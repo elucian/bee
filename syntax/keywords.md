@@ -4,7 +4,7 @@ Bee uses 29 reserved keywords to create statements. You can't use these keywords
 
 ```
 2: {if, as}  
-3: {asm, cpp, bee, def, con, get, say, put, new, let}  
+3: {asm, cpp, bee, def, get, say, put, new, let}  
 4: {read, case, else, next, over, exit, fail, pass, loop, stop} 
 5: {write, cycle, abort, trial, error, other, after} 
 ```
@@ -18,8 +18,7 @@ Next statements are used to import modules or declare something.
 | asm      | Import Assembly \| start assembly code
 | cpp      | Import C \| C++ library
 | bee      | Import Bee module \| library
-| def      | Define user data type or type alias
-| con      | Declare immutable variable (constant)
+| def      | Define user data type or constant
 | new      | Declare a mutable variable
 
 ### Execution statements

@@ -4,9 +4,9 @@
 #driver "ti"
 
 -- constant type inference
-con a := 10;  -- i8
-con x := 0.5; -- d8 
-con y := 1/2; -- Q 
+def a := 10;  -- i8
+def x := 0.5; -- d8 
+def y := 1/2; -- Q 
 
 -- variable type inference
 new v := (1,2,3);     -- List

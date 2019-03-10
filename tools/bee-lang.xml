@@ -27,7 +27,7 @@
             <Keywords name="Keywords1">bee asm cpp read write over</Keywords>
             <Keywords name="Keywords2">if case else cycle trial error other after&#x000D;&#x000A;plot draw show hide</Keywords>
             <Keywords name="Keywords3">loop stop exit abort fail pass</Keywords>
-            <Keywords name="Keywords4">def con new let get put say</Keywords>
+            <Keywords name="Keywords4">def new let get put say</Keywords>
             <Keywords name="Keywords5">pop del deq clear first last next</Keywords>
             <Keywords name="Keywords6">b1 b2 c1 c2 n4 n8 i4 i8 f4 f8&#x000D;&#x000A;B L W Z N Q R C D T H&#x000D;&#x000A;A S U &#x000D;&#x000A;F X&#x000D;&#x000A;P V G&#x000D;&#x000A;&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$</Keywords>

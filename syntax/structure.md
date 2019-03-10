@@ -23,9 +23,9 @@ Bee has 3 kind of program files each with different role:
 
 Bee is using 3 kind of declarations:
 
+* def -- define/initialize constants
 * def -- composite type or sub-type
 * new -- create/initialize variables
-* con -- define/initialize constants
 
 **Note:**
 Bee do not support Unicode identifiers in declarations.

@@ -172,7 +172,7 @@ new <var_name>, <var_name> ... := <constructor>;
 ## Constant declaration
 
 ```
-con <constant_name> := <constant>;   
+def <constant_name> := <constant>;   
 ```
 
 ## Modify values
@@ -196,7 +196,7 @@ put b;         -- expected 11
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-con pi := 3.14;
+def pi := 3.14;
 
 -- declare multiple variables using let
 new a   ε Z; -- Integer 
