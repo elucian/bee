@@ -1,0 +1,20 @@
++--------------------------
+   wee input value demo
+--------------------------+
+#driver "in"
+
+new a ε N;
+put "to stop enter 0";
+write;
+
+cycle
+  get (a, "enter a number:", "####.##"); 
+  read;
+  
+  put ("you have enter: " + a);
+  write;   
+  
+  stop if (a ≡ 0);
+cycle;
+
+over.

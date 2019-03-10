@@ -1,0 +1,45 @@
++------------------------------
+   global variables are public
+   use prefix $ and lowercase
+------------------------------+
+#driver "gv"
+
+-- declare a global variable $x
+def $x := 1;
+
+-- use global variable x in method "add"
+-- since add has not parameters and no result
+-- it is just a simple method declaration
+add1()
+  let $x += 1;
+  put $x;
+add1;
+
+-- call a subroutine by name
+add1; -- print 2
+add1; -- print 3
+add1; -- print 4
+
+put $x; -- expect 4    
+
+write;
+
+-- declare variable x
+new x := 1;
+
+-- variable shadowing
+add2() 
+  new x := 0;     -- create a new variable x 
+  let x := x + 1; -- increment local variable
+  put x;          -- print local x
+add2;
+
+add2;  -- print 1
+add2;  -- print 1
+add2;  -- print 1
+
+put x; -- x remain 4
+
+write;
+  
+over.

@@ -1,0 +1,56 @@
++---------------------------------------
+      High order function demo
+---------------------------------------+
+#driver "ho" 
+ 
+-- define closure function "shift"
+shift(s, i ε Z) => (g ε F):
+  g() ε Z => (s + i);
+shift;
+
+-- create two function instances
+new inc := shift(+1);  -- increment 
+new dec := shift(-1);  -- decrement 
+
+-- test function inc
+put inc(); --> 11
+put inc(); --> 12
+
+-- test function dec
+put dec(); --> 19
+put dec(); --> 18
+
++---------------------------------------
+ iterative coroutine (generators)
+---------------------------------------+
+foo(min, max, step ε N ) => (bar ε F):
+ .index := min ε N;
+  -- termination function
+ .finish() ε L =>(index > max);
+  -- create closure function
+ .bar() => (x ε N):
+   cycle
+      stop if (index > max);
+      let x := index;
+      yield;  --> wait     
+      let index += step;      
+   cycle;
+ .bar;
+  -- stop coroutine and erase states
+ .halt()
+    let inedx := max + 1;
+    bar();
+ .halt;
+foo;
+
+-- use generator in cycle
+new test := foo(0,10,2);
+new i := 0;
+cycle
+  exit if test.finish();
+  say test();
+  say ',' if ¬ test.finish();
+cycle;
+write; --> 0,2,4,6,8,10,
+
+over.

@@ -1,0 +1,21 @@
++------------------------------
+  asynchronous call using "run" 
+------------------------------+
+#driver "ac"
+
+-- multi-thread procedure
+test()
+  wait 10;
+test.
+
+-- create 4 threads and wait
+i := 0 -- thread 
+cycle
+  run test; 
+  let i += 1;
+cycle;
+rest; --> synchronize
+
+over.
+
+** See also: tr.wee

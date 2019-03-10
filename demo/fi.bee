@@ -1,0 +1,22 @@
++---------------------------
+  Declare a "free" method
+---------------------------+
+#driver "fi"
+
+-- declare Fibonacci method
+fib(n ε N) => (y ε N) 
+  case (n ≡ 1 | n ≡ 0)
+    let y := 1;
+  else
+    let y := fib(n - 1) + fib(n - 2);
+  case;
+fib;
+
+-- call method fib 
+new r:=fib(5)
+
+-- print the result
+put r;
+write;
+
+over.

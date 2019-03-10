@@ -1,0 +1,28 @@
++-------------------------------------
+   unpacking demonstration 
+-------------------------------------+
+#driver "up"
+
+-- method with two results
+test(x, y ε Z) => (a,b ε Z)
+  let a := x+1;
+  let b := y+1;
+test; 
+
+-- unpacking to new variables
+new n,m := test(1,2);
+put (n, m) -- will print 2, 3
+
+-- method with structured result
+def Rec <: {x : Z, y : R};
+
+demo(x ε Z, y ε R) => (r ε Rec):
+  r.x := x;
+  r.y := y;
+demo;
+
+put demo(4,5.5); -- will print { x: 4, y: 5.5 }
+
+write;
+ 
+over.

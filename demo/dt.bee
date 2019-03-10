@@ -1,0 +1,47 @@
++-----------------------------------------
+     "def" demo: defined data types       
+-----------------------------------------+
+-- type: structured data
+#driver "dt"
+
+-- this type is public (uses dot prefix)
+def .Data <: {key:A, value:N};
+
+-- new variable using type alias
+new x ε Data;
+let x := {key:'a', value:10};
+
++---------------------------------------------------+ 
+|* public enumeration type with public elements    *|
+|* elements starting with "." do not need qualifier*|
++---------------------------------------------------+ 
+def Number: { 
+   .zero, 
+   .one, 
+   .two, 
+   .three, 
+   .four, 
+   .five, 
+   .six, 
+   .seven, 
+   .eight, 
+   .nine 
+};
+
++------------------------------------------------+ 
+|* Note: first element has assigned a value := 0,*| 
+|* all other elements have previous value + 1   *|
++------------------------------------------------+
+
+-- example of use
+new a := 0;
+
+-- example of use
+case (a ≡ zero)
+  put "zero";
+else
+  put "life is misery";
+case;
+write;
+
+over.

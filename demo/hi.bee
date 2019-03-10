@@ -1,0 +1,18 @@
++--------------------------
+   console input demos
+--------------------------+
+#driver "hi"
+
+put "Hello. I'm Bee!";
+write;
+ 
+new name ε S;
+new age  ε N;
+
+get(name , "Your name?:");
+get(age  , "Your age:");
+read;
+
+put("hello: " + name);
+write;
+over.

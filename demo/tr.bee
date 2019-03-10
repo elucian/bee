@@ -1,0 +1,30 @@
++-------------------------
+   sequential processes
+-------------------------+
+#driver 'tr'
+
+new x := 0;
+
+-- trial has local scope
+trial
+  new x := 15; -- local x
+  let x := x + 2;
+  put x; --> expect 17   
+trial;
+put x; --> expect 10
+
+-- trial with bug fix 
+let x := 0;
+trial
+  new a := 1 / (x * 2);
+error 1001
+  exit 1;
+error 1002
+  exit 2;       
+other
+  put $error.code;
+after
+  pass;  
+trial;
+
+over.

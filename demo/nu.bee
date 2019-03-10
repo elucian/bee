@@ -1,0 +1,65 @@
++----------------------------------------------
+          Working with references              
+----------------------------------------------+
+new d, e ε Z; --reference to natural number
+new s := 10 ε i8; --> type is i8 native type   
+
+-- assign "by reference" 
+let d := s; -- auto-boxing address for "s"
+let d += 1; -- modify underline value of d that is s  
+put d; --> 11  -- d is modified as expected
+ 
+-- test modifier effects
+put s; --> 11 (underlined value is modified)
+
+-- assign "by value"
+let e :: s -> Z; -- make a clone from s
+let e += 1; -- increment e value
+put e; --> 12 (modified)
+put s; --> 11 (unchanged)
+
+write;
+
+************************************************
+** Reference to function
+************************************************
+new f ε F; 
+
+-- define a normal function
+-- parameters a, b are integer
+func(a,b ε Z) ε Z => (a + b);
+
+-- create reference to function func
+new f := func;  -- assign address of func to f
+put f(1,1);     -- execute function reference
+
+write;
+
+*************************************************
+** Using references as argument
+*************************************************
+
+-- method with input output parameters
+-- @ require argument reference and operator ":" in case of named arguments
+pro(a,b @: N) => ()
+  new a +=  1; -- modify parameter a
+  new b +=  2; -- modify parameter b 
+pro;
+
+new x, y := 10; -- define native integers using inference
+pro (a : x, b : y) -- execute pro and expect x, y  to be modified
+
+-- verify new values for arguments
+put  x; --> will print 11
+put  y; --> will print 12
+
+-- negative test
+trial
+  pro (a : 1, b : 2); 
+other
+  put "ERROR: a, b expect references!";
+trial;
+  
+write;
+over.
+**************************************************

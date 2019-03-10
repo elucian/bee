@@ -1,0 +1,19 @@
++----------------------------------
+  declare and use a function 
+ ---------------------------------+
+#driver "fn"
+
+-- simple function
+add(a, b ε Z) ε Z => (a + b);
+
+-- call function add
+put add(1, 2);  -- print 3
+put add(-10, 10);  -- print 0
+write;
+
+-- recursive function
+fac(n ε N) ε N => (1 if n ≡ 0, fac(n-1));
+put fac(3); -- expect 6
+write; 
+ 
+over.

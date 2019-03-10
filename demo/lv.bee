@@ -1,0 +1,32 @@
++-------------------------------------------
+   demo for local variable site-effect
+-------------------------------------------+
+#driver "lv"
+
+-- local variable
+new x := 1;
+
+-- method side-effects
+add()
+  let x := x + 1;
+  put x;
+add;
+
+add; -- will print 2
+add; -- will print 3
+
+put x; -- x := 3 (is modified)
+
+write;  
+
+-- changing x influence method
+let x := 0;  -- new x value 
+
+add;   -- will print 1
+add;   -- will print 2
+
+put x; -- x := 2 (modified)
+
+write;
+
+over.

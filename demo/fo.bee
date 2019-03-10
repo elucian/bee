@@ -1,0 +1,22 @@
++--------------------------------
+ open a file and write into it. 
+--------------------------------+
+#driver "fo"
+
+-- initialize the system library 
+bee io   := $wee.system.io.*;
+new file := io.open('foo.txt','+w');  
+
+-- write into the file using put
+file.put("Hello World!");
+file.write;
+
+-- read the entire content from file
+new content := file.read;
+
+file.close; 
+
+say content;
+write; 
+
+over.

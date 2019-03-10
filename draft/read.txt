@@ -1,0 +1,7 @@
+--------------------------------------
+| These Wee examples are experiments.|
+--------------------------------------
+Some are using features that are not explained in syntax specification.
+These features are highly debatable and may never be included.
+
+Have fun learning Bee.

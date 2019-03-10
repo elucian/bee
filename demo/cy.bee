@@ -1,0 +1,37 @@
++----------------------------------
+    Demonstrate cycle statement
+-----------------------------------+
+#driver "cy"
+
+-- declare array of 10 Words
+new a ε [Z](10);
+
+-- use cycle 
+new i ε Z; 
+cycle
+  let a[i] := i;
+  case (i ≡ 9)
+    stop;
+  else
+    let i += 1;
+    loop;
+  case;
+cycle;
+
+-- cycle shortcut
+new x := 10;
+cycle
+  case (x % 2 ≡ 0)
+    let x -= 1;
+    loop;
+  case;  
+  put x;
+  
+  case (x < 0)
+    stop;
+  else
+    let x -= 1;
+  case;
+cycle;  
+
+over.

@@ -1,0 +1,37 @@
++-------------------------------
+   "if" and "case" decisions
+-------------------------------+
+#driver "if"
+
+new x ε N;
+get (x ,"Type a number:");
+read;
+
+-- if conditional
+put "x := 0" if (x ≡ 0);
+
+-- single branch
+case (x ≡ 1)
+   put "x := 1";
+case;
+write;
+
+-- single branch
+case ¬(x ≡ 5)
+   put "x ≠ 5";
+else
+   put "x = 5";   
+case;
+write;
+
+-- multiple branches
+case (x ≡ 1)
+   put "x = 1";
+case (x > 5)
+   put "x > 5";
+else
+   put "0 < x < 5";
+case;
+write;
+
+over.

@@ -1,0 +1,44 @@
++-----------------------------------
+      type inference demo
+-----------------------------------+
+#driver "ti"
+
+-- constant type inference
+con a := 10;  -- i8
+con x := 0.5; -- d8 
+con y := 1/2; -- Q 
+
+-- variable type inference
+new v := (1,2,3);     -- List
+new s := 'string';    -- String
+
+-- explicit conversion + inference
+new t := '1:45am'     -> T12; -- Time
+new t := '23:45'      -> T24; -- Time
+new d := '10/10/2010' -> DMY; -- Date
+
+-- optional parameters inference
+add(x,y := 0) => (z ε Z)
+  let z := x + y; 
+add;
+put add(1,1); -- will print 2
+
+write;
+
+-- argument x is mandatory, y is optional
+plus(x ε Z, y := 1) => (z ε Z)
+  let z := (x + y);  
+plus;
+put plus(1); -- will print 2
+
+-- input/output arguments, y is optional 
+inc(x @: Z, y := 0) => ()
+  let x += 1;  
+  let y += 1;
+inc;
+
+new i,k := 0; -- references
+inc(i);   --> i = 1 
+inc(i,k); --> i = 2 and k = 1
+
+over.
