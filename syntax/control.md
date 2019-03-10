@@ -5,7 +5,6 @@ executed depending on conditions.
 
 **statements:**
 
-
 * case   -- multiple branches
 * cycle  -- repetitive block
 * trial  -- trial-error block
@@ -66,7 +65,7 @@ cycle
   say ','; 
 cycle;
 
-write
+write;
 ```
 
 **Notes:** 
