@@ -34,6 +34,15 @@ You can learn bee by reading demo source files:
 1. [fo.bee](demo/fo.bee) - file input/output
 1. [nu.bee](demo/nu.bee) - working with references
 
+## Tools
+
+For syntax color highlighter you can use Notepad++.
+
+**Download:**
+ 
+* [bee-lang.xml](../tools/bee-lang.xml)
+* [md-wiki.xml](../tools/md-wiki.xml)
+
 ## Community
 
 If you like Reddit I have set-up a forum:
