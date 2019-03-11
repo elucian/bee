@@ -22,16 +22,16 @@ symbol| description
   :   | Pair up key-value in a collection or method call
   ;   | End of statement \| Statement enumerator
   .   | Public element/member/property \| Membership dot notation
-  .   | String concatenation for library/module path
+  .   | String concatenation 
   '   | ASCII character literal is using single quotes'
   "   | Unlimited string literals are using double quotes"
-  \*  | Parameter prefix for variable arguments \| [*] all elements
+  \*  | Parameter prefix for variable arguments \| [*] all elements  
   \_  | Anonymous variable (constant  := ' ') \| Space string concatenation 
   \\  | Escape character (\\n := New Line) \| maybe regular expressions 
-  \*  | Multiplication
- /    | Numeric Division
+  \*  | Multiplication \| String repetition
+ /    | Numeric Division \| URL or path string concatenation 
  %    | Modulo operator
-\+    | Numeric addition \| String/List concatenation 
+\+    | Numeric addition \| List concatenation 
 \-    | Numeric subtraction \| Collection difference \| Numeric sign
 
 
@@ -50,7 +50,7 @@ symbol| description
  =>   | Define function result 
  ->   | Function pipeline \| explicit conversion 
  <+   | Insert one or more values into a string template 
- <:   | Define input parameter as composite type or subset
+ <:   | Define subset \| input parameter composite type or subset
  @:   | Define input/output parameter with custom type
 
 **Note:** Triple dot "..." is used in switch statement.
@@ -113,13 +113,13 @@ In Bee the logic operators and bitwise operators are overloaded.
 
 symbol| meaning   | description
 ------|-----------|-------------------------------
-  `↔` | EQUIVALENT| if and only if
-  `¬` | NOT       | unary operator
-  `&` | AND       | dual operator 
-  `\` | OR        | dual operator 
-  `~` | XOR       | dual operator 
-  `←` | SHIFTL    | shift bits to left  
-  `→` | SHIFTR    | shift bits to right  
+  ↔   | EQUIVALENT| if and only if
+  ¬   | NOT       | unary operator
+  &   | AND       | dual operator 
+ \|   | OR        | dual operator 
+ \~   | XOR       | dual operator 
+  ←   | SHIFTL    | shift bits to left  
+  →   | SHIFTR    | shift bits to right  
 
 **Logical operators**
 
