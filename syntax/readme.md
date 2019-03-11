@@ -1,12 +1,3 @@
-## Bee Language
-
-Project description: [Wiki Bee](https://github.com/sage-code/bee/wiki)
-
-* Copyright: [SageCode](https://sagecode.net/bee-lang) (c) 2019 
-* License: [LICENSE](../LICENSE)
-
-**Status:** Inception version: 9 (March 2019)
-
 ## Bee Syntax
 
 For documentation we use *.md files in folder /syntax
@@ -19,7 +10,7 @@ For documentation we use *.md files in folder /syntax
 1. [Standard Library](syntax/standard.md)
 1. [System Library](syntax/system.md)
 
-## Bee Demo
+## Bee Demos
 
 You can learn bee by reading demo source files:
 
@@ -43,19 +34,7 @@ You can learn bee by reading demo source files:
 1. [fo.bee](../demo/fo.bee) - file input/output
 1. [nu.bee](../demo/nu.bee) - working with references
 
-## Highlighter
-
-For syntax color highlighter you can use Notepad++.
-
-**Download:**
- 
-* [bee-lang.xml](../tools/e-lang.xml)
-* [md-wiki.xml](../tools/md-wiki.xml)
-
 ## Community
 
 If you like Reddit I have set-up a forum:
 Follow on: [reddit](https://www.reddit.com/r/bee_lang/)
-
-Bee is designed by "SageCode" community:
-Join us: [discord](https://discord.gg/s4G8pTj)

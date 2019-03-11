@@ -12,7 +12,7 @@ For syntax color highlighter you can use Notepad++.
 
 **Download:**
  
-* [bee-lang.xml](../tools/e-lang.xml)
+* [bee-lang.xml](../tools/bee-lang.xml)
 * [md-wiki.xml](../tools/md-wiki.xml)
 
 
