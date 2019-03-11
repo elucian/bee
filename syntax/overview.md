@@ -272,7 +272,7 @@ let a := 10.5; --FAIL: a is of type: Integer
 
 ## Logic type
 
-Logic type is an enumeration of two public symbols: ƒ = False and † = True
+Logic type is an enumeration of two public symbols: ƒ = 0 False and † = 1 True
 
 ```
 def .L <: {f, t};
@@ -291,7 +291,7 @@ Precedence: { ¬, &, | }
 **relations**
 Relation operators will create a logical response: † or ƒ.
 
-* comparison ( ≈, =, ≡, >, <, ≤, ≥ ); 
+* comparison ( ≈, =, =, >, <, ≤, ≥ ); 
 * belonging operation ( ε, >>, <<, >=, <= );
 * logic equivalent ( ↔ ); 
 
@@ -359,10 +359,10 @@ The statement is executed only if the condition is True.
 new a ε Z;
 
 -- conditional execution
-let a := 1 if (a ≡ 0);
+let a := 1 if (a = 0);
 
 -- conditional output
-put "a is 0" if (a ≡ 0);
+put "a is 0" if (a = 0);
 put "a >  0" if (a ≥ 0);
  
 write 
@@ -479,7 +479,7 @@ new a,r := 0;
 
 cycle
   let r := x % 2;
-  let a := (0 if r ≡ 0, 1 if r ≡ 0, 2);
+  let a := (0 if r = 0, 1 if r = 0, 2);
   say "{1}:{2}" <+ (x,a);
   let x -= 1;
   stop if (x < 5);
@@ -595,7 +595,7 @@ foo;
 -- initialization method for Foo type
 bar(me @: Foo, p1, p2 ε Z, p3 ε S) => ()
   --precondition
-  fail if (p1 < 0 | p2 < 0 | p3 ≡ "");
+  fail if (p1 < 0 | p2 < 0 | p3 = "");
   
   --modify Foo members
   let me.p1 := p1;
@@ -641,8 +641,8 @@ let i := i + 2; -- modify i := 12
 put j; --> expect 10 (unmodified)
 
 -- verify assignment effect
-put j = i; -- 0 different reference 
-put j ≡ i; -- 1 same value
+put j ≡ i; -- 0 different reference 
+put j = i; -- 1 same value
 
 -- explicit boxing using ":="
 let j := i; -- boxing i := 12 
@@ -650,8 +650,8 @@ let i += 1; -- modify i := 13
 put i; --> expect 13 (modified)
 
 -- verify boxing effect
-put j = i; -- 1 (true) same reference 
-put j ≡ i; -- 1 same value
+put j ≡ i; -- 1 (true) same reference 
+put j = i; -- 1 same value
 
 write;
 ```

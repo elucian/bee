@@ -14,7 +14,7 @@ cycle
   put ("you have enter: " + a);
   write;   
   
-  stop if (a ≡ 0);
+  stop if (a = 0);
 cycle;
 
 over.

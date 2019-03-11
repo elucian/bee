@@ -11,7 +11,7 @@ Composite types are complex data structures.
 * [queue](#list)
 * [array](#list)
 * [string](#string)
-* [object](#string)
+* [object](#object)
 
 ## Usability
 
@@ -206,7 +206,7 @@ new list := ('a','b','c');
 new element := list.first();
 cycle
   say element;
-  exit if element = list.last();
+  exit if element ≡ list.last();
   element := list.next(element);
   say ',';  
 cycle;
@@ -259,7 +259,7 @@ new s2 := {2,3,4};
 new s  := {N}; --this is an empty set
 
 -- empty collection
-put "set \"s\" is empty" if s ≡ {}
+put "set \"s\" is empty" if s = {}
 
 -- set specific operations
 let s := s1 | s2; --{1,2,3,4} --union
@@ -360,7 +360,7 @@ new x := 0;
 cycle 
   let test[i] := x;
   let x += 1;
-  stop if x ≡ m;
+  stop if x = m;
 cycle;
 
 -- print all elements of array
@@ -385,7 +385,7 @@ Arrays can have optional index range [!..?]
 
 * Symbol ! represents first index 
 * Symbol ? represents last index
-* Array capacity c = ? - ! + 1
+* Array capacity `c := ? - ! + 1`
 
 **syntax**
 ```
@@ -465,8 +465,8 @@ new e,f,r := [Z](); -- empty array
 -- by default assign ":=" copy/clone an entire collection
 let e := a; 
 
--- compare two collections using "≡"
-put e ≡ a; --> 1 (equal collections)
+-- compare two collections using "="
+put e = a; --> 1 (equal collections)
 
 -- by default a slice is a copy/clone of original data
 let f := a[2..?];  -- slice copy 
@@ -499,7 +499,7 @@ new x := length(mat);
 cycle   
   say (mat[x], ',');
   i += 1;
-  stop if i ≡ x;
+  stop if i = x;
 cycle;
 
 write;
@@ -616,7 +616,7 @@ put test_file;
 write; --> "c:\work\project\src\test.bee"
 ```
 
-**Note:** Anonymous constant: `_ ≡ " "`
+**Note:** Anonymous constant: `_ = " "`
 
 Using "." will insert "\\" or "/" depending on the operating system.
 
@@ -765,18 +765,18 @@ new b := {}; -- define empty set or map
 
 
 --before initialization    
-put a ≡ (); -- 1 
-put b ≡ []; -- 1 
-put c ≡ {}; -- 1 
+put a = (); -- 1 
+put b = []; -- 1 
+put c = {}; -- 1 
 
 let c := ('a','b','c'); -- Bound to List of A elements   
 let a := ['A','B','C']; -- Bound to Array of A elements
 let b := {'a','b','c'}; -- Bound to Set of A elements
 
 --after initialization
-put a ≡ (); --> 0 
-put b ≡ []; --> 0 
-put c ≡ {}; --> 0 
+put a = (); --> 0 
+put b = []; --> 0 
+put c = {}; --> 0 
 ```
 
 ### Variable arguments
@@ -789,7 +789,7 @@ Declare an array using prefix "*" for parameter name.
 foo(*bar <: [Z]) => (x ε Z)
   let c := bar.count();  
   -- precondition
-  case (c ≡ 0)
+  case (c = 0)
     let x := 0; 
     exit;
   case;
@@ -798,7 +798,7 @@ foo(*bar <: [Z]) => (x ε Z)
   cycle
     let x += bar[i];
     let i += 1;
-    stop if i ≡ c;
+    stop if i = c;
   cycle;
 foo;
 

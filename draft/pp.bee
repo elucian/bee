@@ -9,7 +9,7 @@ new  ch := [N](c)   -- define channel
 producer(ch ε [N]) => ()
   new item := 0 ε N;
   cycle
-    stop if (len(ch) ≡ c);
+    stop if (len(ch) = c);
     let item  := random(10);
     let ch    += item
     yield consumer;  
@@ -20,7 +20,7 @@ producer;
 consumer(ch ε [N], e ε N ) => ()
   new item ε N;
   cycle
-    stop if (len(ch) ≡ 0);     
+    stop if (len(ch) = 0);     
     let item := ch.deq; -- FIFO
     let e += 1;
     wait 30;   

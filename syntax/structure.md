@@ -72,7 +72,7 @@ Rogue statements are executed top down in synchronous mode.
 new i, c ε Z;
 let c := $params.count;
 
-abort if (c ≡ 0);
+abort if (c = 0);
 -- comma separated parameters
 cycle
   say $params[i];
@@ -291,9 +291,5 @@ Using this technique, one module can extend user defined types in any other modu
 1. [bee operators](operators.md)
 1. [bee keywords](keywords.md)
 1. [syntax overview](overview.md)
-1. [composite types](composite.md)
-1. [type inference](inference.md)
-1. [standard library](standard.md)
-1. [system library](system.md)
 
 **See also:**[Wiki Bee](https://github.com/sage-code/bee/wiki)

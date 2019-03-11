@@ -21,8 +21,8 @@ new i := 0;   -- type := Z
 new j := 0.5; -- type := R
 
 -- logic expressions
-new false := ƒ; -- type = L
-new true  := †; -- type = L
+new false := ƒ; -- type L
+new true  := †; -- type L
 
 -- multiple variables
 new x,y,z := 5;   -- type := Z

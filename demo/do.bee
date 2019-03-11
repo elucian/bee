@@ -9,7 +9,7 @@ new n := a.count()-1; -- index of last element
 new i ε [0..n];
 cycle
    put ('r[{0}] := {1}' <+ (i, a[i]));
-   stop if (i ≡ n);
+   stop if (i = n);
    let i += 1;
 cycle;
 write;

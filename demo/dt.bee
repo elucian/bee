@@ -37,7 +37,7 @@ def Number: {
 new a := 0;
 
 -- example of use
-case (a ≡ zero)
+case (a = zero)
   put "zero";
 else
   put "life is misery";

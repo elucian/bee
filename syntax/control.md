@@ -17,7 +17,7 @@ A decision is based on logical expressions and two keywords: {case, else}.
 new a := 10; 
 
 -- single block
-case (a ≡ 10)
+case (a = 10)
    put 'yes';
 case;
 
@@ -35,7 +35,7 @@ case (a < 0)  -- first case
   put 'a < 0';
 case (a > 5)  -- second case
   put 'a > 5';
-case (a ≡ 0) -- third case
+case (a = 0) -- third case
   put "a := 0"; 
 else -- alternative case
   put ("a := " + a)
@@ -58,7 +58,7 @@ new a := 10;
 cycle
   let a -= 1;
   -- conditional repetition
-  loop if (a % 2 ≡ 0);  
+  loop if (a % 2 = 0);  
   say a;  
   -- conditional termination
   stop if (a < 0);

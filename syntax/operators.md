@@ -76,9 +76,9 @@ Relation operators are used to compare expressions.
 
 symbol | meaning
 -------|--------------------------------------------------------------------
-  ≈    | almost equal (support also different data types)
-  =    | same memory address, same reference: (shallow comparison)
-  ≡    | equivalence of two values, collections or objects (deep comparison)
+  ≡    | same memory address, same reference: (shallow comparison)
+  =    | equality of two values, collections or objects (deep comparison)
+  ≈    | almost equal (support also different data types)  
  \>    | value is greater than 
  \<    | value is less than
   ≥    | greater than or equal to
@@ -87,8 +87,8 @@ symbol | meaning
 
 **patterns:** 
 ```
- ¬(x = y) -- divergence of two references, (not the same address)
- ¬(x ≡ y) -- divergence of two values, objects or collections
+ ¬(x ≡ y) -- divergence of two references, (not the same address)
+ ¬(x = y) -- divergence of two values, objects or collections
 ```
 
 ## Collection operators
@@ -123,7 +123,7 @@ symbol| meaning   | description
 
 **Logical operators**
 
-Bee is using values ƒ = False and † = True
+Bee is using values ƒ is False and † is True
 
  p | q |¬ p |p ~ q |p ↔ q |p & q | p \| q
 ---|---|----|------|------|------|--------

@@ -8,25 +8,25 @@ get (x ,"Type a number:");
 read;
 
 -- if conditional
-put "x := 0" if (x ≡ 0);
+put "x := 0" if (x = 0);
 
 -- single branch
-case (x ≡ 1)
+case (x = 1)
    put "x := 1";
 case;
 write;
 
 -- single branch
-case ¬(x ≡ 5)
+case ¬(x = 5)
    put "x ≠ 5";
 else
-   put "x = 5";   
+   put "x ≡ 5";   
 case;
 write;
 
 -- multiple branches
-case (x ≡ 1)
-   put "x = 1";
+case (x = 1)
+   put "x ≡ 1";
 case (x > 5)
    put "x > 5";
 else

@@ -24,7 +24,7 @@ Following Unicode symbols are not supported: ∈ ⊕ ∧ ∨ ⊥ ⊤ ∩
 sym| code 
 ---|------------
  ε | 238   
- ≡ | 240
+ = | 240
  ≈ | 247
  ≥ | 242 
  ≤ | 243
