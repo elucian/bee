@@ -76,4 +76,4 @@ Following types are included in standard library.
 | fac      | factorial
 | mod      | modulo y := \|x\|  
 
-**Read next:** [Syntax Overview](overview.md)
+**Read next:** [Structure](structure.md)
