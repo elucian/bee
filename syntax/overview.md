@@ -4,7 +4,16 @@ For syntax notation we use modified BNF convention:
 
 * We use \<name\> to represent identifier names;
 * We use  ...  to represent repetitive sequence;
-* We use notes to mention optional things;
+* We use notes or examples to explain optional things;
+
+## Tools
+
+For syntax color highlighter you can use Notepad++.
+
+**Download:**
+ 
+* [bee-lang.xml](../tools/e-lang.xml)
+* [md-wiki.xml](../tools/md-wiki.xml)
 
 
 ## Expressions

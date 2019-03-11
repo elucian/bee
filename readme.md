@@ -5,7 +5,7 @@
 </p>
 
 ------------------------------------------------------------------------------------------
-<p align="center"> <a href=manual/overview.md>Syntax Overview</a>
+<p align="center"> <a href=syntax/overview.md>Syntax Overview</a>
 </p>
 
 ------------------------------------------------------------------------------------------
