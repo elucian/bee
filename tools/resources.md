@@ -18,15 +18,15 @@
 
 ## Compiler creation
 
-*[introduction to compiler creation](https://vimeopro.com/user12798068/university-of-salzburg-introduction-to-compiler-construction)
-* [compiler book](https://www3.nd.edu/~dthain/compilerbook/)
-* [Compiler Basics](http://www.cs.man.ac.uk/~pjj/farrell/compmain.html)
+* [Introduction to compiler creation](https://vimeopro.com/user12798068/university-of-salzburg-introduction-to-compiler-construction)
+* [Compiler book](https://www3.nd.edu/~dthain/compilerbook/)
+* [Compiler basics](http://www.cs.man.ac.uk/~pjj/farrell/compmain.html)
 * [Implement programming languages](http://www1.digitalgrammars.com/ipl-book/)
-* [Want to Write a Compiler?](http://prog21.dadgum.com/30.html)
-* [Let's Build a Compiler](http://compilers.iecc.com/crenshaw/)
-* [Programming Languages: Application and  Interpretation](http://cs.brown.edu/courses/cs173/2012/book/)
-* [how the parsers work](http://parsingintro.sourceforge.net/)
-* [crafting interpreters](http://craftinginterpreters.com/)
+* [Want to write a compiler?](http://prog21.dadgum.com/30.html)
+* [Let's build a compiler](http://compilers.iecc.com/crenshaw/)
+* [Programming languages: Application and  Interpretation](http://cs.brown.edu/courses/cs173/2012/book/)
+* [How the parsers work](http://parsingintro.sourceforge.net/)
+* [Crafting interpreters](http://craftinginterpreters.com/)
 * [Let's build a Compiler](https://compilers.iecc.com/crenshaw/)
 * [CST vs AST](https://eli.thegreenplace.net/2009/02/16/abstract-vs-concrete-syntax-trees/)
 * [Constructing AST](https://www.cs.mcgill.ca/~cs520/2018/slides/4-ast.pdf)
@@ -36,7 +36,6 @@
 
 ## Frameworks
 * [LLVM Tutorial](http://llvm.org/docs/tutorial/)
-* [LLVM Tutorial](https://llvm.org/docs/tutorial/LangImpl01.html)
 * [ANTLR Documentation](https://github.com/antlr/antlr4/blob/master/doc/index.md)
 * [YACC/Byson](http://www.gnu.org/software/bison/)  
 * [FLEX](http://flex.sourceforge.net/)
