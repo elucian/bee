@@ -69,11 +69,13 @@ sym| code
 
 sym| code
 ---|-------- 
+ ` | 96 
  ° | 248
  ⁿ | 252
  ² | 253
  ² | 0178
  ³ | 0179
+
  
 ## Trivial fractions 
 

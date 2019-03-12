@@ -43,7 +43,7 @@ def Positive      <: Z[0..+];
 def Negative      <: Z[-..-1];
 
 --Check variable belong to sub-type
-case 'x' ε AlfaChar
+case ('x' ε AlfaChar)
   put 'yes';
 else
   put 'no';
@@ -544,10 +544,10 @@ let x := parse("123.5",2,",.");       --convert to real 123.5
 let y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
 
-## ASCII Encoding
+### ASCII Encoding
 Default _code page_ [437](https://en.wikipedia.org/wiki/Code_page_437) is used for MS-DOS and Windows console. Greek alphabet _code page_ [737](https://en.wikipedia.org/wiki/Code_page_737) is prefered for mathematic algebra.
 
-## Change code page on Windows
+### Change code page on Windows
 Programmers working in Bee can decide to use a console editor (like edit) that is capable to display 
 correct the characters for specific code page. User can verify or change the console code page using command chcp:
 ```
@@ -563,7 +563,7 @@ In Bee we use this list of characters to represent the strings:
 [Code ASCII Standard](https://en.wikipedia.org/wiki/ASCII)
 
 
-## Double quoted string
+### Double quoted string
 
 Double quoted strings are dynamic strings with more features than ASCII strings. 
 Bee support "escape" notation using escape `\` symbol only in double quoted strings.
@@ -572,7 +572,7 @@ Bee support "escape" notation using escape `\` symbol only in double quoted stri
 put("this represents \n new line in string")
 ```
 
-## Control codes:
+### Control codes:
 
 For each escape character Bee also define a constant CODE.
 
@@ -597,34 +597,43 @@ put type(s); -- Print: U
 
 **See also:** [symbols.md](symbols.md)
 
-**concatenation**
+### Concatenation
 
-Strings can be concatenated using operator "." , "_" , or "+".
+All operators below will concatenate two strings.
 
+symbol| description
+------|---------------------------------------------------------------
+ .-.  | Concatenate two strings after trimming first string
+ .+.  | Concatenate two strings as they are. No trim is performed!
+ ._.  | Concatenate two strings and trim both strings to one space
+ ./.  | Concatenate two strings with "/" separator and de-duplicate "//"   
+ .\\. | Concatenate two strings with "\\" separator and de-duplicate "\\"   
+
+
+**examples**
 ```
 new u, c := S; -- default S length is 255
 
 -- string concatenation
-let u := "This is" + " a long string.";
-let c := "Dynamic and"+_+'fix size';
+let u := "This is".+." a long string.";
+let c := "This is"._.'fix size'; 
 
 -- path concatenation
-new test_file := $pro."src"."test.bee";
+new test_file := $pro./."src"./."test.bee";
 
--- when $pro := c:\work\project\
+-- when $pro = c:\work\project\
 put test_file; 
 write; --> "c:\work\project\src\test.bee"
 ```
 
-**Note:** Anonymous constant: `_ = " "`
+**Note:** You can not concatenate a string with a number, you must convert it first.
 
-Using "." will insert "\\" or "/" depending on the operating system.
+### Template
 
-**Template**
-
-* We can include numbers into a string using template operator "<+" or "+>".
-* Inside template we use "{n}" notation to find a value using the member index.
-* Template must be included in double quotes " ".
+* We can include numbers into a string using template operator "<+" or "+>"
+* Inside template we use "{n}" notation to find a value using the member index
+* Template must be included in double quotes " " 
+* If a placeholder is not found then it is ignored preserved as is.
 
 ```
 new <variable> := <template> <+ <variable>;
@@ -640,11 +649,12 @@ new y := 41; -- Code ASCII A
 put ("{0} > {1}" <+ (x,y)); --print "30 > 41"
   
 ```
-## String Generator
+
+### String Generator
 
 It is common to create strings automatically.
 
-**Operator : Repeat := "*" is not multiplication
+**Operator:**  "*"
 
 ```
 new str := <str_constant> * n;
@@ -652,7 +662,7 @@ new str := <str_constant> * n;
 
 **Example:**
 ```
-new sep := "+" + ("-" * 18) + "+";
+new sep := "+".."-"*18.."+";
 
 put sep;
 put "|*  this is a test  *|";
@@ -666,23 +676,14 @@ put sep;
 |*  this is a test *|
 +-------------------+
 ```
-**Range:**
-
-Range notation works for strings and Unlimited:
-
-```
-new alpha := A['a'..'z']; --lowercase letters
-new beta  := A['A'..'Z']; --uppercase letters
-```
 
 ## Object 
 
-Objects are complex data structures enclosed in curly brackets { , , ,} and separated by comma. 
-Each object has attributes with associated data type and identifier. 
+Objects are complex data structures enclosed in curly brackets { , , ,} and separated by comma. Each object has attributes with associated data type and identifier. 
 
 **Syntax:**
 ```
-def <class_name> <: {<element> : <type>, <element> : <type>...};
+def <class_name> <: {<element> ε <type>, <element> ε <type>...};
 new <object_name> := <class_name>(<arguments>);
 
 --using qualifier with attributes

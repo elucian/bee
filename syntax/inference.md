@@ -12,9 +12,9 @@ Operator ":=" can be used to define native variables using type inference.
 **Defaults:**
 ```
 -- character expressions
-new c := 'a';        -- type = A (capacity = 4)
-new s := 'str';      -- type = S (capacity = 4)
-new b := "Unlimited";-- type = U (radix tree)
+new c := `a`;        -- type = A (capacity = 1)
+new s := 'str';      -- type = S (capacity = 255)
+new b := "Unlimited";-- type = U (unlimited capacity)
 
 -- numeric expressions
 new i := 0;   -- type := Z
@@ -92,7 +92,7 @@ write;
 
 **Pass arguments by name:**
 
-We can use parameter name and "=" symbol for argument value:
+We can use parameter name and pair-up ":" symbol for argument value.
 
 ```
 -- fn with optional parameters

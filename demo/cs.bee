@@ -7,7 +7,7 @@
 new a := 10, b := 5 ε N;
 
 -- simple decision 
-put ("a ≡ b") if (a = b);
+put ("a = b") if (a = b);
 put ("a < b") if (a < b);
 put ("a > b") if (a > b);
 
@@ -50,7 +50,7 @@ case (a & b)
 case (a | b)
   put ("a ≠ 0 or b ≠ 0");
 else
-  put ("a ≡ 0 and b ≡ 0");  
+  put ("a = 0 and b = 0");  
 case;
 
 write;

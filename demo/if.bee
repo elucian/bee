@@ -20,13 +20,13 @@ write;
 case ¬(x = 5)
    put "x ≠ 5";
 else
-   put "x ≡ 5";   
+   put "x = 5";   
 case;
 write;
 
 -- multiple branches
 case (x = 1)
-   put "x ≡ 1";
+   put "x = 1";
 case (x > 5)
    put "x > 5";
 else

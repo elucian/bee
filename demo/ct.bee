@@ -39,7 +39,7 @@ new p := {A};    -- let collection of ASCII characters
 new m := {R,S};  -- hash map of strings with real key
 
 -- Establish map using literals
-let m := {'a':1, 'b':2, 'c':3};
+let m := {`a`:1, `b`:2, `c`:3};
 
 -- complex list examples
 new q1 := (A);        -- a list of characters
@@ -67,17 +67,17 @@ let s1 := s1 - 1; -- {0,2}
 let s1 := s1 - 2; -- {0}
 
 -- set literals using type inference
-new s3 := {'a','b','c'}; -- set of 2 elements
-new s4 := {'b','c','d'}; -- set of 2 elements
+new s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
+new s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
 
--- union between 2 sets
-put (s3 | s4); -- {'a','b','c','d'}
+-- union between 2 sets (a, b) are nod duplicated
+put (s3 | s4); -- {`a`,`b`,`c`,`d`}
 
 -- intersection between 2 sets
-put (s3 & s4);-- {'b','c'}
+put (s3 & s4);-- {`a`,`b`}
 
 -- difference between two sets
-put (s3 - s4);-- {'a'}
+put (s3 - s4);-- {'c'}
 put (s4 - s3);-- {'d'}
 
 over.

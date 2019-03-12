@@ -27,13 +27,13 @@ new b := [A](10);   -- array of 10 ASCII characters
 new m := [W](3,3);  -- matrix of 3x3 Words
 
 put a; -- [0,0,0,0,0,0,0,0,0,0]
-put b; -- ['','','','','','','','','','']
+put b; -- [``,``,``,``,``,``,``,``,``,``]
 put m; -- [[0,0,0], [0,0,0], [0,0,0]]
 
 write;
 
 -- use all member initialization [*]
-let b[*] := 's'; -- assign value "s" for all elements
+let b[*] := `s`; -- assign value "s" for all elements
 let a[*] :=  5 ; -- scalar modification, make all = 5
 let m[*] :=  1 ; -- scalar matrix modification
 

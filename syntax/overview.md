@@ -139,17 +139,28 @@ Bee define a collection using a special notation based on brackets.
 | {} | Hash Map \| Set 
 | () | List \| Expression
 
+## Constant declaration
+
+Constants are protected memory locations representing a un-mutable value.
+
+```
+def <constant_name> := <constant> ε <type>;   
+```
+
+**Notes:** 
+* You can use only native types or basic types for constants;
+* Constant identifier is not restricted to a particular convention;
 
 ## Variable declarations
 
-Variables are defined using keyword "new" and 2 operators:
+Variables are defined using keyword "new" and next operators:
 
 sym | purpose
 ----|------------------------------------------------------------------
  ε  | declare variable type | member type | parameter type
  :  | pair-up member value to a constant/expression or constructor
  := | initialize variable using a constant/expression or constructor
- :: | initialize variable using a copy/clone from another variable
+ :: | initialize variable using a reference to another variable
 
 
 ```
@@ -157,9 +168,12 @@ sym | purpose
 new <var_name> ε <type>;
 new <var_name> := <constant> ε <type>;
 
--- partial declaration with value and type inference
+-- partial declaration using type inference
 new <var_name> := <expression>; -- native type inference
 new <var_name> := <constructor>;-- object type inference
+
+-- reference declaration using using operator "::"
+new <ref_name> :: <var_name>; 
 ```
 
 Multiple variables can be define in one single line using comma separator:
@@ -168,15 +182,14 @@ new <var_name>, <var_name> ... := <expression>;
 new <var_name>, <var_name> ... := <constructor>;
 ```
 
-## Constant declaration
+**Notes:** 
 
-```
-def <constant_name> := <constant>;   
-```
+* Each variable in the list will be initialized in a different location;
+* If operator "::" is used you can create multiple references for same location;
 
 ## Modify values
 
-One can modify variables using _let_ statement.
+One can modify variables using "let" statement.
 
 **example**
 ```
@@ -189,8 +202,7 @@ put b;         -- expected 11
 
 **notes:** 
 * Multiple variables can be modified at once if separated by comma;
-* One let statement can use one single "=" or ":" assignment;
-* Using comma we can continue let statement on next line;
+* One let statement can use one single ":=" or "::" assignment;
 
 **Examples:**
 ```
@@ -214,10 +226,10 @@ let x, y := 10.5;  -- modify value of x and y
 
 ## Type declaration
 
-User can define types using keyword _def_ and operator "=".
+User can define composite types and sub-types using keyword "def" and operator "<:".
 
 ```
-def <type_name> <: <subtype constructor>;
+def <type_name> <: <type_constructor>;
 
 --using new type
 new <var_name>[,<var_name>] ... ε <type_name>;
@@ -229,7 +241,7 @@ Bee is an explicit language. We avoid implicit conversions.
 When data type mismatch we must perform explicit conversion.
 
 * If data do not fit in the new type you receive a runtime error.
-* Explicit conversion is done using _pipeline operator:_ "->"
+* Explicit conversion is done using _pipeline operator: "->"
 
 **example:**
 ```
@@ -250,17 +262,17 @@ put x; --> expect 20.0
 Bee define A := ASCII character as native type.
 
 ```
-new a,b εA; --ASCII character
-new x,y εB; --Binary number 
+new a,b ε A; --ASCII character
+new x,y ε B; --Binary number 
 
-let a := '0';    -- representation of 0
+let a := `0`;    -- representation of 0
 let x := a -> B; -- convert to 30
 let y := 30;     -- ASCII code for '0'
 let b := y -> A; -- convert to '0'
 ```
 ## Type checking
 
-We can use variable type to verify expressions.
+We can use variable type to validate expression type.
 
 ```
 new a := 0;    --integer variable 
@@ -295,7 +307,8 @@ Relation operators will create a logical response: † or ƒ.
 * belonging operation ( ε, >>, <<, >=, <= );
 * logic equivalent ( ↔ ); 
 
-Precedence: 
+**Precedence:** 
+
 * Logic operators have greater precedence than relations. 
 * Lowest precedence is for "↔". 
 
@@ -308,16 +321,16 @@ new x := ƒ ε L;
 new y := † ε L;
 
 --simple expressions
-put    x; -- 0
-put  ¬ x; -- 1
+put    x; -- ƒ
+put  ¬ x; -- †
 
 --complex expressions
-put  (x ↔ y);  --  0
-put ¬(x ↔ y);  --  1
-put  (x < y);  --  1
-put  (x > y);  --  0
-put  (x & y);  --  0
-put  (x | y);  --  1
+put  (x ↔ y);  --  ƒ
+put ¬(x ↔ y);  --  †
+put  (x < y);  --  †
+put  (x > y);  --  ƒ
+put  (x & y);  --  ƒ
+put  (x | y);  --  †
 
 ```
 **Notes:** 
@@ -334,6 +347,11 @@ new a := 0.0, b := 1.5 ;
 let x := a -> L; -- x := 0
 let y := b -> L; -- y := 1
 ```
+
+**Notes:** 
+* Only integer part of a number is used;
+* Fraction is eliminated before conversion;
+* A string that has content
 
 ## Control Flow
 
@@ -641,8 +659,8 @@ let i := i + 2; -- modify i := 12
 put j; --> expect 10 (unmodified)
 
 -- verify assignment effect
-put j ≡ i; -- 0 different reference 
 put j = i; -- 1 same value
+put j ≡ i; -- 0 different reference 
 
 -- explicit boxing using ":="
 let j := i; -- boxing i := 12 
@@ -650,8 +668,8 @@ let i += 1; -- modify i := 13
 put i; --> expect 13 (modified)
 
 -- verify boxing effect
-put j ≡ i; -- 1 (true) same reference 
 put j = i; -- 1 same value
+put j ≡ i; -- 1 (true) same reference 
 
 write;
 ```

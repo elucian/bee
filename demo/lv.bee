@@ -15,7 +15,7 @@ add;
 add; -- will print 2
 add; -- will print 3
 
-put x; -- x := 3 (is modified)
+put x; -- x = 3 (is modified)
 
 write;  
 
@@ -25,7 +25,7 @@ let x := 0;  -- new x value
 add;   -- will print 1
 add;   -- will print 2
 
-put x; -- x := 2 (modified)
+put x; -- x = 2 (modified)
 
 write;
 

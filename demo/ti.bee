@@ -9,8 +9,9 @@ def x := 0.5; -- d8
 def y := 1/2; -- Q 
 
 -- variable type inference
-new v := (1,2,3);     -- List
-new s := 'string';    -- String
+new v := (1,2,3);     -- List of i8
+new s := 'string';    -- String capacity 255
+new c := `c`          -- ASCII Char
 
 -- explicit conversion + inference
 new t := '1:45am'     -> T12; -- Time

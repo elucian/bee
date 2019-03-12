@@ -9,7 +9,7 @@ def .Data <: {key:A, value:N};
 
 -- new variable using type alias
 new x ε Data;
-let x := {key:'a', value:10};
+let x := {key:`a`, value:10};
 
 +---------------------------------------------------+ 
 |* public enumeration type with public elements    *|

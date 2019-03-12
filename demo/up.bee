@@ -14,7 +14,7 @@ new n,m := test(1,2);
 put (n, m) -- will print 2, 3
 
 -- method with structured result
-def Rec <: {x : Z, y : R};
+def Rec <: {x ε Z, y ε R};
 
 demo(x ε Z, y ε R) => (r ε Rec):
   r.x := x;

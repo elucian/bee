@@ -1,6 +1,8 @@
 +----------------------------------------------
           Working with references              
 ----------------------------------------------+
+#driver "nu"
+
 new d, e ε Z; --reference to natural number
 new s := 10 ε i8; --> type is i8 native type   
 
@@ -61,5 +63,6 @@ other
 trial;
   
 write;
+
 over.
 **************************************************

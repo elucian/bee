@@ -1,6 +1,7 @@
 ## Operators
 
-In Bee operators are created using ASCII symbols.
+In Bee operators are created using Extended ASCII symbols.   
+Read about supported symbols here: [symbols](symbols.md)
 
 ## Brackets
 
@@ -12,28 +13,44 @@ symbol| description
   []  | Array or range \| access of elements by index 
   {}  | Enumeration, structure, set or hash map
 
+## Delimiters
+
+symbol  | description
+--------|-----------------------------------------------------
+ `z`    | Back quote \| grave accent = single character 
+ 'x'    | ASCII character literal is using single quotes
+ "y"    | Unlimited string literals are using double quotes
+
+
 ## Single Symbols
 
 symbol| description
 ------|----------------------------------------------------------------
- ^    | Power symbol used with fractions or expressions
  \#   | Compiler directives prefix \| Template placeholder
   $   | Global variables prefix \| System environment constants
   :   | Pair up key-value in a collection or method call
   ;   | End of statement \| Statement enumerator
   .   | Public element/member/property \| Membership dot notation
-  .   | String concatenation 
-  '   | ASCII character literal is using single quotes'
-  "   | Unlimited string literals are using double quotes"
-  \*  | Parameter prefix for variable arguments \| [*] all elements  
-  \_  | Anonymous variable (constant  := ' ') \| Space string concatenation 
-  \\  | Escape character (\\n := New Line) \| maybe regular expressions 
-  \*  | Multiplication \| String repetition
- /    | Numeric Division \| URL or path string concatenation 
- %    | Modulo operator
-\+    | Numeric addition \| List concatenation 
-\-    | Numeric subtraction \| Collection difference \| Numeric sign
+  \_  | Space constant:' ' \| Anonymous variable
+  \*  | Sting repetition \| Variable arguments \| [*] all elements  
+  \\  | Escape character (\\n := New Line) \| maybe regular expressions
 
+
+## Numeric operators  
+
+Listed in the order of precedence top down.
+
+symbol| description
+------|------------------------------------------------------------------
+ /    | Rational number division (higher precedence)
+ ±    | change sign, replace "y = -x" with "y = ±x" 
+ ^    | Power symbol used with fractions or expressions   
+ ·    | multiplication
+ ÷    | division 
+ ×    | array and matrix multiplication
+ %    | Modulo operator
+\+    | Numeric addition \| List append
+\-    | Numeric subtraction \| Collection difference \| Numeric sign
 
 ## Double Symbols
 
@@ -43,15 +60,17 @@ symbol| description
 ------|------------------------------------------------------
 \|\*  | Begin expression comment, or nested comment
  \*\| | End expression comment or nested comment
+ \+-  | Start for multiple line comments
  \--  | Start for single line comment /separator
  \**  | Start for a subtitle comment /separator
  \##  | Start for a title comment /separator  
- ..   | Define range or array slice between two values [n..m]
- =>   | Define function result 
- ->   | Function pipeline \| explicit conversion 
+ \-+  | End for multiple line comments 
+ ..   | Define range [n..m] \| Define slice from Array
+ =>   | Define: function expression \| method result
+ ->   | Function pipeline \| Explicit conversion 
  <+   | Insert one or more values into a string template 
- <:   | Define subset \| input parameter composite type or subset
- @:   | Define input/output parameter with custom type
+ <:   | Define subset \| Composite type \| Input parameter type
+ @:   | Define output parameter \| Bound first parameter to object class
 
 **Note:** Triple dot "..." is used in switch statement.
 
@@ -65,8 +84,9 @@ symbol| meaning
  :=   | modify value or reference \| create new object \| copy value
  +=   | increment value
  -=   | decrement value
- /=   | real division modifier
- *=   | multiplication modifier
+ ·=   | multiplication modifier 
+ ÷=   | real division modifier
+ /=   | rational division modifier
  ^=   | power  modifier
  %=   | modulo modifier
 
@@ -95,9 +115,9 @@ symbol | meaning
 
 symbol | `=>`       |meaning
 -------|------------|-------------------------------------------------
-   &   | Set        |Intersection between two collections
-  \|   | Set        |Union between two collections
-   +   | List       |Concatenation between two lists
+  &&   | Set        |Intersection between two collections
+  \|\| | Set        |Union between two collections
+  ++   | List       |Concatenation between two lists
   +=   | collection |Append element to collection 
   -=   | collection |Remove element from collection 
   !=   | element    |Remove first element from collection 
@@ -118,12 +138,10 @@ symbol| meaning   | description
   &   | AND       | dual operator 
  \|   | OR        | dual operator 
  \~   | XOR       | dual operator 
-  ←   | SHIFTL    | shift bits to left  
-  →   | SHIFTR    | shift bits to right  
 
 **Logical operators**
 
-Bee is using values ƒ is False and † is True
+Bee is using values "ƒ" = False and "†" = True
 
  p | q |¬ p |p ~ q |p ↔ q |p & q | p \| q
 ---|---|----|------|------|------|--------
@@ -135,6 +153,22 @@ Bee is using values ƒ is False and † is True
 
 **Bitwise operators**
 
+Some of these operators are overloaded.
+
+symbol| meaning       | description
+------|---------------|-------------------------------
+  ¬   | bit NOT       | unary operator
+  &   | bit AND       | dual operator 
+ \|   | bit OR        | dual operator 
+ \~   | bit XOR       | dual operator 
+  ←   | bit SHIFTL    | shift bits to left  
+  →   | bit SHIFTR    | shift bits to right  
+
+
+**See also:** [Bit Manipulation](https://en.wikipedia.org/wiki/Bit_manipulation) 
+
+Arity = 1
+
  A    | ¬ A | A ← 1 | A → 2  
 ------|-----|-------|--------
  0000 |1111 | 0000  | 0000   
@@ -142,6 +176,9 @@ Bee is using values ƒ is False and † is True
  0111 |1000 | 1110  | 0001   
  0110 |1001 | 1100  | 0001   
 
+
+Arity = 2
+ 
  A    | B   | A & B  | A \| B  | A ~ B
 ------|-----|--------|---------|--------
  00   | 00  | 00     | 00      |  11    
@@ -149,7 +186,5 @@ Bee is using values ƒ is False and † is True
  11   | 01  | 01     | 11      |  00    
  10   | 11  | 10     | 11      |  01    
 
-
-**See also:** [Bit Manipulation](https://en.wikipedia.org/wiki/Bit_manipulation) 
  
 **Read Next:** [keywords](keywords.md)

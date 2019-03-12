@@ -13,6 +13,6 @@ get(name , "Your name?:");
 get(age  , "Your age:");
 read;
 
-put("hello: " + name);
+put("hello:"._.name);
 write;
 over.
