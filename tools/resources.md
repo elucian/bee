@@ -4,7 +4,7 @@
 * [Lambda](http://lambda-the-ultimate.org/)
 * [#proglangdesign](http://www.proglangdesign.net/)
 
-## Tutorials to learn base language:
+## Tutorials to Assembly
 ---------------------------------------------------
 * https://chortle.ccsu.edu/AssemblyTutorial/index.html
 * https://github.com/Captainarash/The_Holy_Book_of_X86
