@@ -1,14 +1,20 @@
 # Bee: resources
 
-Tutorials to learn base language:
+## Community of Languages
+* [Lambda](http://lambda-the-ultimate.org/)
+* [#proglangdesign](http://www.proglangdesign.net/)
+
+## Tutorials to learn base language:
 ---------------------------------------------------
-https://chortle.ccsu.edu/AssemblyTutorial/index.html
-https://github.com/Captainarash/The_Holy_Book_of_X86
+* https://chortle.ccsu.edu/AssemblyTutorial/index.html
+* https://github.com/Captainarash/The_Holy_Book_of_X86
 
 
-Nice References for language design:
+## Language design & tips
 ---------------------------------------------------
-https://en.wikipedia.org/wiki/Rope_(data_structure)
+* https://en.wikipedia.org/wiki/Rope_(data_structure)
+* http://joeduffyblog.com/2016/02/07/the-error-model/
+* https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare
 
 ## Compiler creation
 
@@ -42,6 +48,3 @@ https://en.wikipedia.org/wiki/Rope_(data_structure)
 ## Many resources
 [Free books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#professional-development)
 
-## Community of Languages
-* [Lambda](http://lambda-the-ultimate.org/)
-* [#proglangdesign](http://www.proglangdesign.net/)

@@ -202,7 +202,7 @@ put b;         -- expected 11
 
 **notes:** 
 * Multiple variables can be modified at once if separated by comma;
-* One let statement can use one single ":=" or "::" assignment;
+* One let statement can use one single operator ":=" or "::";
 
 **Examples:**
 ```
@@ -351,7 +351,8 @@ let y := b -> L; -- y := 1
 **Notes:** 
 * Only integer part of a number is used;
 * Fraction is eliminated before conversion;
-* A string that has content
+* A string that contains "True" "true", "T" or "t" or "1" convert to: †
+* A string that contains "False", "true", "F" or "f" or "0" convert to: ƒ
 
 ## Control Flow
 
