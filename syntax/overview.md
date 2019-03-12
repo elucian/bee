@@ -648,8 +648,8 @@ over.
 
 In Bee all basic types and user defined types are references. 
 
-* Default assign ":=" copy a value or execute an expression. 
-* Reference assign "::" clone a reference and fail if this is not possible.
+* Default assign `:=` copy a value or execute an expression. 
+* Reference assign `::` clone a reference and fail if this is not possible.
 
 **example**
 ```
