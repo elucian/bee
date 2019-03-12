@@ -7,9 +7,9 @@ Composite types are complex data structures.
 * [range](#range)
 * [ordinal](#ordinal)
 * [list](#list)
-* [stack](#list)
-* [queue](#list)
-* [array](#list)
+* [stack](#stack)
+* [queue](#queue)
+* [array](#array)
 * [string](#string)
 * [object](#object)
 
@@ -408,7 +408,6 @@ new array := [Z](10);
 let array[*] := 1; 
 ```
 
-
 **Array Slice**
 
 We can define a section of array using [n..m] notation. This is called slice. The numbers n and m represent the subscript of array element. Slices maintain references to array elements.
@@ -458,8 +457,6 @@ Default assignment ":=" and slicing operator "[..]" makes a copy.
 
 ```
 new a := [0,1,2,3,4];
-
-
 new e,f,r := [Z](); -- empty array
 
 -- by default assign ":=" copy/clone an entire collection
