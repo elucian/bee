@@ -18,6 +18,7 @@
 
 ## Compiler creation
 
+*[introduction to compiler creation](https://vimeopro.com/user12798068/university-of-salzburg-introduction-to-compiler-construction)
 * [compiler book](https://www3.nd.edu/~dthain/compilerbook/)
 * [Compiler Basics](http://www.cs.man.ac.uk/~pjj/farrell/compmain.html)
 * [Implement programming languages](http://www1.digitalgrammars.com/ipl-book/)
@@ -45,6 +46,7 @@
 * [GralVM](http://www.graalvm.org/)
 * [Trift](https://en.wikipedia.org/wiki/Apache_Thrift)
 * [Webassembly](https://webassembly.org/)
-## Many resources
-[Free books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#professional-development)
 
+## Multiple resources
+[Free books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#professional-development)
+[awesome-compilers](https://github.com/aalhour/awesome-compilers)
