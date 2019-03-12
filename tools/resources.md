@@ -48,5 +48,5 @@
 * [Webassembly](https://webassembly.org/)
 
 ## Multiple resources
-[Free books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#professional-development)
-[awesome-compilers](https://github.com/aalhour/awesome-compilers)
+* [free programming books](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md#professional-development)
+* [awesome compilers](https://github.com/aalhour/awesome-compilers)
