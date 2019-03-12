@@ -647,7 +647,8 @@ over.
 ## References 
 
 In Bee all basic types and user defined types are references.  
-Assign "=" copy a value or reference depending on left operand.
+Default assign ":=" copy a value or execute an expression.
+Reference assign "::" clone a reference and fail if this is not possible.
 
 **example**
 ```
@@ -655,18 +656,18 @@ new i := 0  ε i4;
 new j := 10 ε Z;
 
 -- explicit un-boxing
-let i :: j; -- copy i to j := 10
+let i := j; -- copy j value. make i = 10
 let i := i + 2; -- modify i := 12
-put j; --> expect 10 (unmodified)
+put j; --> j = 10 (unmodified)
 
 -- verify assignment effect
 put j = i; -- 1 same value
 put j ≡ i; -- 0 different reference 
 
--- explicit boxing using ":="
-let j := i; -- boxing i := 12 
+-- explicit boxing using "::"
+let j :: i; -- boxing i := 12 
 let i += 1; -- modify i := 13
-put i; --> expect 13 (modified)
+put j; --> expect 13 (modified)
 
 -- verify boxing effect
 put j = i; -- 1 same value

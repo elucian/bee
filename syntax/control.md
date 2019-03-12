@@ -50,7 +50,7 @@ case;
 
 ## Cycle loop
 
-Bee can execute a block of code multiple times: { cycle , redo, stop }
+Bee can execute a block of code multiple times: { cycle , loop, stop }
 
 ```
 new a := 10;
