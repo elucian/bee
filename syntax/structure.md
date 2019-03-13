@@ -50,9 +50,8 @@ Statements can be contained in blocks of code.
 * Block of code is ending with same keyword and ";"
 
 **Keywords:**
-* "case"    create multi-path groups of statements based on logical conditions
+* "when"    create multi-path groups of statements based on logical conditions
 * "cycle"   group of statements that can be repeated multiple times
-* "trial"   execute statements that can fail and recover from errors
 
 ## Driver file
 

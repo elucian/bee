@@ -5,11 +5,11 @@
 
 -- declare Fibonacci method
 fib(n ε N) => (y ε N) 
-  case (n = 1 | n = 0)
+  when (n = 1 | n = 0)
     let y := 1;
   else
     let y := fib(n - 1) + fib(n - 2);
-  case;
+  when;
 fib;
 
 -- call method fib 

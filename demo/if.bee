@@ -1,5 +1,5 @@
 +-------------------------------
-   "if" and "case" decisions
+   "if" and "when" decisions
 -------------------------------+
 #driver "if"
 
@@ -11,27 +11,27 @@ read;
 put "x := 0" if (x = 0);
 
 -- single branch
-case (x = 1)
+when (x = 1):
    put "x := 1";
-case;
+when;
 write;
 
 -- single branch
-case ¬(x = 5)
+when ¬(x = 5):
    put "x ≠ 5";
-else
+else:
    put "x = 5";   
-case;
+when;
 write;
 
 -- multiple branches
-case (x = 1)
+when (x = 1):
    put "x = 1";
-case (x > 5)
+when (x > 5):
    put "x > 5";
-else
+else:
    put "0 < x < 5";
-case;
+when;
 write;
 
 over.

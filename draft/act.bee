@@ -7,7 +7,7 @@ New Keywords:
 #driver "act"
 
 -- execute sequential several jobs
-trial
+job
    new local := "act {0} is done" 
    act one
      wait 30;
@@ -27,6 +27,6 @@ other --> catch errors
 after
   -- executed after all jobs
   say "done: {0} errors!" <+ $job.err;  
-trial;
+job;
 
 over.

@@ -10,28 +10,28 @@ new a ε [Z](10);
 new i ε Z; 
 cycle
   let a[i] := i;
-  case (i = 9)
+  when (i = 9)
     stop;
   else
     let i += 1;
     loop;
-  case;
+  when;
 cycle;
 
 -- cycle shortcut
 new x := 10;
 cycle
-  case (x % 2 = 0)
+  when (x % 2 = 0)
     let x -= 1;
     loop;
-  case;  
+  when;  
   put x;
   
-  case (x < 0)
+  when (x < 0)
     stop;
   else
     let x -= 1;
-  case;
+  when;
 cycle;  
 
 over.

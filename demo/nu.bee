@@ -46,7 +46,7 @@ write;
 *************************************************
 
 -- method with input output parameters
--- @ require argument reference and operator ":" in case of named arguments
+-- @ require argument reference and operator ":" in when of named arguments
 pro(a,b @: N) => ()
   new a +=  1; -- modify parameter a
   new b +=  2; -- modify parameter b 
@@ -60,11 +60,7 @@ put  x; --> will print 11
 put  y; --> will print 12
 
 -- negative test
-trial
-  pro (a : 1, b : 2); 
-other
-  put "ERROR: a, b expect references!";
-trial;
+pro (a : 1, b : 2); --> "ERROR: a, b expect references!";
   
 write;
 

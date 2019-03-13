@@ -1,21 +1,21 @@
 +----------------------------
-  case vs pattern matching
+  when vs pattern matching
 ----------------------------+
 #driver "pm"
 
--- case matching method
+-- when matching method
 pm1(p1,p2 ε N) => (r ε N)
-  case (p1 = 0)
+  when (p1 = 0)
     let r := 0;
-  case (p2 = 0)
+  when (p2 = 0)
     let r := 1;
-  case (p1 = p2)
+  when (p1 = p2)
     let r := 2;    
-  case (p1 > p2)
+  when (p1 > p2)
     let r := 3;
   else
     let r := 4;
-  case;
+  when;
 pm1;
 
 -- pattern matching method

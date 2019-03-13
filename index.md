@@ -21,7 +21,6 @@ You can learn bee by reading demo source files:
 1. [do.bee](demo/do.bee) - repetitive statements
 1. [in.bee](demo/in.bee) - input multiple values
 1. [cs.bee](demo/cs.bee) - control structures
-1. [tr.bee](demo/tr.bee) - job robust block
 1. [fn.bee](demo/fn.bee) - function declaration
 1. [fi.bee](demo/fi.bee) - Fibonacci function
 1. [gv.bee](demo/gv.bee) - global variables

@@ -356,9 +356,9 @@ let y := b -> L; -- y := 1
 
 ## Control Flow
 
-Bee has 4 control flow statements {if, case, cycle, trial }:
+Bee has 3 control flow statements {if, when, cycle }:
 
-## IF Conditionals
+## Conditional
 
 A conditional is using "if" keyword to control one statement.   
 Observe that "if" is not itself a full statement only an augment.
@@ -389,20 +389,55 @@ write
 
 **Notes:** Keyword "if" and "else" are not related.
 
-### Case
+### When
 
-Multi-path decision block.
+Multi-path decision block based on logical expressions.
 
 ```
-case <logical expression>
+when <logical expression>
   <first_branch>;
-case <logical expression>
+when <logical expression>
   <second_branch>
 ...  
 else
   <cover_branch>;
-case;
+when;
 ```
+
+**example**
+```
+new a := 10; 
+
+-- single block
+when (a = 10)
+   put 'yes';
+when;
+
+-- two branches
+when (a < 5)
+  put 'yes';
+else
+  put 'no';
+when;
+
+-- multiple branches
+when (a < 0)  -- first condition
+  put 'a < 0';
+when (a > 5)  -- second condition
+  put 'a > 5';
+when (a = 0) -- third condition
+  put "a := 0"; 
+else -- alternative condition
+  put ("a := " + a)
+when;
+
+```  
+
+**Notes:** 
+
+* After the logical expression we can have end of line or comment;
+* Logic expressions can be enclosed in () but this is not mandatory;
+
 
 ### Cycle
 
@@ -420,43 +455,47 @@ cycle
 cycle;
 ```
 
-### Trial
-
-Trial is a bloc that can fail and we can handle some errors.
+**example**
 
 ```
-trial
-  <statement>;  
-  ...
-error <code>
-  <error_handler>
-error <code>
-  <error_handler>
-  ...
-other
-  <general_handler>
-after
-  <finalization>      
-trial;
+new a := 10;
+
+cycle
+  let a -= 1;
+  -- conditional repetition
+  loop if (a % 2 = 0);  
+  say a;  
+  -- conditional termination
+  stop if (a < 0);
+  say ','; 
+cycle;
+
+write;
 ```
 
-associated keywords:
+**Notes:** 
+
+* If _stop_ condition is missing the cycle is infinite;
+* The cycle can be controlled using conditionals;
+
+### Nested cycles
+
+Nested cycles can be labeled:
+
+**pattern:** 
 
 ```
--- next keywords are used to interrupt a job
-fail (<code>,<message>); -- create a recoverable exception 
-exit  -- stop the current method
-abort -- stop program execution
-
--- this keyword is used to fix a bad case
-pass -- clear the $error variable
+-- label 2 nested cycles 
+cycle outer 
+  cycle inner
+       -- continue with outer cycle
+       loop outer if <condition>; 
+       ...
+       -- stop for both cycles
+       stop outer if <condition>;
+  cycle; 
+cycle;
 ```
-
-example: [tr.bee](../demo/tr.bee)
-
-It is time to see some more complex examples and learn more about control flow.
-
-**Read more:** [control](control.md)
 
 ## Pattern Matching
 
@@ -490,7 +529,7 @@ let <var> := (
 <dx>   := default expression (no condition).
 ```
 
-**Example**
+**example**
 
 ```
 new x   := 9;
@@ -592,7 +631,7 @@ over.
 * Multiple arguments can be enumerated only with brackets (arg1, arg2...);
 * A method can not be used in expressions except assign expressions;
 * A method can have side-effects or output parameters;
-* We can interrupt a method prematurely using "exit" or "abort". 
+* We can interrupt a method prematurely using "abort" keyword. 
 
 **Bounding**
 A method can bound to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Bounding methods enable object oriented design in Bee.

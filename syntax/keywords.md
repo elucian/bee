@@ -3,10 +3,10 @@
 Bee uses 29 reserved keywords to create statements. You can't use these keywords as identifiers in your program. That's the reason Bee is a minimalist language: to avoid restricting you to use English words as new identifiers in your program.
 
 ```
-2: {if, as}  
-3: {asm, cpp, bee, def, get, say, put, new, let}  
-4: {read, case, else, next, over, exit, fail, pass, loop, stop} 
-5: {write, cycle, abort, trial, error, other, after} 
+2: if, as  
+3: asm, cpp, bee, def, get, say, put, new, let  
+4: read, when, else, skip, next, exit, fail, pass, loop, stop, over 
+5: write, cycle 
 ```
 
 ### Definition statements
@@ -34,7 +34,7 @@ Next statements represents actions. Also called Imperative statements.
 | read     | Accept user input from console 
 | write    | Output expression result to console 
 | exit     | Silent interrupt a method with no error 
-| abort    | Interrupt program execution with error 
+| fail     | Interrupt program execution with error 
 | over     | Last executable statement in Bee module.
 
 ## Control statements
@@ -43,10 +43,9 @@ Control statements are also known as decision statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| case     | Decision block for conditional expression 
+| if       | Conditional augment and pattern matching
+| when     | Decision block for conditional expression 
 | cycle    | Start point for repetitive block
-| trial    | Anonymous block and exception handler
-
 
 ## Semantic keywords
 
@@ -54,14 +53,10 @@ These keywords are associated with other statements to customize the statement b
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| if       | Conditional augment and pattern matching
 | else     | Alternative path executed in _when_ statement
 | loop     | Continue iteration _for_ from beginning
 | stop     | stop inner cycle and continue after end of cycle.
 | fail     | Create an exception, used in job to create errors
 | pass     | Clear exception and continue with next statement
-| error    | Create specific exception handler in trial block
-| other    | Create generic exception handler in trial block
-| after    | Create finalization region for trial-error block
 
 **Read next:** [Syntax Overview](overview.md)

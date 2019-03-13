@@ -43,11 +43,11 @@ def Positive      <: Z[0..+];
 def Negative      <: Z[-..-1];
 
 --Check variable belong to sub-type
-case ('x' ε AlfaChar)
+when ('x' ε AlfaChar)
   put 'yes';
 else
   put 'no';
-case;
+when;
 
 write;
 ```
@@ -326,11 +326,11 @@ We can check if an element is included in a collection.
 ```
 new map := {'a':"first", 'b':"second"};
 
-case ('a' ε map):
+when ('a' ε map):
   put("a is found");
 else
   put("not found");
-case;
+when;
   
 write;  
 ```
@@ -787,10 +787,10 @@ Declare an array using prefix "*" for parameter name.
 foo(*bar <: [Z]) => (x ε Z)
   let c := bar.count();  
   -- precondition
-  case (c = 0)
+  when (c = 0)
     let x := 0; 
     exit;
-  case;
+  when;
   new i := 0; 
   -- sum all parameters  
   cycle

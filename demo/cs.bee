@@ -14,30 +14,30 @@ put ("a > b") if (a > b);
 write;
 
 -- single branch decision
-case ¬(a = b) 
+when ¬(a = b) 
   put ("a is not equals to b");
-case;
+when;
 
 -- decision with alternative
-case (a < 5)
+when (a < 5)
   put "yes";
 else
   put "no";
-case;
+when;
 
 write;
 
 -- multi-decisions with range
 let a := 9;
-case (a ε [0..4])
+when (a ε [0..4])
    put ('a ≥ 0 & a < 5');
-case (a ε [5..9])
+when (a ε [5..9])
    put ('a ≥ 5 & a < 10');
-case  (a < 0)
+when  (a < 0)
    put "a is negative";
 else
    put ('a ≤ 10');
-case;
+when;
 
 write;
   
@@ -45,13 +45,13 @@ write;
 let a := 1, b := 0;
   
 -- cascade decision statement
-case (a & b)  
+when (a & b)  
   put ("a ≠ 0 and b ≠ 0");
-case (a | b)
+when (a | b)
   put ("a ≠ 0 or b ≠ 0");
 else
   put ("a = 0 and b = 0");  
-case;
+when;
 
 write;
 

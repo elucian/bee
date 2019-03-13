@@ -1,4 +1,4 @@
-## Standard Library
+# Standard Library
 
 Standard library is automatically included in Bee language.
 
