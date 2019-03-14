@@ -43,9 +43,9 @@ def Positive      <: Z[0..+];
 def Negative      <: Z[-..-1];
 
 --Check variable belong to sub-type
-when ('x' ε AlfaChar)
+when ('x' ε AlfaChar):
   put 'yes';
-else
+else:
   put 'no';
 when;
 

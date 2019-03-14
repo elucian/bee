@@ -420,15 +420,25 @@ else:
   put 'no';
 when;
 
--- multiple branches
-when (a < 0):  -- first condition
-  put 'a < 0';
-when (a > 5):  -- second condition
-  put 'a > 5';
-when (a = 0): -- third condition
-  put "a := 0"; 
+-- multiple branches, all conditions 
+let a := 0;
+when (a < 0) : put 'a < 0';
+when (a >= 0): put 'a >= 0';
+when (a = 0) : put "a = 0"; 
 else: -- alternative condition
   put ("a := " + a)
+when;
+-- expect two messages a>=0 and a=0.
+
+-- multiple branches, first condition
+when (a < 0):  
+  put 'a < 0';
+else:when (a > 5):  
+  put 'a > 5';
+else:when (a = 0): 
+  put "a = 0"; 
+else: -- alternative condition
+  put ("a = " + a)
 when;
 
 ```  
