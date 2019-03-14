@@ -10,7 +10,7 @@ new test ε Number;
 let test := zero; -- instance of Number
 
 -- create a method for type Number
-convert(x @: Number) => (y ε S)
+convert(x @: Number) => (y ε S):
   let y := ('zero'  if x = zero,
             'one'   if x = one,
             'two'   if x = two,
@@ -18,7 +18,7 @@ convert(x @: Number) => (y ε S)
 convert;
 
 -- a wrapper method for convert
-equal(x @: Number, s ε S) => (r ε L)
+equal(x @: Number, s ε S) => (r ε L):
   let r := s = x.convert(); 
 equal;
     

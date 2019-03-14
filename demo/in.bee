@@ -7,7 +7,7 @@ new a ε N;
 put "to stop enter 0";
 write;
 
-cycle
+cycle:
   get (a, "enter a number:", "####.##"); 
   read;
   

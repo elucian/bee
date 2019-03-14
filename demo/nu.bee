@@ -47,13 +47,13 @@ write;
 
 -- method with input output parameters
 -- @ require argument reference and operator ":" in when of named arguments
-pro(a,b @: N) => ()
+pro(a,b @: N) => ():
   new a +=  1; -- modify parameter a
   new b +=  2; -- modify parameter b 
 pro;
 
 new x, y := 10; -- define native integers using inference
-pro (a :: x, b :: y) -- execute pro and expect x, y  to be modified
+pro (a :: x, b :: y); -- execute pro and expect x, y  to be modified
 
 -- verify new values for arguments
 put  x; --> will print 11

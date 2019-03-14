@@ -37,9 +37,9 @@ def Number: {
 new a := 0;
 
 -- example of use
-when (a = zero)
+when (a = zero):
   put "zero";
-else
+else:
   put "life is misery";
 when;
 write;

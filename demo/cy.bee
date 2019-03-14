@@ -8,11 +8,11 @@ new a ε [Z](10);
 
 -- use cycle 
 new i ε Z; 
-cycle
+cycle:
   let a[i] := i;
-  when (i = 9)
+  when (i = 9):
     stop;
-  else
+  else:
     let i += 1;
     loop;
   when;
@@ -20,16 +20,16 @@ cycle;
 
 -- cycle shortcut
 new x := 10;
-cycle
-  when (x % 2 = 0)
+cycle:
+  when (x % 2 = 0):
     let x -= 1;
     loop;
   when;  
   put x;
   
-  when (x < 0)
+  when (x < 0):
     stop;
-  else
+  else:
     let x -= 1;
   when;
 cycle;  

@@ -19,9 +19,9 @@ when ¬(a = b)
 when;
 
 -- decision with alternative
-when (a < 5)
+when (a < 5):
   put "yes";
-else
+else:
   put "no";
 when;
 
@@ -29,13 +29,13 @@ write;
 
 -- multi-decisions with range
 let a := 9;
-when (a ε [0..4])
+when (a ε [0..4]):
    put ('a ≥ 0 & a < 5');
-when (a ε [5..9])
+when (a ε [5..9]):
    put ('a ≥ 5 & a < 10');
-when  (a < 0)
+when  (a < 0):
    put "a is negative";
-else
+else:
    put ('a ≤ 10');
 when;
 
@@ -45,11 +45,11 @@ write;
 let a := 1, b := 0;
   
 -- cascade decision statement
-when (a & b)  
+when (a & b):  
   put ("a ≠ 0 and b ≠ 0");
-when (a | b)
+when (a | b):
   put ("a ≠ 0 or b ≠ 0");
-else
+else:
   put ("a = 0 and b = 0");  
 when;
 

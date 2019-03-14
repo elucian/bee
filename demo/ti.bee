@@ -19,7 +19,7 @@ new t := '23:45'      -> T24; -- Time
 new d := '10/10/2010' -> DMY; -- Date
 
 -- optional parameters inference
-add(x,y := 0) => (z ε Z)
+add(x,y := 0) => (z ε Z):
   let z := x + y; 
 add;
 put add(1,1); -- will print 2
@@ -27,13 +27,13 @@ put add(1,1); -- will print 2
 write;
 
 -- argument x is mandatory, y is optional
-plus(x ε Z, y := 1) => (z ε Z)
+plus(x ε Z, y := 1) => (z ε Z):
   let z := (x + y);  
 plus;
 put plus(1); -- will print 2
 
 -- input/output arguments, y is optional 
-inc(x @: Z, y := 0) => ()
+inc(x @: Z, y := 0) => ():
   let x += 1;  
   let y += 1;
 inc;
