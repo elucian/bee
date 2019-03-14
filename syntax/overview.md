@@ -655,12 +655,12 @@ def Foo <: {.p1 εN, .p2 εN, .p3 εS};
 
 -- constructor (same name as Foo)
 -- create a result of type Foo (me)
-foo() => (me @: Foo):
+foo() => (me @ Foo):
   let me := {0,0,0}
 foo;
 
 -- initialization method for Foo type
-bar(me @: Foo, p1, p2 ε Z, p3 ε S) => ():
+bar(me @ Foo, p1, p2 ε Z, p3 ε S) => ():
   --precondition
   fail if (p1 < 0 | p2 < 0 | p3 = "");
   
@@ -671,7 +671,7 @@ bar(me @: Foo, p1, p2 ε Z, p3 ε S) => ():
 bar;
 
 -- second method for Foo type
-print(me @: Foo) => ():
+print(me @ Foo) => ():
   put "{p1={0},p2={1},p3={2}}" <+ (me.p1, me.p2, me.p3);
 print;
 

@@ -47,7 +47,7 @@ write;
 
 -- method with input output parameters
 -- @ require argument reference and operator ":" in when of named arguments
-pro(a,b @: N) => ():
+pro(a,b @ N) => ():
   new a +=  1; -- modify parameter a
   new b +=  2; -- modify parameter b 
 pro;

@@ -33,7 +33,7 @@ plus;
 put plus(1); -- will print 2
 
 -- input/output arguments, y is optional 
-inc(x @: Z, y := 0) => ():
+inc(x @ Z, y := 0) => ():
   let x += 1;  
   let y += 1;
 inc;
