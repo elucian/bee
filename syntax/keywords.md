@@ -5,7 +5,7 @@ Bee uses 29 reserved keywords to create statements. You can't use these keywords
 ```
 2: if, as  
 3: asm, cpp, bee, def, get, say, put, new, let  
-4: read, when, else, skip, next, exit, fail, pass, loop, stop, over 
+4: read, when, else, skip, next, exit, fail, pass, loop, stop
 5: write, cycle 
 ```
 
@@ -35,7 +35,6 @@ Next statements represents actions. Also called Imperative statements.
 | write    | Output expression result to console 
 | exit     | Silent interrupt a method with no error 
 | fail     | Interrupt program execution with error 
-| over     | Last executable statement in Bee module.
 
 ## Control statements
 
