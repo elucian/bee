@@ -384,7 +384,7 @@ let a := 1 if (a = 0);
 put "a is 0" if (a = 0);
 put "a >  0" if (a ≥ 0);
  
-write 
+write; 
 ```
 
 **Notes:** Keyword "if" and "else" are not related.
@@ -394,12 +394,12 @@ write
 Multi-path decision block based on logical expressions.
 
 ```
-when <logical expression>
+when <logical expression>:
   <first_branch>;
-when <logical expression>
+when <logical expression>:
   <second_branch>
 ...  
-else
+else:
   <cover_branch>;
 when;
 ```
@@ -409,25 +409,25 @@ when;
 new a := 10; 
 
 -- single block
-when (a = 10)
+when (a = 10):
    put 'yes';
 when;
 
 -- two branches
-when (a < 5)
+when (a < 5):
   put 'yes';
-else
+else:
   put 'no';
 when;
 
 -- multiple branches
-when (a < 0)  -- first condition
+when (a < 0):  -- first condition
   put 'a < 0';
-when (a > 5)  -- second condition
+when (a > 5):  -- second condition
   put 'a > 5';
-when (a = 0) -- third condition
+when (a = 0): -- third condition
   put "a := 0"; 
-else -- alternative condition
+else: -- alternative condition
   put ("a := " + a)
 when;
 
@@ -444,7 +444,7 @@ when;
 Create repetitive statement block.
 
 ```
-cycle
+cycle:
   <statement block>
   ...
   loop if <condition>;
@@ -460,7 +460,7 @@ cycle;
 ```
 new a := 10;
 
-cycle
+cycle:
   let a -= 1;
   -- conditional repetition
   loop if (a % 2 = 0);  
@@ -486,8 +486,8 @@ Nested cycles can be labeled:
 
 ```
 -- label 2 nested cycles 
-cycle outer 
-  cycle inner
+cycle outer: 
+  cycle inner:
        -- continue with outer cycle
        loop outer if <condition>; 
        ...
@@ -535,7 +535,7 @@ let <var> := (
 new x   := 9;
 new a,r := 0;
 
-cycle
+cycle:
   let r := x % 2;
   let a := (0 if r = 0, 1 if r = 0, 2);
   say "{1}:{2}" <+ (x,a);
@@ -646,12 +646,12 @@ def Foo <: {.p1 εN, .p2 εN, .p3 εS};
 
 -- constructor (same name as Foo)
 -- create a result of type Foo (me)
-foo() => (me @: Foo)
+foo() => (me @: Foo):
   let me := {0,0,0}
 foo;
 
 -- initialization method for Foo type
-bar(me @: Foo, p1, p2 ε Z, p3 ε S) => ()
+bar(me @: Foo, p1, p2 ε Z, p3 ε S) => ():
   --precondition
   fail if (p1 < 0 | p2 < 0 | p3 = "");
   
@@ -662,7 +662,7 @@ bar(me @: Foo, p1, p2 ε Z, p3 ε S) => ()
 bar;
 
 -- second method for Foo type
-print(me @: Foo) => ()
+print(me @: Foo) => ():
   put "{p1={0},p2={1},p3={2}}" <+ (me.p1, me.p2, me.p3);
 print;
 

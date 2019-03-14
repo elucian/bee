@@ -17,10 +17,10 @@ Composite types are complex data structures.
 
 Bee uses composite types to ...
 
-* define data types using "def" and "<:"
-* declare constants using "def" and ":="
-* declare variables using "new" and ":="
-* declare parameters using "<:", "@:" or ":=" 
+* define data types using "def", "<:" and "ε"
+* declare constants using "def", ":=" and "ε"
+* declare variables using "new", ":=" and "ε"
+* declare parameters using symbols "*", ":=", "@:" and "ε"
 
 ## Range
 
@@ -54,7 +54,7 @@ write;
 
 **Notes:**
 
-* Anonymous range expression [n..m] is of type Z
+* Anonymous range expression [n..m] is of type i8
 * Range can apply only to discrete basic types (A,B,Z,N)
 * Control variables can be declared in range using "ε"
 * To check value is in range use operator "ε"
@@ -146,7 +146,7 @@ A method can have multiple results.
 
 ```
 -- create a list from expressions
-test(x,y ε Z) => (r, c ε Z)
+test(x,y ε Z) => (r, c ε Z):
   r += x+1;
   c += y+1;
 test;
@@ -357,7 +357,7 @@ put test[m];   -- last element
 
 -- set value of element := subscript
 new x := 0;
-cycle 
+cycle: 
   let test[i] := x;
   let x += 1;
   stop if x = m;
@@ -493,7 +493,7 @@ So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 -- elements in matrix can be accessed using a cycle
 new i := 0;
 new x := length(mat);  
-cycle   
+cycle:   
   say (mat[x], ',');
   i += 1;
   stop if i = x;
@@ -784,16 +784,16 @@ Declare an array using prefix "*" for parameter name.
 
 ```
 --parameter *bar is an array
-foo(*bar <: [Z]) => (x ε Z)
+foo(*bar ε [Z]) => (x ε Z):
   let c := bar.count();  
   -- precondition
-  when (c = 0)
+  when (c = 0):
     let x := 0; 
     exit;
   when;
   new i := 0; 
   -- sum all parameters  
-  cycle
+  cycle:
     let x += bar[i];
     let i += 1;
     stop if i = c;

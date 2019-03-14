@@ -69,7 +69,7 @@ symbol| description
  =>   | Define: function expression \| method result
  ->   | Function pipeline \| Explicit conversion 
  <+   | Insert one or more values into a string template 
- <:   | Define subset \| Composite type \| Input parameter type
+ <:   | Define subset \| Composite type
  @:   | Define output parameter \| Bound first parameter to object class
 
 **Note:** Triple dot "..." is used in switch statement.
