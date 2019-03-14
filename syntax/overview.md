@@ -631,7 +631,6 @@ foo;
 -- using name of method will execute the method  
 foo();
 
-over.
 ```
 
 **Notes:**
@@ -684,7 +683,7 @@ test.print; -- call second method for foo
 
 write;
 
-over.
+
 ```
 **Notes:** 
 * Bee is using single dispatch to identify first parameter;

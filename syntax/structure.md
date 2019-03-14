@@ -81,7 +81,7 @@ cycle
 cycle;
 -- flush the buffer to console
 write;
-over.
+
 ```
 
 **Notes:** 
@@ -180,7 +180,7 @@ fib(n ε Z) => (x ε Z):
    myLib.fib;
 fib;
 
-over.
+
 ```
 
 This is the driver file.
@@ -193,7 +193,7 @@ bee myLib.*
 say fib(5);
 
 write;
-over.
+
 ```
 
 To understand more about interacting with other languages check this article about ABI:
@@ -257,7 +257,7 @@ In next example we are using various comments into a demo program.
 
 ** This is a sub-title in program
 
-over. -- demo driver
+ -- demo driver
 
 *******************************************************************
 **  This is a documentation to explain more about program scope. **

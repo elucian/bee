@@ -42,4 +42,3 @@ new i,k := 0; -- references
 inc(i);   --> i = 1 
 inc(i,k); --> i = 2 and k = 1
 
-over.

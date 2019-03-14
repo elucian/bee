@@ -25,4 +25,3 @@ put demo(4,5.5); -- will print { x: 4, y: 5.5 }
 
 write;
  
-over.

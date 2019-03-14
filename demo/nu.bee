@@ -64,5 +64,5 @@ pro (a : 1, b : 2); --> "ERROR: a, b expect references!";
   
 write;
 
-over.
+
 **************************************************

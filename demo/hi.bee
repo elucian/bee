@@ -15,4 +15,3 @@ read;
 
 put("hello:"._.name);
 write;
-over.

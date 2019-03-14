@@ -19,4 +19,3 @@ new r:=fib(5)
 put r;
 write;
 
-over.

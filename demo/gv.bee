@@ -42,4 +42,3 @@ put x; -- x remain 4
 
 write;
   
-over.

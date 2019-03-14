@@ -25,4 +25,3 @@ equal;
 -- calling test methods 
 put test.convert();     -- will print "zero"
 put test.equal('zero'); -- will print 1
-over.

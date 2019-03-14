@@ -16,4 +16,3 @@ fac(n ε N) ε N => (1 if n = 0, fac(n-1));
 put fac(3); -- expect 6
 write; 
  
-over.

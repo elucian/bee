@@ -29,4 +29,3 @@ put x; -- x = 2 (modified)
 
 write;
 
-over.
