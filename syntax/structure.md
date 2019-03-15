@@ -149,10 +149,10 @@ This is useful for a long function to know that is public at the end.
 
 ```
 --public variable
-new .v εN;
+new .v ε sN;
 
 --public function
-.func(x ε N) => (y ε N)
+.func(x ε N) => (y ε N):
    let y += 1;
 .func;
 ```
@@ -174,7 +174,7 @@ This is myLib.bee file:
 ```
 #library
 
-cpp myLib -- load cpp library
+cpp myLib; -- load cpp library
 
 fib(n ε Z) => (x ε Z):
    myLib.fib;
@@ -187,7 +187,7 @@ This is the driver file.
 ```
 #driver
 
-bee myLib.*
+bee myLib.*;
 
 --use external function
 say fib(5);
