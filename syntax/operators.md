@@ -17,7 +17,7 @@ symbol| description
 
 symbol  | description
 --------|-----------------------------------------------------
- `z`    | Back quote \| grave accent = single character 
+ `z`    | Back quote = grave accent for single character 
  'x'    | ASCII character literal is using single quotes
  "y"    | Unlimited string literals are using double quotes
 

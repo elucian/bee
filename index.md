@@ -8,7 +8,6 @@ For documentation we use *.md files in folder /syntax
 1. [Composite Types](syntax/composite.md)
 1. [Type Inference](syntax/inference.md)
 1. [Standard Library](syntax/standard.md)
-1. [System Library](syntax/system.md)
 
 ## Bee Demos
 
@@ -39,8 +38,8 @@ For syntax color highlighter you can use Notepad++.
 
 **Download:**
  
-* [bee-lang.xml](../tools/bee-lang.xml)
-* [md-wiki.xml](../tools/md-wiki.xml)
+* [bee-lang.xml](tools/bee-lang.xml)
+* [md-wiki.xml](tools/md-wiki.xml)
 
 ## Community
 
