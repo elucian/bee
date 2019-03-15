@@ -4,7 +4,6 @@ For documentation we use *.md files in folder /syntax
 
 1. [Program Structure](syntax/structure.md)
 1. [Syntax Overview](syntax/overview.md)
-1. [Control Flow](syntax/control.md)
 1. [Composite Types](syntax/composite.md)
 1. [Type Inference](syntax/inference.md)
 1. [Standard Library](syntax/standard.md)
