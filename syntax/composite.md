@@ -600,11 +600,10 @@ All operators below will concatenate two strings.
 
 symbol| description
 ------|---------------------------------------------------------------
- .-.  | Concatenate two strings after trimming first string
  .+.  | Concatenate two strings as they are. No trim is performed!
  ._.  | Concatenate two strings and trim both strings to one space
- ./.  | Concatenate two strings with "/" separator and de-duplicate "//"   
- .\\. | Concatenate two strings with "\\" separator and de-duplicate "\\"   
+ ./.  | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
+ .\\. | Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
 
 
 **examples**
