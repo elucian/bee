@@ -103,8 +103,19 @@ cpp myLib.(x, y, z);
 asm myAsm.* ;
 ```
 
-* use.* all public members are used
-* use.(x,y,z) only x,y,z members are used
+* use .* all public members are used
+* use .(x,y,z) only x,y,z members are used
+
+Using alias for Bee module members:
+
+**pattern**
+```
+-- import with alias
+bee <alias> := <path>./.<module>;
+
+-- use alias qualifier for a method call:
+<alias>.<met_name>(<arguments>);
+```
 
 **Environment variables**
 Environment variables are globals anthat start with $ symbol. 
@@ -149,7 +160,7 @@ This is useful for a long function to know that is public at the end.
 
 ```
 --public variable
-new .v ε sN;
+new .v ε N;
 
 --public function
 .func(x ε N) => (y ε N):
