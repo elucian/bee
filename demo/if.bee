@@ -25,12 +25,15 @@ when;
 write;
 
 -- multiple branches
+let x := 1;
 when (x = 1):
    put "x = 1";
-when (x > 5):
-   put "x > 5";
+when (x ≥ 1):
+   put "x ≥ 1";
 else:
-   put "0 < x < 5";
+   put "x < 1";
 when;
-write;
-
+write; 
+-- expect two messages
+-- x = 1
+-- x ≥ 1
