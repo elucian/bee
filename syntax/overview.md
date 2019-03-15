@@ -197,7 +197,7 @@ new a := 10 ε i8; -- native variable
 new b := 0  ε Z;  -- basic variable
 
 let b := a + 1; -- modify b 10->11 
-put b;         -- expected 11
+put b;          -- expected 11
 ```
 
 **notes:** 
@@ -220,7 +220,7 @@ let a += 1;   -- increment value of a := 11
 let a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-let q, p := True;  -- modify value of q and p
+let q, p := T;     -- modify value of q and p
 let x, y := 10.5;  -- modify value of x and y
 ```
 
@@ -367,7 +367,7 @@ Observe that "if" is not itself a full statement only an augment.
 <statement> if (<condition>);
 ```
 
-The statement is executed only if the condition is True. 
+The statement is executed only if the condition is T = true. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
@@ -605,8 +605,8 @@ com(x,y ε Z) => (s ε Z, d ε Z):
   let d := x - y;
 com;
 
--- unpack result to "b","c"  
-new b,c := com(2,1); 
+-- unpack result to "b","c" using "<+"  
+new b,c <+ com(2,1); 
 
 put b; -- print 3 
 put c; -- print 1 

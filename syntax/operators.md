@@ -66,11 +66,11 @@ symbol| description
  \##  | Start for a title comment /separator  
  \-+  | End for multiple line comments 
  ..   | Define range [n..m] \| Define slice from Array
- =>   | Define: function expression \| method result
- ->   | Function pipeline \| Explicit conversion 
- <+   | Insert one or more values into a string template 
- <:   | Define subset \| Composite type
- @    | Define output parameter \| Bound first parameter to object class
+ =\>  | Define: function expression \| method result
+ -\>  | Function pipeline \| Explicit conversion 
+ \<+  | Unpack a list \| Fill template using values from list
+ \<:  | Define subset \| User composite type
+ @    | Define output parameter \| Bound first parameter to class
 
 **Note:** Triple dot "..." is used in switch statement.
 
@@ -81,7 +81,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 symbol| meaning
 ------|------------------------------------------------------------------
  ::   | explicit clone a reference, or create a slice  \| explicit boxing
- :=   | modify value or reference \| create new object \| copy value
+ :=   | modify value or reference \| assign new object \| copy value
  +=   | increment value
  -=   | decrement value
  ·=   | multiplication modifier 
@@ -122,10 +122,10 @@ symbol | `=>`       |meaning
   -=   | collection |Remove element from collection 
   !=   | element    |Remove first element from collection 
   ?=   | element    |Remove last element from collection 
-  <<   | Logic      |set is included in superset: "⊂"
-  >>   | Logic      |set contain subset: "⊃"
-  <=   | Logic      |set is included in superset or equal: "⊆"
-  >=   | Logic      |set contain subset or equal: "⊇"
+  \<\< | Logic      |set is included in superset: "⊂"
+  \>\> | Logic      |set contain subset: "⊃"
+  \<=  | Logic      |set is included in superset or equal: "⊆"
+  \>=  | Logic      |set contain subset or equal: "⊇"
                                           
 ## Bitwise Operators 
 
