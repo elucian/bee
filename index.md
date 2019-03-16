@@ -8,7 +8,13 @@ For documentation we use *.md files in folder /syntax
 1. [Type Inference](syntax/inference.md)
 1. [Standard Library](syntax/standard.md)
 
-## Bee Demos
+## Overalls
+
+1. [operators](operators.md)
+1. [keywords](keywords.md)
+1. [symbols](symbols.md)
+
+## Demo code
 
 You can learn bee by reading demo source files:
 

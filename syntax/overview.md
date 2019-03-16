@@ -1,4 +1,4 @@
-## Bee Syntax
+## Syntax Overview
 
 For syntax notation we use modified BNF convention:
 

@@ -1,4 +1,4 @@
-# Bee program structure
+# Program structure
 
 One Bee program has one driver and multiple modules.
 All program files have the same extension:  *.bee
@@ -298,8 +298,6 @@ Using this technique, one module can extend user defined types in any other modu
 
 **Read next:** 
 
-1. [bee operators](operators.md)
-1. [bee keywords](keywords.md)
 1. [syntax overview](overview.md)
 
 **See also:**[Wiki Bee](https://github.com/sage-code/bee/wiki)
