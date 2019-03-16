@@ -391,7 +391,7 @@ write;
 
 ### When
 
-Multi-path selector based on logical expressions.
+Dual selector based on single logical expression.
 
 **pattern**
 ```
@@ -413,7 +413,7 @@ when (a ≤ 0):
     put 'a = 0';
   else:
     put "a < 0"; 
-  else;  
+  when;  
 when;
 write; 
 -- expect 2 messages:
@@ -475,7 +475,7 @@ cycle outer:
     ...
     -- stop for both cycles
     stop outer if <condition>;
-  cycle; 
+  cycle;
 cycle;
 ```
 
