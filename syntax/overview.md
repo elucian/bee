@@ -391,63 +391,35 @@ write;
 
 ### When
 
-Multi-path decision block based on logical expressions.
+Multi-path selector based on logical expressions.
 
+**pattern**
 ```
-when <logical expression>:
-  <first_branch>;
-when <logical expression>:
-  <second_branch>
+when <condition>:
+  <branch>;
+else if <condition>:
+  <branch>
+else if <condition>:
+  <branch>
 ...  
 else:
-  <cover_branch>;
+  <branch>;
 when;
 ```
 
 **example**
+
 ```
-new a := 10; 
-
--- single block
-when (a = 10):
-   put 'yes';
-when;
-
--- two branches
-when (a < 5):
-  put 'yes';
-else:
-  put 'no';
-when;
-
--- multiple branches, all conditions 
 let a := 0;
-when (a < 0) : put 'a < 0';
-when (a >= 0): put 'a >= 0';
-when (a = 0) : put "a = 0"; 
-else: -- alternative condition
-  put ("a := " + a)
-when;
--- expect two messages a>=0 and a=0.
-
--- multiple branches, first condition
 when (a < 0):  
   put 'a < 0';
-else:when (a > 5):  
-  put 'a > 5';
-else:when (a = 0): 
+else if (a > 0):  
+  put 'a > 0';
+else:
   put "a = 0"; 
-else: -- alternative condition
-  put ("a = " + a)
 when;
-
+write;
 ```  
-
-**Notes:** 
-
-* After the logical expression we can have end of line or comment;
-* Logic expressions can be enclosed in () but this is not mandatory;
-
 
 ### Cycle
 
@@ -498,11 +470,11 @@ Nested cycles can be labeled:
 -- label 2 nested cycles 
 cycle outer: 
   cycle inner:
-       -- continue with outer cycle
-       loop outer if <condition>; 
-       ...
-       -- stop for both cycles
-       stop outer if <condition>;
+    -- continue with outer cycle
+    loop outer if <condition>; 
+    ...
+    -- stop for both cycles
+    stop outer if <condition>;
   cycle; 
 cycle;
 ```

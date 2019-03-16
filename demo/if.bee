@@ -8,32 +8,59 @@ get (x ,"Type a number:");
 read;
 
 -- if conditional
-put "x := 0" if (x = 0);
+put "x = 0" if (x = 0);
 
 -- single branch
 when (x = 1):
-   put "x := 1";
+  put "x = 1";
 when;
 write;
 
--- single branch
+-- two branches
 when ¬(x = 5):
-   put "x ≠ 5";
+  put "x ≠ 5";
 else:
-   put "x = 5";   
+  put "x = 5";   
 when;
 write;
 
--- multiple branches
+-- exclusive branches
 let x := 1;
-when (x = 1):
-   put "x = 1";
 when (x ≥ 1):
-   put "x ≥ 1";
+  put "x ≥ 2";
+else if (x = 1):
+  put "x = 1";
+else if (x < 1):
+  put "x < 1";
+when;
+
+-- nested branches
+let x := 1;
+when (x ≥ 1):
+  put "x ≥ 1";
+  when (x = 1):
+    put "x = 1";
+  else:
+    put "x > 1";  
+  when; 
 else:
-   put "x < 1";
+  put "x < 1";
 when;
 write; 
--- expect two messages
--- x = 1
 -- x ≥ 1
+-- x = 1
+
+-- nested alternative
+when (x < 1):
+  put "x < 1";
+else:
+  when (x > 1):
+    put "x > 1";
+  else:
+    put "x = 1";
+  when;   
+when;
+write; 
+-- x = 1
+
+write;
