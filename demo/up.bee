@@ -10,7 +10,7 @@ test(x, y ε Z) => (a,b ε Z):
 test; 
 
 -- unpacking to new variables
-new n,m := test(1,2);
+new n,m <+ test(1,2);
 put (n, m) -- will print 2, 3
 
 -- method with structured result
