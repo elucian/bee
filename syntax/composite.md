@@ -341,6 +341,7 @@ Bee define Array variable using notation := []().
 
 **syntax**
 ```
+new <array_name>  := [<member-type>]();    --one dimension array with unknown capacity
 new <array_name>  := [<member-type>](c);   --one dimension with capacity c
 new <matrix_name> := [<member-type>](n,m); --two dimensions with capacity n x m
 ```
@@ -376,7 +377,7 @@ write;
 
 **Notes:**
 
-* Array of undefined capacity () is Null. Capacity can be established later.
+* Array of undefined capacity () ≡ []. Capacity can be established later.
 * Array with capacity is automatically initialized, elements of array are 0 or 0.0.
 
 **custom index**
@@ -401,11 +402,22 @@ put <array_name>[?]; -- print last element
 Initial value for all elements in array are zero. We use notation [*] for all elements.
 
 ```
--- declare array of integers
-new array := [Z](10);
+-- declare array of integers with initial value 
+new zum := 1 ε [Z](10);
 
--- modify all elements to 1
-let array[*] := 1; 
+-- add 1 to each element
+let zum[*] += 1; 
+put zum; -- expect [2,2,2,2,2,2,2,2,2,2]
+```
+
+**differed initialization**
+```
+new vec ε [A]();
+
+-- element multiply "*"
+let vec := `x` * 10;
+put vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+
 ```
 
 **Array Slice**
@@ -467,6 +479,10 @@ put e = a; --> 1 (equal collections)
 
 -- by default a slice is a copy/clone of original data
 let f := a[2..?];  -- slice copy 
+
+-- you can copy a sub-type from a basic type using range [..]
+let r := Z[1..10]
+put r; -- expect [1,2,3,4,5,6,7,8,9,10]
 ```
 
 ## Matrix
