@@ -1,6 +1,6 @@
-## Bee Syntax
+## Bee Index
 
-For documentation we use *.md files in folder /syntax
+Specification is in folder: /syntax
 
 1. [Program Structure](syntax/structure.md)
 1. [Syntax Overview](syntax/overview.md)
@@ -10,9 +10,9 @@ For documentation we use *.md files in folder /syntax
 
 ## Overalls
 
-1. [operators](operators.md)
-1. [keywords](keywords.md)
-1. [symbols](symbols.md)
+1. [operators](syntax/operators.md)
+1. [keywords](syntax/keywords.md)
+1. [symbols](syntax/symbols.md)
 
 ## Demo code
 
@@ -50,3 +50,5 @@ For syntax color highlighter you can use Notepad++.
 
 If you like Reddit I have set-up a forum:
 Follow on: [reddit](https://www.reddit.com/r/bee_lang/)
+
+**See also:**[Wiki Bee](https://github.com/sage-code/bee/wiki)
