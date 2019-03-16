@@ -32,7 +32,7 @@ symbol| description
   ;   | End of statement \| Statement enumerator
   .   | Public element/member/property \| Membership dot notation
   \_  | Space constant:' ' \| Anonymous variable
-  \*  | Sting repetition \| Variable arguments \| [*] all elements  
+  \*  | Replicate value \| [*] Multiple elements  \|Variable arguments  
   \\  | Escape character (\\n := New Line) \| maybe regular expressions
 
 

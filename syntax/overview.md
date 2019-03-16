@@ -623,7 +623,7 @@ One special method is called constructor. This method has same name as the bound
 **example**
 ```
 -- define Foo as object with 3 public attributes:
-def Foo <: {.p1 εN, .p2 εN, .p3 εS};
+def Foo <: {.p1 ε N, .p2 ε N, .p3 ε S};
 
 -- constructor (same name as Foo)
 -- create a result of type Foo (me)
