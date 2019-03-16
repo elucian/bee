@@ -6,7 +6,18 @@ For syntax notation we use modified BNF convention:
 * We use  ...  to represent repetitive sequence;
 * We use notes or examples to explain optional things;
 
-## Expressions
+**bookmarks**
+
+* [Expression](#expression)
+* [Data type](#data-type)
+* [Control Flow](#control-flow)
+* [Pattern Matching](#pattern-matching)
+* [Functions](#functions)
+* [Methods](#methods)
+* [References](#references)
+
+
+## Expression
 Expressions are created using identifiers, operators, functions and constant literals. 
 
 * can be enumerated using comma separator ","
@@ -48,7 +59,7 @@ write --> print 6 rows
 * multiple expressions or arguments are separated by comma
 * you can omit the parentheses when you call a method with one single parameter
 
-## Data types
+## Data type
 
 Digital data is based on binary numbers: {0, 1}.
 Using this basic values we represent all data types.
