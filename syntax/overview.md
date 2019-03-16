@@ -397,11 +397,6 @@ Multi-path selector based on logical expressions.
 ```
 when <condition>:
   <branch>;
-else if <condition>:
-  <branch>
-else if <condition>:
-  <branch>
-...  
 else:
   <branch>;
 when;
@@ -411,14 +406,19 @@ when;
 
 ```
 let a := 0;
-when (a < 0):  
-  put 'a < 0';
-else if (a > 0):  
-  put 'a > 0';
-else:
-  put "a = 0"; 
+-- nested selector
+when (a ≤ 0):  
+  put 'a ≤ 0';
+  when (a = 0):  
+    put 'a = 0';
+  else:
+    put "a < 0"; 
+  else;  
 when;
-write;
+write; 
+-- expect 2 messages:
+-- a ≤ 0
+-- a = 0
 ```  
 
 ### Cycle
