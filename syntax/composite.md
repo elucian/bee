@@ -100,10 +100,10 @@ new <variable> := (<Type>);
 
 **example**
 ```
--- define a list of ASCII characters
+-- create a list of ASCII characters
 new v := (A);
 
--- initialize a list using a literal
+-- create a list using a literal
 new w := ('1','a','2','b'); 
 ```
 
@@ -125,7 +125,7 @@ A list can be assigned to multiple variables using unpacking:
 **Example:**
 
 ```
---create 3 new variables using list notation
+--create 3 new variables using list literal
 new x, y, z ε Z;
 
 --unpacking modify all 3 value
@@ -145,7 +145,7 @@ put s; -- "97 > 65 > 40"
 A method can have multiple results.
 
 ```
--- create a list from expressions
+-- have a list of results
 test(x,y ε Z) => (r, c ε Z):
   r += x+1;
   c += y+1;
@@ -403,7 +403,7 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-new zum := 1 ε [Z](10);
+new zum := [Z](10);
 
 -- add 1 to each element
 let zum[*] += 1; 
@@ -412,7 +412,7 @@ put zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 
 **differed initialization**
 ```
-new vec ε [A]();
+new vec := [A]();
 
 -- element multiply "*"
 let vec := `x` * 10;
@@ -420,7 +420,7 @@ put vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
 ```
 
-**Array Slice**
+## Slice
 
 We can define a section of array using [n..m] notation. This is called slice. The numbers n and m represent the subscript of array element. Slices maintain references to array elements.
 
@@ -463,7 +463,7 @@ put a; -- expect [1,8,0,0,0]
 
 ```
 
-**Array Copy**
+## Copy
 
 Default assignment ":=" and slicing operator "[..]" makes a copy.   
 
@@ -474,13 +474,14 @@ new e,f,r := [Z](); -- empty array
 -- by default assign ":=" copy/clone an entire collection
 let e := a; 
 
--- compare two collections using "="
+-- compare two collections
 put e = a; --> 1 (equal collections)
+put e ≡ a; --> 0 (different memory locations)
 
 -- by default a slice is a copy/clone of original data
-let f := a[2..?];  -- slice copy 
+let f := a[2..?];  -- copy data using slice notation
 
--- you can copy a sub-type from a basic type using range [..]
+-- you can also copy a data from a basic type
 let r := Z[1..10]
 put r; -- expect [1,2,3,4,5,6,7,8,9,10]
 ```
@@ -695,17 +696,20 @@ Objects are complex data structures enclosed in curly brackets { , , ,} and sepa
 
 **Syntax:**
 ```
-def <class_name> <: {<element> ε <type>, <element> ε <type>...};
-new <object_name> := <class_name>(<arguments>);
+-- declare a class of objects
+def <class_name> <: {<attribute> ε <type>, <attribute> ε <type>...};
 
---using qualifier with attributes
-let <object_name.element> := <value>;
-
---pair-up literal and values using ":"
-let <object_name> := {
-       <element> : <value>,
-       <element> : <value>,
+-- create an object instance
+new <object_name> := {
+       <attribute> : <value>,
+       <attribute> : <value>,
      ...};
+
+-- modify one object attribute
+let <object_name.attribute> := <value>;
+
+-- unpacking object attributes
+new <var_name>, <var_name> <+ object_name;
 ```
 
 **Object structure can be ...**
@@ -736,10 +740,20 @@ let r2 := {name:'Barbu', age:25,
                {name:'Radu', age:1} 
              )
           };
-```
-## _size_
 
-Structure size is a constant that can be calculated using size(T).
+-- unpacking into new variables
+new r_name, r_age, r_children <+ r2;
+
+-- using introspection
+put type(r_name) ; -- S
+put type(r_age) ; -- N
+put type(r_children) ; -- (Person)
+           
+```
+
+**class size**
+
+Class size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
@@ -766,7 +780,7 @@ put size(Person);
 write;
 ```
 
-### Partial declaration
+## Partial declaration
 
 Declare empty collections are populated later.
 
@@ -792,7 +806,7 @@ put b = []; --> 0
 put c = {}; --> 0 
 ```
 
-### Variable arguments
+## Variable arguments
 
 One function or method can receive variable number of arguments.   
 Declare an array using prefix "*" for parameter name.
