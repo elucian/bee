@@ -1,4 +1,4 @@
-## Bee Index
+## Bee Syntax
 
 Specification is in folder: /syntax
 
