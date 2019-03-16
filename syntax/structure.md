@@ -98,20 +98,21 @@ In Bee external code can be imported like this:
 **Imports:**
 
 ```
-bee math.* ;
-cpp myLib.(x, y, z);
-asm myAsm.* ;
+bee math :* ;
+cpp myLib: (x, y, z);
+asm myAsm:* ;
 ```
 
-* use .* all public members are used
-* use .(x,y,z) only x,y,z members are used
+* use :* all public members are used
+* use :(x,y,z) only x,y,z members are used
 
 Using alias for Bee module members:
 
 **pattern**
 ```
 -- import with alias
-bee <alias> := <path>./.<module>;
+bee <alias> := <path>./.<module> (*);
+bee <alias> := <path>./.<module> (<members>);
 
 -- use alias qualifier for a method call:
 <alias>.<met_name>(<arguments>);
@@ -130,10 +131,10 @@ Global variables are unique and are visible in all project modules.
 Global variables are lowercase and are predefined in Bee language.
 
 ```
-#cpp $bee.cpp.myLib.* --import cpp library
-#asm $bee.asm.myLib.* --import asm library
-#bee $bee.lib.myLib.* --import core library
-#bee $pro.lib.myLib.* --import project library
+#cpp $bee.cpp.myLib: * --import cpp library
+#asm $bee.asm.myLib: * --import asm library
+#bee $bee.lib.myLib: * --import core library
+#bee $pro.lib.myLib: * --import project library
 ```
 
 Other predefined global variables:
