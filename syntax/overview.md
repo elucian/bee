@@ -625,56 +625,6 @@ foo();
 * A method can have side-effects or output parameters;
 * We can interrupt a method prematurely using "abort" keyword. 
 
-**Bounding**
-A method can bound to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Bounding methods enable object oriented design in Bee.
-
-**Constructor**
-One special method is called constructor. This method has same name as the bounded type but with lowercase. It can have other name defined by the user convention. Also a constructor has a result that is a reference to "me" object. 
-
-**example**
-```
--- define Foo as object with 3 public attributes:
-def Foo <: {.p1 ε N, .p2 ε N, .p3 ε S};
-
--- constructor (same name as Foo)
--- create a result of type Foo (me)
-foo() => (me @ Foo):
-  let me := {0,0,0}
-foo;
-
--- initialization method for Foo type
-bar(me @ Foo, p1, p2 ε Z, p3 ε S) => ():
-  --precondition
-  fail if (p1 < 0 | p2 < 0 | p3 = "");
-  
-  --modify Foo members
-  let me.p1 := p1;
-  let me.p2 := p2;
-  let me.p3 := p3;
-bar;
-
--- second method for Foo type
-print(me @ Foo) => ():
-  put "{p1={0},p2={1},p3={2}}" <+ (me.p1, me.p2, me.p3);
-print;
-
--- declare instance of Foo
-new test := foo(); 
-
-test.bar(1,2,"Test"); -- initialize foo
-test.print; -- call second method for foo
-
-write;
-
-
-```
-**Notes:** 
-* Bee is using single dispatch to identify first parameter;
-* If the type is public, the constructor should be also public;
-* Methods of a type can be private to module or public using dot prefix;
-* Constructors and methods can be overloaded using multiple dispatch;
-* Constructors and methods can be overwritten in other modules;
-
 ## References 
 
 In Bee all basic types and user defined types are references. 

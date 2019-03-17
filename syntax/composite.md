@@ -12,6 +12,9 @@ Composite types are complex data structures.
 * [array](#array)
 * [string](#string)
 * [object](#object)
+* [varargs](#varargs)
+* [bounding](#bounding)
+
 
 ## Usability
 
@@ -692,14 +695,14 @@ put sep;
 
 ## Object 
 
-Objects are complex data structures enclosed in curly brackets { , , ,} and separated by comma. Each object has attributes with associated data type and identifier. 
+Objects are complex data structures enclosed in curly brackets { , , ,} and separated by comma. Each object has one or more attributes with associated data types. Default object constructor is simplistic using JSON like notation to initialize the attribute values.
 
 **Syntax:**
 ```
 -- declare a class of objects
 def <class_name> <: {<attribute> ε <type>, <attribute> ε <type>...};
 
--- create an object instance
+-- create an object instance using default constructor
 new <object_name> := {
        <attribute> : <value>,
        <attribute> : <value>,
@@ -780,32 +783,6 @@ put size(Person);
 write;
 ```
 
-## Partial declaration
-
-Declare empty collections are populated later.
-
-**Unbound literals:**
-```
-new c := (); -- define empty list
-new a := []; -- define empty array
-new b := {}; -- define empty set or map
-
-
---before initialization    
-put a = (); -- 1 
-put b = []; -- 1 
-put c = {}; -- 1 
-
-let c := ('a','b','c'); -- Bound to List of A elements   
-let a := ['A','B','C']; -- Bound to Array of A elements
-let b := {'a','b','c'}; -- Bound to Set of A elements
-
---after initialization
-put a = (); --> 0 
-put b = []; --> 0 
-put c = {}; --> 0 
-```
-
 ## Variable arguments
 
 One function or method can receive variable number of arguments.   
@@ -837,5 +814,55 @@ put foo(1,2,3);--> 6
 
 write;
 ```
+
+## Bounding
+A method can bound to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Bounding methods enable object oriented design in Bee.
+
+**Constructor**
+One special method is called constructor. This method has same name as the bounded type but with lowercase. It can have other name defined by the user convention. Also a constructor has a result that is a reference to "me" object instance. 
+
+**example**
+```
+-- define Foo as object with 3 public attributes:
+def Foo <: {p1 ε N, p2 ε N, p3 ε S};
+
+-- constructor (same name as Foo)
+-- create a result of type Foo (me)
+foo() => (me ε Foo):
+  let me := {0,0,0}
+foo;
+
+-- first parameter is bounding bar to Foo
+bar(me @ Foo, p1, p2 ε Z, p3 ε S):
+  --precondition
+  fail if (p1 < 0 | p2 < 0 | p3 = "");
+  
+  --modify Foo members
+  let me.p1 := p1;
+  let me.p2 := p2;
+  let me.p3 := p3;
+bar;
+
+-- second method for Foo type
+print(me @ Foo):
+  put "{p1={0},p2={1},p3={2}}" <+ (me.p1, me.p2, me.p3);
+print;
+
+-- declare instance of Foo
+new test := foo(); 
+
+-- use Foo methods using "test" qualifier
+test.bar(1,2,"Test"); -- initialize foo
+test.print; -- call second method for foo
+
+write;
+```
+**Notes:** 
+* Bounded methods are using multiple dispatch so they can be overloaded;
+* Constructors and methods can be overwritten in other modules;
+* Methods of a type can be private to module or public using dot prefix;
+* If the object type is public, the constructor must also be public;
+* You can not alter object structure after it is defined.
+* Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
 **Read next:** [Type Inference](inference.md) 
