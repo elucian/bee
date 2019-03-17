@@ -56,7 +56,7 @@ Statements can be contained in blocks of code.
 ## Driver file
 
 Bee is a free form language. That means indentation of code and spaces are not relevant.
-In Bee method main() is optional. Instead we define a _driver_ file using directive #driver. 
+In Bee method "main" is optional. Instead we define a _driver_ file using directive #driver. 
 This is the program entry point. One program can have a single _driver_ and many _modules_.
 
 A _driver_ can contain statements that do not belong to any function or method.

@@ -12,7 +12,7 @@ Composite types are complex data structures.
 * [array](#array)
 * [string](#string)
 * [object](#object)
-* [varargs](#varargs)
+* [varargs](#Variable-arguments)
 * [bounding](#bounding)
 
 
@@ -344,10 +344,14 @@ Bee define Array variable using notation := []().
 
 **syntax**
 ```
-new <array_name>  := [<member-type>]();    --one dimension array with unknown capacity
+new <array_name>  := [<member-type>];      --one dimension array with unknown capacity
 new <array_name>  := [<member-type>](c);   --one dimension with capacity c
 new <matrix_name> := [<member-type>](n,m); --two dimensions with capacity n x m
 ```
+
+**Note:** 
+* Empty parenthesis () are not required for unknown capacity.
+* Arrays are initialized using ":=" and can not be declared with ε.
 
 **example**
 
@@ -380,8 +384,8 @@ write;
 
 **Notes:**
 
-* Array of undefined capacity () ≡ []. Capacity can be established later.
-* Array with capacity is automatically initialized, elements of array are 0 or 0.0.
+* Array of undefined capacity have no members and is equivalent to [].
+* Array with capacity is automatically initialized, elements of new array are by default zero.
 
 **custom index**
 
@@ -415,7 +419,7 @@ put zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 
 **differed initialization**
 ```
-new vec := [A]();
+new vec := [A];
 
 -- element multiply "*"
 let vec := `x` * 10;
@@ -472,7 +476,7 @@ Default assignment ":=" and slicing operator "[..]" makes a copy.
 
 ```
 new a := [0,1,2,3,4];
-new e,f,r := [Z](); -- empty array
+new e,f,r := [Z]; -- empty array
 
 -- by default assign ":=" copy/clone an entire collection
 let e := a; 

@@ -599,15 +599,15 @@ put com(0,0); -- print (0, 0)
 write;
 ```
 
-**Side effects**
+**Side-effect**
 
 * Some methods have no parameters and no results; 
 * These methods are used for side-effects;
 
 **example**
 ```
--- using:↓↓↓ for empty result makes this a method
-foo() => ():
+-- a method with side-effect
+foo:
   put "hello, I am foo";
 foo;
 
@@ -617,13 +617,13 @@ foo();
 ```
 
 **Notes:**
-* Method declaration is using "()" to indicate no result;
-* Method with no parameters require empty brackets () for declaration;
-* Method calls do not require brackets () for one single argument;
+* Method declaration is using ":" after name to indicate no result;
+* Method with no parameters do not require empty brackets ();
+* Method calls do not require brackets () for no argument or single argument;
 * Multiple arguments can be enumerated only with brackets (arg1, arg2...);
 * A method can not be used in expressions except assign expressions;
 * A method can have side-effects or output parameters;
-* We can interrupt a method prematurely using "abort" keyword. 
+* We can interrupt a method prematurely using "exit" keyword. 
 
 ## References 
 
