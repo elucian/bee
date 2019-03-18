@@ -820,10 +820,10 @@ write;
 ```
 
 ## Binding
-A method can bound to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Bounding methods enable object oriented design in Bee.
+A method can bind to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Binded methods enable object oriented design in Bee.
 
 **Constructor**
-One special method is called constructor. This method has same name as the bounded type but with lowercase. It can have other name defined by the user convention. Also a constructor has a result that is a reference to "me" object instance. 
+One special method is called constructor. This method has same name as the binded type but with lowercase. It can have other name defined by the user convention. Also a constructor has a result that is a reference to "me" object instance. 
 
 **example**
 ```
@@ -836,7 +836,7 @@ foo() => (me ε Foo):
   let me := {0,0,0}
 foo;
 
--- first parameter is bounding bar to Foo
+-- first parameter is binding bar to Foo
 bar(me @ Foo, p1, p2 ε Z, p3 ε S):
   --precondition
   fail if (p1 < 0 | p2 < 0 | p3 = "");
@@ -862,7 +862,7 @@ test.print; -- call second method for foo
 write;
 ```
 **Notes:** 
-* Bounded methods are using multiple dispatch so they can be overloaded;
+* Binded methods are using multiple dispatch so they can be overloaded;
 * Constructors and methods can be overwritten in other modules;
 * Methods of a type can be private to module or public using dot prefix;
 * If the object type is public, the constructor must also be public;
