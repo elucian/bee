@@ -1,6 +1,10 @@
 ## Bee Syntax
 
-Specification is in folder: /syntax
+Bee is a light-weight statically typed computer language.
+
+**Read more:**[Wiki Bee](https://github.com/sage-code/bee/wiki)
+
+Specification is available in folder: /syntax
 
 1. [Program Structure](syntax/structure.md)
 1. [Syntax Overview](syntax/overview.md)
@@ -50,5 +54,3 @@ For syntax color highlighter you can use Notepad++.
 
 If you like Reddit I have set-up a forum:
 Follow on: [reddit](https://www.reddit.com/r/bee_lang/)
-
-**See also:**[Wiki Bee](https://github.com/sage-code/bee/wiki)
