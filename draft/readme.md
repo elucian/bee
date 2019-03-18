@@ -1,6 +1,15 @@
-# Draft Projects
+## Bee Draft
 
-Make a sub-folder and post example and *.md files to explain them.
-If your suggestion is voted on reddit, discord or twitter I will put it in specification.
+Here are some suggestions and research papers for new features.
 
-Have fun posting suggestions!
+## Procedure
+1. First clone then create a branch with your user-name in repository;
+2. If you have a small feature that do not have example files just make a *.md file.   
+3. For examples make a sub-folder with feature-name and post example *.bee files inside.   
+4. Make a pull request
+
+## Acceptance
+
+If your suggestion is good, we will move it into official /syntax specification.
+
+Thanks!
