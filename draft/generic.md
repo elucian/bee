@@ -20,21 +20,35 @@ sort;
 ```
 def Person  <: { name ε S, age ε N };
 
-new clients   := [Person](100);
-new suppliers := [Person](10);
-
 -- define order method for array of Persons
 order(cat @ [Person]):
   sort<S>(cat, func::(a, b) => (a if a ≤ b, b));
 order;
 
-...
-*******************************************
-** populate clients and suppliers somehow
-*******************************************
+-- define clients and suppliers
+new clients   := [Person](100);
+new suppliers := [Person](10);
+-- populate somehow
 ...
 
 -- use new order method to sort
 order(clients);
 order(suppliers);
 ```
+
+## Anonymous functions
+
+This design require anonymous functions and "signature reference."
+
+**syntax**
+```
+(param, param,...) => (expression)
+```
+
+This can be used to accommodate a reference to a "function signature"
+
+**syntax**
+```
+ identifier @ (type,type, ...):type
+```
+
