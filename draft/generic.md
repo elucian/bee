@@ -6,7 +6,7 @@ A generic method is using a variable type "X".
 
 ```
 sort<X>(array @ [X], gt @ (X,X) ε L ):
-    new n := length(array);
+    new n := length(array)-1;
     new swap ε L;
     new temp ε X;
     new i := 0 ε N;
