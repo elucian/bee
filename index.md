@@ -42,10 +42,10 @@ You can learn bee by reading demo source files:
 1. [nu.bee](demo/nu.bee) - working with references
 1. [bs.bee](demo/bs.bee) - bubble sort algorithm
 
-## Future
-To explore new features we use "draft" folder /draft. 
+## Draft
+To explore new features we use /draft folder. 
 
-**Read more:** [Draft Read-me](draft/readme.md)
+**Read more:** [draft-it](draft/readme.md)
 
 ## Tools
 
