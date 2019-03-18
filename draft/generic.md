@@ -5,7 +5,7 @@ A generic method is using a variable type "X".
 **generic sort**
 
 ```
-sort<X>(array @ [X], func @ (X,X) :L ):
+sort<X>(array @ [X], cmp @ (X,X) :L ):
   ...
 sort;
 ```
@@ -13,7 +13,7 @@ sort;
 **Notes:**
 
 * Method "sort" receive type X using markup <X> 
-* Function reference "func" is received as argument.
+* Function reference "cmp" is received as argument.
 
 **sort usage**
 
@@ -22,7 +22,7 @@ def Person  <: { name ε S, age ε N };
 
 -- define order method for array of Persons
 order(cat @ [Person]):
-  sort<S>(cat, func::(a, b) => (a if a ≤ b, b));
+  sort<S>(cat, cmp::(a, b) => (a.name ≤ b.name));
 order;
 
 -- define clients and suppliers
