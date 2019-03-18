@@ -2,7 +2,7 @@
 
 A generic method is using a variable type "X". 
 
-**generic sort**
+**bubble sort**
 
 ```
 sort<X>(array @ [X], gt @ (X,X) :L ):
@@ -23,6 +23,7 @@ sort<X>(array @ [X], gt @ (X,X) :L ):
                 let array[i+1]:= temp;
                 swap := †;
             when;
+            let i +=1;
         cycle;
         stop if ¬ swap;
     cycle;
