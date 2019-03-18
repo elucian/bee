@@ -58,21 +58,22 @@ order(suppliers);
 
 ## Anonymous functions
 
-This design require anonymous functions and "signature reference."
+This design uses one _anonymous function_:
 
-**syntax**
+
+**function**
 ```
  (param, param,...) => (expression)
 ```
 
-This can be used to accommodate a reference to a "function signature"
+This can be used to create an argument for a _signature reference_:
 
-**syntax**
+**signature**
 ```
  ( id @ (type,type, ...) ε type)
 ```
 
-To assign an anonymous function as argument by name use "::"
+To assign an anonymous function as argument by name Bee uses: "::"
 
 ```
   id :: (...) => (...)
