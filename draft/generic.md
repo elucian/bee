@@ -5,7 +5,7 @@ A generic method is using a variable type "X".
 **bubble sort**
 
 ```
-sort<X>(array @ [X], gt @ (X,X) :L ):
+sort<X>(array @ [X], gt @ (X,X) ε L ):
     new n := length(array);
     new swap ε L;
     new temp ε X;
@@ -62,13 +62,22 @@ This design require anonymous functions and "signature reference."
 
 **syntax**
 ```
-(param, param,...) => (expression)
+ (param, param,...) => (expression)
 ```
 
 This can be used to accommodate a reference to a "function signature"
 
 **syntax**
 ```
- identifier @ (type,type, ...):type
+ ( id @ (type,type, ...) ε type)
 ```
 
+To assign an anonymous function as argument by name use "::"
+
+```
+  id :: (...) => (...)
+```
+
+Where: "id" is parameter name representing reference to function.
+
+**Read next:** [overview](../syntax/overview.md)
