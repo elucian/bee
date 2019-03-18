@@ -16,7 +16,7 @@ sort<X>(array @ [X], gt @ (X,X) :L ):
         cycle 
             stop if (i = n);
             -- this pair is out of order ?
-            when ¬ gt(array[i], array[i+1]):
+            when gt(array[i], array[i+1]):
                 -- swap pair and set swap flag = true
                 let temp := array[i];
                 let array[i]  := array[i+1];
