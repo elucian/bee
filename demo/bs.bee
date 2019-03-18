@@ -9,10 +9,10 @@ sort(this @ [Z]):
   new swap ε L;
   new temp ε X;
   new i := 0 ε N;
-  cycle
+  cycle:
     let i := 0;
     let swap := ƒ;
-    cycle 
+    cycle: 
       stop if (i = n);
       -- this pair is out of order ?
       when (this[i] < this[i+1]):
