@@ -5,15 +5,34 @@ A generic method is using a variable type "X".
 **generic sort**
 
 ```
-sort<X>(array @ [X], cmp @ (X,X) :L ):
-  ...
+sort<X>(array @ [X], gt @ (X,X) :L ):
+    new n := length(array);
+    new swap ε L;
+    new temp ε X;
+    new i := 0 ε N;
+    cycle
+        let i := 0;
+        let swap := ƒ;
+        cycle 
+            stop if (i = n);
+            -- this pair is out of order ?
+            when ¬ gt(array[i], array[i+1]):
+                -- swap pair and set swap flag = true
+                let temp := array[i];
+                let array[i]  := array[i+1];
+                let array[i+1]:= temp;
+                swap := †;
+            when;
+        cycle;
+        stop if ¬ swap;
+    cycle;
 sort;
 ```
 
 **Notes:**
 
 * Method "sort" receive type X using markup <X> 
-* Function reference "cmp" is received as argument.
+* Function reference "gt" is received as argument.
 
 **sort usage**
 
@@ -22,7 +41,7 @@ def Person  <: { name ε S, age ε N };
 
 -- define order method for array of Persons
 order(cat @ [Person]):
-  sort<S>(cat, cmp::(a, b) => (a.name ≤ b.name));
+  sort<S>(cat, gt::(a, b) => (a.name > b.name));
 order;
 
 -- define clients and suppliers
