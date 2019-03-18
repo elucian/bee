@@ -555,7 +555,7 @@ Bee functions are named expressions that can return a single result:
 new z ε Z;
 func(x,y ε Z) ε Z => (x + y); 
 
--- function call
+-- simple function call
 let z := func(1,1); 
 put z; -- print 2 
 
@@ -619,10 +619,10 @@ foo();
 **Notes:**
 * Method declaration is using ":" after name to indicate no result;
 * Method with no parameters do not require empty brackets ();
-* Method calls do not require brackets () for no argument or single argument;
+* Method calls do not require brackets () for single argument;
 * Multiple arguments can be enumerated only with brackets (arg1, arg2...);
-* A method can not be used in expressions except assign expressions;
-* A method can have side-effects or output parameters;
+* A method can not be used in expressions except unpacking expressions;
+* A method can have output parameters or side-effects;
 * We can interrupt a method prematurely using "exit" keyword. 
 
 ## References 
@@ -631,6 +631,7 @@ In Bee all basic types and user defined types are references.
 
 * Default assign `:=` copy a value or execute an expression. 
 * Reference assign `::` clone a reference and fail if this is not possible.
+
 
 **example**
 ```
@@ -670,5 +671,27 @@ Arguments are part of the function calls and can be: constants, variables or exp
 * If a parameter is a native type it is received by value;
 * If a parameter is a reference type it is received by reference;
 * For input/output parameters we must require a reference using "@";
+
+**example**
+```
+#driver "fn"
+
+-- method with output parameter
+add(a, b ε i8, r @ Z):
+  let r := a + b;
+add;
+
+-- call function add with arguments by name
+new res ε Z;
+add(a:1, b:2, r :: res); 
+put res;  -- expect 3
+
+-- call function add with arguments by position
+new res ε Z;
+add(2, 2, res);  
+put res;  -- expect 4
+
+write;
+```
 
 **Read Next:** [Composite Types](composite.md)
