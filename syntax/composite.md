@@ -13,7 +13,7 @@ Composite types are complex data structures.
 * [string](#string)
 * [object](#object)
 * [varargs](#Variable-arguments)
-* [bounding](#bounding)
+* [binding](#binding)
 
 
 ## Usability
@@ -819,7 +819,7 @@ put foo(1,2,3);--> 6
 write;
 ```
 
-## Bounding
+## Binding
 A method can bound to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Bounding methods enable object oriented design in Bee.
 
 **Constructor**
