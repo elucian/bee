@@ -687,7 +687,6 @@ add(a:1, b:2, r :: res);
 put res;  -- expect 3
 
 -- call function add with arguments by position
-new res ε Z;
 add(2, 2, res);  
 put res;  -- expect 4
 
