@@ -40,6 +40,7 @@ You can learn bee by reading demo source files:
 1. [pm.bee](demo/pm.bee) - pattern matching
 1. [fo.bee](demo/fo.bee) - file input/output
 1. [nu.bee](demo/nu.bee) - working with references
+1. [bs.bee](demo/bs.bee) - bubble sort algorithm
 
 ## Tools
 

@@ -681,8 +681,10 @@ add(a, b ε i8, r @ Z):
   let r := a + b;
 add;
 
--- call function add with arguments by name
+-- declare result variable
 new res ε Z;
+
+-- call function add with arguments by name
 add(a:1, b:2, r :: res); 
 put res;  -- expect 3
 
