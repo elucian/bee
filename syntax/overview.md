@@ -663,11 +663,11 @@ write;
 ## Parameters & Arguments
 
 Parameters are variables defined in method or function signature.   
-Arguments part of the function call and can be constants, variables or expressions.
+Arguments are part of the function calls and can be: constants, variables or expressions.
 
 **Notes:**   
 * Parameters can be pass by value or by reference depending on the type;
-* If a parameter is a native type is is received by value;
+* If a parameter is a native type it is received by value;
 * If a parameter is a reference type it is received by reference;
 * For input/output parameters we must require a reference using "@";
 
