@@ -12,7 +12,7 @@ sort<X>(array @ [X], gt @ (X,X) ε L ):
     new i := 0 ε N;
     cycle
         let i := 0;
-        let swap := ƒ;
+        let swap := $0; -- false
         cycle 
             stop if (i = n);
             -- this pair is out of order ?
@@ -21,7 +21,7 @@ sort<X>(array @ [X], gt @ (X,X) ε L ):
                 let temp := array[i];
                 let array[i]  := array[i+1];
                 let array[i+1]:= temp;
-                swap := †;
+                swap := $1; -- true
             when;
             let i +=1;
         cycle;

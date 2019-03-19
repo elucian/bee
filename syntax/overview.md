@@ -295,10 +295,10 @@ let a := 10.5; --FAIL: a is of type: Integer
 
 ## Logic type
 
-Logic type is an enumeration of two public symbols: ƒ = 0 False and † = 1 True
+Logic type is an enumeration of two public symbols: $0 = 0 = False and $1 = 1 = True
 
 ```
-def .L <: {f, t};
+def .L <: {.$0, .$1};
 ```
 
 ## Logic operations
@@ -312,7 +312,7 @@ Bee uses several familiar operators:
 Precedence: { ¬, &, | }
 
 **relations**
-Relation operators will create a logical response: † or ƒ.
+Relation operators will create a logical response: $0 or $1.
 
 * comparison ( ≈, =, =, >, <, ≤, ≥ ); 
 * belonging operation ( ε, >>, <<, >=, <= );
@@ -325,23 +325,23 @@ Relation operators will create a logical response: † or ƒ.
 
 ## Logical expression
 
-Logical expression have value { ƒ, † }
+Logical expression have value { $0, $1 }
 
 ```
-new x := ƒ ε L;
-new y := † ε L;
+new x := $0;
+new y := $1;
 
 --simple expressions
-put    x; -- ƒ
-put  ¬ x; -- †
+put    x; -- $0
+put  ¬ x; -- $1
 
 --complex expressions
-put  (x ↔ y);  --  ƒ
-put ¬(x ↔ y);  --  †
-put  (x < y);  --  †
-put  (x > y);  --  ƒ
-put  (x & y);  --  ƒ
-put  (x | y);  --  †
+put  (x ↔ y);  --  0
+put ¬(x ↔ y);  --  1
+put  (x < y);  --  1
+put  (x > y);  --  0
+put  (x & y);  --  0
+put  (x | y);  --  1
 
 ```
 **Notes:** 
@@ -355,15 +355,15 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 new x, y ε L;
 new a := 0.0, b := 1.5 ;
 
-let x := a -> L; -- x := 0
-let y := b -> L; -- y := 1
+let x := a -> L; -- x = $0
+let y := b -> L; -- y = $1
 ```
 
 **Notes:** 
 * Only integer part of a number is used;
 * Fraction is eliminated before conversion;
-* A string that contains "True" "true", "T" or "t" or "1" convert to: †
-* A string that contains "False", "true", "F" or "f" or "0" convert to: ƒ
+* A string that contains "True" "true", "T" or "t" or "1" convert to: $1
+* A string that contains "False", "true", "F" or "f" or "0" convert to: $0
 
 ## Control Flow
 
@@ -635,6 +635,7 @@ In Bee all basic types and user defined types are references.
 
 **example**
 ```
+new i := 0  ε i4; 
 new i := 0  ε i4; 
 new j := 10 ε Z;
 

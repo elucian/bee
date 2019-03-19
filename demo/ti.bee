@@ -7,6 +7,8 @@
 def a := 10;  -- i8
 def x := 0.5; -- d8 
 def y := 1/2; -- Q 
+def f := $0;  -- L
+def t := $1;  -- L
 
 -- variable type inference
 new v := (1,2,3);     -- List of i8

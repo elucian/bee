@@ -43,7 +43,7 @@ Listed in the order of precedence top down.
 symbol| description
 ------|------------------------------------------------------------------
  /    | Rational number division (higher precedence)
- ±    | change sign, replace "y = -x" with "y = ±x" 
+ -    | change sign, replace "y = -x" with "y = -1·x"
  ^    | Power symbol used with fractions or expressions   
  ·    | multiplication
  ÷    | division 
@@ -141,14 +141,14 @@ symbol| meaning   | description
 
 **Logical operators**
 
-Bee is using values "ƒ" = False and "†" = True
+Bee is using values  $1 = 1 = True and  $0 = 0 = False 
 
- p | q |¬ p |p ~ q |p ↔ q |p & q | p \| q
----|---|----|------|------|------|--------
- † | † | ƒ  | ƒ    | †    |†     | †      
- † | ƒ | ƒ  | †    | ƒ    |ƒ     | †      
- ƒ | † | †  | †    | ƒ    |ƒ     | †      
- ƒ | ƒ | †  | ƒ    | †    |ƒ     | ƒ      
+ p  | q  |¬ p |p ~ q |p ↔ q |p & q | p \| q
+----|----|----|------|------|------|--------
+ 1  | 1  | 0  | 0    | 1    |1     | 1     
+ 1  | 0  | 0  | 1    | 0    |0     | 1     
+ 0  | 1  | 1  | 1    | 0    |0     | 1     
+ 0  | 0  | 1  | 0    | 1    |0     | 0      
 
 
 **Bitwise operators**

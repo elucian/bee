@@ -87,12 +87,13 @@ sym   | code
  ½    | 0189
  ¾    | 0190
   
-## Boolean
-
+ 
+## Documentation
+ 
  s   | code
------|-------- 
- ƒ   | 0131
- †   | 0134
+--------------
+  »  | 0187
+  «  | 0171
  
 ## Forms/Reporting
 

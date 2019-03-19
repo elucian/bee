@@ -11,7 +11,7 @@ sort(this @ [Z]):
   new i := 0 ε N;
   cycle:
     let i := 0;
-    let swap := ƒ;
+    let swap := $0;
     cycle: 
       stop if (i = n);
       -- this pair is out of order ?
@@ -20,7 +20,7 @@ sort(this @ [Z]):
         let temp     :: this[i];
         let this[i]  :: this[i+1];
         let this[i+1]:: temp;
-        swap := †;
+        swap := $1;
       when;
       let i += 1;
     cycle;
@@ -38,6 +38,6 @@ put test;
 write;
 
 -- check result
-fail if ¬(test = result);
+fail if ¬ (test = result);
 
 -- end
