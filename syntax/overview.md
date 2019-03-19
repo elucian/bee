@@ -10,6 +10,8 @@ For syntax notation we use modified BNF convention:
 
 * [Expression](#expression)
 * [Data type](#data-type)
+* [Logical expression](#logical-expression)
+* [Active expression](#active-expression)
 * [Control Flow](#control-flow)
 * [Pattern Matching](#pattern-matching)
 * [Functions](#functions)
@@ -37,8 +39,8 @@ put "this is a test";
 write; --> print two rows
 
 --complex expressions can use ()  
-put (10 + 10 + 15);     -- math
-put (10 > 5) | (2 < 3); -- logical
+put (10 + 10 + 15);   -- math
+put (10 > 5 | 2 < 3); -- logical
 
 --multiple expressions in a line
 put (1,',',2,',',3); --expect 1,2,3
@@ -54,10 +56,9 @@ write --> print 6 rows
 **Notes:** 
 * put statement can receive multiple parameters
 * put statement add new line by default
-* to avoid new line use coma separated parameters
-* to avoid new line you must use "say" statement instead of "put"
+* to avoid new line use coma separated parameters or "say" statement
 * multiple expressions or arguments are separated by comma
-* you can omit the parentheses when you call a method with one single parameter
+* you can omit the parentheses when you call a method with one single argument
 
 ## Data type
 
@@ -360,10 +361,36 @@ let y := b -> L; -- y = $1
 ```
 
 **Notes:** 
-* Only integer part of a number is used;
-* Fraction is eliminated before conversion;
-* A string that contains "True" "true", "T" or "t" or "1" convert to: $1
-* A string that contains "False", "true", "F" or "f" or "0" convert to: $0
+* Only integer part of a number is used in conversion;
+* Fraction is eliminated before conversion to logic type;
+* A string that contains "True" "true", "T" or "t" or "1" convert to: 1
+* A string that contains "False", "true", "F" or "f" or "0" convert to: 0
+
+## Active expression
+
+An expression is active if it modifies a variable. An active expression has a logic result: $0 or $1. The result can be captured using assignment ":=" or it can be used in a conditional.
+
+**syntax**
+```
+  <variable_name> <op> <mutating_expression>;
+```
+
+Where: <op> can be any [modifier operator](operators.md#arithmetic-modifiers).
+
+**examples**
+```
+new a := 0;
+-- active conditional
+when a += 1:
+   put a; -- expect 1
+when;
+
+-- protect zero division
+new b ε L;
+let b := (a := 1/0); -- not failing
+put b ; -- expected $0 (false)
+put a := 1; (unmodified)
+```
 
 ## Control Flow
 
@@ -378,12 +405,12 @@ Observe that "if" is not itself a full statement only an augment.
 <statement> if (<condition>);
 ```
 
-The statement is executed only if the condition is T = true. 
+The statement is executed only if the condition is 1 = $1. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
-1. Conditional can not be used with declaration statements;
-1. Conditional can not be used with block statements;
+1. Conditional can not be associated with def statement;
+1. Conditional can not be associated with any block statement;
 
 ```
 new a ε Z;
@@ -519,7 +546,7 @@ let <var> := (
 <var>  := predefined variable
 <xp1>  := expression of same type with <v>
 <cnd1> := condition for <xp1>
-<dx>   := default expression (no condition).
+<dx>   := default expression (optional condition).
 ```
 
 **example**
@@ -542,7 +569,7 @@ write; --> 9:1, 8:0, 7:1, 6:0, 5:1
 
 ## Functions
 
-Bee functions are named expressions that can return a single result:
+Functions are named expressions that can return result:
 
 **syntax**
 ```
@@ -562,14 +589,29 @@ put z; -- print 2
 write;
 ```
 
-**Note:** 
-* Functions must have one single result;
-* Result expression is enclosed in brackets ();
-* Arguments for function calls require ();
+**properties:** 
+
+* functions have one single result;
+* functions have a local scope called context;
+* functions can be created during run-time by a method;
+* functions can be assigned to variables;
+* functions can be used in expressions;
+* functions can be send as parameters to methods;
+
+**restriction:**
+* functions can not have local declarations 
+* functions can not create another functions
+* functions can not receive input/output parameters
+* functions can not perform input/output operations
+* functions can not fail and can not be interrupted
+
+**Exmples**
+[fn.bee](../demo/fn.bee)
+[pm.bee](../demo/pm.bee)
 
 ## Methods
 
-A method is a named block that can have one or more results.
+A method is a named block that can have no result, one or more results.
 
 ```
 <name>(<param> ε <type>,...) => (<result> ε <type>,...):
@@ -612,17 +654,17 @@ foo:
 foo;
 
 -- using name of method will execute the method  
-foo();
+foo;
 
 ```
 
 **Notes:**
-* Method declaration is using ":" after name to indicate no result;
-* Method with no parameters do not require empty brackets ();
-* Method calls do not require brackets () for single argument;
+* Method declaration is using ":" immediate after name if there is no result;
+* Method declaration do not require empty brackets ();
+* Method calls do not require brackets () for single or no argument;
 * Multiple arguments can be enumerated only with brackets (arg1, arg2...);
-* A method can not be used in expressions except unpacking expressions;
-* A method can have output parameters or side-effects;
+* A method can not be used in expressions except unpacking expression;
+* A method can have output parameters and side-effects;
 * We can interrupt a method prematurely using "exit" keyword. 
 
 ## References 
@@ -631,7 +673,6 @@ In Bee all basic types and user defined types are references.
 
 * Default assign `:=` copy a value or execute an expression. 
 * Reference assign `::` clone a reference and fail if this is not possible.
-
 
 **example**
 ```
@@ -660,18 +701,38 @@ put j ≡ i; -- 1 (true) same reference
 write;
 ```
 
-**See also:** [nu.bee](../demo/nu.bee) 
+## Function References
 
-## Parameters & Arguments
+A function reference is a deferred function declaration.
 
-Parameters are variables defined in method or function signature.   
-Arguments are part of the function calls and can be: constants, variables or expressions.
+**syntax**
+```
+new func_name @ (param_list) ε rezult_type;
+```
+
+**example**
+```
+-- declare function reference with two parameters
+new add @ (Z,Z) ε Z;
+
+-- create expression for function reference
+let add :: (a, b) => (a + b);
+put add(1,1); -- expect 2
+
+write;
+```
+**See also:** 
+* [nu.bee](../demo/nu.bee) 
+* [ho.bee](../demo/ho.bee) 
+
+## Method Parameters
+
+Parameters are variables defined in a method signature. Arguments are part of the method call and can be: constants, variables, expressions or functions.
 
 **Notes:**   
-* Parameters can be pass by value or by reference depending on the type;
-* If a parameter is a native type it is received by value;
-* If a parameter is a reference type it is received by reference;
-* For input/output parameters we must require a reference using "@";
+* Native type parameters are pass by value;
+* Reference type parameters can be pass by value or by reference;
+* For input/output parameters we must using "@" instead of "ε";
 
 **example**
 ```
@@ -692,6 +753,32 @@ put res;  -- expect 3
 -- call function add with arguments by position
 add(2, 2, res);  
 put res;  -- expect 4
+
+write;
+```
+
+**note**
+* Parameters with initial value are optional
+* Optional parameters must be last parameters
+* Optional parameters are initialized with pair-up operator ":"
+
+**example**
+```
+#driver "fn"
+
+-- method with output parameter
+add(a,b ε Z, c: 0) => (r ε Z):
+  let r := a + b;
+add;
+
+-- declare result variable
+new res ε Z;
+
+-- call function with 2 arguments
+let res <+ add(1, 2); 
+
+-- call function add with 3 arguments
+let res <+ add(4,4,4);  
 
 write;
 ```

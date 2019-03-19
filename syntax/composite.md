@@ -14,7 +14,7 @@ Composite types are complex data structures.
 * [object](#object)
 * [varargs](#Variable-arguments)
 * [binding](#binding)
-
+* [complex](#complex)
 
 ## Usability
 
@@ -868,5 +868,30 @@ write;
 * If the object type is public, the constructor must also be public;
 * You can not alter object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
+
+## Complex 
+
+A complex collection can store references to other things.
+
+**example**
+```
+-- a list of lists of integers
+new clist := ((Z));
+
+-- an array of 10 lists of integers
+new alist := [(Z)](10);
+
+-- an array of arrays of integers
+new carry := [[Z](5)](10);
+
+-- an list of function references
+new farry := (@());
+
+-- an array of function references
+new farry  := [@()];
+
+-- a hash map of function references
+new fuhash := {S:@()};
+```
 
 **Read next:** [Type Inference](inference.md) 

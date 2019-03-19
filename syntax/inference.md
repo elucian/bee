@@ -21,8 +21,8 @@ new i := 0;   -- type := Z
 new j := 0.5; -- type := R
 
 -- logic expressions
-new false := ƒ; -- type L
-new true  := †; -- type L
+new false := $0; -- type L
+new true  := $1; -- type L
 
 -- multiple variables
 new x,y,z := 5;   -- type := Z
@@ -69,7 +69,7 @@ In next function foo, parameters a, b are optional.
 
 ```
 -- result type is missing
-foo(a, b := 0) => ( a + b ); 
+foo(a:0, b:0) => ( a + b ); 
 
 put foo();   -- 0
 put foo(1);  -- 1
@@ -81,7 +81,7 @@ put foo(1,2);-- 3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-foo(a,b ε Z, c := 0 ) ε Z => (a+b+c);
+foo(a,b ε Z, c : 0 ) ε Z => (a+b+c);
 
 put foo(1,2);   -- 3
 put foo(1,2,3); -- 6
@@ -97,7 +97,7 @@ We can use parameter name and pair-up ":" symbol for argument value.
 ```
 -- fn with optional parameters
 -- result type is missing
-bar(a,b,c := 0) => (a+b+c);
+bar(a,b,c:0) => (a+b+c);
 
 -- observe we use pair-up to give value to argument
 put bar(a:1); -- print 1 because (b,c := 0) 

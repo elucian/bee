@@ -24,7 +24,7 @@ sort<X>(array @ [X], gt @ (X,X) ε L ):
                 swap := $1; -- true
             when;
             let i +=1;
-        cycle;
+        cycle; 
         stop if ¬ swap;
     cycle;
 sort;
@@ -76,7 +76,7 @@ This can be used to create an argument for a _signature reference_:
 To assign an anonymous function as argument by name Bee uses: "::"
 
 ```
-  id :: (...) => (...)
+  id :: (param ,param ...) => (...)
 ```
 
 Where: "id" is parameter name representing reference to function.

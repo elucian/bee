@@ -296,4 +296,4 @@ After this you can create new methods and a new constructors in your module. The
 
 Using this technique, one module can extend user defined types in any other module, including the core library modules. So Bee is a modular language.
 
-**Read next:** [syntax overview](overview.md)
+**Read next:** [Syntax Overview](overview.md)
