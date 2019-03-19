@@ -160,13 +160,20 @@ For symmetry a end of public method or function also use prefix ".".
 This is useful for a long function to know that is public at the end.
 
 ```
+--public constant
+new .pi := 3.14;
+
 --public variable
 new .v ε N;
 
 --public function
-.func(x ε N) => (y ε N):
-   let y += 1;
-.func;
+.f(x ε N) ε N => (x + 1);
+
+--public method
+.m(x, y ε N, r @ N):
+  r := x + y;
+.m;
+
 ```
 
 ## Execution
@@ -287,12 +294,11 @@ In next example we are using various comments into a demo program.
 
 ## Type hierarchy
 
-Bee does not have classes. However doing an explicit design you can create a type hierarchy 
-similar to OOP using module level encapsulations: user defined types and methods. 
+Bee does not have classes. However doing an explicit design you can create a type hierarchy similar to OOP using module level encapsulations: user defined types and methods. 
 
-Users can define new types based on existing types using symbol "=". This will inherit all methods of the original type, including the constructor.
+Users can define new types based on existing types using symbol "<:". This will inherit all methods of the original type, including the constructor.
 
-After this you can create new methods and a new constructors in your module. The new constructors can  call the superior constructor explicit. Nothing is implicit in Bee.
+After this you can create new methods and a new constructors in your module. The new constructors can call the superior constructor explicit. 
 
 Using this technique, one module can extend user defined types in any other module, including the core library modules. So Bee is a modular language.
 

@@ -43,14 +43,15 @@ Listed in the order of precedence top down.
 symbol| description
 ------|------------------------------------------------------------------
  /    | Rational number division (higher precedence)
- -    | change sign, replace "y = -x" with "y = -1·x"
+ -    | Change sign, replace "y = -x" with "y = -1·x"
  ^    | Power symbol used with fractions or expressions   
- ·    | multiplication
- ÷    | division 
- ×    | array and matrix multiplication
+ ·    | Multiplication
+ ÷    | Division 
+ ×    | Array and matrix multiplication
  %    | Modulo operator
 \+    | Numeric addition \| List append
-\-    | Numeric subtraction \| Collection difference \| Numeric sign
+\-    | Numeric subtraction \| Collection difference 
+ ±    | Numeric tolerance (use with ≈)
 
 ## Double Symbols
 
@@ -98,7 +99,7 @@ symbol | meaning
 -------|--------------------------------------------------------------------
   ≡    | same memory address, same reference: (shallow comparison)
   =    | equality of two values, collections or objects (deep comparison)
-  ≈    | almost equal (support also different data types)  
+  ≈    | approximative equal, used with `±` like: (x ≈ 4 ± 0.25)
  \>    | value is greater than 
  \<    | value is less than
   ≥    | greater than or equal to
