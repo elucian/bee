@@ -22,25 +22,26 @@ Specification is available in folder: /syntax
 
 You can learn bee by reading demo source files:
 
-1. [hi.bee](demo/hi.bee) - input output demo
-1. [dc.bee](demo/dc.bee) - native declarations
-1. [ct.bee](demo/ct.bee) - composite types
-1. [if.bee](demo/if.bee) - decision statements
-1. [do.bee](demo/do.bee) - repetitive statements
-1. [in.bee](demo/in.bee) - input multiple values
-1. [cs.bee](demo/cs.bee) - control structures
-1. [fn.bee](demo/fn.bee) - function declaration
+1. [hi.bee](demo/hi.bee) - Input output demo
+1. [dc.bee](demo/dc.bee) - Native declarations
+1. [ct.bee](demo/ct.bee) - Composite types
+1. [if.bee](demo/if.bee) - Decision statements
+1. [do.bee](demo/do.bee) - Repetitive statements
+1. [in.bee](demo/in.bee) - Input multiple values
+1. [cs.bee](demo/cs.bee) - Control structures
+1. [fn.bee](demo/fn.bee) - Function declaration
 1. [fi.bee](demo/fi.bee) - Fibonacci function
-1. [gv.bee](demo/gv.bee) - global variables
-1. [lv.bee](demo/lv.bee) - local variable demo
-1. [dt.bee](demo/dt.bee) - user defined data types
-1. [ti.bee](demo/ti.bee) - type inference demo
-1. [up.bee](demo/up.bee) - unpacking demo
-1. [me.bee](demo/me.bee) - method dispatch demo
-1. [pm.bee](demo/pm.bee) - pattern matching
-1. [fo.bee](demo/fo.bee) - file input/output
-1. [nu.bee](demo/nu.bee) - working with references
-1. [bs.bee](demo/bs.bee) - bubble sort algorithm
+1. [gv.bee](demo/gv.bee) - Global variables
+1. [lv.bee](demo/lv.bee) - Local variable demo
+1. [dt.bee](demo/dt.bee) - User defined data types
+1. [ti.bee](demo/ti.bee) - Type inference demo
+1. [up.bee](demo/up.bee) - Unpacking demo
+1. [me.bee](demo/me.bee) - Method dispatch demo
+1. [pm.bee](demo/pm.bee) - Pattern matching
+1. [fo.bee](demo/fo.bee) - File input/output
+1. [nu.bee](demo/nu.bee) - Working with references
+1. [bs.bee](demo/bs.bee) - Bubble sort algorithm
+1. [ho.bee](demo/ho.bee) - High order functions
 
 ## Draft
 To explore new features we use /draft folder. 
