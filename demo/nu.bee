@@ -38,8 +38,22 @@ func(a,b ε Z) ε Z => (a + b);
 -- create reference to function func
 new f :: func;  -- assign address of func to f
 put f(1,1);     -- execute function reference
-
 write;
+
+-- define a function signature
+def cmp <: (Z,Z) ε L;
+
+-- create 3 references to function type "cmp"
+new gt, lt, eq @ cmp; 
+
+-- instantiate 3 functions of type "cmp"
+let gt :: (x, y) => (x > y);
+let lt :: (x, y) => (x < y);
+let eq :: (x, y) => (x = y);
+
+put gt (3,1) -- expect $1
+put lt (3,1) -- expect $0
+put eq (3,1) -- expect $0
 
 *************************************************
 ** Using references as argument
@@ -63,6 +77,5 @@ put  y; --> will print 12
 pro (a : 1, b : 2); --> "ERROR: a, b expect references!";
   
 write;
-
 
 **************************************************

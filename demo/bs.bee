@@ -22,7 +22,7 @@ sort(this @ [Z]):
         let this[i+1]:: temp;
         swap := $1;
       when;
-      let i += 1;
+      let i += 1; 
     cycle;
     stop if ¬ swap;
   cycle;
