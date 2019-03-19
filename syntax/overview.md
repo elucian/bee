@@ -624,6 +624,16 @@ A method is a named block that can have no result, one or more results.
 **Example:** 
 
 ```
+-- method with one result:
+add(x,y ε i8) => (r ε i8):
+  r := x + y; 
+add;
+
+-- use result in assign expression
+new m := add(1,2);
+new m :: add(0,0); -- compilation error: result is not a reference
+new m <+ add(0,0); -- compilation error: single result
+
 -- two results "s" and "d"
 com(x,y ε Z) => (s ε Z, d ε Z):
   let s := x + y; 
@@ -639,6 +649,10 @@ put c; -- print 1
 -- call com and print the result
 put com(0,0); -- print (0, 0)
 write;
+
+-- try to call com in expression
+new x := com(1,1) + 1; -- compilation error, "com" has 2 results.
+
 ```
 
 **Side-effect**
@@ -663,9 +677,10 @@ foo;
 * Method declaration do not require empty brackets ();
 * Method calls do not require brackets () for single or no argument;
 * Multiple arguments can be enumerated only with brackets (arg1, arg2...);
-* A method can not be used in expressions except unpacking expression;
 * A method can have output parameters and side-effects;
-* We can interrupt a method prematurely using "exit" keyword. 
+* A method that has multiple results can be used only in unpacking expression;
+* A method that has no result can not be used in expressions
+* A method can be interrupted rearly using "exit" keyword.
 
 ## References 
 
