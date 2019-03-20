@@ -573,17 +573,17 @@ Functions are named expressions that can return result:
 
 **syntax**
 ```
-<name>(<param> ε <type>,...) ε type => (expression);
+def <name>(<param> ε <type>,...) ε type => (expression);
 ```
 
 **Example:** 
 
 ```
-new z ε Z;
-func(x,y ε Z) ε Z => (x + y); 
+-- define "func" a function with two parameters
+def func(x,y ε Z) ε Z => (x + y); 
 
 -- simple function call
-let z := func(1,1); 
+new z := func(1,1); 
 put z; -- print 2 
 
 write;
@@ -614,20 +614,20 @@ write;
 A method is a named block that can have no result, one or more results.
 
 ```
-<name>(<param> ε <type>,...) => (<result> ε <type>,...):
+def <name>(<param> ε <type>,...) => (<result> ε <type>,...):
    [<statement>];
    ...   
    let <result> := <expression>;
-<name>;
+def;
 ```
 
 **Example:** 
 
 ```
 -- method with one result:
-add(x,y ε i8) => (r ε i8):
+def add(x,y ε i8) => (r ε i8):
   r := x + y; 
-add;
+def;
 
 -- use result in assign expression
 new m := add(1,2);
@@ -635,10 +635,10 @@ new m :: add(0,0); -- compilation error: result is not a reference
 new m <+ add(0,0); -- compilation error: single result
 
 -- two results "s" and "d"
-com(x,y ε Z) => (s ε Z, d ε Z):
+def com(x,y ε Z) => (s ε Z, d ε Z):
   let s := x + y; 
   let d := x - y;
-com;
+def;
 
 -- unpack result to "b","c" using "<+"  
 new b,c <+ com(2,1); 
@@ -663,9 +663,9 @@ new x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 **example**
 ```
 -- a method with side-effect
-foo:
+def foo:
   put "hello, I am foo";
-foo;
+def;
 
 -- using name of method will execute the method  
 foo;
@@ -716,22 +716,23 @@ put j ≡ i; -- 1 (true) same reference
 write;
 ```
 
-## Function References
+## Forward declaration
 
-A function reference is a deferred function declaration.
+A forward declaration is a deferred function.
 
 **syntax**
 ```
-new func_name @ (param_list) ε rezult_type;
+func_name(param_list) ε rezult_type;
 ```
 
 **example**
 ```
 -- declare function reference with two parameters
-new add @ (Z,Z) ε Z;
+def add(Z,Z) ε Z;
 
--- create expression for function reference
-let add :: (a, b) => (a + b);
+-- implement function reference (types are not specified)
+def add(a, b) => (a + b);
+
 put add(1,1); -- expect 2
 
 write;
@@ -754,19 +755,19 @@ Parameters are variables defined in a method signature. Arguments are part of th
 #driver "fn"
 
 -- method with output parameter
-add(a, b ε i8, r @ Z):
+def add(a, b ε i8, r @ Z):
   let r := a + b;
-add;
+def;
 
--- declare result variable
+-- create result variable
 new res ε Z;
 
 -- call function add with arguments by name
-add(a:1, b:2, r :: res); 
+def add(a:1, b:2, r :: res); 
 put res;  -- expect 3
 
 -- call function add with arguments by position
-add(2, 2, res);  
+def add(2, 2, res);  
 put res;  -- expect 4
 
 write;
@@ -782,9 +783,9 @@ write;
 #driver "fn"
 
 -- method with output parameter
-add(a,b ε Z, c: 0) => (r ε Z):
+def add(a,b ε Z, c: 0) => (r ε Z):
   let r := a + b;
-add;
+def;
 
 -- declare result variable
 new res ε Z;

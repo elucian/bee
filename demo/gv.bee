@@ -10,10 +10,10 @@ def $x := 1;
 -- use global variable x in method "add"
 -- since add has not parameters and no result
 -- it is just a simple method declaration
-add1:
+def add1:
   let $x += 1;
   put $x;
-add1;
+def;
 
 -- call a subroutine by name
 add1; -- print 2
@@ -28,11 +28,11 @@ write;
 new x := 1;
 
 -- variable shadowing
-add2: 
+def add2: 
   new x := 0;     -- create a new variable x 
   let x := x + 1; -- increment local variable
   put x;          -- print local x
-add2;
+def;
 
 add2;  -- print 1
 add2;  -- print 1
@@ -42,3 +42,4 @@ put x; -- x remain 4
 
 write;
   
+over;

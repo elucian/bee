@@ -1,16 +1,14 @@
 +---------------------------------
-  High order methods demo
+  High order method demo
 ----------------------------------+
 #driver "ho" 
 
-************************************
 ** Function factory
-************************************
  
 -- this method can create a function
-shift(i ε Z) => (g @ (Z) ε Z):
-  g(s ε Z) ε Z => (s + i);
-shift;
+def shift(i ε Z) => g(Z) ε Z:
+  def g(s ε Z) => (s + i);
+def shift;
 
 -- create two function instances
 new inc := shift(+1);  -- increment 
@@ -24,21 +22,7 @@ put inc(10);  --> 11
 put dec(20); --> 19
 put dec(19); --> 18
 
-************************************
-** Closure
-************************************
--- this method create a closure
-gen(min, max ε N) => (f @ () ε N):
-  new s := min;    
-  f() ε N => (s + 1 if s ≤ max, -1 if s > max & s += 1);
-gen;
+put "end sift test";
+write;
 
--- use gen to create one instance: 
-new foo::gen(10,20);
-new x := 0;
-cycle
-  stop if (x = -1);
-  let x := foo();  
-cycle;
-
-over.
+over;

@@ -4,7 +4,7 @@
 #driver "pm"
 
 -- pattern matching function
-pm(p1,p2 ε N) ε N =>
+def pm(p1,p2 ε N) ε N =>
   (0 if (p1 = 0 )
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
@@ -19,3 +19,4 @@ put pm(1,2);  -- will print 3
 put pm(2,1);  -- will print 4
 
 write;
+over;

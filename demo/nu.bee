@@ -20,62 +20,7 @@ let d :: s; -- explicit boxing address for "s"
 let d += 1; -- modify underline value of d that is s  
 put s; --> s = 11  (modified)
 put d; --> d = 11  (modified) 
- 
+write; 
 -- test modifier effect
 fail if ¬ (s ≡ d); 
-
-write;
-
-************************************************
-** Reference to function
-************************************************
-new f ε F; 
-
--- define a normal function
--- parameters a, b are integer
-func(a,b ε Z) ε Z => (a + b);
-
--- create reference to function func
-new f :: func;  -- assign address of func to f
-put f(1,1);     -- execute function reference
-write;
-
--- define a function signature
-def cmp <: (Z,Z) ε L;
-
--- create 3 references to function type "cmp"
-new gt, lt, eq @ cmp; 
-
--- instantiate 3 functions of type "cmp"
-let gt :: (x, y) => (x > y);
-let lt :: (x, y) => (x < y);
-let eq :: (x, y) => (x = y);
-
-put gt (3,1) -- expect $1
-put lt (3,1) -- expect $0
-put eq (3,1) -- expect $0
-
-*************************************************
-** Using references as argument
-*************************************************
-
--- method with input output parameters
--- @ require argument reference and operator ":" in when of named arguments
-pro(a,b @ N) => ():
-  new a +=  1; -- modify parameter a
-  new b +=  2; -- modify parameter b 
-pro;
-
-new x, y := 10; -- define native integers using inference
-pro (a :: x, b :: y); -- execute pro and expect x, y  to be modified
-
--- verify new values for arguments
-put  x; --> will print 11
-put  y; --> will print 12
-
--- negative test
-pro (a : 1, b : 2); --> "ERROR: a, b expect references!";
-  
-write;
-
-**************************************************
+over;

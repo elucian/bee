@@ -7,10 +7,10 @@
 new x := 1;
 
 -- method side-effects
-add:
+def add:
   let x := x + 1;
   put x;
-add;
+def;
 
 add; -- will print 2
 add; -- will print 3
@@ -26,6 +26,6 @@ add;   -- will print 1
 add;   -- will print 2
 
 put x; -- x = 2 (modified)
-
 write;
 
+over;

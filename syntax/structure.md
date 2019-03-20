@@ -21,10 +21,9 @@ Bee has 3 kind of program files each with different role:
 
 ## Declaration
 
-Bee is using 3 kind of declarations:
+Bee is using 2 kind of declarations:
 
-* def -- define/initialize constants
-* def -- composite type or sub-type
+* def -- define:constant,types,functions
 * new -- create/initialize variables
 
 **Note:**
@@ -71,7 +70,7 @@ Rogue statements are executed top down in synchronous mode.
 new i, c ε Z;
 let c := $params.count;
 
-abort if (c = 0);
+over if (c = 0);
 -- comma separated parameters
 cycle
   say $params[i];
@@ -82,6 +81,7 @@ cycle;
 -- flush the buffer to console
 write;
 
+over;
 ```
 
 **Notes:** 
@@ -167,12 +167,12 @@ new .pi := 3.14;
 new .v ε N;
 
 --public function
-.f(x ε N) ε N => (x + 1);
+def .f(x ε N) ε N => (x + 1);
 
 --public method
-.m(x, y ε N, r @ N):
+def .m(x, y ε N, r @ N):
   r := x + y;
-.m;
+def;
 
 ```
 
@@ -195,9 +195,9 @@ This is myLib.bee file:
 
 cpp myLib; -- load cpp library
 
-fib(n ε Z) => (x ε Z):
+def fib(n ε Z) => (x ε Z):
    myLib.fib;
-fib;
+def;
 
 ```
 

@@ -3,25 +3,25 @@
 -------------------------------------+
 #driver "up"
 
--- method with two results
-test(x, y ε Z) => (a,b ε Z):
+** method with two results
+def test(x, y ε Z) => (a,b ε Z):
   let a := x+1;
   let b := y+1;
-test; 
+def; 
 
 -- unpacking to new variables
 new n,m <+ test(1,2);
 put (n, m) -- will print 2, 3
 
--- method with structured result
+** method with structured result
 def Rec <: {x ε Z, y ε R};
 
-demo(x ε Z, y ε R) => (r ε Rec):
+def(x ε Z, y ε R) => (r ε Rec):
   r.x := x;
   r.y := y;
-demo;
+def;
 
 put demo(4,5.5); -- will print { x: 4, y: 5.5 }
 
 write;
- 
+over; 

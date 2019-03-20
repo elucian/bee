@@ -4,13 +4,13 @@
 #driver "fi"
 
 -- declare Fibonacci method
-fib(n ε N) => (y ε N): 
+def fib(n ε N) => (y ε N): 
   when (n = 1 | n = 0)
     let y := 1;
   else:
     let y := fib(n - 1) + fib(n - 2);
   when;
-fib;
+def;
 
 -- call method fib 
 new r:=fib(5):
@@ -19,3 +19,4 @@ new r:=fib(5):
 put r;
 write;
 
+over;

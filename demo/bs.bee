@@ -4,7 +4,7 @@
 #driver "bs"
 
 -- bubble sort method
-sort(this @ [Z]):
+def sort(this @ [Z]):
   new n := length(this)-1;
   new swap ε L;
   new temp ε X;
@@ -26,7 +26,7 @@ sort(this @ [Z]):
     cycle;
     stop if ¬ swap;
   cycle;
-sort;
+def;
 
 -- define test & result fixture
 new test   := [1,4,1,5,9,2,6,5,3,5];
@@ -40,4 +40,4 @@ write;
 -- check result
 fail if ¬ (test = result);
 
--- end
+over;

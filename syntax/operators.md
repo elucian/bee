@@ -43,7 +43,7 @@ Listed in the order of precedence top down.
 symbol| description
 ------|------------------------------------------------------------------
  /    | Rational number division (higher precedence)
- -    | Change sign, replace "y = -x" with "y = -1·x"
+\-    | Change sign, replace "y = -x" with "y = -1·x"
  ^    | Power symbol used with fractions or expressions   
  ·    | Multiplication
  ÷    | Division 
