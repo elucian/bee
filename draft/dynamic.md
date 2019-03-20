@@ -30,10 +30,10 @@ new lt := (x, y ε Z) ε L => (x < y);
 new eq := (x, y ε Z) ε L => (x = y);
 
 -- define a dictionary of λ expressions
-def DIC <: {U : CMP}
+def DIC <: {(U : CMP)}
  
 -- define a hash map of expressions
-new dic := {"gt":gt,"lt":lt,"eq":eq} ε DIC;
+new dic := {("gt":gt),("lt":lt),("eq":eq)} ε DIC;
 
 put dic["gt"](3,1) -- expect $1
 put dic["lt"](3,1) -- expect $0
