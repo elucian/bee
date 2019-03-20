@@ -1,0 +1,27 @@
+** Closure demoS
+#driver "cj"
+
+-- this method create a closure
+def gen(min, max ε N) => (me() ε Z):
+  new s := min;    
+  def me() => r ε Z:
+     when s ≤ max:
+       r := s;      
+       s += 1;
+     else
+       r := -1;
+     when; 
+  def;
+def;
+
+-- use gen to create one instance: 
+new foo := gen(10,20);
+new x := 0;
+cycle
+  stop if (x = -1);
+  let x := foo();  
+  say (x,",");
+cycle;
+write; 
+over;
+--expect: 10,11,12,13,14,15,16,17,18,19,20, 
