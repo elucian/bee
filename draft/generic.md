@@ -5,7 +5,7 @@ A generic method is using a variable type "X".
 **bubble sort**
 
 ```
-sort<X>(array @ [X], gt @ (X,X) ε L ):
+def sort<X>(array @ [X], gt @ (X,X) ε L ):
     new n := length(array)-1;
     new swap ε L;
     new temp ε X;
@@ -27,7 +27,7 @@ sort<X>(array @ [X], gt @ (X,X) ε L ):
         cycle; 
         stop if ¬ swap;
     cycle;
-sort;
+def;
 ```
 
 **Notes:**
@@ -41,9 +41,9 @@ sort;
 def Person  <: { name ε S, age ε N };
 
 -- define order method for array of Persons
-order(cat @ [Person]):
-  sort<S>(cat, gt::(a, b) => (a.name > b.name));
-order;
+def order(cat @ [Person]):
+  sort<S>(cat, gt::(a, b ε S) ε L => (a.name > b.name));
+def order;
 
 -- define clients and suppliers
 new clients   := [Person](100);
@@ -70,7 +70,7 @@ This can be used to create an argument for a _signature reference_:
 
 **signature**
 ```
- ( id @ (type,type, ...) ε type)
+ id @ (type,type, ...) ε type
 ```
 
 To assign an anonymous function as argument by name Bee uses: "::"
