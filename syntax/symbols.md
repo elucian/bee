@@ -3,8 +3,7 @@
 Bee has limited support for special symbols:
 It is using Extended ASCII character set not Unicode.
 
-* Preferred font for Bee: "Lucida Console".
-* You can use ALT+Code to input a symbol:
+**Note:** You can use ALT+Code to input a symbol:
 
 ### Code page
 You can change code page to: 
