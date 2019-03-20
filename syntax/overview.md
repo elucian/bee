@@ -15,8 +15,8 @@ For syntax notation we use modified BNF convention:
 * [Control Flow](#control-flow)
 * [Functions](#functions)
 * [Methods](#methods)
-* [Lambda Expressions](λ-expressions)
 * [References](#references)
+* [Lambda Expressions](lambda-expressions)
 
 
 ## Expression
