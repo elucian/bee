@@ -1,0 +1,27 @@
+*************************************************
+** Input/Output parameters
+*************************************************
+#driver "op"
+-- method with input output parameters
+-- Operator "@"  define input/output reference 
+-- operator "::" for named argument pass by reference
+
+def pro(a,b @ N) => ():
+  new a +=  1; -- modify parameter a
+  new b +=  2; -- modify parameter b 
+def ;
+
+-- define native integers using inference
+new x, y := 10; 
+
+-- execute pro and expect x, y  to be modified
+pro (a :: x, b :: y); 
+
+-- verify new values for arguments
+put x; --> will print 11
+put y; --> will print 12
+
+-- negative test
+pro (a : 1, b : 2); --> "ERROR: a, b expect references!";
+  
+write;
