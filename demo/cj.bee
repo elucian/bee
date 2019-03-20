@@ -1,4 +1,4 @@
-** Closure demoS
+** Closure demo
 #driver "cj"
 
 -- this method create a closure
