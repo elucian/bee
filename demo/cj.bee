@@ -6,10 +6,10 @@ def gen(min, max ε N) => (me() ε Z):
   new s := min;    
   def me() => r ε Z:
      when s ≤ max:
-       r := s;      
-       s += 1;
+       let r := s;      
+       let s += 1;
      else
-       r := -1;
+       let r := -1;
      when; 
   def;
 def;

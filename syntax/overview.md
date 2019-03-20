@@ -606,8 +606,9 @@ write;
 * functions can not fail and can not be interrupted
 
 **Exmples**
-[fn.bee](../demo/fn.bee)
-[pm.bee](../demo/pm.bee)
+* [fi.bee](../demo/fi.bee)
+* [fn.bee](../demo/fn.bee)
+* [pm.bee](../demo/pm.bee)
 
 ## Methods
 
@@ -722,7 +723,7 @@ A forward declaration is a deferred function.
 
 **syntax**
 ```
-func_name(param_list) ε rezult_type;
+def func_name(param_list) ε rezult_type;
 ```
 
 **example**
@@ -731,15 +732,15 @@ func_name(param_list) ε rezult_type;
 def add(Z,Z) ε Z;
 
 -- implement function reference (types are not specified)
-def add(a, b) => (a + b);
+def add(a ε Z, b ε Z) ε Z => (a + b);
 
 put add(1,1); -- expect 2
 
 write;
 ```
 **See also:** 
-* [nu.bee](../demo/nu.bee) 
-* [ho.bee](../demo/ho.bee) 
+* [cj.bee](../demo/cj.bee) 
+* [ho.bee](../demo/ho.bee)
 
 ## Method Parameters
 

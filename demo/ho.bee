@@ -22,7 +22,6 @@ put inc(10);  --> 11
 put dec(20); --> 19
 put dec(19); --> 18
 
-put "end sift test";
 write;
 
 over;
