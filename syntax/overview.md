@@ -16,7 +16,7 @@ For syntax notation we use modified BNF convention:
 * [Functions](#functions)
 * [Methods](#methods)
 * [References](#references)
-* [Lambda Expressions](lambda-expressions)
+* [Lambda Expressions](#lambda-expressions)
 
 
 ## Expression
