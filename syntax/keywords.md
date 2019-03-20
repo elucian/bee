@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee uses 29 reserved keywords to create statements. You can't use these keywords as identifiers in your program. That's the reason Bee is a minimalist language: to avoid restricting you to use English words as new identifiers in your program.
+Bee uses reserved keywords to create statements. You can not use these keywords as identifiers in your program. That is Bee is a minimalist language: to avoid restricting you to use English words as new identifiers in your program.
 
 ```
 2: if, as  
