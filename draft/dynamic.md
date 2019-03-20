@@ -1,6 +1,6 @@
-**************************************
-** using function signature
-**************************************
+
+** Using function signature
+```
 def CMP @ (Z,Z) ε L;
 
 -- instantiate 3 functions of type "CMP"
@@ -17,9 +17,12 @@ put dic["gt"](3,1) -- expect $1
 put dic["lt"](3,1) -- expect $0
 put dic["eq"](3,1) -- expect $0
 
-************************************************
+over;
+```
+
 ** Forward declaration
-************************************************
+
+```
 def func @ (Z,Z) ε L; 
 
 -- deferred declaration using same signature
@@ -30,3 +33,4 @@ put func(1,1);     -- execute function reference
 write;
 
 over;
+```
