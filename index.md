@@ -1,6 +1,6 @@
 ## Bee Syntax
 
-Bee is a light-weight statically typed computer language.
+Bee is a light-weight, statically typed computer language inspired from Python.
 
 **Read more:**[Wiki Bee](https://github.com/sage-code/bee/wiki)
 
