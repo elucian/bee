@@ -1,19 +1,19 @@
 +---------------------------
-  Declare a "free" method
+  Declare Fibonacci function
 ---------------------------+
 #driver "fi"
 
--- declare Fibonacci method
+-- declare Fibonacci function
 def fib(n ε N) => (y ε N): 
-  when (n = 1 | n = 0)
+  when (n = 1 | n = 0):
     let y := 1;
   else:
     let y := fib(n - 1) + fib(n - 2);
   when;
 def;
 
--- call method fib 
-new r:=fib(5):
+-- call function fib 
+new r := fib(5):
 
 -- print the result
 put r;

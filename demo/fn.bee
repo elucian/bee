@@ -1,18 +1,18 @@
 +----------------------------------
-  declare and use a function 
+  declare and use a λ function
  ---------------------------------+
 #driver "fn"
 
-** simple function
-def add(a, b ε Z) ε Z => (a + b);
+** simple λ function
+new add λ (a, b ε Z) ε Z => (a + b);
 
--- call function add
-put add(1, 2);  -- print 3
+-- call λ function add
+put add(1, 2);     -- print 3
 put add(-10, 10);  -- print 0
 write;
 
 ** recursive function
-def fac(n ε N) ε N => (1 if n = 0, fac(n-1));
+new fac λ (n ε N) ε N => (1 if n = 0, fac(n-1));
 put fac(3); -- expect 6
 write; 
  

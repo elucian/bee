@@ -1,10 +1,10 @@
-*************************************************
-** Input/Output parameters
-*************************************************
++------------------------------------
+       Input/Output parameters
+------------------------------------+
 #driver "op"
 -- method with input output parameters
--- Operator "@"  define input/output reference 
--- operator "::" for named argument pass by reference
+-- operator "@"  define input/output reference 
+-- operator "::" pass named argument by reference
 
 def pro(a,b @ N):
   new a +=  1; -- modify parameter a

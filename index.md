@@ -30,7 +30,7 @@ You can learn bee by reading demo source files:
 1. [in.bee](demo/in.bee) - Input multiple values
 1. [cs.bee](demo/cs.bee) - Control structures
 1. [fn.bee](demo/fn.bee) - Function declaration
-1. [fi.bee](demo/fi.bee) - Fibonacci function
+1. [fi.bee](demo/fi.bee) - Fibonacci λ function
 1. [gv.bee](demo/gv.bee) - Global variables
 1. [lv.bee](demo/lv.bee) - Local variable demo
 1. [dt.bee](demo/dt.bee) - User defined data types
