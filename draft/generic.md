@@ -5,7 +5,7 @@ A generic method is using a variable type "X".
 **bubble sort**
 
 ```
-def sort<X>(array @ [X], gt @ (X,X) ε L ):
+def sort<X>(array @ [X], gt λ (X,X) ε L ):
     new n := length(array)-1;
     new swap ε L;
     new temp ε X;
@@ -42,7 +42,7 @@ def Person  <: { name ε S, age ε N };
 
 -- define order method for array of Persons
 def order(cat @ [Person]):
-  sort<S>(cat, gt::(a, b ε S) ε L => (a.name > b.name));
+  sort<S>(cat, (a, b ε S) ε L => (a.name > b.name));
 def order;
 
 -- define clients and suppliers

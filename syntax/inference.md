@@ -69,7 +69,7 @@ In next function foo, parameters a, b are optional.
 
 ```
 -- result type is missing
-def foo(a:0, b:0) => ( a + b ); 
+new foo λ (a:0, b:0) => ( a + b ); 
 
 put foo();   -- 0
 put foo(1);  -- 1
@@ -97,7 +97,7 @@ We can use parameter name and pair-up ":" symbol for argument value.
 ```
 -- fn with optional parameters
 -- result type is missing
-def bar(a,b,c:0) => (a+b+c);
+new bar λ (a,b,c:0) => (a+b+c);
 
 -- observe we use pair-up to give value to argument
 put bar(a:1); -- print 1 because (b,c := 0) 

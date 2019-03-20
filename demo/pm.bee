@@ -1,17 +1,17 @@
-+----------------------------
-  pattern matching
-----------------------------+
++-------------------------------
+  pattern matching λ expression
+------------------------------+
 #driver "pm"
 
--- pattern matching function
-def pm(p1,p2 ε N) ε N =>
+-- pattern matching expression
+new pm λ (p1,p2 ε N) ε N =>
   (0 if (p1 = 0 )
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
   ,3 if (p1 > p2)
   ,4);
 
--- execute function pm
+-- execute pm expression
 put pm(0,2);  -- will print 0
 put pm(1,0);  -- will print 1
 put pm(1,1);  -- will print 2

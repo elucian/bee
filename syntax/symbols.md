@@ -1,10 +1,10 @@
 # Special symbols
 
 Bee has limited support for special symbols:
-It is using Extended ASCII character set.
+It is using Extended ASCII character set not Unicode.
 
 * Preferred font for Bee: "Lucida Console".
-* Use ALT+ Code to input a symbol:
+* You can use ALT+Code to input a symbol:
 
 ### Code page
 You can change code page to: 
@@ -14,11 +14,11 @@ You can change code page to:
 >chcp 737 (Greek)
 >chcp 866 (Cyrillic)
 
-Basically if the characters below are supported by a code page you can use it.
-
 ### Not supported:
-Following Unicode symbols are not supported: ∈ ⊕ ∧ ∨ ⊥ ⊤ ∩ 
-
+Following Unicode symbols are not supported: 
+```
+∈ ⊕ ∧ ∨ ⊥ ⊤ ∩
+```
 ## Basic Operators
 
 sym| code 

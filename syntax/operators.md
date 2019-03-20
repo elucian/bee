@@ -30,7 +30,8 @@ symbol| description
   $   | Global variables prefix \| System environment constants
   :   | Pair up key-value in a collection or method call
   ;   | End of statement \| Statement enumerator
-  .   | Public element/member/property \| Membership dot notation
+  .   | Decimals for real numbers \| String concatenation
+  .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Space constant:' ' \| Anonymous variable
   \*  | Replicate value \| [*] Multiple elements  \|Variable arguments  
   \\  | Escape character (\\n := New Line) \| maybe regular expressions

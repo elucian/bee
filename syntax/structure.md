@@ -23,8 +23,8 @@ Bee has 3 kind of program files each with different role:
 
 Bee is using 2 kind of declarations:
 
-* def -- define:constant,types,functions
-* new -- create/initialize variables
+* def -- define:constant,types,methods,functions
+* new -- create/initialize variable,collection,λ-expressions
 
 **Note:**
 Bee do not support Unicode identifiers in declarations.
@@ -166,8 +166,8 @@ new .pi := 3.14;
 --public variable
 new .v ε N;
 
---public function
-def .f(x ε N) ε N => (x + 1);
+--public λ expression
+new .f λ (x ε N) ε N => (x + 1);
 
 --public method
 def .m(x, y ε N, r @ N):
@@ -193,10 +193,11 @@ This is myLib.bee file:
 ```
 #library
 
-cpp myLib; -- load cpp library
+cpp myLib.(*); -- load cpp library
 
+-- define a wrapper for external "fib"
 def fib(n ε Z) => (x ε Z):
-   myLib.fib;
+   let x := myLib.fib(n -> i8);
 def;
 
 ```

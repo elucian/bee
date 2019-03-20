@@ -11,7 +11,6 @@ For syntax notation we use modified BNF convention:
 * [Expression](#expression)
 * [Data type](#data-type)
 * [Logical expression](#logical-expression)
-* [Active expression](#active-expression)
 * [Control Flow](#control-flow)
 * [Pattern Matching](#pattern-matching)
 * [Functions](#functions)
@@ -366,32 +365,6 @@ let y := b -> L; -- y = $1
 * A string that contains "True" "true", "T" or "t" or "1" convert to: 1
 * A string that contains "False", "true", "F" or "f" or "0" convert to: 0
 
-## Active expression
-
-An expression is active if it modifies a variable. An active expression has a logic result: $0 or $1. The result can be captured using assignment ":=" or it can be used in a conditional.
-
-**syntax**
-```
-  <variable_name> <op> <mutating_expression>;
-```
-
-Where: <op> can be any [modifier operator](operators.md#arithmetic-modifiers).
-
-**examples**
-```
-new a := 0;
--- active conditional
-when a += 1:
-   put a; -- expect 1
-when;
-
--- protect zero division
-new b ε L;
-let b := (a := 1/0); -- not failing
-put b ; -- expected $0 (false)
-put a := 1; (unmodified)
-```
-
 ## Control Flow
 
 Bee has 3 control flow statements {if, when, cycle }:
@@ -410,6 +383,7 @@ The statement is executed only if the condition is 1 = $1.
 **notes:**
 1. Conditional expression must be enclosed in ();
 1. Conditional can not be associated with def statement;
+1. Conditional can not be associated with new statement;
 1. Conditional can not be associated with any block statement;
 
 ```
@@ -427,16 +401,67 @@ write;
 
 **Notes:** Keyword "if" and "else" are not related.
 
+## Pattern Matching
+
+Instead of ternary operator we use conditional expressions. 
+These expressions are separated by coma and enclosed in ().
+
+**Syntax:**
+
+```
+new <var> ε <type>;
+
+-- single matching with default value
+let <var> := (<xp> if <cnd>, <dx>);
+
+-- multiple matching with default value
+let <var> := (<xp1> if <cnd1>, <xp2> if <cnd2>..., <dx>);
+
+-- alternative code alignment
+let <var> := (
+  <xp1> if <cnd1>,
+  <xp2> if <cnd2>,
+  <dx>  );
+```
+
+**Legend:**
+ 
+```
+<var>  := predefined variable
+<xp1>  := expression of same type with <v>
+<cnd1> := condition for <xp1>
+<dx>   := default expression (optional condition).
+```
+
+**example**
+```
+new x := `0`;
+get (x,"x:>");
+new what := ("digit" if x ε [`0`..`9`], if x ε [`a`..`z`], "letter","unknown");
+put "x is"._.what;
+over;
+```
+
 ### When
 
-Dual selector based on single logical expression.
+When is a decision statement selector based on one condition.
+
+**syntax**
+```
+when <condition>:
+  <statement>;
+  ... 
+when;
+```
+
+Dual selector based on single logical expression:
 
 **pattern**
 ```
 when <condition>:
-  <branch>;
+  <true_branch>;
 else:
-  <branch>;
+  <false_branch>;
 when;
 ```
 
@@ -517,38 +542,6 @@ cycle outer:
 cycle;
 ```
 
-## Pattern Matching
-
-Instead of ternary operator we use conditional expressions. 
-These expressions are separated by coma and enclosed in (, , ,).
-
-**Syntax:**
-
-```
-new <var> ε <type>;
-
--- single matching with default value
-let <var> := (<xp> if <cnd>, <dx>);
-
--- multiple matching with default value
-let <var> := (<xp1> if <cnd1>, <xp2> if <cnd2>..., <dx>);
-
--- alternative code alignment
-let <var> := (
-  <xp1> if <cnd1>,
-  <xp2> if <cnd2>,
-  <dx>  );
-```
-
-**Legend:**
- 
-```
-<var>  := predefined variable
-<xp1>  := expression of same type with <v>
-<cnd1> := condition for <xp1>
-<dx>   := default expression (optional condition).
-```
-
 **example**
 
 ```
@@ -567,73 +560,68 @@ cycle;
 write; --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
-## Functions
+## λ Expressions
 
-Functions are named expressions that can return result:
+λ Expressions are deterministic expressions that can return one single result:
 
 **syntax**
 ```
-def <name>(<param> ε <type>,...) ε type => (expression);
+new <name>(<param> ε <type>,...) ε type => (expression);
 ```
 
 **Example:** 
 
 ```
--- define "func" a function with two parameters
-def func(x,y ε Z) ε Z => (x + y); 
+-- define "ex" a function with two parameters
+new ex λ (x,y ε Z) ε Z => (x + y); 
 
 -- simple function call
-new z := func(1,1); 
+new z := ex(1,1); 
 put z; -- print 2 
 
 write;
 ```
 
-**properties:** 
+**note:** Lambda expressions are mathematical functions.
 
-* functions have one single result;
-* functions have a local scope called context;
-* functions can be created during run-time by a method;
-* functions can be assigned to variables;
-* functions can be used in expressions;
-* functions can be send as parameters to methods;
+**properties**
+* λ expressions have a deterministic result
+* λ expressions can be created during run-time;
+* λ expressions can be used in other λ expressions;
 
 **restriction:**
-* functions can not have local declarations 
-* functions can not create another functions
-* functions can not receive input/output parameters
-* functions can not perform input/output operations
-* functions can not fail and can not be interrupted
+* λ expressions can not have local declarations 
+* λ expressions can not receive input/output parameters
+* λ expressions can not perform input/output operations
+* λ expressions can not fail and can not be interrupted
 
-**Exmples**
-* [fi.bee](../demo/fi.bee)
-* [fn.bee](../demo/fn.bee)
-* [pm.bee](../demo/pm.bee)
+**See also:**
+[pm.bee](../demo/pm.bee)
 
-## Methods
+## Functions
 
-A method is a named block that can have no result, one or more results.
+A function is a named block of code that can have, one or more results.
 
+**pattern**
 ```
 def <name>(<param> ε <type>,...) => (<result> ε <type>,...):
    [<statement>];
    ...   
    let <result> := <expression>;
+   ...
 def;
 ```
 
 **Example:** 
 
 ```
--- method with one result:
+-- function with one result:
 def add(x,y ε i8) => (r ε i8):
-  r := x + y; 
+  let r := x + y; 
 def;
 
--- use result in assign expression
-new m := add(1,2);
-new m :: add(0,0); -- compilation error: result is not a reference
-new m <+ add(0,0); -- compilation error: single result
+-- function can be call using "new" or "let"
+new m := add(0,0); -- create m = 0 ε i8
 
 -- two results "s" and "d"
 def com(x,y ε Z) => (s ε Z, d ε Z):
@@ -656,10 +644,59 @@ new x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
 ```
 
+**properties:** 
+
+* functions can be assigned to function references;
+* functions can be sent as reference arguments to methods;
+* functions have a local scope called _"context"_;
+* functions can be created during run-time by other functions;
+
+**restriction:**
+* functions must have at least one result;
+* functions can not be used in λ expressions;
+* functions results must be captured in variables;
+
+**See also:**
+* [fi.bee](../demo/fi.bee)
+* [fn.bee](../demo/fn.bee)
+
+## Methods
+
+A method is a named block of code that have parameters but no result.
+
+**pattern:**
+```
+def <name>(<param> ε <type>,...,<output> @ <type>):
+   [<statement>];
+   ...   
+   let <output> := <expression>;
+def;
+```
+
+**Example:** 
+
+```
+-- method with one result:
+def add(x,y ε i8, r @ Z):
+  let r := (x + y); 
+def;
+
+-- define result for method call
+new result ε Z;
+
+-- call method and capture result
+add(1,2,result); 
+
+-- test output value
+put result --> 3
+```
+
 **Side-effect**
 
-* Some methods have no parameters and no results; 
-* These methods are used for side-effects;
+Methods can have side-effects.
+
+* Some methods have no parameters; 
+* These methods are used only for side-effects;
 
 **example**
 ```
@@ -670,18 +707,13 @@ def;
 
 -- using name of method will execute the method  
 foo;
-
 ```
 
 **Notes:**
-* Method declaration is using ":" immediate after name if there is no result;
-* Method declaration do not require empty brackets ();
-* Method calls do not require brackets () for single or no argument;
-* Multiple arguments can be enumerated only with brackets (arg1, arg2...);
+* A method declaration do not require empty brackets ();
+* A method call do not require brackets () for single or no argument;
 * A method can have output parameters and side-effects;
-* A method that has multiple results can be used only in unpacking expression;
-* A method that has no result can not be used in expressions
-* A method can be interrupted rearly using "exit" keyword.
+* A method can be interrupted earlier using "exit" keyword.
 
 ## References 
 
@@ -689,23 +721,24 @@ In Bee all basic types and user defined types are references.
 
 * Default assign `:=` copy a value or execute an expression. 
 * Reference assign `::` clone a reference and fail if this is not possible.
+* Mandatory reference operator "@" can be used to declare input/output parameters.
 
 **example**
 ```
-new i := 0  ε i4; 
-new i := 0  ε i4; 
+new i := 0  ε i8; 
+new i := 0  ε i8; 
 new j := 10 ε Z;
 
--- explicit un-boxing
-let i := j; -- copy j value. make i = 10
-let i := i + 2; -- modify i := 12
+-- un-boxing using ":="
+let i := j ; -- i = 10
+let i := i + 2;   -- i = 12
 put j; --> j = 10 (unmodified)
 
 -- verify assignment effect
 put j = i; -- 1 same value
 put j ≡ i; -- 0 different reference 
 
--- explicit boxing using "::"
+-- boxing using "::"
 let j :: i; -- boxing i := 12 
 let i += 1; -- modify i := 13
 put j; --> expect 13 (modified)
@@ -717,34 +750,9 @@ put j ≡ i; -- 1 (true) same reference
 write;
 ```
 
-## Forward declaration
-
-A forward declaration is a deferred function.
-
-**syntax**
-```
-def func_name(param_list) ε rezult_type;
-```
-
-**example**
-```
--- declare function reference with two parameters
-def add(Z,Z) ε Z;
-
--- implement function reference (types are not specified)
-def add(a ε Z, b ε Z) ε Z => (a + b);
-
-put add(1,1); -- expect 2
-
-write;
-```
-**See also:** 
-* [cj.bee](../demo/cj.bee) 
-* [ho.bee](../demo/ho.bee)
-
 ## Method Parameters
 
-Parameters are variables defined in a method signature. Arguments are part of the method call and can be: constants, variables, expressions or functions.
+Parameters are variables defined in a method signature.
 
 **Notes:**   
 * Native type parameters are pass by value;
@@ -764,40 +772,50 @@ def;
 new res ε Z;
 
 -- call function add with arguments by name
-def add(a:1, b:2, r :: res); 
+add(a:1, b:2, r :: res); 
 put res;  -- expect 3
 
 -- call function add with arguments by position
-def add(2, 2, res);  
+add(2, 2, res);  
 put res;  -- expect 4
 
 write;
 ```
 
 **note**
-* Parameters with initial value are optional
-* Optional parameters must be last parameters
-* Optional parameters are initialized with pair-up operator ":"
+* Parameters with initial value are optional;
+* Optional parameters must be last parameters or can be called by name;
+* Optional parameters are initialized with pair-up operator ":";
+
+## Expression as Parameter
+
+A method or function can receive as parameter a λ expression.
+
+**syntax**
+```
+def <method_name>(<expression_name> λ (<param_list>) ε <result_type>):
+  ...
+def;
+```
 
 **example**
 ```
-#driver "fn"
-
--- method with output parameter
-def add(a,b ε Z, c: 0) => (r ε Z):
-  let r := a + b;
+-- declare function reference with two parameters
+def compare(a,b ε Z,cmp λ (Z,Z) ε L) => (r ε L):
+  let r := cmp(a,b);
 def;
 
--- declare result variable
-new res ε Z;
+-- declare λ expressions:
+new lt λ (a,b ε Z) ε L => (a < b)
 
--- call function with 2 arguments
-let res <+ add(1, 2); 
-
--- call function add with 3 arguments
-let res <+ add(4,4,4);  
+-- call compare using anonymous λ expressions
+new test := compare(1,2,lt);
+put test; -- expect $1
 
 write;
 ```
+**See also:** 
+* [cj.bee](../demo/cj.bee) 
+* [ho.bee](../demo/ho.bee)
 
 **Read Next:** [Composite Types](composite.md)

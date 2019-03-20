@@ -6,7 +6,7 @@
 -- Operator "@"  define input/output reference 
 -- operator "::" for named argument pass by reference
 
-def pro(a,b @ N) => ():
+def pro(a,b @ N):
   new a +=  1; -- modify parameter a
   new b +=  2; -- modify parameter b 
 def ;

@@ -1,12 +1,12 @@
 ## Bee Keywords
 
-Bee uses reserved keywords to create statements. You can not use these keywords as identifiers in your program. That is Bee is a minimalist language: to avoid restricting you to use English words as new identifiers in your program.
+Bee uses reserved keywords to create statements. You can not use these keywords as identifiers in your program. 
 
 ```
-2: if, as  
+2: if, as, do  
 3: asm, cpp, bee, def, get, say, put, new, let  
-4: read, when, else, skip, next, exit, fail, pass, loop, stop, over;
-5: write, cycle 
+4: read, when, else, redo, done, exit, fail, pass, loop, stop, over;
+5: write, cycle, while  
 ```
 
 ### Definition statements
@@ -18,7 +18,7 @@ Next statements are used to import modules or declare something.
 | asm      | Import Assembly \| start assembly code
 | cpp      | Import C \| C++ library
 | bee      | Import Bee module \| library
-| def      | Define user data type or constant
+| def      | Define data type, constant, method or function
 | new      | Declare a mutable variable
 
 ### Execution statements

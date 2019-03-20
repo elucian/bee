@@ -1,13 +1,13 @@
 +---------------------------------
-  High order method demo
+  High order function demo
 ----------------------------------+
 #driver "ho" 
 
-** Function factory
+** Define: λ Factory
  
--- this method can create a function
-def shift(i ε Z) => g(Z) ε Z:
-  def g(s ε Z) => (s + i);
+-- this function can create λ expression
+def shift(i ε Z) => (g λ (Z) ε Z):
+  let g :: (s ε Z) => (s + i);
 def shift;
 
 -- create two function instances

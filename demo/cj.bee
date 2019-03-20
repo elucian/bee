@@ -4,7 +4,7 @@
 -- this method create a closure
 def gen(min, max ε N) => (me() ε Z):
   new s := min;    
-  def me() => r ε Z:
+  def me() => (r ε Z):
      when s ≤ max:
        let r := s;      
        let s += 1;
