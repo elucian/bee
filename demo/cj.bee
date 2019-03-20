@@ -8,7 +8,7 @@ def gen(min, max ε N) => (me() ε Z):
      when s ≤ max:
        let r := s;      
        let s += 1;
-     else
+     else:
        let r := -1;
      when; 
   def;
@@ -17,7 +17,7 @@ def;
 -- use gen to create one instance: 
 new foo := gen(10,20);
 new x := 0;
-cycle
+cycle:
   stop if (x = -1);
   let x := foo();  
   say (x,",");

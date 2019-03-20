@@ -14,7 +14,7 @@ put ("a > b") if (a > b);
 write;
 
 -- single branch decision
-when ¬(a = b) 
+when ¬(a = b): 
   put ("a is not equals to b");
 when;
 
