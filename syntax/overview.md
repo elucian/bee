@@ -11,10 +11,11 @@ For syntax notation we use modified BNF convention:
 * [Expression](#expression)
 * [Data type](#data-type)
 * [Logical expression](#logical-expression)
-* [Control Flow](#control-flow)
 * [Pattern Matching](#pattern-matching)
+* [Control Flow](#control-flow)
 * [Functions](#functions)
 * [Methods](#methods)
+* [Lambda Expressions](λ-expressions)
 * [References](#references)
 
 
@@ -560,44 +561,6 @@ cycle;
 write; --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
-## λ Expressions
-
-λ Expressions are deterministic expressions that can return one single result:
-
-**syntax**
-```
-new <name>(<param> ε <type>,...) ε type => (expression);
-```
-
-**Example:** 
-
-```
--- define "ex" a function with two parameters
-new ex λ (x,y ε Z) ε Z => (x + y); 
-
--- simple function call
-new z := ex(1,1); 
-put z; -- print 2 
-
-write;
-```
-
-**note:** Lambda expressions are mathematical functions.
-
-**properties**
-* λ expressions have a deterministic result
-* λ expressions can be created during run-time;
-* λ expressions can be used in other λ expressions;
-
-**restriction:**
-* λ expressions can not have local declarations 
-* λ expressions can not receive input/output parameters
-* λ expressions can not perform input/output operations
-* λ expressions can not fail and can not be interrupted
-
-**See also:**
-[pm.bee](../demo/pm.bee)
-
 ## Functions
 
 A function is a named block of code that can have, one or more results.
@@ -787,6 +750,45 @@ write;
 * Optional parameters must be last parameters or can be called by name;
 * Optional parameters are initialized with pair-up operator ":";
 
+## Lambda Expressions
+
+λ Expressions are deterministic expressions that can return one single result:
+
+**syntax**
+```
+new <name>(<param> ε <type>,...) ε type => (expression);
+```
+
+**Example:** 
+
+```
+-- define "ex" a function with two parameters
+new ex λ (x,y ε Z) ε Z => (x + y); 
+
+-- simple function call
+new z := ex(1,1); 
+put z; -- print 2 
+
+write;
+```
+
+**note:** Lambda expressions are mathematical functions.
+
+**properties**
+* λ expressions have a deterministic result
+* λ expressions can be created during run-time;
+* λ expressions can be used in other λ expressions;
+
+**restriction:**
+* λ expressions can not have local declarations 
+* λ expressions can not receive input/output parameters
+* λ expressions can not perform input/output operations
+* λ expressions can not fail and can not be interrupted
+
+**See also:**
+* [pm.bee](../demo/pm.bee)
+* [ho.bee](../demo/ho.bee)
+
 ## Expression as Parameter
 
 A method or function can receive as parameter a λ expression.
@@ -814,8 +816,8 @@ put test; -- expect $1
 
 write;
 ```
+
 **See also:** 
 * [cj.bee](../demo/cj.bee) 
-* [ho.bee](../demo/ho.bee)
 
 **Read Next:** [Composite Types](composite.md)
