@@ -16,5 +16,6 @@ For voting on next feature that is going to be promoted I use twitter.
 ## Draft list
 
 * [Generic](generic.md) - generic method
+* [Dynamic](dynamic.md) - dynamic programming
 
 **Read next:** [index](../index.md)
