@@ -1,12 +1,12 @@
 ## Bee Keywords
 
-Bee uses reserved keywords to create statements. You can not use these keywords as identifiers in your program. 
+Bee uses 21 reserved keywords to create statements. You can not use these keywords as identifiers in your program. 
 
 ```
-2: if, as, do  
-3: asm, cpp, bee, def, get, say, put, new, let  
-4: read, when, else, redo, done, exit, fail, pass, loop, stop, over;
-5: write, cycle, while  
+2: if
+3: asm, cpp, bee, def, new, let, put, say, get 
+4: read, when, else, exit, fail, pass, loop, stop, over;
+5: write, cycle
 ```
 
 ### Definition statements
@@ -33,9 +33,6 @@ Next statements represents actions. Also called Imperative statements.
 | get      | Accept input from console and wait for read
 | read     | Accept user input from console 
 | write    | Output expression result to console 
-| exit     | Silent interrupt a method with no error 
-| fail     | Interrupt program execution with error 
-| over     | Program over (finalize program)
 
 ## Control statements
 
@@ -45,18 +42,20 @@ Control statements are also known as decision statements.
 |----------|--------------------------------------------------
 | if       | Conditional augment and pattern matching
 | when     | Decision block for conditional expression 
+| else     | Alternative path executed in _when_ statement
 | cycle    | Start point for repetitive block
 
-## Semantic keywords
+## Interruption keywords
 
-These keywords are associated with other statements to customize the statement behavior.
+These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| else     | Alternative path executed in _when_ statement
 | loop     | Continue iteration _for_ from beginning
 | stop     | stop inner cycle and continue after end of cycle.
-| fail     | Create an exception, used in job to create errors
-| pass     | Clear exception and continue with next statement
+| exit     | Silent interrupt a method or function with no error 
+| fail     | Interrupt method, function or program with error 
+| pass     | Null statement. It does absolutely nothing.
+| over     | Program over (finalize program)
 
 **Read next:** [Syntax Overview](overview.md)
