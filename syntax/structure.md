@@ -1,7 +1,21 @@
 # Program structure
 
-One Bee program has one driver and multiple modules.
-All program files have the same extension:  *.bee
+* One Bee program has one driver and multiple modules.
+* All program files have the same extension:  *.bee
+
+**bookmarks**
+
+* [Directives](#directives)
+* [Declarations](#declarations)
+* [Statements](#statements)
+* [Code blocks](#code-blocks)
+* [External Code](#external-code)
+* [Global scope](#global-scope)
+* [Public members](#public-members)
+* [Execution](#execution)
+* [Comments](#comments)
+* [Type hierarchy](#type-hierarchy)
+
 
 ## Directives
 Compiler directive symbol "#" is used to identify file type.
@@ -19,7 +33,7 @@ Bee has 3 kind of program files each with different role:
 * A library can be included in driver or modules programs;
 * A module can be instantiated once or multiple times
 
-## Declaration
+## Declarations
 
 Bee is using 2 kind of declarations:
 
@@ -218,7 +232,7 @@ write;
 To understand more about interacting with other languages check this article about ABI:
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
  
-## ASCII comments
+## Comments
 
 In We comments are number one concern. We enable several notations that enable ASCII comments. 
 
