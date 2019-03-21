@@ -1,12 +1,15 @@
-# Standard Library
+## Standard Library
 
-Standard library is automatically included in Bee language.
+Standard library contains:
 
+* [type-system](#type-system)
+* [built-in-functions](#built-in-functions)
+* [mathematics](#mathematics)
+* [system-library](#system-library)
 
 ## Type system
 
-In Bee the types are considered finite or infinite sets.   
-Following types are included in standard library.
+Following types are included in standard library:
 
 **Basic types**
 
@@ -62,7 +65,6 @@ Following types are included in standard library.
 | floor    | Convert one real into an integer
 | parse    | Convert one string into one number
 | random   | Create random numbers
-
  
 ## Mathematics
 
@@ -74,6 +76,64 @@ Following types are included in standard library.
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | modulo y := \|x\|  
+| mod      | module function y := \|x\|  
+
+## System Library
+
+Interaction with operating system require import from library.
+
+```
++-------------------------
+\bee 
+  |
+  |-->system
+  |     |-->io.bee
+  |
+  +-->db
+  ...
+-------------------------+  
+```
+
+## File IO
+
+To read and write into files and save to disk, we must use method "open" from system.io library.
+
+This library define type "F" : file handler. It offer support for file input/output from operating system.
+
+**Methods**
+
+Next is a fragment from system.io library that define functions open and close.
+
+```
+def .open(name ε S, mode ε A) => (f ε F);
+def .close(f ε F);
+...
+
+```
+**remember:** public functions start with "."
+
+**Examples:**
+
+* File Open:[fo.bee](../demo/fo.bee)
+* File Scan:[fs.bee](../demo/sc.bee) 
+
+**File IO**
+
+Other functions available in systen.io
+
+| Function | Purpose
+|----------|------------------------------------------ 
+| .exist   | Check if file exist on disk
+| .open    | Open a file for read or write
+| .close   | Close a file after using it
+| .erase   | Remove a file from disk
+| .scrub   | Remove all files from directory
+| .clean   | Remove all files and folders /recursive  
+| .make    | Make a directory
+| .remove  | Remove a directory
+| .list    | Read a list of files and folders from directory
+| .folder  | Current working folder name 
+| .change  | Change current working folder
+
 
 **Read next:** [Structure](structure.md)

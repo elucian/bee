@@ -1,7 +1,9 @@
-** Closure demo
++----------------------------------
+  Closure demo function
+----------------------------------+
 #driver "cj"
 
--- this method create a closure
+-- this function is a "closure"
 def gen(min, max ε N) => (me() ε Z):
   new s := min;    
   def me() => (r ε Z):
@@ -14,7 +16,7 @@ def gen(min, max ε N) => (me() ε Z):
   def;
 def;
 
--- use gen to create one instance: 
+-- use gen to create one closure instance: 
 new foo := gen(10,20);
 new x := 0;
 cycle:

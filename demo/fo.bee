@@ -4,7 +4,9 @@
 #driver "fo"
 
 -- initialize the system library 
-bee io   := $wee.system.io.*;
+bee io   := $bee.system.io.(*);
+bee con  := $bee.system.console.(*);
+
 new file := io.open('foo.txt','+w');  
 
 -- write into the file using put
@@ -12,11 +14,13 @@ file.put("Hello World!");
 file.write;
 
 -- read the entire content from file
-new content := file.read;
+new content ε U;
 
+file.read content;
 file.close; 
 
+-- display the entrie content to console
 say content;
-write; 
+con.write; 
 
 over;
