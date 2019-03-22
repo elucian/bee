@@ -5,7 +5,7 @@
 
 -- this function is a "closure"
 def gen(min, max ε N) => (me() ε Z):
-  new s := min;    
+  new s := min ε N;    
   def me() => (r ε Z):
      when s ≤ max:
        let r := s;      

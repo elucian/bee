@@ -96,9 +96,7 @@ Interaction with operating system require import from library.
 
 ## File IO
 
-To read and write into files and save to disk, we must use method "open" from system.io library.
-
-This library define type "F" : file handler. It offer support for file input/output from operating system.
+To read and write into files and save to disk, we must use system.io library. This library define type "F" : file handler. It offer support for file input/output.
 
 **Methods**
 
@@ -119,21 +117,20 @@ def .close(f ε F);
 
 **File IO**
 
-Other functions available in systen.io
+Other functions in system.io
 
-| Function | Purpose
-|----------|------------------------------------------ 
-| .exist   | Check if file exist on disk
-| .open    | Open a file for read or write
-| .close   | Close a file after using it
-| .erase   | Remove a file from disk
-| .scrub   | Remove all files from directory
-| .clean   | Remove all files and folders /recursive  
-| .make    | Make a directory
-| .remove  | Remove a directory
-| .list    | Read a list of files and folders from directory
-| .folder  | Current working folder name 
-| .change  | Change current working folder
-
+|Function | Purpose
+|---------|------------------------------------------ 
+| exist   | Check if file exist on disk
+| open    | Open a file for read or write
+| close   | Close a file after using it
+| erase   | Remove a file from disk
+| scrub   | Remove all files from directory
+| clean   | Remove all files and folders /recursive  
+| make    | Make a directory
+| remove  | Remove a directory
+| list    | Read a list of files and folders from directory
+| folder  | Current working folder name 
+| change  | Change current working folder
 
 **Read next:** [Structure](structure.md)
