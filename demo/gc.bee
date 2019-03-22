@@ -10,23 +10,31 @@ def GenI <: {min ,max ,ci:min ε Z};
 def GenI.reset(me @ GenI, p_min , p_max ε Z):
   let me.min := p_min
   let me.max := p_max
-  let ci:= p_min;    
+  let me.ci:= p_min;    
 def;
 
 -- get next index
 def GenI.next(me @ GenI) => (i ε Z):
-  let i  := ci;
-  let ci += 1;
+  let i  := me.ci;
+  let me.ci += 1;
+def;
+
+-- detect if finish
+def GenI.finish(me @ GenI)  => (r ε L):
+  let L := (me.ci ≥ me.max);
 def;
 
 -- use GenI to create one instance: 
 new foo := {min:10,max:20} ε GenI;
 new x := 0;
 cycle:
-  stop if (x = -1);
+  stop if foo.finish();
   let x := foo,next();  
   say (x,",");
 cycle;
-write; 
+write; -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
+
+-- test reset method
+foo.reset();
+fail if ¬ (foo.ci = 10); -- expect: 10
 over;
---expect: 10,11,12,13,14,15,16,17,18,19,20, 
