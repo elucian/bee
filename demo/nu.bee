@@ -3,8 +3,8 @@
 ----------------------------------------------+
 #driver "nu"
 
-new d, e ε Z; --reference to natural number
-new s := 10 ε i8; --> type is i8 native type   
+new d, e ∈ Z; --reference to natural number
+new s := 10 ∈ i8; --> type is i8 native type   
 
 -- assign "by value"
 let e := s; -- make a clone from s

@@ -6,11 +6,11 @@
 -- enumeration with public members
 def Number <: {.zero, .one, .two};
 
-new test ε Number;
+new test ∈ Number;
 let test := zero; -- instance of Number
 
 -- create a method for type Number
-def convert(x @ Number) => (y ε S):
+def convert(x @ Number) => (y ∈ S):
   let y := ('zero'  if x = zero,
             'one'   if x = one,
             'two'   if x = two,
@@ -18,7 +18,7 @@ def convert(x @ Number) => (y ε S):
 def;
 
 -- a wrapper method for convert
-def equal(x @ Number, s ε S) => (r ε L):
+def equal(x @ Number, s ∈ S) => (r ∈ L):
   let r := s = x.convert(); 
 def;
     

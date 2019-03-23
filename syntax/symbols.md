@@ -1,28 +1,96 @@
 # Special symbols
 
-Bee has limited support for special symbols:
-It is using Extended ASCII character set not Unicode.
+You must use a special font to enable Bee symbols:
 
-**Note:** You can use ALT+Code to input a symbol:
+## Programmable Keyboard
 
-### Code page
-You can change code page to: 
+We recommend usage of programmable keyboards with more than 12 programmable keys.
 
->chcp 437 (Default)
->chco 863 (French)
->chcp 737 (Greek)
->chcp 866 (Cyrillic)
+**Logitech:** G110
 
-### Not supported:
-Following Unicode symbols are not supported: 
+My keyboard settings is saved in file G110.xml
+
+```  
+      M1    M2   M3
+-----------------------
+  G1 | ∈ ≡  ≈ ↔  ε λ 
+  G2 | ≤ ≥  ± ×  τ φ
+-----------------------
+  G3 | ¬ ≠  ⊃ ⊂  α β  
+  G4 | · ÷  ∩ ∪  π σ
+-----------------------
+  G5 | ∧ ∨  ↑ ↓  Π Σ 
+  G6 | ⊤ ⊥  ← →  Γ Δ
+-----------------------
 ```
-∈ ⊕ ∧ ∨ ⊥ ⊤ ∩
+
+## Other symbols
+
+Optional Unicode symbols can be used to enhance the readability of programs.
+
+**Superscript**
+
+Superscript is considered exponent. Alternative to `^` power symbol.
+
+``` 
+M ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ 
+A ⁺ ⁻ ⁱ ʲ ᵏ ⁿ ᵒ ᵖ ʳ ˢ ˣ ʸ ᶻ 
+
+A ᵃ ᵇ ᶜ ᵈ ᵉ ᶠ ᵍ ʰ ⁱ ʲ ᵏ ᶩ ᵐ ⁿ ᵒ ᵖ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ 
+B ᴬ ᴮ ᴰ ᴱ ᴳ ᴴ ᴵ ᴶ ᴷ ᴸ ᴹ ᴺ ᴼ ᴾ ᴿ ᵀ ᵁ ᵂ 
 ```
-## Basic Operators
+
+**Subscript**
+
+Subscript symbol can be used for identifiers as a second letter or digit.
+
+```
+M ₀ ₁ ₂ ₃ ₄ ₅ ₆ ₇ ₈ ₉ 
+X ₐ ₑ ₕ ᵢ ⱼ ₖ ₗ ₘ ₙ ₒ ₚ ᵣ ₛ ₜ ᵤ ᵥ ₓ
+```
+
+**Fraction sign**
+
+Fraction sign ⁄ represent rational numbers:
+
+```
+¹⁄₂ ¹⁄₃ ¹⁄₄ ¹⁄₅ ¹⁄₆ ¹⁄₇ ¹⁄₈ ¹⁄₉ ¹⁄₁₀ ¹⁄₁₀₀ 
+```
+
+## Greek Letters
+
+Greek letters can be used for variable names.
+
+```
+Γ Δ Λ Ξ Π Σ Φ Ψ Ω 
+α β ∈ δ ζ η θ λ μ ν ξ ο π ρ σ ς τ υ φ
+```
+
+## Editor Font
+
+We recommend a fixed size font and UTF-8 encoding for Bee source code.
+
+**Download:** [Dejavu Fonts](https://dejavu-fonts.github.io/)
+
+## Console
+Windows console can support Unicode fonts. You must add a new entry in registry:
+```
+1. run:> regedit
+2. locate: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\
+           Windows NT\CurrentVersion\Console\TrueTypeFont
+3. add text entry:000 and modify to: "DejaVu Sans Mono"
+4. close regedit
+5. start/restart console
+6. use: chcp 65001
+7. edit default font and select "DejaVu Sans Mono"
+```
+
+## ALT-KEY Codes
+
+Many symbols can be input from a normal keyboard using ALT+CODE
 
 sym| code 
 ---|------------
- ε | 238   
  = | 240
  ≈ | 247
  ≥ | 242 
@@ -49,6 +117,7 @@ sym| code
 
 sym| code
 ---|-------- 
+ ε | 238   
  α | 224
  ß | 225
  Γ | 226
@@ -74,18 +143,6 @@ sym| code
  ² | 253
  ² | 0178
  ³ | 0179
-
- 
-## Trivial fractions 
-
-sym   | code
-------|------
- ½    | 171 
- ¼    | 172
- ¼    | 0188
- ½    | 0189
- ¾    | 0190
-  
  
 ## Documentation
  

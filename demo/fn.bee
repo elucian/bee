@@ -4,7 +4,7 @@
 #driver "fn"
 
 ** simple λ expression
-def add(a, b ε Z) ε Z => (a + b);
+def add(a, b ∈ Z) ∈ Z => (a + b);
 
 -- call λ expression add
 put add(1, 2);     -- print 3
@@ -12,7 +12,7 @@ put add(-10, 10);  -- print 0
 write;
 
 ** recursive expression
-def fac λ (n ε N) ε N => (1 if n = 0, fac(n-1));
+def fac λ (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
 put fac(3); -- expect 6
 write; 
  

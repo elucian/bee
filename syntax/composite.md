@@ -20,10 +20,10 @@ Composite types are complex data structures.
 
 Bee uses composite types to ...
 
-* define data types using "def", "<:" and "ε"
-* declare constants using "def", ":=" and "ε"
-* declare variables using "new", ":=" and "ε"
-* declare parameters using symbols "*", ":=", "@:" and "ε"
+* define data types using "def", "<:" and "∈"
+* declare constants using "def", ":=" and "∈"
+* declare variables using "new", ":=" and "∈"
+* declare parameters using symbols "*", ":=", "@:" and "∈"
 
 ## Range
 
@@ -46,7 +46,7 @@ def Positive      <: Z[0..+];
 def Negative      <: Z[-..-1];
 
 --Check variable belong to sub-type
-when ('x' ε AlfaChar):
+when ('x' ∈ AlfaChar):
   put 'yes';
 else:
   put 'no';
@@ -59,8 +59,8 @@ write;
 
 * Anonymous range expression [n..m] is of type i8
 * Range can apply only to discrete basic types (A,B,Z,N)
-* Control variables can be declared in range using "ε"
-* To check value is in range use operator "ε"
+* Control variables can be declared in range using "∈"
+* To check value is in range use operator "∈"
 
 ## Ordinal
 
@@ -70,7 +70,7 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 ```
 def TypeName <: { name1:0, name2, name3};
 
-new a, b, c ε TypeName;
+new a, b, c ∈ TypeName;
 
 let a := TypeName.name1; --a=2
 let b := TypeName.name2; --b=3
@@ -129,7 +129,7 @@ A list can be assigned to multiple variables using unpacking:
 
 ```
 --create 3 new variables using list literal
-new x, y, z ε Z;
+new x, y, z ∈ Z;
 
 --unpacking modify all 3 value
 let x, y, z := (97, 65, 40);
@@ -149,12 +149,12 @@ A method can have multiple results.
 
 ```
 -- have a list of results
-def test(x,y ε Z) => (r, c ε Z):
+def test(x,y ∈ Z) => (r, c ∈ Z):
   r += x+1;
   c += y+1;
 def;
 
-new n, m ε Z;
+new n, m ∈ Z;
 
 -- unpacking the result
 let n, m := test(1,2);
@@ -173,7 +173,7 @@ List members can be ignored when unpacking using anonymous variable: "_"
 
 ```
 new lst := (0, 1, 2, 3, 4, 5);
-new x,y,z ε Z;
+new x,y,z ∈ Z;
 
 -- first element and last 2 are ignored
 let _,x,_,z := lst;
@@ -221,7 +221,7 @@ A stack is a LIFO collection of elements.
 
 ```
 new a := (1,2,3);
-new last ε N;
+new last ∈ N;
 
 -- using set with operator "+"
 let a := a + 4; -- (1,2,3,4)
@@ -265,8 +265,8 @@ new s  := {N}; --this is an empty set
 put "set \"s\" is empty" if s = {}
 
 -- set specific operations
-let s := s1 | s2; --{1,2,3,4} --union
-let s := s1 & s2; --{2,3}     --intersection
+let s := s1 ∪ s2; --{1,2,3,4} --union
+let s := s1 ∩ s2; --{2,3}     --intersection
 let s := s1 - s2; --{1}       --difference 1
 let s := s2 - s1; --{4}       --difference 2
 
@@ -329,7 +329,7 @@ We can check if an element is included in a collection.
 ```
 new map := {'a':"first", 'b':"second"};
 
-when ('a' ε map):
+when ('a' ∈ map):
   put("a is found");
 else
   put("not found");
@@ -351,7 +351,7 @@ new <matrix_name> := [<member-type>](n,m); --two dimensions with capacity n x m
 
 **Note:** 
 * Empty parenthesis () are not required for unknown capacity.
-* Arrays are initialized using ":=" and can not be declared with ε.
+* Arrays are initialized using ":=" and can not be declared with ∈.
 
 **example**
 
@@ -550,7 +550,7 @@ Will print:
 new str := S(25);   -- string with capacity 25 Extended ASCHII characters
 new a   := [A](25); -- array of 25 characters
 
-let str := "Long string";
+let str := 'Long string'; 
 let a   := split(str);
 ```
 
@@ -558,7 +558,7 @@ let a   := split(str);
 Conversion of a string into number is done using _parse_ function:
 
 ```
-new x,y ε R;
+new x,y ∈ R;
 
 -- function parse return a Real number
 let x := parse("123.5",2,",.");       --convert to real 123.5
@@ -586,7 +586,7 @@ In Bee we use this list of characters to represent the strings:
 
 ### Double quoted string
 
-Double quoted strings are dynamic strings with more features than ASCII strings. 
+Double quoted strings are Unicode dynamic strings with more features than ASCII strings. 
 Bee support "escape" notation using escape `\` symbol only in double quoted strings.
 
 ```
@@ -612,7 +612,7 @@ DEC|HEX|CODE|ESCAPE|NAME
 27 |1B |ESC |\e    |Escape
 
 ```
-new s := "This is a Unlimited string";
+new s := "This is a Unicode string";
 put type(s); -- Print: U
 ```
 
@@ -647,14 +647,14 @@ put test_file;
 write; --> "c:\work\project\src\test.bee"
 ```
 
-**Note:** You can not concatenate a string with a number, you must convert it first.
+**Note:** You can concatenate a string with a number or two numbers using .+.
 
 ### Template
 
 * We can include numbers into a string using template operator "<+" or "+>"
 * Inside template we use "{n}" notation to find a value using the member index
 * Template must be included in double quotes " " 
-* If a placeholder is not found then it is ignored preserved as is.
+* If a placeholder index is not found then it is preserved as is
 
 ```
 new <variable> := <template> <+ <variable>;
@@ -667,7 +667,7 @@ new x := 30; -- Code ASCII 0
 new y := 41; -- Code ASCII A
 
 --template writing
-put ("{0} > {1}" <+ (x,y)); --print "30 > 41"
+put ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
   
 ```
 
@@ -705,7 +705,7 @@ Objects are complex data structures enclosed in curly brackets { , , ,} and sepa
 **Syntax:**
 ```
 -- declare a class of objects
-def <class_name> <: {<attribute> ε <type>, <attribute> ε <type>...};
+def <class_name> <: {<attribute> ∈ <type>, <attribute> ∈ <type>...};
 
 -- create an object instance using default constructor
 new <object_name> := {
@@ -730,13 +730,13 @@ new <var_name>, <var_name> <+ object_name;
 ```
 -- define recursive class Person
 def Person <: {
-      name ε S, 
-      age  ε N,  
-      children ε (Person)
+      name ∈ S, 
+      age  ∈ N,  
+      children ∈ (Person)
     }; 
 
 -- create two objects of type Person
-new r1,r2 ε Person;
+new r1,r2 ∈ Person;
 
 -- person with no children          
 let r1 := {name:'Mica', age:21};
@@ -765,7 +765,7 @@ Class size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-def Person <: {name ε U, age ε N};
+def Person <: {name ∈ U, age ∈ N};
 
 --array of 10 persons
 new catalog := [Person](10); 
@@ -795,7 +795,7 @@ Declare an array using prefix "*" for parameter name.
 
 ```
 --parameter *bar is an array
-def foo(*bar ε [Z]) => (x ε Z):
+def foo(*bar ∈ [Z]) => (x ∈ Z):
   let c := bar.count();  
   -- precondition
   when (c = 0):
@@ -829,18 +829,18 @@ One special method is called constructor. This method has same name as the binde
 **example**
 ```
 -- define Foo as object with 3 public attributes:
-def Foo <: {p1 ε N, p2 ε N, p3 ε S};
+def Foo <: {p1 ∈ N, p2 ∈ N, p3 ∈ S};
 
 -- constructor (same name as Foo)
 -- create a result of type Foo (me)
-def foo() => (me ε Foo):
+def foo() => (me ∈ Foo):
   let me := {0,0,0}
 def;
 
 -- first parameter is binding bar to Foo
-def Foo.bar(me @ Foo, p1, p2 ε Z, p3 ε S):
+def Foo.bar(me @ Foo, p1, p2 ∈ Z, p3 ∈ S):
   --precondition
-  fail if (p1 < 0 | p2 < 0 | p3 = "");
+  fail if (p1 < 0 ∨ p2 < 0 ∨ p3 = "");
   
   --modify Foo members
   let me.p1 := p1;

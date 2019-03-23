@@ -5,14 +5,14 @@ A generic method is using a variable type "X".
 **bubble sort**
 
 ```
-def sort<X>(array @ [X], gt λ (X,X) ε L ):
+def sort<X>(array @ [X], gt λ (X,X) ∈ L ):
     new n := length(array)-1;
-    new swap ε L;
-    new temp ε X;
-    new i := 0 ε N;
+    new swap ∈ L;
+    new temp ∈ X;
+    new i := 0 ∈ N;
     cycle
         let i := 0;
-        let swap := $0; -- false
+        let swap := $⊥; -- false
         cycle 
             stop if (i = n);
             -- this pair is out of order ?
@@ -21,7 +21,7 @@ def sort<X>(array @ [X], gt λ (X,X) ε L ):
                 let temp := array[i];
                 let array[i]  := array[i+1];
                 let array[i+1]:= temp;
-                swap := $1; -- true
+                swap := $⊤; -- true
             when;
             let i +=1;
         cycle; 
@@ -38,7 +38,7 @@ def;
 **sort usage**
 
 ```
-def Person  <: { name ε S, age ε N };
+def Person  <: { name ∈ S, age ∈ N };
 
 -- define order method for array of Persons
 def order(cat @ [Person]):
@@ -70,7 +70,7 @@ This can be used to create an argument for a _signature reference_:
 
 **signature**
 ```
- id λ (type,type, ...) ε type
+ id λ (type,type, ...) ∈ type
 ```
 
 To assign an anonymous function as argument by name Bee uses: "::"

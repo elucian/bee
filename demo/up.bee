@@ -4,7 +4,7 @@
 #driver "up"
 
 ** method with two results
-def test(x, y ε Z) => (a,b ε Z):
+def test(x, y ∈ Z) => (a,b ∈ Z):
   let a := x+1;
   let b := y+1;
 def; 
@@ -14,9 +14,9 @@ new n,m <+ test(1,2);
 put (n, m) -- will print 2, 3
 
 ** method with structured result
-def Rec <: {x ε Z, y ε R};
+def Rec <: {x ∈ Z, y ∈ R};
 
-def(x ε Z, y ε R) => (r ε Rec):
+def(x ∈ Z, y ∈ R) => (r ∈ Rec):
   r.x := x;
   r.y := y;
 def;

@@ -4,10 +4,10 @@
 #driver "cy"
 
 -- declare array of 10 Words
-new a ε [Z](10);
+new a ∈ [Z](10);
 
 -- use cycle 
-new i ε Z; 
+new i ∈ Z; 
 cycle:
   let a[i] := i;
   when (i = 9):

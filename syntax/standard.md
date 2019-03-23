@@ -103,8 +103,8 @@ To read and write into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define functions open and close.
 
 ```
-def .open(name ε S, mode ε A) => (f ε F);
-def .close(f ε F);
+def .open(name ∈ S, mode ∈ A) => (f ∈ F);
+def .close(f ∈ F);
 ...
 
 ```

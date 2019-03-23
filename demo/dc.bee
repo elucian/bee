@@ -3,9 +3,9 @@
 -----------------------------------------+
 #driver "dc"
 
-new n ε Z;   -- Integer on 64 bit
-new h ε S;   -- Default 255 char string
-new l ε L;   -- Logical value False := 0
+new n ∈ Z;   -- Integer on 64 bit
+new h ∈ S;   -- Default 255 char string
+new l ∈ L;   -- Logical value False := 0
 
 -----------------------------------------
 -- printing initial values
@@ -18,8 +18,8 @@ write;
 
 -- declaring with initial value
 
-new g, h := -10 ε N;
-new x := 10, y := 20 ε N;
+new g, h := -10 ∈ N;
+new x := 10, y := 20 ∈ N;
 
 -- native array are auto initialized
 new a := [W](10);   -- array of 10 Words

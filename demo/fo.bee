@@ -14,7 +14,7 @@ file.put("Hello World!");
 file.write;
 
 -- read the entire content from file
-new content ε U;
+new content ∈ U;
 
 file.read content;
 file.close; 

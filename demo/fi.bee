@@ -4,8 +4,8 @@
 #driver "fi"
 
 -- declare Fibonacci function
-def fib(n ε N) => (y ε N): 
-  when (n = 1 | n = 0):
+def fib(n ∈ N) => (y ∈ N): 
+  when (n = 1 ∨ n = 0):
     let y := 1;
   else:
     let y := fib(n - 1) + fib(n - 2);

@@ -21,8 +21,8 @@ new i := 0;   -- type := Z
 new j := 0.5; -- type := R
 
 -- logic expressions
-new false := $0; -- type L
-new true  := $1; -- type L
+new false := $⊥; -- type L
+new true  := $⊤; -- type L
 
 -- multiple variables
 new x,y,z := 5;   -- type := Z
@@ -81,7 +81,7 @@ put foo(1,2);-- 3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-foo(a,b ε Z, c : 0 ) ε Z => (a+b+c);
+foo(a,b ∈ Z, c : 0 ) ∈ Z => (a+b+c);
 
 put foo(1,2);   -- 3
 put foo(1,2,3); -- 6

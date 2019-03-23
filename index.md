@@ -1,6 +1,6 @@
 ## Bee Syntax
 
-Bee is a light-weight, training language for beginners.
+Bee is an efficient, general purpose programming language.
 
 **Read more:** [Wiki Bee](https://github.com/sage-code/bee/wiki)
 

@@ -8,7 +8,7 @@
 def .Data <: {key:A, value:N};
 
 -- new variable using type alias
-new x ε Data;
+new x ∈ Data;
 let x := {key:`a`, value:10};
 
 +---------------------------------------------------+ 

@@ -54,7 +54,7 @@ say (3,4);  --> expect 1234
 write --> print 6 rows
 
 -- calculation that fail will do nothing.
-new x := 5 ε R;
+new x := 5 ∈ R;
 new x := x ÷ 0; -- no effect
 put x; -- expect x = 5
 ```
@@ -123,8 +123,8 @@ Basic types are represented with one single uppercase ASCII character.
 
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
-| String      |S  | limited capacity string   (single quoted)
-| Unlimited   |U  | unlimited capacity string (double quoted)
+| String      |S  | limited capacity (ASCII) string
+| Unicode     |U  | unlimited capacity (Unicode) string 
 | Date        |D  | DD/MM/YYYY
 | Time        |T  | hh:mm,ms
 | Complex     |C  | Complex number
@@ -159,7 +159,7 @@ Bee define a collection using a special notation based on brackets.
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-def <constant_name> := <constant> ε <type>;   
+def <constant_name> := <constant> ∈ <type>;   
 ```
 
 **Notes:** 
@@ -172,7 +172,7 @@ Variables are defined using keyword "new" and next operators:
 
 sym | purpose
 ----|------------------------------------------------------------------
- ε  | declare variable type | member type | parameter type
+ ∈  | declare variable type | member type | parameter type
  :  | pair-up member value to a constant/expression or constructor
  := | initialize variable using a constant/expression or constructor
  :: | initialize variable using a reference to another variable
@@ -180,8 +180,8 @@ sym | purpose
 
 ```
 -- full declarations with type and initial value
-new <var_name> ε <type>;
-new <var_name> := <constant> ε <type>;
+new <var_name> ∈ <type>;
+new <var_name> := <constant> ∈ <type>;
 
 -- partial declaration using type inference
 new <var_name> := <expression>; -- native type inference
@@ -208,8 +208,8 @@ One can modify variables using "let" statement.
 
 **example**
 ```
-new a := 10 ε i8; -- native variable
-new b := 0  ε Z;  -- basic variable
+new a := 10 ∈ i8; -- native variable
+new b := 0  ∈ Z;  -- basic variable
 
 let b := a + 1; -- modify b 10->11 
 put b;          -- expected 11
@@ -225,9 +225,9 @@ put b;          -- expected 11
 def pi := 3.14;
 
 -- declare multiple variables using let
-new a   ε Z; -- Integer 
-new x,y ε R; -- Double
-new q,p ε L; -- Logic
+new a   ∈ Z; -- Integer 
+new x,y ∈ R; -- Double
+new q,p ∈ L; -- Logic
 
 --using modifier expressions
 let a := 10;  -- modify value of a := 10
@@ -247,7 +247,7 @@ User can define composite types and sub-types using keyword "def" and operator "
 def <type_name> <: <type_constructor>;
 
 --using new type
-new <var_name>[,<var_name>] ... ε <type_name>;
+new <var_name>[,<var_name>] ... ∈ <type_name>;
 ```
 
 ## Type conversion
@@ -260,8 +260,8 @@ When data type mismatch we must perform explicit conversion.
 
 **example:**
 ```
-new a := 0, b := 20 ε Z;   
-new v := 10.5, x := 0.0 ε R;
+new a := 0, b := 20 ∈ Z;   
+new v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
 let a := v -> N;
@@ -277,8 +277,8 @@ put x; --> expect 20.0
 Bee define A := ASCII character as native type.
 
 ```
-new a,b ε A; --ASCII character
-new x,y ε B; --Binary number 
+new a,b ∈ A; --ASCII character
+new x,y ∈ B; --Binary number 
 
 let a := `0`;    -- representation of 0
 let x := a -> B; -- convert to 30
@@ -299,7 +299,7 @@ let a := 10.5; --FAIL: a is of type: Integer
 
 ## Logic type
 
-Logic type is an enumeration of two public symbols: $0 = 0 = False and $1 = 1 = True
+Logic type is an enumeration of two public symbols: $⊥ = 0 = False and $⊤ = 1 = True
 
 ```
 def .L <: {.$0, .$1};
@@ -309,58 +309,62 @@ def .L <: {.$0, .$1};
 
 Bee uses several familiar operators:
 
-*  ¬ (not) unary operator, has the highest precedence
-*  & (and) dual operator, has moderate precedence
-*  | (or)  dual operator, has lowest precedence
+*  ¬ (not) 
+*  ∧ (and) 
+*  ∨ (or)  
+*  ~ (xor)  
+*  ↔ (inference)  
+ 
+Precedence: { ¬, ∧, ∨, ~, ↔ }
 
-Precedence: { ¬, &, | }
 
 **relations**
-Relation operators will create a logical response: $0 or $1.
+Relation operators will create a logical response: $⊥ = 0 or $⊤ = 1.
 
-* comparison ( ≈, =, =, >, <, ≤, ≥ ); 
-* belonging operation ( ε, >>, <<, >=, <= );
-* logic equivalent ( ↔ ); 
+* comparison ( ±, ≈, =, ≠, ≡, >, <, ≤, ≥ ); 
+* belonging  ( ∈, ⊃, ⊂ );
 
 **Precedence:** 
 
 * Logic operators have greater precedence than relations. 
-* Lowest precedence is for "↔". 
+
 
 ## Logical expression
 
-Logical expression have value { $0, $1 }
+Logical expression have value { $⊥, $⊤ }
 
 ```
-new x := $0;
-new y := $1;
+new x := $⊥;
+new y := $⊤;
 
 --simple expressions
-put    x; -- $0
-put  ¬ x; -- $1
+put    x; -- $⊥ = 0
+put  ¬ x; -- $⊤ = 1
 
 --complex expressions
 put  (x ↔ y);  --  0
 put ¬(x ↔ y);  --  1
 put  (x < y);  --  1
 put  (x > y);  --  0
-put  (x & y);  --  0
-put  (x | y);  --  1
+put  (x ∧ y);  --  0
+put  (x ∨ y);  --  1
 
 ```
 **Notes:** 
 * Operators { ¬ } is unary operator;
-* Operators { &, | } are shortcut operators;
+* Operators { ∧, ∨ } are shortcut operators;
+* Operators { ¬, ~ } are also bitwise operators;
+* Operators { ←, →, ↑, ↓, &, | } are bitwise operators;
 
 **coercion**
 Any numeric expression ca be converted to logic using coercion operation `-> L`
 
 ```
-new x, y ε L;
+new x, y ∈ L;
 new a := 0.0, b := 1.5 ;
 
-let x := a -> L; -- x = $0
-let y := b -> L; -- y = $1
+let x := a -> L; -- x = $⊥
+let y := b -> L; -- y = $⊤
 ```
 
 **Notes:** 
@@ -380,8 +384,8 @@ In Bee all basic types, sub-types and composite types are references.
 
 **example**
 ```
-new i := 10  ε i8; 
-new j ε Z;
+new i := 10  ∈ i8; 
+new j ∈ Z;
 
 -- boxing using "::"
 let j :: i; -- boxing i := 12 
@@ -404,7 +408,7 @@ Observe that "if" is not itself a full statement only an augment.
 <statement> if (<condition>);
 ```
 
-The statement is executed only if the condition is 1 = $1. 
+The statement is executed only if the condition is 1 = $⊤. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
@@ -413,7 +417,7 @@ The statement is executed only if the condition is 1 = $1.
 1. Conditional can not be associated with any block statement;
 
 ```
-new a ε Z;
+new a ∈ Z;
 
 -- conditional execution
 let a := 1 if (a = 0);
@@ -435,7 +439,7 @@ These expressions are separated by coma and enclosed in ().
 **Syntax:**
 
 ```
-new <var> ε <type>;
+new <var> ∈ <type>;
 
 -- single matching with default value
 let <var> := (<xp> if <cnd>, <dx>);
@@ -463,7 +467,7 @@ let <var> := (
 ```
 new x := `0`;
 get (x,"x:>");
-new what := ("digit" if x ε [`0`..`9`], if x ε [`a`..`z`], "letter","unknown");
+new what := ("digit" if x ∈ [`0`..`9`], if x ∈ [`a`..`z`], "letter","unknown");
 put "x is"._.what;
 over;
 ```
@@ -596,7 +600,7 @@ A function is a named block of code that can have parameters and results.
 
 **pattern**
 ```
-def <name>(<param> ε <type>,...) => (<result> ε <type>,...):
+def <name>(<param> ∈ <type>,...) => (<result> ∈ <type>,...):
    [<statement>];
    ...   
    let <result> := <expression>;
@@ -608,15 +612,15 @@ def;
 
 ```
 -- method with one result:
-def add(x,y ε i8) => (r ε i8):
+def add(x,y ∈ i8) => (r ∈ i8):
   let r := x + y; 
 def;
 
 -- method can be call using "new" or "let"
-new m := add(0,0); -- create m = 0 ε i8
+new m := add(0,0); -- create m = 0 ∈ i8
 
 -- two results "s" and "d"
-def com(x,y ε Z) => (s ε Z, d ε Z):
+def com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
   let s := x + y; 
   let d := x - y;
 def;
@@ -655,7 +659,7 @@ A method is a named block that have optional parameters but no result.
 
 **pattern**
 ```
-def <name>(<param> ε <type>,...):
+def <name>(<param> ∈ <type>,...):
    [<statement>];
    ...   
 def;
@@ -696,7 +700,7 @@ Parameters are variables defined in a method or function signature.
 **Notes:**   
 * Native type parameters are pass by value;
 * Reference type parameters can be pass by value or by reference;
-* For input/output parameters we must using "@" instead of "ε";
+* For input/output parameters we must using "@" instead of "∈";
 
 **note**
 * Parameters with initial value are optional;
@@ -713,14 +717,14 @@ A λ expressions is a named expression that can have parameters and can create a
 
 **syntax**
 ```
-def <name> λ (<param> ε <type>,...) ε type => (expression);
+def <name> λ (<param> ∈ <type>,...) ∈ type => (expression);
 ```
 
 **Example:** 
 
 ```
 -- define "ex" a method with two parameters
-def ex λ (x,y ε Z) ε Z => (x + y); 
+def ex λ (x,y ∈ Z) ∈ Z => (x + y); 
 
 -- expression can be used in larger expressions
 new z := ex(1,1)+1; 
@@ -757,7 +761,7 @@ A method can receive λ expressions as parameters.
 
 **syntax**
 ```
-def <method_name>(<expression_name>λ(<param_list>) ε <result_type>):
+def <method_name>(<expression_name>λ(<param_list>) ∈ <result_type>):
   ...
 def;
 ```
@@ -765,20 +769,20 @@ def;
 **example**
 ```
 -- declare method with lambda parameter
-def compare(a,b ε Z, cmp λ (Z,Z) ε L) => (r ε L):
+def compare(a,b ∈ Z, cmp λ (Z,Z) ∈ L) => (r ∈ L):
   let r := cmp(a,b);
 def;
 
 -- declare λ expressions:
-def lt λ(a,b ε Z) ε L => (a < b);
+def lt λ(a,b ∈ Z) ∈ L => (a < b);
 
 -- call compare using λ expression as named argument
 new test := compare(1,2,cmp::lt);
-put test; -- expect $1
+put test; -- expect $⊤
 
 -- call compare using anonymous λ expression argument
 new test := compare(1, 2, λ(a,b) => (a ≥ b));
-put test; -- expect $1
+put test; -- expect $⊤
 
 write;
 ```

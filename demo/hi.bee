@@ -6,8 +6,8 @@
 put "Hello. I'm Bee!";
 write;
  
-new name ε S;
-new age  ε N;
+new name ∈ S;
+new age  ∈ N;
 
 get(name , "Your name?:");
 get(age  , "Your age:");

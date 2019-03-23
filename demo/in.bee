@@ -3,7 +3,7 @@
 --------------------------+
 #driver "in"
 
-new a ε N;
+new a ∈ N;
 put "to stop enter 0";
 write;
 

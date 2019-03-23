@@ -81,7 +81,7 @@ Rogue statements are executed top down in synchronous mode.
 ```
 #driver "main"
 
-new i, c ε Z;
+new i, c ∈ Z;
 let c := $params.count;
 
 over if (c = 0);
@@ -178,13 +178,13 @@ This is useful for a long function to know that is public at the end.
 new .pi := 3.14;
 
 --public variable
-new .v ε N;
+new .v ∈ N;
 
 --public λ expression
-new .f λ (x ε N) ε N => (x + 1);
+new .f λ (x ∈ N) ∈ N => (x + 1);
 
 --public method
-def .m(x, y ε N, r @ N):
+def .m(x, y ∈ N, r @ N):
   r := x + y;
 def;
 
@@ -210,7 +210,7 @@ This is myLib.bee file:
 cpp myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
-def fib(n ε Z) => (x ε Z):
+def fib(n ∈ Z) => (x ∈ Z):
    let x := myLib.fib(n -> i8);
 def;
 

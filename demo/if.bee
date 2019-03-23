@@ -3,7 +3,7 @@
 -------------------------------+
 #driver "if"
 
-new x ε N;
+new x ∈ N;
 get (x ,"Type a number:");
 read;
 

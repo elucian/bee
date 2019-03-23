@@ -6,12 +6,12 @@
 -- bubble sort method
 def sort(this @ [Z]):
   new n := length(this)-1;
-  new swap ε L;
-  new temp ε X;
-  new i := 0 ε N;
+  new swap ∈ L;
+  new temp ∈ X;
+  new i := 0 ∈ N;
   cycle:
     let i := 0;
-    let swap := $0;
+    let swap := $⊤;
     cycle: 
       stop if (i = n);
       -- this pair is out of order ?
@@ -20,7 +20,7 @@ def sort(this @ [Z]):
         let temp     :: this[i];
         let this[i]  :: this[i+1];
         let this[i+1]:: temp;
-        swap := $1;
+        swap := $⊤;
       when;
       let i += 1; 
     cycle;

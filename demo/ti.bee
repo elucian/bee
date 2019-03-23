@@ -7,8 +7,8 @@
 def a := 10;  -- i8 (integer on 64bit)
 def x := 0.5; -- d8 (double precision)
 def y := 1/2; -- Q  (rational number)
-def f := $0;  -- L  (logic false)
-def t := $1;  -- L  (logic true)
+def f := $⊥;  -- L  (logic false)
+def t := $⊤;  -- L  (logic true)
 
 -- variable type inference
 new v := (1,2,3);     -- List of i8
@@ -21,7 +21,7 @@ new t := '23:45'      -> T24; -- Time
 new d := '10/10/2010' -> DMY; -- Date
 
 -- optional parameters inference
-def add(x,y:0) => (z ε Z):
+def add(x,y:0) => (z ∈ Z):
   let z := x + y; 
 def;
 
@@ -30,7 +30,7 @@ put add(1,1); -- will print 2
 write;
 
 -- argument x is mandatory, y is optional
-def plus(x ε Z, y : 1) => (z ε Z):
+def plus(x ∈ Z, y : 1) => (z ∈ Z):
   let z := (x + y);  
 def;
 put plus(1); -- will print 2

@@ -4,28 +4,28 @@
 #driver "gc"
 
 -- first create an object
-def GenI <: {min ,max ,ci:min ε Z};
+def GenI <: {min ,max ,ci:min ∈ Z};
 
 -- reset method
-def GenI.reset(me @ GenI, p_min , p_max ε Z):
+def GenI.reset(me @ GenI, p_min , p_max ∈ Z):
   let me.min := p_min
   let me.max := p_max
   let me.ci:= p_min;    
 def;
 
 -- get next index
-def GenI.next(me @ GenI) => (i ε Z):
+def GenI.next(me @ GenI) => (i ∈ Z):
   let i  := me.ci;
   let me.ci += 1;
 def;
 
 -- detect if finish
-def GenI.finish(me @ GenI)  => (r ε L):
+def GenI.finish(me @ GenI)  => (r ∈ L):
   let L := (me.ci ≥ me.max);
 def;
 
 -- use GenI to create one instance: 
-new foo := {min:10,max:20} ε GenI;
+new foo := {min:10,max:20} ∈ GenI;
 new x := 0;
 cycle:
   stop if foo.finish();

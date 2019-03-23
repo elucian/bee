@@ -17,9 +17,9 @@ symbol| description
 
 symbol  | description
 --------|-----------------------------------------------------
- `z`    | Back quote = grave accent for single character 
- 'x'    | ASCII character literal is using single quotes
- "y"    | Unlimited string literals are using double quotes
+ `z`    | Back quote (grave accent) single ASCII character 
+ 'x'    | Limited capacity ASCII string literal 
+ "y"    | Variable capacity Unicode string literals
 
 
 ## Single Symbols
@@ -98,14 +98,16 @@ Relation operators are used to compare expressions.
 
 symbol | meaning
 -------|--------------------------------------------------------------------
+  ∈    | element belong to collection
   ≡    | same memory address, same reference: (shallow comparison)
   =    | equality of two values, collections or objects (deep comparison)
+  ≠    | divergence of two values, collections or objects (deep comparison)
   ≈    | approximative equal, used with `±` like: (x ≈ 4 ± 0.25)
  \>    | value is greater than 
  \<    | value is less than
   ≥    | greater than or equal to
   ≤    | less than or equal to
-  ε    | element belong to collection
+
 
 **patterns:** 
 ```
@@ -117,35 +119,29 @@ symbol | meaning
 
 symbol | `=>`       |meaning
 -------|------------|-------------------------------------------------
-  &&   | Set        |Intersection between two collections
-  \|\| | Set        |Union between two collections
-  ++   | List       |Concatenation between two lists
+  ∩    | Set        |Intersection between two collections
+  ∪    | Set        |Union between two collections
+  ⊂    | Logic      |set is included in superset: "⊂"
+  ⊃    | Logic      |set contain subset: "⊃"  
+  +    | List       |Concatenation between two lists
   +=   | collection |Append element to collection 
   -=   | collection |Remove element from collection 
   !=   | element    |Remove first element from collection 
   ?=   | element    |Remove last element from collection 
-  \<\< | Logic      |set is included in superset: "⊂"
-  \>\> | Logic      |set contain subset: "⊃"
-  \<=  | Logic      |set is included in superset or equal: "⊆"
-  \>=  | Logic      |set contain subset or equal: "⊇"
                                           
-## Bitwise Operators 
+## Logic Operators 
 
-In Bee the logic operators and bitwise operators are overloaded.
+Bee is using constants:  $⊤ = 1 = True and  $⊥ = 0 = False 
 
-symbol| meaning   | description
+symbol| meaning   | notes
 ------|-----------|-------------------------------
-  ↔   | EQUIVALENT| if and only if
+  ↔   | Inference | require logic arguments
   ¬   | NOT       | unary operator
-  &   | AND       | dual operator 
- \|   | OR        | dual operator 
- \~   | XOR       | dual operator 
+  ∧   | AND       | shortcut operator
+  ∨   | OR        | shortcut operator
 
-**Logical operators**
 
-Bee is using values  $1 = 1 = True and  $0 = 0 = False 
-
- p  | q  |¬ p |p ~ q |p ↔ q |p & q | p \| q
+ p  | q  |¬ p |p ~ q |p ↔ q |p ∧ q | p ∨ q
 ----|----|----|------|------|------|--------
  1  | 1  | 0  | 0    | 1    |1     | 1     
  1  | 0  | 0  | 1    | 0    |0     | 1     
@@ -155,14 +151,14 @@ Bee is using values  $1 = 1 = True and  $0 = 0 = False
 
 **Bitwise operators**
 
-Some of these operators are overloaded.
+Bitwise operators are overloaded for numbers.
 
-symbol| meaning       | description
+symbol| meaning       | notes
 ------|---------------|-------------------------------
-  ¬   | bit NOT       | unary operator
+  ¬   | bit NOT       | unary operator (overloaded)
   &   | bit AND       | dual operator 
  \|   | bit OR        | dual operator 
- \~   | bit XOR       | dual operator 
+ \~   | bit XOR       | dual operator  
   ←   | bit SHIFTL    | shift bits to left  
   →   | bit SHIFTR    | shift bits to right  
 
@@ -188,5 +184,19 @@ Arity = 2
  11   | 01  | 01     | 11      |  00    
  10   | 11  | 10     | 11      |  01    
 
+## String operators
+
+|Symbol| Description
+|------|---------------------------------------------------------------
+| *    | String pattern repetition \| String generator
+| <+   | String format injector \| Unpack operator
+| .    | Concatenate two strings as they are. No trim is performed
+| .+.  | Concatenate two strings, trim first and concatenate with second
+| .,.  | Concatenate two strings, trim first and separate with comma
+| ._.  | Concatenate two strings, trim both and separate with one space
+| ./.  | Concatenate two strings with "/" separator and de-duplicate "//"   
+| .\\. | Concatenate two strings with "\\" separator and de-duplicate "\\"   
+
+**Note:** Except "." , all other operators can work with numbers.
  
 **Read Next:** [keywords](keywords.md)

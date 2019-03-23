@@ -14,7 +14,7 @@ put (Enum.trd); -- 3
 write;
 
 -- define hash map variable
-new s ε {(A:N)}; 
+new s ∈ {(A:N)}; 
 
 -- assign (name:value) pairs
 let s =
@@ -71,10 +71,10 @@ new s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
 new s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
 
 -- union between 2 sets (a, b) are nod duplicated
-put (s3 | s4); -- {`a`,`b`,`c`,`d`}
+put (s3 ∨ s4); -- {`a`,`b`,`c`,`d`}
 
 -- intersection between 2 sets
-put (s3 & s4);-- {`a`,`b`}
+put (s3 ∧ s4);-- {`a`,`b`}
 
 -- difference between two sets
 put (s3 - s4);-- {'c'}

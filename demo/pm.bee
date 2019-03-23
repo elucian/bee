@@ -4,7 +4,7 @@
 #driver "pm"
 
 -- pattern matching expression
-new pm(p1,p2 ε N) ε N =>
+new pm(p1,p2 ∈ N) ∈ N =>
   (0 if (p1 = 0 )
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
