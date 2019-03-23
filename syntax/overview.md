@@ -11,13 +11,14 @@ For syntax notation we use modified BNF convention:
 * [Expression](#expression)
 * [Data type](#data-type)
 * [Logical expression](#logical-expression)
+* [Reference](#reference)
+* [Conditional](#conditional)
 * [Pattern Matching](#pattern-matching)
 * [Control Flow](#control-flow)
 * [Functions](#functions)
 * [Methods](#methods)
-* [References](#references)
-* [Lambda Expressions](#lambda-expressions)
-
+* [Parameters](#parameters)
+* [Lambda Expression](#lambda)
 
 ## Expression
 Expressions are created using identifiers, operators, functions and constant literals. 
@@ -51,19 +52,21 @@ say (1,2);
 say (3,4);  --> expect 1234
 
 write --> print 6 rows
+
+-- calculation that fail will do nothing.
+new x := 5 ε R;
+new x := x ÷ 0; -- no effect
+put x; -- expect x = 5
 ```
 
 **Notes:** 
-* put statement can receive multiple parameters
-* put statement add new line by default
-* to avoid new line use coma separated parameters or "say" statement
-* multiple expressions or arguments are separated by comma
-* you can omit the parentheses when you call a method with one single argument
+* put statement can receive multiple parameters;
+* put statement add new line by default;
+* say statement can be used to avoid new line;
+* multiple arguments are separated by comma;
+* multiple arguments are enclosed in parenthesis;
 
 ## Data type
-
-Digital data is based on binary numbers: {0, 1}.
-Using this basic values we represent all data types.
 
 Bee use 4 kind of data types:
 
@@ -74,7 +77,7 @@ Bee use 4 kind of data types:
 
 **Native types**
 
-In Bee native types are created using a lowercase letter and a number representing the number of bytes used. These types are compatible to C++ native types and are used for ABI but can be also used to improve performance in critical applications. 
+Native types names are using one lowercase letter and a number, representing the number of bytes used. These types are compatible with C++ native types. Are used to improve performance. 
 
 type | name             | size
 -----|------------------|---------------
@@ -82,8 +85,8 @@ type | name             | size
  b2  | Intel word       | 2 bytes
  c1  | char (ASCII)     | 1 byte 
  c2  | expanded (DBCS)  | 2 byte 
- n4  | short number     | 4 bytes 
- n8  | long number      | 8 bytes  
+ n4  | unsigned short   | 4 bytes 
+ n8  | unsigned long    | 8 bytes  
  i4  | short integer    | 4 bytes   
  i8  | long integer     | 8 bytes
  f4  | single precision | 4 bytes
@@ -124,7 +127,7 @@ Basic types are represented with one single uppercase ASCII character.
 | Unlimited   |U  | unlimited capacity string (double quoted)
 | Date        |D  | DD/MM/YYYY
 | Time        |T  | hh:mm,ms
-| Complext    |C  | Complex number
+| Complex     |C  | Complex number
 
 ## Literals
 
@@ -153,7 +156,7 @@ Bee define a collection using a special notation based on brackets.
 
 ## Constant declaration
 
-Constants are protected memory locations representing a un-mutable value.
+Constants are protected memory locations representing a non-mutable value.
 
 ```
 def <constant_name> := <constant> ε <type>;   
@@ -366,9 +369,31 @@ let y := b -> L; -- y = $1
 * A string that contains "True" "true", "T" or "t" or "1" convert to: 1
 * A string that contains "False", "true", "F" or "f" or "0" convert to: 0
 
-## Control Flow
+## Reference
 
-Bee has 3 control flow statements {if, when, cycle }:
+In Bee all basic types, sub-types and composite types are references. 
+
+**assign**
+
+* New reference can be create using operator ":="
+* Existing reference can be cloned using operator: "::"
+
+**example**
+```
+new i := 10  ε i8; 
+new j ε Z;
+
+-- boxing using "::"
+let j :: i; -- boxing i := 12 
+let i += 1; -- modify i := 13
+put j; --> expect 13 (modified)
+
+-- verify boxing effect
+put j = i; -- 1 same value
+put j ≡ i; -- 1 (true) same reference 
+
+write;
+```
 
 ## Conditional
 
@@ -442,6 +467,10 @@ new what := ("digit" if x ε [`0`..`9`], if x ε [`a`..`z`], "letter","unknown")
 put "x is"._.what;
 over;
 ```
+
+## Control Flow
+
+Bee has 2 control flow statements { when, cycle }:
 
 ### When
 
@@ -563,7 +592,7 @@ write; --> 9:1, 8:0, 7:1, 6:0, 5:1
 
 ## Functions
 
-A function is a named block of code that can have, one or more results.
+A function is a named block of code that can have parameters and results.
 
 **pattern**
 ```
@@ -578,12 +607,12 @@ def;
 **Example:** 
 
 ```
--- function with one result:
+-- method with one result:
 def add(x,y ε i8) => (r ε i8):
   let r := x + y; 
 def;
 
--- function can be call using "new" or "let"
+-- method can be call using "new" or "let"
 new m := add(0,0); -- create m = 0 ε i8
 
 -- two results "s" and "d"
@@ -602,64 +631,35 @@ put c; -- print 1
 put com(0,0); -- print (0, 0)
 write;
 
--- try to call com in expression
+-- negative test: try to call com in expression
 new x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
 ```
 
+**Notes:**
+* A function can not have output parameters;
+* A function can not be interrupted using "exit" keyword;
+
 **properties:** 
 
-* functions can be assigned to function references;
-* functions can be sent as reference arguments to methods;
 * functions have a local scope called _"context"_;
-* functions can be created during run-time by other functions;
+* functions can have one or more results;
 
 **restriction:**
-* functions must have at least one result;
-* functions can not be used in λ expressions;
-* functions results must be captured in variables;
-
-**See also:**
-* [fi.bee](../demo/fi.bee)
-* [fn.bee](../demo/fn.bee)
+* a function can not be declared inside other function;
+* a function result must be captured using assign ":=" o unpacking "<+"; 
 
 ## Methods
 
-A method is a named block of code that have parameters but no result.
+A method is a named block that have optional parameters but no result.
 
-**pattern:**
+**pattern**
 ```
-def <name>(<param> ε <type>,...,<output> @ <type>):
+def <name>(<param> ε <type>,...):
    [<statement>];
    ...   
-   let <output> := <expression>;
 def;
 ```
-
-**Example:** 
-
-```
--- method with one result:
-def add(x,y ε i8, r @ Z):
-  let r := (x + y); 
-def;
-
--- define result for method call
-new result ε Z;
-
--- call method and capture result
-add(1,2,result); 
-
--- test output value
-put result --> 3
-```
-
-**Side-effect**
-
-Methods can have side-effects.
-
-* Some methods have no parameters; 
-* These methods are used only for side-effects;
 
 **example**
 ```
@@ -674,150 +674,116 @@ foo;
 
 **Notes:**
 * A method declaration do not require empty brackets ();
-* A method call do not require brackets () for single or no argument;
+* A method call do not require empty brackets ();
 * A method can have output parameters and side-effects;
 * A method can be interrupted earlier using "exit" keyword.
 
-## References 
+**properties:** 
 
-In Bee all basic types and user defined types are references. 
+* method have a local scope called _"context"_;
+* method can receive input/output parameters;
+* method can have optional one or more results;
 
-* Default assign `:=` copy a value or execute an expression. 
-* Reference assign `::` clone a reference and fail if this is not possible.
-* Mandatory reference operator "@" can be used to declare input/output parameters.
+**restriction:**
+* a method can not be declared inside other method;
+* a methods can not be used in expressions except assign expression;
+* a method result must be captured using assign ":=" o unpacking "<+"; 
 
-**example**
-```
-new i := 0  ε i8; 
-new i := 0  ε i8; 
-new j := 10 ε Z;
+## Parameters
 
--- un-boxing using ":="
-let i := j ; -- i = 10
-let i := i + 2;   -- i = 12
-put j; --> j = 10 (unmodified)
-
--- verify assignment effect
-put j = i; -- 1 same value
-put j ≡ i; -- 0 different reference 
-
--- boxing using "::"
-let j :: i; -- boxing i := 12 
-let i += 1; -- modify i := 13
-put j; --> expect 13 (modified)
-
--- verify boxing effect
-put j = i; -- 1 same value
-put j ≡ i; -- 1 (true) same reference 
-
-write;
-```
-
-## Method Parameters
-
-Parameters are variables defined in a method signature.
+Parameters are variables defined in a method or function signature.
 
 **Notes:**   
 * Native type parameters are pass by value;
 * Reference type parameters can be pass by value or by reference;
 * For input/output parameters we must using "@" instead of "ε";
 
-**example**
-```
-#driver "fn"
-
--- method with output parameter
-def add(a, b ε i8, r @ Z):
-  let r := a + b;
-def;
-
--- create result variable
-new res ε Z;
-
--- call function add with arguments by name
-add(a:1, b:2, r :: res); 
-put res;  -- expect 3
-
--- call function add with arguments by position
-add(2, 2, res);  
-put res;  -- expect 4
-
-write;
-```
-
 **note**
 * Parameters with initial value are optional;
 * Optional parameters must be last parameters or can be called by name;
 * Optional parameters are initialized with pair-up operator ":";
 
-## Lambda Expressions
+**See also:** 
+* [fi.bee](../demo/fi.bee)
+* [bs.bee](../demo/bs.bee) 
 
-λ Expressions are deterministic expressions that can return one single result:
+## Lambda Expression
+
+A λ expressions is a named expression that can have parameters and can create a result.
 
 **syntax**
 ```
-new <name>(<param> ε <type>,...) ε type => (expression);
+def <name> λ (<param> ε <type>,...) ε type => (expression);
 ```
 
 **Example:** 
 
 ```
--- define "ex" a function with two parameters
-new ex λ (x,y ε Z) ε Z => (x + y); 
+-- define "ex" a method with two parameters
+def ex λ (x,y ε Z) ε Z => (x + y); 
 
--- simple function call
-new z := ex(1,1); 
-put z; -- print 2 
+-- expression can be used in larger expressions
+new z := ex(1,1)+1; 
+put z; -- print 3
 
 write;
 ```
 
-**note:** Lambda expressions are mathematical functions.
-
 **properties**
-* λ expressions have a deterministic result
+
+* λ expressions can have only one result not a list;
 * λ expressions can be created during run-time;
 * λ expressions can be used in other λ expressions;
+* λ expressions can be used as parameter for a method or function;
+* λ expressions can be created as a result of a function;
 
 **restriction:**
-* λ expressions can not have local declarations 
-* λ expressions can not receive input/output parameters
-* λ expressions can not perform input/output operations
-* λ expressions can not fail and can not be interrupted
 
+* λ expressions can not have side effects;
+* λ expressions can not mutate variables;
+* λ expressions can not have local declarations; 
+* λ expressions can not receive input/output parameters;
+* λ expressions can not perform input/output operations;
+* λ expressions can not fail and can not be interrupted;
+
+```
 **See also:**
+* [fn.bee](../demo/fn.bee)
 * [pm.bee](../demo/pm.bee)
-* [ho.bee](../demo/ho.bee)
 
 ## Expression as Parameter
 
-A method or function can receive as parameter a λ expression.
+A method can receive λ expressions as parameters.
 
 **syntax**
 ```
-def <method_name>(<expression_name> λ (<param_list>) ε <result_type>):
+def <method_name>(<expression_name>λ(<param_list>) ε <result_type>):
   ...
 def;
 ```
 
 **example**
 ```
--- declare function reference with two parameters
-def compare(a,b ε Z,cmp λ (Z,Z) ε L) => (r ε L):
+-- declare method with lambda parameter
+def compare(a,b ε Z, cmp λ (Z,Z) ε L) => (r ε L):
   let r := cmp(a,b);
 def;
 
 -- declare λ expressions:
-new lt λ (a,b ε Z) ε L => (a < b)
+def lt λ(a,b ε Z) ε L => (a < b);
 
--- call compare using anonymous λ expressions
-new test := compare(1,2,lt);
+-- call compare using λ expression as named argument
+new test := compare(1,2,cmp::lt);
+put test; -- expect $1
+
+-- call compare using anonymous λ expression argument
+new test := compare(1, 2, λ(a,b) => (a ≥ b));
 put test; -- expect $1
 
 write;
 ```
 
-**See also:** 
-* [cj.bee](../demo/cj.bee) 
+**See also:**
+* [ho.bee](../demo/ho.bee) 
 
 **Read Next:** [Composite Types](composite.md)

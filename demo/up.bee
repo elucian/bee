@@ -9,7 +9,7 @@ def test(x, y ε Z) => (a,b ε Z):
   let b := y+1;
 def; 
 
--- unpacking to new variables
+-- unpacking and create new variables
 new n,m <+ test(1,2);
 put (n, m) -- will print 2, 3
 

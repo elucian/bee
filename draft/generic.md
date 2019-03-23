@@ -42,7 +42,7 @@ def Person  <: { name ε S, age ε N };
 
 -- define order method for array of Persons
 def order(cat @ [Person]):
-  sort<S>(cat, λ(a, b ε S) ε L => (a.name > b.name));
+  sort<Person>(cat, λ(a, b) => (a.name > b.name));
 def order;
 
 -- define clients and suppliers

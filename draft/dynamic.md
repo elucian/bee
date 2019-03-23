@@ -22,7 +22,7 @@ over;
 Expression signature is a type declaration;
 
 ```
-def CMP <: λ (Z,Z) ε L;
+def CMP λ (Z,Z) ε L;
 
 -- instantiate 3 functions like "CMP"
 new gt := (x, y ε Z) ε L => (x > y);

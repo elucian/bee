@@ -1,8 +1,8 @@
 ## Bee Syntax
 
-Bee is a light-weight, statically typed computer language inspired from Python.
+Bee is a light-weight, training language for beginners.
 
-**Read more:**[Wiki Bee](https://github.com/sage-code/bee/wiki)
+**Read more:** [Wiki Bee](https://github.com/sage-code/bee/wiki)
 
 Specification is available in folder: /syntax
 
@@ -30,7 +30,7 @@ You can learn bee by reading demo source files:
 1. [in.bee](demo/in.bee) - Input multiple values
 1. [cs.bee](demo/cs.bee) - Control structures
 1. [fn.bee](demo/fn.bee) - Function declaration
-1. [fi.bee](demo/fi.bee) - Fibonacci λ function
+1. [fi.bee](demo/fi.bee) - Fibonacci function
 1. [gv.bee](demo/gv.bee) - Global variables
 1. [lv.bee](demo/lv.bee) - Local variable demo
 1. [dt.bee](demo/dt.bee) - User defined data types
@@ -42,8 +42,7 @@ You can learn bee by reading demo source files:
 1. [nu.bee](demo/nu.bee) - Working with references
 1. [op.bee](demo/op.bee) - Output parameters
 1. [bs.bee](demo/bs.bee) - Bubble sort algorithm
-1. [ho.bee](demo/ho.bee) - High order function
-1. [cj.bee](demo/cj.bee) - Using a closure
+1. [ho.bee](demo/ho.bee) - High order method
 1. [gc.bee](demo/gc.bee) - Generator class
 
 ## Draft

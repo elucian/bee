@@ -6,8 +6,8 @@
 ** Define: λ Factory
  
 -- this function can create λ expression
-def shift(i ε Z) => (g λ (Z) ε Z):
-  new g λ (s ε Z) => (s + i);
+def shift(i ε Z) => g λ (s ε Z) ε Z:
+  let g :: (s ε Z) => (s + i);
 def shift;
 
 -- create two function instances
