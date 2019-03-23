@@ -17,7 +17,7 @@ symbol| description
 
 symbol  | description
 --------|-----------------------------------------------------
- `z`    | Back quote (grave accent) single ASCII character 
+ \`z\`  | Back quote (grave accent) single ASCII character 
  'x'    | Limited capacity ASCII string literal 
  "y"    | Variable capacity Unicode string literals
 
