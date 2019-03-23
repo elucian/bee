@@ -123,9 +123,9 @@ symbol | `=>`       |meaning
   ∪    | Set        |Union between two collections
   ⊂    | Logic      |set is included in superset: "⊂"
   ⊃    | Logic      |set contain subset: "⊃"  
-  +    | List       |Concatenation between two lists
-  +=   | collection |Append element to collection 
-  -=   | collection |Remove element from collection 
+  \+   | List       |Concatenation between two lists
+  \+=  | collection |Append element to collection 
+  \-=  | collection |Remove element from collection 
   !=   | element    |Remove first element from collection 
   ?=   | element    |Remove last element from collection 
                                           
