@@ -149,10 +149,10 @@ A method can have multiple results.
 
 ```
 -- have a list of results
-test(x,y ε Z) => (r, c ε Z):
+def test(x,y ε Z) => (r, c ε Z):
   r += x+1;
   c += y+1;
-test;
+def;
 
 new n, m ε Z;
 
@@ -838,7 +838,7 @@ def foo() => (me ε Foo):
 def;
 
 -- first parameter is binding bar to Foo
-def bar(me @ Foo, p1, p2 ε Z, p3 ε S):
+def Foo.bar(me @ Foo, p1, p2 ε Z, p3 ε S):
   --precondition
   fail if (p1 < 0 | p2 < 0 | p3 = "");
   
@@ -849,7 +849,7 @@ def bar(me @ Foo, p1, p2 ε Z, p3 ε S):
 def;
 
 -- second method for Foo type
-def print(me @ Foo):
+def Foo.print(me @ Foo):
   put "{p1={0},p2={1},p3={2}}" <+ (me.p1, me.p2, me.p3);
 def;
 
