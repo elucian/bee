@@ -750,7 +750,6 @@ write;
 * λ expressions can not perform input/output operations;
 * λ expressions can not fail and can not be interrupted;
 
-```
 **See also:**
 * [fn.bee](../demo/fn.bee)
 * [pm.bee](../demo/pm.bee)
