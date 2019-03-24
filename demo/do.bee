@@ -2,16 +2,16 @@
        repetitive statement demo
 -----------------------------------------+
 #driver "do"
-new a := [Z](10);      -- array of 10 Words
-new n := a.count()-1; -- index of last element
+array a := [Z](10);      -- array of 10 Words
+value n := a.count()-1; -- index of last element
 
 -- use range for iteration
-new i ∈ [0..n];
+value i ∈ [0..n];
 cycle:
-   put ('r[{0}] := {1}' <+ (i, a[i]));
+   print ('r[{0}] := {1}' <+ (i, a[i]));
    stop if (i = n);
-   let i += 1;
+   alter i += 1;
 cycle;
-write;
+
 
 over;

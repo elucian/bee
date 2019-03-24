@@ -3,24 +3,24 @@
 ----------------------------------------------+
 #driver "nu"
 
-new d, e ∈ Z; --reference to natural number
-new s := 10 ∈ i8; --> type is i8 native type   
+value d, e ∈ Z; --reference to natural number
+value s := 10 ∈ i8; --> type is i8 native type   
 
 -- assign "by value"
-let e := s; -- make a clone from s
-let e += 1; -- increment e value
-put e; --> e = 12 (modified)
-put s; --> s = 11 (unchanged)
+alter e := s; -- make a clone from s
+alter e += 1; -- increment e value
+print e; --> e = 12 (modified)
+print s; --> s = 11 (unchanged)
 
 -- test modifier effect
 fail if (s ≡ d); 
 
 -- assign "by reference" 
-let d :: s; -- explicit boxing address for "s"
-let d += 1; -- modify underline value of d that is s  
-put s; --> s = 11  (modified)
-put d; --> d = 11  (modified) 
-write; 
+alter d :: s; -- explicit boxing address for "s"
+alter d += 1; -- modify underline value of d that is s  
+print s; --> s = 11  (modified)
+print d; --> d = 11  (modified) 
+ 
 -- test modifier effect
 fail if ¬ (s ≡ d); 
 over;

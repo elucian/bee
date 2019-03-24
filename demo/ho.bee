@@ -6,22 +6,20 @@
 ** Define: λ Factory
  
 -- this function can create λ expression
-def shift(i ∈ Z) => g λ (s ∈ Z) ∈ Z:
-  let g :: (s ∈ Z) => (s + i);
-def shift;
+aspect shift(i ∈ Z) => g λ (s ∈ Z) ∈ Z:
+  alter g :: (s ∈ Z) => (s + i);
+aspect shift;
 
 -- create two function instances
-new inc := shift(+1);  -- increment 
-new dec := shift(-1);  -- decrement 
+value inc := shift(+1);  -- increment 
+value dec := shift(-1);  -- decrement 
 
 -- test function inc
-put inc(-10); --> 9
-put inc(10);  --> 11
+print inc(-10); --> 9
+print inc(10);  --> 11
 
 -- test function dec
-put dec(20); --> 19
-put dec(19); --> 18
-
-write;
+print dec(20); --> 19
+print dec(19); --> 18
 
 over;

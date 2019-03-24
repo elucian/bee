@@ -4,80 +4,80 @@
 #driver "ct"
 
 -- enumeration is a type 
-def Enum := {fst:1, snd, trd}; 
+ordinal Enum := {fst:1, snd, trd}; 
 
 -- print enumeration members
-put (Enum.fst); -- 1
-put (Enum.snd); -- 2
-put (Enum.trd); -- 3
+print (Enum.fst); -- 1
+print (Enum.snd); -- 2
+print (Enum.trd); -- 3
 
-write;
+
 
 -- define hash map variable
-new s ∈ {(A:N)}; 
+value s ∈ {(A:N)}; 
 
 -- assign (name:value) pairs
-let s =
+alter s :=
   {
    ("first" : 1), 
    ("secont": 2),
    ("third" : 3)
   };
 
-put s["first"];  -- 1
-put s["second"]; -- 2
-put s["third"];  -- 3
+print s["first"];  -- 1
+print s["second"]; -- 2
+print s["third"];  -- 3
 
-write;
+
 
 -- array with capacity
-new v1 := [Z](10);  -- vector of 10 integer elements
-new v2 := [R](2,3); -- matrix of 2 rows and 3 columns
+array v1 := [Z](10);  -- vector of 10 integer elements
+array v2 := [R](2,3); -- matrix of 2 rows and 3 columns
 
--- dynamic let / map collections
-new p := {A};    -- let collection of ASCII characters
-new m := {R,S};  -- hash map of strings with real key
+-- dynamic alter / map collections
+tree  p := {A};    -- alter collection of ASCII characters
+index m := {(R:S)};  -- hash map of strings with real key
 
 -- Establish map using literals
-let m := {`a`:1, `b`:2, `c`:3};
+alter m := {`a`:1, `b`:2, `c`:3};
 
 -- complex list examples
-new q1 := (A);        -- a list of characters
-new q2 := (R);        -- a list of real numbers
-new q3 := ((A));      -- a list of lists of characters
-new q4 := ([A](10));  -- a list of array with capacity 10
+list := (A);        -- a list of characters
+list := (R);        -- a list of real numbers
+list := ((A));      -- a list of lists of characters
+list := ([A](10));  -- a list of array with capacity 10
 
 -- Array and Matrix literals
-new l2 := [1,2,3];      -- array of 3 elements
-new m2 := [[1,1],[2,2]];-- matrix of 2x2
+array  l2 := [1,2,3];      -- array of 3 elements
+matrix m2 := [[1,1],[2,2]];-- matrix of 2x2
 
 -- Demo for "set" operations
-new s1 := {Z}; -- empty set of strings
+tree s1 := {Z}; -- empty set of strings
 
 -- Initialized set of 3 elements
-new s2 := {1, 2, 3};
+tree s2 := {1, 2, 3};
 
 -- append one element into a set
-let s1 := s1 + 0; -- {0}
-let s1 := s1 + 1; -- {0,1}
-let s1 := s1 + 2; -- {0,1,2}
+alter s1 := s1 + 0; -- {0}
+alter s1 := s1 + 1; -- {0,1}
+alter s1 := s1 + 2; -- {0,1,2}
 
 -- remove one element from set
-let s1 := s1 - 1; -- {0,2}
-let s1 := s1 - 2; -- {0}
+alter s1 := s1 - 1; -- {0,2}
+alter s1 := s1 - 2; -- {0}
 
 -- set literals using type inference
-new s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
-new s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
+tree s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
+tree s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
 
 -- union between 2 sets (a, b) are nod duplicated
-put (s3 ∨ s4); -- {`a`,`b`,`c`,`d`}
+print (s3 ∨ s4); -- {`a`,`b`,`c`,`d`}
 
 -- intersection between 2 sets
-put (s3 ∧ s4);-- {`a`,`b`}
+print (s3 ∧ s4);-- {`a`,`b`}
 
 -- difference between two sets
-put (s3 - s4);-- {'c'}
-put (s4 - s3);-- {'d'}
+print (s3 - s4);-- {'c'}
+print (s4 - s3);-- {'d'}
 
 over;

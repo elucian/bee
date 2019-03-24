@@ -158,7 +158,7 @@ Bee define a collection using a special notation based on brackets.
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-value <constant_name> := <constant>;   
+static constant_name := constant_literal;   
 ```
 
 **Notes:** 
@@ -179,21 +179,20 @@ sym | purpose
 
 ```
 -- full declarations with type and initial value
-value <var_name> ∈ <type>;
-value <var_name> := <constant> ∈ <type>;
+value var_name ∈  type_name;
+value var_name := constant ∈ type_name;
 
 -- partial declaration using type inference
-value <var_name> := <expression>; -- native type inference
-value <var_name> := <constructor>;-- object type inference
+value var_name := expression; -- type inference
 
 -- reference declaration using using operator "::"
-value <ref_name> :: <var_name>; 
+value ref_name :: var_name; 
 ```
 
 Multiple variables can be define in one single line using comma separator:
 ```
-value <var_name>, <var_name> ... := <expression>;
-value <var_name>, <var_name> ... := <constructor>;
+value var_name, var_name ... := expression;
+value var_name, var_name ... := constructor;
 ```
 
 **Notes:** 
@@ -221,7 +220,7 @@ print b;          -- expected 11
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-label pi := 3.14;
+static pi := 3.14;
 
 -- declare multiple variables using alter
 value a   ∈ Z; -- Integer 
@@ -234,20 +233,23 @@ alter a += 1;   -- increment value of a := 11
 alter a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p := T;     -- modify value of q and p
+alter q, p := $⊤;    -- modify value of q and p
 alter x, y := 10.5;  -- modify value of x and y
 ```
 
-## Alias declaration
+## Type declaration
 
-User can define composite types and sub-types using keyword "type" and operator "<:".
+User can define composite types and sub-types using composite category and operator "<:".
 
 ```
-alias alias_name <: type_descriptor;
+--declare new type
+category type_name <: type_descriptor;
 
 --using new type
-value var_name,var_name ... ∈ alias_name;
+value var_name,var_name ... ∈ type_name;
 ```
+
+category ::= { range, class, ordinal }
 
 ## Type conversion
 
@@ -303,7 +305,7 @@ alter a := 10.5; --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: $⊥ = 0 = False and $⊤ = 1 = True
 
 ```
-type .L <: {.$0, .$1};
+ordinal .L <: {.$0, .$1};
 ```
 
 ## Logic operations

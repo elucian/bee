@@ -4,19 +4,19 @@
 #driver "fi"
 
 -- declare Fibonacci function
-def fib(n ∈ N) => (y ∈ N): 
+aspect fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
-    let y := 1;
+    alter y := 1;
   else:
-    let y := fib(n - 1) + fib(n - 2);
+    alter y := fib(n - 1) + fib(n - 2);
   when;
-def;
+aspect;
 
 -- call function fib 
-new r := fib(5):
+value r := fib(5):
 
 -- print the result
-put r;
-write;
+print r;
+
 
 over;

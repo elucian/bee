@@ -4,24 +4,24 @@
 #driver "up"
 
 ** method with two results
-def test(x, y ∈ Z) => (a,b ∈ Z):
-  let a := x+1;
-  let b := y+1;
-def; 
+aspect test(x, y ∈ Z) => (a,b ∈ Z):
+  alter a := x+1;
+  alter b := y+1;
+aspect; 
 
--- unpacking and create new variables
-new n,m <+ test(1,2);
-put (n, m) -- will print 2, 3
+-- unpacking and create value variables
+value n,m <+ test(1,2);
+print (n, m) -- will print 2, 3
 
 ** method with structured result
-def Rec <: {x ∈ Z, y ∈ R};
+class Rec <: {x ∈ Z, y ∈ R};
 
-def(x ∈ Z, y ∈ R) => (r ∈ Rec):
-  r.x := x;
-  r.y := y;
-def;
+aspect (x ∈ Z, y ∈ R) => (r ∈ Rec):
+  alter r.x := x;
+  alter r.y := y;
+aspect;
 
-put demo(4,5.5); -- will print { x: 4, y: 5.5 }
+print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 
-write;
+
 over; 

@@ -3,47 +3,47 @@
 -----------------------------------------+
 #driver "dc"
 
-new n ∈ Z;   -- Integer on 64 bit
-new h ∈ S;   -- Default 255 char string
-new l ∈ L;   -- Logical value False := 0
+value n ∈ Z;   -- Integer on 64 bit
+value h ∈ S;   -- Default 255 char string
+value l ∈ L;   -- Logical value False := 0
 
 -----------------------------------------
 -- printing initial values
 -----------------------------------------
-put n; -- 0
-put h; -- ''
-put l; -- 0 
+print n; -- 0
+print h; -- ''
+print l; -- 0 
 
 write;
 
 -- declaring with initial value
 
-new g, h := -10 ∈ N;
-new x := 10, y := 20 ∈ N;
+value g, h := -10 ∈ N;
+value x := 10, y := 20 ∈ N;
 
 -- native array are auto initialized
-new a := [W](10);   -- array of 10 Words
-new b := [A](10);   -- array of 10 ASCII characters
-new m := [W](3,3);  -- matrix of 3x3 Words
+array  a := [W](10);   -- array of 10 Words
+array  b := [A](10);   -- array of 10 ASCII characters
+matrix m := [W](3,3);  -- matrix of 3x3 Words
 
-put a; -- [0,0,0,0,0,0,0,0,0,0]
-put b; -- [``,``,``,``,``,``,``,``,``,``]
-put m; -- [[0,0,0], [0,0,0], [0,0,0]]
+print a; -- [0,0,0,0,0,0,0,0,0,0]
+print b; -- [``,``,``,``,``,``,``,``,``,``]
+print m; -- [[0,0,0], [0,0,0], [0,0,0]]
 
 write;
 
 -- use all member initialization [*]
-let b[*] := `s`; -- assign value "s" for all elements
-let a[*] :=  5 ; -- scalar modification, make all = 5
-let m[*] :=  1 ; -- scalar matrix modification
+alter b[*] := `s`; -- assign value "s" for all elements
+alter a[*] :=  5 ; -- scalar modification, make all = 5
+alter m[*] :=  1 ; -- scalar matrix modification
 
 -- use index to find member
-put a[0];   -- will print 5
-put b[0];   -- will print 's' 
-put m[2,2]; -- will print 1
+print a[0];   -- will print 5
+print b[0];   -- will print 's' 
+print m[2,2]; -- will print 1
 
 -- use slice to modify elements
-let a[2..?] := 1; --> [5,5,1,1,1,1,1,1,1,1] 
-let a[0..5] := 2; --> [2,2,2,2,2,2,1,1,1,1] 
+alter a[2..?] := 1; --> [5,5,1,1,1,1,1,1,1,1] 
+alter a[0..5] := 2; --> [2,2,2,2,2,2,1,1,1,1] 
 
 over;

@@ -3,55 +3,52 @@
 -------------------------------+
 #driver "if"
 
-new x ∈ N;
-get (x ,"Type a number:");
-read;
+value x ∈ N;
+read (x ,"Type a number:");
 
 -- if conditional
-put "x = 0" if (x = 0);
+print "x = 0" if (x = 0);
 
 -- single branch
 when (x = 1):
-  put "x = 1";
+  print "x = 1";
 when;
-write;
+
 
 -- two branches
 when ¬(x = 5):
-  put "x ≠ 5";
+  print "x ≠ 5";
 else:
-  put "x = 5";   
+  print "x = 5";   
 when;
-write;
+
 
 -- nested branches
-let x := 1;
+alter x := 1;
 when (x ≥ 1):
-  put "x ≥ 1";
+  print "x ≥ 1";
   when (x = 1):
-    put "x = 1";
+    print "x = 1";
   else:
-    put "x > 1";  
+    print "x > 1";  
   when; 
 else:
-  put "x < 1";
+  print "x < 1";
 when;
-write; 
+ 
 -- x ≥ 1
 -- x = 1
 
 -- nested alternative
 when (x < 1):
-  put "x < 1";
+  print "x < 1";
 else:
   when (x > 1):
-    put "x > 1";
+    print "x > 1";
   else:
-    put "x = 1";
+    print "x = 1";
   when;   
 when;
-write; 
--- x = 1
+-- expect x = 1
 
-write;
 over;

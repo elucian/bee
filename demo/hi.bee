@@ -1,19 +1,16 @@
 +--------------------------
-   console input demos
+   console inprint demos
 --------------------------+
 #driver "hi"
 
-put "Hello. I'm Bee!";
-write;
+print "Hello. I'm Bee!";
  
-new name ∈ S;
-new age  ∈ N;
+value name ∈ S;
+value age  ∈ N;
 
-get(name , "Your name?:");
-get(age  , "Your age:");
-read;
+read(name , "Your name?:");
+read(age  , "Your age:");
 
-put("hello:".name);
-write;
+print "hello:".name;
 
 over;

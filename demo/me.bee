@@ -4,26 +4,26 @@
 #driver "me"
 
 -- enumeration with public members
-def Number <: {.zero, .one, .two};
+ordinal Number <: {.zero, .one, .two};
 
-new test ∈ Number;
-let test := zero; -- instance of Number
+value test ∈ Number;
+alter test := zero; -- instance of Number
 
 -- create a method for type Number
-def convert(x @ Number) => (y ∈ S):
-  let y := ('zero'  if x = zero,
-            'one'   if x = one,
-            'two'   if x = two,
-            'none');
-def;
+aspect convert(x @ Number) => (y ∈ S):
+  alter y := ('zero'  if x = zero,
+              'one'   if x = one,
+              'two'   if x = two,
+              'none');
+aspect;
 
 -- a wrapper method for convert
-def equal(x @ Number, s ∈ S) => (r ∈ L):
-  let r := s = x.convert(); 
-def;
+aspect equal(x @ Number, s ∈ S) => (r ∈ L):
+  alter r := s = x.convert(); 
+aspect;
     
 -- calling test methods 
-put test.convert();     -- will print "zero"
-put test.equal('zero'); -- will print 1
+print test.convert();     -- will print "zero"
+print test.equal('zero'); -- will print 1
 
 over;

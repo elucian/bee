@@ -3,36 +3,36 @@
 ----------------------------------+
 #driver "gc"
 
--- first create an object
-def GenI <: {min ,max ,ci:min ∈ Z};
+-- first create a class
+class GenI <: {min ,max ,ci:min ∈ Z};
 
 -- reset method
-def GenI.reset(me @ GenI, p_min , p_max ∈ Z):
-  let me.min := p_min
-  let me.max := p_max
-  let me.ci:= p_min;    
-def;
+aspect GenI.reset(me @ GenI, p_min , p_max ∈ Z):
+  alter me.min := p_min
+  alter me.max := p_max
+  alter me.ci:= p_min;    
+aspect;
 
 -- get next index
-def GenI.next(me @ GenI) => (i ∈ Z):
-  let i  := me.ci;
-  let me.ci += 1;
-def;
+aspect GenI.next(me @ GenI) => (i ∈ Z):
+  alter i  := me.ci;
+  alter me.ci += 1;
+aspect;
 
 -- detect if finish
-def GenI.finish(me @ GenI)  => (r ∈ L):
-  let L := (me.ci ≥ me.max);
-def;
+aspect GenI.finish(me @ GenI)  => (r ∈ L):
+  alter L := (me.ci ≥ me.max);
+aspect;
 
 -- use GenI to create one instance: 
-new foo := {min:10,max:20} ∈ GenI;
-new x := 0;
+value foo := {min:10,max:20} ∈ GenI;
+value x := 0;
 cycle:
   stop if foo.finish();
-  let x := foo,next();  
-  say (x,",");
+  alter x := foo,next();  
+  write (x,",");
 cycle;
-write; -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
+ -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
 
 -- test reset method
 foo.reset();

@@ -1,19 +1,14 @@
 +--------------------------
-   wee input value demo
+   wee inprint value demo
 --------------------------+
 #driver "in"
 
-new a ∈ N;
-put "to stop enter 0";
-write;
+value a ∈ N;
+print "to stop enter 0";
 
 cycle:
-  get (a, "enter a number:", "####.##"); 
-  read;
-  
-  put ("you have enter: " + a);
-  write;   
-  
+  read (a, "enter a number:", "####.##");  
+  print ("you have enter: " + a);
   stop if (a = 0);
 cycle;
 

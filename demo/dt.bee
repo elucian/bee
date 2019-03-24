@@ -5,17 +5,17 @@
 #driver "dt"
 
 -- this type is public (uses dot prefix)
-def .Data <: {key:A, value:N};
+class .Data <: {key:A, value:N};
 
--- new variable using type alias
-new x ∈ Data;
-let x := {key:`a`, value:10};
+-- value variable using type alias
+value x ∈ Data;
+alter x := {key:`a`, value:10};
 
 +---------------------------------------------------+ 
 |* public enumeration type with public elements    *|
 |* elements starting with "." do not need qualifier*|
 +---------------------------------------------------+ 
-def Number: { 
+ordinal Number <: { 
    .zero, 
    .one, 
    .two, 
@@ -34,14 +34,14 @@ def Number: {
 +------------------------------------------------+
 
 -- example of use
-new a := 0;
+value a := 0;
 
 -- example of use
 when (a = zero):
-  put "zero";
+  print "zero";
 else:
-  put "life is misery";
+  print "life is misery";
 when;
-write;
+
 
 over;

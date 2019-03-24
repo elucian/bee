@@ -39,7 +39,7 @@ Bee is using 2 kind of declarations:
 
 * type  -- define: data types
 * value -- create/initialize a value variable
-* fixed -- create/initialize a constant value
+* static -- create/initialize a constant value
 
 **Note:**
 Bee do not support Unicode identifiers in declarations.
@@ -176,7 +176,7 @@ This is useful for a long rule to know that is public at the end.
 
 ```
 --public constant
-fixed .pi := 3.14;
+static .pi := 3.14;
 
 --public variable
 value .v ∈ N;

@@ -4,33 +4,33 @@
 #driver "cy"
 
 -- declare array of 10 Words
-new a ∈ [Z](10);
+array a ∈ [Z](10);
 
 -- use cycle 
-new i ∈ Z; 
+value i ∈ Z; 
 cycle:
-  let a[i] := i;
+  alter a[i] := i;
   when (i = 9):
     stop;
   else:
-    let i += 1;
+    alter i += 1;
     loop;
   when;
 cycle;
 
 -- cycle shortcut
-new x := 10;
+value x := 10;
 cycle:
   when (x % 2 = 0):
-    let x -= 1;
+    alter x -= 1;
     loop;
   when;  
-  put x;
+  print x;
   
   when (x < 0):
     stop;
   else:
-    let x -= 1;
+    alter x -= 1;
   when;
 cycle;  
 

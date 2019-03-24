@@ -7,20 +7,20 @@
 bee io   := $bee.system.io.(*);
 bee con  := $bee.system.console.(*);
 
-new file := io.open('foo.txt','+w');  
+value file := io.open('foo.txt','+w');  
 
 -- write into the file using put
-file.put("Hello World!");
-file.write;
+file.print("Hello World!");
+file.
 
 -- read the entire content from file
-new content ∈ U;
+value content ∈ U;
 
 file.read content;
 file.close; 
 
 -- display the entrie content to console
-say content;
-con.write; 
+write content;
+con. 
 
 over;

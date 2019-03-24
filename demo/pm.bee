@@ -1,10 +1,10 @@
 +-------------------------------
-  pattern matching λ expression
+  pattern matching λ rule
 ------------------------------+
 #driver "pm"
 
 -- pattern matching expression
-new pm(p1,p2 ∈ N) ∈ N =>
+rule pm λ (p1,p2 ∈ N) ∈ N =>
   (0 if (p1 = 0 )
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
@@ -12,11 +12,10 @@ new pm(p1,p2 ∈ N) ∈ N =>
   ,4);
 
 -- execute pm expression
-put pm(0,2);  -- will print 0
-put pm(1,0);  -- will print 1
-put pm(1,1);  -- will print 2
-put pm(1,2);  -- will print 3
-put pm(2,1);  -- will print 4
+print pm(0,2);  -- will print 0
+print pm(1,0);  -- will print 1
+print pm(1,1);  -- will print 2
+print pm(1,2);  -- will print 3
+print pm(2,1);  -- will print 4
 
-write;
 over;

@@ -4,28 +4,25 @@
 #driver "lv"
 
 -- local variable
-new x := 1;
+value x := 1;
 
 -- method side-effects
-def add:
-  let x := x + 1;
-  put x;
-def;
+aspect add:
+  alter x := x + 1;
+  print x;
+aspect;
 
 add; -- will print 2
 add; -- will print 3
 
-put x; -- x = 3 (is modified)
-
-write;  
+print x; -- x = 3 (is modified)
 
 -- changing x influence method
-let x := 0;  -- new x value 
+alter x := 0;  -- value x value 
 
 add;   -- will print 1
 add;   -- will print 2
 
-put x; -- x = 2 (modified)
-write;
+print x; -- x = 2 (modified)
 
 over;

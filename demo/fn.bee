@@ -4,16 +4,16 @@
 #driver "fn"
 
 ** simple λ expression
-def add(a, b ∈ Z) ∈ Z => (a + b);
+rule add λ (a, b ∈ Z) ∈ Z => (a + b);
 
 -- call λ expression add
-put add(1, 2);     -- print 3
-put add(-10, 10);  -- print 0
-write;
+print add(1, 2);     -- print 3
+print add(-10, 10);  -- print 0
+
 
 ** recursive expression
-def fac λ (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
-put fac(3); -- expect 6
-write; 
+rule  fac λ (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
+print fac(3); -- expect 6
+ 
  
 over;
