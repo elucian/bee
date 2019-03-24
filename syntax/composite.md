@@ -732,26 +732,26 @@ print sep;
 
 ## Classes
 
-Classes are complex data structures with elements enclosed in curly brackets { , , ,} and separated by comma. Classes are templates for creation of items. Each unit has one or more attributes with associated data types. 
+Classes are complex data structures with elements enclosed in curly brackets { , , ,} and separated by comma. Classes are templates for creation of items. Each object has one or more attributes with associated data types. 
 
 **Pattern:**
 ```
 -- declare a category of objects
 class type_name <: {attribute ∈ type_name, ...};
 
--- create an unit instance using default constructor
-unit item_name := {
+-- create an object instance using default constructor
+object item_name := {
        attribute : constant,
        ...
        } ∈ type_name;
 
--- modify one unit attribute
+-- modify one object attribute
 alter item_name.attribute := give_value;
 
 -- declare receivers
 value var_name ∈ type_name
 
--- unpacking unit attributes
+-- unpacking object attributes
 value var_name,... <+ item_name;
 ```
 
@@ -771,7 +771,7 @@ class Person <: {
     }; 
 
 -- create two objects of type Person
-unit r1,r2 ∈ Person;
+object r1,r2 ∈ Person;
 
 -- person with no children          
 alter r1 := {name:'Mica', age:21};
@@ -784,7 +784,7 @@ alter r2 := {name:'Barbu', age:25,
              )
           };
 
--- unit unpacking into new variables
+-- object unpacking into new variables
 value r_name, r_age, r_children <+ r2;
 
 -- using introspection
@@ -806,8 +806,8 @@ class Person <: {name ∈ U, age ∈ N};
 array catalog := [Person](10); 
   
 --assign value using literals
-unit catalog[0] := {name:"Cleopatra", age:15};
-unit catalog[1] := {name:"Martin", age:17};
+object catalog[0] := {name:"Cleopatra", age:15};
+object catalog[1] := {name:"Martin", age:17};
 
 --using one element with dot operators
 print caralog[0].name; --will print Cleopatra
@@ -829,12 +829,12 @@ An aspect can bind to items using reference parameter: "me".
 
 **pattern**
 ```
--- define Foo as unit with 3 public attributes:
+-- define Foo as object with 3 public attributes:
 class Foo <: {p ∈ N};
   
 -- foo setup
 aspect foo(p ∈ N) => (me @ Foo):
-  unit me := {p};
+  object me := {p};
 aspect;
 
 -- second aspect for Foo type
@@ -842,10 +842,10 @@ aspect bar(me @ Foo):
   print "p ="._.p;
 aspect;
 
--- create Foo unit 
-unit test :: foo(p:1);
+-- create Foo object 
+object test :: foo(p:1);
 
--- test unit aspect
+-- test object aspect
 test.bar();  -- p = 1
 
 ```
@@ -853,8 +853,8 @@ test.bar();  -- p = 1
 * Binded actions are using multiple dispatch so they can be overloaded;
 * Constructors and actions can be overwritten in other modules;
 * Actions of a type can be private to module or public using dot prefix;
-* If the unit type is public, the constructor must also be public;
-* You can not alter unit structure after it is defined.
+* If the object type is public, the constructor must also be public;
+* You can not alter object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
 

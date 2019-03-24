@@ -1,13 +1,13 @@
 ## Bee Keywords
 
-Bee uses reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 26 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 2: if,
 3: asm, cpp, bee, 
-4: read, unit, when, else, exit, fail, pass, loop, stop, over 
+4: read, when, else, exit, fail, pass, loop, stop, over 
 5: class, range, value, write, print, alter, cycle, while, solve, 
-6: aspect, global, static
+6: aspect, object, global, static
 ```
 
 ### Definition statements
@@ -24,7 +24,7 @@ Next statements are used to import modules or declare something.
 | value    | Declare a mutable native or basic variable 
 | rule     | Define a rule
 | class    | Define a class
-| unit     | Define a new class instance
+| object   | Define a new class instance
 | range    | Define sub-type range
 | ordinal  | Define ordinal data type
 

@@ -51,7 +51,7 @@ tree s := {1,2,3,4};
 index c := {(1:"storage"),(2:"string")};
 
 -- create a data structure
-unit  b := {name:'Goliath', age:'30'};
+object  b := {name:'Goliath', age:'30'};
 
 ```
 
