@@ -1,9 +1,9 @@
 +---------------------------
-  Declare Fibonacci function
+  Declare Fibonacci aspect
 ---------------------------+
 #driver "fi"
 
--- declare Fibonacci function
+-- declare Fibonacci aspect
 aspect fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
     alter y := 1;
@@ -12,7 +12,7 @@ aspect fib(n ∈ N) => (y ∈ N):
   when;
 aspect;
 
--- call function fib 
+-- call aspect fib 
 value r := fib(5):
 
 -- print the result

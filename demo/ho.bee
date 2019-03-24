@@ -1,24 +1,24 @@
 +---------------------------------
-  High order function demo
+  High order aspect demo
 ----------------------------------+
 #driver "ho" 
 
 ** Define: λ Factory
  
--- this function can create λ expression
-aspect shift(i ∈ Z) => g λ (s ∈ Z) ∈ Z:
-  alter g :: (s ∈ Z) => (s + i);
+-- this aspect can create λ rule
+aspect shift(i ∈ Z) => (g λ (s ∈ Z) ∈ Z):
+  rule g :: (s ∈ Z) => (s + i);
 aspect shift;
 
--- create two function instances
+-- create two aspect instances
 value inc := shift(+1);  -- increment 
 value dec := shift(-1);  -- decrement 
 
--- test function inc
+-- test aspect inc
 print inc(-10); --> 9
 print inc(10);  --> 11
 
--- test function dec
+-- test aspect dec
 print dec(20); --> 19
 print dec(19); --> 18
 
