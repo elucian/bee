@@ -19,10 +19,12 @@ My keyboard settings is saved in file G110.xml
   G3 | ¬ ≠  ⊃ ⊂  α β  
   G4 | · ÷  ∩ ∪  π σ
 -----------------------
-  G5 | ∧ ∨  ↑ ↓  Π Σ 
-  G6 | ⊤ ⊥  ← →  Γ Δ
+  G5 | ∧ ∨  ↑ ↓  ∞ ∅ 
+  G6 | ⊤ ⊥  ← →  Π Σ
 -----------------------
 ```
+
+
 
 ## Other symbols
 
@@ -68,7 +70,7 @@ Greek letters can be used for variable names.
 
 ## Editor Font
 
-We recommend a fixed size font and UTF-8 encoding for Bee source code.
+We recommend a static size font and UTF-8 encoding for Bee source code.
 
 **Download:** [Dejavu Fonts](https://dejavu-fonts.github.io/)
 
