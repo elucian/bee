@@ -11,11 +11,11 @@ For syntax notation we use modified BNF convention:
 * [Expression](#expression)
 * [Data type](#data-type)
 * [Logical expression](#logical-expression)
-* [Reference](#reference)
+* [References](#references)
 * [Conditional](#conditional)
 * [Pattern Matching](#pattern-matching)
 * [Control Flow](#control-flow)
-* [Methods](#methods)
+* [Aspects](#aspects)
 * [Rules](#rules)
 * [Parameters](#parameters)
 
@@ -376,7 +376,7 @@ alter y := b -> L; -- y = $⊤
 * A string that contains "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: 1
 * A string that contains "No", "no", "False", "true", "F" or "f" or "0" convert to: 0
 
-## Reference
+## References
 
 In Bee all values and composite types are references except native types. 
 
@@ -599,7 +599,7 @@ cycle;
 print; --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
-## Aspect
+## Aspects
 
 An aspect is a named block of code that can have parameters and create results.
 

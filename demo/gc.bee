@@ -7,32 +7,32 @@
 class GenI <: {min ,max ,ci:min ∈ Z};
 
 -- reset method
-aspect GenI.reset(me @ GenI, p_min , p_max ∈ Z):
+aspect reset(me @ GenI, p_min , p_max ∈ Z):
   alter me.min := p_min
   alter me.max := p_max
   alter me.ci:= p_min;    
 aspect;
 
 -- get next index
-aspect GenI.next(me @ GenI) => (i ∈ Z):
+aspect next(me @ GenI) => (i ∈ Z):
   alter i  := me.ci;
   alter me.ci += 1;
 aspect;
 
 -- detect if finish
-aspect GenI.finish(me @ GenI)  => (r ∈ L):
-  alter L := (me.ci ≥ me.max);
+aspect finish(me @ GenI)  => (r ∈ L):
+  alter r := (me.ci ≥ me.max);
 aspect;
 
 -- use GenI to create one instance: 
-value foo := {min:10,max:20} ∈ GenI;
-value x := 0;
+unit  foo := {min:10,max:20} ∈ GenI;
+value x   := 0;
 cycle:
   stop if foo.finish();
   alter x := foo,next();  
   write (x,",");
 cycle;
- -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
+-- expect: 10,11,12,13,14,15,16,17,18,19,20, 
 
 -- test reset method
 foo.reset();

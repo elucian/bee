@@ -2,7 +2,7 @@
 
 Composite types are complex data structures. 
 
-## Index
+**Bookmarks**
 
 * [range](#range)
 * [ordinal](#ordinal)
@@ -13,10 +13,11 @@ Composite types are complex data structures.
 * [index](#index)
 * [array](#array)
 * [slice](#slice)
-* [string](#string)
 * [varargs](#varargs)
-* [complex](#complex)
+* [string](#string)
+* [classes](#classes)
 * [binding](#binding)
+* [aggregate](#agregate)
 
 ## Usability
 
@@ -51,8 +52,6 @@ when ('x' ∈ Alfa):
 else:
   print 'no';
 when;
-
-print;
 ```
 
 **Notes:**
@@ -539,6 +538,37 @@ Will print:
 | 9 10 11 12|
 |13 14 15 16|
 ```
+## Varargs
+
+One rule or aspect can receive variable number of arguments.   
+We declare an array using prefix "*" for variable parameter name.
+
+```
+--parameter *bar is an array
+aspect foo(*bar ∈ [Z]) => (x ∈ Z):
+  alter c := bar.count();  
+  -- precondition
+  when (c = 0):
+    alter x := 0; 
+    exit;
+  when;
+  value i := 0; 
+  -- sum all parameters  
+  cycle:
+    alter x += bar[i];
+    alter i += 1;
+    stop if i = c;
+  cycle;
+aspect;
+
+--we can call foo with variable number of arguments
+print foo();     --> 0
+print foo(1);    --> 1
+print foo(1,2);  --> 3
+print foo(1,2,3);--> 6
+
+print;
+```
 
 ## String
 
@@ -700,77 +730,28 @@ print sep;
 
 **Note:** Operator "*" have higher precedence then "."
 
-## Varargs
+## Classes
 
-One rule or aspect can receive variable number of arguments.   
-We declare an array using prefix "*" for variable parameter name.
-
-```
---parameter *bar is an array
-aspect foo(*bar ∈ [Z]) => (x ∈ Z):
-  alter c := bar.count();  
-  -- precondition
-  when (c = 0):
-    alter x := 0; 
-    exit;
-  when;
-  value i := 0; 
-  -- sum all parameters  
-  cycle:
-    alter x += bar[i];
-    alter i += 1;
-    stop if i = c;
-  cycle;
-aspect;
-
---we can call foo with variable number of arguments
-print foo();     --> 0
-print foo(1);    --> 1
-print foo(1,2);  --> 3
-print foo(1,2,3);--> 6
-
-print;
-```
-
-## Complex 
-
-A complex collection can store references to other things.
-
-**example**
-```
--- a list of lists of integers
-list  clist ∈ ((Z));
-
--- an array of 10 lists of integers
-array lheap ∈ [(Z)](10);
-
--- an array of arrays of integers
-array aheap ∈ [[Z](5)](10);
-
-```
-
-## Class
-
-Classes are complex data structures with elements enclosed in curly brackets { , , ,} and separated by comma. Classes are templates for creation of items. Each item has one or more attributes with associated data types. 
+Classes are complex data structures with elements enclosed in curly brackets { , , ,} and separated by comma. Classes are templates for creation of items. Each unit has one or more attributes with associated data types. 
 
 **Pattern:**
 ```
 -- declare a category of objects
 class type_name <: {attribute ∈ type_name, ...};
 
--- create an item instance using default constructor
-item item_name := {
+-- create an unit instance using default constructor
+unit item_name := {
        attribute : constant,
        ...
        } ∈ type_name;
 
--- modify one item attribute
+-- modify one unit attribute
 alter item_name.attribute := give_value;
 
 -- declare receivers
 value var_name ∈ type_name
 
--- unpacking item attributes
+-- unpacking unit attributes
 value var_name,... <+ item_name;
 ```
 
@@ -790,7 +771,7 @@ class Person <: {
     }; 
 
 -- create two objects of type Person
-value r1,r2 ∈ Person;
+unit r1,r2 ∈ Person;
 
 -- person with no children          
 alter r1 := {name:'Mica', age:21};
@@ -803,7 +784,7 @@ alter r2 := {name:'Barbu', age:25,
              )
           };
 
--- item unpacking into new variables
+-- unit unpacking into new variables
 value r_name, r_age, r_children <+ r2;
 
 -- using introspection
@@ -825,8 +806,8 @@ class Person <: {name ∈ U, age ∈ N};
 array catalog := [Person](10); 
   
 --assign value using literals
-alter catalog[0] := {name:"Cleopatra", age:15};
-alter catalog[1] := {name:"Martin", age:17};
+unit catalog[0] := {name:"Cleopatra", age:15};
+unit catalog[1] := {name:"Martin", age:17};
 
 --using one element with dot operators
 print caralog[0].name; --will print Cleopatra
@@ -848,12 +829,12 @@ An aspect can bind to items using reference parameter: "me".
 
 **pattern**
 ```
--- define Foo as item with 3 public attributes:
+-- define Foo as unit with 3 public attributes:
 class Foo <: {p ∈ N};
   
 -- foo setup
 aspect foo(p ∈ N) => (me @ Foo):
-  value me := {p};
+  unit me := {p};
 aspect;
 
 -- second aspect for Foo type
@@ -861,10 +842,10 @@ aspect bar(me @ Foo):
   print "p ="._.p;
 aspect;
 
--- create Foo item 
-item test :: foo(p:1);
+-- create Foo unit 
+unit test :: foo(p:1);
 
--- test item aspect
+-- test unit aspect
 test.bar();  -- p = 1
 
 ```
@@ -872,9 +853,29 @@ test.bar();  -- p = 1
 * Binded actions are using multiple dispatch so they can be overloaded;
 * Constructors and actions can be overwritten in other modules;
 * Actions of a type can be private to module or public using dot prefix;
-* If the item type is public, the constructor must also be public;
-* You can not alter item structure after it is defined.
+* If the unit type is public, the constructor must also be public;
+* You can not alter unit structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
+
+## Aggregate
+
+An aggregate type can store references to classes and other composite types.
+
+**example**
+```
+-- a list of lists of integers
+list  clist ∈ ((Z));
+
+-- an array of 10 lists of integers
+array lheap ∈ [(Z)](10);
+
+-- an array of arrays of integers
+array aheap ∈ [[Z](5)](10);
+
+-- an indexed catalog of persons
+index caper ∈ {(S:Person)};
+
+```
 
 **Read next:** [Type Inference](inference.md) 

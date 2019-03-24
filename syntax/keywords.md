@@ -5,9 +5,9 @@ Bee uses reserved keywords to create statements. You can not use these keywords 
 ```
 2: if,
 3: asm, cpp, bee, 
-4: read, when, else, exit, fail, pass, loop, stop, over 
-5: alias, value, write, print, alter, cycle, while, solve, 
-6: aspect, 
+4: read, unit, when, else, exit, fail, pass, loop, stop, over 
+5: class, range, value, write, print, alter, cycle, while, solve, 
+6: aspect, global, static
 ```
 
 ### Definition statements
@@ -19,11 +19,14 @@ Next statements are used to import modules or declare something.
 | asm      | Import Assembly \| start assembly code
 | cpp      | Import C \| C++ library
 | bee      | Import Bee module \| library
-| alias    | Define alias for data type
-| value    | Declare a mutable variable
+| static   | Declare a constant
+| global   | Declare a global variable (also start with $)
+| value    | Declare a mutable native or basic variable 
 | rule     | Define a rule
 | class    | Define a class
-| item     | Define a new item from a class
+| unit     | Define a new class instance
+| range    | Define sub-type range
+| ordinal  | Define ordinal data type
 
 ### Collection declaration
 

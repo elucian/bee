@@ -5,11 +5,6 @@ Type inference is a logical deduction of type from constant literals.
 ## Default type
 Each literal has a "default" type that is automatic assigned for specific notation.
 
-## Type Bound
-
-Operator ":=" can be used to define native variables using type inference.
-
-**Defaults:**
 ```
 -- character expressions
 value c := `a`;        -- type = A (capacity = 1)
@@ -37,26 +32,26 @@ Composite structures are using () [] and {} to create different types:
 
 ```
 -- create one list of integers
-value t := (1,2); 
+list t := (1,2); 
 
 -- create one list of ASCII chars
-value l := ('a','b');
+list l := ('a','b');
 
 -- create an Array with capacity of 4
-value d := [1,2,3,4];
+array d := [1,2,3,4];
 
 -- create an Array with capacity of 10
 -- all elements initialized with 0.0
-value e := [0.0](10);
+matrix e := [0.0](10);
 
--- create a data set
-value s := {1,2,3,4};
+-- create a data set of integer
+tree s := {1,2,3,4};
 
 -- create a hash map
-value c := {(1:"storage"),(2:"string")};
+index c := {(1:"storage"),(2:"string")};
 
 -- create a data structure
-value b := {name:'Goliath', age:'30'};
+unit  b := {name:'Goliath', age:'30'};
 
 ```
 
