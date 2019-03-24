@@ -14,7 +14,7 @@
 * [Public members](#public-members)
 * [Execution](#execution)
 * [Comments](#comments)
-* [Type hierarchy](#type-hierarchy)
+* [Data types](#data-types)
 
 
 ## Directives
@@ -23,8 +23,8 @@ Bee has 3 kind of program files each with different role:
 
 ```
 #library -- reusable library
-#module  -- data module/class
-#driver  -- main driving program
+#module  -- project module
+#driver  -- main module
 ```
 
 **Notes**
@@ -37,8 +37,9 @@ Bee has 3 kind of program files each with different role:
 
 Bee is using 2 kind of declarations:
 
-* def -- define:constant,types,methods,functions
-* new -- create/initialize variable,collection,λ-expressions
+* type  -- define: data types
+* value -- create/initialize a value variable
+* fixed -- create/initialize a constant value
 
 **Note:**
 Bee do not support Unicode identifiers in declarations.
@@ -49,9 +50,9 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* let --assign expression value to variables
-* say --output to console result of expressions
-* get --accept input from console
+* alter  --assign expression value to variables
+* write --output to console result of expressions
+* read  --accept input from console
 
 Multiple statements on same line are separated by ";"
 A statement is optional terminated by ";"
@@ -69,10 +70,10 @@ Statements can be contained in blocks of code.
 ## Driver file
 
 Bee is a free form language. That means indentation of code and spaces are not relevant.
-In Bee method "main" is optional. Instead we define a _driver_ file using directive #driver. 
+In Bee aspect "main" is optional. Instead we define a _driver_ file using directive #driver. 
 This is the program entry point. One program can have a single _driver_ and many _modules_.
 
-A _driver_ can contain statements that do not belong to any function or method.
+A _driver_ can contain statements that do not belong to any rule or aspect.
 These are called _rogue_ statements and are driving the program execution.
 Rogue statements are executed top down in synchronous mode.
 
@@ -81,19 +82,19 @@ Rogue statements are executed top down in synchronous mode.
 ```
 #driver "main"
 
-new i, c ∈ Z;
-let c := $params.count;
+value i, c ∈ Z;
+alter c := $params.count;
 
 over if (c = 0);
 -- comma separated parameters
 cycle
-  say $params[i];
-  let i += 1;
+  write $params[i];
+  alter i += 1;
   stop if (i > c);
-  say ",";
+  write ",";
 cycle;
--- flush the buffer to console
-write;
+-- print the buffer to console
+print;
 
 over;
 ```
@@ -112,9 +113,9 @@ In Bee external code can be imported like this:
 **Imports:**
 
 ```
-bee bee_lib;
-asm asm_lib;
-cpp cpp_lib;
+#bee bee_lib;
+#asm asm_lib;
+#cpp cpp_lib;
 ```
 
 * use :* all public members are used
@@ -125,11 +126,11 @@ Using alias for Bee module members:
 **pattern**
 ```
 -- import with alias
-bee <alias> := <path>./.<module> .(*);
-bee <alias> := <path>./.<module> .(<members>);
+#bee qualifier := path./.module:(*);
+#bee qualifier := path./.module:(member_list);
 
--- use alias qualifier for a method call:
-<alias>.<met_name>(<arguments>);
+-- use alias qualifier for an aspect call:
+qualifier.aspect_name(arguments);
 ```
 
 **Environment variables**
@@ -142,16 +143,16 @@ All system variables are automatic imported from OS environment.
 
 Bee is using one global scope. All modules are using same global scope.
 Global variables are unique and are visible in all project modules.
-Global variables are lowercase and are predefined in Bee language.
+Global variables are lowercase and are pretagined in Bee language.
 
 ```
-#cpp $bee.cpp.myLib .(*) --import cpp library
-#asm $bee.asm.myLib .(*) --import asm library
-#bee $bee.lib.myLib .(*) --import core library
-#bee $pro.lib.myLib .(*) --import project library
+#cpp $bee.cpp.myLib:(*) --import cpp library
+#asm $bee.asm.myLib:(*) --import asm library
+#bee $bee.lib.myLib:(*) --import core library
+#bee $pro.lib.myLib:(*) --import project library
 ```
 
-Other predefined global variables:
+Other pretagined global variables:
 
 ```
 $params --contains a list of parameters
@@ -161,7 +162,7 @@ $path   --contains a list of folders
 **See example:** [gv.bee](../demo/gv.bee)
 
 ## Local scope
-A Bee a function or method can have local declarations. 
+A Bee a rule or aspect can have local declarations. 
 Local variables are private inside local scope.
 
 **See example:** [lv.bee](../demo/lv.bee)
@@ -170,23 +171,23 @@ Local variables are private inside local scope.
 In Bee all members that start with dot "." are public members.
 A public member from another module can be access using dot notation.
 
-For symmetry a end of public method or function also use prefix ".".
-This is useful for a long function to know that is public at the end.
+For symmetry a end of public aspect or rule also use prefix ".".
+This is useful for a long rule to know that is public at the end.
 
 ```
 --public constant
-new .pi := 3.14;
+fixed .pi := 3.14;
 
 --public variable
-new .v ∈ N;
+value .v ∈ N;
 
---public λ expression
-new .f λ (x ∈ N) ∈ N => (x + 1);
+--public λ rule
+rule .f λ (x ∈ N) ∈ N => (x + 1);
 
---public method
-def .m(x, y ∈ N, r @ N):
+--public aspect
+aspect .m(x, y ∈ N, r @ N):
   r := x + y;
-def;
+aspect;
 
 ```
 
@@ -210,23 +211,20 @@ This is myLib.bee file:
 cpp myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
-def fib(n ∈ Z) => (x ∈ Z):
-   let x := myLib.fib(n -> i8);
-def;
+aspect fib(n ∈ Z) => (x ∈ Z):
+   alter x := myLib.fib(n -> i8);
+aspect;
 
 ```
 
 This is the driver file.
 ```
 #driver
-
+-- import library
 bee myLib.(*);
 
---use external function
-say fib(5);
-
-write;
-
+--use external rule
+print myLib.fib(5);
 ```
 
 To understand more about interacting with other languages check this article about ABI:
@@ -250,7 +248,7 @@ For single line comments we use a pair of two symbols:
 **Notes:** These are chosen for following reasons:
 
 1. In Wiki "**" is for making titles bold. So Bee is Wiki friendly.
-2. In Wiki "##" represents title 2. Iʼm using Wiki notation to write Bee documentation.
+2. In Wiki "##" represents title 2. Iʼm using Wiki notation to print Bee documentation.
 3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
 
 The only problem is the apostrophe must not use "'" instead you can use Unicode symbol: ` ʼ `
@@ -290,8 +288,9 @@ In next example we are using various comments into a demo program.
 
 ** This is a sub-title in program
 
- -- demo driver
+-- this is a demo driver with comments
 
+over;
 *******************************************************************
 **  This is a documentation to explain more about program scope. **
 **  It can span multiple rows and can terminate with separators. **
@@ -303,18 +302,16 @@ In next example we are using various comments into a demo program.
 ```
 ## Using Modules
 
-* Usually modules are declaring data types, functions and methods.
+* Usually modules are declaring data types, rules and actions.
 * Rogue statements can be used for module initialization.
 * A module is executed when is imported using _wee_ statement. 
 
-## Type hierarchy
+## Data types
 
-Bee does not have classes. However doing an explicit design you can create a type hierarchy similar to OOP using module level encapsulations: user defined types and methods. 
+Bee implements a variety of data types and data structures. In most use cases programmers do not have to define new structures but customize existing ones.
 
-Users can define new types based on existing types using symbol "<:". This will inherit all methods of the original type, including the constructor.
+Users can define type aliases using symbol "<:" and a _type descriptor_. Type aliases will inherit all aspects of the original type and can have additional aspects.
 
-After this you can create new methods and a new constructors in your module. The new constructors can call the superior constructor explicit. 
-
-Using this technique, one module can extend user defined types in any other module, including the core library modules. So Bee is a modular language.
+Bee is a modular and extensible language. Using this technique, one module can extend types declared in any other module. However a super-type can not be used as a sub-type. It must be explicit converted.
 
 **Read next:** [Syntax Overview](overview.md)

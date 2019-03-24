@@ -1,11 +1,11 @@
-## Generic Methods
+## Generic Actions
 
-A generic method is using a variable type "X". 
+A generic action is using a variable type "X". 
 
 **bubble sort**
 
 ```
-def sort<X>(array @ [X], gt λ (X,X) ∈ L ):
+act sort<X>(array @ [X], gt λ (X,X) ∈ L ):
     new n := length(array)-1;
     new swap ∈ L;
     new temp ∈ X;
@@ -27,31 +27,31 @@ def sort<X>(array @ [X], gt λ (X,X) ∈ L ):
         cycle; 
         stop if ¬ swap;
     cycle;
-def;
+act;
 ```
 
 **Notes:**
 
-* Method "sort" receive type X using markup <X> 
+* Action "sort" receive type X using markup <X> 
 * Function reference "gt" is received as argument.
 
 **sort usage**
 
 ```
-def Person  <: { name ∈ S, age ∈ N };
+tag Person  <: { name ∈ S, age ∈ N };
 
--- define order method for array of Persons
-def order(cat @ [Person]):
+-- tagine order action for array of Persons
+act order(cat @ [Person]):
   sort<Person>(cat, λ(a, b) => (a.name > b.name));
-def order;
+act;
 
--- define clients and suppliers
+-- tagine clients and suppliers
 new clients   := [Person](100);
 new suppliers := [Person](10);
 -- populate somehow
 ...
 
--- use new order method to sort
+-- use new order action to sort
 order(clients);
 order(suppliers);
 ```
@@ -70,13 +70,13 @@ This can be used to create an argument for a _signature reference_:
 
 **signature**
 ```
- id λ (type,type, ...) ∈ type
+ (id λ (type,type, ...) ∈ type)
 ```
 
 To assign an anonymous function as argument by name Bee uses: "::"
 
 ```
- id :: (param ,param ...) => (...)
+ (id :: (param ,param ...) => (...))
 ```
 
 Where: "id" is parameter name representing reference to function.

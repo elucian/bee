@@ -28,7 +28,7 @@ symbol| description
 ------|----------------------------------------------------------------
  \#   | Compiler directives prefix \| Template placeholder
   $   | Global variables prefix \| System environment constants
-  :   | Pair up key-value in a collection or method call
+  :   | Pair up key-value in a collection or aspect call
   ;   | End of statement \| Statement enumerator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
@@ -68,11 +68,11 @@ symbol| description
  \##  | Start for a title comment /separator  
  \-+  | End for multiple line comments 
  ..   | Define range [n..m] \| Define slice from Array
- =\>  | Define: function expression \| method result
- -\>  | Function pipeline \| Explicit conversion 
+ =\>  | Define: rule expression \| aspect result
+ -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Fill template using values from list
  \<:  | Define subset \| User composite type
- @    | Define output parameter \| Bound first parameter to class
+ @    | Define output parameter \| Bound first parameter to type
 
 **Note:** Triple dot "..." is used in switch statement.
 
@@ -83,7 +83,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 symbol| meaning
 ------|------------------------------------------------------------------
  ::   | explicit clone a reference, or create a slice  \| explicit boxing
- :=   | modify value or reference \| assign new object \| copy value
+ :=   | modify value or reference \| assign value object \| copy value
  +=   | increment value
  -=   | decrement value
  ·=   | multiplication modifier 

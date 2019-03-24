@@ -9,20 +9,22 @@ Composite types are complex data structures.
 * [list](#list)
 * [stack](#stack)
 * [queue](#queue)
+* [tree](#tree)
+* [index](#index)
 * [array](#array)
+* [slice](#slice)
 * [string](#string)
-* [object](#object)
-* [varargs](#Variable-arguments)
-* [binding](#binding)
+* [varargs](#varargs)
 * [complex](#complex)
+* [binding](#binding)
 
 ## Usability
 
 Bee uses composite types to ...
 
-* define data types using "def", "<:" and "∈"
-* declare constants using "def", ":=" and "∈"
-* declare variables using "new", ":=" and "∈"
+* define data types using "alias", "<:" and "∈"
+* declare constants using "fixed", ":=" and "∈"
+* declare variables using "value", ":=" and "∈"
 * declare parameters using symbols "*", ":=", "@:" and "∈"
 
 ## Range
@@ -32,27 +34,25 @@ Range notation is used to define a subtype.
 **syntax**
 
 ```
-def <subtype_name> <: <Type>[min..max]
+range class_name <: type[min..max]
 ```
 
 **Examples:**
 ```
 -- sub-type declarations
-def SmallRange    <: B[0..9];
-def NegativeRange <: Z[-10...0];
-def AlfaChar      <: A['a'..'Z'];
-def NumChar       <: A['0'..'9'];
-def Positive      <: Z[0..+];
-def Negative      <: Z[-..-1];
+range Small     <: B[0..9];
+range Alfa      <: A['a'..'Z'];
+range Positive  <: Z[0..+∞];
+range Negative  <: Z[-∞..-1];
 
 --Check variable belong to sub-type
-when ('x' ∈ AlfaChar):
-  put 'yes';
+when ('x' ∈ Alfa):
+  print 'yes';
 else:
-  put 'no';
+  print 'no';
 when;
 
-write;
+print;
 ```
 
 **Notes:**
@@ -68,25 +68,25 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 
 **pattern**
 ```
-def TypeName <: { name1:0, name2, name3};
+ordinal type_name <: { name1:0, name2, name3};
 
-new a, b, c ∈ TypeName;
+value a, b, c ∈ type_name;
 
-let a := TypeName.name1; --a=2
-let b := TypeName.name2; --b=3
-let c := TypeName.name3; --c=4
+alter a := type_name.name1; -- a=2
+alter b := type_name.name2; -- b=3
+alter c := type_name.name3; -- c=4
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for individual values
 
 ```
 -- using public elements in enumeration
-def TypeName <: { .name1, .name2 };
+ordinal type_name <: { .name1, .name2 };
 
-new a, b := 0;
+value a, b := 0;
 
-let a := name1; --a := 0
-let b := name2; --b := 1
+alter a := name1; --a := 0
+alter b := name2; --b := 1
 
 ```
 
@@ -96,7 +96,7 @@ A list is an ordered collection of values separated by comma and enclosed in bra
 
 **Syntax**
 ```
-new <variable> := (<Type>);
+value <variable> := () ∈ (<Type>);
 ```
 
 **Notes**: List members must have same data type
@@ -104,10 +104,10 @@ new <variable> := (<Type>);
 **example**
 ```
 -- create a list of ASCII characters
-new v := (A);
+list a := () ∈ (A);
 
 -- create a list using a literal
-new w := ('1','a','2','b'); 
+list b := ('1','a','2','b') ∈ (A); 
 ```
 
 **empty list**
@@ -115,10 +115,10 @@ new w := ('1','a','2','b');
 An empty list is represented like this: ()
 
 ```
-new a := (); -- empty list
-new b := (1,2,3); -- initialize list using assign
+list a := ();      -- empty list
+list b := (1,2,3); -- initialize list using assign
 
-let a := b; -- re-assign a and throw to garbage ()
+alter a := b; -- re-assign a and throw to garbage ()
 ```
 
 **Unpacking**
@@ -129,41 +129,41 @@ A list can be assigned to multiple variables using unpacking:
 
 ```
 --create 3 new variables using list literal
-new x, y, z ∈ Z;
+value x, y, z ∈ Z;
 
 --unpacking modify all 3 value
-let x, y, z := (97, 65, 40);
+alter x, y, z <+ (97, 65, 40);
 
-put x; -->  97
-put y; -->  65
-put z; -->  40
+print x; -->  97
+print y; -->  65
+print z; -->  40
 
 --anonymous list with string template
-new s := "{0} > {1} > {2}" <+ (x, y, z); 
-put s; -- "97 > 65 > 40"
+value s := "{0} > {1} > {2}" <+ (x, y, z); 
+print s; -- "97 > 65 > 40"
 ```
 
 **Multiple results**
 
-A method can have multiple results.
+An aspect can produce multiple results in a list.
 
 ```
 -- have a list of results
-def test(x,y ∈ Z) => (r, c ∈ Z):
-  r += x+1;
-  c += y+1;
-def;
+aspect test(x,y ∈ Z) => (r, c ∈ Z):
+  alter r += x+1;
+  alter c += y+1;
+aspect;
 
-new n, m ∈ Z;
+items n, m ∈ Z;
 
 -- unpacking the result
-let n, m := test(1,2);
+alter n, m <+ test(1,2);
 
-put n; --will print 2
-put m; --will print 3
+print n; --will print 2
+print m; --will print 3
 
 -- ignoring the result
-let _,_ := test(3,4);
+alter _,_ <+ test(3,4);
 
 ```
 
@@ -172,11 +172,11 @@ let _,_ := test(3,4);
 List members can be ignored when unpacking using anonymous variable: "_"
 
 ```
-new lst := (0, 1, 2, 3, 4, 5);
-new x,y,z ∈ Z;
+list lst := (0, 1, 2, 3, 4, 5);
+value x, y, z ∈ Z;
 
 -- first element and last 2 are ignored
-let _,x,_,z := lst;
+alter _,x,_,z := lst;
 
 ```
 
@@ -189,29 +189,29 @@ let _,x,_,z := lst;
 ### List processing
 
 ```
-new l1 := (1,2,3);
-new l2 := (2,3,4);
+list l1 := (1, 2, 3);
+list l2 := (2, 3, 4);
 
-new l3, l4, l5 := ();
+list l3, l4, l5 := ();
 
 --addition between lists "+" 
-let l3 := l1 + l2; --(1,2,3,2,3,4)
+alter l3 := l1 + l2; --(1,2,3,2,3,4)
 
 --difference between lists "-"
-let l4 := l1 - l2;  -- (1)
-let l5 := l2 - l1;  -- (4)
+alter l4 := l1 - l2;  -- (1)
+alter l5 := l2 - l1;  -- (4)
 ```
 
 **List traversal**
 
 ```
-new list := ('a','b','c');
-new element := list.first();
+list    := ('a', 'b', 'c');
+value x := list.first();
 cycle
-  say element;
-  exit if element ≡ list.last();
-  element := list.next(element);
-  say ',';  
+  write x;
+  exit if x ≡ list.last();
+  alter x := list.next(element);
+  write ',';  
 cycle;
 ```
 
@@ -220,17 +220,17 @@ cycle;
 A stack is a LIFO collection of elements.
 
 ```
-new a := (1,2,3);
-new last ∈ N;
+stack a := (1, 2, 3);
+value last ∈ N;
 
--- using set with operator "+"
-let a := a + 4; -- (1,2,3,4)
+-- using stack with operator "+="
+alter a += 4; -- (1,2,3,4)
 
--- read last element using "="
-let last := a.last;  -- last := 4, a := [1,2,3,4]
+-- read last element using "-="
+alter last := a[?];  -- last := 4, a := [1,2,3,4]
 
 -- remove last element using pop
-let last := a.pop(); -- last := 4, a := [1,2,3]
+alter last -= a[?];  -- last := 4, a := [1,2,3]
 ```
 
 ## Queue
@@ -238,44 +238,42 @@ let last := a.pop(); -- last := 4, a := [1,2,3]
 A queue is a FIFO collection of elements.
 
 ```
-new q := (1,2,3);
-new first : N;
+queue q := (1,2,3);
+value  first : N;
 
 -- using enqueue operator "+:" 
-let q := q + 4; -- (1,2,3,4)
+alter q += 4; -- (1,2,3,4)
 
--- read first element using "=" and "let"
-let first := a.first; --> 1 and a := (1,2,3,4)
+-- read first element using "=" and "alter"
+alter first := a[!]; --> 1 and a := (1,2,3,4)
 
--- dequeue first element using deq method
-let first := a.deq(); --> 1 and a := (2,3,4)
+-- dequeue first element using deq aspect
+alter first -= a[!]; --> 1 and a := (2,3,4)
 ```
 
-## Set of values
+## Tree
 
-A set is a sorted collection of unique elements.
+An tree is a sorted collection of unique values.
 
 ```
---define 3 collections
-new s1 := {1,2,3}; 
-new s2 := {2,3,4};
-new s  := {N}; --this is an empty set
+--define a collection
+tree s1 := {1,2,3} ∈ {N}; 
+tree s2 := {2,3,4} ∈ {N};
+tree s  := {}      ∈ {N}; -- empty
 
--- empty collection
-put "set \"s\" is empty" if s = {}
 
--- set specific operations
-let s := s1 ∪ s2; --{1,2,3,4} --union
-let s := s1 ∩ s2; --{2,3}     --intersection
-let s := s1 - s2; --{1}       --difference 1
-let s := s2 - s1; --{4}       --difference 2
+-- specific operations
+alter s := s1 ∪ s2; --{1,2,3,4} -- union
+alter s := s1 ∩ s2; --{2,3}     -- intersection
+alter s := s1 - s2; --{1}       -- difference 1
+alter s := s2 - s1; --{4}       -- difference 2
 
 -- declare a new set
-new a := {1,2,3};
+tree a := {1,2,3} ∈ {N};
 
 -- using operator +/- to mutate set a
-let a := a + 4; --> {1,2,3,4} --append 4
-let a := a - 3; --> {1,2,4}   --remove 3 (not 3)
+alter a := a + 4; --> {1,2,3,4} --append 4
+alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 
 ```
 
@@ -285,39 +283,39 @@ let a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 * Sets are not recommended to create queues or stacks;
 * Usually you do not remove elements from a set but only append;
 
-## Hash Map
+## Index
 
-A map is a hash collection of (key:value) pairs indexed by key.
+An index is a collection of (key:value) pairs sorted by key.
 
 **syntax**
 ```
-def <type> <: {(<key_type>:<value_type>)}
+alias type_name <: hash ∈ {(key_type : value_type)}
 ```
 
 **example**
 ```
 -- declare a new empty hash map
-new map := {(A:S)};
+table map ∈ type_name;
 
 -- initial value of map
-let map := {'a':"first", 'b':"second"};
+alter map := {'a':"first", 'b':"second"};
 
 -- create new element
-new map['c'] := "third";
+alter map['c'] := "third";
 
 -- modification of non existent element will fail
-let map['e'] := "forth"; --> ERROR
+alter map['e'] := "forth"; --> ERROR
 
 -- finding elements by key
-put map['a']; --'first'
-put map['b']; --'second'
-put map['c']; --'third'
+print map['a']; --'first'
+print map['b']; --'second'
+print map['c']; --'third'
 
 -- remove an element by key
-del map['a']; --> remove 'first' element
-put map;      --> expected: {'b'='second', 'c'='third'}
+erase map['a']; --> remove 'first' element
+print map;      --> expected: {'b'='second', 'c'='third'}
 
-write;
+print;
 ```
 
 **Note:** Hash map operators work like for sets
@@ -327,15 +325,15 @@ write;
 We can check if an element is included in a collection.
 
 ```
-new map := {'a':"first", 'b':"second"};
+value map := {'a':"first", 'b':"second"};
 
 when ('a' ∈ map):
-  put("a is found");
+  print("a is found");
 else
-  put("not found");
+  print("not found");
 when;
   
-write;  
+print;  
 ```
 
 ## Array
@@ -344,9 +342,9 @@ Bee define Array variable using notation := []().
 
 **syntax**
 ```
-new <array_name>  := [<member-type>];      --one dimension array with unknown capacity
-new <array_name>  := [<member-type>](c);   --one dimension with capacity c
-new <matrix_name> := [<member-type>](n,m); --two dimensions with capacity n x m
+array  array_name  := [type];      --one dimension array with unknown capacity
+array  array_name  := [type](c);   --one dimension with capacity c
+matrix matrix_name := [type](n,m); --two dimensions with capacity n x m
 ```
 
 **Note:** 
@@ -357,24 +355,24 @@ new <matrix_name> := [<member-type>](n,m); --two dimensions with capacity n x m
 
 ```
 -- define array with 10 Real elements
-new test := [R](10); 
-new m := length(test)-1;  
+value test := [R](10); 
+value m := length(test)-1;  
 
-put test[0];   -- first element
-put test[m];   -- last element
+print test[0];   -- first element
+print test[m];   -- last element
 
 -- set value of element := subscript
-new x := 0;
+value x := 0;
 cycle: 
-  let test[i] := x;
-  let x += 1;
+  alter test[i] := x;
+  alter x += 1;
   stop if x = m;
 cycle;
 
 -- print all elements of array
-put test;
+print test;
 
-write;
+print;
 ```
 
 **Output:**
@@ -384,7 +382,7 @@ write;
 
 **Notes:**
 
-* Array of undefined capacity have no members and is equivalent to [].
+* Array of untagined capacity have no members and is equivalent to [].
 * Array with capacity is automatically initialized, elements of new array are by default zero.
 
 **custom index**
@@ -398,10 +396,10 @@ Arrays can have optional index range [!..?]
 **syntax**
 ```
 --one dimensional array with elements starting from n to m
-new <array_name>  := [<member-type>](n..m);  
+value array_name := [member_type](n..m);  
 
-put <array_name>[!]; -- print first element
-put <array_name>[?]; -- print last element
+print array_name[!]; -- print first element
+print array_name[?]; -- print last element
 ```
 
 **initialize elements**
@@ -410,20 +408,20 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-new zum := [Z](10);
+value zum := [Z](10);
 
 -- add 1 to each element
-let zum[*] += 1; 
-put zum; -- expect [2,2,2,2,2,2,2,2,2,2]
+alter zum[*] += 1; 
+print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 ```
 
 **differed initialization**
 ```
-new vec := [A];
+value vec := [A];
 
 -- element multiply "*"
-let vec := `x` * 10;
-put vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+alter vec := `x` * 10;
+print vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
 ```
 
@@ -435,10 +433,10 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-new <array_name> := [<type>](c);
+array array_name := [type](c);
 
 -- slice creation using "::"
-new <slice_name> :: <array_name>[n..m];
+slice slice_name :: array_name[n..m];
 ```
 
 **Note:** Slice has references or a copy of original members;
@@ -446,27 +444,27 @@ new <slice_name> :: <array_name>[n..m];
 **example**
 ```
 -- capacity is 5, last element is 0
-new a := [1,2,3,4](5); 
-put a; -- [1,2,3,4,0]
+array a := [1,2,3,4](5); 
+print a; -- [1,2,3,4,0]
 
 -- making 4 slice views
-new b :: a[0..?]; -- [1,2,3,4,0]
-new c :: a[1..?]; -- [2,3,4,0]
-new d :: a[0..2]; -- [1,2,3]
-new e :: a[2..4]; -- [3,4,0]
+value b :: a[0..?]; -- [1,2,3,4,0]
+value c :: a[1..?]; -- [2,3,4,0]
+value d :: a[0..2]; -- [1,2,3]
+value e :: a[2..4]; -- [3,4,0]
 
 --modify slice elements
-let c[0] := 8; -- first element in c slice
-let e[0] := 0; -- first element in e slice
-let e[?] := 9; -- last element  in e slice
+alter c[0] := 8; -- first element in c slice
+alter e[0] := 0; -- first element in e slice
+alter e[?] := 9; -- last element  in e slice
 
 --original array is modified
 --                 ↧ ↧   ↧                        
-put a;-- expect [1,8,0,4,9]
+print a;-- expect [1,8,0,4,9]
 
 --modify last 3 elements
-let a[2..?] := 0;
-put a; -- expect [1,8,0,0,0]
+alter a[2..?] := 0;
+print a; -- expect [1,8,0,0,0]
 
 ```
 
@@ -475,22 +473,22 @@ put a; -- expect [1,8,0,0,0]
 Default assignment ":=" and slicing operator "[..]" makes a copy.   
 
 ```
-new a := [0,1,2,3,4];
-new e,f,r := [Z]; -- empty array
+value a := [0,1,2,3,4];
+value e,f,r := [Z]; -- empty array
 
 -- by default assign ":=" copy/clone an entire collection
-let e := a; 
+alter e := a; 
 
 -- compare two collections
-put e = a; --> 1 (equal collections)
-put e ≡ a; --> 0 (different memory locations)
+print e = a; --> 1 (equal collections)
+print e ≡ a; --> 0 (different memory locations)
 
 -- by default a slice is a copy/clone of original data
-let f := a[2..?];  -- copy data using slice notation
+alter f := a[2..?];  -- copy data using slice notation
 
 -- you can also copy a data from a basic type
-let r := Z[1..10]
-put r; -- expect [1,2,3,4,5,6,7,8,9,10]
+alter r := Z[1..10]
+print r; -- expect [1,2,3,4,5,6,7,8,9,10]
 ```
 
 ## Matrix
@@ -499,13 +497,13 @@ It is an array with 2 or more indexes. We can have 2D or 3D array.
 
 **Example:** 
 ```
-new mat := [R](4,4); -- define matrix
+value mat := [R](4,4); -- define matrix
 
 -- modify matrix using ":=" operator
-let mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
+alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
 
-put mat[0,0]; --first element
-put mat[3,3]; --last element
+print mat[0,0]; --first element
+print mat[3,3]; --last element
 
 ```
 
@@ -515,21 +513,22 @@ So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```
 -- elements in matrix can be accessed using a cycle
-new i := 0;
-new x := length(mat);  
+value i := 0;
+value x := length(mat);
+  
 cycle:   
-  say (mat[x], ',');
+  write (mat[x], ',');
   i += 1;
   stop if i = x;
 cycle;
 
-write;
+print;
 ```
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
 
 ```
-new m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
-put m -> matrix();
+value m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
+print m -> matrix();
 ```
 
 Will print:
@@ -547,22 +546,22 @@ Will print:
 * A can be used to create arrays of ASCII characters compatible with C strings; 
 
 ```
-new str := S(25);   -- string with capacity 25 Extended ASCHII characters
-new a   := [A](25); -- array of 25 characters
+value str := S(25);   -- string with capacity 25 Extended ASCHII characters
+array a   := [A](25); -- array of 25 characters
 
-let str := 'Long string'; 
-let a   := split(str);
+alter str := 'Long string'; 
+alter a   := split(str);
 ```
 
 **conversion**
-Conversion of a string into number is done using _parse_ function:
+Conversion of a string into number is done using _parse_ rule:
 
 ```
-new x,y ∈ R;
+value x,y ∈ R;
 
--- function parse return a Real number
-let x := parse("123.5",2,",.");       --convert to real 123.5
-let y := parse("10,000.3333",2,",."); --convert to real 10000.33
+-- rule parse return a Real number
+alter x := parse("123.5",2,",.");       --convert to real 123.5
+alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
 
 ### ASCII Encoding
@@ -590,7 +589,7 @@ Double quoted strings are Unicode dynamic strings with more features than ASCII 
 Bee support "escape" notation using escape `\` symbol only in double quoted strings.
 
 ```
-put("this represents \n new line in string")
+print("this represents \n new line in string")
 ```
 
 ### Control codes:
@@ -612,8 +611,8 @@ DEC|HEX|CODE|ESCAPE|NAME
 27 |1B |ESC |\e    |Escape
 
 ```
-new s := "This is a Unicode string";
-put type(s); -- Print: U
+value s := "This is a Unicode string";
+print type(s); -- Print: U
 ```
 
 **See also:** [symbols.md](symbols.md)
@@ -633,18 +632,18 @@ symbol| description
 
 **examples**
 ```
-new u, c := S; -- default S length is 255
+value u, c := S; -- default S length is 255
 
 -- string concatenation
-let u := "This is".+." a long string.";
-let c := "This is"._.'fix size'; 
+alter u := "This is".+." a long string.";
+alter c := "This is"._.'fix size'; 
 
 -- path concatenation
-new test_file := $pro./."src"./."test.bee";
+value test_file := $pro./."src"./."test.bee";
 
 -- when $pro = c:\work\project\
-put test_file; 
-write; --> "c:\work\project\src\test.bee"
+print test_file; 
+print; --> "c:\work\project\src\test.bee"
 ```
 
 **Note:** You can concatenate a string with a number or two numbers using .+.
@@ -657,17 +656,17 @@ write; --> "c:\work\project\src\test.bee"
 * If a placeholder index is not found then it is preserved as is
 
 ```
-new <variable> := <template> <+ <variable>;
-new <variable> := <template> <+ (<var1>,[<var2>,]...);
+value var_name := template <+ (variable);
+value var_name := template <+ (var1,var2,...);
 ```
 
 **Examples:**
 ```
-new x := 30; -- Code ASCII 0
-new y := 41; -- Code ASCII A
+value x := 30; -- Code ASCII 0
+value y := 41; -- Code ASCII A
 
 --template writing
-put ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
+print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
   
 ```
 
@@ -678,16 +677,17 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-new str := <str_constant> * n;
+value str := constant * x ∈ S(n);
 ```
 
 **Example:**
 ```
-new sep := "+".."-"*18.."+";
+value sep ∈ U;
+alter sep := "+"."-"*18."+";
 
-put sep;
-put "|*  this is a test  *|";
-put sep;
+print sep;
+print "|*  this is a test  *|";
+print sep;
 ```
 
 **Output:**
@@ -698,26 +698,80 @@ put sep;
 +-------------------+
 ```
 
-## Object 
+**Note:** Operator "*" have higher precedence then "."
 
-Objects are complex data structures enclosed in curly brackets { , , ,} and separated by comma. Each object has one or more attributes with associated data types. Default object constructor is simplistic using JSON like notation to initialize the attribute values.
+## Varargs
 
-**Syntax:**
+One rule or aspect can receive variable number of arguments.   
+We declare an array using prefix "*" for variable parameter name.
+
 ```
--- declare a class of objects
-def <class_name> <: {<attribute> ∈ <type>, <attribute> ∈ <type>...};
+--parameter *bar is an array
+aspect foo(*bar ∈ [Z]) => (x ∈ Z):
+  alter c := bar.count();  
+  -- precondition
+  when (c = 0):
+    alter x := 0; 
+    exit;
+  when;
+  value i := 0; 
+  -- sum all parameters  
+  cycle:
+    alter x += bar[i];
+    alter i += 1;
+    stop if i = c;
+  cycle;
+aspect;
 
--- create an object instance using default constructor
-new <object_name> := {
-       <attribute> : <value>,
-       <attribute> : <value>,
-     ...};
+--we can call foo with variable number of arguments
+print foo();     --> 0
+print foo(1);    --> 1
+print foo(1,2);  --> 3
+print foo(1,2,3);--> 6
 
--- modify one object attribute
-let <object_name.attribute> := <value>;
+print;
+```
 
--- unpacking object attributes
-new <var_name>, <var_name> <+ object_name;
+## Complex 
+
+A complex collection can store references to other things.
+
+**example**
+```
+-- a list of lists of integers
+list  clist ∈ ((Z));
+
+-- an array of 10 lists of integers
+array lheap ∈ [(Z)](10);
+
+-- an array of arrays of integers
+array aheap ∈ [[Z](5)](10);
+
+```
+
+## Class
+
+Classes are complex data structures with elements enclosed in curly brackets { , , ,} and separated by comma. Classes are templates for creation of items. Each item has one or more attributes with associated data types. 
+
+**Pattern:**
+```
+-- declare a category of objects
+class type_name <: {attribute ∈ type_name, ...};
+
+-- create an item instance using default constructor
+item item_name := {
+       attribute : constant,
+       ...
+       } ∈ type_name;
+
+-- modify one item attribute
+alter item_name.attribute := give_value;
+
+-- declare receivers
+value var_name ∈ type_name
+
+-- unpacking item attributes
+value var_name,... <+ item_name;
 ```
 
 **Object structure can be ...**
@@ -728,171 +782,99 @@ new <var_name>, <var_name> <+ object_name;
 
 **Example:**
 ```
--- define recursive class Person
-def Person <: {
+-- define recursive type Person
+class Person <: {
       name ∈ S, 
       age  ∈ N,  
       children ∈ (Person)
     }; 
 
 -- create two objects of type Person
-new r1,r2 ∈ Person;
+value r1,r2 ∈ Person;
 
 -- person with no children          
-let r1 := {name:'Mica', age:21};
+alter r1 := {name:'Mica', age:21};
 
 -- person with two children
-let r2 := {name:'Barbu', age:25, 
+alter r2 := {name:'Barbu', age:25, 
              children : (
                {name:'Telu', age:4},
                {name:'Radu', age:1} 
              )
           };
 
--- unpacking into new variables
-new r_name, r_age, r_children <+ r2;
+-- item unpacking into new variables
+value r_name, r_age, r_children <+ r2;
 
 -- using introspection
-put type(r_name) ; -- S
-put type(r_age) ; -- N
-put type(r_children) ; -- (Person)
+print type(r_name) ; -- S
+print type(r_age)  ; -- N
+print type(r_children) ; -- (Person)
            
 ```
 
-**class size**
+**type size**
 
-Class size is a constant that can be calculated using size(T).
+Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-def Person <: {name ∈ U, age ∈ N};
+class Person <: {name ∈ U, age ∈ N};
 
---array of 10 persons
-new catalog := [Person](10); 
+-- array of 10 persons
+array catalog := [Person](10); 
   
 --assign value using literals
-let catalog[0] := {name:"Cleopatra", age:15};
-let catalog[1] := {name:"Martin", age:17};
+alter catalog[0] := {name:"Cleopatra", age:15};
+alter catalog[1] := {name:"Martin", age:17};
 
 --using one element with dot operators
-put caralog[0].name; --will print Cleopatra
-put caralog[1].name; --will print Martin
+print caralog[0].name; --will print Cleopatra
+print caralog[1].name; --will print Martin
 
 --member type can be check using _type()_ built in
-put type(Person.name); -- will print U
-put type(Person.age);  -- will print W
+print type(Person.name); -- will print U
+print type(Person.age);  -- will print W
 
 --print size of structure
-put size(Person);
+print size(Person);
 
-write;
-```
-
-## Variable arguments
-
-One function or method can receive variable number of arguments.   
-Declare an array using prefix "*" for parameter name.
-
-```
---parameter *bar is an array
-def foo(*bar ∈ [Z]) => (x ∈ Z):
-  let c := bar.count();  
-  -- precondition
-  when (c = 0):
-    let x := 0; 
-    exit;
-  when;
-  new i := 0; 
-  -- sum all parameters  
-  cycle:
-    let x += bar[i];
-    let i += 1;
-    stop if i = c;
-  cycle;
-def;
-
---we can call foo with variable number of arguments
-put foo();     --> 0
-put foo(1);    --> 1
-put foo(1,2);  --> 3
-put foo(1,2,3);--> 6
-
-write;
+print;
 ```
 
 ## Binding
-A method can bind to the first parameter. The first parameter is called: "me" but this name is not restricted you can also use: "it","he", "she", depending on gender. Binded methods enable object oriented design in Bee.
 
-**Constructor**
-One special method is called constructor. This method has same name as the binded type but with lowercase. It can have other name defined by the user convention. Also a constructor has a result that is a reference to "me" object instance. 
+An aspect can bind to items using reference parameter: "me". 
 
-**example**
+**pattern**
 ```
--- define Foo as object with 3 public attributes:
-def Foo <: {p1 ∈ N, p2 ∈ N, p3 ∈ S};
-
--- constructor (same name as Foo)
--- create a result of type Foo (me)
-def foo() => (me ∈ Foo):
-  let me := {0,0,0}
-def;
-
--- first parameter is binding bar to Foo
-def Foo.bar(me @ Foo, p1, p2 ∈ Z, p3 ∈ S):
-  --precondition
-  fail if (p1 < 0 ∨ p2 < 0 ∨ p3 = "");
+-- define Foo as item with 3 public attributes:
+class Foo <: {p ∈ N};
   
-  --modify Foo members
-  let me.p1 := p1;
-  let me.p2 := p2;
-  let me.p3 := p3;
-def;
+-- foo setup
+aspect foo(p ∈ N) => (me @ Foo):
+  value me := {p};
+aspect;
 
--- second method for Foo type
-def Foo.print(me @ Foo):
-  put "{p1={0},p2={1},p3={2}}" <+ (me.p1, me.p2, me.p3);
-def;
+-- second aspect for Foo type
+aspect bar(me @ Foo):
+  print "p ="._.p;
+aspect;
 
--- declare instance of Foo
-new test := foo(); 
+-- create Foo item 
+item test :: foo(p:1);
 
--- use Foo methods using "test" qualifier
-test.bar(1,2,"Test"); -- initialize foo
-test.print; -- call second method for foo
+-- test item aspect
+test.bar();  -- p = 1
 
-write;
 ```
 **Notes:** 
-* Binded methods are using multiple dispatch so they can be overloaded;
-* Constructors and methods can be overwritten in other modules;
-* Methods of a type can be private to module or public using dot prefix;
-* If the object type is public, the constructor must also be public;
-* You can not alter object structure after it is defined.
+* Binded actions are using multiple dispatch so they can be overloaded;
+* Constructors and actions can be overwritten in other modules;
+* Actions of a type can be private to module or public using dot prefix;
+* If the item type is public, the constructor must also be public;
+* You can not alter item structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
-## Complex 
-
-A complex collection can store references to other things.
-
-**example**
-```
--- a list of lists of integers
-new clist := ((Z));
-
--- an array of 10 lists of integers
-new alist := [(Z)](10);
-
--- an array of arrays of integers
-new carry := [[Z](5)](10);
-
--- an list of function references
-new farry := (@());
-
--- an array of function references
-new farry  := [@()];
-
--- a hash map of function references
-new fuhash := {S:@()};
-```
 
 **Read next:** [Type Inference](inference.md) 

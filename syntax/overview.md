@@ -15,54 +15,53 @@ For syntax notation we use modified BNF convention:
 * [Conditional](#conditional)
 * [Pattern Matching](#pattern-matching)
 * [Control Flow](#control-flow)
-* [Functions](#functions)
 * [Methods](#methods)
+* [Rules](#rules)
 * [Parameters](#parameters)
-* [Lambda Expression](#lambda)
 
 ## Expression
-Expressions are created using identifiers, operators, functions and constant literals. 
+Expressions are created using identifiers, operators, rules and constant literals. 
 
 * can be enumerated using comma separator ","
 * can be combined to create more complex expressions;
 * have type that is calculated using type inference;
-* can be assigned to variables using "new" or "let" statements;
-* can be printed to console using "put" or "say" methods;
+* can be assigned to variables using "value" or "alter" statements;
+* can be printed to console using "print" or "write" actions;
 * can use () to establish order of operations;
 
 **Examples**
 ```
--- simple expressions in put statement
+-- simple expressions in print statement
 -- no need for parentheses for a single value
-put 10; -- print 10
-put "this is a test";
+print 10; -- print 10
+print "this is a test";
 
-write; --> print two rows
+print; --> print two rows
 
 --complex expressions can use ()  
-put (10 + 10 + 15);   -- math
-put (10 > 5 | 2 < 3); -- logical
+print (10 + 10 + 15);   -- math
+print (10 > 5 | 2 < 3); -- logical
 
 --multiple expressions in a line
-put (1,',',2,',',3); --expect 1,2,3
-put (10, 11, 12);    --expected 101112   
+print (1,',',2,',',3); --expect 1,2,3
+print (10, 11, 12);    --expected 101112   
 
 --avoid new line after 2
-say (1,2);
-say (3,4);  --> expect 1234
+write (1,2);
+write (3,4);  --> expect 1234
 
-write --> print 6 rows
+print; --> print 6 rows
 
 -- calculation that fail will do nothing.
-new x := 5 ∈ R;
-new x := x ÷ 0; -- no effect
-put x; -- expect x = 5
+value x := 5 ∈ R;
+value x := x ÷ 0; -- no effect
+print x; -- expect x = 5
 ```
 
 **Notes:** 
-* put statement can receive multiple parameters;
-* put statement add new line by default;
-* say statement can be used to avoid new line;
+* print statement can receive multiple parameters;
+* print statement add new line by default;
+* write statement can be used to avoid new line;
 * multiple arguments are separated by comma;
 * multiple arguments are enclosed in parenthesis;
 
@@ -159,7 +158,7 @@ Bee define a collection using a special notation based on brackets.
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-def <constant_name> := <constant> ∈ <type>;   
+value <constant_name> := <constant>;   
 ```
 
 **Notes:** 
@@ -168,7 +167,7 @@ def <constant_name> := <constant> ∈ <type>;
 
 ## Variable declarations
 
-Variables are defined using keyword "new" and next operators:
+Variables are defined using keyword "value" and next operators:
 
 sym | purpose
 ----|------------------------------------------------------------------
@@ -180,21 +179,21 @@ sym | purpose
 
 ```
 -- full declarations with type and initial value
-new <var_name> ∈ <type>;
-new <var_name> := <constant> ∈ <type>;
+value <var_name> ∈ <type>;
+value <var_name> := <constant> ∈ <type>;
 
 -- partial declaration using type inference
-new <var_name> := <expression>; -- native type inference
-new <var_name> := <constructor>;-- object type inference
+value <var_name> := <expression>; -- native type inference
+value <var_name> := <constructor>;-- object type inference
 
 -- reference declaration using using operator "::"
-new <ref_name> :: <var_name>; 
+value <ref_name> :: <var_name>; 
 ```
 
 Multiple variables can be define in one single line using comma separator:
 ```
-new <var_name>, <var_name> ... := <expression>;
-new <var_name>, <var_name> ... := <constructor>;
+value <var_name>, <var_name> ... := <expression>;
+value <var_name>, <var_name> ... := <constructor>;
 ```
 
 **Notes:** 
@@ -204,72 +203,74 @@ new <var_name>, <var_name> ... := <constructor>;
 
 ## Modify values
 
-One can modify variables using "let" statement.
+One can modify variables using "alter" statement.
 
 **example**
 ```
-new a := 10 ∈ i8; -- native variable
-new b := 0  ∈ Z;  -- basic variable
+value a := 10 ∈ i8; -- native variable
+value b := 0  ∈ Z;  -- basic variable
 
-let b := a + 1; -- modify b 10->11 
-put b;          -- expected 11
+alter b := a + 1; -- modify b 10->11 
+print b;          -- expected 11
 ```
 
 **notes:** 
 * Multiple variables can be modified at once if separated by comma;
-* One let statement can use one single operator ":=" or "::";
+* One alter statement can use one single operator ":=" or "::";
 
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-def pi := 3.14;
+label pi := 3.14;
 
--- declare multiple variables using let
-new a   ∈ Z; -- Integer 
-new x,y ∈ R; -- Double
-new q,p ∈ L; -- Logic
+-- declare multiple variables using alter
+value a   ∈ Z; -- Integer 
+value x,y ∈ R; -- Double
+value q,p ∈ L; -- Logic
 
 --using modifier expressions
-let a := 10;  -- modify value of a := 10
-let a += 1;   -- increment value of a := 11
-let a -= 1;   -- decrement value of a := 10
+alter a := 10;  -- modify value of a := 10
+alter a += 1;   -- increment value of a := 11
+alter a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-let q, p := T;     -- modify value of q and p
-let x, y := 10.5;  -- modify value of x and y
+alter q, p := T;     -- modify value of q and p
+alter x, y := 10.5;  -- modify value of x and y
 ```
 
-## Type declaration
+## Alias declaration
 
-User can define composite types and sub-types using keyword "def" and operator "<:".
+User can define composite types and sub-types using keyword "type" and operator "<:".
 
 ```
-def <type_name> <: <type_constructor>;
+alias alias_name <: type_descriptor;
 
 --using new type
-new <var_name>[,<var_name>] ... ∈ <type_name>;
+value var_name,var_name ... ∈ alias_name;
 ```
 
 ## Type conversion
 
-Bee is an explicit language. We avoid implicit conversions.
+Bee is an explicit language. We avoid implicit conversion.   
 When data type mismatch we must perform explicit conversion.
 
-* If data do not fit in the new type you receive a runtime error.
 * Explicit conversion is done using _pipeline operator: "->"
+* This is unsafe operation. And a range check is recommended before conversion.
+* Data precision may suffer. Some decimals may be lost.
+* If data do not fit in the new type overflow exception is created.
 
 **example:**
 ```
-new a := 0, b := 20 ∈ Z;   
-new v := 10.5, x := 0.0 ∈ R;
+value a := 0, b := 20 ∈ Z;   
+value v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
-let a := v -> N;
-put a; -- expect 10
+alter a := v -> N;
+print a; -- truncated to 10 
 
 --explicit conversion
-let x := b -> R;
-put x; --> expect 20.0
+alter x := b -> R;
+print x; --> expect 20.0
 ```
 
 ## ASCII type
@@ -277,24 +278,24 @@ put x; --> expect 20.0
 Bee define A := ASCII character as native type.
 
 ```
-new a,b ∈ A; --ASCII character
-new x,y ∈ B; --Binary number 
+value a, b ∈ A; --ASCII character
+value x, y ∈ B; --Binary number 
 
-let a := `0`;    -- representation of 0
-let x := a -> B; -- convert to 30
-let y := 30;     -- ASCII code for '0'
-let b := y -> A; -- convert to '0'
+alter a := `0`;    -- representation of 0
+alter x := a -> B; -- convert to 30
+alter y := 30;     -- ASCII code for '0'
+alter b := y -> A; -- convert to '0'
 ```
 ## Type checking
 
 We can use variable type to validate expression type.
 
 ```
-new a := 0;    --integer variable 
-new b := 0.0;  --real variable 
+value a := 0;    --integer variable 
+value b := 0.0;  --real variable 
 
-let b := 10;   --FAIL: b is of type: Real
-let a := 10.5; --FAIL: a is of type: Integer
+alter b := 10;   --FAIL: b is of type: Real
+alter a := 10.5; --FAIL: a is of type: Integer
 ```
 
 ## Logic type
@@ -302,7 +303,7 @@ let a := 10.5; --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: $⊥ = 0 = False and $⊤ = 1 = True
 
 ```
-def .L <: {.$0, .$1};
+type .L <: {.$0, .$1};
 ```
 
 ## Logic operations
@@ -334,20 +335,20 @@ Relation operators will create a logical response: $⊥ = 0 or $⊤ = 1.
 Logical expression have value { $⊥, $⊤ }
 
 ```
-new x := $⊥;
-new y := $⊤;
+value x := $⊥; -- false
+value y := $⊤; -- true
 
 --simple expressions
-put    x; -- $⊥ = 0
-put  ¬ x; -- $⊤ = 1
+print    x; -- $⊥ = 0
+print  ¬ x; -- $⊤ = 1
 
 --complex expressions
-put  (x ↔ y);  --  0
-put ¬(x ↔ y);  --  1
-put  (x < y);  --  1
-put  (x > y);  --  0
-put  (x ∧ y);  --  0
-put  (x ∨ y);  --  1
+print  (x ↔ y);  --  0
+print ¬(x ↔ y);  --  1
+print  (x < y);  --  1
+print  (x > y);  --  0
+print  (x ∧ y);  --  0
+print  (x ∨ y);  --  1
 
 ```
 **Notes:** 
@@ -360,22 +361,22 @@ put  (x ∨ y);  --  1
 Any numeric expression ca be converted to logic using coercion operation `-> L`
 
 ```
-new x, y ∈ L;
-new a := 0.0, b := 1.5 ;
+value x, y ∈ L;
+value a := 0.0, b := 1.5 ;
 
-let x := a -> L; -- x = $⊥
-let y := b -> L; -- y = $⊤
+alter x := a -> L; -- x = $⊥
+alter y := b -> L; -- y = $⊤
 ```
 
 **Notes:** 
 * Only integer part of a number is used in conversion;
-* Fraction is eliminated before conversion to logic type;
-* A string that contains "True" "true", "T" or "t" or "1" convert to: 1
-* A string that contains "False", "true", "F" or "f" or "0" convert to: 0
+* Fraction is truncated before conversion to logic type;
+* A string that contains "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: 1
+* A string that contains "No", "no", "False", "true", "F" or "f" or "0" convert to: 0
 
 ## Reference
 
-In Bee all basic types, sub-types and composite types are references. 
+In Bee all values and composite types are references except native types. 
 
 **assign**
 
@@ -384,19 +385,19 @@ In Bee all basic types, sub-types and composite types are references.
 
 **example**
 ```
-new i := 10  ∈ i8; 
-new j ∈ Z;
+value i := 10 ∈ i8;  -- native type
+value j ∈ Z;         -- references
 
 -- boxing using "::"
-let j :: i; -- boxing i := 12 
-let i += 1; -- modify i := 13
-put j; --> expect 13 (modified)
+alter j :: i; -- boxing i := 12 
+alter i += 1; -- modify i := 13
+print j; --> expect 13 (modified)
 
 -- verify boxing effect
-put j = i; -- 1 same value
-put j ≡ i; -- 1 (true) same reference 
+print j = i; -- 1 same value
+print j ≡ i; -- 1 (true) same reference 
 
-write;
+print;
 ```
 
 ## Conditional
@@ -405,28 +406,28 @@ A conditional is using "if" keyword to control one statement.
 Observe that "if" is not itself a full statement only an augment.
 
 ```
-<statement> if (<condition>);
+ statement if (condition);
 ```
 
 The statement is executed only if the condition is 1 = $⊤. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
-1. Conditional can not be associated with def statement;
-1. Conditional can not be associated with new statement;
+1. Conditional can not be associated with type statement;
+1. Conditional can not be associated with value statement;
 1. Conditional can not be associated with any block statement;
 
 ```
-new a ∈ Z;
+value a ∈ Z;
 
 -- conditional execution
-let a := 1 if (a = 0);
+alter a := 1 if (a = 0);
 
--- conditional output
-put "a is 0" if (a = 0);
-put "a >  0" if (a ≥ 0);
+-- conditional print
+print "a is 0" if (a = 0);
+print "a >  0" if (a ≥ 0);
  
-write; 
+print; 
 ```
 
 **Notes:** Keyword "if" and "else" are not related.
@@ -439,36 +440,38 @@ These expressions are separated by coma and enclosed in ().
 **Syntax:**
 
 ```
-new <var> ∈ <type>;
+value var_name ∈ type;
 
 -- single matching with default value
-let <var> := (<xp> if <cnd>, <dx>);
+alter var_name := (expression if condition, default);
 
 -- multiple matching with default value
-let <var> := (<xp1> if <cnd1>, <xp2> if <cnd2>..., <dx>);
+alter var_name := (xp1 if cnd1, xp2 if cnd2..., dx);
 
 -- alternative code alignment
-let <var> := (
-  <xp1> if <cnd1>,
-  <xp2> if <cnd2>,
-  <dx>  );
+alter var_name := (
+   xp1 if cnd1
+  ,xp2 if cnd2
+  ,dx  );
 ```
 
 **Legend:**
  
 ```
-<var>  := predefined variable
-<xp1>  := expression of same type with <v>
-<cnd1> := condition for <xp1>
-<dx>   := default expression (optional condition).
+var  := pretagined variable
+xp1  := expression of same type with <v>
+cnd1 := condition for <xp1>
+dx   := default expression (optional condition).
 ```
 
 **example**
 ```
-new x := `0`;
-get (x,"x:>");
-new what := ("digit" if x ∈ [`0`..`9`], if x ∈ [`a`..`z`], "letter","unknown");
-put "x is"._.what;
+value x := `0`;
+read (x,"x:>");
+
+value what := ("digit" if x ∈ [`0`..`9`], if x ∈ [`a`..`z`], "letter","unknown");
+print "x is"._.what;
+
 over;
 ```
 
@@ -482,8 +485,8 @@ When is a decision statement selector based on one condition.
 
 **syntax**
 ```
-when <condition>:
-  <statement>;
+when condition:
+  statement;
   ... 
 when;
 ```
@@ -493,26 +496,26 @@ Dual selector based on single logical expression:
 **pattern**
 ```
 when <condition>:
-  <true_branch>;
+  true_branch;
 else:
-  <false_branch>;
+  false_branch;
 when;
 ```
 
 **example**
 
 ```
-let a := 0;
 -- nested selector
-when (a ≤ 0):  
-  put 'a ≤ 0';
-  when (a = 0):  
-    put 'a = 0';
+value a := 0;
+when (a ≤ 0):
+  print 'a ≤ 0';
+  when (a = 0):
+    print 'a = 0';
   else:
-    put "a < 0"; 
+    print "a < 0"; 
   when;  
 when;
-write; 
+print; 
 -- expect 2 messages:
 -- a ≤ 0
 -- a = 0
@@ -524,12 +527,12 @@ Create repetitive statement block.
 
 ```
 cycle:
-  <statement block>
+  statement block
   ...
-  loop if <condition>;
+  loop if condition;
   ...
   
-  stop if <condition>;
+  stop if condition;
   ...
 cycle;
 ```
@@ -537,19 +540,19 @@ cycle;
 **example**
 
 ```
-new a := 10;
+value a := 10;
 
 cycle:
-  let a -= 1;
+  alter a -= 1;
   -- conditional repetition
   loop if (a % 2 = 0);  
-  say a;  
+  write a;  
   -- conditional termination
   stop if (a < 0);
-  say ','; 
+  write ','; 
 cycle;
 
-write;
+print;
 ```
 
 **Notes:** 
@@ -568,10 +571,10 @@ Nested cycles can be labeled:
 cycle outer: 
   cycle inner:
     -- continue with outer cycle
-    loop outer if <condition>; 
+    loop outer if condition; 
     ...
     -- stop for both cycles
-    stop outer if <condition>;
+    stop outer if condition;
   cycle;
 cycle;
 ```
@@ -579,123 +582,186 @@ cycle;
 **example**
 
 ```
-new x   := 9;
-new a,r := 0;
+value x   := 9;
+value a,r := 0;
 
 cycle:
-  let r := x % 2;
-  let a := (0 if r = 0, 1 if r = 0, 2);
-  say "{1}:{2}" <+ (x,a);
-  let x -= 1;
+  alter r := x % 2;
+  alter a := (0 if r = 0, 1 if r = 0, 2);
+  write "{1}:{2}" <+ (x,a);
+  alter x -= 1;
   stop if (x < 5);
-  say ',';
+  write ',';
 cycle;
 
-write; --> 9:1, 8:0, 7:1, 6:0, 5:1
+print; --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
-## Functions
+## Aspect
 
-A function is a named block of code that can have parameters and results.
+An aspect is a named block of code that can have parameters and create results.
 
 **pattern**
 ```
-def <name>(<param> ∈ <type>,...) => (<result> ∈ <type>,...):
-   [<statement>];
+aspect name(<param> ∈ <type>,...) => (<result> ∈ <type>,...):
    ...   
-   let <result> := <expression>;
+   alter <result> := <expression>;
    ...
-def;
+aspect;
 ```
 
 **Example:** 
 
 ```
--- method with one result:
-def add(x,y ∈ i8) => (r ∈ i8):
-  let r := x + y; 
-def;
+-- aspect with one result:
+aspect add(x,y ∈ i8) => (r ∈ i8):
+  alter r := x + y; 
+aspect;
 
--- method can be call using "new" or "let"
-new m := add(0,0); -- create m = 0 ∈ i8
+-- aspect can be call using "value" or "alter"
+value m := add(0,0); -- create m = 0 ∈ i8
 
 -- two results "s" and "d"
-def com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
-  let s := x + y; 
-  let d := x - y;
-def;
+aspect com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
+  alter s := x + y; 
+  alter d := x - y;
+aspect;
 
 -- unpack result to "b","c" using "<+"  
-new b,c <+ com(2,1); 
+value b,c <+ com(2,1); 
 
-put b; -- print 3 
-put c; -- print 1 
+print b; -- print 3 
+print c; -- print 1 
 
 -- call com and print the result
-put com(0,0); -- print (0, 0)
-write;
+print com(0,0); -- print (0, 0)
+print;
 
 -- negative test: try to call com in expression
-new x := com(1,1) + 1; -- compilation error, "com" has 2 results.
+value x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
 ```
+## Site Effects
 
-**Notes:**
-* A function can not have output parameters;
-* A function can not be interrupted using "exit" keyword;
-
-**properties:** 
-
-* functions have a local scope called _"context"_;
-* functions can have one or more results;
-
-**restriction:**
-* a function can not be declared inside other function;
-* a function result must be captured using assign ":=" o unpacking "<+"; 
-
-## Methods
-
-A method is a named block that have optional parameters but no result.
+An aspect sometimes do not have a result and is used for side-effects.
 
 **pattern**
 ```
-def <name>(<param> ∈ <type>,...):
+aspect <name>(<param> ∈ <type>,...):
    [<statement>];
    ...   
-def;
+aspect;
 ```
 
 **example**
 ```
--- a method with side-effect
-def foo:
-  put "hello, I am foo";
-def;
+-- an aspect with side-effect
+aspect foo:
+  print "hello, I am foo";
+aspect;
 
--- using name of method will execute the method  
+-- using name of aspect will execute the aspect  
 foo;
 ```
 
 **Notes:**
-* A method declaration do not require empty brackets ();
-* A method call do not require empty brackets ();
-* A method can have output parameters and side-effects;
-* A method can be interrupted earlier using "exit" keyword.
+* Aspect declaration do not require empty brackets ();
+* Aspect call do not require empty brackets ();
+* Aspect can have output parameters and side-effects;
+* Aspect can be interrupted earlier using "exit" keyword.
 
 **properties:** 
 
-* method have a local scope called _"context"_;
-* method can receive input/output parameters;
-* method can have optional one or more results;
+* An aspect have a local scope called _"context"_;
+* An aspect can receive input/output parameters;
+* An aspect can have optional one or more results;
 
 **restriction:**
-* a method can not be declared inside other method;
-* a methods can not be used in expressions except assign expression;
-* a method result must be captured using assign ":=" o unpacking "<+"; 
+* An aspect can not be declared inside other aspect;
+* An aspect can not be used in expressions or rules;
+* An aspect result must be captured using assign ":=" o unpacking "<+"; 
+
+## Rules
+
+Rules are λ expressions that can have parameters and have one single result.
+
+**syntax**
+```
+rule name λ (param ∈ type,...) ∈ type => (expression);
+```
+
+**Example:** 
+
+```
+-- define "ex" an aspect with two parameters
+rule ex λ (x,y ∈ Z) ∈ Z => (x + y); 
+
+-- expression can be used in larger expressions
+value z := ex(1,1)+1; 
+print z; -- print 3
+
+print;
+```
+
+**properties**
+
+* a rule can have only one result not a list;
+* a rule can be created during run-time;
+* a rule can be used in other rules;
+* a rule can be used as parameter for an aspect or rule;
+* a rule can be created as a result of an aspect;
+
+**restriction:**
+
+* rules can not have side effects;
+* rules can not mutate variables;
+* rules can not have local declarations; 
+* rules can not receive input/output parameters;
+* rules can not perform input/output operations;
+* rules can not fail and can not be interrupted;
+
+**See also:**
+* [fn.bee](../demo/fn.bee)
+* [pm.bee](../demo/pm.bee)
+
+## Rules as Parameter
+
+An aspect can receive rules as parameters.
+
+**syntax**
+```
+aspect act_name(xp_name λ (param_list) ∈ result_type):
+  ...
+aspect;
+```
+
+**example**
+```
+-- declare aspect with lambda rule as parameter
+aspect compare(a,b ∈ Z, cmp λ (Z,Z) ∈ L) => (r ∈ L):
+  alter r := cmp(a,b);
+aspect;
+
+-- declare λ expressions:
+rule lt λ (a,b ∈ Z) ∈ L => (a < b);
+
+-- call compare using λ expression as named argument
+value test := compare(1,2,cmp::lt);
+print test; -- expect $⊤
+
+-- call compare using anonymous λ expression argument
+value test := compare(1, 2, λ(a,b) => (a ≥ b));
+print test; -- expect $⊤
+
+print;
+```
+
+**See also:**
+* [ho.bee](../demo/ho.bee) 
 
 ## Parameters
 
-Parameters are variables defined in a method or function signature.
+Parameters are variables defined in an aspect or rule signature.
 
 **Notes:**   
 * Native type parameters are pass by value;
@@ -710,83 +776,5 @@ Parameters are variables defined in a method or function signature.
 **See also:** 
 * [fi.bee](../demo/fi.bee)
 * [bs.bee](../demo/bs.bee) 
-
-## Lambda Expression
-
-A λ expressions is a named expression that can have parameters and can create a result.
-
-**syntax**
-```
-def <name> λ (<param> ∈ <type>,...) ∈ type => (expression);
-```
-
-**Example:** 
-
-```
--- define "ex" a method with two parameters
-def ex λ (x,y ∈ Z) ∈ Z => (x + y); 
-
--- expression can be used in larger expressions
-new z := ex(1,1)+1; 
-put z; -- print 3
-
-write;
-```
-
-**properties**
-
-* λ expressions can have only one result not a list;
-* λ expressions can be created during run-time;
-* λ expressions can be used in other λ expressions;
-* λ expressions can be used as parameter for a method or function;
-* λ expressions can be created as a result of a function;
-
-**restriction:**
-
-* λ expressions can not have side effects;
-* λ expressions can not mutate variables;
-* λ expressions can not have local declarations; 
-* λ expressions can not receive input/output parameters;
-* λ expressions can not perform input/output operations;
-* λ expressions can not fail and can not be interrupted;
-
-**See also:**
-* [fn.bee](../demo/fn.bee)
-* [pm.bee](../demo/pm.bee)
-
-## Expression as Parameter
-
-A method can receive λ expressions as parameters.
-
-**syntax**
-```
-def <method_name>(<expression_name>λ(<param_list>) ∈ <result_type>):
-  ...
-def;
-```
-
-**example**
-```
--- declare method with lambda parameter
-def compare(a,b ∈ Z, cmp λ (Z,Z) ∈ L) => (r ∈ L):
-  let r := cmp(a,b);
-def;
-
--- declare λ expressions:
-def lt λ(a,b ∈ Z) ∈ L => (a < b);
-
--- call compare using λ expression as named argument
-new test := compare(1,2,cmp::lt);
-put test; -- expect $⊤
-
--- call compare using anonymous λ expression argument
-new test := compare(1, 2, λ(a,b) => (a ≥ b));
-put test; -- expect $⊤
-
-write;
-```
-
-**See also:**
-* [ho.bee](../demo/ho.bee) 
 
 **Read Next:** [Composite Types](composite.md)
