@@ -29,8 +29,8 @@ aspect sort(this @ [Z]):
 aspect;
 
 -- define test & result fixture
-array test   := [1,4,1,5,9,2,6,5,3,5];
-array result := [1,1,2,3,4,5,5,5,6,9];
+value test   := [1,4,1,5,9,2,6,5,3,5];
+value result := [1,1,2,3,4,5,5,5,6,9];
 -- test sort method
 sort(test);
 

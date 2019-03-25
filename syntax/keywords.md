@@ -6,8 +6,8 @@ Bee uses 26 reserved keywords to create statements. You can not use these keywor
 2: if,
 3: asm, cpp, bee, 
 4: read, when, else, exit, fail, pass, loop, stop, over 
-5: class, range, value, write, print, alter, cycle, while, solve, 
-6: aspect, object, global, static
+5: class, range, value, write, print, alter, cycle,
+6: aspect, global, static
 ```
 
 ### Definition statements
@@ -18,15 +18,11 @@ Next statements are used to import modules or declare something.
 |----------|--------------------------------------------------
 | asm      | Import Assembly \| start assembly code
 | cpp      | Import C \| C++ library
-| bee      | Import Bee module \| library
-| static   | Declare a constant
-| global   | Declare a global variable (also start with $)
+| bee      | Execute a bee module \| Import library
+| static   | Declare a static value
+| global   | Declare a global value
 | value    | Declare a mutable native or basic variable 
 | rule     | Define a rule
-| class    | Define a class
-| object   | Define a new class instance
-| range    | Define sub-type range
-| ordinal  | Define ordinal data type
 
 ### Collection declaration
 
@@ -61,8 +57,6 @@ Control statements are also known as decision statements.
 | when     | Decision block for conditional expression 
 | else     | Alternative path executed in _when_ statement
 | cycle    | Start point for repetitive block
-| while    | Execute a block of code while condition is true
-| solve    | Resolve a multi-case problem that may fail
 
 ## Interruption keywords
 

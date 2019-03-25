@@ -5,7 +5,7 @@
 #driver "dt"
 
 -- this type is public (uses dot prefix)
-class .Data <: {key:A, value:N};
+type  .Data <: {key:A, value:N};
 
 -- value variable using type alias
 value x ∈ Data;
@@ -15,7 +15,7 @@ alter x := {key:`a`, value:10};
 |* public enumeration type with public elements    *|
 |* elements starting with "." do not need qualifier*|
 +---------------------------------------------------+ 
-ordinal Number <: { 
+type Number <: { 
    .zero, 
    .one, 
    .two, 

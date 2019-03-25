@@ -4,7 +4,7 @@
 #driver "cy"
 
 -- declare array of 10 Words
-array a ∈ [Z](10);
+value a ∈ [Z](10);
 
 -- use cycle 
 value i ∈ Z; 

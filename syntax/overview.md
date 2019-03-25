@@ -376,7 +376,7 @@ alter y := b -> L; -- y = $⊤
 * A string that contains "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: 1
 * A string that contains "No", "no", "False", "true", "F" or "f" or "0" convert to: 0
 
-## References
+## Reference
 
 In Bee all values and composite types are references except native types. 
 
@@ -387,8 +387,8 @@ In Bee all values and composite types are references except native types.
 
 **example**
 ```
-value i := 10 ∈ i8;  -- native type
-value j ∈ Z;         -- references
+local  i := 10 ∈ i8;  -- native type
+local  j ∈ Z;         -- references
 
 -- boxing using "::"
 alter j :: i; -- boxing i := 12 

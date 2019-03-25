@@ -4,7 +4,7 @@
 #driver "ct"
 
 -- enumeration is a type 
-ordinal Enum := {fst:1, snd, trd}; 
+type Enum := {fst:1, snd, trd}; 
 
 -- print enumeration members
 print (Enum.fst); -- 1

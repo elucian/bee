@@ -22,9 +22,9 @@ value g, h := -10 ∈ N;
 value x := 10, y := 20 ∈ N;
 
 -- native array are auto initialized
-array  a := [W](10);   -- array of 10 Words
-array  b := [A](10);   -- array of 10 ASCII characters
-matrix m := [W](3,3);  -- matrix of 3x3 Words
+value  a := [W](10);   -- array of 10 Words
+value  b := [A](10);   -- array of 10 ASCII characters
+value  m := [W](3,3);  -- matrix of 3x3 Words
 
 print a; -- [0,0,0,0,0,0,0,0,0,0]
 print b; -- [``,``,``,``,``,``,``,``,``,``]

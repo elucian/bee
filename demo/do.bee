@@ -2,7 +2,7 @@
        repetitive statement demo
 -----------------------------------------+
 #driver "do"
-array a := [Z](10);      -- array of 10 Words
+value a := [Z](10);      -- array of 10 Words
 value n := a.count()-1; -- index of last element
 
 -- use range for iteration

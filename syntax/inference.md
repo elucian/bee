@@ -32,26 +32,26 @@ Composite structures are using () [] and {} to create different types:
 
 ```
 -- create one list of integers
-list t := (1,2); 
+value t := (1,2); 
 
 -- create one list of ASCII chars
-list l := ('a','b');
+value l := ('a','b');
 
 -- create an Array with capacity of 4
-array d := [1,2,3,4];
+value d := [1,2,3,4];
 
 -- create an Array with capacity of 10
 -- all elements initialized with 0.0
-matrix e := [0.0](10);
+value e := [0.0](10);
 
 -- create a data set of integer
-tree s := {1,2,3,4};
+value s := {1,2,3,4};
 
 -- create a hash map
-index c := {(1:"storage"),(2:"string")};
+value c := {(1:"storage"),(2:"string")};
 
--- create a data structure
-object  b := {name:'Goliath', age:'30'};
+-- create a complex data structure
+value  b := {name:'Goliath', age:'30'};
 
 ```
 

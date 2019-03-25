@@ -7,17 +7,15 @@ Composite types are complex data structures.
 * [range](#range)
 * [ordinal](#ordinal)
 * [list](#list)
-* [stack](#stack)
-* [queue](#queue)
-* [tree](#tree)
-* [index](#index)
+* [cluster](#cluster)
+* [table](#table)
 * [array](#array)
 * [slice](#slice)
 * [varargs](#varargs)
 * [string](#string)
-* [classes](#classes)
-* [binding](#binding)
+* [complex](#complex)
 * [aggregate](#agregate)
+* [binding](#binding)
 
 ## Usability
 
@@ -35,16 +33,16 @@ Range notation is used to define a subtype.
 **syntax**
 
 ```
-range class_name <: type[min..max]
+type range_name <: basic_type[min..max]
 ```
 
 **Examples:**
 ```
 -- sub-type declarations
-range Small     <: B[0..9];
-range Alfa      <: A['a'..'Z'];
-range Positive  <: Z[0..+∞];
-range Negative  <: Z[-∞..-1];
+type Small     <: B[0..9];
+type Alfa      <: A['a'..'Z'];
+type Positive  <: Z[0..+∞];
+type Negative  <: Z[-∞..-1];
 
 --Check variable belong to sub-type
 when ('x' ∈ Alfa):
@@ -67,7 +65,7 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 
 **pattern**
 ```
-ordinal type_name <: { name1:0, name2, name3};
+type type_name <: { name1:0, name2, name3};
 
 value a, b, c ∈ type_name;
 
@@ -80,13 +78,12 @@ alter c := type_name.name3; -- c=4
 
 ```
 -- using public elements in enumeration
-ordinal type_name <: { .name1, .name2 };
+type type_names <: { .name0, .name1 };
 
-value a, b := 0;
+value a, b ∈ type_name;
 
-alter a := name1; --a := 0
-alter b := name2; --b := 1
-
+alter  a := name0; -- a value := 0
+alter  b := name1; -- b value := 1
 ```
 
 ## List
@@ -95,7 +92,7 @@ A list is an ordered collection of values separated by comma and enclosed in bra
 
 **Syntax**
 ```
-value <variable> := () ∈ (<Type>);
+type <variable> := () ∈ (value_type);
 ```
 
 **Notes**: List members must have same data type
@@ -103,10 +100,10 @@ value <variable> := () ∈ (<Type>);
 **example**
 ```
 -- create a list of ASCII characters
-list a := () ∈ (A);
+value a := () ∈ (A);
 
 -- create a list using a literal
-list b := ('1','a','2','b') ∈ (A); 
+value b := ('1','a','2','b') ∈ (A); 
 ```
 
 **empty list**
@@ -114,8 +111,8 @@ list b := ('1','a','2','b') ∈ (A);
 An empty list is represented like this: ()
 
 ```
-list a := ();      -- empty list
-list b := (1,2,3); -- initialize list using assign
+value a := ();      -- empty list
+value b := (1,2,3); -- initialize list using assign
 
 alter a := b; -- re-assign a and throw to garbage ()
 ```
@@ -153,7 +150,7 @@ aspect test(x,y ∈ Z) => (r, c ∈ Z):
   alter c += y+1;
 aspect;
 
-items n, m ∈ Z;
+value n, m ∈ Z;
 
 -- unpacking the result
 alter n, m <+ test(1,2);
@@ -171,7 +168,7 @@ alter _,_ <+ test(3,4);
 List members can be ignored when unpacking using anonymous variable: "_"
 
 ```
-list lst := (0, 1, 2, 3, 4, 5);
+value lst := (0, 1, 2, 3, 4, 5);
 value x, y, z ∈ Z;
 
 -- first element and last 2 are ignored
@@ -188,10 +185,9 @@ alter _,x,_,z := lst;
 ### List processing
 
 ```
-list l1 := (1, 2, 3);
-list l2 := (2, 3, 4);
-
-list l3, l4, l5 := ();
+value l1 := (1, 2, 3);
+value l2 := (2, 3, 4);
+value l3, l4, l5 := ();
 
 --addition between lists "+" 
 alter l3 := l1 + l2; --(1,2,3,2,3,4)
@@ -204,12 +200,12 @@ alter l5 := l2 - l1;  -- (4)
 **List traversal**
 
 ```
-list    := ('a', 'b', 'c');
+value   := ('a', 'b', 'c');
 value x := list.first();
 cycle
   write x;
   exit if x ≡ list.last();
-  alter x := list.next(element);
+  alter x  := list.next(element);
   write ',';  
 cycle;
 ```
@@ -219,7 +215,7 @@ cycle;
 A stack is a LIFO collection of elements.
 
 ```
-stack a := (1, 2, 3);
+value a := (1, 2, 3);
 value last ∈ N;
 
 -- using stack with operator "+="
@@ -237,7 +233,7 @@ alter last -= a[?];  -- last := 4, a := [1,2,3]
 A queue is a FIFO collection of elements.
 
 ```
-queue q := (1,2,3);
+value q := (1,2,3);
 value  first : N;
 
 -- using enqueue operator "+:" 
@@ -250,15 +246,16 @@ alter first := a[!]; --> 1 and a := (1,2,3,4)
 alter first -= a[!]; --> 1 and a := (2,3,4)
 ```
 
-## Tree
+## Cluster
 
-An tree is a sorted collection of unique values.
+A cluster is a sorted collection of unique values.
 
 ```
---define a collection
-tree s1 := {1,2,3} ∈ {N}; 
-tree s2 := {2,3,4} ∈ {N};
-tree s  := {}      ∈ {N}; -- empty
+--define a cluster
+
+value s1 := {1,2,3} ∈ {N}; 
+value s2 := {2,3,4} ∈ {N};
+value s  := {}      ∈ {N}; -- empty
 
 
 -- specific operations
@@ -268,7 +265,7 @@ alter s := s1 - s2; --{1}       -- difference 1
 alter s := s2 - s1; --{4}       -- difference 2
 
 -- declare a new set
-tree a := {1,2,3} ∈ {N};
+cluster a := {1,2,3} ∈ {N};
 
 -- using operator +/- to mutate set a
 alter a := a + 4; --> {1,2,3,4} --append 4
@@ -282,19 +279,19 @@ alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 * Sets are not recommended to create queues or stacks;
 * Usually you do not remove elements from a set but only append;
 
-## Index
+## Table
 
-An index is a collection of (key:value) pairs sorted by key.
+A table is a collection of (key:value) pairs sorted by key.
 
 **syntax**
 ```
-alias type_name <: hash ∈ {(key_type : value_type)}
+type type_name <: {(key_type : value_type)}
 ```
 
 **example**
 ```
 -- declare a new empty hash map
-table map ∈ type_name;
+value map := {} ∈ type_name;
 
 -- initial value of map
 alter map := {'a':"first", 'b':"second"};
@@ -306,13 +303,13 @@ alter map['c'] := "third";
 alter map['e'] := "forth"; --> ERROR
 
 -- finding elements by key
-print map['a']; --'first'
-print map['b']; --'second'
-print map['c']; --'third'
+print map['a']; -- first
+print map['b']; -- second
+print map['c']; -- third
 
 -- remove an element by key
-erase map['a']; --> remove 'first' element
-print map;      --> expected: {'b'='second', 'c'='third'}
+erase map['a']; --> remove "first" element
+print map;      --> expected: {'b'="second", 'c'="third"}
 
 print;
 ```
@@ -324,7 +321,9 @@ print;
 We can check if an element is included in a collection.
 
 ```
-value map := {'a':"first", 'b':"second"};
+type  Tmap ∈ {(A:U)};
+
+value map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
 when ('a' ∈ map):
   print("a is found");
@@ -341,9 +340,9 @@ Bee define Array variable using notation := []().
 
 **syntax**
 ```
-array  array_name  := [type];      --one dimension array with unknown capacity
-array  array_name  := [type](c);   --one dimension with capacity c
-matrix matrix_name := [type](n,m); --two dimensions with capacity n x m
+value array_name  := [type];      --one dimension array with unknown capacity
+value array_name  := [type](c);   --one dimension with capacity c
+value array_name  := [type](n,m); --two dimensions with capacity n x m
 ```
 
 **Note:** 
@@ -395,7 +394,7 @@ Arrays can have optional index range [!..?]
 **syntax**
 ```
 --one dimensional array with elements starting from n to m
-value array_name := [member_type](n..m);  
+array array_name := [member_type](n..m);  
 
 print array_name[!]; -- print first element
 print array_name[?]; -- print last element
@@ -432,10 +431,10 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-array array_name := [type](c);
+value array_name := [type](c);
 
 -- slice creation using "::"
-slice slice_name :: array_name[n..m];
+value slice_name :: array_name[n..m];
 ```
 
 **Note:** Slice has references or a copy of original members;
@@ -443,7 +442,7 @@ slice slice_name :: array_name[n..m];
 **example**
 ```
 -- capacity is 5, last element is 0
-array a := [1,2,3,4](5); 
+value a := [1,2,3,4](5); 
 print a; -- [1,2,3,4,0]
 
 -- making 4 slice views
@@ -473,7 +472,7 @@ Default assignment ":=" and slicing operator "[..]" makes a copy.
 
 ```
 value a := [0,1,2,3,4];
-value e,f,r := [Z]; -- empty array
+value e,f,r ∈ [Z]; -- empty array
 
 -- by default assign ":=" copy/clone an entire collection
 alter e := a; 
@@ -546,18 +545,18 @@ We declare an array using prefix "*" for variable parameter name.
 ```
 --parameter *bar is an array
 aspect foo(*bar ∈ [Z]) => (x ∈ Z):
-  alter c := bar.count();  
+  value c := bar.count();  
   -- precondition
   when (c = 0):
     alter x := 0; 
     exit;
   when;
-  value i := 0; 
+  alter i := 0; 
   -- sum all parameters  
   cycle:
     alter x += bar[i];
     alter i += 1;
-    stop if i = c;
+    stop if (i = c);
   cycle;
 aspect;
 
@@ -577,7 +576,7 @@ print;
 
 ```
 value str := S(25);   -- string with capacity 25 Extended ASCHII characters
-array a   := [A](25); -- array of 25 characters
+value a   := [A](25); -- array of 25 characters
 
 alter str := 'Long string'; 
 alter a   := split(str);
@@ -730,29 +729,31 @@ print sep;
 
 **Note:** Operator "*" have higher precedence then "."
 
-## Classes
+## Complex
 
-Classes are complex data structures with elements enclosed in curly brackets { , , ,} and separated by comma. Classes are templates for creation of items. Each object has one or more attributes with associated data types. 
+Complex types are data structures with elements enclosed in curly brackets { , , ,} and separated by comma. 
 
 **Pattern:**
 ```
 -- declare a category of objects
-class type_name <: {attribute ∈ type_name, ...};
+type  type_name <: {attribute ∈ type_name, ...};
 
 -- create an object instance using default constructor
-object item_name := {
+value item_name := {
        attribute : constant,
        ...
        } ∈ type_name;
 
 -- modify one object attribute
-alter item_name.attribute := give_value;
+alter object_name.attribute := new_value;
 
 -- declare receivers
-value var_name ∈ type_name
+value var1 ∈ type_1
+value var2 ∈ type_2
+...
 
 -- unpacking object attributes
-value var_name,... <+ item_name;
+value var1,var2... <+ object_name;
 ```
 
 **Object structure can be ...**
@@ -764,14 +765,14 @@ value var_name,... <+ item_name;
 **Example:**
 ```
 -- define recursive type Person
-class Person <: {
+type Person <: {
       name ∈ S, 
       age  ∈ N,  
       children ∈ (Person)
     }; 
 
 -- create two objects of type Person
-object r1,r2 ∈ Person;
+value r1,r2 ∈ Person;
 
 -- person with no children          
 alter r1 := {name:'Mica', age:21};
@@ -800,14 +801,14 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-class Person <: {name ∈ U, age ∈ N};
+type  Person <: {name ∈ U, age ∈ N};
 
 -- array of 10 persons
-array catalog := [Person](10); 
+value catalog := [Person](10); 
   
 --assign value using literals
-object catalog[0] := {name:"Cleopatra", age:15};
-object catalog[1] := {name:"Martin", age:17};
+value catalog[0] := {name:"Cleopatra", age:15};
+value catalog[1] := {name:"Martin", age:17};
 
 --using one element with dot operators
 print caralog[0].name; --will print Cleopatra
@@ -823,6 +824,26 @@ print size(Person);
 print;
 ```
 
+## Aggregate
+
+An aggregate type can store references other composite types.
+
+**example**
+```
+-- a list of lists of integers
+type Dlist ∈ ((Z));
+
+-- an array of 10 lists of integers
+type Alist ∈ [(Z)](10);
+
+-- an array of arrays of integers
+type Aheap ∈ [[Z](5)](10);
+
+-- an catalog of persons
+type Acat ∈ {(S:Person)};
+
+```
+
 ## Binding
 
 An aspect can bind to items using reference parameter: "me". 
@@ -830,23 +851,26 @@ An aspect can bind to items using reference parameter: "me".
 **pattern**
 ```
 -- define Foo as object with 3 public attributes:
-class Foo <: {p ∈ N};
+type Foo <: {a, b ∈ N};
   
 -- foo setup
-aspect foo(p ∈ N) => (me @ Foo):
-  object me := {p};
+aspect foo(p1,p2 ∈ N) => (me @ Foo):
+  value me := {a:p1, b:p2};
 aspect;
 
 -- second aspect for Foo type
 aspect bar(me @ Foo):
-  print "p ="._.p;
+  print "a ="._.me.a;
+  print "b ="._.me.b;
 aspect;
 
 -- create Foo object 
-object test :: foo(p:1);
+value test :: foo(p:1);
 
 -- test object aspect
-test.bar();  -- p = 1
+test.bar();  
+-- a = 1
+-- b = 1
 
 ```
 **Notes:** 
@@ -857,25 +881,5 @@ test.bar();  -- p = 1
 * You can not alter object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
-
-## Aggregate
-
-An aggregate type can store references to classes and other composite types.
-
-**example**
-```
--- a list of lists of integers
-list  clist ∈ ((Z));
-
--- an array of 10 lists of integers
-array lheap ∈ [(Z)](10);
-
--- an array of arrays of integers
-array aheap ∈ [[Z](5)](10);
-
--- an indexed catalog of persons
-index caper ∈ {(S:Person)};
-
-```
 
 **Read next:** [Type Inference](inference.md) 
