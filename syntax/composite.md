@@ -336,7 +336,7 @@ print;
 
 ## Array
 
-Bee define Array variable using notation := []().
+Bee define Array variable using notation := `[]()`.
 
 **syntax**
 ```
