@@ -243,13 +243,11 @@ User can define composite types and sub-types using composite category and opera
 
 ```
 --declare new type
-category type_name <: type_descriptor;
+type  type_name <: type_descriptor;
 
 --using new type
 value var_name,var_name ... ∈ type_name;
 ```
-
-category ::= { range, class, ordinal }
 
 ## Type conversion
 
@@ -305,7 +303,7 @@ alter a := 10.5; --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: $⊥ = 0 = False and $⊤ = 1 = True
 
 ```
-ordinal .L <: {.$0, .$1};
+type .L <: {.$0, .$1};
 ```
 
 ## Logic operations
@@ -387,8 +385,8 @@ In Bee all values and composite types are references except native types.
 
 **example**
 ```
-local  i := 10 ∈ i8;  -- native type
-local  j ∈ Z;         -- references
+value  i := 10 ∈ i8;  -- native type
+value  j ∈ Z;         -- references
 
 -- boxing using "::"
 alter j :: i; -- boxing i := 12 
