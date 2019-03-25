@@ -1,33 +1,33 @@
 ## Generic Actions
 
-A generic action is using a variable type "X". 
+A generic aspect is using a variable type "X". 
 
 **bubble sort**
 
 ```
-act sort<X>(array @ [X], gt λ (X,X) ∈ L ):
-    new n := length(array)-1;
-    new swap ∈ L;
-    new temp ∈ X;
-    new i := 0 ∈ N;
+aspect sort<X>(array @ [X], gt λ (X,X) ∈ L ):
+    value n := length(array)-1;
+    value swap ∈ L;
+    value temp ∈ X;
+    value i := 0 ∈ N;
     cycle
-        let i := 0;
-        let swap := $⊥; -- false
+        alter i := 0;
+        alter swap := $⊥; -- false
         cycle 
             stop if (i = n);
             -- this pair is out of order ?
             when gt(array[i], array[i+1]):
                 -- swap pair and set swap flag = true
-                let temp := array[i];
-                let array[i]  := array[i+1];
-                let array[i+1]:= temp;
-                swap := $⊤; -- true
+                alter temp := array[i];
+                alter array[i]  := array[i+1];
+                alter array[i+1]:= temp;
+                alter swap := $⊤; -- true
             when;
-            let i +=1;
+            alter i +=1;
         cycle; 
         stop if ¬ swap;
     cycle;
-act;
+aspect;
 ```
 
 **Notes:**
@@ -38,16 +38,16 @@ act;
 **sort usage**
 
 ```
-tag Person  <: { name ∈ S, age ∈ N };
+type Person  <: { name ∈ S, age ∈ N };
 
 -- tagine order action for array of Persons
-act order(cat @ [Person]):
+aspect order(cat @ [Person]):
   sort<Person>(cat, λ(a, b) => (a.name > b.name));
-act;
+aspect;
 
 -- tagine clients and suppliers
-new clients   := [Person](100);
-new suppliers := [Person](10);
+value clients   := [Person](100);
+value suppliers := [Person](10);
 -- populate somehow
 ...
 
