@@ -610,7 +610,7 @@ The "trial" statement execute a process that can fail for some reason.
 | abort | unrecoverable error, stop program
 
 ```
-trial
+trial:
   -- protected region
   ...
   -- fail with error code
@@ -621,9 +621,9 @@ patch code:
 patch code:
   -- patch statement  
 ...  
-other
+other:
   -- other errors  
-after
+after:
   <finalization>
 trial;
 ```
