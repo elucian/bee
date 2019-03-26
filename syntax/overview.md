@@ -186,7 +186,8 @@ create var_name := constant ∈ type_name;
 create var_name := expression; -- type inference
 
 -- reference declaration using using operator "::"
-assign ref_name :: var_name; 
+create ref_name :: var_name; 
+create ref_name :: object_constructor; 
 ```
 
 Multiple variables can be define in one single line using comma separator:
@@ -388,7 +389,7 @@ In Bee all values and composite types are references except native types.
 create i := 10 ∈ i8;  -- native type
 create j ∈ Z;         -- references
 
--- boxing using "::"
+-- boxing using "::" (borrow address)
 assign j :: i; -- boxing i := 12 
 modify i += 1; -- modify i := 13
 print  j; --> expect 13 (modified)
@@ -396,7 +397,7 @@ print  j; --> expect 13 (modified)
 -- verify boxing effect
 print j = i; -- 1 same value
 print j ≡ i; -- 1 (true) same reference 
-
+
 ```
 
 ## Conditional
@@ -424,8 +425,7 @@ modify a := 1 if (a = 0);
 
 -- conditional print
 print "a is 0" if (a = 0);
-print "a >  0" if (a ≥ 0);
-  
+print "a >  0" if (a ≥ 0); 
 ```
 
 **Notes:** Keyword "if" and "else" are not related.
@@ -493,7 +493,7 @@ Dual selector based on single logical expression:
 
 **pattern**
 ```
-when <condition>:
+when condition:
   true_branch;
 else:
   false_branch;

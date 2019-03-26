@@ -843,7 +843,7 @@ An method can bind to items using reference parameter: "me".
 
 **pattern**
 ```
--- define Foo as object with 3 public attributes:
+-- define Foo as object with 2 public attributes:
 define Foo <: {a, b ∈ N};
   
 -- foo setup (require reference capturing)
