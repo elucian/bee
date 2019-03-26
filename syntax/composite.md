@@ -13,7 +13,7 @@ Composite types are complex data structures.
 * [slice](#slice)
 * [varargs](#varargs)
 * [string](#string)
-* [complex](#complex)
+* [object](#object)
 * [aggregate](#agregate)
 * [binding](#binding)
 
@@ -723,9 +723,9 @@ print sep;
 
 **Note:** Operator "*" have higher precedence then "."
 
-## Complex
+## Object
 
-Complex types are data structures with elements enclosed in curly brackets { , , ,} and separated by comma. 
+Object types are data structures with elements enclosed in curly brackets { , , ,} and separated by comma. 
 
 **Pattern:**
 ```
@@ -819,7 +819,7 @@ print size(Person);
 
 ## Aggregate
 
-An aggregate type can store references other composite types.
+An aggregate type can store references to other composite types.
 
 **example**
 ```

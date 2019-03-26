@@ -6,7 +6,7 @@
 define sort(this @ [Z]):
   create n := length(this)-1;
   create swap ∈ L;
-  create temp ∈ X;
+  create temp ∈ Z;
   create i := 0 ∈ N;
   cycle:
     modify i := 0;

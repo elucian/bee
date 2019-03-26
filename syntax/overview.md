@@ -473,7 +473,7 @@ over;
 
 ## Control Flow
 
-Bee has 2 control flow statements { when, cycle }:
+Bee has 3 control flow statements { when, cycle, trial }:
 
 ### When
 
@@ -589,6 +589,58 @@ cycle:
 cycle;
  --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
+
+## Trial
+
+The "trial" statement execute a process that can fail for some reason.
+
+**Keywords:**
+
+| word  | description
+|-------|-------------------------------------
+| trial | start and end trial block
+| patch | catch and fix error code
+| other | catch other errors
+| after | executed after trial ends
+| $error| system error record
+| pass  | scrub $error record and end trial
+| exit  | stop current method/function 
+| fail  | create an error with a code
+| over  | unconditional stop program
+| abort | unrecoverable error, stop program
+
+```
+trial
+  -- protected region
+  ...
+  -- fail with error code
+  fail 24 if <condition>     
+  ...    
+patch code:
+  -- patch statement
+patch code:
+  -- patch statement  
+...  
+other
+  -- other errors  
+after
+  <finalization>
+trial;
+```
+
+**patch**
+
+Patch regions are "exception handlers". Each can resolve one single error with a specific code.
+**other**
+
+The "other" region is executed when the error is not captured by a patch. In this region you can use control statements for a range of errors. 
+
+**after**
+
+This region is executed regardless if there is an error or not. It contains resource closing statements:
+
+* close a file or connection to databases 
+* close locked resources and free memory
 
 ## Methods
 
