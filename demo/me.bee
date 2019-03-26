@@ -3,7 +3,7 @@
 ----------------------------------------+
 #driver "me"
 -- enumeration with public members
-define  Number <: {.zero, .one, .two};
+define Number <: {.zero, .one, .two};
 create test ∈ Number;
 modify test := zero; -- instance of Number
 -- create a method for define Number
