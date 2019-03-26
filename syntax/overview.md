@@ -633,6 +633,7 @@ trial;
 **patch**
 
 Patch regions are "exception handlers". Each can resolve one single error with a specific code.
+
 **other**
 
 The "other" region is executed when the error is not captured by a patch. In this region you can use control statements for a range of errors. 
@@ -654,7 +655,8 @@ define E <: {code ∈ Z, message ∈ S};
 
 -- global system error
 create $error ∈ {code ∈ Z, message ∈ S, line ∈ Z};
-``
+```
+
 User can define his own exceptions with code > 0:
 
 **example**
@@ -669,9 +671,11 @@ fail $custom_error if <condition>;
 * Error code ≤ -1   are unrecoverable abort errors
 
 **example**
+
 ```
 abort -1 ; -- end program and exit with error code = -1
 ```
+
 ## Methods
 
 An method is a named block of code that can have parameters and create results.
