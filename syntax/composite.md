@@ -846,7 +846,7 @@ An method can bind to items using reference parameter: "me".
 -- define Foo as object with 3 public attributes:
 define Foo <: {a, b ∈ N};
   
--- foo setup
+-- foo setup (require reference capturing)
 define foo(p1,p2 ∈ N) => (me @ Foo):
   create me := {a:p1, b:p2};
 define;
@@ -857,8 +857,8 @@ define bar(me @ Foo):
   print "b ="._.me.b;
 define;
 
--- create Foo object 
-assign test :: foo(p:1);
+-- reference capture "::" result Foo object 
+create test :: foo(p:1);
 
 -- test object method
 test.bar();  
@@ -866,6 +866,8 @@ test.bar();
 -- b = 1
 
 ```
+**See also:** [me.bee](me.be)
+
 **Notes:** 
 * Binded actions are using multiple dispatch so they can be overloaded;
 * Constructors and actions can be overwritten in other modules;
