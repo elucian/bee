@@ -127,7 +127,7 @@ Other rules in system.io
 | erase   | Remove a file from disk
 | scrub   | Remove all files from directory
 | clean   | Remove all files and folders /recursive  
-| alter    | Make a directory
+| alter   | Make a directory
 | remove  | Remove a directory
 | list    | Read a list of files and folders from directory
 | folder  | Current working folder name 
@@ -139,7 +139,7 @@ Bee has pre-define exceptions in range [0..200]:
 ```
 -- global exception type
 define E <: {code ∈ Z, message ∈ S};
-``
+```
 
 ```
 define $zero_div      := {100,"division by zero"}       ∈ E;
