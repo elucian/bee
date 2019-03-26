@@ -1,15 +1,15 @@
 +-----------------------------------------
-     "def" demo: defined data defines       
+     "def" demo: defined data types
 -----------------------------------------+
 -- define: structured data
 #driver "dt"
--- this define is public (uses dot prefix)
+-- this type is public (uses dot prefix)
 define  .Data <: {key:A, create:N};
--- create variable using define alias
+-- create variable using defubed alias
 create x ∈ Data;
 modify x := {key:`a`, create:10};
 +---------------------------------------------------+ 
-|* public enumeration define with public elements    *|
+|* public enumeration type with public elements    *|
 |* elements starting with "." do not need qualifier*|
 +---------------------------------------------------+ 
 define Number <: { 

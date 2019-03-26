@@ -19,7 +19,7 @@ over;
 
 ## Expression signature
 
-Expression signature is a define declaration;
+Expression signature is a type declaration;
 
 ```
 define CMP λ (Z,Z) ∈ L;

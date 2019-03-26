@@ -28,7 +28,7 @@ Bee uses composite types to ...
 
 ## Range
 
-Range notation is used to define a subtype.
+Range notation is used to type a subtype.
 
 **syntax**
 
@@ -440,13 +440,13 @@ create slice_name :: array_name[n..m];
 ```
 -- capacity is 5, last element is 0
 create a := [1,2,3,4](5); 
-print a; -- [1,2,3,4,0]
+print  a; -- [1,2,3,4,0]
 
 -- making 4 slice views
-create b :: a[0..?]; -- [1,2,3,4,0]
-create c :: a[1..?]; -- [2,3,4,0]
-create d :: a[0..2]; -- [1,2,3]
-create e :: a[2..4]; -- [3,4,0]
+assign b :: a[0..?]; -- [1,2,3,4,0]
+assign c :: a[1..?]; -- [2,3,4,0]
+assign d :: a[0..2]; -- [1,2,3]
+assign e :: a[2..4]; -- [3,4,0]
 
 --modify slice elements
 modify c[0] := 8; -- first element in c slice
@@ -459,7 +459,7 @@ print a;-- expect [1,8,0,4,9]
 
 --modify last 3 elements
 modify a[2..?] := 0;
-print a; -- expect [1,8,0,0,0]
+print  a; -- expect [1,8,0,0,0]
 
 ```
 
@@ -848,7 +848,7 @@ define Foo <: {a, b ∈ N};
   
 -- foo setup
 define foo(p1,p2 ∈ N) => (me @ Foo):
-  value me := {a:p1, b:p2};
+  create me := {a:p1, b:p2};
 define;
 
 -- second method for Foo type
@@ -858,7 +858,7 @@ define bar(me @ Foo):
 define;
 
 -- create Foo object 
-create test :: foo(p:1);
+assign test :: foo(p:1);
 
 -- test object method
 test.bar();  

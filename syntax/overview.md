@@ -164,7 +164,7 @@ define constant_name := constant_literal;
 
 ## Variable declarations
 
-Variables are defined using keyword "value" and next operators:
+Variables are defined using keyword "create" and next operators:
 
 sym | purpose
 ----|------------------------------------------------------------------
@@ -173,6 +173,7 @@ sym | purpose
  := | initialize variable using a constant/expression or constructor
  :: | initialize variable using a reference to another variable
 
+**Note:** For operator :: we use "assign" keyword not "create"
 
 ```
 -- full declarations with type and initial value
@@ -183,7 +184,7 @@ create var_name := constant ∈ type_name;
 create var_name := expression; -- type inference
 
 -- reference declaration using using operator "::"
-create ref_name :: var_name; 
+assign ref_name :: var_name; 
 ```
 
 Multiple variables can be define in one single line using comma separator:
@@ -386,7 +387,7 @@ create i := 10 ∈ i8;  -- native type
 create j ∈ Z;         -- references
 
 -- boxing using "::"
-modify j :: i; -- boxing i := 12 
+assign j :: i; -- boxing i := 12 
 modify i += 1; -- modify i := 13
 print  j; --> expect 13 (modified)
 
@@ -736,11 +737,11 @@ define lt λ (a,b ∈ Z) ∈ L => (a < b);
 
 -- call compare using λ expression as named argument
 create test := compare(1,2,cmp::lt);
-print test; -- expect $T
+print  test; -- expect $T
 
 -- call compare using anonymous λ expression argument
 create test := compare(1, 2, λ(a,b) => (a ≥ b));
-print test; -- expect $T
+print  test; -- expect $T
 
 ```
 

@@ -1,13 +1,13 @@
 +----------------------------------
-  declare and use a λ define
+  declare and use a λ function
 ----------------------------------+
 #driver "fn"
-** simple λ define
+** simple λ function
 define add λ (a, b ∈ Z) ∈ Z => (a + b);
--- call λ define add
+-- call λ function add
 print add(1, 2);     -- print 3
 print add(-10, 10);  -- print 0
-** recursive define
+** recursive function
 define  fac λ (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
 print fac(3); -- expect 6
  

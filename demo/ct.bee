@@ -1,8 +1,8 @@
 +----------------------------------
-        composite defines
+        composite types
 ----------------------------------+
 #driver "ct"
--- enumeration is a define 
+-- enumeration is a type 
 define Enum := {fst:1, snd, trd}; 
 -- print enumeration members
 print (Enum.fst); -- 1
@@ -47,7 +47,7 @@ modify s1 := s1 + 2; -- {0,1,2}
 -- remove one element from set
 modify s1 := s1 - 1; -- {0,2}
 modify s1 := s1 - 2; -- {0}
--- set literals using define inference
+-- set literals using type inference
 tree s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
 tree s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
 -- union between 2 sets (a, b) are nod duplicated

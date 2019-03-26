@@ -1,5 +1,5 @@
 +-------------------------------
-  pattern matching λ define
+  pattern matching λ function
 ------------------------------+
 #driver "pm"
 -- pattern matching expression

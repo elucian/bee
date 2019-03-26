@@ -203,7 +203,7 @@ Usually these mappings are implemented in a #library file.
 **Example:**
 This is myLib.bee file: 
 ```
-#library "name"
+#library "mLib"
 
 #import $bee.cpp.myLib.(*); -- load cpp library
 
@@ -216,7 +216,7 @@ define;
 
 This is the driver file.
 ```
-#driver 
+#driver "main"
 -- import library
 #import $bee.lib.myLib.(*);
 

@@ -1,6 +1,6 @@
 ## Generic Actions
 
-A generic define is using a variable define "X". 
+A generic method is using a variable of type "X". 
 
 **bubble sort**
 
@@ -32,7 +32,7 @@ define;
 
 **Notes:**
 
-* Action "sort" receive define X using markup <X> 
+* Action "sort" receive type X using markup <X> 
 * Function reference "gt" is received as argument.
 
 **sort usage**

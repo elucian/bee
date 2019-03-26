@@ -19,12 +19,13 @@ My keyboard settings is saved in file G110.xml
   G3 | ¬ ≠  ⊃ ⊂  α β  
   G4 | · ÷  ∩ ∪  π σ
 -----------------------
-  G5 | ∧ ∨  ↑ ↓  ∞ ∅ 
-  G6 | T F  ← →  Π Σ
+  G5 | ∧ ∨  ↑ ↓  S F
+  G6 | ∞ ∅  ← →  Π Σ
 -----------------------
 ```
 
-
+S = ⁺ ⁻ ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ 
+F = ¹⁄₀ ¹⁄₂ ¹⁄₃ ¹⁄₄ ¹⁄₅ ¹⁄₆ ¹⁄₇ ¹⁄₈ ¹⁄₉ 
 
 ## Other symbols
 
@@ -64,8 +65,8 @@ Fraction sign ⁄ represent rational numbers:
 Greek letters can be used for variable names.
 
 ```
-Γ Δ Λ Ξ Π Σ Φ Ψ Ω 
-α β ∈ δ ζ η θ λ μ ν ξ ο π ρ σ ς τ υ φ
+Γ Δ Ξ Π Σ Φ Ψ Ω 
+α β δ ζ η θ λ μ ν ξ ο π ρ σ ς τ υ φ
 ```
 
 ## Editor Font

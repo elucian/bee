@@ -16,9 +16,9 @@ define sort(this @ [Z]):
       -- this pair is out of order ?
       when (this[i] < this[i+1]):
         -- swap pair and set swap flag = true
-        modify temp     :: this[i];
-        modify this[i]  :: this[i+1];
-        modify this[i+1]:: temp;
+        assign temp     :: this[i];
+        assign this[i]  :: this[i+1];
+        assign this[i+1]:: temp;
         modify swap := $T;
       when;
       modify i += 1; 

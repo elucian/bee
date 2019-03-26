@@ -12,7 +12,7 @@ print s; --> s = 11 (unchanged)
 -- test modifier effect
 fail if (s ≡ d); 
 -- assign "by reference" 
-modify d :: s; -- explicit boxing address for "s"
+assign d :: s; -- explicit boxing address for "s"
 modify d += 1; -- modify underline create of d that is s  
 print s; --> s = 11  (modified)
 print d; --> d = 11  (modified) 

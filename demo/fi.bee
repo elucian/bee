@@ -1,8 +1,8 @@
 +---------------------------
-  Declare Fibonacci define
+  Deni Fibonacci function
 ---------------------------+
 #driver "fi"
--- declare Fibonacci define
+-- declare Fibonacci function
 define fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
     modify y := 1;

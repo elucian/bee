@@ -1,12 +1,13 @@
 +---------------------------------
-  High order define demo
+  High order function demo
 ----------------------------------+
 #driver "ho" 
+
 ** Define: λ Factory
  
--- this define can create λ define
+-- this define can create λ function
 define shift(i ∈ Z) => (g λ (s ∈ Z) ∈ Z):
-  define g :: (s ∈ Z) => (s + i);
+  assign g :: (s ∈ Z) => (s + i);
 define shift;
 -- create two define instances
 create inc := shift(+1);  -- increment 
