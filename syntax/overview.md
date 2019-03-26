@@ -614,7 +614,8 @@ trial:
   -- protected region
   ...
   -- fail with error code
-  fail 24 if <condition>     
+  fail if <condition>     
+  fail {code,"message"} if <condition>     
   ...    
 patch code:
   -- patch statement
@@ -641,6 +642,14 @@ This region is executed regardless if there is an error or not. It contains reso
 
 * close a file or connection to databases 
 * close locked resources and free memory
+
+**error**
+The error is a system generated object with the following structure:
+
+```
+define E <: {code:Z, message:S, line:N};
+define $error ∈ E;
+``
 
 ## Methods
 
