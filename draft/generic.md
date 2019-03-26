@@ -18,9 +18,9 @@ define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
       -- this pair is out of order ?
       when gt(array[i], array[i+1]):
         -- swap pair and set swap flag = true
-        modify temp := array[i];
-        modify array[i]  := array[i+1];
-        modify array[i+1]:= temp;
+        assign temp :: array[i];
+        assign array[i]  :: array[i+1];
+        assign array[i+1]:: temp;
         modify swap := $T; -- true
       when;
       modify i +=1;

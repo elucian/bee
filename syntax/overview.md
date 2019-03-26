@@ -237,7 +237,7 @@ modify x, y := 10.5;  -- modify value of x and y
 
 ## Type declaration
 
-User can define composite types and sub-types using composite category and operator "<:".
+User can define composite types and sub-types using operator "<:".
 
 ```
 --declare new type
