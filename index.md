@@ -46,7 +46,8 @@ You can learn bee by reading demo source files:
 1. [gc.bee](demo/gc.bee) - Generator class
 
 ## Draft
-To explore new features we use /draft folder. 
+To explore new features or suggestions we use /draft folder.    
+You can contribute with drafts. Read the instructions below:
 
 **Read more:** [draft-it](draft/readme.md)
 
