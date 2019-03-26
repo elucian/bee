@@ -598,17 +598,17 @@ The "trial" statement execute a process that can fail for some reason.
 **Keywords:**
 
 | word  | description
-|-------|-------------------------------------
+|-------|------------------------------------------------
 | trial | start and end trial block
 | patch | catch and fix error code
 | other | catch other errors
 | after | executed after trial ends
 | pass  | scrub $error record and end trial
 | exit  | stop current method/function 
-| fail  | create an error with a code
+| fail  | create an error with a code (default 0)
 | over  | unconditional stop program
-| abort | unrecoverable error, stop program
-| $error| system error record
+| abort | unrecoverable error, stop program (default -1)
+| $error| system last error record (clear by pass)
 
 ```
 trial:
