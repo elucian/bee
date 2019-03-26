@@ -666,7 +666,7 @@ define $custom_error  := {200,"my first exception"} ∈ E;
 fail $custom_error if <condition>;
 ```
 
-**Notes: **
+**Notes:**
 * Error code <  200 are system reserved error codes.
 * Error code ≤ -1   are unrecoverable abort errors
 
