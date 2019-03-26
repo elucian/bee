@@ -338,9 +338,9 @@ Bee define Array variable using notation := `[]()`.
 
 **syntax**
 ```
-create array_name  := [type];      --one dimension array with unknown capacity
-create array_name  := [type](c);   --one dimension with capacity c
-create array_name  := [type](n,m); --two dimensions with capacity n x m
+create array_name ∈  [type];      --one dimension array with unknown capacity
+create array_name ∈  [type](c);   --one dimension with capacity c
+create array_name ∈  [type](n,m); --two dimensions with capacity n x m
 ```
 
 **Note:** 
@@ -351,7 +351,7 @@ create array_name  := [type](n,m); --two dimensions with capacity n x m
 
 ```
 -- define array with 10 Real elements
-create test := [R](10); 
+create test ∈ [R](10); 
 create m := length(test)-1;  
 
 print test[0];   -- first element
@@ -403,7 +403,7 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-create zum := [Z](10);
+create zum ∈ [Z](10);
 
 -- add 1 to each element
 modify zum[*] += 1; 
@@ -412,7 +412,7 @@ print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 
 **differed initialization**
 ```
-create vec := [A];
+create vec ∈ [A];
 
 -- element multiply "*"
 modify vec := `x` * 10;
@@ -428,7 +428,7 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-create array_name := [type](c);
+create array_name ∈ [type](c);
 
 -- slice creation using "::"
 create slice_name :: array_name[n..m];
@@ -492,7 +492,7 @@ It is an array with 2 or more indexes. We can have 2D or 3D array.
 
 **Example:** 
 ```
-create mat := [R](4,4); -- define matrix
+create mat ∈ [R](4,4); -- define matrix
 
 -- modify matrix using ":=" operator
 modify mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
@@ -570,8 +570,8 @@ print foo(1,2,3);--> 6
 * A can be used to create arrays of ASCII characters compatible with C strings; 
 
 ```
-create str := S(25);   -- string with capacity 25 Extended ASCHII characters
-create a   := [A](25); -- array of 25 characters
+create str ∈ S(25);   -- string with capacity 25 Extended ASCHII characters
+create a   ∈ [A](25); -- array of 25 characters
 
 modify str := 'Long string'; 
 modify a   := split(str);
@@ -656,7 +656,7 @@ symbol| description
 
 **examples**
 ```
-create u, c := S; -- default S length is 255
+create u, c ∈ S; -- default S length is 255
 
 -- string concatenation
 modify u := "This is".+." a long string.";
@@ -798,7 +798,7 @@ Type size is a constant that can be calculated using size(T).
 define  Person <: {name ∈ U, age ∈ N};
 
 -- array of 10 persons
-create catalog := [Person](10); 
+create catalog ∈ [Person](10); 
   
 --assign value using literals
 create catalog[0] := {name:"Cleopatra", age:15};

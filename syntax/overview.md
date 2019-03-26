@@ -11,10 +11,11 @@ For syntax notation we use modified BNF convention:
 * [Expression](#expression)
 * [Data type](#data-type)
 * [Logical expression](#logical-expression)
-* [References](#references)
+* [Reference](#reference)
 * [Conditional](#conditional)
 * [Pattern Matching](#pattern-matching)
 * [Control Flow](#control-flow)
+* [Exceptions](#exceptions)
 * [Methods](#methods)
 * [Functions](#functions)
 * [Parameters](#parameters)
@@ -190,8 +191,8 @@ assign ref_name :: var_name;
 
 Multiple variables can be define in one single line using comma separator:
 ```
+create var_name, var_name ... ∈ type;
 create var_name, var_name ... := expression;
-create var_name, var_name ... := constructor;
 ```
 
 **Notes:** 
@@ -605,7 +606,7 @@ The "trial" statement execute a process that can fail for some reason.
 | after | executed after trial ends
 | pass  | scrub $error record and end trial
 | exit  | stop current method/function 
-| fail  | create an error with a code (default 0)
+| fail  | interrupt and raize exception (default 0)
 | over  | unconditional stop program
 | abort | unrecoverable error, stop program (default -1)
 | $error| system last error record (clear by pass)

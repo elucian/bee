@@ -17,8 +17,8 @@ Next statements are used to import modules or declare something.
 |----------|--------------------------------------------------
 | import   | Import Assembly \| start assembly code
 | define   | Declare: type, method, function, function
-| create   | Create a variable/value
-| assign   | Create a reference to a variable using ::
+| create   | Create a variable/value using "∈", ":=" or "::"
+| assign   | Create a reference to a variable using "::"
 
 
 ### Execution statements

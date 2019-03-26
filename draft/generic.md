@@ -6,10 +6,11 @@ A generic method is using a variable of type "X".
 
 ```
 define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
-  create n := length(array)-1;
+  create n := length(array)-1 ∈ N; 
   create swap ∈ L;
   create temp ∈ X;
-  create i := 0 ∈ N;
+  create i ∈ N;
+  modify 
   cycle
     modify i := 0;
     modify swap := $F; -- false

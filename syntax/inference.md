@@ -16,8 +16,8 @@ create i := 0;   -- type := Z
 create j := 0.5; -- type := R
 
 -- logic expressions
-create false := $F; -- type L
-create true  := $T; -- type L
+create false := $F; -- type L = 0
+create true  := $T; -- type L = 1
 
 -- multiple variables
 create x,y,z := 5;   -- type := Z
@@ -76,7 +76,7 @@ print foo(1,2);-- 3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-define foo(a,b ∈ Z, c:0 ) ∈ Z => (a+b+c);
+define foo λ (a,b ∈ Z, c:0 ) ∈ Z => (a+b+c);
 
 print foo(1,2);   -- 3
 print foo(1,2,3); -- 6
