@@ -2,29 +2,22 @@
    "if" and "when" decisions
 -------------------------------+
 #driver "if"
-
-value x ∈ N;
-read (x ,"Type a number:");
-
+create x ∈ N;
+read (x ,"define a number:");
 -- if conditional
 print "x = 0" if (x = 0);
-
 -- single branch
 when (x = 1):
   print "x = 1";
 when;
-
-
 -- two branches
 when ¬(x = 5):
   print "x ≠ 5";
 else:
   print "x = 5";   
 when;
-
-
 -- nested branches
-alter x := 1;
+modify x := 1;
 when (x ≥ 1):
   print "x ≥ 1";
   when (x = 1):
@@ -38,8 +31,7 @@ when;
  
 -- x ≥ 1
 -- x = 1
-
--- nested alternative
+-- nested modifynative
 when (x < 1):
   print "x < 1";
 else:
@@ -50,5 +42,4 @@ else:
   when;   
 when;
 -- expect x = 1
-
 over;

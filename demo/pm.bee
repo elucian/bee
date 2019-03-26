@@ -1,21 +1,18 @@
 +-------------------------------
-  pattern matching λ rule
+  pattern matching λ define
 ------------------------------+
 #driver "pm"
-
 -- pattern matching expression
-rule pm λ (p1,p2 ∈ N) ∈ N =>
+define pm λ (p1,p2 ∈ N) ∈ N =>
   (0 if (p1 = 0 )
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
   ,3 if (p1 > p2)
   ,4);
-
 -- execute pm expression
 print pm(0,2);  -- will print 0
 print pm(1,0);  -- will print 1
 print pm(1,1);  -- will print 2
 print pm(1,2);  -- will print 3
 print pm(2,1);  -- will print 4
-
 over;

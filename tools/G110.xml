@@ -190,14 +190,14 @@
           <text playback="unicode" hasdelay="false" delay="0">↓</text>
         </textblock>
       </macro>
-      <macro hidden="false" color="4278246655" name="⊤" guid="{1AAC5AB6-E545-4686-8F21-004EE457FACA}">
+      <macro hidden="false" color="4278246655" name="T" guid="{1AAC5AB6-E545-4686-8F21-004EE457FACA}">
         <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
-          <text playback="unicode" hasdelay="false" delay="0">⊤</text>
+          <text playback="unicode" hasdelay="false" delay="0">T</text>
         </textblock>
       </macro>
-      <macro hidden="false" color="4278246655" name="⊥" guid="{F820FEF5-D583-4904-995D-5823E6004C28}">
+      <macro hidden="false" color="4278246655" name="F" guid="{F820FEF5-D583-4904-995D-5823E6004C28}">
         <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
-          <text playback="unicode" hasdelay="false" delay="0">⊥</text>
+          <text playback="unicode" hasdelay="false" delay="0">F</text>
         </textblock>
       </macro>
       <macro hidden="false" color="4278246655" name="·" guid="{CC321597-CA17-4694-8B67-1D01A13134AD}">

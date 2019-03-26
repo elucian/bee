@@ -5,22 +5,17 @@
 -- method with inprint output parameters
 -- operator "@"  define input/output reference 
 -- operator "::" pass named argument by reference
-
-aspect pro(a,b @ N):
-  value a +=  1; -- modify parameter a
-  value b +=  2; -- modify parameter b 
-aspect ;
-
+define pro(a,b @ N):
+  create a +=  1; -- modify parameter a
+  create b +=  2; -- modify parameter b 
+define ;
 -- define native integers using inference
-value x, y := 10; 
-
+create x, y := 10; 
 -- execute pro and expect x, y  to be modified
 pro (a :: x, b :: y); 
-
--- verify value values for arguments
+-- verify create creates for arguments
 print x; --> will print 11
 print y; --> will print 12
-
 -- negative test
 pro (a : 1, b : 2); --> "ERROR: a, b expect references!";
   

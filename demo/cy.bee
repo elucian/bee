@@ -2,27 +2,24 @@
     Demonstrate cycle statement
 -----------------------------------+
 #driver "cy"
-
 -- declare array of 10 Words
-value a ∈ [Z](10);
-
+create a ∈ [Z](10);
 -- use cycle 
-value i ∈ Z; 
+create i ∈ Z; 
 cycle:
-  alter a[i] := i;
+  modify a[i] := i;
   when (i = 9):
     stop;
   else:
-    alter i += 1;
+    modify i += 1;
     loop;
   when;
 cycle;
-
 -- cycle shortcut
-value x := 10;
+create x := 10;
 cycle:
   when (x % 2 = 0):
-    alter x -= 1;
+    modify x -= 1;
     loop;
   when;  
   print x;
@@ -30,8 +27,7 @@ cycle:
   when (x < 0):
     stop;
   else:
-    alter x -= 1;
+    modify x -= 1;
   when;
 cycle;  
-
 over;

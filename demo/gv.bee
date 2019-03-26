@@ -3,39 +3,31 @@
    use prefix $ and lowercase
 ------------------------------+
 #driver "gv"
-
 -- declare a global variable $x
 global $x := 1;
-
 -- use global variable x in method "add"
 -- since add has not parameters and no result
 -- it is just a simple method declaration
-aspect add1:
-  alter $x += 1;
+define add1:
+  modify $x += 1;
   print $x;
-aspect;
-
+define;
 -- call a subroutine by name
 add1; -- print 2
 add1; -- print 3
 add1; -- print 4
-
 print $x; -- expect 4    
-
 -- declare variable x
-value x := 1;
-
+create x := 1;
 -- variable shadowing
-aspect add2: 
-  value x := 0;     -- create a value variable x 
-  alter x := x + 1; -- increment local variable
+define add2: 
+  create x := 0;     -- create a create variable x 
+  modify x := x + 1; -- increment local variable
   print x;          -- print local x
-aspect;
-
+define;
 add2;  -- print 1
 add2;  -- print 1
 add2;  -- print 1
-
 print x; -- x remain 4
  
 over;

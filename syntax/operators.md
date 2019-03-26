@@ -28,7 +28,7 @@ symbol| description
 ------|----------------------------------------------------------------
  \#   | Compiler directives prefix \| Template placeholder
   $   | Global variables prefix \| System environment constants
-  :   | Pair up key-value in a collection or aspect call
+  :   | Pair up key-value in a collection or method call
   ;   | End of statement \| Statement enumerator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
@@ -68,8 +68,8 @@ symbol| description
  \##  | Start for a title comment /separator  
  \-+  | End for multiple line comments 
  ..   | Define range [n..m] \| Define slice from Array
- =\>  | Define: rule expression \| aspect result
- -\>  | rule pipeline \| Explicit conversion 
+ =\>  | Define: function expression \| method result
+ -\>  | function pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Fill template using values from list
  \<:  | Define subset \| User composite type
  @    | Define output parameter \| Bound first parameter to type
@@ -131,7 +131,7 @@ symbol | `=>`       |meaning
                                           
 ## Logic Operators 
 
-Bee is using constants:  $⊤ = 1 = True and  $⊥ = 0 = False 
+Bee is using constants:  $T = 1 = True and  $F = 0 = False 
 
 symbol| meaning   | notes
 ------|-----------|-------------------------------

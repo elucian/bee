@@ -2,42 +2,37 @@
    Bubble Sort Demo
 -----------------------+
 #driver "bs"
-
 -- bubble sort method
-aspect sort(this @ [Z]):
-  value n := length(this)-1;
-  value swap ∈ L;
-  value temp ∈ X;
-  value i := 0 ∈ N;
+define sort(this @ [Z]):
+  create n := length(this)-1;
+  create swap ∈ L;
+  create temp ∈ X;
+  create i := 0 ∈ N;
   cycle:
-    alter i := 0;
-    alter swap := $⊤;
+    modify i := 0;
+    modify swap := $T;
     cycle: 
       stop if (i = n);
       -- this pair is out of order ?
       when (this[i] < this[i+1]):
         -- swap pair and set swap flag = true
-        alter temp     :: this[i];
-        alter this[i]  :: this[i+1];
-        alter this[i+1]:: temp;
-        alter swap := $⊤;
+        modify temp     :: this[i];
+        modify this[i]  :: this[i+1];
+        modify this[i+1]:: temp;
+        modify swap := $T;
       when;
-      alter i += 1; 
+      modify i += 1; 
     cycle;
     stop if ¬ swap;
   cycle;
-aspect;
-
+define;
 -- define test & result fixture
-value test   := [1,4,1,5,9,2,6,5,3,5];
-value result := [1,1,2,3,4,5,5,5,6,9];
+create test   := [1,4,1,5,9,2,6,5,3,5];
+create result := [1,1,2,3,4,5,5,5,6,9];
 -- test sort method
 sort(test);
-
 print test;
-
 
 -- check result
 fail if ¬ (test = result);
-
 over;

@@ -2,33 +2,26 @@
     control structure demo       
 -------------------------------+
 #driver "cs"
-
 -- declare two natural numbers
-value a := 10, b := 5 ∈ N;
-
+create a := 10, b := 5 ∈ N;
 -- simple decision 
 print ("a = b") if (a = b);
 print ("a < b") if (a < b);
 print ("a > b") if (a > b);
 
-
-
 -- single branch decision
 when ¬(a = b): 
   print ("a is not equals to b");
 when;
-
--- decision with alternative
+-- decision with modifynative
 when (a < 5):
   print "yes";
 else:
   print "no";
 when;
 
-
-
 -- multi-decisions with range
-alter a := 9;
+modify a := 9;
 when (a ∈ [0..4]):
    print ('a ≥ 0 ∧ a < 5');
 when (a ∈ [5..9]):
@@ -38,11 +31,9 @@ when  (a < 0):
 else:
    print ('a ≤ 10');
 when;
-
-
   
--- two values in one statement  
-alter a := 1, b := 0;
+-- two creates in one statement  
+modify a := 1, b := 0;
   
 -- cascade decision statement
 when (a ∧ b):  
@@ -52,7 +43,4 @@ when (a ∨ b):
 else:
   print ("a = 0 and b = 0");  
 when;
-
-
-
 over; 

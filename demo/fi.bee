@@ -1,22 +1,17 @@
 +---------------------------
-  Declare Fibonacci aspect
+  Declare Fibonacci define
 ---------------------------+
 #driver "fi"
-
--- declare Fibonacci aspect
-aspect fib(n ∈ N) => (y ∈ N): 
+-- declare Fibonacci define
+define fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
-    alter y := 1;
+    modify y := 1;
   else:
-    alter y := fib(n - 1) + fib(n - 2);
+    modify y := fib(n - 1) + fib(n - 2);
   when;
-aspect;
-
--- call aspect fib 
-value r := fib(5):
-
+define;
+-- call define fib 
+create r := fib(5):
 -- print the result
 print r;
-
-
 over;

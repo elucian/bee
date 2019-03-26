@@ -1,21 +1,18 @@
 +-----------------------------------------
-     "def" demo: defined data types       
+     "def" demo: defined data defines       
 -----------------------------------------+
--- type: structured data
+-- define: structured data
 #driver "dt"
-
--- this type is public (uses dot prefix)
-type  .Data <: {key:A, value:N};
-
--- value variable using type alias
-value x ∈ Data;
-alter x := {key:`a`, value:10};
-
+-- this define is public (uses dot prefix)
+define  .Data <: {key:A, create:N};
+-- create variable using define alias
+create x ∈ Data;
+modify x := {key:`a`, create:10};
 +---------------------------------------------------+ 
-|* public enumeration type with public elements    *|
+|* public enumeration define with public elements    *|
 |* elements starting with "." do not need qualifier*|
 +---------------------------------------------------+ 
-type Number <: { 
+define Number <: { 
    .zero, 
    .one, 
    .two, 
@@ -27,21 +24,16 @@ type Number <: {
    .eight, 
    .nine 
 };
-
 +------------------------------------------------+ 
-|* Note: first element has assigned a value := 0,*| 
-|* all other elements have previous value + 1   *|
+|* Note: first element has assigned a create := 0,*| 
+|* all other elements have previous create + 1   *|
 +------------------------------------------------+
-
 -- example of use
-value a := 0;
-
+create a := 0;
 -- example of use
 when (a = zero):
   print "zero";
 else:
   print "life is misery";
 when;
-
-
 over;

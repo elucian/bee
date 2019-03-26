@@ -50,7 +50,7 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* alter  --assign expression value to variables
+* modify  --assign expression value to variables
 * write --output to console result of expressions
 * read  --accept input from console
 
@@ -70,10 +70,10 @@ Statements can be contained in blocks of code.
 ## Driver file
 
 Bee is a free form language. That means indentation of code and spaces are not relevant.
-In Bee aspect "main" is optional. Instead we define a _driver_ file using directive #driver. 
+In Bee method "main" is optional. Instead we define a _driver_ file using directive #driver. 
 This is the program entry point. One program can have a single _driver_ and many _modules_.
 
-A _driver_ can contain statements that do not belong to any rule or aspect.
+A _driver_ can contain statements that do not belong to any function or method.
 These are called _rogue_ statements and are driving the program execution.
 Rogue statements are executed top down in synchronous mode.
 
@@ -82,19 +82,18 @@ Rogue statements are executed top down in synchronous mode.
 ```
 #driver "main"
 
-value i, c ∈ Z;
-alter c := $params.count;
+create i, c ∈ Z;
+modify c := $params.count;
 
 over if (c = 0);
 -- comma separated parameters
 cycle
   write $params[i];
-  alter i += 1;
+  modify i += 1;
   stop if (i > c);
   write ",";
 cycle;
--- print the buffer to console
-print;
+-- print the buffer to console
 
 over;
 ```
@@ -113,9 +112,7 @@ In Bee external code can be imported like this:
 **Imports:**
 
 ```
-#bee bee_lib;
-#asm asm_lib;
-#cpp cpp_lib;
+#import bee_lib;
 ```
 
 * use :* all public members are used
@@ -126,11 +123,11 @@ Using alias for Bee module members:
 **pattern**
 ```
 -- import with alias
-#bee qualifier := path./.module:(*);
-#bee qualifier := path./.module:(member_list);
+#import qualifier := path./.module:(*);
+#import qualifier := path./.module:(member_list);
 
--- use alias qualifier for an aspect call:
-qualifier.aspect_name(arguments);
+-- use alias qualifier for an method call:
+qualifier.method_name(arguments);
 ```
 
 **Environment variables**
@@ -146,10 +143,10 @@ Global variables are unique and are visible in all project modules.
 Global variables are lowercase and are pretagined in Bee language.
 
 ```
-#cpp $bee.cpp.myLib:(*) --import cpp library
-#asm $bee.asm.myLib:(*) --import asm library
-#bee $bee.lib.myLib:(*) --import core library
-#bee $pro.lib.myLib:(*) --import project library
+#import $bee.cpp.myLib:(*) --import cpp library
+#import $bee.asm.myLib:(*) --import asm library
+#import $bee.lib.myLib:(*) --import core library
+#import $pro.lib.myLib:(*) --import project library
 ```
 
 Other pretagined global variables:
@@ -162,7 +159,7 @@ $path   --contains a list of folders
 **See example:** [gv.bee](../demo/gv.bee)
 
 ## Local scope
-A Bee a rule or aspect can have local declarations. 
+A Bee a function or method can have local declarations. 
 Local variables are private inside local scope.
 
 **See example:** [lv.bee](../demo/lv.bee)
@@ -171,23 +168,23 @@ Local variables are private inside local scope.
 In Bee all members that start with dot "." are public members.
 A public member from another module can be access using dot notation.
 
-For symmetry a end of public aspect or rule also use prefix ".".
-This is useful for a long rule to know that is public at the end.
+For symmetry a end of public method or function also use prefix ".".
+This is useful for a long function to know that is public at the end.
 
 ```
 --public constant
-static .pi := 3.14;
+define .pi := 3.14;
 
 --public variable
-value .v ∈ N;
+create .v ∈ N;
 
---public λ rule
-rule .f λ (x ∈ N) ∈ N => (x + 1);
+--public λ function
+define .f λ (x ∈ N) ∈ N => (x + 1);
 
---public aspect
-aspect .m(x, y ∈ N, r @ N):
+--public method
+define .m(x, y ∈ N, r @ N):
   r := x + y;
-aspect;
+define;
 
 ```
 
@@ -206,24 +203,24 @@ Usually these mappings are implemented in a #library file.
 **Example:**
 This is myLib.bee file: 
 ```
-#library
+#library "name"
 
-cpp myLib.(*); -- load cpp library
+#import $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
-aspect fib(n ∈ Z) => (x ∈ Z):
-   alter x := myLib.fib(n -> i8);
-aspect;
+define fib(n ∈ Z) => (x ∈ Z):
+   modify x := myLib.fib(n -> i8);
+define;
 
 ```
 
 This is the driver file.
 ```
-#driver
+#driver 
 -- import library
-bee myLib.(*);
+#import $bee.lib.myLib.(*);
 
---use external rule
+--use external function
 print myLib.fib(5);
 ```
 
@@ -302,7 +299,7 @@ over;
 ```
 ## Using Modules
 
-* Usually modules are declaring data types, rules and actions.
+* Usually modules are declaring data types, functions and actions.
 * Rogue statements can be used for module initialization.
 * A module is executed when is imported using _wee_ statement. 
 
@@ -310,7 +307,7 @@ over;
 
 Bee implements a variety of data types and data structures. In most use cases programmers do not have to define new structures but customize existing ones.
 
-Users can define type aliases using symbol "<:" and a _type descriptor_. Type aliases will inherit all aspects of the original type and can have additional aspects.
+Users can define type aliases using symbol "<:" and a _type descriptor_. Type aliases will inherit all methods of the original type and can have additional methods.
 
 Bee is a modular and extensible language. Using this technique, one module can extend types declared in any other module. However a super-type can not be used as a sub-type. It must be explicit converted.
 

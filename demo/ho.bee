@@ -1,25 +1,20 @@
 +---------------------------------
-  High order aspect demo
+  High order define demo
 ----------------------------------+
 #driver "ho" 
-
 ** Define: λ Factory
  
--- this aspect can create λ rule
-aspect shift(i ∈ Z) => (g λ (s ∈ Z) ∈ Z):
-  rule g :: (s ∈ Z) => (s + i);
-aspect shift;
-
--- create two aspect instances
-value inc := shift(+1);  -- increment 
-value dec := shift(-1);  -- decrement 
-
--- test aspect inc
+-- this define can create λ define
+define shift(i ∈ Z) => (g λ (s ∈ Z) ∈ Z):
+  define g :: (s ∈ Z) => (s + i);
+define shift;
+-- create two define instances
+create inc := shift(+1);  -- increment 
+create dec := shift(-1);  -- decrement 
+-- test define inc
 print inc(-10); --> 9
 print inc(10);  --> 11
-
--- test aspect dec
+-- test define dec
 print dec(20); --> 19
 print dec(19); --> 18
-
 over;

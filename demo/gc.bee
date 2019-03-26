@@ -2,38 +2,32 @@
   Generator Class demo 
 ----------------------------------+
 #driver "gc"
-
 -- first create a class
-type GenI <: {min ,max ,ci:min ∈ Z};
-
+define GenI <: {min ,max ,ci:min ∈ Z};
 -- reset method
-aspect reset(me @ GenI, p_min , p_max ∈ Z):
-  alter me.min := p_min
-  alter me.max := p_max
-  alter me.ci:= p_min;    
-aspect;
-
+define reset(me @ GenI, p_min , p_max ∈ Z):
+  modify me.min := p_min
+  modify me.max := p_max
+  modify me.ci:= p_min;    
+define;
 -- get next index
-aspect next(me @ GenI) => (i ∈ Z):
-  alter i  := me.ci;
-  alter me.ci += 1;
-aspect;
-
+define next(me @ GenI) => (i ∈ Z):
+  modify i  := me.ci;
+  modify me.ci += 1;
+define;
 -- detect if finish
-aspect finish(me @ GenI)  => (r ∈ L):
-  alter r := (me.ci ≥ me.max);
-aspect;
-
+define finish(me @ GenI)  => (r ∈ L):
+  modify r := (me.ci ≥ me.max);
+define;
 -- use GenI to create one instance: 
-value  foo := {min:10,max:20} ∈ GenI;
-value   x  := 0;
+create foo := {min:10,max:20} ∈ GenI;
+create  x  := 0;
 cycle:
   stop if foo.finish();
-  alter x := foo,next();  
+  modify x := foo,next();  
   write (x,",");
 cycle;
 -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
-
 -- test reset method
 foo.reset();
 fail if ¬ (foo.ci = 10); -- expect: 10

@@ -2,22 +2,18 @@
           Working with references              
 ----------------------------------------------+
 #driver "nu"
-
-value d, e ∈ Z; --reference to natural number
-value s := 10 ∈ i8; --> type is i8 native type   
-
--- assign "by value"
-alter e := s; -- make a clone from s
-alter e += 1; -- increment e value
+create d, e ∈ Z; --reference to natural number
+create s := 10 ∈ i8; --> define is i8 native define   
+-- assign "by create"
+modify e := s; -- make a clone from s
+modify e += 1; -- increment e create
 print e; --> e = 12 (modified)
 print s; --> s = 11 (unchanged)
-
 -- test modifier effect
 fail if (s ≡ d); 
-
 -- assign "by reference" 
-alter d :: s; -- explicit boxing address for "s"
-alter d += 1; -- modify underline value of d that is s  
+modify d :: s; -- explicit boxing address for "s"
+modify d += 1; -- modify underline create of d that is s  
 print s; --> s = 11  (modified)
 print d; --> d = 11  (modified) 
  

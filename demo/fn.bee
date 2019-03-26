@@ -1,18 +1,14 @@
 +----------------------------------
-  declare and use a λ rule
+  declare and use a λ define
 ----------------------------------+
 #driver "fn"
-
-** simple λ rule
-rule add λ (a, b ∈ Z) ∈ Z => (a + b);
-
--- call λ rule add
+** simple λ define
+define add λ (a, b ∈ Z) ∈ Z => (a + b);
+-- call λ define add
 print add(1, 2);     -- print 3
 print add(-10, 10);  -- print 0
-
-
-** recursive rule
-rule  fac λ (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
+** recursive define
+define  fac λ (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
 print fac(3); -- expect 6
  
 over;

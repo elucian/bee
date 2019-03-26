@@ -2,15 +2,11 @@
    console inprint demos
 --------------------------+
 #driver "hi"
-
 print "Hello. I'm Bee!";
  
-value name ∈ S;
-value age  ∈ N;
-
+create name ∈ S;
+create age  ∈ N;
 read(name , "Your name?:");
 read(age  , "Your age:");
-
 print "hello:".name;
-
 over;

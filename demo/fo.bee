@@ -2,25 +2,18 @@
  open a file and write into it. 
 --------------------------------+
 #driver "fo"
-
 -- initialize the system library 
 bee io   := $bee.system.io.(*);
 bee con  := $bee.system.console.(*);
-
-value file := io.open('foo.txt','+w');  
-
+create file := io.open('foo.txt','+w');  
 -- write into the file using put
 file.print("Hello World!");
 file.
-
 -- read the entire content from file
-value content ∈ U;
-
+create content ∈ U;
 file.read content;
 file.close; 
-
 -- display the entrie content to console
 write content;
 con. 
-
 over;

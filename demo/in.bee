@@ -1,15 +1,12 @@
 +--------------------------
-   wee inprint value demo
+   wee inprint create demo
 --------------------------+
 #driver "in"
-
-value a ∈ N;
+create a ∈ N;
 print "to stop enter 0";
-
 cycle:
   read (a, "enter a number:", "####.##");  
   print ("you have enter: " + a);
   stop if (a = 0);
 cycle;
-
 over;

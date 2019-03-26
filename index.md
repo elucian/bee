@@ -1,6 +1,6 @@
 ## Bee Syntax
 
-Bee is an efficient, general purpose programming language.
+Bee is an imperative, structured programming language.
 
 **Read more:** [Wiki Bee](https://github.com/sage-code/bee/wiki)
 

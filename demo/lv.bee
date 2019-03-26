@@ -2,27 +2,19 @@
    demo for local variable site-effect
 -------------------------------------------+
 #driver "lv"
-
 -- local variable
-value x := 1;
-
+create x := 1;
 -- method side-effects
-aspect add:
-  alter x := x + 1;
+define add:
+  modify x := x + 1;
   print x;
-aspect;
-
+define;
 add; -- will print 2
 add; -- will print 3
-
 print x; -- x = 3 (is modified)
-
 -- changing x influence method
-alter x := 0;  -- value x value 
-
+modify x := 0;  -- create x create 
 add;   -- will print 1
 add;   -- will print 2
-
 print x; -- x = 2 (modified)
-
 over;

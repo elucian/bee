@@ -1,53 +1,53 @@
 ## Generic Actions
 
-A generic aspect is using a variable type "X". 
+A generic define is using a variable define "X". 
 
 **bubble sort**
 
 ```
-aspect sort<X>(array @ [X], gt λ (X,X) ∈ L ):
-    value n := length(array)-1;
-    value swap ∈ L;
-    value temp ∈ X;
-    value i := 0 ∈ N;
-    cycle
-        alter i := 0;
-        alter swap := $⊥; -- false
-        cycle 
-            stop if (i = n);
-            -- this pair is out of order ?
-            when gt(array[i], array[i+1]):
-                -- swap pair and set swap flag = true
-                alter temp := array[i];
-                alter array[i]  := array[i+1];
-                alter array[i+1]:= temp;
-                alter swap := $⊤; -- true
-            when;
-            alter i +=1;
-        cycle; 
-        stop if ¬ swap;
-    cycle;
-aspect;
+define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
+  create n := length(array)-1;
+  create swap ∈ L;
+  create temp ∈ X;
+  create i := 0 ∈ N;
+  cycle
+    modify i := 0;
+    modify swap := $F; -- false
+    cycle 
+      stop if (i = n);
+      -- this pair is out of order ?
+      when gt(array[i], array[i+1]):
+        -- swap pair and set swap flag = true
+        modify temp := array[i];
+        modify array[i]  := array[i+1];
+        modify array[i+1]:= temp;
+        modify swap := $T; -- true
+      when;
+      modify i +=1;
+    cycle; 
+    stop if (¬ swap);
+  cycle;
+define;
 ```
 
 **Notes:**
 
-* Action "sort" receive type X using markup <X> 
+* Action "sort" receive define X using markup <X> 
 * Function reference "gt" is received as argument.
 
 **sort usage**
 
 ```
-type Person  <: { name ∈ S, age ∈ N };
+define Person  <: { name ∈ S, age ∈ N };
 
 -- tagine order action for array of Persons
-aspect order(cat @ [Person]):
+define order(cat @ [Person]):
   sort<Person>(cat, λ(a, b) => (a.name > b.name));
-aspect;
+define;
 
 -- tagine clients and suppliers
-value clients   := [Person](100);
-value suppliers := [Person](10);
+create clients   := [Person](100);
+create suppliers := [Person](10);
 -- populate somehow
 ...
 
