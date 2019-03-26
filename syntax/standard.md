@@ -133,4 +133,20 @@ Other rules in system.io
 | folder  | Current working folder name 
 | change  | Change current working folder
 
+## Exception
+Bee has pre-define exceptions in range [0..200]:
+
+```
+-- global exception type
+define E <: {code ∈ Z, message ∈ S};
+``
+
+```
+define $zero_div      := {100,"division by zero"}       ∈ E;
+define $val_overflow  := {101,"value overflow"}         ∈ E;
+define $out_of_range  := {102,"value is out of range"}  ∈ E;
+define $over_capacity := {103,"value is over capacity"} ∈ E;
+define $out_of_domain := {104,"out of domain subscript"}∈ E;
+```
+
 **Read next:** [Structure](structure.md)
