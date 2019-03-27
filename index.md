@@ -1,10 +1,10 @@
-## Bee Syntax
+## Bee Index
 
-Bee is an imperative, structured programming language.
+Design: [Wiki Bee](https://github.com/sage-code/bee/wiki)
 
-**Read more:** [Wiki Bee](https://github.com/sage-code/bee/wiki)
+## Syntax
 
-Specification is available in folder: /syntax
+Described in /sintax folder.
 
 1. [Program Structure](syntax/structure.md)
 1. [Syntax Overview](syntax/overview.md)
@@ -14,13 +14,15 @@ Specification is available in folder: /syntax
 
 ## Overalls
 
+Some Bee core ingredients:
+
 1. [operators](syntax/operators.md)
 1. [keywords](syntax/keywords.md)
 1. [symbols](syntax/symbols.md)
 
 ## Demo code
 
-You can learn bee by reading demo source files:
+Unverified demo source files:
 
 1. [hi.bee](demo/hi.bee) - Input output demo
 1. [dc.bee](demo/dc.bee) - Native declarations
@@ -46,10 +48,9 @@ You can learn bee by reading demo source files:
 1. [gc.bee](demo/gc.bee) - Generator class
 
 ## Draft
-To explore new features or suggestions we use /draft folder.    
-You can contribute with drafts. Read the instructions below:
+To explore new features read /draft folder.    
 
-**Read more:** [draft-it](draft/readme.md)
+* [readme.md](draft/readme.md)
 
 ## Tools
 
@@ -60,7 +61,4 @@ For syntax color highlighter you can use Notepad++.
 * [bee-lang.xml](tools/bee-lang.xml)
 * [md-wiki.xml](tools/md-wiki.xml)
 
-## Community
-
-If you like Reddit I have set-up a forum:
-Follow on: [reddit](https://www.reddit.com/r/bee_lang/)
+Subscribe: [bee-lang](https://www.reddit.com/r/bee_lang/)
