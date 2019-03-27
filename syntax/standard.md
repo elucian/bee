@@ -2,10 +2,10 @@
 
 Standard library contains:
 
-* [type-system](#type-system)
-* [built-in-rules](#built-in-rules)
-* [mathematics](#mathematics)
-* [system-library](#system-library)
+* [Type system](#type-system)
+* [Built-in functions](#built-in-functions)
+* [Mathematics](#mathematics)
+* [System library](#system-library)
 
 ## Type system
 
@@ -31,11 +31,11 @@ Following types are included in standard library:
 | Date        |D  | "YYYYDDMM" -> YDM, "DD/MM/YYYY" -> DMY, "MM/DD/YYYY" -> YDM
 | Time        |T  | "hh:mm,9999ms" -> T12 "hh:mm__, 9999ms" __={am/pm} + {T12, T24}
 
-## Built-in rules
+## Built-in functions
  
 **Introspection**
 
-| rule | Purpose
+| function | Purpose
 |----------|------------------------------------------ 
 | type     | type name
 | size     | type size 
@@ -46,7 +46,7 @@ Following types are included in standard library:
  
 **List/strings**
 
-| rule | Purpose
+| function | Purpose
 |----------|------------------------------------------ 
 | split    | Split a string into a list / array
 | join     | Join a list into a string 
@@ -59,7 +59,7 @@ Following types are included in standard library:
  
 **Numeric**
  
-| rule | Purpose
+| function | Purpose
 |----------|------------------------------------------ 
 | round    | Convert one real into an integer
 | floor    | Convert one real into an integer
@@ -68,7 +68,7 @@ Following types are included in standard library:
  
 ## Mathematics
 
-| rule | Purpose
+| function | Purpose
 |----------|------------------------------------------ 
 | sin      | sinus 
 | cos      | cousin
@@ -76,7 +76,7 @@ Following types are included in standard library:
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | module rule y := \|x\|  
+| mod      | module function y := \|x\|  
 
 ## System Library
 
@@ -119,7 +119,7 @@ type .close(f ∈ F);
 
 Other rules in system.io
 
-|rule | Purpose
+|function | Purpose
 |---------|------------------------------------------ 
 | exist   | Check if file exist on disk
 | open    | Open a file for read or print
