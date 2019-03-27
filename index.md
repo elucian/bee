@@ -61,4 +61,4 @@ For syntax color highlighter you can use Notepad++.
 * [bee-lang.xml](tools/bee-lang.xml)
 * [md-wiki.xml](tools/md-wiki.xml)
 
-Subscribe: [bee-lang](https://www.reddit.com/r/bee_lang/)
+Reddit: [bee-lang](https://www.reddit.com/r/bee_lang/)
