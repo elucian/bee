@@ -7,7 +7,8 @@
 ------------------------------------------------------------------------------------------
 <p align="center"> <a href=index.md>Bee Syntax</a>
 </p>
-
+<p align="center"> <a href=https://www.reddit.com/r/bee_lang/>Reddit Community</a>
+</p>
 ------------------------------------------------------------------------------------------
 <p align="center">
 Copyright 2019 Elucian Moise
