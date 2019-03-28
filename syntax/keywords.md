@@ -37,7 +37,8 @@ Control statements are also known as decision statements.
 
 | Keyword  | Purpose
 |----------|----------------------------------------------------
-| do if    | Execute statement block only if condition
+| do if    | Execute statement block only if condition true
+| done     | End of do block, follow by semicolumn
 | else     | Alternative path executed in _do_ statement
 | while    | Start point for repetitive block
 | trial    | Protect a block of code that may have exceptions
