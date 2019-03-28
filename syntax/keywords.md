@@ -4,9 +4,9 @@ Bee uses 24 reserved keywords to create statements. You can not use these keywor
 
 ```
 01: if,
-09: read, else, exit, fail, pass,  stop, over, abort
+09: read, else, exit, fail, pass, over, abort
 08: write, print, while, trial, patch, other, after 
-08: repeat, define, modify, create, #import, #driver, #library, #module
+08: define, modify, create, #import, #driver, #library, #module
 ```
 
 ### Definition statements
@@ -48,8 +48,6 @@ These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| repeat   | Continue iteration _for_ from beginning
-| stop     | stop inner while and continue after end of while.
 | exit     | Silent interrupt an method or function with no error 
 | fail     | Interrupt method, function or program with error 
 | pass     | Null statement. It does absolutely nothing.

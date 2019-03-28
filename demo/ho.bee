@@ -6,8 +6,8 @@
 ** Define: λ Factory
  
 -- this define can create λ function
-define shift(i ∈ Z) => (g λ (s ∈ Z) ∈ Z):
-  create g :: (s ∈ Z) => (s + i);
+define shift(i ∈ Z) => (g(s ∈ Z) ∈ Z):
+  create g(s ∈ Z) => (s + i) ∈ Z;
 define shift;
 -- create two define instances
 create inc := shift(+1);  -- increment 

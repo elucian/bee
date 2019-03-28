@@ -22,12 +22,12 @@ over;
 Expression signature is a type declaration;
 
 ```
-define CMP λ (Z,Z) ∈ L;
+define CMP(Z,Z) ∈ L;
 
 -- instantiate 3 functions like "CMP"
-define gt λ (x, y ∈ Z) ∈ L => (x > y);
-define lt λ (x, y ∈ Z) ∈ L => (x < y);
-define eq λ (x, y ∈ Z) ∈ L => (x = y);
+define gt(x, y ∈ Z) => (x > y) ∈ L;
+define lt(x, y ∈ Z) => (x < y) ∈ L;
+define eq(x, y ∈ Z) => (x = y) ∈ L;
 
 -- define a dictionary of λ expressions
 define DIC <: {(U : CMP)}

@@ -6,14 +6,9 @@
 create a ∈ [Z](10);
 -- use while 
 create i ∈ Z; 
-while:
+while (i < 10):
   modify a[i] := i;
-  do if (i = 9):
-    stop;
-  else
-    modify i += 1;
-    repeat;
-  done;
+  modify i += 1;
 while;
 -- while shortcut
 create x := 10;

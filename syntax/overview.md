@@ -556,11 +556,6 @@ while;
 
 ```
 
-**Notes:** 
-
-* If _stop_ condition is missing the while is infinite;
-* The while can be controlled using conditionals;
-
 ### Nested while
 
 One while block can be nested inside another.
@@ -593,15 +588,15 @@ while;
 create x   := 9;
 create a,r := 0;
 
-while:
+while (x < 5):
   modify r := x % 2;
   modify a := (0 if r = 0, 1 if r = 0, 2);
   write "{1}:{2}" <+ (x,a);
-  modify x -= 1;
-  stop if (x < 5);
-  write ',';
+  write ',' if (x < 5);
+  modify x -= 1;  
 while;
- --> 9:1, 8:0, 7:1, 6:0, 5:1
+
+print;--> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
 ## Trial
@@ -778,14 +773,14 @@ Functions are λ expressions that can have parameters and have one single result
 
 **syntax**
 ```
-define name λ (param ∈ type,...) ∈ type => (expression);
+define name(param ∈ type,...) => (expression) ∈ type;
 ```
 
 **Example:** 
 
 ```
 -- define "ex" an method with two parameters
-define ex λ (x,y ∈ Z) ∈ Z => (x + y); 
+define ex λ (x,y ∈ Z) => (x + y) ∈ Z; 
 
 -- expression can be used in larger expressions
 create z := ex(1,1)+1; 
@@ -819,7 +814,7 @@ An method can receive functions as parameters.
 
 **syntax**
 ```
-define act_name(xp_name λ (param_list) ∈ result_type):
+define act_name(xp_name(param_list) ∈ result_type):
   ...
 define;
 ```
@@ -827,19 +822,19 @@ define;
 **example**
 ```
 -- declare method with lambda function as parameter
-define compare(a,b ∈ Z, cmp λ (Z,Z) ∈ L) => (r ∈ L):
+define compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
   modify r := cmp(a,b);
 define;
 
 -- declare λ expressions:
-define lt λ (a,b ∈ Z) ∈ L => (a < b);
+define lt λ (a,b ∈ Z) => (a < b) ∈ L;
 
 -- call compare using λ expression as named argument
 create test := compare(1,2,cmp::lt);
 print  test; -- expect $T
 
 -- call compare using anonymous λ expression argument
-create test := compare(1, 2, λ(a,b) => (a ≥ b));
+create test := compare(1, 2, (a,b) => (a ≥ b));
 print  test; -- expect $T
 
 ```

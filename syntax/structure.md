@@ -178,7 +178,7 @@ define .pi := 3.14;
 create .v ∈ N;
 
 --public λ function
-define .f λ (x ∈ N) ∈ N => (x + 1);
+define .f(x ∈ N) => (x + 1) ∈ N;
 
 --public method
 define .m(x, y ∈ N, r @ N):
