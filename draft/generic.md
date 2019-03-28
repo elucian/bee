@@ -1,4 +1,4 @@
-## Generic Actions
+## Generic Methods
 
 A generic method is using a variable of type "X". 
 

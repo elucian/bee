@@ -869,9 +869,9 @@ test.bar();
 **See also:** [me.bee](me.be)
 
 **Notes:** 
-* Binded actions are using multiple dispatch so they can be overloaded;
-* Constructors and actions can be overwritten in other modules;
-* Actions of a type can be private to module or public using dot prefix;
+* Binded methods are using multiple dispatch so they can be overloaded;
+* Constructors and methods can be overwritten in other modules;
+* Methods of a type can be private to module or public using dot prefix;
 * If the object type is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;

@@ -299,7 +299,7 @@ over;
 ```
 ## Using Modules
 
-* Usually modules are declaring data types, functions and actions.
+* Usually modules are declaring data types, functions and methods.
 * Rogue statements can be used for module initialization.
 * A module is executed when is imported using _wee_ statement. 
 
