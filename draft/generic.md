@@ -11,23 +11,23 @@ define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
   create temp ∈ X;
   create i ∈ N;
   modify 
-  cycle
+  while:
     modify i := 0;
     modify swap := $F; -- false
-    cycle 
+    while: 
       stop if (i = n);
       -- this pair is out of order ?
       when gt(array[i], array[i+1]):
         -- swap pair and set swap flag = true
-        assign temp :: array[i];
-        assign array[i]  :: array[i+1];
-        assign array[i+1]:: temp;
+        modify temp :: array[i];
+        modify array[i]  :: array[i+1];
+        modify array[i+1]:: temp;
         modify swap := $T; -- true
       when;
       modify i +=1;
-    cycle; 
+    while; 
     stop if (¬ swap);
-  cycle;
+  while;
 define;
 ```
 
@@ -74,7 +74,7 @@ This can be used to create an argument for a _signature reference_:
  (id λ (type,type, ...) ∈ type)
 ```
 
-To assign an anonymous function as argument by name Bee uses: "::"
+To modify an anonymous function as argument by name Bee uses: "::"
 
 ```
  (id :: (param ,param ...) => (...))

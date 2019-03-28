@@ -5,26 +5,24 @@
 -- bubble sort method
 define sort(this @ [Z]):
   create n := length(this)-1;
-  create swap ∈ L;
-  create temp ∈ Z;
   create i := 0 ∈ N;
-  cycle:
+  create temp ∈ Z;  
+  create swap := T ∈ L;  
+  while swap:
     modify i := 0;
     modify swap := $T;
-    cycle: 
-      stop if (i = n);
+    while (i ≤ n): 
       -- this pair is out of order ?
-      when (this[i] < this[i+1]):
+      execute if (this[i] < this[i+1]):
         -- swap pair and set swap flag = true
-        assign temp     :: this[i];
-        assign this[i]  :: this[i+1];
-        assign this[i+1]:: temp;
+        modify temp     :: this[i];
+        modify this[i]  :: this[i+1];
+        modify this[i+1]:: temp;
         modify swap := $T;
-      when;
+      execute;
       modify i += 1; 
-    cycle;
-    stop if ¬ swap;
-  cycle;
+    while;
+  while;
 define;
 -- define test & result fixture
 create test   := [1,4,1,5,9,2,6,5,3,5];

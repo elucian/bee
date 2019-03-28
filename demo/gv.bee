@@ -21,7 +21,7 @@ print $x; -- expect 4
 create x := 1;
 -- variable shadowing
 define add2: 
-  create x := 0;     -- create a create variable x 
+  create x := 0;     -- create a variable x 
   modify x := x + 1; -- increment local variable
   print x;          -- print local x
 define;

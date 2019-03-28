@@ -7,7 +7,7 @@ define test(x, y ∈ Z) => (a,b ∈ Z):
   modify a := x+1;
   modify b := y+1;
 define; 
--- unpacking and create create variables
+-- unpacking and create new variables
 create n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
 ** method with structured result

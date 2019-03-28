@@ -6,14 +6,14 @@
 -- operator "@"  define input/output reference 
 -- operator "::" pass named argument by reference
 define pro(a,b @ N):
-  create a +=  1; -- modify parameter a
-  create b +=  2; -- modify parameter b 
+  modify a +=  1; -- modify parameter a
+  modify b +=  2; -- modify parameter b 
 define ;
 -- define native integers using inference
 create x, y := 10; 
 -- execute pro and expect x, y  to be modified
 pro (a :: x, b :: y); 
--- verify create creates for arguments
+-- verify new values for arguments
 print x; --> will print 11
 print y; --> will print 12
 -- negative test

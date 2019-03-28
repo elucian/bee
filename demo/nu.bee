@@ -4,16 +4,16 @@
 #driver "nu"
 create d, e ∈ Z; --reference to natural number
 create s := 10 ∈ i8; --> define is i8 native define   
--- assign "by create"
+-- assign "by value"
 modify e := s; -- make a clone from s
-modify e += 1; -- increment e create
+modify e += 1; -- increment e value
 print e; --> e = 12 (modified)
 print s; --> s = 11 (unchanged)
 -- test modifier effect
 fail if (s ≡ d); 
 -- assign "by reference" 
 assign d :: s; -- explicit boxing address for "s"
-modify d += 1; -- modify underline create of d that is s  
+modify d += 1; -- modify underline value of d that is s  
 print s; --> s = 11  (modified)
 print d; --> d = 11  (modified) 
  

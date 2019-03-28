@@ -1,33 +1,33 @@
 +----------------------------------
-    Demonstrate cycle statement
+    Demonstrate while statement
 -----------------------------------+
 #driver "cy"
 -- declare array of 10 Words
 create a ∈ [Z](10);
--- use cycle 
+-- use while 
 create i ∈ Z; 
-cycle:
+while:
   modify a[i] := i;
   when (i = 9):
     stop;
   else:
     modify i += 1;
-    loop;
+    repeat;
   when;
-cycle;
--- cycle shortcut
+while;
+-- while shortcut
 create x := 10;
-cycle:
+while (x ≥ 0):
   when (x % 2 = 0):
     modify x -= 1;
-    loop;
+    repeat;
   when;  
   print x;
   
   when (x < 0):
-    stop;
+    stops;
   else:
     modify x -= 1;
   when;
-cycle;  
+while;  
 over;

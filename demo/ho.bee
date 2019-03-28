@@ -7,7 +7,7 @@
  
 -- this define can create λ function
 define shift(i ∈ Z) => (g λ (s ∈ Z) ∈ Z):
-  assign g :: (s ∈ Z) => (s + i);
+  create g :: (s ∈ Z) => (s + i);
 define shift;
 -- create two define instances
 create inc := shift(+1);  -- increment 

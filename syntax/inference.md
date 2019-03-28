@@ -47,7 +47,7 @@ create e := [0.0](10);
 -- create a data set of integer
 create s := {1,2,3,4};
 
--- create a hash map
+-- create a hash table
 create c := {(1:"storage"),(2:"string")};
 
 -- create a complex data structure

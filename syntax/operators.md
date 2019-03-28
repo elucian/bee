@@ -83,7 +83,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 symbol| meaning
 ------|------------------------------------------------------------------
  ::   | explicit clone a reference, or create a slice  \| explicit boxing
- :=   | modify value or reference \| assign value object \| copy value
+ :=   | modify value \| copy value
  +=   | increment value
  -=   | decrement value
  ·=   | multiplication modifier 

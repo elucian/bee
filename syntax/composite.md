@@ -112,9 +112,9 @@ An empty list is represented like this: ()
 
 ```
 create a := ();      -- empty list
-create b := (1,2,3); -- initialize list using assign
+create b := (1,2,3); -- initialize list using modify
 
-modify a := b; -- re-assign a and throw to garbage ()
+modify a := b; -- modify a and throw to garbage ()
 ```
 
 **Unpacking**
@@ -202,12 +202,12 @@ modify l5 := l2 - l1;  -- (4)
 ```
 create   := ('a', 'b', 'c');
 create x := list.first();
-cycle
+while
   write x;
   exit if x ≡ list.last();
   modify x  := list.next(element);
   write ',';  
-cycle;
+while;
 ```
 
 ## Stack
@@ -275,8 +275,8 @@ modify a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 
 **Notes:** 
 
-* Bee sets are internally sorted not indexed;
-* Sets are not recommended to create queues or stacks;
+* Clusters are internally sorted not indexed;
+* Clusters are not recommended to create queues or stacks;
 * Usually you do not remove elements from a set but only append;
 
 ## Table
@@ -359,11 +359,11 @@ print test[m];   -- last element
 
 -- set value of element := subscript
 create x := 0;
-cycle: 
+while: 
   modify test[i] := x;
   modify x += 1;
   stop if x = m;
-cycle;
+while;
 
 -- print all elements of array
 print test;
@@ -443,10 +443,10 @@ create a := [1,2,3,4](5);
 print  a; -- [1,2,3,4,0]
 
 -- making 4 slice views
-assign b :: a[0..?]; -- [1,2,3,4,0]
-assign c :: a[1..?]; -- [2,3,4,0]
-assign d :: a[0..2]; -- [1,2,3]
-assign e :: a[2..4]; -- [3,4,0]
+modify b :: a[0..?]; -- [1,2,3,4,0]
+modify c :: a[1..?]; -- [2,3,4,0]
+modify d :: a[0..2]; -- [1,2,3]
+modify e :: a[2..4]; -- [3,4,0]
 
 --modify slice elements
 modify c[0] := 8; -- first element in c slice
@@ -471,7 +471,7 @@ Default assignment ":=" and slicing operator "[..]" makes a copy.
 create a := [0,1,2,3,4];
 create e,f,r ∈ [Z]; -- empty array
 
--- by default assign ":=" copy/clone an entire collection
+-- by default modify ":=" copy/clone an entire collection
 modify e := a; 
 
 -- compare two collections
@@ -507,15 +507,15 @@ print mat[3,3]; --last element
 So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```
--- elements in matrix can be accessed using a cycle
+-- elements in matrix can be accessed using while
 create i := 0;
 create x := length(mat);
   
-cycle:   
+while:   
   write (mat[x], ',');
   i += 1;
   stop if i = x;
-cycle;
+while;
 
 ```
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
@@ -549,11 +549,11 @@ define foo(*bar ∈ [Z]) => (x ∈ Z):
   when;
   modify i := 0; 
   -- sum all parameters  
-  cycle:
+  while:
     modify x += bar[i];
     modify i += 1;
     stop if (i = c);
-  cycle;
+  while;
 define;
 
 --we can call foo with variable number of arguments
@@ -800,7 +800,7 @@ define  Person <: {name ∈ U, age ∈ N};
 -- array of 10 persons
 create catalog ∈ [Person](10); 
   
---assign value using literals
+-- initialize value using literals
 create catalog[0] := {name:"Cleopatra", age:15};
 create catalog[1] := {name:"Martin", age:17};
 

@@ -50,9 +50,9 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* modify  --assign expression value to variables
-* write --output to console result of expressions
-* read  --accept input from console
+* modify  --change variable value
+* write   --output to console result of expressions
+* read    --accept input from console
 
 Multiple statements on same line are separated by ";"
 A statement is optional terminated by ";"
@@ -65,7 +65,7 @@ Statements can be contained in blocks of code.
 
 **Keywords:**
 * "when"    create multi-path groups of statements based on logical conditions
-* "cycle"   group of statements that can be repeated multiple times
+* "while"   group of statements that can be repeated multiple times
 
 ## Driver file
 
@@ -87,12 +87,13 @@ modify c := $params.count;
 
 over if (c = 0);
 -- comma separated parameters
-cycle
+while (i > c):
   write $params[i];
   modify i += 1;
-  stop if (i > c);
-  write ",";
-cycle;
+  if (i < c):
+     write ",";
+  if;   
+while;
 -- print the buffer to console
 
 over;

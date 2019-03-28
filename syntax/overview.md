@@ -175,7 +175,6 @@ sym | purpose
  := | initialize variable using a constant/expression or constructor
  :: | initialize variable using a reference to another variable
 
-**Note:** For operator :: we use "assign" keyword not "create"
 
 ```
 -- full declarations with type and initial value
@@ -379,9 +378,9 @@ modify y := b -> L; -- y = $T
 
 In Bee all values and composite types are references except native types. 
 
-**assign**
+**modify**
 
-* New reference can be create using operator ":="
+* New reference can be created using operator ":="
 * Existing reference can be cloned using operator: "::"
 
 **example**
@@ -390,7 +389,7 @@ create i := 10 ∈ i8;  -- native type
 create j ∈ Z;         -- references
 
 -- boxing using "::" (borrow address)
-assign j :: i; -- boxing i := 12 
+modify j :: i; -- boxing i := 12 
 modify i += 1; -- modify i := 13
 print  j; --> expect 13 (modified)
 
@@ -475,18 +474,18 @@ over;
 
 ## Control Flow
 
-Bee has 3 control flow statements { when, cycle, trial }:
+Bee has 3 control flow statements { case, while, trial }:
 
-### When
+### Case
 
-When is a decision statement selector based on one condition.
+Case is a decision statement selector based on one condition.
 
 **syntax**
 ```
-when condition:
+case (condition):
   statement;
   ... 
-when;
+case;
 ```
 
 Dual selector based on single logical expression:
@@ -518,20 +517,20 @@ when;
 -- a = 0
 ```  
 
-### Cycle
+### While
 
 Create repetitive statement block.
 
 ```
-cycle:
+while:
   statement block
   ...
-  loop if condition;
+  repeat if condition;
   ...
   
   stop if condition;
   ...
-cycle;
+while;
 ```
 
 **example**
@@ -539,41 +538,46 @@ cycle;
 ```
 create a := 10;
 
-cycle:
+while (a > 0):
   modify a -= 1;
   -- conditional repetition
-  loop if (a % 2 = 0);  
+  repeat if (a % 2 = 0);  
   write a;  
-  -- conditional termination
-  stop if (a < 0);
   write ','; 
-cycle;
+while;
 
 ```
 
 **Notes:** 
 
-* If _stop_ condition is missing the cycle is infinite;
-* The cycle can be controlled using conditionals;
+* If _stop_ condition is missing the while is infinite;
+* The while can be controlled using conditionals;
 
-### Nested cycles
+### Nested while
 
-Nested cycles can be labeled:
+One while block can be nested inside another.
 
 **pattern:** 
 
 ```
--- label 2 nested cycles 
-cycle outer: 
-  cycle inner:
-    -- continue with outer cycle
-    loop outer if condition; 
+while condition: 
+  -- outer block statements
+  ...
+  while condition:
+    -- inner block
     ...
-    -- stop for both cycles
-    stop outer if condition;
-  cycle;
-cycle;
+  while;  
+  -- continue outer block
+  ...
+  while condition:
+    -- inner block
+    ...
+  while;  
+  ...       
+while;
 ```
+
+**Note:** You can not jump outside of a nested while statement.
 
 **example**
 
@@ -581,14 +585,14 @@ cycle;
 create x   := 9;
 create a,r := 0;
 
-cycle:
+while:
   modify r := x % 2;
   modify a := (0 if r = 0, 1 if r = 0, 2);
   write "{1}:{2}" <+ (x,a);
   modify x -= 1;
   stop if (x < 5);
   write ',';
-cycle;
+while;
  --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
@@ -758,7 +762,7 @@ foo;
 **restriction:**
 * An method can not be declared inside other method;
 * An method can not be used in expressions or functions;
-* An method result must be captured using assign ":=" o unpacking "<+"; 
+* An method result must be captured using modify ":=" o unpacking "<+"; 
 
 ## Functions
 

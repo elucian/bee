@@ -4,7 +4,7 @@
 #driver "dc"
 create n ∈ Z;   -- Integer on 64 bit
 create h ∈ S;   -- Default 255 char string
-create l ∈ L;   -- Logical create False := 0
+create l ∈ L;   -- Logical value False := 0
 -----------------------------------------
 -- printing initial creates
 -----------------------------------------
@@ -12,7 +12,7 @@ print n; -- 0
 print h; -- ''
 print l; -- 0 
 write;
--- declaring with initial create
+-- declaring with initial value
 create g, h := -10 ∈ N;
 create x := 10, y := 20 ∈ N;
 -- native array are auto initialized
@@ -24,7 +24,7 @@ print b; -- [``,``,``,``,``,``,``,``,``,``]
 print m; -- [[0,0,0], [0,0,0], [0,0,0]]
 write;
 -- use all member initialization [*]
-modify b[*] := `s`; -- assign create "s" for all elements
+modify b[*] := `s`; -- assign "s" for all elements
 modify a[*] :=  5 ; -- scalar modification, make all = 5
 modify m[*] :=  1 ; -- scalar matrix modification
 -- use index to find member
