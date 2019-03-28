@@ -135,8 +135,6 @@ Bee is using constants:  $T = 1 = True and  $F = 0 = False
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
-  if   | only if    | is implied by
-  →   | then       | if ... then implication
   ↔   | Inference  | equivalence (if and only if)
   ¬   | NOT        | unary operator
   ∧   | AND        | shortcut operator
@@ -162,20 +160,20 @@ symbol| meaning       | notes
   &   | bit AND       | dual operator 
  \|   | bit OR        | dual operator 
  \~   | bit XOR       | dual operator  
- \<\< | bit SHIFTL    | shift bits to left  
- \>\> | bit SHIFTR    | shift bits to right  
+ ←    | bit SHIFTL    | shift bits to left  
+ →    | bit SHIFTR    | shift bits to right  
 
 
 **See also:** [Bit Manipulation](https://en.wikipedia.org/wiki/Bit_manipulation) 
 
 Arity = 1
 
- A    | ¬ A | A \<\<  1 | A \>\> 2  
-------|-----|-----------|--------
- 0000 |1111 | 0000      | 0000   
- 1111 |0000 | 1110      | 0011   
- 0111 |1000 | 1110      | 0001   
- 0110 |1001 | 1100      | 0001   
+ A    | ¬ A | A ← 1 | A → 2  
+------|-----|-------|--------
+ 0000 |1111 | 0000  | 0000   
+ 1111 |0000 | 1110  | 0011   
+ 0111 |1000 | 1110  | 0001   
+ 0110 |1001 | 1100  | 0001   
 
 
 Arity = 2
