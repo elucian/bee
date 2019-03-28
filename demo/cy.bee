@@ -8,26 +8,21 @@ create a ∈ [Z](10);
 create i ∈ Z; 
 while:
   modify a[i] := i;
-  when (i = 9):
+  do if (i = 9):
     stop;
-  else:
+  else
     modify i += 1;
     repeat;
-  when;
+  done;
 while;
 -- while shortcut
 create x := 10;
 while (x ≥ 0):
-  when (x % 2 = 0):
+  do if (x % 2 = 0):
     modify x -= 1;
-    repeat;
-  when;  
-  print x;
-  
-  when (x < 0):
-    stops;
-  else:
-    modify x -= 1;
-  when;
+  else
+    print x;    
+  done;  
+  modify x -= 1;
 while;  
 over;

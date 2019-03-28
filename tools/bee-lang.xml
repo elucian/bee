@@ -24,12 +24,12 @@
             <Keywords name="Folders in comment, open"></Keywords>
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close"></Keywords>
-            <Keywords name="Keywords1">import define create</Keywords>
-            <Keywords name="Keywords2">when else cycle &#x000D;&#x000A;</Keywords>
-            <Keywords name="Keywords3">loop stop exit fail pass over</Keywords>
-            <Keywords name="Keywords4">modify read write print erase plot draw show hide </Keywords>
+            <Keywords name="Keywords1">import define create </Keywords>
+            <Keywords name="Keywords2">do else done while trial patch other after&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords3">repeat stop exit fail pass over abort</Keywords>
+            <Keywords name="Keywords4">execute default modify read write print erase plot draw show hide</Keywords>
             <Keywords name="Keywords5">clear first last bee asm cpp</Keywords>
-            <Keywords name="Keywords6">b1 b2 c1 c2 n4 n8 i4 i8 f4 f8&#x000D;&#x000A;B L W Z N Q R C D T H&#x000D;&#x000A;A S U &#x000D;&#x000A;F X&#x000D;&#x000A;P V G&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords6">b1 b2 c1 c2 n4 n8 i4 i8 f4 f8&#x000D;&#x000A;B L W Z N Q R C D T H&#x000D;&#x000A;A S U &#x000D;&#x000A;F X E&#x000D;&#x000A;P V G&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$</Keywords>
             <Keywords name="Keywords8">#</Keywords>
             <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12` 13 14` 15&apos; 16\ 17&apos; 18&#x00AB; 19 20&#x00BB; 21|* 22 23*|</Keywords>

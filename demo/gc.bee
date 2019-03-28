@@ -15,7 +15,7 @@ define next(me @ GenI) => (i ∈ Z):
   modify i  := me.ci;
   modify me.ci += 1;
 define;
--- detect if finish
+-- detect when finish
 define finish(me @ GenI)  => (r ∈ L):
   modify r := (me.ci ≥ me.max);
 define;
@@ -29,5 +29,5 @@ while;
 -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
 -- test reset method
 foo.reset();
-fail if ¬ (foo.ci = 10); -- expect: 10
+fail if ( foo.ci ≠ 10); -- expect: 10
 over;

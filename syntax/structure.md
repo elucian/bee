@@ -64,8 +64,8 @@ Statements can be contained in blocks of code.
 * Block of code is ending with same keyword and ";"
 
 **Keywords:**
-* "when"    create multi-path groups of statements based on logical conditions
-* "while"   group of statements that can be repeated multiple times
+* "do"     create multi-path groups of statements based on logical conditions
+* "while"  group of statements that can be repeated multiple times
 
 ## Driver file
 
@@ -90,11 +90,9 @@ over if (c = 0);
 while (i > c):
   write $params[i];
   modify i += 1;
-  if (i < c):
-     write ",";
-  if;   
+  write "," if (i < c);
 while;
--- print the buffer to console
+-- print the buffer to console
 
 over;
 ```

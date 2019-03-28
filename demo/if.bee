@@ -1,45 +1,45 @@
 +-------------------------------
-   "if" and "when" decisions
+   "if" and "else" decisions
 -------------------------------+
 #driver "if"
 create x ∈ N;
 read (x ,"define a number:");
--- if conditional
+-- only if conditional
 print "x = 0" if (x = 0);
 -- single branch
-when (x = 1):
+do if (x = 1):
   print "x = 1";
-when;
+done;
 -- two branches
-when ¬(x = 5):
+do if (x ≠ 5):
   print "x ≠ 5";
-else:
+else
   print "x = 5";   
-when;
+done;
 -- nested branches
 modify x := 1;
-when (x ≥ 1):
+do if (x ≥ 1):
   print "x ≥ 1";
-  when (x = 1):
+  do if (x = 1):
     print "x = 1";
-  else:
+  else
     print "x > 1";  
-  when; 
-else:
+  done; 
+else
   print "x < 1";
-when;
+done;
  
 -- x ≥ 1
 -- x = 1
 -- nested modifynative
-when (x < 1):
+do if (x < 1):
   print "x < 1";
-else:
-  when (x > 1):
+else
+  do if (x > 1):
     print "x > 1";
-  else:
+  else
     print "x = 1";
-  when;   
-when;
+  done;   
+done;
 -- expect x = 1
 over;

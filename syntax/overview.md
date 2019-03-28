@@ -214,7 +214,7 @@ print  b;          -- expected 11
 ```
 
 **notes:** 
-* Multiple variables can be modified at once if separated by comma;
+* Multiple variables can be modified all at once when separated by comma;
 * One modify statement can use one single operator ":=" or "::";
 
 **Examples:**
@@ -355,7 +355,7 @@ print  (x ∨ y);  --  1
 * Operators { ¬ } is unary operator;
 * Operators { ∧, ∨ } are shortcut operators;
 * Operators { ¬, ~ } are also bitwise operators;
-* Operators { ←, →, ↑, ↓, &, | } are bitwise operators;
+* Operators { if, →, ↑, ↓, &, | } are bitwise operators;
 
 **coercion**
 Any numeric expression ca be converted to logic using coercion operation `-> L`
@@ -401,8 +401,7 @@ print j ≡ i; -- 1 (true) same reference
 
 ## Conditional
 
-A conditional is using "if" keyword to control one statement.   
-Observe that "if" is not itself a full statement only an augment.
+A conditional is using symbol "if" that is implication to control one statement.   
 
 ```
  statement if (condition);
@@ -466,7 +465,7 @@ dx   := default expression (optional condition).
 create x := `0`;
 read (x,"x:>");
 
-create what := ("digit" if x ∈ [`0`..`9`], if x ∈ [`a`..`z`], "letter","unknown");
+create what := ("digit" if x ∈ [`0`..`9`], "letter" if x ∈ [`a`..`z`], "unknown");
 print "x is"._.what;
 
 over;
@@ -474,29 +473,28 @@ over;
 
 ## Control Flow
 
-Bee has 3 control flow statements { case, while, trial }:
+Bee has 3 control flow statements { do, while, trial }:
 
-### Case
+### do
 
 Case is a decision statement selector based on one condition.
 
 **syntax**
 ```
-case (condition):
+do if (condition):
   statement;
-  ... 
-case;
+done;
 ```
 
 Dual selector based on single logical expression:
 
 **pattern**
 ```
-when condition:
-  true_branch;
-else:
-  false_branch;
-when;
+do if condition:
+  -- first branch;
+else
+  -- second branch;
+done;
 ```
 
 **example**
@@ -504,14 +502,28 @@ when;
 ```
 -- nested selector
 create a := 0;
-when (a ≤ 0):
+do if (a ≤ 0):
   print 'a ≤ 0';
-  when (a = 0):
+  do if (a = 0):
     print 'a = 0';
-  else:
+  else
     print "a < 0"; 
-  when;  
-when; 
+  done;  
+done;
+
+**example**
+
+```
+-- lather selector
+create a := 0;
+do if (a ≤ 0):
+  print 'a ≤ 0';
+else if (a = 0):
+  print 'a = 0';
+else
+  print "a < 0"; 
+done;
+ 
 -- expect 2 messages:
 -- a ≤ 0
 -- a = 0
@@ -522,13 +534,8 @@ when;
 Create repetitive statement block.
 
 ```
-while:
-  statement block
-  ...
-  repeat if condition;
-  ...
-  
-  stop if condition;
+while (condition):
+  -- statement block
   ...
 while;
 ```
@@ -541,9 +548,10 @@ create a := 10;
 while (a > 0):
   modify a -= 1;
   -- conditional repetition
-  repeat if (a % 2 = 0);  
-  write a;  
-  write ','; 
+  do if (a % 2 ≠ 0);  
+    write a;  
+    write ','; 
+  done;    
 while;
 
 ```
@@ -616,22 +624,22 @@ The "trial" statement execute a process that can fail for some reason.
 | $error| system last error record (clear by pass)
 
 ```
-trial:
+trial
   -- protected region
   ...
   -- fail with error code
-  fail if <condition>     
-  fail {code,"message"} if <condition>     
+  fail if (condition);
+  fail {code,"message"} if (condition);
   ...    
 patch code:
   -- patch statement
 patch code:
   -- patch statement  
 ...  
-other:
+other
   -- other errors  
-after:
-  <finalization>
+after
+  -- finalization
 trial;
 ```
 
@@ -668,7 +676,7 @@ User can define his own exceptions with code > 0:
 ```
 define $custom_error  := {200,"my first exception"} ∈ E; 
 
-fail $custom_error if <condition>;
+fail $custom_error if (condition);
 ```
 
 **Notes:**

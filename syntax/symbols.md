@@ -20,7 +20,7 @@ My keyboard settings is saved in file G110.xml
   G4 | · ÷  ∩ ∪  π σ
 -----------------------
   G5 | ∧ ∨  ↑ ↓  S F
-  G6 | ∞ ∅  ← →  Π Σ
+  G6 | ∞ ∅  if →  Π Σ
 -----------------------
 ```
 
@@ -113,7 +113,7 @@ sym| code
  ↑ | 24 
  ↓ | 25 
  → | 26 
- ← | 27  
+ if | 27  
 
  
 ## Greek letters

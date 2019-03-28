@@ -45,11 +45,11 @@ define Positive  <: Z[0..+∞];
 define Negative  <: Z[-∞..-1];
 
 --Check variable belong to sub-type
-when ('x' ∈ Alfa):
+do if ('x' ∈ Alfa):
   print 'yes';
-else:
+else
   print 'no';
-when;
+done;
 ```
 
 **Notes:**
@@ -202,9 +202,8 @@ modify l5 := l2 - l1;  -- (4)
 ```
 create   := ('a', 'b', 'c');
 create x := list.first();
-while
+while ¬ list.last();
   write x;
-  exit if x ≡ list.last();
   modify x  := list.next(element);
   write ',';  
 while;
@@ -324,11 +323,11 @@ define  Tmap ∈ {(A:U)};
 
 create map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
-when ('a' ∈ map):
+do if ('a' ∈ map):
   print("a is found");
 else
   print("not found");
-when;
+done;
     
 ```
 
@@ -359,10 +358,9 @@ print test[m];   -- last element
 
 -- set value of element := subscript
 create x := 0;
-while: 
+while (x < m): 
   modify test[i] := x;
   modify x += 1;
-  stop if x = m;
 while;
 
 -- print all elements of array
@@ -511,10 +509,9 @@ So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 create i := 0;
 create x := length(mat);
   
-while:   
+while (i < x):   
   write (mat[x], ',');
   i += 1;
-  stop if i = x;
 while;
 
 ```
@@ -543,16 +540,15 @@ We declare an array using prefix "*" for variable parameter name.
 define foo(*bar ∈ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
-  when (c = 0):
+  do if (c = 0):
     modify x := 0; 
     exit;
-  when;
+  done;
   modify i := 0; 
   -- sum all parameters  
-  while:
+  while (i < c):
     modify x += bar[i];
     modify i += 1;
-    stop if (i = c);
   while;
 define;
 

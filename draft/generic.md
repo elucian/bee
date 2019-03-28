@@ -7,26 +7,24 @@ A generic method is using a variable of type "X".
 ```
 define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
   create n := length(array)-1 ∈ N; 
-  create swap ∈ L;
+  create swap := $T ∈ L;
   create temp ∈ X;
   create i ∈ N;
   modify 
-  while:
+  while swap:
     modify i := 0;
     modify swap := $F; -- false
-    while: 
-      stop if (i = n);
+    while (i ≤ n): 
       -- this pair is out of order ?
-      when gt(array[i], array[i+1]):
+      do if gt(array[i], array[i+1]):
         -- swap pair and set swap flag = true
         modify temp :: array[i];
         modify array[i]  :: array[i+1];
         modify array[i+1]:: temp;
         modify swap := $T; -- true
-      when;
+      done;
       modify i +=1;
     while; 
-    stop if (¬ swap);
   while;
 define;
 ```

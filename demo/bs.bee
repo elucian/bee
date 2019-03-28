@@ -13,13 +13,13 @@ define sort(this @ [Z]):
     modify swap := $T;
     while (i ≤ n): 
       -- this pair is out of order ?
-      execute if (this[i] < this[i+1]):
+      do if (this[i] < this[i+1]):
         -- swap pair and set swap flag = true
         modify temp     :: this[i];
         modify this[i]  :: this[i+1];
         modify this[i+1]:: temp;
         modify swap := $T;
-      execute;
+      done;
       modify i += 1; 
     while;
   while;
@@ -32,5 +32,6 @@ sort(test);
 print test;
 
 -- check result
-fail if ¬ (test = result);
+fail if (test ≠ result);
+
 over;
