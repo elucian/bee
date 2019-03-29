@@ -513,7 +513,7 @@ when (a ≤ 0):
 when;
 ```
 
-**leather**
+**ladder**
 ```
 create a := 0;
 when (a < 0):
