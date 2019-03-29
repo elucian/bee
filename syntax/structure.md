@@ -139,7 +139,7 @@ All system variables are automatic imported from OS environment.
 
 Bee is using one global scope. All modules are using same global scope.
 Global variables are unique and are visible in all project modules.
-Global variables are lowercase and are pretagined in Bee language.
+Global variables are lowerwhen and are pretagined in Bee language.
 
 ```
 #import $bee.cpp.myLib:(*) --import cpp library
@@ -304,7 +304,7 @@ over;
 
 ## Data types
 
-Bee implements a variety of data types and data structures. In most use cases programmers do not have to define new structures but customize existing ones.
+Bee implements a variety of data types and data structures. In most use whens programmers do not have to define new structures but customize existing ones.
 
 Users can define type aliases using symbol "<:" and a _type descriptor_. Type aliases will inherit all methods of the original type and can have additional methods.
 

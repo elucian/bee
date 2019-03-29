@@ -45,11 +45,11 @@ define Positive  <: Z[0..+∞];
 define Negative  <: Z[-∞..-1];
 
 --Check variable belong to sub-type
-do if ('x' ∈ Alfa):
+when ('x' ∈ Alfa):
   print 'yes';
-else
+else:
   print 'no';
-done;
+when;
 ```
 
 **Notes:**
@@ -323,11 +323,11 @@ define  Tmap ∈ {(A:U)};
 
 create map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
-do if ('a' ∈ map):
+when ('a' ∈ map):
   print("a is found");
-else
+else:
   print("not found");
-done;
+when;
     
 ```
 
@@ -540,10 +540,10 @@ We declare an array using prefix "*" for variable parameter name.
 define foo(*bar ∈ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
-  do if (c = 0):
+  when (c = 0):
     modify x := 0; 
     exit;
-  done;
+  when;
   modify i := 0; 
   -- sum all parameters  
   while (i < c):
@@ -574,7 +574,7 @@ modify a   := split(str);
 ```
 
 **conversion**
-Conversion of a string into number is done using _parse_ function:
+Conversion of a string into number is when; using _parse_ function:
 
 ```
 create x,y ∈ R;

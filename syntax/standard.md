@@ -89,7 +89,7 @@ Interaction with operating system require import from library.
   |-->system
   |     |-->io.bee
   |
-  +-->db
+  --->db
   ...
 -------------------------+  
 ```

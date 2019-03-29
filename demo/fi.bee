@@ -4,11 +4,11 @@
 #driver "fi"
 -- declare Fibonacci function
 define fib(n ∈ N) => (y ∈ N): 
-  do if (n = 1 ∨ n = 0):
+  when (n = 1 ∨ n = 0):
     modify y := 1;
-  else
+  else:
     modify y := fib(n - 1) + fib(n - 2);
-  done;
+  when;
 define;
 -- call define fib 
 create r := fib(5):

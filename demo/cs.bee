@@ -10,40 +10,61 @@ print ("a < b") if (a < b);
 print ("a > b") if (a > b);
 
 -- single branch decision
-do if (a ≠ b): 
-  print ("a is not equals to b");
-done;
--- decision with alternate branch
-do if (a < 5):
-  print "yes";
-else
-  print "no";
-done;
+when (a = b):
+    print ("a = b");
+when;
 
--- multi-decisions with range
-modify a := 9;
-do
-  if (a ∈ [0..4]):
-    print ('a ≥ 0 ∧ a < 5');
-  if (a ∈ [5..9]):
-    print ('a ≥ 5 ∧ a < 10');
-  if (a < 0):
-    print "a is negative";
-else
-   print ('a ≤ 10');
-done;
-  
--- two creates in one statement  
-modify a := 1, b := 0;
-  
--- cascade decision statement
-do 
-  if (a ∧ b):  
-    print ("a ≠ 0 and b ≠ 0");
-  if (a ∨ b):
-    print ("a ≠ 0 or b ≠ 0");
-else
+-- decision with alternate branch
+when (a < 5):
+  print "a < 5";
+else:
+  print "no";
+when;
+
+-- mutual exclusive multi-path selector
+modify a := 2;
+when (a ∈ [0..4]):
+    -- this is true since a = 2
+    print ('a is between 0 and 4');
+else: (a ∈ [2..5]):
+    -- this is also true since a = 2
+    print ('a is between 2 and 5');   
+else: (a < 0):
+    -- this is not true since a > 0
+    print ('a ≤ 0');
+none:
+  print ('a ≥ 5'); -- no match
+when;
++-------------------------------------------
+  when is breaking at first match           
+  therefore only one message is produced:   
++------------------------------------------+
+-- 'a is between 0 and 4';
+
+-- nested statements are supported
+modify a := $T, b := $F;
+when (a ∧ b):
+  print ("a ≠ 0 and b ≠ 0");
+  when (a ≥ b):
+    print ("a ≥ b");
+  when;  
+  when (a > b):
+     print ("a > b");  
+  when;     
+else:
   print ("a = 0 and b = 0");  
-done;
+when;
+
+-- avoiding nested statements is a good practice
+modify a := $T, b := $F;
+when (a ∧ b):
+  print ("a ≠ 0 and b ≠ 0");
+also (a ≥ b):
+  print ("a ≥ b");
+also (a > b):
+  print ("a > b");  
+else:
+  print ("a = 0 and b = 0");  
+when;
 
 over; 

@@ -16,13 +16,13 @@ define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
     modify swap := $F; -- false
     while (i ≤ n): 
       -- this pair is out of order ?
-      do if gt(array[i], array[i+1]):
+      when gt(array[i], array[i+1]):
         -- swap pair and set swap flag = true
         modify temp :: array[i];
         modify array[i]  :: array[i+1];
         modify array[i+1]:: temp;
         modify swap := $T; -- true
-      done;
+      when;
       modify i +=1;
     while; 
   while;

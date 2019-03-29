@@ -31,9 +31,9 @@ define Number <: {
 -- example of use
 create a := 0;
 -- example of use
-do if (a = zero):
+when (a = zero):
   print "zero";
-else
+else:
   print "life is misery";
-done;
+when;
 over;

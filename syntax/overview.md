@@ -74,7 +74,7 @@ Bee use 4 kind of data types:
 
 **Native types**
 
-Native types names are using one lowercase letter and a number, representing the number of bytes used. These types are compatible with C++ native types. Are used to improve performance. 
+Native types names are using one lowerwhen letter and a number, representing the number of bytes used. These types are compatible with C++ native types. Are used to improve performance. 
 
 define | name             | size
 -----|------------------|---------------
@@ -104,7 +104,7 @@ Bee basic data types have information about:
 1. access  (private or public or local)
 1. storage (memory  or registry)
 
-Basic types are represented with one single uppercase ASCII character.
+Basic types are represented with one single upperwhen ASCII character.
 
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
@@ -254,7 +254,7 @@ create var_name,var_name ... ∈ type_name;
 Bee is an explicit language. We avoid implicit conversion.   
 When data type mismatch we must perform explicit conversion.
 
-* Explicit conversion is done using _pipeline operator: "->"
+* Explicit conversion is when; using _pipeline operator: "->"
 * This is unsafe operation. And a range check is recommended before conversion.
 * Data precision may suffer. Some decimals may be lost.
 * If data do not fit in the new type overflow exception is created.
@@ -473,70 +473,68 @@ over;
 
 ## Control Flow
 
-Bee has 3 control flow statements { do, while, trial }:
+Bee has 3 control flow statements { when, while, trial }:
 
-### do
+### when
 
 Case is a decision statement selector based on one condition.
 
 **syntax**
 ```
-do if (condition):
+when (condition):
   statement;
-done;
+when;
 ```
 
 Dual selector based on single logical expression:
 
 **pattern**
 ```
-do if condition:
+when (condition):
   -- first branch;
-else
+else:
   -- second branch;
-done;
+when;
 ```
 
-**example**
+**Note:** Column ":" is mandatory after else keyword.
+
+**nested**
 
 ```
--- nested selector
 create a := 0;
-do if (a ≤ 0):
+when (a ≤ 0):
   print 'a ≤ 0';
-  do if (a = 0):
+  when (a = 0):
     print 'a = 0';
-  else
+  else:
     print "a < 0"; 
-  done;  
-done;
-
-**example**
-
+  when;  
+when;
 ```
--- lather selector
+
+**leather**
+```
 create a := 0;
-do if (a ≤ 0):
-  print 'a ≤ 0';
-else if (a = 0):
-  print 'a = 0';
-else
-  print "a < 0"; 
-done;
- 
--- expect 2 messages:
--- a ≤ 0
--- a = 0
-```  
+when (a < 0):
+  print 'a < 0';
+else (a > 0):
+  print 'a > 0';
+else:
+  print "a = 0"; 
+when;
+```
 
 ### While
 
-Create repetitive statement block.
+Create repetitive block controlled by a condition.
 
 ```
 while (condition):
-  -- statement block
+  -- repetitive block
   ...
+else:
+  -- alternative path
 while;
 ```
 
@@ -548,12 +546,11 @@ create a := 10;
 while (a > 0):
   modify a -= 1;
   -- conditional repetition
-  do if (a % 2 ≠ 0);  
+  when (a % 2 ≠ 0);  
     write a;  
     write ','; 
-  done;    
+  when;
 while;
-
 ```
 
 ### Nested while
@@ -640,7 +637,7 @@ trial;
 
 **patch**
 
-Patch regions are "exception handlers". Each can resolve one single error with a specific code.
+Patch regions are "exception handlers". Each can rewhen one single error with a specific code.
 
 **other**
 

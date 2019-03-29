@@ -13,11 +13,11 @@ while;
 -- while shortcut
 create x := 10;
 while (x ≥ 0):
-  do if (x % 2 = 0):
+  when (x % 2 = 0):
     modify x -= 1;
-  else
+  else:
     print x;    
-  done;  
+  when;  
   modify x -= 1;
 while;  
 over;
