@@ -7,5 +7,5 @@
 <p align="center"> <a href=index.md>Bee Syntax</a></p>
 
 <p align="center">
-Copyright 2019 Elucian Moise
+Copyright 2018 Elucian Moise
 </p>
