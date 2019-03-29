@@ -1,10 +1,10 @@
 ## Bee Index
 
-Design: [Wiki Bee](https://github.com/sage-code/bee/wiki)
+Design goals: [Wiki Bee](https://github.com/sage-code/bee/wiki)
 
 ## Syntax
 
-Described in /sintax folder.
+Described in /syntax folder.
 
 1. [Program Structure](syntax/structure.md)
 1. [Syntax Overview](syntax/overview.md)
@@ -14,7 +14,7 @@ Described in /sintax folder.
 
 ## Overalls
 
-Some Bee core ingredients:
+These are Bee core ingredients:
 
 1. [operators](syntax/operators.md)
 1. [keywords](syntax/keywords.md)

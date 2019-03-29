@@ -14,7 +14,7 @@
             <Keywords name="Numbers, suffix2"></Keywords>
             <Keywords name="Numbers, range">AH</Keywords>
             <Keywords name="Operators1">. , ~ + - : ; @ * / % = &lt; &gt; ! ? &amp; | ^</Keywords>
-            <Keywords name="Operators2">&#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; _ &#x2194; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x2190; &#x2192; &#x2191; &#x2193; &#x03BB; if</Keywords>
+            <Keywords name="Operators2">&#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; _ &#x2194; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x2190; &#x2192; &#x2191; &#x2193; if</Keywords>
             <Keywords name="Folders in code1, open"></Keywords>
             <Keywords name="Folders in code1, middle"></Keywords>
             <Keywords name="Folders in code1, close"></Keywords>
@@ -25,7 +25,7 @@
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close"></Keywords>
             <Keywords name="Keywords1">import define create </Keywords>
-            <Keywords name="Keywords2">do else done while trial patch other after&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords2">when else none while trial error other after&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords3">exit fail pass over abort</Keywords>
             <Keywords name="Keywords4">execute default modify read write print erase plot draw show hide</Keywords>
             <Keywords name="Keywords5">clear first last bee asm cpp</Keywords>
