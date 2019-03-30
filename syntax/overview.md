@@ -587,7 +587,7 @@ The "trial" statement execute a process that can fail for some reason.
 | exit  | stop current method/function 
 | fail  | interrupt and raize exception (default 0)
 | over  | unconditional stop program
-| abort | unrecoverable error, stop program (default -1)
+| panic | unrecoverable error, stop program (default -1)
 | $error| system last error record (clear by pass)
 
 ```
@@ -648,12 +648,12 @@ fail $custom_error if (condition);
 
 **Notes:**
 * Error code <  200 are system reserved error codes.
-* Error code ≤ -1   are unrecoverable abort errors
+* Error code ≤ -1   are unrecoverable panic errors
 
 **example**
 
 ```
-abort -1 ; -- end program and exit with error code = -1
+panic -1 ; -- end program and exit with error code = -1
 ```
 
 ## Methods

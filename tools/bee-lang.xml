@@ -26,7 +26,7 @@
             <Keywords name="Folders in comment, close"></Keywords>
             <Keywords name="Keywords1">import define create </Keywords>
             <Keywords name="Keywords2">when else none while trial error other after&#x000D;&#x000A;</Keywords>
-            <Keywords name="Keywords3">exit fail pass over abort</Keywords>
+            <Keywords name="Keywords3">exit fail pass over panic</Keywords>
             <Keywords name="Keywords4">execute default modify read write print erase plot draw show hide</Keywords>
             <Keywords name="Keywords5">clear first last bee asm cpp</Keywords>
             <Keywords name="Keywords6">B L W Z N Q R C D T H&#x000D;&#x000A;A S U &#x000D;&#x000A;F X E&#x000D;&#x000A;P V G&#x000D;&#x000A;</Keywords>
