@@ -31,7 +31,7 @@ when;
  
 -- x ≥ 1
 -- x = 1
--- nested modifynative
+-- nested when
 when (x < 1):
   print "x < 1";
 else:

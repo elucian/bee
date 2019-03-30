@@ -25,6 +25,7 @@ Bee has 3 kind of program files each with different role:
 #library -- reusable library
 #module  -- project module
 #driver  -- main module
+#timer   -- set-up program time limit
 ```
 
 **Notes**
@@ -39,10 +40,6 @@ Bee is using 2 kind of declarations:
 
 * type  -- define: data types
 * value -- create/initialize a value variable
-* static -- create/initialize a constant value
-
-**Note:**
-Bee do not support Unicode identifiers in declarations.
 
 ## Statements
 
@@ -50,9 +47,11 @@ Each statement start with one keyword.
 
 **Examples:**
 
+* define  --define a constant, data type or function 
+* create  --will allocate memory for new variables
 * modify  --change variable value
-* write   --output to console result of expressions
-* read    --accept input from console
+* write   --output to console result of an expressions
+* read    --accept input from console into a variable
 
 Multiple statements on same line are separated by ";"
 A statement is optional terminated by ";"
@@ -64,7 +63,7 @@ Statements can be contained in blocks of code.
 * Block of code is ending with same keyword and ";"
 
 **Keywords:**
-* "do"     create multi-path groups of statements based on logical conditions
+* "when"   create multi-path groups of statements based on logical conditions
 * "while"  group of statements that can be repeated multiple times
 
 ## Driver file
@@ -208,7 +207,7 @@ This is myLib.bee file:
 
 -- define a wrapper for external "fib"
 define fib(n ∈ Z) => (x ∈ Z):
-   modify x := myLib.fib(n -> i8);
+   modify x := myLib.fib(n -> Z);
 define;
 
 ```

@@ -2,20 +2,23 @@
           Working with references              
 ----------------------------------------------+
 #driver "nu"
-create d, e ∈ Z; --reference to natural number
-create s := 10 ∈ i8; --> define is i8 native define   
--- assign "by value"
-modify e := s; -- make a clone from s
-modify e += 1; -- increment e value
-print e; --> e = 12 (modified)
-print s; --> s = 11 (unchanged)
--- test modifier effect
-fail if (s ≡ d); 
+create d, e @ Z;    --reference to natural number
+create s := 10 ∈ Z; --> define integer
 -- assign "by reference" 
 modify d :: s; -- explicit boxing address for "s"
 modify d += 1; -- modify underline value of d that is s  
 print s; --> s = 11  (modified)
 print d; --> d = 11  (modified) 
+
+-- wrong assignment using "::"
+trial
+  modify e := s; 
+other
+  -- expect error "Null reference error"
+  print "failed:".$error.message;
+after
+  pass;-- clear error message     
+trial;
  
 -- test modifier effect
 fail if ¬ (s ≡ d); 

@@ -54,7 +54,7 @@ when;
 
 **Notes:**
 
-* Anonymous range expression [n..m] is of type i8
+* Anonymous range expression [n..m] is of type Z
 * Range can apply only to discrete basic types (A,B,Z,N)
 * Control variables can be declared in range using "∈"
 * To check value is in range use operator "∈"

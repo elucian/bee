@@ -3,13 +3,13 @@
 -----------------------------------+
 #driver "ti"
 -- constant define inference
-static a := 10;  -- i8 (integer on 64bit)
-static x := 0.5; -- d8 (double precision)
+static a := 10;  -- Z (integer on 64bit)
+static x := 0.5; -- R (double precision)
 static y := 1/2; -- Q  (rational number)
 static f := $F;  -- L  (logic false)
 static t := $T;  -- L  (logic true)
 -- variable define inference
-create v := (1,2,3);    -- List of i8
+create v := (1,2,3);    -- List of Z
 create s := 'string';    -- String capacity 255
 create c := `c`          -- ASCII Char
 -- explicit conversion + inference

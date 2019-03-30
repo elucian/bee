@@ -143,10 +143,11 @@ define E <: {code ∈ Z, message ∈ S};
 
 ```
 define $zero_div      := {100,"division by zero"}       ∈ E;
-define $val_overflow  := {101,"value overflow"}         ∈ E;
-define $out_of_range  := {102,"value is out of range"}  ∈ E;
-define $over_capacity := {103,"value is over capacity"} ∈ E;
-define $out_of_domain := {104,"out of domain subscript"}∈ E;
+define $null_ref      := {101,"null reference usage"}   ∈ E;
+define $val_overflow  := {102,"value overflow"}         ∈ E;
+define $out_of_range  := {103,"value out of range"}     ∈ E;
+define $over_capacity := {104,"value over capacity"}    ∈ E;
+define $out_of_domain := {105,"subscript out of domain"}∈ E;
 ```
 
 **Read next:** [Structure](structure.md)

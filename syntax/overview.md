@@ -65,33 +65,11 @@ print  x; -- expect x = 5
 
 ## Data type
 
-Bee use 4 kind of data types:
+Bee use 3 kind of data types:
 
-1. native data types;
-2. basic data types;
-3. composite data types;
-4. user defined types;
-
-**Native types**
-
-Native types names are using one lowerwhen letter and a number, representing the number of bytes used. These types are compatible with C++ native types. Are used to improve performance. 
-
-define | name             | size
------|------------------|---------------
- b1  | single byte      | 1 byte
- b2  | Intel word       | 2 bytes
- c1  | char (ASCII)     | 1 byte 
- c2  | expanded (DBCS)  | 2 byte 
- n4  | unsigned short   | 4 bytes 
- n8  | unsigned long    | 8 bytes  
- i4  | short integer    | 4 bytes   
- i8  | long integer     | 8 bytes
- f4  | single precision | 4 bytes
- f8  | double precision | 8 bytes
-  
-**notes:** 
-* Using type inference with ":=" create native types;
-* Using type inference with ":" create basic types;
+1. basic data types;
+2. composite data types;
+3. user defined types;
 
 **Basic Types**
 
@@ -102,9 +80,8 @@ Bee basic data types have information about:
 1. capacity
 1. limits  (min/max)
 1. access  (private or public or local)
-1. storage (memory  or registry)
 
-Basic types are represented with one single upperwhen ASCII character.
+Basic types are represented with one single upper-case character.
 
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
@@ -112,7 +89,7 @@ Basic types are represented with one single upperwhen ASCII character.
 | Binary      |B  | Positive short number (4 bytes)
 | Natural     |N  | Positive large number (8 bytes) 
 | Integer     |Z  | Positive or negative number 
-| Logical     |L  | Logical number {0,1}
+| Logical     |L  | Logical number {$F,$T}
 | Rational    |Q  | Rational number ¹⁄₂ ¹⁄₃ ²⁄₃ ...
 | Real        |R  | Real number 
 | Exception   |E  | Exception object: {code, message, line}
@@ -148,9 +125,9 @@ Bee define a collection using a special notation based on brackets.
 
 | sym| Collection type
 |----|------------------------------------------------------------------
-| [] | Array \|  Matrix 
-| {} | Hash Map \| Set 
 | () | List \| Expression
+| [] | Array \|  Matrix 
+| {} | Cluster \| Table \| Object
 
 ## Constant declaration
 
@@ -206,8 +183,7 @@ One can modify variables using "modify" statement.
 
 **example**
 ```
-create a := 10 ∈ i8; -- native variable
-create b := 0  ∈ Z;  -- basic variable
+create a := 10, b := 0 ∈ Z;  
 
 modify b := a + 1; -- modify b 10->11 
 print  b;          -- expected 11
@@ -215,7 +191,7 @@ print  b;          -- expected 11
 
 **notes:** 
 * Multiple variables can be modified all at once when separated by comma;
-* One modify statement can use one single operator ":=" or "::";
+* The modify statement can use only operator ":=" or "::";
 
 **Examples:**
 ```
@@ -239,7 +215,7 @@ modify x, y := 10.5;  -- modify value of x and y
 
 ## Type declaration
 
-User can define composite types and sub-types using operator "<:".
+User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
 --declare new type
@@ -371,12 +347,12 @@ modify y := b -> L; -- y = $T
 **Notes:** 
 * Only integer part of a number is used in conversion;
 * Fraction is truncated before conversion to logic type;
-* A string that contains "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: 1
-* A string that contains "No", "no", "False", "true", "F" or "f" or "0" convert to: 0
+* A string that contains "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: $T
+* A string that contains "No", "no", "False", "true", "F" or "f" or "0" convert to: $F
 
 ## Reference
 
-In Bee all values and composite types are references except native types. 
+In Bee all values and composite types are references to native types. 
 
 **modify**
 
@@ -385,18 +361,19 @@ In Bee all values and composite types are references except native types.
 
 **example**
 ```
-create i := 10 ∈ i8;  -- native type
-create j ∈ Z;         -- references
+create i := 10 ∈ Z;  -- basic type
+create j :: i @ Z;   -- reference
+create k @ Z;        -- null reference
 
 -- boxing using "::" (borrow address)
-modify j :: i; -- boxing i := 12 
+modify k :: i; -- boxing i := 12 
 modify i += 1; -- modify i := 13
-print  j; --> expect 13 (modified)
+print  k; --> expect 13 (modified)
 
 -- verify boxing effect
-print j = i; -- 1 same value
-print j ≡ i; -- 1 (true) same reference 
-
+print k ≡ j; -- $T (same)
+print k ≡ i; -- $T (same)
+print j ≡ i; -- $T (same)
 ```
 
 ## Conditional
@@ -416,7 +393,7 @@ The statement is executed only if the condition is 1 = $T.
 1. Conditional can not be associated with any block statement;
 
 ```
-create a ∈ Z;
+create a := 0 ∈ Z;
 
 -- conditional execution
 modify a := 1 if (a = 0);
@@ -438,17 +415,14 @@ These expressions are separated by coma and enclosed in ().
 ```
 create var_name ∈ type;
 
--- single matching with default value
-modify var_name := (expression if condition, default);
-
 -- multiple matching with default value
-modify var_name := (xp1 if cnd1, xp2 if cnd2..., dx);
+modify var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
 
 -- alternative code alignment
 modify var_name := (
-   xp1 if cnd1
-  ,xp2 if cnd2
-  ,dx  );
+   xp1 if cnd1,
+   xp2 if cnd2,
+   dx  );
 ```
 
 **Legend:**
@@ -465,9 +439,8 @@ dx   := default expression (optional condition).
 create x := `0`;
 read (x,"x:>");
 
-create what := ("digit" if x ∈ [`0`..`9`], "letter" if x ∈ [`a`..`z`], "unknown");
-print "x is"._.what;
-
+create kind := ("digit" if x ∈ [`0`..`9`], "letter" if x ∈ [`a`..`z`], "unknown");
+print "x is ".kind; -- expect: "x is digit"
 over;
 ```
 
@@ -527,16 +500,20 @@ when;
 
 ### While
 
-Create repetitive block controlled by a condition.
+Controlled repetitive block:
 
 ```
 while (condition):
   -- repetitive block
-  ...
 else:
   -- alternative path
 while;
 ```
+
+**Notes:** 
+* If condition is true all the time we can end-up in infinite loop;
+* Infinite while can be interrupted by timer directive: {#timer:10s};
+* When timer expire, the loop will terminate. By default timer is 0s;
 
 **example**
 
@@ -551,21 +528,21 @@ while (a > 0):
     write ','; 
   when;
 while;
+print;
 ```
 
 ### Nested while
 
-One while block can be nested inside another.
+One while block can be nested.
 
 **pattern:** 
 
 ```
 while condition: 
-  -- outer block statements
-  ...
+  -- outer block 
+  
   while condition:
-    -- inner block
-    ...
+    -- inner block 
   while;  
   -- continue outer block
   ...
@@ -576,8 +553,6 @@ while condition:
   ...       
 while;
 ```
-
-**Note:** You can not jump outside of a nested while statement.
 
 **example**
 
@@ -605,7 +580,7 @@ The "trial" statement execute a process that can fail for some reason.
 | word  | description
 |-------|------------------------------------------------
 | trial | start and end trial block
-| patch | catch and fix error code
+| error | catch and fix error code
 | other | catch other errors
 | after | executed after trial ends
 | pass  | scrub $error record and end trial
@@ -623,9 +598,9 @@ trial
   fail if (condition);
   fail {code,"message"} if (condition);
   ...    
-patch code:
+error code:
   -- patch statement
-patch code:
+error code:
   -- patch statement  
 ...  
 other
@@ -635,9 +610,9 @@ after
 trial;
 ```
 
-**patch**
+**error**
 
-Patch regions are "exception handlers". Each can rewhen one single error with a specific code.
+Error regions are "exception handlers". Each can resolve one single error with a specific code.
 
 **other**
 
@@ -662,7 +637,7 @@ define E <: {code ∈ Z, message ∈ S};
 create $error ∈ {code ∈ Z, message ∈ S, line ∈ Z};
 ```
 
-User can define his own exceptions with code > 0:
+User can define his own exceptions with code > 200:
 
 **example**
 ```
@@ -698,12 +673,12 @@ define;
 
 ```
 -- method with one result:
-define add(x,y ∈ i8) => (r ∈ i8):
+define add(x,y ∈ Z) => (r ∈ Z):
   modify r := x + y; 
 define;
 
 -- method can be call using "value" or "modify"
-create m := add(0,0); -- create m = 0 ∈ i8
+create m := add(0,0); -- create m = 0 ∈ Z
 
 -- two results "s" and "d"
 define com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
@@ -811,20 +786,20 @@ An method can receive functions as parameters.
 
 **syntax**
 ```
-define act_name(xp_name(param_list) ∈ result_type):
+define method_name( xp_name() ∈ result_type ):
   ...
 define;
 ```
 
 **example**
 ```
--- declare method with lambda function as parameter
+-- declare method with function "cmp" as parameter
 define compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
   modify r := cmp(a,b);
 define;
 
 -- declare λ expressions:
-define lt λ (a,b ∈ Z) => (a < b) ∈ L;
+define lt(a,b ∈ Z) => (a < b) ∈ L;
 
 -- call compare using λ expression as named argument
 create test := compare(1,2,cmp::lt);

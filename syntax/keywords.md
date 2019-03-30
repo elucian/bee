@@ -1,12 +1,12 @@
 ## Bee Keywords
 
-Bee uses 24 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 20 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 01: if,
-09: read, else, exit, fail, pass, over, abort
+04: read, else, exit, fail, pass, over, abort
 08: write, print, while, trial, error, other, after, none
-08: define, modify, create, #import, #driver, #library, #module
+07: define, modify, create, #import, #driver, #library, #module
 ```
 
 ### Definition statements
@@ -42,6 +42,9 @@ Control statements are also known as decision statements.
 | none     | Alternative path executed after else cases
 | while    | Start point for repetitive block
 | trial    | Protect a block of code that may have exceptions
+| error    | Associated with trial to patch one errors
+| other    | Associated with trial to patch other errors
+| after    | Associated with trial to finalize the trial block
 
 ## Interruption keywords
 
