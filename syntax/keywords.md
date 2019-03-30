@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee uses 20 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 23 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 01: if,
