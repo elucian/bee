@@ -498,6 +498,35 @@ else:
 when;
 ```
 
+### Switch
+
+Is a multi-path selector based on a single value:
+
+**pattern**
+
+* "var" can be any variable or expression;
+* "val" can be a value or expression;
+
+```
+switch var:  
+  is val1:
+    -- match first
+  is val2:
+    -- match second
+  in (val1,val2,val3 ...):
+    -- match third
+  in [min..max]:
+    -- match forth
+none:
+  -- default match 
+switch;
+```
+
+**Note:**: 
+
+* Switch is automatically break at first match unless "," is used;
+* If a statement end with "," instead of ";" next case is evaluated;
+
 ### While
 
 Controlled repetitive block:

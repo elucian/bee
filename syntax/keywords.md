@@ -1,12 +1,12 @@
 ## Bee Keywords
 
-Bee uses 23 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 26 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
-01: if,
-04: read, else, exit, fail, pass, over, panic
+03: if, is, in
+07: read, else, exit, fail, pass, over, panic
 08: write, print, while, trial, error, other, after, none
-07: define, modify, create, #import, #driver, #library, #module
+08: define, create, modify, switch, #import, #driver, #library, #module
 ```
 
 ### Definition statements
