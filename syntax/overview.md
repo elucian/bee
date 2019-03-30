@@ -517,8 +517,8 @@ switch var:
     -- match third
   in [min..max]:
     -- match forth
-none:
-  -- default match 
+default:
+  -- default branch
 switch;
 ```
 
