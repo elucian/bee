@@ -74,7 +74,16 @@ symbol| description
  \<:  | Define subset \| User composite type
  @    | Define output parameter \| Bound first parameter to type
 
-**Note:** Triple dot "..." is used in switch statement.
+## Triple Symbols
+
+symbol| description
+------|------------------------------------------------------
+ ...  | is used in switch statement to continue
+ .,.  | concatenate two string with comma
+ ._.  | concatenate two strings with space
+ .+.  | concatenate two strings with as they are
+ ./.  | concatenate two strings with / 
+ .\\. | concatenate two strings with \\ 
 
 ## Arithmetic modifiers
 
@@ -140,7 +149,6 @@ symbol| meaning    | notes
   ∧   | AND        | shortcut operator
   ∨   | OR         | shortcut operator
   
-
 
  p  | q  |¬ p |p ~ q |p ↔ q |p ∧ q | p ∨ q
 ----|----|----|------|------|------|--------

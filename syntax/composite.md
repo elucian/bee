@@ -645,8 +645,7 @@ All operators below will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
- .    | Concatenate two string as they are. No trim is performed!
- .+.  | Concatenate two strings and trim first strings!
+ .+.  | Concatenate two strings as tye are no trim is performed!
  ._.  | Concatenate two strings and trim both strings to one space separator
  ./.  | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
  .\\. | Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
