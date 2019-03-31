@@ -113,7 +113,7 @@ sym| code
  ↑ | 24 
  ↓ | 25 
  → | 26 
- if | 27  
+ ← | 27  
 
  
 ## Greek letters

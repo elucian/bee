@@ -1,10 +1,10 @@
-## Bee Index
+## Syntax Index
 
 Design goals: [Wiki Bee](https://github.com/sage-code/bee/wiki)
 
 ## Syntax
 
-You can learn Bee in 2 hours:
+You can learn Bee in less than 2 hours:
 
 1. [Program Structure](structure.md)
 1. [Syntax Overview](overview.md)
