@@ -33,6 +33,9 @@
 * [Abstract Syntax Trees](https://www.cs.mcgill.ca/~cs520/2015/slides/ast.pdf)
 * [Graal & Truffle](https://blog.plan99.net/graal-truffle-134d8f28fb69)
 * [Making a simple Virtual Machine](https://csl.name/post/vm/)
+* [Making LLVM back-end](https://jonathan2251.github.io/lbd/)
+* [Making LLVM https://www.youtube.com/watch?v=AFaIP-dF-RA)
+* [Study of malog](https://medium.com/iskakaushik/eli5-jemalloc-e9bd412abd70)
 
 ## Frameworks
 * [LLVM Tutorial](http://llvm.org/docs/tutorial/)
