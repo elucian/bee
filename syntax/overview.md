@@ -506,15 +506,19 @@ Is a multi-path selector based on a single value:
 
 * "var" can be any variable or expression;
 * "val" can be a value or expression;
+* "..." is optional but an actual symbol;
 
 ```
 switch var:  
   is val1:
     -- match first
+    ...
   is val2:
     -- match second
+    ...
   in (val1,val2,val3 ...):
     -- match third
+    ...
   in [min..max]:
     -- match forth
 other:
@@ -524,8 +528,8 @@ switch;
 
 **Note:**: 
 
-* Switch is automatically break at first match unless "," is used;
-* If a statement end with "," instead of ";" next case is evaluated;
+* Switch is automatically break at first match unless "..." is used;
+* If a case end with "..." after ";" the next case is also evaluated;
 
 ### While
 
@@ -736,7 +740,6 @@ An method sometimes do not have a result and is used for side-effects.
 ```
 rule name(param ∈ type,...):
    -- executable statements
-   ...   
 rule;
 ```
 

@@ -703,7 +703,7 @@ make str := constant * x ∈ S(n);
 **Example:**
 ```
 make sep ∈ U;
-alter sep := "+"."-"*18."+";
+alter sep := "+".+."-"*18.+."+";
 
 print sep;
 print "|*  this is a test  *|";
