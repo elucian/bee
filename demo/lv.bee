@@ -3,17 +3,17 @@
 -------------------------------------------+
 #driver "lv"
 -- local variable
-create x := 1;
+make x := 1;
 -- method side-effects
 define add:
-  modify x := x + 1;
+  alter x := x + 1;
   print x;
 define;
 add; -- will print 2
 add; -- will print 3
 print x; -- x = 3 (is modified)
 -- changing x influence method
-modify x := 0;  -- create x create 
+alter x := 0;  -- make x make 
 add;   -- will print 1
 add;   -- will print 2
 print x; -- x = 2 (modified)

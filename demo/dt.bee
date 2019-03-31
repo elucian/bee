@@ -5,9 +5,9 @@
 #driver "dt"
 -- this type is public (uses dot prefix)
 define  .Data <: {key:A, value:N};
--- create variable using defubed alias
-create x ∈ Data;
-modify x := {key:`a`, create:10};
+-- make variable using defubed alias
+make x ∈ Data;
+alter x := {key:`a`, make:10};
 +---------------------------------------------------+ 
 |* public enumeration type with public elements    *|
 |* elements starting with "." do not need qualifier*|
@@ -29,7 +29,7 @@ define Number <: {
 |* all other elements have previous value  + 1   *|
 +------------------------------------------------+
 -- example of use
-create a := 0;
+make a := 0;
 -- example of use
 when (a = zero):
   print "zero";

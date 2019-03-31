@@ -5,12 +5,12 @@
 -- initialize the system library 
 bee io   := $bee.system.io.(*);
 bee con  := $bee.system.console.(*);
-create file := io.open('foo.txt','+w');  
+make file := io.open('foo.txt','+w');  
 -- write into the file using put
 file.print("Hello World!");
 file.
 -- read the entire content from file
-create content ∈ U;
+make content ∈ U;
 file.read content;
 file.close; 
 -- display the entrie content to console

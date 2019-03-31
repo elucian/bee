@@ -2,17 +2,17 @@
           Working with references              
 ----------------------------------------------+
 #driver "nu"
-create d, e @ Z;    --reference to natural number
-create s := 10 ∈ Z; --> define integer
+make d, e @ Z;    --reference to natural number
+make s := 10 ∈ Z; --> define integer
 -- assign "by reference" 
-modify d :: s; -- explicit boxing address for "s"
-modify d += 1; -- modify underline value of d that is s  
+alter d :: s; -- explicit boxing address for "s"
+alter d += 1; -- alter underline value of d that is s  
 print s; --> s = 11  (modified)
 print d; --> d = 11  (modified) 
 
 -- wrong assignment using "::"
 trial
-  modify e := s; 
+  alter e := s; 
 other
   -- expect error "Null reference error"
   print "failed:".$error.message;

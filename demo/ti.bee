@@ -9,29 +9,29 @@ static y := 1/2; -- Q  (rational number)
 static f := $F;  -- L  (logic false)
 static t := $T;  -- L  (logic true)
 -- variable define inference
-create v := (1,2,3);    -- List of Z
-create s := 'string';    -- String capacity 255
-create c := `c`          -- ASCII Char
+make v := (1,2,3);    -- List of Z
+make s := 'string';    -- String capacity 255
+make c := `c`          -- ASCII Char
 -- explicit conversion + inference
-create t := '1:45am'     -> T12; -- Time
-create t := '23:45'      -> T24; -- Time
-create d := '10/10/2010' -> DMY; -- Date
+make t := '1:45am'     -> T12; -- Time
+make t := '23:45'      -> T24; -- Time
+make d := '10/10/2010' -> DMY; -- Date
 -- optional parameters inference
 define add(x,y:0) => (z ∈ Z):
-  modify z := x + y; 
+  alter z := x + y; 
 define;
 print add(1,1); -- will print 2
 -- argument x is mandatory, y is optional
 define plus(x ∈ Z, y : 1) => (z ∈ Z):
-  modify z := (x + y);  
+  alter z := (x + y);  
 define;
 print plus(1); -- will print 2
 -- input/output arguments, y is optional 
 define inc(x @ Z, y : 0):
-  modify x += 1;  
-  modify y += 1;
+  alter x += 1;  
+  alter y += 1;
 define;
-create i,k := 0; -- references
+make i,k := 0; -- references
 inc(i);   --> i = 1 
 inc(i,k); --> i = 2 and k = 1
 over;

@@ -5,13 +5,13 @@
 
 ** Define: λ Factory
  
--- this define can create λ function
+-- this define can make λ function
 define shift(i ∈ Z) => (g(s ∈ Z) ∈ Z):
-  create g(s ∈ Z) => (s + i) ∈ Z;
+make g(s ∈ Z) => (s + i) ∈ Z;
 define shift;
--- create two define instances
-create inc := shift(+1);  -- increment 
-create dec := shift(-1);  -- decrement 
+-- make two define instances
+make inc := shift(+1);  -- increment 
+make dec := shift(-1);  -- decrement 
 -- test define inc
 print inc(-10); --> 9
 print inc(10);  --> 11

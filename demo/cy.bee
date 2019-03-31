@@ -3,21 +3,21 @@
 -----------------------------------+
 #driver "cy"
 -- declare array of 10 Words
-create a ∈ [Z](10);
+make a ∈ [Z](10);
 -- use while 
-create i ∈ Z; 
+make i ∈ Z; 
 while (i < 10):
-  modify a[i] := i;
-  modify i += 1;
+  alter a[i] := i;
+  alter i += 1;
 while;
 -- while shortcut
-create x := 10;
+make x := 10;
 while (x ≥ 0):
   when (x % 2 = 0):
-    modify x -= 1;
+    alter x -= 1;
   else:
     print x;    
   when;  
-  modify x -= 1;
+  alter x -= 1;
 while;  
 over;

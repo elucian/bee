@@ -4,29 +4,29 @@
 #driver "bs"
 -- bubble sort method
 define sort(this @ [Z]):
-  create n := length(this)-1;
-  create i := 0 ∈ N;
-  create temp @ Z;  
-  create swap := T ∈ L;  
+make n := length(this)-1;
+make i := 0 ∈ N;
+make temp @ Z;  
+make swap := T ∈ L;  
   while swap:
-    modify i := 0;
-    modify swap := $T;
+    alter i := 0;
+    alter swap := $T;
     while (i ≤ n): 
       -- this pair is out of order ?
       when (this[i] < this[i+1]):
         -- swap pair and set swap flag = true
-        modify temp     :: this[i];
-        modify this[i]  :: this[i+1];
-        modify this[i+1]:: temp;
-        modify swap := $T;
+        alter temp     :: this[i];
+        alter this[i]  :: this[i+1];
+        alter this[i+1]:: temp;
+        alter swap := $T;
       when;
-      modify i += 1; 
+      alter i += 1; 
     while;
   while;
 define;
 -- define test & result fixture
-create test   := [1,4,1,5,9,2,6,5,3,5];
-create result := [1,1,2,3,4,5,5,5,6,9];
+make test   := [1,4,1,5,9,2,6,5,3,5];
+make result := [1,1,2,3,4,5,5,5,6,9];
 -- test sort method
 sort(test);
 print test;

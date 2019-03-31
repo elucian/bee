@@ -4,17 +4,17 @@
 #driver "up"
 ** method with two results
 define test(x, y ∈ Z) => (a,b ∈ Z):
-  modify a := x+1;
-  modify b := y+1;
+  alter a := x+1;
+  alter b := y+1;
 define; 
--- unpacking and create new variables
-create n,m <+ test(1,2);
+-- unpacking and make new variables
+make n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
 ** method with structured result
 class Rec <: {x ∈ Z, y ∈ R};
 define (x ∈ Z, y ∈ R) => (r ∈ Rec):
-  modify r.x := x;
-  modify r.y := y;
+  alter r.x := x;
+  alter r.y := y;
 define;
 print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 over; 

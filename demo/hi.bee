@@ -4,8 +4,8 @@
 #driver "hi"
 print "Hello. I'm Bee!";
  
-create name ∈ S;
-create age  ∈ N;
+make name ∈ S;
+make age  ∈ N;
 read(name , "Your name?:");
 read(age  , "Your age:");
 print "hello:".name;

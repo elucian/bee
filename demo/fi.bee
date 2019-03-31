@@ -5,13 +5,13 @@
 -- declare Fibonacci function
 define fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
-    modify y := 1;
+    alter y := 1;
   else:
-    modify y := fib(n - 1) + fib(n - 2);
+    alter y := fib(n - 1) + fib(n - 2);
   when;
 define;
 -- call define fib 
-create r := fib(5):
+make r := fib(5):
 -- print the result
 print r;
 over;
