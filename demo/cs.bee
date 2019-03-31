@@ -11,7 +11,7 @@ print ("a > b") if (a > b);
 
 -- single branch decision
 when (a = b):
-    print ("a = b");
+  print ("a = b");
 when;
 
 -- decision with alternate branch

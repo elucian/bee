@@ -3,20 +3,20 @@
 ----------------------------------------+
 #driver "me"
 -- enumeration with public members
-define Number <: {.zero, .one, .two};
+type Number <: {.zero, .one, .two};
 make test ∈ Number;
 alter test := zero; -- instance of Number
 -- make a method for define Number
-define convert(x @ Number) => (y ∈ S):
+rule convert(x @ Number) => (y ∈ S):
   alter y := ('zero'  if x = zero,
                'one'   if x = one,
                'two'   if x = two,
                'none');
-define;
+rule;
 -- a wrapper method for convert
-define equal(x @ Number, s ∈ S) => (r ∈ L):
+rule equal(x @ Number, s ∈ S) => (r ∈ L):
   alter r := s = x.convert(); 
-define;
+rule;
     
 -- calling test methods 
 print test.convert();     -- will print "zero"

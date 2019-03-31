@@ -3,12 +3,12 @@
 ----------------------------------+
 #driver "fn"
 ** simple λ function
-define add(a, b ∈ Z) => (a + b) ∈ Z;
+rule add(a, b ∈ Z) => (a + b) ∈ Z;
 -- call λ function add
 print add(1, 2);     -- print 3
 print add(-10, 10);  -- print 0
 ** recursive function
-define  fac(n ∈ N) => (1 if n = 0, fac(n-1)) ∈ N;
+rule  fac(n ∈ N) => (1 if n = 0, fac(n-1)) ∈ N;
 print fac(3); -- expect 6
  
 over;

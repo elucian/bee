@@ -3,13 +3,13 @@
 ---------------------------+
 #driver "fi"
 -- declare Fibonacci function
-define fib(n ∈ N) => (y ∈ N): 
+rule fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
     alter y := 1;
   else:
     alter y := fib(n - 1) + fib(n - 2);
   when;
-define;
+rule;
 -- call define fib 
 make r := fib(5):
 -- print the result

@@ -3,11 +3,11 @@
 -----------------------------------+
 #driver "ti"
 -- constant define inference
-static a := 10;  -- Z (integer on 64bit)
-static x := 0.5; -- R (double precision)
-static y := 1/2; -- Q  (rational number)
-static f := $F;  -- L  (logic false)
-static t := $T;  -- L  (logic true)
+name a := 10;  -- Z (integer on 64bit)
+name x := 0.5; -- R (double precision)
+name y := 1/2; -- Q  (rational number)
+name f := $F;  -- L  (logic false)
+name t := $T;  -- L  (logic true)
 -- variable define inference
 make v := (1,2,3);    -- List of Z
 make s := 'string';    -- String capacity 255
@@ -17,21 +17,23 @@ make t := '1:45am'     -> T12; -- Time
 make t := '23:45'      -> T24; -- Time
 make d := '10/10/2010' -> DMY; -- Date
 -- optional parameters inference
-define add(x,y:0) => (z ∈ Z):
+rule add(x,y:0) => (z ∈ Z):
   alter z := x + y; 
-define;
+rule;
+
 print add(1,1); -- will print 2
 -- argument x is mandatory, y is optional
-define plus(x ∈ Z, y : 1) => (z ∈ Z):
+rule plus(x ∈ Z, y : 1) => (z ∈ Z):
   alter z := (x + y);  
-define;
+rule;
 print plus(1); -- will print 2
 -- input/output arguments, y is optional 
-define inc(x @ Z, y : 0):
+rule inc(x @ Z, y : 0):
   alter x += 1;  
   alter y += 1;
-define;
+rule;
+
 make i,k := 0; -- references
-inc(i);   --> i = 1 
-inc(i,k); --> i = 2 and k = 1
+apply inc(i);   --> i = 1 
+apply inc(i,k); --> i = 2 and k = 1
 over;

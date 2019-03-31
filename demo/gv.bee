@@ -4,30 +4,30 @@
 ------------------------------+
 #driver "gv"
 -- declare a global variable $x
-global $x := 1;
+name $x := 1;
 -- use global variable x in method "add"
 -- since add has not parameters and no result
 -- it is just a simple method declaration
-define add1:
+rule add1:
   alter $x += 1;
   print $x;
-define;
+rule;
 -- call a subroutine by name
-add1; -- print 2
-add1; -- print 3
-add1; -- print 4
+apply add1; -- print 2
+apply add1; -- print 3
+apply add1; -- print 4
 print $x; -- expect 4    
 -- declare variable x
 make x := 1;
 -- variable shadowing
-define add2: 
-make x := 0;     -- make a variable x 
+rule add2: 
+  make  x := 0;     -- make a variable x 
   alter x := x + 1; -- increment local variable
   print x;          -- print local x
-define;
-add2;  -- print 1
-add2;  -- print 1
-add2;  -- print 1
+rule;
+apply add2;  -- print 1
+apply add2;  -- print 1
+apply add2;  -- print 1
 print x; -- x remain 4
  
 over;

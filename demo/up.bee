@@ -3,18 +3,18 @@
 -------------------------------------+
 #driver "up"
 ** method with two results
-define test(x, y ∈ Z) => (a,b ∈ Z):
+rule test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x+1;
   alter b := y+1;
-define; 
+rule; 
 -- unpacking and make new variables
 make n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
 ** method with structured result
-class Rec <: {x ∈ Z, y ∈ R};
-define (x ∈ Z, y ∈ R) => (r ∈ Rec):
+type Rec <: {x ∈ Z, y ∈ R};
+rule (x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.x := x;
   alter r.y := y;
-define;
+rule;
 print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 over; 

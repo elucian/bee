@@ -3,7 +3,7 @@
 ----------------------------------+
 #driver "ct"
 -- enumeration is a type 
-define Enum := {fst:1, snd, trd}; 
+type Enum := {fst:1, snd, trd}; 
 -- print enumeration members
 print (Enum.fst); -- 1
 print (Enum.snd); -- 2
@@ -21,25 +21,25 @@ print s["first"];  -- 1
 print s["second"]; -- 2
 print s["third"];  -- 3
 -- array with capacity
-array v1 := [Z](10);  -- vector of 10 integer elements
-array v2 := [R](2,3); -- matrix of 2 rows and 3 columns
+make v1 := [Z](10);  -- vector of 10 integer elements
+make v2 := [R](2,3); -- matrix of 2 rows and 3 columns
 -- dynamic alter / map collections
-tree  p := {A};    -- alter collection of ASCII characters
-index m := {(R:S)};  -- hash map of strings with real key
+make p := {A};    -- alter collection of ASCII characters
+make m := {(R:S)};  -- hash map of strings with real key
 -- Establish map using literals
 alter m := {`a`:1, `b`:2, `c`:3};
 -- complex list examples
-list := (A);        -- a list of characters
-list := (R);        -- a list of real numbers
-list := ((A));      -- a list of lists of characters
-list := ([A](10));  -- a list of array with capacity 10
+make := (A);        -- a list of characters
+make := (R);        -- a list of real numbers
+make := ((A));      -- a list of lists of characters
+make := ([A](10));  -- a list of array with capacity 10
 -- Array and Matrix literals
-array  l2 := [1,2,3];      -- array of 3 elements
-matrix m2 := [[1,1],[2,2]];-- matrix of 2x2
+make l2 := [1,2,3];      -- array of 3 elements
+make m2 := [[1,1],[2,2]];-- matrix of 2x2
 -- Demo for "set" operations
-tree s1 := {Z}; -- empty set of strings
+make s1 := {Z}; -- empty set of strings
 -- Initialized set of 3 elements
-tree s2 := {1, 2, 3};
+make s2 := {1, 2, 3};
 -- append one element into a set
 alter s1 := s1 + 0; -- {0}
 alter s1 := s1 + 1; -- {0,1}
@@ -48,8 +48,8 @@ alter s1 := s1 + 2; -- {0,1,2}
 alter s1 := s1 - 1; -- {0,2}
 alter s1 := s1 - 2; -- {0}
 -- set literals using type inference
-tree s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
-tree s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
+make s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
+make s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
 -- union between 2 sets (a, b) are nod duplicated
 print (s3 ∨ s4); -- {`a`,`b`,`c`,`d`}
 -- intersection between 2 sets

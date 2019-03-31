@@ -3,7 +3,7 @@
 ------------------------------+
 #driver "pm"
 -- pattern matching expression
-define pm(p1,p2 ∈ N) =>
+rule pm(p1,p2 ∈ N) =>
   (0 if (p1 = 0 )
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
