@@ -734,8 +734,8 @@ An method sometimes do not have a result and is used for side-effects.
 
 **pattern**
 ```
-rule <name>(<param> ∈ <type>,...):
-   [<statement>];
+rule name(param ∈ type,...):
+   -- executable statements
    ...   
 rule;
 ```
@@ -848,8 +848,8 @@ print  test; -- expect $T
 Parameters are variables defined in an method or function signature.
 
 **Notes:**   
-* Native type parameters are pass by value;
-* Reference type parameters can be pass by value or by reference;
+* Basic arguments and literal arguments are pass by value;
+* Composite type parameters can be pass by reference or by value;
 * For input/output parameters we must using "@" instead of "∈";
 
 **note**

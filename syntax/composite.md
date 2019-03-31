@@ -281,18 +281,19 @@ alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 
 ## Table
 
-A table is a collection of (key:value) pairs sorted by key.
+A table is a hash collection of (key:value) pairs sorted by key.
 
 **syntax**
 ```
+-- define a table type
 type type_name <: {(key_type : value_type)}
+
+-- declare a new empty table
+make new_map := {} ∈ type_name;
 ```
 
 **example**
 ```
--- declare a new empty hash map
-make map := {} ∈ type_name;
-
 -- initial value of map
 alter map := {'a':"first", 'b':"second"};
 
@@ -308,9 +309,9 @@ print map['b']; -- second
 print map['c']; -- third
 
 -- remove an element by key
-scrap map['a']; --> remove "first" element
+clean map['a']; --> remove "first" element
 print map;      --> expected: {'b'="second", 'c'="third"}
-
+
 ```
 
 **Note:** Hash map operators work like for sets
@@ -366,7 +367,7 @@ while;
 
 -- print all elements of array
 print test;
-
+over;
 ```
 
 **Output:**
@@ -390,7 +391,7 @@ Arrays can have optional index range [!..?]
 **syntax**
 ```
 --one dimensional array with elements starting from n to m
-array array_name := [member_type](n..m);  
+make array_name := [member_type](n..m);  
 
 print array_name[!]; -- print first element
 print array_name[?]; -- print last element
@@ -427,7 +428,7 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-make array_name ∈ [type](c);
+make array_name ∈ [element_type](c);
 
 -- slice creation using "::"
 make slice_name :: array_name[n..m];
