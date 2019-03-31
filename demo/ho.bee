@@ -6,7 +6,7 @@
 ** Define: λ Factory
  
 -- this define can make λ function
-rule shift(i ∈ Z) => (g(s ∈ Z) ∈ Z):
+rule shift(i ∈ Z) => g(s ∈ Z):
   make g(s ∈ Z) => (s + i) ∈ Z;
 rule shift;
 -- make two define instances

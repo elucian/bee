@@ -16,8 +16,6 @@ trial
 other
   -- expect error "Null reference error"
   print "failed:".$error.message;
-after
-  pass;-- clear error message     
 trial;
  
 -- test modifier effect
