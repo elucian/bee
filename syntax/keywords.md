@@ -1,12 +1,12 @@
 ## Bee Keywords
 
-Bee uses 26 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 29 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 03: if, is, in
-07: read, else, exit, fail, pass, over, panic
-08: write, print, while, trial, error, other, after, none
-08: define, create, modify, switch, default, #import, #driver, #library, #module
+11: type, safe, make, read, rule, else, exit, fail, pass, over, panic
+10: write, print, alter, clear, while, trial, error, other, after, none
+05: switch, #import, #driver, #library, #module
 ```
 
 ### Definition statements
@@ -15,9 +15,9 @@ Next statements are used to import modules or declare something.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| import   | Import Assembly \| start assembly code
-| define   | Declare: type, method, function, function
-| create   | Create a variable/value using "∈", ":=" or "::"
+| type     | Declare: data type
+| safe     | Create a constant
+| make     | Create a variable 
 
 
 ### Execution statements
@@ -29,7 +29,7 @@ Next statements represents actions. Also called Imperative statements.
 | read     | Accept user input from console 
 | write    | Add something to console buffer but no new line 
 | print    | Output expression result to console 
-| modify   | Mutate variable value using an expression
+| alter    | Mutate variable value using an expression
 
 ## Control statements
 

@@ -1,0 +1,27 @@
++--------------------------
+ Switch statement demo
+---------------------------+
+#driver "sw"
+
+ msg ∈ S;
+ var ∈ Z;
+read(var,"var:>");
+switch var:
+  is 0:
+    msg := "zero";
+  is 1:
+    msg := "one";
+  in (1,3,5,7,9):
+    msg := "odd";
+  in [1..3]:
+    msg := "small";
+  in [4..9]:
+    msg := "large";
+default:
+  msg := "Undexpected";
+switch;
+
+print msg;
+
+over;
+```

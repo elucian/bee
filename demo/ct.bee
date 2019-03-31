@@ -10,7 +10,7 @@ print (Enum.snd); -- 2
 print (Enum.trd); -- 3
 -- define hash map variable
 make s ∈ {(A:N)}; 
--- assign (name:value) pairs
+-- assign (key:value) pairs
 alter s :=
   {
    ("first" : 1), 

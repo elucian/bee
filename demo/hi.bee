@@ -4,9 +4,16 @@
 #driver "hi"
 print "Hello. I'm Bee!";
  
-make name ∈ S;
-make age  ∈ N;
-read(name , "Your name?:");
-read(age  , "Your age:");
-print "hello:".name;
+make your_name ∈ S;
+make your_age  ∈ N;
+read(your_name , "Your name?:");
+read(your_age  , "Your age:");
+print "hello:".your_name;
+
+when (age < 21):
+  print "have a candy!"
+else:
+  print "have a bear!"
+when;
+
 over;

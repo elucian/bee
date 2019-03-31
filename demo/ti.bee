@@ -3,11 +3,11 @@
 -----------------------------------+
 #driver "ti"
 -- constant define inference
-name a := 10;  -- Z (integer on 64bit)
-name x := 0.5; -- R (double precision)
-name y := 1/2; -- Q  (rational number)
-name f := $F;  -- L  (logic false)
-name t := $T;  -- L  (logic true)
+safe a := 10;  -- Z (integer on 64bit)
+safe x := 0.5; -- R (double precision)
+safe y := 1/2; -- Q  (rational number)
+safe f := $F;  -- L  (logic false)
+safe t := $T;  -- L  (logic true)
 -- variable define inference
 make v := (1,2,3);    -- List of Z
 make s := 'string';    -- String capacity 255

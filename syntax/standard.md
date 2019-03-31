@@ -123,14 +123,15 @@ Other rules in system.io
 |---------|------------------------------------------ 
 | exist   | Check if file exist on disk
 | open    | Open a file for read or print
+| save    | Save file modifications to disk
+| undo    | Restore file modification before save
 | close   | Close a file after using it
-| erase   | Remove a file from disk
-| scrub   | Remove all files from directory
-| clean   | Remove all files and folders /recursive  
-| alter   | Make a directory
-| remove  | Remove a directory
-| list    | Read a list of files and folders from directory
-| folder  | Current working folder name 
+| scrap   | Remove one or more file from disk
+| new     | Make a new directory
+| remove  | Remove a directory / with files
+| list    | Read a list of files from directory
+| tree    | Read tree of directory in memory
+| where   | Current working folder name 
 | change  | Change current working folder
 
 ## Exception
@@ -138,16 +139,16 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-define E <: {code ∈ Z, message ∈ S};
+safe E <: {code ∈ Z, message ∈ S};
 ```
 
 ```
-define $zero_div      := {100,"division by zero"}       ∈ E;
-define $null_ref      := {101,"null reference usage"}   ∈ E;
-define $val_overflow  := {102,"value overflow"}         ∈ E;
-define $out_of_range  := {103,"value out of range"}     ∈ E;
-define $over_capacity := {104,"value over capacity"}    ∈ E;
-define $out_of_domain := {105,"subscript out of domain"}∈ E;
+safe $zero_div      := {100,"division by zero"}       ∈ E;
+safe $null_ref      := {101,"null reference usage"}   ∈ E;
+safe $val_overflow  := {102,"value overflow"}         ∈ E;
+safe $out_of_range  := {103,"value out of range"}     ∈ E;
+safe $over_capacity := {104,"value over capacity"}    ∈ E;
+safe $out_of_domain := {105,"subscript out of domain"}∈ E;
 ```
 
 **Read next:** [Structure](structure.md)

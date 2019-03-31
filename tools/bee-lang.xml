@@ -14,24 +14,24 @@
             <Keywords name="Numbers, suffix2"></Keywords>
             <Keywords name="Numbers, range">AH</Keywords>
             <Keywords name="Operators1">. , ~ + - : ; @ * / % = &lt; &gt; ! ? &amp; | ^</Keywords>
-            <Keywords name="Operators2">&#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; _ &#x2194; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x2190; &#x2192; &#x2191; &#x2193; if</Keywords>
+            <Keywords name="Operators2">&#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; _ &#x2194; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x2190; &#x2192; &#x2191; &#x2193; if is in</Keywords>
             <Keywords name="Folders in code1, open"></Keywords>
             <Keywords name="Folders in code1, middle"></Keywords>
             <Keywords name="Folders in code1, close"></Keywords>
             <Keywords name="Folders in code2, open"></Keywords>
             <Keywords name="Folders in code2, middle"></Keywords>
             <Keywords name="Folders in code2, close"></Keywords>
-            <Keywords name="Folders in comment, open"></Keywords>
+            <Keywords name="Folders in comment, open">|*</Keywords>
             <Keywords name="Folders in comment, middle"></Keywords>
-            <Keywords name="Folders in comment, close"></Keywords>
-            <Keywords name="Keywords1">import define create </Keywords>
-            <Keywords name="Keywords2">when else none while trial error other after&#x000D;&#x000A;</Keywords>
+            <Keywords name="Folders in comment, close">*|</Keywords>
+            <Keywords name="Keywords1">import safe type make</Keywords>
+            <Keywords name="Keywords2">rule node when else none switch default  while trial error other after &#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords3">exit fail pass over panic</Keywords>
-            <Keywords name="Keywords4">execute default modify read write print erase plot draw show hide</Keywords>
-            <Keywords name="Keywords5">clear first last bee asm cpp</Keywords>
+            <Keywords name="Keywords4">apply alter clear read write print erase plot draw show hide</Keywords>
+            <Keywords name="Keywords5">exist open close scrap clean remove list change new where save undo tree</Keywords>
             <Keywords name="Keywords6">B L W Z N Q R C D T H&#x000D;&#x000A;A S U &#x000D;&#x000A;F X E&#x000D;&#x000A;P V G&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$</Keywords>
-            <Keywords name="Keywords8">#</Keywords>
+            <Keywords name="Keywords8"># </Keywords>
             <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12` 13 14` 15&apos; 16\ 17&apos; 18&#x00AB; 19 20&#x00BB; 21|* 22 23*|</Keywords>
         </KeywordLists>
         <Styles>
@@ -55,7 +55,7 @@
             <WordsStyle name="DELIMITERS2" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117493807" />
             <WordsStyle name="DELIMITERS3" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="50380859" />
             <WordsStyle name="DELIMITERS4" fgColor="FFFF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS5" fgColor="FFFF00" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117702655" />
+            <WordsStyle name="DELIMITERS5" fgColor="00FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117702655" />
             <WordsStyle name="DELIMITERS6" fgColor="FFFF00" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="DELIMITERS7" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="DELIMITERS8" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />

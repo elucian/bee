@@ -16,7 +16,6 @@
 * [Comments](#comments)
 * [Data types](#data-types)
 
-
 ## Directives
 Compiler directive symbol "#" is used to identify file type.
 Bee has 3 kind of program files each with different role: 
@@ -63,7 +62,7 @@ Statements can be contained in blocks of code.
 * Block of code is ending with same keyword and ";"
 
 **Keywords:**
-* "when"   create multi-path groups of statements based on logical conditions
+* "when"   make multi-path groups of statements based on logical conditions
 * "while"  group of statements that can be repeated multiple times
 
 ## Driver file
@@ -81,14 +80,14 @@ Rogue statements are executed top down in synchronous mode.
 ```
 #driver "main"
 
-create i, c ∈ Z;
-modify c := $params.count;
+make i, c ∈ Z;
+alter c := $params.count;
 
 over if (c = 0);
 -- comma separated parameters
 while (i > c):
   write $params[i];
-  modify i += 1;
+  alter i += 1;
   write "," if (i < c);
 while;
 -- print the buffer to console
@@ -171,18 +170,18 @@ This is useful for a long function to know that is public at the end.
 
 ```
 --public constant
-define .pi := 3.14;
+rule .pi := 3.14;
 
 --public variable
-create .v ∈ N;
+make .v ∈ N;
 
 --public λ function
-define .f(x ∈ N) => (x + 1) ∈ N;
+rule .f(x ∈ N) => (x + 1) ∈ N;
 
 --public method
-define .m(x, y ∈ N, r @ N):
+rule .m(x, y ∈ N, r @ N):
   r := x + y;
-define;
+rule;
 
 ```
 
@@ -206,9 +205,9 @@ This is myLib.bee file:
 #import $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
-define fib(n ∈ Z) => (x ∈ Z):
-   modify x := myLib.fib(n -> Z);
-define;
+rule fib(n ∈ Z) => (x ∈ Z):
+   alter x := myLib.fib(n -> Z);
+rule;
 
 ```
 

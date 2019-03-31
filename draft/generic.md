@@ -5,28 +5,27 @@ A generic method is using a variable of type "X".
 **bubble sort**
 
 ```
-define sort<X>(array @ [X], gt λ (X,X) ∈ L ):
-  create n := length(array)-1 ∈ N; 
-  create swap := $T ∈ L;
-  create temp ∈ X;
-  create i ∈ N;
-  modify 
+rule sort<X>(array @ [X], gt λ (X,X) ∈ L ):
+  make n := length(array)-1 ∈ N; 
+  make swap := $T ∈ L;
+  make temp ∈ X;
+  make i ∈ N;
   while swap:
-    modify i := 0;
-    modify swap := $F; -- false
+    alter i := 0;
+    alter swap := $F; -- false
     while (i ≤ n): 
       -- this pair is out of order ?
       when gt(array[i], array[i+1]):
         -- swap pair and set swap flag = true
-        modify temp :: array[i];
-        modify array[i]  :: array[i+1];
-        modify array[i+1]:: temp;
-        modify swap := $T; -- true
+        alter temp :: array[i];
+        alter array[i]  :: array[i+1];
+        alter array[i+1]:: temp;
+        alter swap := $T; -- true
       when;
-      modify i +=1;
+      alter i +=1;
     while; 
   while;
-define;
+rule;
 ```
 
 **Notes:**
@@ -37,22 +36,22 @@ define;
 **sort usage**
 
 ```
-define Person  <: { name ∈ S, age ∈ N };
+type Person  <: { name ∈ S, age ∈ N };
 
 -- tagine order action for array of Persons
-define order(cat @ [Person]):
+rule order(cat @ [Person]):
   sort<Person>(cat, λ(a, b) => (a.name > b.name));
-define;
+rule;
 
 -- tagine clients and suppliers
-create clients   := [Person](100);
-create suppliers := [Person](10);
+make clients   := [Person](100);
+make suppliers := [Person](10);
 -- populate somehow
 ...
 
 -- use new order action to sort
-order(clients);
-order(suppliers);
+apply order(clients);
+apply order(suppliers);
 ```
 
 ## Anonymous Lambda
@@ -62,14 +61,14 @@ This design uses one _anonymous λ function_:
 
 **function**
 ```
- λ(param, param,...) => (expression)
+ (param, param,...) => (expression)
 ```
 
 This can be used to create an argument for a _signature reference_:
 
 **signature**
 ```
- (id λ (type,type, ...) ∈ type)
+ (id(type,type, ...) ∈ type)
 ```
 
 To modify an anonymous function as argument by name Bee uses: "::"

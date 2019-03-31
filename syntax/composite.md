@@ -33,16 +33,16 @@ Range notation is used to type a subtype.
 **syntax**
 
 ```
-define range_name <: basic_type[min..max]
+type range_name <: basic_type[min..max]
 ```
 
 **Examples:**
 ```
 -- sub-type declarations
-define Small     <: B[0..9];
-define Alfa      <: A['a'..'Z'];
-define Positive  <: Z[0..+∞];
-define Negative  <: Z[-∞..-1];
+type Small     <: B[0..9];
+type Alfa      <: A['a'..'Z'];
+type Positive  <: Z[0..+∞];
+type Negative  <: Z[-∞..-1];
 
 --Check variable belong to sub-type
 when ('x' ∈ Alfa):
@@ -65,25 +65,25 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 
 **pattern**
 ```
-define type_name <: { name1:0, name2, name3};
+type type_name <: { name1:0, name2, name3};
 
-create a, b, c ∈ type_name;
+make a, b, c ∈ type_name;
 
-modify a := type_name.name1; -- a=2
-modify b := type_name.name2; -- b=3
-modify c := type_name.name3; -- c=4
+alter a := type_name.name1; -- a=2
+alter b := type_name.name2; -- b=3
+alter c := type_name.name3; -- c=4
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for individual values
 
 ```
 -- using public elements in enumeration
-define type_names <: { .name0, .name1 };
+type type_names <: { .name0, .name1 };
 
-create a, b ∈ type_name;
+make a, b ∈ type_name;
 
-modify  a := name0; -- a value := 0
-modify  b := name1; -- b value := 1
+alter  a := name0; -- a value := 0
+alter  b := name1; -- b value := 1
 ```
 
 ## List
@@ -92,7 +92,7 @@ A list is an ordered collection of values separated by comma and enclosed in bra
 
 **Syntax**
 ```
-define <variable> := () ∈ (value_type);
+type <variable> := () ∈ (value_type);
 ```
 
 **Notes**: List members must have same data type
@@ -100,10 +100,10 @@ define <variable> := () ∈ (value_type);
 **example**
 ```
 -- create a list of ASCII characters
-create a := () ∈ (A);
+make a := () ∈ (A);
 
 -- create a list using a literal
-create b := ('1','a','2','b') ∈ (A); 
+make b := ('1','a','2','b') ∈ (A); 
 ```
 
 **empty list**
@@ -111,10 +111,10 @@ create b := ('1','a','2','b') ∈ (A);
 An empty list is represented like this: ()
 
 ```
-create a := ();      -- empty list
-create b := (1,2,3); -- initialize list using modify
+make a := ();      -- empty list
+make b := (1,2,3); -- initialize list using modify
 
-modify a := b; -- modify a and throw to garbage ()
+alter a := b; -- modify a and throw to garbage ()
 ```
 
 **Unpacking**
@@ -125,17 +125,17 @@ A list can be assigned to multiple variables using unpacking:
 
 ```
 --create 3 new variables using list literal
-create x, y, z ∈ Z;
+make x, y, z ∈ Z;
 
 --unpacking modify all 3 value
-modify x, y, z <+ (97, 65, 40);
+alter x, y, z <+ (97, 65, 40);
 
 print x; -->  97
 print y; -->  65
 print z; -->  40
 
 --anonymous list with string template
-create s := "{0} > {1} > {2}" <+ (x, y, z); 
+make s := "{0} > {1} > {2}" <+ (x, y, z); 
 print s; -- "97 > 65 > 40"
 ```
 
@@ -145,21 +145,21 @@ An method can produce multiple results in a list.
 
 ```
 -- have a list of results
-define test(x,y ∈ Z) => (r, c ∈ Z):
-  modify r += x+1;
-  modify c += y+1;
-define;
+rule test(x,y ∈ Z) => (r, c ∈ Z):
+  alter r += x+1;
+  alter c += y+1;
+rule;
 
-create n, m ∈ Z;
+make n, m ∈ Z;
 
 -- unpacking the result
-modify n, m <+ test(1,2);
+alter n, m <+ test(1,2);
 
 print n; --will print 2
 print m; --will print 3
 
--- ignoring the result
-modify _,_ <+ test(3,4);
+-- ignoring first result
+alter _,m <+ test(3,4);
 
 ```
 
@@ -168,11 +168,11 @@ modify _,_ <+ test(3,4);
 List members can be ignored when unpacking using anonymous variable: "_"
 
 ```
-create lst := (0, 1, 2, 3, 4, 5);
-create x, y, z ∈ Z;
+make lst := (0, 1, 2, 3, 4, 5);
+make x, y, z ∈ Z;
 
 -- first element and last 2 are ignored
-modify _,x,_,z := lst;
+alter _,x,y,z <+ lst;
 
 ```
 
@@ -185,26 +185,27 @@ modify _,x,_,z := lst;
 ### List processing
 
 ```
-create l1 := (1, 2, 3);
-create l2 := (2, 3, 4);
-create l3, l4, l5 := ();
+make l1 := (1, 2, 3);
+make l2 := (2, 3, 4);
+make l3, l4, l5 := ();
 
 --addition between lists "+" 
-modify l3 := l1 + l2; --(1,2,3,2,3,4)
+alter l3 := l1 + l2; --(1,2,3,2,3,4)
 
 --difference between lists "-"
-modify l4 := l1 - l2;  -- (1)
-modify l5 := l2 - l1;  -- (4)
+alter l4 := l1 - l2;  -- (1)
+alter l5 := l2 - l1;  -- (4)
 ```
 
 **List traversal**
 
 ```
-create   := ('a', 'b', 'c');
-create x := list.first();
-while ¬ list.last();
+make list := (`a`, `b`, `c`);
+make x @ A;
+alter x  := list[!];
+while ¬(x ≡ list[?]);
   write x;
-  modify x  := list.next(element);
+  alter x :: next(x);
   write ',';  
 while;
 ```
@@ -214,17 +215,17 @@ while;
 A stack is a LIFO collection of elements.
 
 ```
-create a := (1, 2, 3);
-create last ∈ N;
+make a := (1, 2, 3);
+make last ∈ N;
 
 -- using stack with operator "+="
-modify a += 4; -- (1,2,3,4)
+alter a += 4; -- (1,2,3,4)
 
 -- read last element using "-="
-modify last := a[?];  -- last := 4, a := [1,2,3,4]
+alter last := a[?];  -- last := 4, a := [1,2,3,4]
 
 -- remove last element using pop
-modify last -= a[?];  -- last := 4, a := [1,2,3]
+alter last -= a[?];  -- last := 4, a := [1,2,3]
 ```
 
 ## Queue
@@ -232,17 +233,17 @@ modify last -= a[?];  -- last := 4, a := [1,2,3]
 A queue is a FIFO collection of elements.
 
 ```
-create q := (1,2,3);
-create  first : N;
+make q := (1,2,3);
+make first : N;
 
 -- using enqueue operator "+:" 
-modify q += 4; -- (1,2,3,4)
+alter q += 4; -- (1,2,3,4)
 
 -- read first element using "=" and "modify"
-modify first := a[!]; --> 1 and a := (1,2,3,4)
+alter first := a[!]; --> 1 and a := (1,2,3,4)
 
 -- dequeue first element using deq method
-modify first -= a[!]; --> 1 and a := (2,3,4)
+alter first -= a[!]; --> 1 and a := (2,3,4)
 ```
 
 ## Cluster
@@ -252,23 +253,23 @@ A cluster is a sorted collection of unique values.
 ```
 --define a cluster
 
-create s1 := {1,2,3} ∈ {N}; 
-create s2 := {2,3,4} ∈ {N};
-create s  := {}      ∈ {N}; -- empty
+make s1 := {1,2,3} ∈ {N}; 
+make s2 := {2,3,4} ∈ {N};
+make s  := {}      ∈ {N}; -- empty
 
 
 -- specific operations
-modify s := s1 ∪ s2; --{1,2,3,4} -- union
-modify s := s1 ∩ s2; --{2,3}     -- intersection
-modify s := s1 - s2; --{1}       -- difference 1
-modify s := s2 - s1; --{4}       -- difference 2
+alter s := s1 ∪ s2; --{1,2,3,4} -- union
+alter s := s1 ∩ s2; --{2,3}     -- intersection
+alter s := s1 - s2; --{1}       -- difference 1
+alter s := s2 - s1; --{4}       -- difference 2
 
 -- declare a new set
-cluster a := {1,2,3} ∈ {N};
+make a := {1,2,3} ∈ {N};
 
 -- using operator +/- to mutate set a
-modify a := a + 4; --> {1,2,3,4} --append 4
-modify a := a - 3; --> {1,2,4}   --remove 3 (not 3)
+alter a := a + 4; --> {1,2,3,4} --append 4
+alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 
 ```
 
@@ -284,22 +285,22 @@ A table is a collection of (key:value) pairs sorted by key.
 
 **syntax**
 ```
-define type_name <: {(key_type : value_type)}
+type type_name <: {(key_type : value_type)}
 ```
 
 **example**
 ```
 -- declare a new empty hash map
-create map := {} ∈ type_name;
+make map := {} ∈ type_name;
 
 -- initial value of map
-modify map := {'a':"first", 'b':"second"};
+alter map := {'a':"first", 'b':"second"};
 
 -- create new element
-modify map['c'] := "third";
+alter map['c'] := "third";
 
 -- modification of non existent element will fail
-modify map['e'] := "forth"; --> ERROR
+alter map['e'] := "forth"; --> ERROR
 
 -- finding elements by key
 print map['a']; -- first
@@ -307,7 +308,7 @@ print map['b']; -- second
 print map['c']; -- third
 
 -- remove an element by key
-erase map['a']; --> remove "first" element
+scrap map['a']; --> remove "first" element
 print map;      --> expected: {'b'="second", 'c'="third"}
 
 ```
@@ -319,9 +320,9 @@ print map;      --> expected: {'b'="second", 'c'="third"}
 We can check if an element is included in a collection.
 
 ```
-define  Tmap ∈ {(A:U)};
+type  Tmap ∈ {(A:U)};
 
-create map  := {('a':"first"), ('b':"second")} ∈ Tmap;
+make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
 when ('a' ∈ map):
   print("a is found");
@@ -337,9 +338,9 @@ Bee define Array variable using notation := `[]()`.
 
 **syntax**
 ```
-create array_name ∈  [type];      --one dimension array with unknown capacity
-create array_name ∈  [type](c);   --one dimension with capacity c
-create array_name ∈  [type](n,m); --two dimensions with capacity n x m
+make array_name ∈  [type];      --one dimension array with unknown capacity
+make array_name ∈  [type](c);   --one dimension with capacity c
+make array_name ∈  [type](n,m); --two dimensions with capacity n x m
 ```
 
 **Note:** 
@@ -350,17 +351,17 @@ create array_name ∈  [type](n,m); --two dimensions with capacity n x m
 
 ```
 -- define array with 10 Real elements
-create test ∈ [R](10); 
-create m := length(test)-1;  
+make test ∈ [R](10); 
+make m := length(test)-1;  
 
 print test[0];   -- first element
 print test[m];   -- last element
 
 -- set value of element := subscript
-create x := 0;
+make x := 0;
 while (x < m): 
-  modify test[i] := x;
-  modify x += 1;
+  alter test[i] := x;
+  alter x += 1;
 while;
 
 -- print all elements of array
@@ -401,19 +402,19 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-create zum ∈ [Z](10);
+make zum ∈ [Z](10);
 
 -- add 1 to each element
-modify zum[*] += 1; 
+alter zum[*] += 1; 
 print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 ```
 
 **differed initialization**
 ```
-create vec ∈ [A];
+make vec ∈ [A];
 
 -- element multiply "*"
-modify vec := `x` * 10;
+alter vec := `x` * 10;
 print vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
 ```
@@ -426,10 +427,10 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-create array_name ∈ [type](c);
+make array_name ∈ [type](c);
 
 -- slice creation using "::"
-create slice_name :: array_name[n..m];
+make slice_name :: array_name[n..m];
 ```
 
 **Note:** Slice has references or a copy of original members;
@@ -437,26 +438,26 @@ create slice_name :: array_name[n..m];
 **example**
 ```
 -- capacity is 5, last element is 0
-create a := [1,2,3,4](5); 
+make a := [1,2,3,4](5); 
 print  a; -- [1,2,3,4,0]
 
 -- making 4 slice views
-modify b :: a[0..?]; -- [1,2,3,4,0]
-modify c :: a[1..?]; -- [2,3,4,0]
-modify d :: a[0..2]; -- [1,2,3]
-modify e :: a[2..4]; -- [3,4,0]
+alter b :: a[0..?]; -- [1,2,3,4,0]
+alter c :: a[1..?]; -- [2,3,4,0]
+alter d :: a[0..2]; -- [1,2,3]
+alter e :: a[2..4]; -- [3,4,0]
 
 --modify slice elements
-modify c[0] := 8; -- first element in c slice
-modify e[0] := 0; -- first element in e slice
-modify e[?] := 9; -- last element  in e slice
+alter c[0] := 8; -- first element in c slice
+alter e[0] := 0; -- first element in e slice
+alter e[?] := 9; -- last element  in e slice
 
 --original array is modified
 --                 ↧ ↧   ↧                        
 print a;-- expect [1,8,0,4,9]
 
 --modify last 3 elements
-modify a[2..?] := 0;
+alter a[2..?] := 0;
 print  a; -- expect [1,8,0,0,0]
 
 ```
@@ -466,21 +467,21 @@ print  a; -- expect [1,8,0,0,0]
 Default assignment ":=" and slicing operator "[..]" makes a copy.   
 
 ```
-create a := [0,1,2,3,4];
-create e,f,r ∈ [Z]; -- empty array
+make a := [0,1,2,3,4];
+make e,f,r ∈ [Z]; -- empty array
 
 -- by default modify ":=" copy/clone an entire collection
-modify e := a; 
+alter e := a; 
 
 -- compare two collections
 print e = a; --> 1 (equal collections)
 print e ≡ a; --> 0 (different memory locations)
 
 -- by default a slice is a copy/clone of original data
-modify f := a[2..?];  -- copy data using slice notation
+alter f := a[2..?];  -- copy data using slice notation
 
 -- you can also copy a data from a basic type
-modify r := Z[1..10]
+alter r := Z[1..10]
 print r; -- expect [1,2,3,4,5,6,7,8,9,10]
 ```
 
@@ -490,10 +491,10 @@ It is an array with 2 or more indexes. We can have 2D or 3D array.
 
 **Example:** 
 ```
-create mat ∈ [R](4,4); -- define matrix
+make mat ∈ [R](4,4); -- define matrix
 
 -- modify matrix using ":=" operator
-modify mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
+alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
 
 print mat[0,0]; --first element
 print mat[3,3]; --last element
@@ -506,8 +507,8 @@ So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```
 -- elements in matrix can be accessed using while
-create i := 0;
-create x := length(mat);
+make i := 0;
+make x := length(mat);
   
 while (i < x):   
   write (mat[x], ',');
@@ -518,7 +519,7 @@ while;
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
 
 ```
-create m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
+make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
 print m -> matrix();
 ```
 
@@ -537,20 +538,20 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-define foo(*bar ∈ [Z]) => (x ∈ Z):
+rule foo(*bar ∈ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
   when (c = 0):
-    modify x := 0; 
+    alter x := 0; 
     exit;
   when;
-  modify i := 0; 
+  alter i := 0; 
   -- sum all parameters  
   while (i < c):
-    modify x += bar[i];
-    modify i += 1;
+    alter x += bar[i];
+    alter i += 1;
   while;
-define;
+rule;
 
 --we can call foo with variable number of arguments
 print foo();     --> 0
@@ -566,22 +567,22 @@ print foo(1,2,3);--> 6
 * A can be used to create arrays of ASCII characters compatible with C strings; 
 
 ```
-create str ∈ S(25);   -- string with capacity 25 Extended ASCHII characters
-create a   ∈ [A](25); -- array of 25 characters
+make str ∈ S(25);   -- string with capacity 25 Extended ASCHII characters
+make a   ∈ [A](25); -- array of 25 characters
 
-modify str := 'Long string'; 
-modify a   := split(str);
+alter str := 'Long string'; 
+alter a   := split(str);
 ```
 
 **conversion**
 Conversion of a string into number is when; using _parse_ function:
 
 ```
-create x,y ∈ R;
+make x,y ∈ R;
 
 -- function parse return a Real number
-modify x := parse("123.5",2,",.");       --convert to real 123.5
-modify y := parse("10,000.3333",2,",."); --convert to real 10000.33
+alter x := parse("123.5",2,",.");       --convert to real 123.5
+alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
 
 ### ASCII Encoding
@@ -631,7 +632,7 @@ DEC|HEX|CODE|ESCAPE|NAME
 27 |1B |ESC |\e    |Escape
 
 ```
-create s := "This is a Unicode string";
+make s := "This is a Unicode string";
 print type(s); -- Print: U
 ```
 
@@ -652,14 +653,14 @@ symbol| description
 
 **examples**
 ```
-create u, c ∈ S; -- default S length is 255
+make u, c ∈ S; -- default S length is 255
 
 -- string concatenation
-modify u := "This is".+." a long string.";
-modify c := "This is"._.'fix size'; 
+alter u := "This is".+." a long string.";
+alter c := "This is"._.'fix size'; 
 
 -- path concatenation
-create test_file := $pro./."src"./."test.bee";
+make test_file := $pro./."src"./."test.bee";
 
 -- when $pro = c:\work\project\
 print test_file;  --> "c:\work\project\src\test.bee"
@@ -675,14 +676,14 @@ print test_file;  --> "c:\work\project\src\test.bee"
 * If a placeholder index is not found then it is preserved as is
 
 ```
-create var_name := template <+ (variable);
-create var_name := template <+ (var1,var2,...);
+make var_name := template <+ (variable);
+make var_name := template <+ (var1,var2,...);
 ```
 
 **Examples:**
 ```
-create x := 30; -- Code ASCII 0
-create y := 41; -- Code ASCII A
+make x := 30; -- Code ASCII 0
+make y := 41; -- Code ASCII A
 
 --template writing
 print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
@@ -696,13 +697,13 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-create str := constant * x ∈ S(n);
+make str := constant * x ∈ S(n);
 ```
 
 **Example:**
 ```
-create sep ∈ U;
-modify sep := "+"."-"*18."+";
+make sep ∈ U;
+alter sep := "+"."-"*18."+";
 
 print sep;
 print "|*  this is a test  *|";
@@ -726,24 +727,24 @@ Object types are data structures with elements enclosed in curly brackets { , , 
 **Pattern:**
 ```
 -- declare a category of objects
-define  type_name <: {attribute ∈ type_name, ...};
+type  type_name <: {attribute ∈ type_name, ...};
 
 -- create an object instance using default constructor
-create item_name := {
+make item_name := {
        attribute : constant,
        ...
        } ∈ type_name;
 
 -- modify one object attribute
-modify object_name.attribute := new_value;
+alter object_name.attribute := new_value;
 
 -- declare receivers
-create var1 ∈ type_1
-create var2 ∈ type_2
+make var1 ∈ type_1
+make var2 ∈ type_2
 ...
 
 -- unpacking object attributes
-create var1,var2... <+ object_name;
+make var1,var2... <+ object_name;
 ```
 
 **Object structure can be ...**
@@ -755,20 +756,20 @@ create var1,var2... <+ object_name;
 **Example:**
 ```
 -- define recursive type Person
-define Person <: {
+type Person <: {
       name ∈ S, 
       age  ∈ N,  
       children ∈ (Person)
     }; 
 
 -- create two objects of type Person
-create r1,r2 ∈ Person;
+make r1,r2 ∈ Person;
 
 -- person with no children          
-modify r1 := {name:'Mica', age:21};
+alter r1 := {name:'Mica', age:21};
 
 -- person with two children
-modify r2 := {name:'Barbu', age:25, 
+alter r2 := {name:'Barbu', age:25, 
              children : (
                {name:'Telu', age:4},
                {name:'Radu', age:1} 
@@ -776,7 +777,7 @@ modify r2 := {name:'Barbu', age:25,
           };
 
 -- object unpacking into new variables
-create r_name, r_age, r_children <+ r2;
+make r_name, r_age, r_children <+ r2;
 
 -- using introspection
 print type(r_name) ; -- S
@@ -791,14 +792,14 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-define  Person <: {name ∈ U, age ∈ N};
+type  Person <: {name ∈ U, age ∈ N};
 
 -- array of 10 persons
-create catalog ∈ [Person](10); 
+make catalog ∈ [Person](10); 
   
 -- initialize value using literals
-create catalog[0] := {name:"Cleopatra", age:15};
-create catalog[1] := {name:"Martin", age:17};
+make catalog[0] := {name:"Cleopatra", age:15};
+make catalog[1] := {name:"Martin", age:17};
 
 --using one element with dot operators
 print caralog[0].name; --will print Cleopatra
@@ -810,7 +811,6 @@ print type(Person.age);  -- will print W
 
 --print size of structure
 print size(Person);
-
 ```
 
 ## Aggregate
@@ -820,16 +820,16 @@ An aggregate type can store references to other composite types.
 **example**
 ```
 -- a list of lists of integers
-define Dlist ∈ ((Z));
+make Dlist ∈ ((Z));
 
 -- an array of 10 lists of integers
-define Alist ∈ [(Z)](10);
+make Alist ∈ [(Z)](10);
 
 -- an array of arrays of integers
-define Aheap ∈ [[Z](5)](10);
+make Aheap ∈ [[Z](5)](10);
 
 -- an catalog of persons
-define Acat ∈ {(S:Person)};
+make Acat ∈ {(S:Person)};
 
 ```
 
@@ -840,24 +840,24 @@ An method can bind to items using reference parameter: "me".
 **pattern**
 ```
 -- define Foo as object with 2 public attributes:
-define Foo <: {a, b ∈ N};
+type Foo <: {a, b ∈ N};
   
 -- foo setup (require reference capturing)
-define foo(p1,p2 ∈ N) => (me @ Foo):
-  create me := {a:p1, b:p2};
-define;
+rule foo(p1,p2 ∈ N) => (me @ Foo):
+  make me := {a:p1, b:p2};
+rule;
 
 -- second method for Foo type
-define bar(me @ Foo):
+rule bar(me @ Foo):
   print "a ="._.me.a;
   print "b ="._.me.b;
-define;
+rule;
 
 -- reference capture "::" result Foo object 
-create test :: foo(p:1);
+make test :: foo(p:1);
 
 -- test object method
-test.bar();  
+apply test.bar();  
 -- a = 1
 -- b = 1
 

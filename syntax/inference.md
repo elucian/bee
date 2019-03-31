@@ -7,23 +7,23 @@ Each literal has a "default" type that is automatic assigned for specific notati
 
 ```
 -- character expressions
-create c := `a`;        -- type = A (capacity = 1)
-create s := 'str';      -- type = S (capacity = 255)
-create b := "Unicode";  -- type = U (Unicode capacity)
+make c := `a`;        -- type = A (capacity = 1)
+make s := 'str';      -- type = S (capacity = 255)
+make b := "Unicode";  -- type = U (Unicode capacity)
 
 -- numeric expressions
-create i := 0;   -- type := Z
-create j := 0.5; -- type := R
+make i := 0;   -- type := Z
+make j := 0.5; -- type := R
 
--- logic expressions
-create false := $F; -- type L = 0
-create true  := $T; -- type L = 1
+-- define synonims for logic constants
+safe false := $F; -- type L = 0
+safe true  := $T; -- type L = 1
 
 -- multiple variables
-create x,y,z := 5;   -- type := Z
+make x,y,z := 5;   -- type := Z
 
 -- combination of types
-create n := 0, m := 0.5 -- types Z and R
+make n := 0, m := 0.5 -- types Z and R
 ```
 
 ## Composite inference
@@ -32,26 +32,26 @@ Composite structures are using () [] and {} to create different types:
 
 ```
 -- create one list of integers
-create t := (1,2); 
+make t := (1,2); 
 
 -- create one list of ASCII chars
-create l := ('a','b');
+make l := ('a','b');
 
 -- create an Array with capacity of 4
-create d := [1,2,3,4];
+make d := [1,2,3,4];
 
 -- create an Array with capacity of 10
 -- all elements initialized with 0.0
-create e := [0.0](10);
+make e := [0.0](10);
 
 -- create a data set of integer
-create s := {1,2,3,4};
+make s := {1,2,3,4};
 
 -- create a hash table
-create c := {(1:"storage"),(2:"string")};
+make c := {(1:"storage"),(2:"string")};
 
 -- create a complex data structure
-create  b := {name:'Goliath', age:'30'};
+make  b := {name:'Goliath', age:'30'};
 
 ```
 
@@ -64,7 +64,7 @@ In next function foo, parameters a, b are optional.
 
 ```
 -- result type is missing
-define foo(a, b:0) => ( a + b ) ∈ Z; 
+rule foo(a, b:0) => ( a + b ) ∈ Z; 
                                   
 print foo();   -- 0               
 print foo(1);  -- 1
@@ -76,7 +76,7 @@ print foo(1,2);-- 3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-define foo(a,b ∈ Z, c:0 ) => (a+b+c) ∈ Z;
+rule foo(a,b ∈ Z, c:0 ) => (a+b+c) ∈ Z;
 
 print foo(1,2);   -- 3
 print foo(1,2,3); -- 6
@@ -91,7 +91,7 @@ We can use parameter name and pair-up ":" symbol for argument value.
 ```
 -- fn with optional parameters
 -- result type is missing
-define bar(a,b,c:0) => (a+b+c) ∈ Z;
+rule bar(a,b,c:0) => (a+b+c) ∈ Z;
 
 -- observe we use pair-up to new value to argument
 print bar(a:1); -- print 1 because (b,c := 0) 

@@ -50,8 +50,8 @@ write (1,2);
 write (3,4);  --> expect 1234
 
 -- calculation that fail will do nothing.
-modify x := 5 ∈ R;
-modify x := x ÷ 0; -- no effect
+alter x := 5 ∈ R;
+alter x := x ÷ 0; -- no effect
 
 print  x; -- expect x = 5
 ```
@@ -134,7 +134,7 @@ Bee define a collection using a special notation based on brackets.
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-define constant_name := constant_literal;
+rule constant_name := constant_literal;
 ```
 
 **Notes:** 
@@ -155,21 +155,21 @@ sym | purpose
 
 ```
 -- full declarations with type and initial value
-create var_name ∈  type_name;
-create var_name := constant ∈ type_name;
+make var_name ∈  type_name;
+make var_name := constant ∈ type_name;
 
 -- partial declaration using type inference
-create var_name := expression; -- type inference
+make var_name := expression; -- type inference
 
 -- reference declaration using using operator "::"
-create ref_name :: var_name; 
-create ref_name :: object_constructor; 
+make ref_name :: var_name; 
+make ref_name :: object_constructor; 
 ```
 
 Multiple variables can be define in one single line using comma separator:
 ```
-create var_name, var_name ... ∈ type;
-create var_name, var_name ... := expression;
+make var_name, var_name ... ∈ type;
+make var_name, var_name ... := expression;
 ```
 
 **Notes:** 
@@ -183,9 +183,9 @@ One can modify variables using "modify" statement.
 
 **example**
 ```
-create a := 10, b := 0 ∈ Z;  
+make a := 10, b := 0 ∈ Z;  
 
-modify b := a + 1; -- modify b 10->11 
+alter b := a + 1; -- modify b 10->11 
 print  b;          -- expected 11
 ```
 
@@ -196,21 +196,21 @@ print  b;          -- expected 11
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-define pi := 3.14;
+rule pi := 3.14;
 
 -- declare multiple variables using modify
-create a   ∈ Z; -- Integer 
-create x,y ∈ R; -- Double
-create q,p ∈ L; -- Logic
+make a   ∈ Z; -- Integer 
+make x,y ∈ R; -- Double
+make q,p ∈ L; -- Logic
 
 --using modifier expressions
-modify a := 10;  -- modify value of a := 10
-modify a += 1;   -- increment value of a := 11
-modify a -= 1;   -- decrement value of a := 10
+alter a := 10;  -- modify value of a := 10
+alter a += 1;   -- increment value of a := 11
+alter a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-modify q, p := $T;    -- modify value of q and p
-modify x, y := 10.5;  -- modify value of x and y
+alter q, p := $T;    -- modify value of q and p
+alter x, y := 10.5;  -- modify value of x and y
 ```
 
 ## Type declaration
@@ -219,10 +219,10 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
 --declare new type
-define type_name <: type_descriptor;
+type type_name <: type_descriptor;
 
 --using new type
-create var_name,var_name ... ∈ type_name;
+make var_name,var_name ... ∈ type_name;
 ```
 
 ## Type conversion
@@ -237,15 +237,15 @@ When data type mismatch we must perform explicit conversion.
 
 **example:**
 ```
-create a := 0, b := 20 ∈ Z;   
-create v := 10.5, x := 0.0 ∈ R;
+make a := 0, b := 20 ∈ Z;   
+make v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
-modify a := v -> N;
+alter a := v -> N;
 print  a; -- truncated to 10 
 
 --explicit conversion
-modify x := b -> R;
+alter x := b -> R;
 print  x; --> expect 20.0
 ```
 
@@ -254,24 +254,24 @@ print  x; --> expect 20.0
 Bee define A := ASCII character as native type.
 
 ```
-create a, b ∈ A; --ASCII character
-create x, y ∈ B; --Binary number 
+make a, b ∈ A; --ASCII character
+make x, y ∈ B; --Binary number 
 
-modify a := `0`;    -- representation of 0
-modify x := a -> B; -- convert to 30
-modify y := 30;     -- ASCII code for '0'
-modify b := y -> A; -- convert to '0'
+alter a := `0`;    -- representation of 0
+alter x := a -> B; -- convert to 30
+alter y := 30;     -- ASCII code for '0'
+alter b := y -> A; -- convert to '0'
 ```
 ## Type checking
 
 We can use variable type to validate expression type.
 
 ```
-create a := 0;    --integer variable 
-create b := 0.0;  --real variable 
+make a := 0;    --integer variable 
+make b := 0.0;  --real variable 
 
-modify b := 10;   --FAIL: b is of type: Real
-modify a := 10.5; --FAIL: a is of type: Integer
+alter b := 10;   --FAIL: b is of type: Real
+alter a := 10.5; --FAIL: a is of type: Integer
 ```
 
 ## Logic type
@@ -279,7 +279,7 @@ modify a := 10.5; --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: $F = 0 = False and $T = 1 = True
 
 ```
-define .L <: {.$0, .$1};
+type .L <: {.$0, .$1};
 ```
 
 ## Logic operations
@@ -311,8 +311,8 @@ Relation operators will create a logical response: $F = 0 or $T = 1.
 Logical expression have value { $F, $T }
 
 ```
-create x := $F; -- false
-create y := $T; -- true
+make x := $F; -- false
+make y := $T; -- true
 
 --simple expressions
 print   x; -- $F = 0
@@ -337,11 +337,11 @@ print  (x ∨ y);  --  1
 Any numeric expression ca be converted to logic using coercion operation `-> L`
 
 ```
-create x, y ∈ L;
-create a := 0.0, b := 1.5 ;
+make x, y ∈ L;
+make a := 0.0, b := 1.5 ;
 
-modify x := a -> L; -- x = $F
-modify y := b -> L; -- y = $T
+alter x := a -> L; -- x = $F
+alter y := b -> L; -- y = $T
 ```
 
 **Notes:** 
@@ -361,13 +361,13 @@ In Bee all values and composite types are references to native types.
 
 **example**
 ```
-create i := 10 ∈ Z;  -- basic type
-create j :: i @ Z;   -- reference
-create k @ Z;        -- null reference
+make i := 10 ∈ Z;  -- basic type
+make j :: i @ Z;   -- reference
+make k @ Z;        -- null reference
 
 -- boxing using "::" (borrow address)
-modify k :: i; -- boxing i := 12 
-modify i += 1; -- modify i := 13
+alter k :: i; -- boxing i := 12 
+alter i += 1; -- modify i := 13
 print  k; --> expect 13 (modified)
 
 -- verify boxing effect
@@ -393,10 +393,10 @@ The statement is executed only if the condition is 1 = $T.
 1. Conditional can not be associated with any block statement;
 
 ```
-create a := 0 ∈ Z;
+make a := 0 ∈ Z;
 
 -- conditional execution
-modify a := 1 if (a = 0);
+alter a := 1 if (a = 0);
 
 -- conditional print
 print "a is 0" if (a = 0);
@@ -413,13 +413,13 @@ These expressions are separated by coma and enclosed in ().
 **Syntax:**
 
 ```
-create var_name ∈ type;
+make var_name ∈ type;
 
 -- multiple matching with default value
-modify var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
+alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
 
 -- alternative code alignment
-modify var_name := (
+alter var_name := (
    xp1 if cnd1,
    xp2 if cnd2,
    dx  );
@@ -436,10 +436,10 @@ dx   := default expression (optional condition).
 
 **example**
 ```
-create x := `0`;
+make x := `0`;
 read (x,"x:>");
 
-create kind := ("digit" if x ∈ [`0`..`9`], "letter" if x ∈ [`a`..`z`], "unknown");
+make kind := ("digit" if x ∈ [`0`..`9`], "letter" if x ∈ [`a`..`z`], "unknown");
 print "x is ".kind; -- expect: "x is digit"
 over;
 ```
@@ -475,7 +475,7 @@ when;
 **nested**
 
 ```
-create a := 0;
+make a := 0;
 when (a ≤ 0):
   print 'a ≤ 0';
   when (a = 0):
@@ -488,7 +488,7 @@ when;
 
 **ladder**
 ```
-create a := 0;
+make a := 0;
 when (a < 0):
   print 'a < 0';
 else (a > 0):
@@ -517,7 +517,7 @@ switch var:
     -- match third
   in [min..max]:
     -- match forth
-default:
+other:
   -- default branch
 switch;
 ```
@@ -547,10 +547,10 @@ while;
 **example**
 
 ```
-create a := 10;
+make a := 10;
 
 while (a > 0):
-  modify a -= 1;
+  alter a -= 1;
   -- conditional repetition
   when (a % 2 ≠ 0);  
     write a;  
@@ -586,15 +586,15 @@ while;
 **example**
 
 ```
-create x   := 9;
-create a,r := 0;
+make x   := 9;
+make a,r := 0;
 
 while (x < 5):
-  modify r := x % 2;
-  modify a := (0 if r = 0, 1 if r = 0, 2);
+  alter r := x % 2;
+  alter a := (0 if r = 0, 1 if r = 0, 2);
   write "{1}:{2}" <+ (x,a);
   write ',' if (x < 5);
-  modify x -= 1;  
+  alter x -= 1;  
 while;
 
 print;--> 9:1, 8:0, 7:1, 6:0, 5:1
@@ -620,7 +620,7 @@ The "trial" statement execute a process that can fail for some reason.
 | $error| system last error record (clear by pass)
 
 ```
-trial
+trial:
   -- protected region
   ...
   -- fail with error code
@@ -632,9 +632,9 @@ error code:
 error code:
   -- patch statement  
 ...  
-other
+other:
   -- other errors  
-after
+after:
   -- finalization
 trial;
 ```
@@ -660,17 +660,17 @@ An error is a generated by the system or by the user:
 **structure**
 ```
 -- global exception type
-define E <: {code ∈ Z, message ∈ S};
+type E <: {code ∈ Z, message ∈ S, line ∈ Z};
 
 -- global system error
-create $error ∈ {code ∈ Z, message ∈ S, line ∈ Z};
+make $error ∈ E;
 ```
 
 User can define his own exceptions with code > 200:
 
 **example**
 ```
-define $custom_error  := {200,"my first exception"} ∈ E; 
+rule $custom_error  := {200,"my first exception"} ∈ E; 
 
 fail $custom_error if (condition);
 ```
@@ -691,32 +691,32 @@ An method is a named block of code that can have parameters and create results.
 
 **pattern**
 ```
-define name(<param> ∈ <type>,...) => (<result> ∈ <type>,...):
+rule name(<param> ∈ <type>,...) => (<result> ∈ <type>,...):
    ...   
-   modify <result> := <expression>;
+   alter <result> := <expression>;
    ...
-define;
+rule;
 ```
 
 **Example:** 
 
 ```
 -- method with one result:
-define add(x,y ∈ Z) => (r ∈ Z):
-  modify r := x + y; 
-define;
+rule add(x,y ∈ Z) => (r ∈ Z):
+  alter r := x + y; 
+rule;
 
 -- method can be call using "value" or "modify"
-create m := add(0,0); -- create m = 0 ∈ Z
+make m := add(0,0); -- create m = 0 ∈ Z
 
 -- two results "s" and "d"
-define com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
-  modify s := x + y; 
-  modify d := x - y;
-define;
+rule com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
+  alter s := x + y; 
+  alter d := x - y;
+rule;
 
 -- unpack result to "b","c" using "<+"  
-create b,c <+ com(2,1); 
+make b,c <+ com(2,1); 
 
 print b; -- print 3 
 print c; -- print 1 
@@ -725,7 +725,7 @@ print c; -- print 1
 print com(0,0); -- print (0, 0)
 
 -- negative test: try to call com in expression
-create x := com(1,1) + 1; -- compilation error, "com" has 2 results.
+make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
 ```
 ## Site Effects
@@ -734,21 +734,21 @@ An method sometimes do not have a result and is used for side-effects.
 
 **pattern**
 ```
-define <name>(<param> ∈ <type>,...):
+rule <name>(<param> ∈ <type>,...):
    [<statement>];
    ...   
-define;
+rule;
 ```
 
 **example**
 ```
 -- an method with side-effect
-define foo:
+rule foo:
   print "hello, I am foo";
-define;
+rule;
 
 -- using name of method will execute the method  
-foo;
+apply foo;
 ```
 
 **Notes:**
@@ -774,17 +774,17 @@ Functions are λ expressions that can have parameters and have one single result
 
 **syntax**
 ```
-define name(param ∈ type,...) => (expression) ∈ type;
+rule name(param ∈ type,...) => (expression) ∈ type;
 ```
 
 **Example:** 
 
 ```
 -- define "ex" an method with two parameters
-define ex λ (x,y ∈ Z) => (x + y) ∈ Z; 
+rule ex λ (x,y ∈ Z) => (x + y) ∈ Z; 
 
 -- expression can be used in larger expressions
-create z := ex(1,1)+1; 
+make z := ex(1,1)+1; 
 print  z; -- print 3
 ```
 
@@ -815,27 +815,27 @@ An method can receive functions as parameters.
 
 **syntax**
 ```
-define method_name( xp_name() ∈ result_type ):
+rule method_name( xp_name() ∈ result_type ):
   ...
-define;
+rule;
 ```
 
 **example**
 ```
 -- declare method with function "cmp" as parameter
-define compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
-  modify r := cmp(a,b);
-define;
+rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
+  alter r := cmp(a,b);
+rule;
 
 -- declare λ expressions:
-define lt(a,b ∈ Z) => (a < b) ∈ L;
+rule lt(a,b ∈ Z) => (a < b) ∈ L;
 
 -- call compare using λ expression as named argument
-create test := compare(1,2,cmp::lt);
+make test := compare(1,2,cmp::lt);
 print  test; -- expect $T
 
 -- call compare using anonymous λ expression argument
-create test := compare(1, 2, (a,b) => (a ≥ b));
+make test := compare(1, 2, (a,b) => (a ≥ b));
 print  test; -- expect $T
 
 ```

@@ -4,7 +4,7 @@
 ------------------------------+
 #driver "gv"
 -- declare a global variable $x
-name $x := 1;
+safe $x := 1;
 -- use global variable x in method "add"
 -- since add has not parameters and no result
 -- it is just a simple method declaration
