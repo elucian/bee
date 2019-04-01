@@ -139,16 +139,16 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-safe E <: {code ∈ Z, message ∈ S};
+static E <: {code ∈ Z, message ∈ S};
 ```
 
 ```
-safe $zero_div      := {100,"division by zero"}       ∈ E;
-safe $null_ref      := {101,"null reference usage"}   ∈ E;
-safe $val_overflow  := {102,"value overflow"}         ∈ E;
-safe $out_of_range  := {103,"value out of range"}     ∈ E;
-safe $over_capacity := {104,"value over capacity"}    ∈ E;
-safe $out_of_domain := {105,"subscript out of domain"}∈ E;
+static $zero_div      := {100,"division by zero"}       ∈ E;
+static $null_ref      := {101,"null reference usage"}   ∈ E;
+static $val_overflow  := {102,"value overflow"}         ∈ E;
+static $out_of_range  := {103,"value out of range"}     ∈ E;
+static $over_capacity := {104,"value over capacity"}    ∈ E;
+static $out_of_domain := {105,"subscript out of domain"}∈ E;
 ```
 
 **Read next:** [Structure](structure.md)

@@ -41,8 +41,8 @@ type range_name <: basic_type[min..max]
 -- sub-type declarations
 type Small     <: B[0..9];
 type Alfa      <: A['a'..'Z'];
-type Positive  <: Z[0..+∞];
-type Negative  <: Z[-∞..-1];
+type Positive  <: Z[0..+?];
+type Negative  <: Z[-!..-1];
 
 --Check variable belong to sub-type
 when ('x' ∈ Alfa):
