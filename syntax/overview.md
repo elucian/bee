@@ -83,24 +83,27 @@ Bee basic data types have information about:
 
 Basic types are represented with one single upper-case character.
 
-| Name        |Bee| Description
-|-------------|---|-------------------------------------------------------------
-| ASCII       |A  | ASCII character
-| Binary      |B  | Positive short number (4 bytes)
-| Natural     |N  | Positive large number (8 bytes) 
-| Integer     |Z  | Positive or negative number 
-| Logical     |L  | Logical number {$F,$T}
-| Rational    |Q  | Rational number ¹⁄₂ ¹⁄₃ ²⁄₃ ...
-| Real        |R  | Real number 
-| Exception   |E  | Exception object: {code, message, line}
+| Name        |Bee|Bytes|Description
+|-------------|---|-----|------------------------------------------------------------
+| Logical     |L  | 4   |Logical number {$F,$T}       
+| Character   |A  | 4   |Alphanumeric ASCII character 
+| Hexadecimal |H  | 4   |Positive short number (format: 0xFF)
+| Binary      |B  | 4   |Positive short number (format: 0b10)       
+| Rational    |Q  | 4   |Fraction of two small numbers: like ¹⁄₂ ¹⁄₃ ²⁄₃ ... 
+| Integer     |Z  | 8   |Signed large discrete number
+| Natural     |N  | 8   |Unsigned large discrete number 
+| Real        |R  | 8   |Real number (double precision)
+| Exception   |E  | ?   |Exception object: {code, message, line}
+
+**Note:** Size is 
 
 **Composite types**
 
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
-| String      |S  | limited capacity (ASCII) string
-| Unicode     |U  | unlimited capacity (Unicode) string 
-| Date        |D  | DD/MM/YYYY
+| String      |S  | Limited capacity (ASCII) string. Default capacity 255 bytes
+| Unicode     |U  | Unicode string  of variable capacity. (UTF8)
+| Date        |D  | DD/MM/YYYY 
 | Time        |T  | hh:mm,ms
 | Complex     |C  | Complex number
 
