@@ -62,9 +62,9 @@ solve order(clients);
 solve order(suppliers);
 ```
 
-## Anonymous Lambda
+## Anonymous Rule
 
-This design uses one _anonymous λ rule:
+This design uses one _anonymous_ rule:
 
 
 **rule**

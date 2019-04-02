@@ -744,11 +744,11 @@ rule name(param ∈ type,...) => (expression) ∈ type;
 **Example:** 
 
 ```
--- define "ex" an aspect with two parameters
-rule ex λ (x,y ∈ Z) => (x + y) ∈ Z; 
+-- define "exp" an rule
+rule exp(x,y ∈ Z) => (x + y) ∈ Z; 
 
--- expression can be used in larger expressions
-make z := ex(1,1)+1; 
+-- a rule can be used in expressions
+make z := exp(1,1) + 1; 
 print  z; -- print 3
 ```
 

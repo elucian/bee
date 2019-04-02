@@ -1,17 +1,19 @@
 +---------------------------------
-  High order function demo
+  High order functor demos
 ----------------------------------+
 #driver "ho" 
 
-** Define: λ Factory
+** create a rule factory
  
--- this define can make λ function
-rule shift(i ∈ Z) => g(s ∈ Z):
+-- this functor can make a rule
+functor shift(i ∈ Z) => g(s ∈ Z):
   make g(s ∈ Z) => (s + i) ∈ Z;
-rule shift;
+functor shift;
+
 -- make two define instances
 make inc := shift(+1);  -- increment 
 make dec := shift(-1);  -- decrement 
+
 -- test define inc
 print inc(-10); --> 9
 print inc(10);  --> 11

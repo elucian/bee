@@ -179,7 +179,7 @@ static .pi := 3.14;
 --public variable
 make .v ∈ N;
 
---public λ rule
+--public rule
 rule .f(x ∈ N) => (x + 1) ∈ N;
 
 --public aspect

@@ -29,7 +29,7 @@ rule gt(x, y ∈ Z) => (x > y) ∈ L;
 rule lt(x, y ∈ Z) => (x < y) ∈ L;
 rule eq(x, y ∈ Z) => (x = y) ∈ L;
 
--- define a dictionary of λ expressions
+-- define a dictionary of rules
 type DIC <: {(U:CMP)}
  
 -- define a hash map of expressions

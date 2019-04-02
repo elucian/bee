@@ -3,8 +3,8 @@
 --------------------------------+
 #driver "fo"
 -- initialize the system library 
-bee io    := $bee.system.io.(*);
-bee con   := $bee.system.console.(*);
+import io    := $bee.system.io.(*);
+import con   := $bee.system.console.(*);
 make file := io.open('foo.txt','+w');  
 -- write into the file using put
 solve file.print("Hello World!");
