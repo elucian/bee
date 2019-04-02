@@ -6,7 +6,7 @@ Bee uses 32 reserved keywords to create statements. You can not use these keywor
 03: if, is, in
 10: type, make, read, rule, else, exit, fail, pass, over, panic
 10: write, print, alter, scrap, solve, while, trial, error, other, after, none 
-08: functor,  aspect, static,switch, #import, #driver, #library, #module
+08: functor,  aspect, define,switch, #import, #driver, #library, #module
 ```
 
 ### Definition statements
@@ -18,7 +18,7 @@ Next statements are used to import modules or declare something.
 | type     | Declare data type
 | rule     | Declare a rule 
 | make     | Create a variable 
-| static   | Create a constant
+| define   | Create a constant
 | aspect   | Create a subroutine
 | functor  | Create a function - object
 

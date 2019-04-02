@@ -46,7 +46,7 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* static  --define a constant
+* define  --define a constant
 * type    --define data type
 * make    --will allocate memory for new variables
 * rule    --create a reusable expression
@@ -174,7 +174,7 @@ This is useful for a long rule to know that is public at the end.
 
 ```
 --public constant
-static .pi := 3.14;
+define .pi := 3.14;
 
 --public variable
 make .v ∈ N;

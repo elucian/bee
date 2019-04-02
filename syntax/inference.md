@@ -16,8 +16,8 @@ make i := 0;   -- type := Z
 make j := 0.5; -- type := R
 
 -- define synonims for logic constants
-static false := $F; -- type L = 0
-static true  := $T; -- type L = 1
+define false := $F; -- type L = 0
+define true  := $T; -- type L = 1
 
 -- multiple variables
 make x,y,z := 5;   -- type := Z

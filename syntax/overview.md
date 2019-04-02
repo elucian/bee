@@ -144,7 +144,7 @@ Bee define a collection using a special notation based on brackets.
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-static constant_name := constant_literal;
+define constant_name := constant_literal;
 ```
 
 **Notes:** 
@@ -206,7 +206,7 @@ print  b;          -- expected 11
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-static pi := 3.14;
+define pi := 3.14;
 
 -- declare multiple variables using modify
 make a   ∈ Z; -- Integer 

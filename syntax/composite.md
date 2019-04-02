@@ -21,9 +21,9 @@ Composite types are complex data structures.
 
 Bee uses composite types to ...
 
-* define data types using type, "<:" and "∈"
-* declare constants using static, ":=" and "∈"
-* declare variables using make, ":=" and "∈"
+* declare data types using type, "<:" and "∈"
+* declare constants  using define, ":=" and "∈"
+* declare variables  using make, ":=" and "∈"
 * declare parameters using symbols "*", ":=", "@:" and "∈"
 
 ## Range
