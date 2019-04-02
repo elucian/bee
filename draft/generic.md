@@ -1,6 +1,14 @@
 ## Generic Aspects
 
-A generic aspect is using a variable of type "X". 
+A generic aspect is using a variable type. 
+
+**pattern**
+```
+aspect name<type_name>(param ∈ type_name, result @ type_name):
+   make local ∈ type_name;   
+   alter result := ...
+aspect;
+```
 
 **bubble sort**
 
@@ -40,7 +48,7 @@ type Person  <: { name ∈ S, age ∈ N };
 
 -- tagine order action for array of Persons
 aspect order(cat @ [Person]):
-  sort<Person>(cat, λ(a, b) => (a.name > b.name));
+  solve sort<Person>(cat, (a, b) => (a.name > b.name));
 aspect;
 
 -- tagine clients and suppliers
