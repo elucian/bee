@@ -1,11 +1,11 @@
 ## Generic Methods
 
-A generic method is using a variable of type "X". 
+A generic aspect is using a variable of type "X". 
 
 **bubble sort**
 
 ```
-rule sort<X>(array @ [X], gt λ (X,X) ∈ L ):
+aspect sort<X>(array @ [X], gt λ (X,X) ∈ L ):
   make n := length(array)-1 ∈ N; 
   make swap := $T ∈ L;
   make temp ∈ X;
@@ -25,13 +25,13 @@ rule sort<X>(array @ [X], gt λ (X,X) ∈ L ):
       alter i +=1;
     while; 
   while;
-rule;
+aspect;
 ```
 
 **Notes:**
 
-* Action "sort" receive type X using markup <X> 
-* Function reference "gt" is received as argument.
+* Aspect "sort" receive type X using markup <X> 
+* Rule reference "gt" is received as argument.
 
 **sort usage**
 
@@ -39,9 +39,9 @@ rule;
 type Person  <: { name ∈ S, age ∈ N };
 
 -- tagine order action for array of Persons
-rule order(cat @ [Person]):
+aspect order(cat @ [Person]):
   sort<Person>(cat, λ(a, b) => (a.name > b.name));
-rule;
+aspect;
 
 -- tagine clients and suppliers
 make clients   := [Person](100);
@@ -50,16 +50,16 @@ make suppliers := [Person](10);
 ...
 
 -- use new order action to sort
-apply order(clients);
-apply order(suppliers);
+solve order(clients);
+solve order(suppliers);
 ```
 
 ## Anonymous Lambda
 
-This design uses one _anonymous λ function_:
+This design uses one _anonymous λ rule_:
 
 
-**function**
+**rule**
 ```
  (param, param,...) => (expression)
 ```
@@ -71,12 +71,12 @@ This can be used to create an argument for a _signature reference_:
  (id(type,type, ...) ∈ type)
 ```
 
-To modify an anonymous function as argument by name Bee uses: "::"
+To modify an anonymous rule as argument by name Bee uses: "::"
 
 ```
  (id :: (param ,param ...) => (...))
 ```
 
-Where: "id" is parameter name representing reference to function.
+Where: "id" is parameter name representing reference to rule.
 
 **Read next:** [overview](../syntax/overview.md)

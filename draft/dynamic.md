@@ -1,6 +1,6 @@
 ## Forward declaration
 
-Declare function signature before they are used
+Declare rule signature before they are used
 
 ```
 rule ex(Z,Z) ∈ L; 
@@ -9,7 +9,7 @@ rule ex(Z,Z) ∈ L;
 print ex(1,1);  
 print;
 
--- later implement the function
+-- later implement the rule
 rule ex(a,b ∈ Z) => (r ∈ Z):
   (a + b);
 rule;  
@@ -24,7 +24,7 @@ Expression signature is a type declaration;
 ```
 type CMP(Z,Z) ∈ L;
 
--- instantiate 3 functions like "CMP"
+-- instantiate 3 rules like "CMP"
 rule gt(x, y ∈ Z) => (x > y) ∈ L;
 rule lt(x, y ∈ Z) => (x < y) ∈ L;
 rule eq(x, y ∈ Z) => (x = y) ∈ L;

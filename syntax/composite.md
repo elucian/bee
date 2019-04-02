@@ -21,9 +21,9 @@ Composite types are complex data structures.
 
 Bee uses composite types to ...
 
-* define data types using "alias", "<:" and "∈"
-* declare constants using "static", ":=" and "∈"
-* declare variables using "value", ":=" and "∈"
+* define data types using type, "<:" and "∈"
+* declare constants using static, ":=" and "∈"
+* declare variables using make, ":=" and "∈"
 * declare parameters using symbols "*", ":=", "@:" and "∈"
 
 ## Range
@@ -55,7 +55,7 @@ when;
 **Notes:**
 
 * Anonymous range expression [n..m] is of type Z
-* Range can apply only to discrete basic types (A,B,Z,N)
+* Range can solve only to discrete basic types (A,B,Z,N)
 * Control variables can be declared in range using "∈"
 * To check value is in range use operator "∈"
 
@@ -141,7 +141,7 @@ print s; -- "97 > 65 > 40"
 
 **Multiple results**
 
-An method can produce multiple results in a list.
+An aspect can produce multiple results in a list.
 
 ```
 -- have a list of results
@@ -242,7 +242,7 @@ alter q += 4; -- (1,2,3,4)
 -- read first element using "=" and "modify"
 alter first := a[!]; --> 1 and a := (1,2,3,4)
 
--- dequeue first element using deq method
+-- dequeue first element using deq aspect
 alter first -= a[!]; --> 1 and a := (2,3,4)
 ```
 
@@ -309,7 +309,7 @@ print map['b']; -- second
 print map['c']; -- third
 
 -- remove an element by key
-clean map['a']; --> remove "first" element
+scrap map['a']; --> remove "first" element
 print map;      --> expected: {'b'="second", 'c'="third"}
 
 ```
@@ -534,7 +534,7 @@ Will print:
 ```
 ## Varargs
 
-One function or method can receive variable number of arguments.   
+One rule or aspect can receive variable number of arguments.   
 We declare an array using prefix "*" for variable parameter name.
 
 ```
@@ -576,12 +576,12 @@ alter a   := split(str);
 ```
 
 **conversion**
-Conversion of a string into number is when; using _parse_ function:
+Conversion of a string into number is when; using _parse_ rule:
 
 ```
 make x,y ∈ R;
 
--- function parse return a Real number
+-- rule parse return a Real number
 alter x := parse("123.5",2,",.");       --convert to real 123.5
 alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
@@ -835,7 +835,7 @@ make Acat ∈ {(S:Person)};
 
 ## Binding
 
-An method can bind to items using reference parameter: "me". 
+An aspect can bind to items using reference parameter: "me". 
 
 **pattern**
 ```
@@ -847,17 +847,17 @@ rule foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
 rule;
 
--- second method for Foo type
-rule bar(me @ Foo):
+-- second aspect for Foo type
+aspect bar(me @ Foo):
   print "a ="._.me.a;
   print "b ="._.me.b;
-rule;
+aspect;
 
 -- reference capture "::" result Foo object 
 make test :: foo(p:1);
 
--- test object method
-apply test.bar();  
+-- test object aspect
+solve test.bar();  
 -- a = 1
 -- b = 1
 
@@ -865,8 +865,8 @@ apply test.bar();
 **See also:** [me.bee](me.be)
 
 **Notes:** 
-* Binded methods are using multiple dispatch so they can be overloaded;
-* Constructors and methods can be overwritten in other modules;
+* Binded aspects are using multiple dispatch so they can be overloaded;
+* Constructors and aspects can be overwritten in other modules;
 * Methods of a type can be private to module or public using dot prefix;
 * If the object type is public, the constructor must also be public;
 * You can not modify object structure after it is defined.

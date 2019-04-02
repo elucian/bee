@@ -1,13 +1,13 @@
 +----------------------------------
-  declare and use a λ function
+  declare and use a λ rule
 ----------------------------------+
 #driver "fn"
-** simple λ function
+** simple λ rule
 rule add(a, b ∈ Z) => (a + b) ∈ Z;
--- call λ function add
+-- call λ rule add
 print add(1, 2);     -- print 3
 print add(-10, 10);  -- print 0
-** recursive function
+** recursive rule
 rule  fac(n ∈ N) => (1 if n = 0, fac(n-1)) ∈ N;
 print fac(3); -- expect 6
  

@@ -2,7 +2,7 @@
    unpacking demonstration 
 -------------------------------------+
 #driver "up"
-** method with two results
+** aspect with two results
 rule test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x+1;
   alter b := y+1;
@@ -10,7 +10,7 @@ rule;
 -- unpacking and make new variables
 make n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
-** method with structured result
+** aspect with structured result
 type Rec <: {x ∈ Z, y ∈ R};
 rule (x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.x := x;

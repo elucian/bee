@@ -28,12 +28,12 @@ rule plus(x ∈ Z, y : 1) => (z ∈ Z):
 rule;
 print plus(1); -- will print 2
 -- input/output arguments, y is optional 
-rule inc(x @ Z, y : 0):
+aspect inc(x @ Z, y : 0):
   alter x += 1;  
   alter y += 1;
-rule;
+aspect;
 
 make i,k := 0; -- references
-apply inc(i);   --> i = 1 
-apply inc(i,k); --> i = 2 and k = 1
+solve inc(i);   --> i = 1 
+solve inc(i,k); --> i = 2 and k = 1
 over;

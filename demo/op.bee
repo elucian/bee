@@ -2,21 +2,21 @@
        Input/Output parameters
 ------------------------------------+
 #driver "op"
--- method with inprint output parameters
+-- aspect with inprint output parameters
 -- operator "@"  define input/output reference 
 -- operator "::" pass named argument by reference
-rule pro(a,b @ N):
+aspect pro(a,b @ N):
   alter a +=  1; -- alter parameter a
   alter b +=  2; -- alter parameter b 
-rule;
+aspect;
 -- define native integers using inference
 make x, y := 10; 
 -- execute pro and expect x, y  to be modified
-apply pro (a :: x, b :: y); 
+solve pro (a :: x, b :: y); 
 -- verify new values for arguments
 print x; --> will print 11
 print y; --> will print 12
 -- negative test
-apply pro(a : 1, b : 2); --> "ERROR: a, b expect references!";
+solve pro(a : 1, b : 2); --> "ERROR: a, b expect references!";
   
 over;

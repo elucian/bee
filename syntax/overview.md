@@ -16,12 +16,12 @@ For syntax notation we use modified BNF convention:
 * [Pattern Matching](#pattern-matching)
 * [Control Flow](#control-flow)
 * [Exceptions](#exceptions)
-* [Methods](#methods)
-* [Functions](#functions)
+* [Aspects](#aspects)
+* [Rules](#rules)
 * [Parameters](#parameters)
 
 ## Expression
-Expressions are created using identifiers, operators, functions and constant literals. 
+Expressions are created using identifiers, operators, rules and constant literals. 
 
 * can be enumerated using comma separator ","
 * can be combined to create more complex expressions;
@@ -137,7 +137,7 @@ Bee define a collection using a special notation based on brackets.
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-rule constant_name := constant_literal;
+static constant_name := constant_literal;
 ```
 
 **Notes:** 
@@ -199,7 +199,7 @@ print  b;          -- expected 11
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-rule pi := 3.14;
+static pi := 3.14;
 
 -- declare multiple variables using modify
 make a   ∈ Z; -- Integer 
@@ -620,7 +620,7 @@ The "trial" statement execute a process that can fail for some reason.
 | other | catch other errors
 | after | executed after trial ends
 | pass  | scrub $error record and end trial
-| exit  | stop current method/function 
+| exit  | stop current aspect/rule 
 | fail  | interrupt and raize exception (default 0)
 | over  | unconditional stop program
 | panic | unrecoverable error, stop program (default -1)
@@ -694,7 +694,7 @@ panic -1 ; -- end program and exit with error code = -1
 
 ## Methods
 
-An method is named "rule" that can have parameters and create multiple results.
+An aspect is named "rule" that can have parameters and create multiple results.
 
 **pattern**
 ```
@@ -708,12 +708,12 @@ rule;
 **Example:** 
 
 ```
--- method with one result:
+-- aspect with one result:
 rule add(x,y ∈ Z) => (r ∈ Z):
   alter r := x + y; 
 rule;
 
--- method can be call using "value" or "modify"
+-- aspect can be call using "value" or "modify"
 make m := add(0,0); -- create m = 0 ∈ Z
 
 -- two results "s" and "d"
@@ -737,24 +737,24 @@ make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 ```
 ## Site Effects
 
-An method sometimes do not have a result and is used for side-effects.
+An aspect sometimes do not have a result and is used for side-effects.
 
 **pattern**
 ```
-rule name(param ∈ type,...):
+aspect name(param ∈ type,...):
    -- executable statements
-rule;
+aspect;
 ```
 
 **example**
 ```
--- an method with side-effect
-rule foo:
+-- an aspect with side-effect
+aspect foo:
   print "hello, I am foo";
-rule;
+aspect;
 
--- using name of method will execute the method  
-apply foo;
+-- using name of aspect will execute the aspect  
+solve foo;
 ```
 
 **Notes:**
@@ -765,18 +765,18 @@ apply foo;
 
 **properties:** 
 
-* An method have a local scope called _"context"_;
-* An method can receive input/output parameters;
-* An method can have optional one or more results;
+* An aspect have a local scope called _"context"_;
+* An aspect can receive input/output parameters;
+* An aspect can have optional one or more results;
 
 **restriction:**
-* An method can not be declared inside other method;
-* An method can not be used in expressions or functions;
-* An method result must be captured using modify ":=" o unpacking "<+"; 
+* An aspect can not be declared inside other aspect;
+* An aspect can not be used in expressions or rules;
+* An aspect result must be captured using modify ":=" o unpacking "<+"; 
 
-## Functions
+## Rules
 
-Functions are light weight "rules" based on λ expressions that can create one single result.
+Rules are light weight "rules" based on λ expressions that can create one single result.
 
 **syntax**
 ```
@@ -786,7 +786,7 @@ rule name(param ∈ type,...) => (expression) ∈ type;
 **Example:** 
 
 ```
--- define "ex" an method with two parameters
+-- define "ex" an aspect with two parameters
 rule ex λ (x,y ∈ Z) => (x + y) ∈ Z; 
 
 -- expression can be used in larger expressions
@@ -796,39 +796,39 @@ print  z; -- print 3
 
 **properties**
 
-* a function can have only one result not a list of results;
-* a function can be created during run-time;
-* a function can be used in other functions;
-* a function can be used as parameter for an method or function;
-* a function can be created as a result of an method;
+* a rule can have only one result not a list of results;
+* a rule can be created during run-time;
+* a rule can be used in other rules;
+* a rule can be used as parameter for an aspect or rule;
+* a rule can be created as a result of an aspect;
 
 **restriction:**
 
-* functions can not have side effects;
-* functions can not mutate variables;
-* functions can not have local declarations; 
-* functions can not receive input/output parameters;
-* functions can not perform input/output operations;
-* functions can not fail and can not be interrupted;
+* rules can not have side effects;
+* rules can not mutate variables;
+* rules can not have local declarations; 
+* rules can not receive input/output parameters;
+* rules can not perform input/output operations;
+* rules can not fail and can not be interrupted;
 
 **See also:**
 * [fn.bee](../demo/fn.bee)
 * [pm.bee](../demo/pm.bee)
 
-## Function as parameter
+## Rule as parameter
 
-An method can receive functions as parameters.
+An aspect can receive rules as parameters.
 
 **syntax**
 ```
-rule method_name( xp_name() ∈ result_type ):
+aspect aspect_name( xp_name() ∈ result_type ):
   ...
-rule;
+aspect;
 ```
 
 **example**
 ```
--- declare method with function "cmp" as parameter
+-- declare aspect with rule "cmp" as parameter
 rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
   alter r := cmp(a,b);
 rule;
@@ -851,7 +851,7 @@ print  test; -- expect $T
 
 ## Parameters
 
-Parameters are variables defined in an method or function signature.
+Parameters are variables defined in an aspect or rule signature.
 
 **Notes:**   
 * Basic arguments and literal arguments are pass by value;

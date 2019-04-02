@@ -1,8 +1,8 @@
 +---------------------------
-  Deni Fibonacci function
+  Deni Fibonacci rule
 ---------------------------+
 #driver "fi"
--- declare Fibonacci function
+-- declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
     alter y := 1;

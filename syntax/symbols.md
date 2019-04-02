@@ -71,7 +71,7 @@ Greek letters can be used for variable names.
 
 ## Editor Font
 
-We recommend a static size font and UTF-8 encoding for Bee source code.
+We recommend a fixed size font and UTF-8 encoding for Bee source code.
 
 **Download:** [Dejavu Fonts](https://dejavu-fonts.github.io/)
 

@@ -46,7 +46,7 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* define  --define a constant, data type or function 
+* define  --define a constant, data type or rule 
 * create  --will allocate memory for new variables
 * modify  --change variable value
 * write   --output to console result of an expressions
@@ -68,10 +68,10 @@ Statements can be contained in blocks of code.
 ## Driver file
 
 Bee is a free form language. That means indentation of code and spaces are not relevant.
-In Bee method "main" is optional. Instead we define a _driver_ file using directive #driver. 
+In Bee aspect "main" is optional. Instead we define a _driver_ file using directive #driver. 
 This is the program entry point. One program can have a single _driver_ and many _modules_.
 
-A _driver_ can contain statements that do not belong to any function or method.
+A _driver_ can contain statements that do not belong to any rule or aspect.
 These are called _rogue_ statements and are driving the program execution.
 Rogue statements are executed top down in synchronous mode.
 
@@ -123,8 +123,8 @@ Using alias for Bee module members:
 #import qualifier := path./.module:(*);
 #import qualifier := path./.module:(member_list);
 
--- use alias qualifier for an method call:
-qualifier.method_name(arguments);
+-- use alias qualifier for an aspect call:
+qualifier.aspect_name(arguments);
 ```
 
 **Environment variables**
@@ -156,7 +156,7 @@ $path   --contains a list of folders
 **See example:** [gv.bee](../demo/gv.bee)
 
 ## Local scope
-A Bee a function or method can have local declarations. 
+A Bee a rule or aspect can have local declarations. 
 Local variables are private inside local scope.
 
 **See example:** [lv.bee](../demo/lv.bee)
@@ -165,23 +165,23 @@ Local variables are private inside local scope.
 In Bee all members that start with dot "." are public members.
 A public member from another module can be access using dot notation.
 
-For symmetry a end of public method or function also use prefix ".".
-This is useful for a long function to know that is public at the end.
+For symmetry a end of public aspect or rule also use prefix ".".
+This is useful for a long rule to know that is public at the end.
 
 ```
 --public constant
-rule .pi := 3.14;
+static .pi := 3.14;
 
 --public variable
 make .v ∈ N;
 
---public λ function
+--public λ rule
 rule .f(x ∈ N) => (x + 1) ∈ N;
 
---public method
-rule .m(x, y ∈ N, r @ N):
+--public aspect
+aspect .m(x, y ∈ N, r @ N):
   r := x + y;
-rule;
+aspect;
 
 ```
 
@@ -193,8 +193,8 @@ A #module is similar to a library except that is specific to a project
 
 One module is loaded only once in memory. If module is used in many files and contain rogue statements these statements are executed only once, first time the module is imported. So these statement if they exist will "initialize" the module.
 
-## Function ABI mapping
-In Bee one can use external functions written in Assembly, Ada, C or CPP.
+## Rule ABI mapping
+In Bee one can use external rules written in Assembly, Ada, C or CPP.
 Usually these mappings are implemented in a #library file.
 
 **Example:**
@@ -217,7 +217,7 @@ This is the driver file.
 -- import library
 #import $bee.lib.myLib.(*);
 
---use external function
+--use external rule
 print myLib.fib(5);
 ```
 
@@ -296,7 +296,7 @@ over;
 ```
 ## Using Modules
 
-* Usually modules are declaring data types, functions and methods.
+* Usually modules are declaring data types, rules and aspects.
 * Rogue statements can be used for module initialization.
 * A module is executed when is imported using _wee_ statement. 
 
@@ -304,7 +304,7 @@ over;
 
 Bee implements a variety of data types and data structures. In most use whens programmers do not have to define new structures but customize existing ones.
 
-Users can define type aliases using symbol "<:" and a _type descriptor_. Type aliases will inherit all methods of the original type and can have additional methods.
+Users can define type aliases using symbol "<:" and a _type descriptor_. Type aliases will inherit all aspects of the original type and can have additional aspects.
 
 Bee is a modular and extensible language. Using this technique, one module can extend types declared in any other module. However a super-type can not be used as a sub-type. It must be explicit converted.
 

@@ -60,7 +60,7 @@ When we define parameters we can use type inference for:
 
 **Optional Parameters:**
 
-In next function foo, parameters a, b are optional.
+In next rule foo, parameters a, b are optional.
 
 ```
 -- result type is missing

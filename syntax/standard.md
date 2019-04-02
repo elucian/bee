@@ -3,7 +3,7 @@
 Standard library contains:
 
 * [Type system](#type-system)
-* [Built-in functions](#built-in-functions)
+* [Built-in rules](#built-in-rules)
 * [Mathematics](#mathematics)
 * [System library](#system-library)
 
@@ -31,11 +31,11 @@ Following types are included in standard library:
 | Date        |D  | "YYYYDDMM" -> YDM, "DD/MM/YYYY" -> DMY, "MM/DD/YYYY" -> YDM
 | Time        |T  | "hh:mm,9999ms" -> T12 "hh:mm__, 9999ms" __={am/pm} + {T12, T24}
 
-## Built-in functions
+## Built-in rules
  
 **Introspection**
 
-| function | Purpose
+| rule | Purpose
 |----------|------------------------------------------ 
 | type     | type name
 | size     | type size 
@@ -46,7 +46,7 @@ Following types are included in standard library:
  
 **List/strings**
 
-| function | Purpose
+| rule | Purpose
 |----------|------------------------------------------ 
 | split    | Split a string into a list / array
 | join     | Join a list into a string 
@@ -59,7 +59,7 @@ Following types are included in standard library:
  
 **Numeric**
  
-| function | Purpose
+| rule | Purpose
 |----------|------------------------------------------ 
 | round    | Convert one real into an integer
 | floor    | Convert one real into an integer
@@ -68,7 +68,7 @@ Following types are included in standard library:
  
 ## Mathematics
 
-| function | Purpose
+| rule | Purpose
 |----------|------------------------------------------ 
 | sin      | sinus 
 | cos      | cousin
@@ -76,7 +76,7 @@ Following types are included in standard library:
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | module function y := \|x\|  
+| mod      | module rule y := \|x\|  
 
 ## System Library
 
@@ -119,18 +119,18 @@ type .close(f ∈ F);
 
 Other rules in system.io
 
-|function | Purpose
+|rule | Purpose
 |---------|------------------------------------------ 
 | exist   | Check if file exist on disk
 | open    | Open a file for read or print
 | save    | Save file modifications to disk
 | undo    | Restore file modification before save
 | close   | Close a file after using it
-| scrap   | Remove one or more file from disk
+| clean   | Remove one or more file from disk
 | new     | Make a new directory
 | remove  | Remove a directory / with files
-| list    | Read a list of files from directory
-| tree    | Read tree of directory in memory
+| files   | Read a list of files from directory
+| folders | Read tree of directory in memory
 | where   | Current working folder name 
 | change  | Change current working folder
 
@@ -139,16 +139,16 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-static E <: {code ∈ Z, message ∈ S};
+type E <: {code ∈ Z, message ∈ S};
 ```
 
 ```
-static $zero_div      := {100,"division by zero"}       ∈ E;
-static $null_ref      := {101,"null reference usage"}   ∈ E;
-static $val_overflow  := {102,"value overflow"}         ∈ E;
-static $out_of_range  := {103,"value out of range"}     ∈ E;
-static $over_capacity := {104,"value over capacity"}    ∈ E;
-static $out_of_domain := {105,"subscript out of domain"}∈ E;
+static $zero_div      := {100,"division by zero"}        ∈ E;
+static $null_ref      := {101,"null reference usage"}    ∈ E;
+static $val_overflow  := {102,"value overflow"}          ∈ E;
+static $out_of_range  := {103,"value out of range"}      ∈ E;
+static $over_capacity := {104,"value over capacity"}     ∈ E;
+static $out_of_domain := {105,"subscript out of domain"} ∈ E;
 ```
 
 **Read next:** [Structure](structure.md)
