@@ -8,10 +8,13 @@ make set_name := { f(element) | element ∈ source ∧ filter };
 make map_name := { (key: expression) | key ∈ source ∧ filter };
 
 ```
-* f ::= functor or rule
-* source ::= collection or range
-* filter ::= logic expression
-* expression := rule or functor dependent upon key
+
+**legend**
+
+* f = functor or rule
+* source = collection or range
+* filter = logic expression
+* expression = rule or functor dependent upon key
 
 **example**
 ```
