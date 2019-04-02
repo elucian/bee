@@ -72,7 +72,9 @@ symbol| description
  -\>  | function pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Fill template using values from list
  \<:  | Define subset \| User composite type
- @    | Define output parameter \| Bound first parameter to type
+ @    | Define a reference \| Define output parameter 
+ &    | Prefix for functor state variables
+
 
 ## Triple Symbols
 
@@ -135,8 +137,6 @@ symbol | `=>`       |meaning
   \+   | List       |Concatenation between two lists
   \+=  | collection |Append element to collection 
   \-=  | collection |Remove element from collection 
-  !=   | element    |Remove first element from collection 
-  ?=   | element    |Remove last element from collection 
                                           
 ## Logic Operators 
 
@@ -164,10 +164,6 @@ Bitwise operators are overloaded for numbers.
 
 symbol| meaning       | notes
 ------|---------------|-------------------------------
-  ¬   | bit NOT       | unary operator (overloaded)
-  &   | bit AND       | dual operator 
- \|   | bit OR        | dual operator 
- \~   | bit XOR       | dual operator  
  ←    | bit SHIFTL    | shift bits to left  
  →    | bit SHIFTR    | shift bits to right  
 
@@ -186,12 +182,12 @@ Arity = 1
 
 Arity = 2
  
- A    | B   | A & B  | A \| B  | A ~ B
-------|-----|--------|---------|--------
- 00   | 00  | 00     | 00      |  11    
- 01   | 00  | 00     | 01      |  10    
- 11   | 01  | 01     | 11      |  00    
- 10   | 11  | 10     | 11      |  01    
+ A    | B   | A ∧ B  | A ∨ B | A ~ B
+------|-----|--------|-------|--------
+ 00   | 00  | 00     | 00    |  11    
+ 01   | 00  | 00     | 01    |  10    
+ 11   | 01  | 01     | 11    |  00    
+ 10   | 11  | 10     | 11    |  01    
 
 ## String operators
 
