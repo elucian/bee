@@ -17,5 +17,6 @@ For voting on next feature that is going to be promoted I use twitter.
 
 * [Generic](generic.md) - generic method
 * [Dynamic](dynamic.md) - dynamic programming
+* [Builder](builder.md) - declarative programming
 
 **Read next:** [index](../index.md)
