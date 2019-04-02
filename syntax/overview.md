@@ -754,18 +754,18 @@ print  z; -- print 3
 
 **properties**
 
-* a rule can have only one result not a list of results;
+* a rule can have only one result;
 * a rule can be created during run-time;
-* a rule can be called from other rules;
+* a rule can be called from other rule;
 
 **restriction:**
 
 * rules can not have side effects;
 * rules can not mutate variables;
 * rules can not have local declarations; 
-* rules can not receive input/output parameters;
-* rules can not perform input/output operations;
-* rules can not fail and can not be interrupted;
+* rules can not have output parameters;
+* rules can not access external storage;
+* rules can not be interrupted;
 
 **See also:**
 * [fn.bee](../demo/fn.bee)
@@ -811,7 +811,6 @@ print c; -- print 1
 -- call com and print the result
 print com(0,0); -- print (0, 0)
 
-
 -- negative test: try to call com in expression
 make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
@@ -821,15 +820,17 @@ make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
 * A functor can have local states and local scope;
 * A functor can receive input/output parameters;
+* A functor can have side-effects;
 * A functor can create one or more results;
 * A functor results can be captured using unpacking `<+`
+* A functor can be interrupted and can fail;
 
 **See also:**
-* [ho.bee](../demo/ho.bee) 
+* [ho.bee](../demo/ho.bee) -- High order functor
 
 ## Parameters
 
-Parameters are variables defined in an aspect or rule signature.
+Parameters are variables defined in functor, aspect or rule signature.
 
 **Notes:**   
 * Basic arguments and literal arguments are pass by value;
@@ -838,12 +839,13 @@ Parameters are variables defined in an aspect or rule signature.
 
 **note**
 * Parameters with initial value are optional;
-* Optional parameters must be last parameters or can be called by name;
+* Optional parameters must be last parameters;
 * Optional parameters are initialized with pair-up operator ":";
 
 **See also:** 
-* [fi.bee](../demo/fi.bee)
-* [bs.bee](../demo/bs.bee) 
+* [fi.bee](../demo/fi.bee) -- Fibonacci functor
+* [rp.bee](../demo/rp.bee) -- Rules as parameters
+* [bs.bee](../demo/bs.bee) -- Bubble Sort
 
 
 **Read Next:** [Composite Types](composite.md)
