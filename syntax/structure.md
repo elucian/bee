@@ -49,7 +49,7 @@ Each statement start with one keyword.
 * define  --define a constant
 * type    --define data type
 * make    --will allocate memory for new variables
-* rule    --create a reusable expression
+* function    --create a reusable expression
 * aspect  --create a block to resolve a problem or concern
 * alter   --change/modify variable value or assign new value
 * read    --accept input from console into a variable
@@ -75,7 +75,7 @@ Bee is a free form language. That means indentation of code and spaces are not r
 In Bee aspect "main" is optional. Instead we define a _driver_ file using directive #driver. 
 This is the program entry point. One program can have a single _driver_ and many _modules_.
 
-A _driver_ can contain statements that do not belong to any rule or aspect.
+A _driver_ can contain statements that do not belong to any function or aspect.
 These are called _rogue_ statements and are driving the program execution.
 Rogue statements are executed top down in synchronous mode.
 
@@ -160,7 +160,7 @@ $path   --contains a list of folders
 **See example:** [gv.bee](../demo/gv.bee)
 
 ## Local scope
-A Bee a rule or aspect can have local declarations. 
+A Bee a function or aspect can have local declarations. 
 Local variables are private inside local scope.
 
 **See example:** [lv.bee](../demo/lv.bee)
@@ -169,8 +169,8 @@ Local variables are private inside local scope.
 In Bee all members that start with dot "." are public members.
 A public member from another module can be access using dot notation.
 
-For symmetry a end of public aspect or rule also use prefix ".".
-This is useful for a long rule to know that is public at the end.
+For symmetry a end of public aspect or function also use prefix ".".
+This is useful for a long function to know that is public at the end.
 
 ```
 --public constant
@@ -179,8 +179,8 @@ define .pi := 3.14;
 --public variable
 make .v ∈ N;
 
---public rule
-rule .f(x ∈ N) => (x + 1) ∈ N;
+--public function
+function .f(x ∈ N) => (x + 1) ∈ N;
 
 --public aspect
 aspect .m(x, y ∈ N, r @ N):
@@ -197,8 +197,8 @@ A #module is similar to a library except that is specific to a project
 
 One module is loaded only once in memory. If module is used in many files and contain rogue statements these statements are executed only once, first time the module is imported. So these statement if they exist will "initialize" the module.
 
-## Rule ABI mapping
-In Bee one can use external rules written in Assembly, Ada, C or CPP.
+## Function ABI mapping
+In Bee one can use external functions written in Assembly, Ada, C or CPP.
 Usually these mappings are implemented in a #library file.
 
 **Example:**
@@ -209,9 +209,9 @@ This is myLib.bee file:
 #import $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
-functor fib(n ∈ Z) => (x ∈ Z):
+relation fib(n ∈ Z) => (x ∈ Z):
   alter x := myLib.fib(n -> Z);
-functor;
+relation;
 
 ```
 
@@ -221,7 +221,7 @@ This is the driver file.
 -- import library
 #import $bee.lib.myLib.(*);
 
---use external rule
+--use external function
 print myLib.fib(5);
 ```
 
@@ -300,7 +300,7 @@ over;
 ```
 ## Using Modules
 
-* Usually modules are declaring data types, rules and aspects.
+* Usually modules are declaring data types, functions and aspects.
 * Rogue statements can be used for module initialization.
 * A module is executed when is imported using _wee_ statement. 
 

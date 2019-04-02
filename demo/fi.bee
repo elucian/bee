@@ -1,15 +1,15 @@
 +---------------------------
-  Deni Fibonacci rule
+  Demo Fibonacci relation
 ---------------------------+
 #driver "fi"
--- declare Fibonacci rule
-functor fib(n ∈ N) => (y ∈ N): 
+-- declare Fibonacci relation
+relation fib(n ∈ N) => (y ∈ N): 
   when (n = 1 ∨ n = 0):
     alter y := 1;
   else:
     alter y := fib(n - 1) + fib(n - 2);
   when;
-functor;
+relation;
 -- call define fib 
 make r := fib(5):
 -- print the result

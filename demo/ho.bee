@@ -1,14 +1,14 @@
 +---------------------------------
-  High order functor demos
+  High order relation demos
 ----------------------------------+
 #driver "ho" 
 
-** create a rule factory
+** create a function factory
  
--- this functor can make a rule
-functor shift(i ∈ Z) => g(s ∈ Z):
+-- this relation can make a function
+relation shift(i ∈ Z) => g(s ∈ Z):
   make g(s ∈ Z) => (s + i) ∈ Z;
-functor shift;
+relation shift;
 
 -- make two define instances
 make inc := shift(+1);  -- increment 

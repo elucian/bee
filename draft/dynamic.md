@@ -1,18 +1,18 @@
 ## Forward declaration
 
-Declare rule signature before they are used
+Declare relation signatures before they are used
 
 ```
-functor ex(Z,Z) ∈ L; 
+relation plus(Z,Z) ∈ Z; 
 
 -- execute before implementation
-print ex(1,1);  
+print plus(1,1);  
 print;
 
--- later implement the functor
-functor ex(a,b ∈ Z) => (r ∈ Z):
+-- later implement the relation
+relation plus(a,b ∈ Z) => (r ∈ Z):
   alter r := (a + b);
-functor;  
+relation;  
 
 over;
 ```
@@ -24,12 +24,12 @@ Expression signature is a type declaration;
 ```
 type CMP @ (Z,Z) ∈ L;
 
--- instantiate 3 rules like "CMP"
-rule gt(x, y ∈ Z) => (x > y) ∈ L;
-rule lt(x, y ∈ Z) => (x < y) ∈ L;
-rule eq(x, y ∈ Z) => (x = y) ∈ L;
+-- instantiate 3 functions like "CMP"
+function gt(x, y ∈ Z) => (x > y) ∈ L;
+function lt(x, y ∈ Z) => (x < y) ∈ L;
+function eq(x, y ∈ Z) => (x = y) ∈ L;
 
--- define a dictionary of rules
+-- define a dictionary of functions
 type DIC <: {(U:CMP)}
  
 -- define a hash map of expressions

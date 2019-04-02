@@ -15,7 +15,7 @@ Composite types are complex data structures.
 * [string](#string)
 * [object](#object)
 * [aggregate](#agregate)
-* [binding](#binding)
+* [Methods](#methods)
 
 ## Usability
 
@@ -145,10 +145,10 @@ An aspect can produce multiple results in a list.
 
 ```
 -- have a list of results
-functor test(x,y ∈ Z) => (r, c ∈ Z):
+relation test(x,y ∈ Z) => (r, c ∈ Z):
   alter r += x+1;
   alter c += y+1;
-functor;
+relation;
 
 make n, m ∈ Z;
 
@@ -439,14 +439,14 @@ make slice_name :: array_name[n..m];
 **example**
 ```
 -- capacity is 5, last element is 0
-make a := [1,2,3,4](5); 
+make   a := [1,2,3,4](5); 
 print  a; -- [1,2,3,4,0]
 
 -- making 4 slice views
-alter b :: a[0..?]; -- [1,2,3,4,0]
-alter c :: a[1..?]; -- [2,3,4,0]
-alter d :: a[0..2]; -- [1,2,3]
-alter e :: a[2..4]; -- [3,4,0]
+make b :: a[0..?]; -- [1,2,3,4,0]
+make c :: a[1..?]; -- [2,3,4,0]
+make d :: a[0..2]; -- [1,2,3]
+make e :: a[2..4]; -- [3,4,0]
 
 --modify slice elements
 alter c[0] := 8; -- first element in c slice
@@ -534,12 +534,12 @@ Will print:
 ```
 ## Varargs
 
-One rule or aspect can receive variable number of arguments.   
+One function or aspect can receive variable number of arguments.   
 We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-functor foo(*bar ∈ [Z]) => (x ∈ Z):
+relation foo(*bar ∈ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
   when (c = 0):
@@ -552,7 +552,7 @@ functor foo(*bar ∈ [Z]) => (x ∈ Z):
     alter x += bar[i];
     alter i += 1;
   while;
-functor;
+relation;
 
 --we can call foo with variable number of arguments
 print foo();     --> 0
@@ -576,12 +576,12 @@ alter a   := split(str);
 ```
 
 **conversion**
-Conversion of a string into number is when; using _parse_ rule:
+Conversion of a string into number is when; using _parse_ function:
 
 ```
 make x,y ∈ R;
 
--- rule parse return a Real number
+-- function parse return a Real number
 alter x := parse("123.5",2,",.");       --convert to real 123.5
 alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
@@ -739,8 +739,8 @@ make item_name := {
 alter object_name.attribute := new_value;
 
 -- declare receivers
-make var1 ∈ type_1
-make var2 ∈ type_2
+make var1 ∈ type_1;
+make var2 ∈ type_2;
 ...
 
 -- unpacking object attributes
@@ -833,25 +833,25 @@ make Acat ∈ {(S:Person)};
 
 ```
 
-## Binding
+## Methods
 
-An aspect can bind to items using reference parameter: "me". 
+An object can have associated relations that are called methods:
 
 **pattern**
 ```
 -- define Foo as object with 2 public attributes:
 type Foo <: {a, b ∈ N};
   
--- foo setup (require reference capturing)
-functor foo(p1,p2 ∈ N) => (me @ Foo):
+-- foo is a constructor for Foo
+method foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
-functor;
+method;
 
 -- second aspect for Foo type
-aspect bar(me @ Foo):
+method bar(me @ Foo):
   print "a ="._.me.a;
   print "b ="._.me.b;
-aspect;
+method;
 
 -- reference capture "::" result Foo object 
 make test :: foo(p:1);
@@ -865,9 +865,9 @@ solve test.bar();
 **See also:** [me.bee](me.be)
 
 **Notes:** 
-* Binded aspects are using multiple dispatch so they can be overloaded;
-* Constructors and aspects can be overwritten in other modules;
-* Aspects of a type can be private to module or public using dot prefix;
+* Binded methods are using multiple dispatch so they can be overloaded;
+* Methods can be overwritten in other modules;
+* Methods of a type can be private to module or public using dot prefix;
 * If the object type is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;

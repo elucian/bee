@@ -17,12 +17,12 @@ For syntax notation we use modified BNF convention:
 * [Control Flow](#control-flow)
 * [Exceptions](#exceptions)
 * [Aspects](#aspects)
-* [Rules](#rules)
-* [Functors](#functors)
+* [Functions](#functions)
+* [Relations](#relations)
 * [Parameters](#parameters)
 
 ## Expression
-Expressions are created using identifiers, operators, rules and constant literals. 
+Expressions are created using identifiers, operators, functions and constant literals. 
 
 * can be enumerated using comma separator ","
 * can be combined to create more complex expressions;
@@ -305,15 +305,15 @@ Bee uses several familiar operators:
 Precedence: { ¬, ∧, ∨, ~, ↔ }
 
 
-**relations**
-Relation operators will create a logical response: $F = 0 or $T = 1.
+**comparison**
+Comparison operators will create a logical response: $F = 0 or $T = 1.
 
 * comparison ( ±, ≈, =, ≠, ≡, >, <, ≤, ≥ ); 
 * belonging  ( ∈, ⊃, ⊂ );
 
 **Precedence:** 
 
-* Logic operators have greater precedence than relations. 
+* Logic operators have greater precedence than comparison. 
 
 
 ## Logical expression
@@ -628,7 +628,7 @@ The "trial" statement execute a process that can fail for some reason.
 | other | catch other errors
 | after | executed after trial ends
 | pass  | scrub $error record and end trial
-| exit  | stop current aspect/rule 
+| exit  | stop current aspect/function 
 | fail  | interrupt and raize exception (default 0)
 | over  | unconditional stop program
 | panic | unrecoverable error, stop program (default -1)
@@ -732,75 +732,82 @@ solve foo;
 * An aspect can receive input/output parameters;
 * An aspect can not be declared inside other aspect;
 
-## Rules
+## Functions
 
-A rule is a light weight deterministic function that can have one single result.
+A function is a light weight deterministic expression that can have one single result.
 
 **syntax**
 ```
-rule name(param ∈ type,...) => (expression) ∈ type;
+function name(param ∈ type,...) => (expression) ∈ type;
 ```
 
 **Example:** 
 
 ```
--- define "exp" an rule
-rule exp(x,y ∈ Z) => (x + y) ∈ Z; 
+-- define "exp" an function
+function exp(x,y ∈ Z) => (x + y) ∈ Z; 
 
--- a rule can be used in expressions
+-- a function can be used in expressions
 make z := exp(1,1) + 1; 
 print  z; -- print 3
 ```
 
+**notes**
+
+* Functions are binding external states. 
+* Functions are using referential transparency;
+
 **properties**
 
-* a rule can have only one result;
-* a rule can be created during run-time;
-* a rule can be called from other rule;
+* a function can have only one result;
+* a function can be created during run-time;
+* a function can be called from other function;
+* a function is deterministic not stochastic;
 
-**restriction:**
+**restrictions**
 
-* rules can not have side effects;
-* rules can not mutate variables;
-* rules can not have local declarations; 
-* rules can not have output parameters;
-* rules can not access external storage;
-* rules can not be interrupted;
+* functions can not have external dependencies;
+* functions can not have side effects;
+* functions can not mutate variables;
+* functions can not have local declarations; 
+* functions can not have output parameters;
+* functions can not access external storage;
+* functions can not have early interruption;
 
 **See also:**
 * [fn.bee](../demo/fn.bee)
 * [pm.bee](../demo/pm.bee)
 
-## Functors
+## Relations
 
-A functor is named block that can have parameters, states and one or multiple results.
+A relation is named block that can have parameters, states and one or multiple results.
 
 **pattern**
 ```
-functor name(param ∈ type,...) => (result ∈ type,...):
+relation name(param ∈ type,...) => (result ∈ type,...):
    make local_variable;
    ...   
    alter result := expression;
    ...
-functor;
+relation;
 ```
 
 **Example:** 
 
 ```
--- functor with one result:
-functor add(x,y ∈ Z) => (r ∈ Z):
+-- relation with one result:
+relation add(x,y ∈ Z) => (r ∈ Z):
   alter r := x + y; 
-functor;
+relation;
 
--- functor can be call using "make" or "modify"
+-- relation can be call using "make" or "modify"
 make m := add(0,0); -- create m = 0 ∈ Z
 
--- functor with two results "s" and "d"
-functor com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
+-- relation with two results "s" and "d"
+relation com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
   alter s := x + y; 
   alter d := x - y;
-functor;
+relation;
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1); 
@@ -818,19 +825,30 @@ make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
 
 **properties:** 
 
-* A functor can have local states and local scope;
-* A functor can receive input/output parameters;
-* A functor can have side-effects;
-* A functor can create one or more results;
-* A functor results can be captured using unpacking `<+`
-* A functor can be interrupted and can fail;
+* A relation can have local states and local scope;
+* A relation can receive input/output parameters;
+* A relation can have side-effects;
+* A relation can create one or more results;
+* A relation results can be captured using unpacking `<+`
+* A relation can be interrupted and can fail;
+
+**notes**
+
+1. In mathematics relations are usually deterministic. Bee is fuzzy about this. We like to have an explicit language so we do not enforce this rule. A relation in Bee may produce different results for same parameters. For example a time() is implemented as a relation.
+2. A relation can have side-effects. That means a relation can read from a file. In this case if the file is changed the same realtion will return different results. 
+3. As a side-effect of this a function can not call a relation. It is forbidden in Bee by the compiler. So what you can do is first capture the result from the relation then use the result to call a function or create a new function with it.
+
+I know Bee is not perfect here but we use two design principles: 
+
+* Explicit is better than implicit;
+* Efficient is better than pure; 
 
 **See also:**
-* [ho.bee](../demo/ho.bee) -- High order functor
+* [ho.bee](../demo/ho.bee) -- High order relation
 
 ## Parameters
 
-Parameters are variables defined in functor, aspect or rule signature.
+Parameters are variables defined in relation, aspect or function signature.
 
 **Notes:**   
 * Basic arguments and literal arguments are pass by value;
@@ -843,8 +861,8 @@ Parameters are variables defined in functor, aspect or rule signature.
 * Optional parameters are initialized with pair-up operator ":";
 
 **See also:** 
-* [fi.bee](../demo/fi.bee) -- Fibonacci functor
-* [rp.bee](../demo/rp.bee) -- Rules as parameters
+* [fi.bee](../demo/fi.bee) -- Fibonacci relation
+* [rp.bee](../demo/rp.bee) -- Functions as parameters
 * [bs.bee](../demo/bs.bee) -- Bubble Sort
 
 

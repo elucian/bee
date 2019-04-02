@@ -73,7 +73,7 @@ symbol| description
  \<+  | Unpack a list \| Fill template using values from list
  \<:  | Define subset \| User composite type
  @    | Define a reference \| Define output parameter 
- &    | Prefix for functor state variables
+ &    | Prefix for relation state variables
 
 
 ## Triple Symbols

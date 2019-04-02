@@ -39,7 +39,7 @@ aspect;
 **Notes:**
 
 * Aspect "sort" receive type X using markup <X> 
-* Rule reference "gt" is received as argument.
+* Function reference "gt" is received as argument.
 
 **sort usage**
 
@@ -62,12 +62,12 @@ solve order(clients);
 solve order(suppliers);
 ```
 
-## Anonymous Rule
+## Anonymous Function
 
-This design uses one _anonymous_ rule:
+This design uses one _anonymous_ function:
 
 
-**rule**
+**function**
 ```
  (param, param,...) => (expression)
 ```
@@ -79,12 +79,12 @@ This can be used to create an argument for a _signature reference_:
  ( id @ (type,type, ...) ∈ type)
 ```
 
-To modify an anonymous rule as argument by name Bee uses: "::"
+To modify an anonymous function as argument by name Bee uses: "::"
 
 ```
  (id :: (param ,param ...) => (...))
 ```
 
-Where: "id" is parameter name representing reference to rule.
+Where: "id" is parameter name representing reference to function.
 
 **Read next:** [overview](../syntax/overview.md)

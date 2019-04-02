@@ -1,24 +1,25 @@
 +----------------------------------------
- demonstrate aspect associated to a define
+ demonstrate method associated to a type
 ----------------------------------------+
 #driver "me"
 -- enumeration with public members
 type Number <: {.zero, .one, .two};
 make test ∈ Number;
 alter test := zero; -- instance of Number
--- make a aspect for define Number
-functor convert(x @ Number) => (y ∈ S):
+-- make a method for define Number
+method convert(x @ Number) => (y ∈ S):
   alter y := ('zero'  if x = zero,
               'one'   if x = one,
               'two'   if x = two,
               'none');
-functor;
--- a wrapper aspect for convert
-functor equal(x @ Number, s ∈ S) => (r ∈ L):
+method;
+
+-- a wrapper method for convert
+method equal(x @ Number, s ∈ S) => (r ∈ L):
   alter r := s = x.convert(); 
-functor;
+method;
     
--- calling test aspects 
+-- calling test methods 
 print test.convert();     -- will print "zero"
 print test.equal('zero'); -- will print 1
 over;

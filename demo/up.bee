@@ -1,20 +1,21 @@
 +-------------------------------------
-   unpacking demonstration 
+   relation unpacking demonstration 
 -------------------------------------+
 #driver "up"
-** aspect with two results
-functor test(x, y ∈ Z) => (a,b ∈ Z):
+** relation with two results
+relation test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x+1;
   alter b := y+1;
-functor; 
+relation; 
 -- unpacking and make new variables
 make n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
-** aspect with structured result
+
+** relation with structured result
 type Rec <: {x ∈ Z, y ∈ R};
-functor (x ∈ Z, y ∈ R) => (r ∈ Rec):
+relation (x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.x := x;
   alter r.y := y;
-functor;
+relation;
 print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 over; 

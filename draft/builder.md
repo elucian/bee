@@ -11,10 +11,10 @@ make map_name := { (key: expression) | key ∈ source ∧ filter };
 
 **legend**
 
-* f = functor or rule
+* f = relation or function
 * source = collection or range
 * filter = logic expression
-* expression = rule or functor dependent upon key
+* expression = function or relation dependent upon key
 
 **example**
 ```

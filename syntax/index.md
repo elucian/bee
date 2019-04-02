@@ -44,7 +44,7 @@ Unverified demo source files:
 1. [fo.bee](../demo/fo.bee) - File input/output
 1. [nu.bee](../demo/nu.bee) - Working with references
 1. [op.bee](../demo/op.bee) - Output parameters
-1. [rp.bee](../demo/ro.bee) - Rule as parameter
+1. [rp.bee](../demo/ro.bee) - Function as parameter
 1. [ho.bee](../demo/ho.bee) - High order method
 1. [gc.bee](../demo/gc.bee) - Generator class
 1. [bs.bee](../demo/bs.bee) - Bubble sort algorithm
