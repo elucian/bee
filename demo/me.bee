@@ -7,16 +7,16 @@ type Number <: {.zero, .one, .two};
 make test ∈ Number;
 alter test := zero; -- instance of Number
 -- make a aspect for define Number
-rule convert(x @ Number) => (y ∈ S):
+functor convert(x @ Number) => (y ∈ S):
   alter y := ('zero'  if x = zero,
               'one'   if x = one,
               'two'   if x = two,
               'none');
-rule;
+functor;
 -- a wrapper aspect for convert
-rule equal(x @ Number, s ∈ S) => (r ∈ L):
+functor equal(x @ Number, s ∈ S) => (r ∈ L):
   alter r := s = x.convert(); 
-rule;
+functor;
     
 -- calling test aspects 
 print test.convert();     -- will print "zero"

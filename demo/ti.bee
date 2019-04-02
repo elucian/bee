@@ -17,15 +17,15 @@ make t := '1:45am'     -> T12; -- Time
 make t := '23:45'      -> T24; -- Time
 make d := '10/10/2010' -> DMY; -- Date
 -- optional parameters inference
-rule add(x,y:0) => (z ∈ Z):
+functor add(x,y:0) => (z ∈ Z):
   alter z := x + y; 
-rule;
+functor;
 
 print add(1,1); -- will print 2
 -- argument x is mandatory, y is optional
-rule plus(x ∈ Z, y : 1) => (z ∈ Z):
+functor plus(x ∈ Z, y : 1) => (z ∈ Z):
   alter z := (x + y);  
-rule;
+functor;
 print plus(1); -- will print 2
 -- input/output arguments, y is optional 
 aspect inc(x @ Z, y : 0):

@@ -145,10 +145,10 @@ An aspect can produce multiple results in a list.
 
 ```
 -- have a list of results
-rule test(x,y ∈ Z) => (r, c ∈ Z):
+functor test(x,y ∈ Z) => (r, c ∈ Z):
   alter r += x+1;
   alter c += y+1;
-rule;
+functor;
 
 make n, m ∈ Z;
 
@@ -539,7 +539,7 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-rule foo(*bar ∈ [Z]) => (x ∈ Z):
+functor foo(*bar ∈ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
   when (c = 0):
@@ -552,7 +552,7 @@ rule foo(*bar ∈ [Z]) => (x ∈ Z):
     alter x += bar[i];
     alter i += 1;
   while;
-rule;
+functor;
 
 --we can call foo with variable number of arguments
 print foo();     --> 0
@@ -843,9 +843,9 @@ An aspect can bind to items using reference parameter: "me".
 type Foo <: {a, b ∈ N};
   
 -- foo setup (require reference capturing)
-rule foo(p1,p2 ∈ N) => (me @ Foo):
+functor foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
-rule;
+functor;
 
 -- second aspect for Foo type
 aspect bar(me @ Foo):
@@ -867,7 +867,7 @@ solve test.bar();
 **Notes:** 
 * Binded aspects are using multiple dispatch so they can be overloaded;
 * Constructors and aspects can be overwritten in other modules;
-* Methods of a type can be private to module or public using dot prefix;
+* Aspects of a type can be private to module or public using dot prefix;
 * If the object type is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;

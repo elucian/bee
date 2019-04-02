@@ -46,7 +46,7 @@ Following types are included in standard library:
  
 **List/strings**
 
-| rule | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | split    | Split a string into a list / array
 | join     | Join a list into a string 
@@ -59,7 +59,7 @@ Following types are included in standard library:
  
 **Numeric**
  
-| rule | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | round    | Convert one real into an integer
 | floor    | Convert one real into an integer
@@ -68,7 +68,7 @@ Following types are included in standard library:
  
 ## Mathematics
 
-| rule | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | sin      | sinus 
 | cos      | cousin
@@ -98,7 +98,7 @@ Interaction with operating system require import from library.
 
 To read and print into files and save to disk, we must use system.io library. This library define type "F" : file handler. It offer support for file input/output.
 
-**Methods**
+**Aspects**
 
 Next is a fragment from system.io library that define rules open and close.
 
@@ -119,19 +119,25 @@ type .close(f ∈ F);
 
 Other rules in system.io
 
-|rule | Purpose
+| rule    | Purpose
 |---------|------------------------------------------ 
 | exist   | Check if file exist on disk
 | open    | Open a file for read or print
+| files   | Read a list of files from directory
+| folders | Read tree of directory in memory
+| where   | Current working folder name 
+| change  | Change current working folder
+
+Other aspects in syste.io
+
+| aspect  | Purpose
+|---------|------------------------------------------ 
 | save    | Save file modifications to disk
 | undo    | Restore file modification before save
 | close   | Close a file after using it
 | clean   | Remove one or more file from disk
 | new     | Make a new directory
 | remove  | Remove a directory / with files
-| files   | Read a list of files from directory
-| folders | Read tree of directory in memory
-| where   | Current working folder name 
 | change  | Change current working folder
 
 ## Exception

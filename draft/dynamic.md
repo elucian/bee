@@ -3,16 +3,16 @@
 Declare rule signature before they are used
 
 ```
-rule ex(Z,Z) ∈ L; 
+functor ex(Z,Z) ∈ L; 
 
 -- execute before implementation
 print ex(1,1);  
 print;
 
--- later implement the rule
-rule ex(a,b ∈ Z) => (r ∈ Z):
-  (a + b);
-rule;  
+-- later implement the functor
+functor ex(a,b ∈ Z) => (r ∈ Z):
+  alter r := (a + b);
+functor;  
 
 over;
 ```
@@ -22,7 +22,7 @@ over;
 Expression signature is a type declaration;
 
 ```
-type CMP(Z,Z) ∈ L;
+type CMP @ (Z,Z) ∈ L;
 
 -- instantiate 3 rules like "CMP"
 rule gt(x, y ∈ Z) => (x > y) ∈ L;
@@ -33,7 +33,7 @@ rule eq(x, y ∈ Z) => (x = y) ∈ L;
 type DIC <: {(U:CMP)}
  
 -- define a hash map of expressions
-make dic := {("gt":gt),("lt":lt),("eq":eq)} ∈ DIC;
+make dic := {("gt"::gt),("lt"::lt),("eq"::eq)} ∈ DIC;
 
 print dic["gt"](3,1) -- expect $T
 print dic["lt"](3,1) -- expect $F

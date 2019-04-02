@@ -39,14 +39,15 @@ Unverified demo source files:
 1. [dt.bee](../demo/dt.bee) - User defined data types
 1. [ti.bee](../demo/ti.bee) - Type inference demo
 1. [up.bee](../demo/up.bee) - Unpacking demo
-1. [me.bee](../demo/me.bee) - Method dispatch demo
+1. [me.bee](../demo/me.bee) - Aspect dispatch demo
 1. [pm.bee](../demo/pm.bee) - Pattern matching
 1. [fo.bee](../demo/fo.bee) - File input/output
 1. [nu.bee](../demo/nu.bee) - Working with references
 1. [op.bee](../demo/op.bee) - Output parameters
-1. [bs.bee](../demo/bs.bee) - Bubble sort algorithm
+1. [rp.bee](../demo/ro.bee) - Rule as parameter
 1. [ho.bee](../demo/ho.bee) - High order method
 1. [gc.bee](../demo/gc.bee) - Generator class
+1. [bs.bee](../demo/bs.bee) - Bubble sort algorithm
 
 ## Draft
 To explore new features read /draft folder.    

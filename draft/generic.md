@@ -1,11 +1,11 @@
-## Generic Methods
+## Generic Aspects
 
 A generic aspect is using a variable of type "X". 
 
 **bubble sort**
 
 ```
-aspect sort<X>(array @ [X], gt λ (X,X) ∈ L ):
+aspect sort<X>(array @ [X], gt @ (X,X) ∈ L ):
   make n := length(array)-1 ∈ N; 
   make swap := $T ∈ L;
   make temp ∈ X;
@@ -56,7 +56,7 @@ solve order(suppliers);
 
 ## Anonymous Lambda
 
-This design uses one _anonymous λ rule_:
+This design uses one _anonymous λ rule:
 
 
 **rule**
@@ -68,7 +68,7 @@ This can be used to create an argument for a _signature reference_:
 
 **signature**
 ```
- (id(type,type, ...) ∈ type)
+ ( id @ (type,type, ...) ∈ type)
 ```
 
 To modify an anonymous rule as argument by name Bee uses: "::"

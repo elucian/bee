@@ -46,11 +46,15 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* define  --define a constant, data type or rule 
-* create  --will allocate memory for new variables
-* modify  --change variable value
-* write   --output to console result of an expressions
+* static  --define a constant
+* type    --define data type
+* make    --will allocate memory for new variables
+* rule    --create a reusable expression
+* aspect  --create a block to resolve a problem or concern
+* alter   --change/modify variable value or assign new value
 * read    --accept input from console into a variable
+* write   --output to console result of an expressions
+* solve   --resolve one aspect of a problem
 
 Multiple statements on same line are separated by ";"
 A statement is optional terminated by ";"
@@ -205,9 +209,9 @@ This is myLib.bee file:
 #import $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x ∈ Z):
-   alter x := myLib.fib(n -> Z);
-rule;
+functor fib(n ∈ Z) => (x ∈ Z):
+  alter x := myLib.fib(n -> Z);
+functor;
 
 ```
 

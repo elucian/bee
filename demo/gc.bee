@@ -11,14 +11,14 @@ aspect reset(me @ GenI, p_min , p_max ∈ Z):
   alter me.ci:= p_min;    
 aspect;
 -- get next index
-rule next(me @ GenI) => (i ∈ Z):
+functor next(me @ GenI) => (i ∈ Z):
   alter i  := me.ci;
   alter me.ci += 1;
-rule;
+functor;
 -- detect when finish
-rule finish(me @ GenI)  => (r ∈ L):
+functor finish(me @ GenI)  => (r ∈ L):
   alter r := (me.ci ≥ me.max);
-aspect;
+functor;
 -- use GenI to make one instance: 
 make foo := {min:10,max:20} ∈ GenI;
 make  x  := 0;

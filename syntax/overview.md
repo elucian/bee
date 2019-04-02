@@ -18,6 +18,7 @@ For syntax notation we use modified BNF convention:
 * [Exceptions](#exceptions)
 * [Aspects](#aspects)
 * [Rules](#rules)
+* [Functors](#functors)
 * [Parameters](#parameters)
 
 ## Expression
@@ -76,26 +77,27 @@ Bee use 3 kind of data types:
 Bee basic data types have information about: 
 
 1. name
-1. representation
 1. capacity
 1. limits  (min/max)
-1. access  (private or public or local)
+1. internal representation
+
 
 Basic types are represented with one single upper-case character.
 
 | Name        |Bee|Bytes|Description
 |-------------|---|-----|------------------------------------------------------------
-| Logical     |L  | 4   |Logical number {$F,$T}       
-| Character   |A  | 4   |Alphanumeric ASCII character 
-| Hexadecimal |H  | 4   |Positive short number (format: 0xFF)
-| Binary      |B  | 4   |Positive short number (format: 0b10)       
+| Binary      |B  | 2   |Small unsigned number
+| Logical     |L  | 2   |Logical number {0,1}       
+| Character   |A  | 2   |Alphanumeric ASCII character 
 | Rational    |Q  | 4   |Fraction of two small numbers: like ¹⁄₂ ¹⁄₃ ²⁄₃ ... 
 | Integer     |Z  | 8   |Signed large discrete number
 | Natural     |N  | 8   |Unsigned large discrete number 
-| Real        |R  | 8   |Real number (double precision)
-| Exception   |E  | ?   |Exception object: {code, message, line}
+| Real        |R  | 8   |Double precision number 
 
-**Note:** Size is 
+**Note:** 
+* Basic types are not objects nor references;
+* Basic types are mapped to native OS types;
+* Basic types are allocated usually on the stack;
 
 **Composite types**
 
@@ -106,6 +108,11 @@ Basic types are represented with one single upper-case character.
 | Date        |D  | DD/MM/YYYY 
 | Time        |T  | hh:mm,ms
 | Complex     |C  | Complex number
+| Exception   |E  | Exception object: {code, message, line}
+
+**Notes:**
+* Composite types are objects;
+* Composite types are allocated usually on the heap;
 
 ## Literals
 
@@ -282,7 +289,7 @@ alter a := 10.5; --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: $F = 0 = False and $T = 1 = True
 
 ```
-type .L <: {.$0, .$1};
+type .L <: {.$F:0, .$T:1};
 ```
 
 ## Logic operations
@@ -331,10 +338,10 @@ print  (x ∨ y);  --  1
 
 ```
 **Notes:** 
-* Operators { ¬ } is unary operator;
-* Operators { ∧, ∨ } are shortcut operators;
+* Operators { ¬    } is unary operator;
+* Operators { ∧, ∨ } are also bitwise operators;
 * Operators { ¬, ~ } are also bitwise operators;
-* Operators { if, →, ↑, ↓, &, | } are bitwise operators;
+* Operators { ←, →, ↑, ↓ } are bitwise operators;
 
 **coercion**
 Any numeric expression ca be converted to logic using coercion operation `-> L`
@@ -355,20 +362,21 @@ alter y := b -> L; -- y = $T
 
 ## Reference
 
-In Bee all values and composite types are references to native types. 
+All composite variables are references to objects. 
 
 **modify**
 
-* New reference can be created using operator ":="
+* New references are declared using "@" instead of "∈"
+* References can be initialized using operator ":="
 * Existing reference can be cloned using operator: "::"
 
 **example**
 ```
 make i := 10 ∈ Z;  -- basic type
-make j :: i @ Z;   -- reference
+make j :: i  @ Z;  -- reference
 make k @ Z;        -- null reference
 
--- boxing using "::" (borrow address)
+-- borrowing address / boxing
 alter k :: i; -- boxing i := 12 
 alter i += 1; -- modify i := 13
 print  k; --> expect 13 (modified)
@@ -692,52 +700,9 @@ fail $custom_error if (condition);
 panic -1 ; -- end program and exit with error code = -1
 ```
 
-## Methods
+## Aspects
 
-An aspect is named "rule" that can have parameters and create multiple results.
-
-**pattern**
-```
-rule name(<param> ∈ <type>,...) => (<result> ∈ <type>,...):
-   ...   
-   alter <result> := <expression>;
-   ...
-rule;
-```
-
-**Example:** 
-
-```
--- aspect with one result:
-rule add(x,y ∈ Z) => (r ∈ Z):
-  alter r := x + y; 
-rule;
-
--- aspect can be call using "value" or "modify"
-make m := add(0,0); -- create m = 0 ∈ Z
-
--- two results "s" and "d"
-rule com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
-  alter s := x + y; 
-  alter d := x - y;
-rule;
-
--- unpack result to "b","c" using "<+"  
-make b,c <+ com(2,1); 
-
-print b; -- print 3 
-print c; -- print 1 
-
--- call com and print the result
-print com(0,0); -- print (0, 0)
-
--- negative test: try to call com in expression
-make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
-
-```
-## Site Effects
-
-An aspect sometimes do not have a result and is used for side-effects.
+An aspect is a named block that can resolve one or multiple tasks and has no result. 
 
 **pattern**
 ```
@@ -758,25 +723,18 @@ solve foo;
 ```
 
 **Notes:**
-* Method declaration do not require empty brackets ();
-* Method call do not require empty brackets ();
-* Method can have output parameters and side-effects;
-* Method can be interrupted earlier using "exit" keyword.
+* Aspect declaration do not require empty brackets ();
+* Aspect call do not require empty brackets ();
+* Aspect can have output parameters and side-effects;
+* Aspect can be interrupted earlier using "exit" keyword.
 
 **properties:** 
-
-* An aspect have a local scope called _"context"_;
 * An aspect can receive input/output parameters;
-* An aspect can have optional one or more results;
-
-**restriction:**
 * An aspect can not be declared inside other aspect;
-* An aspect can not be used in expressions or rules;
-* An aspect result must be captured using modify ":=" o unpacking "<+"; 
 
 ## Rules
 
-Rules are light weight "rules" based on λ expressions that can create one single result.
+A rule is a light weight deterministic function that can have one single result.
 
 **syntax**
 ```
@@ -798,9 +756,7 @@ print  z; -- print 3
 
 * a rule can have only one result not a list of results;
 * a rule can be created during run-time;
-* a rule can be used in other rules;
-* a rule can be used as parameter for an aspect or rule;
-* a rule can be created as a result of an aspect;
+* a rule can be called from other rules;
 
 **restriction:**
 
@@ -815,36 +771,58 @@ print  z; -- print 3
 * [fn.bee](../demo/fn.bee)
 * [pm.bee](../demo/pm.bee)
 
-## Rule as parameter
+## Functors
 
-An aspect can receive rules as parameters.
+A functor is named block that can have parameters, states and one or multiple results.
 
-**syntax**
+**pattern**
 ```
-aspect aspect_name( xp_name() ∈ result_type ):
-  ...
-aspect;
+functor name(param ∈ type,...) => (result ∈ type,...):
+   make local_variable;
+   ...   
+   alter result := expression;
+   ...
+functor;
 ```
 
-**example**
-```
--- declare aspect with rule "cmp" as parameter
-rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
-  alter r := cmp(a,b);
-rule;
-
--- declare λ expressions:
-rule lt(a,b ∈ Z) => (a < b) ∈ L;
-
--- call compare using λ expression as named argument
-make test := compare(1,2,cmp::lt);
-print  test; -- expect $T
-
--- call compare using anonymous λ expression argument
-make test := compare(1, 2, (a,b) => (a ≥ b));
-print  test; -- expect $T
+**Example:** 
 
 ```
+-- functor with one result:
+functor add(x,y ∈ Z) => (r ∈ Z):
+  alter r := x + y; 
+functor;
+
+-- functor can be call using "make" or "modify"
+make m := add(0,0); -- create m = 0 ∈ Z
+
+-- functor with two results "s" and "d"
+functor com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
+  alter s := x + y; 
+  alter d := x - y;
+functor;
+
+-- unpack result to "b","c" using "<+"  
+make b,c <+ com(2,1); 
+
+print b; -- print 3 
+print c; -- print 1 
+
+-- call com and print the result
+print com(0,0); -- print (0, 0)
+
+
+-- negative test: try to call com in expression
+make x := com(1,1) + 1; -- compilation error, "com" has 2 results.
+
+```
+
+**properties:** 
+
+* A functor can have local states and local scope;
+* A functor can receive input/output parameters;
+* A functor can create one or more results;
+* A functor results can be captured using unpacking `<+`
 
 **See also:**
 * [ho.bee](../demo/ho.bee) 
@@ -866,5 +844,6 @@ Parameters are variables defined in an aspect or rule signature.
 **See also:** 
 * [fi.bee](../demo/fi.bee)
 * [bs.bee](../demo/bs.bee) 
+
 
 **Read Next:** [Composite Types](composite.md)

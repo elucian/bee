@@ -1,0 +1,22 @@
++--------------------
+  Rule as parameter
+--------------------+
+
+-- declare functor with rule "cmp" as parameter
+functor compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r ∈ L):
+  alter r := cmp(a,b);
+functor;
+
+-- declare a rule:
+rule lt(a,b ∈ Z) => (a < b) ∈ L;
+make test ∈ L
+
+-- call compare using rule "lt"
+alter test := compare(1,2,cmp::lt);
+print test; -- expect 1
+
+-- call compare using anonymous rule
+alter test := compare(1, 2, (a,b) => (a ≥ b));
+print test; -- expect 1
+
+over;
