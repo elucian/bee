@@ -7,8 +7,8 @@ Composite types are complex data structures.
 * [range](#range)
 * [ordinal](#ordinal)
 * [list](#list)
-* [cluster](#cluster)
-* [table](#table)
+* [set](#set)
+* [map](#map)
 * [array](#array)
 * [slice](#slice)
 * [varargs](#varargs)
@@ -244,12 +244,12 @@ alter first := a[!]; --> first = 1
 alter a -= a[!]; --> a = (2,3,4)
 ```
 
-## Cluster
+## Set
 
-A cluster is a sorted collection of unique values.
+A set is a sorted collection of unique values.
 
 ```
---define a cluster
+--define a set
 
 make s1 := {1,2,3} ∈ {N}; 
 make s2 := {2,3,4} ∈ {N};
@@ -273,20 +273,20 @@ alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 
 **Notes:** 
 
-* Clusters are internally sorted not indexed;
-* Clusters are not recommended to create queues or stacks;
+* Sets are internally sorted not indexed;
+* Sets are not recommended to create queues or stacks;
 * Usually you do not remove elements from a set but only append;
 
-## Table
+## Map
 
-A table is a hash collection of (key:value) pairs sorted by key.
+A map is a set of (key:value) pairs sorted by key.
 
 **syntax**
 ```
--- define a table type
+-- define a map type
 type type_name <: {(key_type : value_type)}
 
--- declare a new empty table
+-- declare a new empty map
 make new_map := {} ∈ type_name;
 ```
 

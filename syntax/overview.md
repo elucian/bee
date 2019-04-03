@@ -135,7 +135,7 @@ Bee define a collection using a special notation based on brackets.
 |----|------------------------------------------------------------------
 | () | List \| Expression
 | [] | Array \|  Matrix 
-| {} | Cluster \| Table \| Object
+| {} | Set \| Map \| Object
 
 ## Constant declaration
 

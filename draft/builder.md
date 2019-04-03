@@ -1,6 +1,6 @@
-## Cluster Builders
+## Set Builders
 
-A cluster builder is a declarative structure used to create a sub-set from a set of elements.
+A set builder is a declarative structure used to create a sub-set from a set of elements.
 
 **syntax**
 ```
@@ -30,4 +30,4 @@ print test ; -- {1,2,3}
 
 **Note:**
 
-A cluster builder can create also a hash table.
+A set builder can create also a hash map.
