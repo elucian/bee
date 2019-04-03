@@ -700,58 +700,52 @@ panic -1 ; -- end program and exit with error code = -1
 
 ## Rules
 
-An rule is a named block or expression that can resolve one or multiple tasks. 
+An rule is a named code block that can resolve one or multiple tasks. 
 
 **pattern**
 ```
 rule name(param ∈ type,...):
    -- executable statements
+   exit if condition;
+   ...
 rule;
 ```
 
 **example**
 ```
--- a rule with side-effect
+-- a rule with side-effects and no parameter
 rule foo:
   print "hello, I am foo";
 rule;
 
--- using name of rule will execute the rule  
+-- using apply + rule name will execute the rule  
 apply foo;
 ```
 
-## Expressions
+**notes:**
+* A rule can be executed using keyword "apply";
+* A rule can have input/output parameters;
+* A rule can be terminated early using "exit";
+* A rule can be interrupted using "fail","panic";
+* A program can be terminated from a rule using "over";
 
-Rules can be based on a single expression with one result:
+## Parameters
 
-**syntax**
-```
-rule name(param ∈ type,...) => (expression) ∈ type;
-```
+Parameters are variables defined in rule signature.
 
-**Example:** 
+**Notes:**   
+* Basic arguments and literal arguments are pass by value;
+* Composite type parameters can be pass by reference or by value;
+* For input/output parameters we are using "@" instead of "∈";
 
-```
--- define "exp" a rule
-rule exp(x,y ∈ Z) => (x + y) ∈ Z; 
+**note**
+* Parameters with initial value are optional;
+* Optional parameters must be last parameters;
+* Optional parameters are initialized with pair-up operator ":";
 
--- a rule can be used in expressions
-make z := exp(1,1) + 1; 
-print  z; -- print 3
-```
+## Static rules
 
-**notes**
-
-* Rule expressions are binding external states. 
-* Rule expressions are using referential transparency;
-
-**See also:**
-* [fn.bee](../demo/fn.bee)
-* [pm.bee](../demo/pm.bee)
-
-## Multiple results
-
-A rule can have multiple results.
+Static rules are named code blocks with results:
 
 **pattern**
 ```
@@ -779,43 +773,106 @@ print b; -- print 3
 print c; -- print 1 
 ```
 
+**Notes:** 
+
+* Result name is explicit declared;
+* All statements are executed;
+* Rules can be used in expressions;
+* There is no return statement;
+
 **properties:** 
 
-* A rule can have local states and local scope;
-* A rule can receive input/output parameters;
-* A rule can have side-effects;
-* A rule can create one or more results;
-* A rule results can be captured using unpacking `<+`
+* Static rules can create one or more results;
+* Static rules can have local states and local scope;
+* Static rules can receive input/output parameters;
+* Static rules can have side-effects;
+* Static rules results can be captured using unpacking `<+`
+* Static rules can have public attributes using dot prefix;
+
+**See also:**
+* [bs.bee](../demo/bs.bee) -- Bubble Sort
+
+## Expression rules
+
+Expression rules are based on a single expression. 
+
+**syntax**
+```
+rule name(param ∈ type,...) => (expression) ∈ type;
+```
+
+**Example:** 
+
+```
+-- define "exp" a rule
+rule exp(x,y ∈ Z) => (x + y) ∈ Z; 
+
+-- using the rule in other expression
+make z := exp(1,1) + 1; 
+print  z; -- print 3
+```
 
 **notes**
 
-Bee is not perfect I have used KISS principles to design rules: 
+* Expression rules have single result;
+* Expression rules are deterministic;
+* Expression rules are binding external states;
+* Expression rules are using referential transparency;
+* Expression rules can be created at runtime;
+
+**See also:**
+* [pm.bee](../demo/pm.bee) -- expression rule
+* [fn.bee](../demo/fn.bee) -- pattern matching rule
+* [fi.bee](../demo/fi.bee) -- recursive rule
+* [rp.bee](../demo/rp.bee) -- rule as parameter
+
+**notes**
+
+I have used KISS principles to design rules: 
 
 * Explicit is better than implicit;
 * Efficient is better than pure; 
 * Keep it simple stupid;
 
+## Rule object
+
+A rule object is a rule created at runtime by another rule.
+
+**pattern**
+```
+rule rule_name(parameters) => result_rule(parameters):
+  rule result_rule(parameters) => (expression) ∈ type;
+rule
+```
+
+**notes:**
+* Parent rule is referred as rule constructor or rule factory;
+* A rule object can have public attributes starting with prefix "."
+* A rule object can communicate with constructor using parent attributes;
+* A rule object is binding external states into local scope;
+
+**example**
+```
+-- this rule can create a rule object
+rule shift(i ∈ Z) => g(s ∈ Z):
+  rule g(s ∈ Z) => (s + i) ∈ Z;
+rule shift;
+
+-- instantiate two rule objects
+make inc := shift(+1);  -- increment 
+make dec := shift(-1);  -- decrement 
+
+-- test rule object "inc"
+print inc(1); --> 2
+print inc(4); --> 5
+
+-- test rule object "dec"
+print dec(1); -->  0
+print dec(2); -->  1
+print dec(0); --> -1
+```
+
 **See also:**
 * [ho.bee](../demo/ho.bee) -- High order rule
-
-## Parameters
-
-Parameters are variables defined in rule signature.
-
-**Notes:**   
-* Basic arguments and literal arguments are pass by value;
-* Composite type parameters can be pass by reference or by value;
-* For input/output parameters we are using "@" instead of "∈";
-
-**note**
-* Parameters with initial value are optional;
-* Optional parameters must be last parameters;
-* Optional parameters are initialized with pair-up operator ":";
-
-**See also:** 
-* [fi.bee](../demo/fi.bee) -- Fibonacci rule
-* [rp.bee](../demo/rp.bee) -- Rules as parameters
-* [bs.bee](../demo/bs.bee) -- Bubble Sort
-
 
 **Read Next:** [Composite Types](composite.md)

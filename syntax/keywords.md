@@ -4,9 +4,9 @@ Bee uses 30 reserved keywords to create statements. You can not use these keywor
 
 ```
 03: if, is, in
-10: type, make, rule, read, else, exit, fail, pass, over, panic
-11: write, print, alter, scrap, apply, while, trial, error, other, after, none 
-06: define,switch, #import, #driver, #library, #module
+10: type, make, rule, read, exit, fail, pass, over, else, none 
+11: write, print, alter, scrap, apply, while, trial, error, other, after, panic
+06: define, switch, #import, #driver, #library, #module
 ```
 
 ### Definition statements

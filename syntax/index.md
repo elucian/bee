@@ -33,7 +33,7 @@ Unverified demo source files:
 1. [cs.bee](../demo/cs.bee) - Control structures
 1. [sw.bee](../demo/sw.bee) - Switch statement
 1. [fn.bee](../demo/fn.bee) - Rule declaration
-1. [fi.bee](../demo/fi.bee) - Fibonacci function
+1. [fi.bee](../demo/fi.bee) - Recursive rule
 1. [gv.bee](../demo/gv.bee) - Global variables
 1. [lv.bee](../demo/lv.bee) - Local variable demo
 1. [dt.bee](../demo/dt.bee) - User defined data types
@@ -45,8 +45,8 @@ Unverified demo source files:
 1. [nu.bee](../demo/nu.bee) - Working with references
 1. [op.bee](../demo/op.bee) - Output parameters
 1. [rp.bee](../demo/ro.bee) - Rule as parameter
-1. [ho.bee](../demo/ho.bee) - High order rule
-1. [gc.bee](../demo/gc.bee) - Generator class
+1. [ho.bee](../demo/ho.bee) - Rule object demo
+1. [gc.bee](../demo/gc.bee) - Generator class demo
 1. [bs.bee](../demo/bs.bee) - Bubble sort algorithm
 
 ## Draft

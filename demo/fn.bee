@@ -1,6 +1,6 @@
-+----------------------------------
-  declare and use a rule
-----------------------------------+
++-----------------------------------
+  declare and use an expression rule
+-----------------------------------+
 #driver "fn"
 ** simple rule
 rule add(a, b ∈ Z) => (a + b) ∈ Z;

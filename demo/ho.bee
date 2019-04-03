@@ -1,23 +1,40 @@
 +---------------------------------
-  High order rule demos
+  High order rule & rule objects
 ----------------------------------+
 #driver "ho" 
 
 ** create a rule factory
  
--- this rule can make a rule
-rule shift(i ∈ Z) => g(s ∈ Z):
-  make g(s ∈ Z) => (s + i) ∈ Z;
-rule shift;
+-- this rule can make a rule object
+rule generator(min, max ∈ Z) => object():
+  rule object() => (r ∈ Z):
+    make .index := min ∈ Z;    
+    make .max   := max ∈ Z;
+    when .index > .max:      
+      fail (201, "index out of bounds");
+    else:
+      alter r := .index;    
+      alter .index += 1;    
+    when;  
+  rule;
+rule;
 
--- make two define instances
-make inc := shift(+1);  -- increment 
-make dec := shift(-1);  -- decrement 
+-- instantiate two rule objects
+make count := generator(0,9);  
 
--- test define inc
-print inc(-10); --> 9
-print inc(10);  --> 11
--- test define dec
-print dec(20); --> 19
-print dec(19); --> 18
+-- test rule object zero_count
+trial:  
+  make set := {} ∈ {Z}; 
+  while $T:
+    alter set += count();
+    write set.index; -- progressive grow
+    write ','
+  while;
+  print; -- expect 0,1,2,3,4,5,6,7,8,9,  
+other:
+  print set;  
+trial;
+-- expectation verify: 
+fail if set ≠ {0,1,2,3,4,5,6,7,8,9};
+
 over;

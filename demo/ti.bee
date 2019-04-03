@@ -1,14 +1,14 @@
 +-----------------------------------
-      define inference demo
+      type inference demo
 -----------------------------------+
 #driver "ti"
--- constant define inference
+-- constant type inference
 define a := 10;  -- Z (integer on 64bit)
 define x := 0.5; -- R (double precision)
 define y := 1/2; -- Q  (rational number)
 define f := $F;  -- L  (logic false)
 define t := $T;  -- L  (logic true)
--- variable define inference
+-- variable type inference
 make v := (1,2,3);    -- List of Z
 make s := 'string';    -- String capacity 255
 make c := `c`          -- ASCII Char
@@ -33,7 +33,7 @@ rule inc(x @ Z, y : 0):
   alter y += 1;
 rule;
 
-make i,k := 0; -- references
+make i,k := 0;  -- references
 apply inc(i);   --> i = 1 
 apply inc(i,k); --> i = 2 and k = 1
 over;

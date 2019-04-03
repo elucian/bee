@@ -70,22 +70,12 @@ symbol| description
  ..   | Define range [n..m] \| Define slice from Array
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
- \<+  | Unpack a list \| Fill template using values from list
+ \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
  @    | Define a reference \| Define output parameter 
- &    | Prefix for rule state variables
 
 
-## Triple Symbols
-
-symbol| description
-------|------------------------------------------------------
- ...  | is used in switch statement to continue
- .,.  | concatenate two string with comma
- ._.  | concatenate two strings with space
- .+.  | concatenate two strings with as they are
- ./.  | concatenate two strings with / 
- .\\. | concatenate two strings with \\ 
+**Note:**  Triple symbol: "..."  is used in switch statement
 
 ## Arithmetic modifiers
 
@@ -191,16 +181,17 @@ Arity = 2
 
 ## String operators
 
-|Symbol| Description
-|------|---------------------------------------------------------------
-| *    | String pattern repetition \| String generator
-| <+   | String format injector \| Unpack operator
-| .    | Concatenate two strings as they are. No trim is performed
-| .+.  | Concatenate two strings, trim first and concatenate with second
-| .,.  | Concatenate two strings, trim first and separate with comma
-| ._.  | Concatenate two strings, trim both and separate with one space
-| ./.  | Concatenate two strings with "/" separator and de-duplicate "//"   
-| .\\. | Concatenate two strings with "\\" separator and de-duplicate "\\"   
+symbol  | description
+--------|------------------------------------------------------
+
+Symbol| Description
+------|---------------------------------------------------------------
+ *    | String pattern repetition \| String generator
+ `_`  | concatenate two strings with one space and trim
+ `&`  | concatenate two strings as they are
+ `/`  | concatenate two strings with / and de-duplicate last
+ `\\` | concatenate two strings with \\ and de-duplicate last
+
 
 **Note:** Except "." , all other operators can work with numbers.
  

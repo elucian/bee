@@ -8,7 +8,7 @@ make your_name ∈ S;
 make your_age  ∈ N;
 read(your_name , "Your name?:");
 read(your_age  , "Your age:");
-print "hello:".+.your_name;
+print "hello:" & your_name;
 
 when (age < 21):
   print "have a candy!"

@@ -35,10 +35,12 @@ Bee has 3 kind of program files each with different role:
 
 ## Declarations
 
-Bee is using 2 kind of declarations:
+Bee is using 4 kind of declarations:
 
-* type  -- define: data types
-* value -- create/initialize a value variable
+* define -- define: constant
+* type   -- define: data types
+* make   -- define: variable
+* rule   -- define: rule
 
 ## Statements
 
@@ -46,10 +48,6 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* define  --define a constant
-* type    --define data type
-* make    --will allocate memory for new variables
-* rule    --create a reusable expression
 * alter   --change/modify variable value or assign new value
 * read    --accept input from console into a variable
 * write   --output to console result of an expressions
@@ -64,8 +62,10 @@ Statements can be contained in blocks of code.
 * Block of code is ending with same keyword and ";"
 
 **Keywords:**
-* "when"   make multi-path groups of statements based on logical conditions
-* "while"  group of statements that can be repeated multiple times
+
+* when    --create multi-path selector using conditions
+* switch  --create multi-path selector using a value
+* while   --create repetitive block of code
 
 ## Driver file
 
@@ -143,10 +143,10 @@ Global variables are unique and are visible in all project modules.
 Global variables are lowerwhen and are pretagined in Bee language.
 
 ```
-#import $bee.cpp.myLib:(*) --import cpp library
-#import $bee.asm.myLib:(*) --import asm library
-#import $bee.lib.myLib:(*) --import core library
-#import $pro.lib.myLib:(*) --import project library
+#import cpp_lib := $bee.cpp.myLib:(*) --import cpp library
+#import asm_lib := $bee.asm.myLib:(*) --import asm library
+#import bee_lib := $bee.lib.myLib:(*) --import core library
+#import pro_lib := $pro.lib.myLib:(*) --import project library
 ```
 
 Other pretagined global variables:

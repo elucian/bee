@@ -645,28 +645,27 @@ All operators below will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
- .+.  | Concatenate two strings as tye are no trim is performed!
- ._.  | Concatenate two strings and trim both strings to one space separator
- ./.  | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
- .\\. | Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
-
+  `&` | Concatenate two strings as tye are no trim is performed!
+  `_` | Concatenate two strings and trim both strings to one space separator
+  `/` | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
+  `\\`| Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
 
 **examples**
 ```
 make u, c ∈ S; -- default S length is 255
 
 -- string concatenation
-alter u := "This is".+." a long string.";
-alter c := "This is"._.'fix size'; 
+alter u := "This is" & " a long string.";
+alter c := "This is" _ 'fix size'; 
 
 -- path concatenation
-make test_file := $pro./."src"./."test.bee";
+make test_file := $pro/"src"/"test.bee";
 
 -- when $pro = c:\work\project\
 print test_file;  --> "c:\work\project\src\test.bee"
 ```
 
-**Note:** You can concatenate a string with a number or two numbers using .+.
+**Note:** You can concatenate a string with a number or two numbers using &
 
 ### Template
 
@@ -697,13 +696,13 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-make str := constant * x ∈ S(n);
+make str := constant * n ∈ S(n);
 ```
 
 **Example:**
 ```
 make sep ∈ U;
-alter sep := "+".+."-"*18.+."+";
+alter sep := "+" & "-" * 18 & "+";
 
 print sep;
 print "|*  this is a test  *|";
@@ -862,7 +861,9 @@ apply test.bar();
 -- b = 1
 
 ```
-**See also:** [me.bee](me.be)
+**See also:** 
+* [me.bee](me.bee) -- numeral with rules
+* [gc.bee](gc.bee) -- generator class
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
