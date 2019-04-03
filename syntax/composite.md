@@ -41,8 +41,8 @@ type range_name <: basic_type[min..max]
 -- sub-type declarations
 type Small     <: B[0..9];
 type Alfa      <: A['a'..'Z'];
-type Positive  <: Z[0..+?];
-type Negative  <: Z[-!..-1];
+type Positive  <: Z[0...];
+type Negative  <: Z[...-1];
 
 --Check variable belong to sub-type
 when ('x' ∈ Alfa):
@@ -181,7 +181,6 @@ alter _,x,y,z <+ lst;
 * If list is greater than target variables the rest of values are ignored;
 * If the list is shorter than the number of variables the rest of variables are set to zero value;
 
-
 ### List processing
 
 ```
@@ -201,9 +200,8 @@ alter l5 := l2 - l1;  -- (4)
 
 ```
 make list := (`a`, `b`, `c`);
-make x @ A;
-alter x  := list[!];
-while ¬(x ≡ list[?]);
+make x :: list[!] @ A;
+while ¬ (x ≡ list[?]):
   write x;
   alter x :: next(x);
   write ',';  
@@ -222,10 +220,10 @@ make last ∈ N;
 alter a += 4; -- (1,2,3,4)
 
 -- read last element using "-="
-alter last := a[?];  -- last := 4, a := [1,2,3,4]
+alter last := a[?];  -- last = 4
 
--- remove last element using pop
-alter last -= a[?];  -- last := 4, a := [1,2,3]
+-- remove last element using -=
+alter a -= a[?];  -- a = (1,2,3)
 ```
 
 ## Queue
@@ -240,10 +238,10 @@ make first : N;
 alter q += 4; -- (1,2,3,4)
 
 -- read first element using "=" and "modify"
-alter first := a[!]; --> 1 and a := (1,2,3,4)
+alter first := a[!]; --> first = 1
 
--- dequeue first element using deq rule
-alter first -= a[!]; --> 1 and a := (2,3,4)
+-- dequeue first element using "-=" operator
+alter a -= a[!]; --> a = (2,3,4)
 ```
 
 ## Cluster

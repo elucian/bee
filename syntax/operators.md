@@ -93,7 +93,7 @@ symbol| meaning
  ^=   | power  modifier
  %=   | modulo modifier
 
-## Relations
+## Relation Operators
 
 Relation operators are used to compare expressions.
 
