@@ -24,7 +24,6 @@ Bee has 3 kind of program files each with different role:
 #library -- reusable library
 #module  -- project module
 #driver  -- main module
-#timer   -- set-up program time limit
 ```
 
 **Notes**
