@@ -11,7 +11,7 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 rule fact(n ∈ N) => (r ∈ N):
   when n == 0:
     alter r := 1;
-  else  
+  else:  
     alter r := n · fact(n-1);
   when;  
 rule;
@@ -23,7 +23,7 @@ rule;
 rule tail(n ∈ N, acc ∈ N) => (r ∈ N):
   when n == 0:
     alter r:= acc;
-  else   
+  else:   
     alter r:= tail(n-1, acc · n);
   when; 
 rule;
@@ -40,7 +40,7 @@ rule fact(a ∈ N, b ∈ N) => (r ∈ N):
   while (b > 1):
     alter a := a · a + a;
     alter b := b - 1;  
-  else
+  else:
     alter r := a; 
   while;
 rule;
