@@ -1,13 +1,12 @@
 ## Bee Keywords
 
-Bee uses 33 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 30 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 03: if, is, in
-09: type, make, read, else, exit, fail, pass, over, panic
-11: write, print, alter, scrap, solve, apply, while, trial, error, other, after, none 
-08: method, aspect, define,switch, #import, #driver, #library, #module
-02: function, relation
+10: type, make, rule, read, else, exit, fail, pass, over, panic
+11: write, print, alter, scrap, apply, while, trial, error, other, after, none 
+06: define,switch, #import, #driver, #library, #module
 ```
 
 ### Definition statements
@@ -19,10 +18,7 @@ Next statements are used to import modules or declare something.
 | type     | Declare data type
 | make     | Declare a variable 
 | define   | Declare a constant
-| aspect   | Declare a subroutine
-| method   | Declare a mothod associated to an object
-| function | Declare a function 
-| relation | Declare a relation
+| rule     | Declare a subroutine
 
 ### Execution statements
 
@@ -30,7 +26,7 @@ Next statements represents actions. Also called Imperative statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| solve    | Resolve one aspect of a larger problem
+| apply    | Apply one rule that have no result
 | read     | Accept user input from console 
 | write    | Add something to console buffer but no new line 
 | print    | Output expression result to console 
@@ -59,10 +55,10 @@ These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| exit     | Silent interrupt an aspect or function with no error 
-| fail     | Interrupt aspect, function or program with error 
+| exit     | Early termination of a rule with no error 
+| fail     | Interrupt rule or program with recoverable error
 | pass     | Null statement. It does absolutely nothing.
-| over     | Program over (finalize program)
-| panic    | Create unrecoverable error
+| over     | Finalize program and give control to OS
+| panic    | Create unrecoverable error and stop program
 
 **Read next:** [Syntax Overview](overview.md)

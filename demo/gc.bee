@@ -5,20 +5,20 @@
 -- first make a class
 type GenI <: {min ,max ,ci:min ∈ Z};
 -- reset object
-method reset(me @ GenI, p_min , p_max ∈ Z):
+rule reset(me @ GenI, p_min , p_max ∈ Z):
   alter me.min := p_min
   alter me.max := p_max
   alter me.ci:= p_min;    
-method;
+rule;
 -- get next index
-method next(me @ GenI) => (i ∈ Z):
+rule next(me @ GenI) => (i ∈ Z):
   alter i  := me.ci;
   alter me.ci += 1;
-method;
+rule;
 -- detect when finish
-method finish(me @ GenI)  => (r ∈ L):
+rule finish(me @ GenI)  => (r ∈ L):
   alter r := (me.ci ≥ me.max);
-method;
+rule;
 -- use GenI to make one instance: 
 make foo := {min:10,max:20} ∈ GenI;
 make x   := 0;
@@ -27,7 +27,7 @@ while ¬ foo.finish():
   write (x,",");
 while;
 -- expect: 10,11,12,13,14,15,16,17,18,19,20, 
--- test reset aspect
+-- test reset rule
 apply foo.reset();
 
 fail if ( foo.ci ≠ 10); -- expect: 10

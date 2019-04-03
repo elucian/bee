@@ -5,28 +5,28 @@
 #driver "gv"
 -- declare a global variable $xS
 make x := 1;
--- use global variable x in aspect "add"
+-- use global variable x in rule "add"
 -- since add has not parameters and no result
--- it is just a simple aspect declaration
-aspect add1:
+-- it is just a simple rule declaration
+rule add1:
   alter x += 1;
   print x;
-aspect;
+rule;
 -- call a subroutine by name
-solve add1; -- print 2
-solve add1; -- print 3
-solve add1; -- print 4
+apply add1; -- print 2
+apply add1; -- print 3
+apply add1; -- print 4
 print x; -- expect 4    
 
 -- variable shadowing
-aspect add2: 
+rule add2: 
   make  x := 0;     -- make a variable x 
   alter x := x + 1; -- increment local variable
   print x;          -- print local x
-aspect;
-solve add2;  -- print 1
-solve add2;  -- print 1
-solve add2;  -- print 1
+rule;
+apply add2;  -- print 1
+apply add2;  -- print 1
+apply add2;  -- print 1
 print x; -- x remain 4
  
 over;

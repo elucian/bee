@@ -15,7 +15,7 @@ Composite types are complex data structures.
 * [string](#string)
 * [object](#object)
 * [aggregate](#agregate)
-* [Methods](#methods)
+* [binding](#binding)
 
 ## Usability
 
@@ -55,7 +55,7 @@ when;
 **Notes:**
 
 * Anonymous range expression [n..m] is of type Z
-* Range can solve only to discrete basic types (A,B,Z,N)
+* Range can apply only to discrete basic types (A,B,Z,N)
 * Control variables can be declared in range using "∈"
 * To check value is in range use operator "∈"
 
@@ -141,14 +141,14 @@ print s; -- "97 > 65 > 40"
 
 **Multiple results**
 
-An aspect can produce multiple results in a list.
+An rule can produce multiple results in a list.
 
 ```
 -- have a list of results
-relation test(x,y ∈ Z) => (r, c ∈ Z):
+rule test(x,y ∈ Z) => (r, c ∈ Z):
   alter r += x+1;
   alter c += y+1;
-relation;
+rule;
 
 make n, m ∈ Z;
 
@@ -242,7 +242,7 @@ alter q += 4; -- (1,2,3,4)
 -- read first element using "=" and "modify"
 alter first := a[!]; --> 1 and a := (1,2,3,4)
 
--- dequeue first element using deq aspect
+-- dequeue first element using deq rule
 alter first -= a[!]; --> 1 and a := (2,3,4)
 ```
 
@@ -534,12 +534,12 @@ Will print:
 ```
 ## Varargs
 
-One function or aspect can receive variable number of arguments.   
+One rule or rule can receive variable number of arguments.   
 We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-relation foo(*bar ∈ [Z]) => (x ∈ Z):
+rule foo(*bar ∈ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
   when (c = 0):
@@ -552,7 +552,7 @@ relation foo(*bar ∈ [Z]) => (x ∈ Z):
     alter x += bar[i];
     alter i += 1;
   while;
-relation;
+rule;
 
 --we can call foo with variable number of arguments
 print foo();     --> 0
@@ -576,12 +576,12 @@ alter a   := split(str);
 ```
 
 **conversion**
-Conversion of a string into number is when; using _parse_ function:
+Conversion of a string into number is when; using _parse_ rule:
 
 ```
 make x,y ∈ R;
 
--- function parse return a Real number
+-- rule parse return a Real number
 alter x := parse("123.5",2,",.");       --convert to real 123.5
 alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
@@ -833,9 +833,9 @@ make Acat ∈ {(S:Person)};
 
 ```
 
-## Methods
+## Binding
 
-An object can have associated relations that are called methods:
+An object can have associated rules:
 
 **pattern**
 ```
@@ -843,21 +843,21 @@ An object can have associated relations that are called methods:
 type Foo <: {a, b ∈ N};
   
 -- foo is a constructor for Foo
-method foo(p1,p2 ∈ N) => (me @ Foo):
+rule foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
-method;
+rule;
 
--- second aspect for Foo type
-method bar(me @ Foo):
+-- second rule for Foo type
+rule bar(me @ Foo):
   print "a ="._.me.a;
   print "b ="._.me.b;
-method;
+rule;
 
 -- reference capture "::" result Foo object 
 make test :: foo(p:1);
 
--- test object aspect
-solve test.bar();  
+-- test object rule
+apply test.bar();  
 -- a = 1
 -- b = 1
 
@@ -865,9 +865,9 @@ solve test.bar();
 **See also:** [me.bee](me.be)
 
 **Notes:** 
-* Binded methods are using multiple dispatch so they can be overloaded;
-* Methods can be overwritten in other modules;
-* Methods of a type can be private to module or public using dot prefix;
+* Binded rules are using multiple dispatch so they can be overloaded;
+* Rules can be overwritten in other modules;
+* Rules of a type can be private to module or public using dot prefix;
 * If the object type is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;

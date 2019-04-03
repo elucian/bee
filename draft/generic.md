@@ -1,19 +1,19 @@
-## Generic Aspects
+## Generic Rules
 
-A generic aspect is using a variable type. 
+A generic rule is using a variable type. 
 
 **pattern**
 ```
-aspect name<type_name>(param ∈ type_name, result @ type_name):
+rule name<type_name>(param ∈ type_name, result @ type_name):
    make local ∈ type_name;   
    alter result := ...
-aspect;
+rule;
 ```
 
 **bubble sort**
 
 ```
-aspect sort<X>(array @ [X], gt @ (X,X) ∈ L ):
+rule sort<X>(array @ [X], gt @ (X,X) ∈ L ):
   make n := length(array)-1 ∈ N; 
   make swap := $T ∈ L;
   make temp ∈ X;
@@ -33,13 +33,13 @@ aspect sort<X>(array @ [X], gt @ (X,X) ∈ L ):
       alter i +=1;
     while; 
   while;
-aspect;
+rule;
 ```
 
 **Notes:**
 
-* Aspect "sort" receive type X using markup <X> 
-* Function reference "gt" is received as argument.
+* Rule "sort" receive type X using markup <X> 
+* Rule reference "gt" is received as argument.
 
 **sort usage**
 
@@ -47,9 +47,9 @@ aspect;
 type Person  <: { name ∈ S, age ∈ N };
 
 -- tagine order action for array of Persons
-aspect order(cat @ [Person]):
-  solve sort<Person>(cat, (a, b) => (a.name > b.name));
-aspect;
+rule order(cat @ [Person]):
+  apply sort<Person>(cat, (a, b) => (a.name > b.name));
+rule;
 
 -- tagine clients and suppliers
 make clients   := [Person](100);
@@ -58,16 +58,16 @@ make suppliers := [Person](10);
 ...
 
 -- use new order action to sort
-solve order(clients);
-solve order(suppliers);
+apply order(clients);
+apply order(suppliers);
 ```
 
-## Anonymous Function
+## Anonymous Rule
 
-This design uses one _anonymous_ function:
+This design uses one _anonymous_ rule:
 
 
-**function**
+**rule**
 ```
  (param, param,...) => (expression)
 ```
@@ -79,12 +79,12 @@ This can be used to create an argument for a _signature reference_:
  ( id @ (type,type, ...) ∈ type)
 ```
 
-To modify an anonymous function as argument by name Bee uses: "::"
+To modify an anonymous rule as argument by name Bee uses: "::"
 
 ```
  (id :: (param ,param ...) => (...))
 ```
 
-Where: "id" is parameter name representing reference to function.
+Where: "id" is parameter name representing reference to rule.
 
 **Read next:** [overview](../syntax/overview.md)

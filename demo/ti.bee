@@ -17,23 +17,23 @@ make t := '1:45am'     -> T12; -- Time
 make t := '23:45'      -> T24; -- Time
 make d := '10/10/2010' -> DMY; -- Date
 -- optional parameters inference
-relation add(x,y:0) => (z ∈ Z):
+rule add(x,y:0) => (z ∈ Z):
   alter z := x + y; 
-relation;
+rule;
 
 print add(1,1); -- will print 2
 -- argument x is mandatory, y is optional
-relation plus(x ∈ Z, y : 1) => (z ∈ Z):
+rule plus(x ∈ Z, y : 1) => (z ∈ Z):
   alter z := (x + y);  
-relation;
+rule;
 print plus(1); -- will print 2
 -- input/output arguments, y is optional 
-aspect inc(x @ Z, y : 0):
+rule inc(x @ Z, y : 0):
   alter x += 1;  
   alter y += 1;
-aspect;
+rule;
 
 make i,k := 0; -- references
-solve inc(i);   --> i = 1 
-solve inc(i,k); --> i = 2 and k = 1
+apply inc(i);   --> i = 1 
+apply inc(i,k); --> i = 2 and k = 1
 over;

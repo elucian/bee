@@ -4,17 +4,17 @@
 #driver "lv"
 -- local variable
 make x := 1;
--- aspect side-effects
-aspect add:
+-- rule side-effects
+rule add:
   alter x := x + 1;
   print x;
-aspect;
-solve add; -- will print 2
-solve add; -- will print 3
+rule;
+apply add; -- will print 2
+apply add; -- will print 3
 print x; -- x = 3 (is modified)
--- changing x influence aspect
+-- changing x influence rule
 alter x := 0;  -- make x make 
-solve add;   -- will print 1
-solve add;   -- will print 2
+apply add;   -- will print 1
+apply add;   -- will print 2
 print x; -- x = 2 (modified)
 over;

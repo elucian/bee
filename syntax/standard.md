@@ -3,7 +3,7 @@
 Standard library contains:
 
 * [Type system](#type-system)
-* [Built-in functions](#built-in-functions)
+* [Built-in rules](#built-in-rules)
 * [Mathematics](#mathematics)
 * [System library](#system-library)
 
@@ -31,11 +31,11 @@ Following types are included in standard library:
 | Date        |D  | "YYYYDDMM" -> YDM, "DD/MM/YYYY" -> DMY, "MM/DD/YYYY" -> YDM
 | Time        |T  | "hh:mm,9999ms" -> T12 "hh:mm__, 9999ms" __={am/pm} + {T12, T24}
 
-## Built-in functions
+## Built-in rules
  
 **Introspection**
 
-| function | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | type     | type name
 | size     | type size 
@@ -46,7 +46,7 @@ Following types are included in standard library:
  
 **List/strings**
 
-| function     | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | split    | Split a string into a list / array
 | join     | Join a list into a string 
@@ -59,7 +59,7 @@ Following types are included in standard library:
  
 **Numeric**
  
-| function     | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | round    | Convert one real into an integer
 | floor    | Convert one real into an integer
@@ -68,7 +68,7 @@ Following types are included in standard library:
  
 ## Mathematics
 
-| function     | Purpose
+| rule     | Purpose
 |----------|------------------------------------------ 
 | sin      | sinus 
 | cos      | cousin
@@ -76,7 +76,7 @@ Following types are included in standard library:
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | module function y := \|x\|  
+| mod      | module rule y := \|x\|  
 
 ## System Library
 
@@ -98,9 +98,9 @@ Interaction with operating system require import from library.
 
 To read and print into files and save to disk, we must use system.io library. This library define type "F" : file handler. It offer support for file input/output.
 
-**Aspects**
+**Rules**
 
-Next is a fragment from system.io library that define functions open and close.
+Next is a fragment from system.io library that define rules open and close.
 
 ```
 type .open(name ∈ S, mode ∈ A) => (f ∈ F);
@@ -108,7 +108,7 @@ type .close(f ∈ F);
 ...
 
 ```
-**remember:** public functions start with "."
+**remember:** public rules start with "."
 
 **Examples:**
 
@@ -117,9 +117,9 @@ type .close(f ∈ F);
 
 **File IO**
 
-Other functions in system.io
+Other rules in system.io
 
-| function    | Purpose
+| rule    | Purpose
 |---------|------------------------------------------ 
 | exist   | Check if file exist on disk
 | open    | Open a file for read or print
@@ -128,9 +128,9 @@ Other functions in system.io
 | where   | Current working folder name 
 | change  | Change current working folder
 
-Other aspects in syste.io
+Other rules in syste.io
 
-| aspect  | Purpose
+| rule  | Purpose
 |---------|------------------------------------------ 
 | save    | Save file modifications to disk
 | undo    | Restore file modification before save

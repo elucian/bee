@@ -60,11 +60,11 @@ When we define parameters we can use type inference for:
 
 **Optional Parameters:**
 
-In next function foo, parameters a, b are optional.
+In rule foo, parameters a, b are optional.
 
 ```
 -- result type is missing
-function foo(a, b:0) => ( a + b ) ∈ Z; 
+rule foo(a, b:0) => ( a + b ) ∈ Z; 
                                   
 print foo();   -- 0               
 print foo(1);  -- 1
@@ -76,7 +76,7 @@ print foo(1,2);-- 3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-function foo(a,b ∈ Z, c:0 ) => (a+b+c) ∈ Z;
+rule foo(a,b ∈ Z, c:0 ) => (a+b+c) ∈ Z;
 
 print foo(1,2);   -- 3
 print foo(1,2,3); -- 6
@@ -91,7 +91,7 @@ We can use parameter name and pair-up ":" symbol for argument value.
 ```
 -- fn with optional parameters
 -- result type is missing
-function bar(a,b,c:0) => (a+b+c) ∈ Z;
+rule bar(a,b,c:0) => (a+b+c) ∈ Z;
 
 -- observe we use pair-up to new value to argument
 print bar(a:1); -- print 1 because (b,c := 0) 

@@ -28,7 +28,7 @@ symbol| description
 ------|----------------------------------------------------------------
  \#   | Compiler directives prefix \| Template placeholder
   $   | Global variables prefix \| System environment constants
-  :   | Pair up key-value in a collection or method call
+  :   | Pair up key-value in a collection or rule call
   ;   | End of statement \| Statement enumerator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
@@ -68,12 +68,12 @@ symbol| description
  \##  | Start for a title comment /separator  
  \-+  | End for multiple line comments 
  ..   | Define range [n..m] \| Define slice from Array
- =\>  | Define: function expression \| method result
- -\>  | function pipeline \| Explicit conversion 
+ =\>  | Define: rule expression \| rule result
+ -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Fill template using values from list
  \<:  | Define subset \| User composite type
  @    | Define a reference \| Define output parameter 
- &    | Prefix for relation state variables
+ &    | Prefix for rule state variables
 
 
 ## Triple Symbols

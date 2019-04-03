@@ -1,21 +1,21 @@
 +------------------------
-  Function as parameter
+  Rule as parameter
 ------------------------+
 
--- declare relation with function "cmp" as parameter
-relation compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r ∈ L):
+-- declare rule with rule "cmp" as parameter
+rule compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r ∈ L):
   alter r := cmp(a,b);
-relation;
+rule;
 
--- declare a function:
-function lt(a,b ∈ Z) => (a < b) ∈ L;
+-- declare a rule:
+rule lt(a,b ∈ Z) => (a < b) ∈ L;
 make test ∈ L
 
--- delegate using function "lt"
+-- delegate using rule "lt"
 alter test := compare(1,2,cmp::lt);
 print test; -- expect 1
 
--- delegate using anonymous function
+-- delegate using anonymous rule
 alter test := compare(1, 2, cmd:: (a,b) => (a ≥ b));
 print test; -- expect 1
 

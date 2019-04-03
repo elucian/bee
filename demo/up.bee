@@ -1,21 +1,21 @@
 +-------------------------------------
-   relation unpacking demonstration 
+   rule unpacking demonstration 
 -------------------------------------+
 #driver "up"
-** relation with two results
-relation test(x, y ∈ Z) => (a,b ∈ Z):
+** rule with two results
+rule test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x+1;
   alter b := y+1;
-relation; 
+rule; 
 -- unpacking and make new variables
 make n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
 
-** relation with structured result
+** rule with structured result
 type Rec <: {x ∈ Z, y ∈ R};
-relation (x ∈ Z, y ∈ R) => (r ∈ Rec):
+rule (x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.x := x;
   alter r.y := y;
-relation;
+rule;
 print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 over; 

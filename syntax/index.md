@@ -32,20 +32,20 @@ Unverified demo source files:
 1. [in.bee](../demo/in.bee) - Input multiple values
 1. [cs.bee](../demo/cs.bee) - Control structures
 1. [sw.bee](../demo/sw.bee) - Switch statement
-1. [fn.bee](../demo/fn.bee) - Function declaration
+1. [fn.bee](../demo/fn.bee) - Rule declaration
 1. [fi.bee](../demo/fi.bee) - Fibonacci function
 1. [gv.bee](../demo/gv.bee) - Global variables
 1. [lv.bee](../demo/lv.bee) - Local variable demo
 1. [dt.bee](../demo/dt.bee) - User defined data types
 1. [ti.bee](../demo/ti.bee) - Type inference demo
 1. [up.bee](../demo/up.bee) - Unpacking demo
-1. [me.bee](../demo/me.bee) - Aspect dispatch demo
+1. [me.bee](../demo/me.bee) - Rule dispatch demo
 1. [pm.bee](../demo/pm.bee) - Pattern matching
 1. [fo.bee](../demo/fo.bee) - File input/output
 1. [nu.bee](../demo/nu.bee) - Working with references
 1. [op.bee](../demo/op.bee) - Output parameters
-1. [rp.bee](../demo/ro.bee) - Function as parameter
-1. [ho.bee](../demo/ho.bee) - High order method
+1. [rp.bee](../demo/ro.bee) - Rule as parameter
+1. [ho.bee](../demo/ho.bee) - High order rule
 1. [gc.bee](../demo/gc.bee) - Generator class
 1. [bs.bee](../demo/bs.bee) - Bubble sort algorithm
 

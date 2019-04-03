@@ -2,8 +2,8 @@
    Bubble Sort Demo
 -----------------------+
 #driver "bs"
--- bubble sort aspect
-aspect sort(this @ [Z]):
+-- bubble sort
+rule sort(this @ [Z]):
   make n := length(this)-1;
   make i := 0 ∈ N;
   make temp @ Z;  
@@ -23,12 +23,12 @@ aspect sort(this @ [Z]):
       alter i += 1; 
     while;
   while;
-aspect;
+rule;
 -- define test & result fixture
 make test   := [1,4,1,5,9,2,6,5,3,5];
 make result := [1,1,2,3,4,5,5,5,6,9];
--- test sort aspect
-solve sort(test);
+-- test sort rule
+apply sort(test);
 print test;
 
 -- check result
