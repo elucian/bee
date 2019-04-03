@@ -1,6 +1,6 @@
 ## Forward declaration
 
-Declare rule signatures before they are used
+Declare rule signatures before it is used
 
 ```
 rule plus(Z,Z) ∈ Z; 

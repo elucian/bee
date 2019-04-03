@@ -1,6 +1,6 @@
 ## Generic Rules
 
-A generic rule is using a variable type. 
+A generic rule is using a type parameter. 
 
 **pattern**
 ```
@@ -9,6 +9,8 @@ rule name<type_name>(param ∈ type_name, result @ type_name):
    alter result := ...
 rule;
 ```
+
+**Note:** Angle brackets `<type_name>` are actually used.
 
 **bubble sort**
 
