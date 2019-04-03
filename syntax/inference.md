@@ -64,7 +64,7 @@ In rule foo, parameters a, b are optional.
 
 ```
 -- result type is missing
-rule foo(a, b:0) => ( a + b ) ∈ Z; 
+rule foo(a,b:0) => ( a + b ) ∈ Z; 
                                   
 print foo();   -- 0               
 print foo(1);  -- 1

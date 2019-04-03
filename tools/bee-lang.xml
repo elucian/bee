@@ -24,10 +24,10 @@
             <Keywords name="Folders in comment, open">|*</Keywords>
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close">*|</Keywords>
-            <Keywords name="Keywords1">import define type aspect functor rule  make </Keywords>
+            <Keywords name="Keywords1">import define type rule make </Keywords>
             <Keywords name="Keywords2">when else none switch default while trial error other after is in&#x000D;&#x000A;</Keywords>
-            <Keywords name="Keywords3">exit fail pass over panic</Keywords>
-            <Keywords name="Keywords4">apply scrap alter &#x000D;&#x000A;read write print solve&#x000D;&#x000A;plot draw show hide erase</Keywords>
+            <Keywords name="Keywords3">exit fail pass over panic </Keywords>
+            <Keywords name="Keywords4">apply scrap alter &#x000D;&#x000A;read write print&#x000D;&#x000A;plot draw show hide erase</Keywords>
             <Keywords name="Keywords5">exist open close remove files folders change new where save undo clean </Keywords>
             <Keywords name="Keywords6">B L W Z N Q R C D T H&#x000D;&#x000A;A S U &#x000D;&#x000A;F X E&#x000D;&#x000A;P V G&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$</Keywords>

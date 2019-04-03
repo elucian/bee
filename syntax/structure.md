@@ -301,7 +301,7 @@ over;
 
 * Usually modules are declaring data types, rules and rules.
 * Rogue statements can be used for module initialization.
-* A module is executed when is imported using _wee_ statement. 
+* A module is executed when is imported using _import_ statement. 
 
 ## Data types
 

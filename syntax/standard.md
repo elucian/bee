@@ -117,7 +117,7 @@ type .close(f ∈ F);
 
 **File IO**
 
-Other rules in system.io
+Rules with result in system.io
 
 | rule    | Purpose
 |---------|------------------------------------------ 
@@ -128,9 +128,9 @@ Other rules in system.io
 | where   | Current working folder name 
 | change  | Change current working folder
 
-Other rules in syste.io
+Rules without rules in syste.io
 
-| rule  | Purpose
+| rule    | Purpose
 |---------|------------------------------------------ 
 | save    | Save file modifications to disk
 | undo    | Restore file modification before save
