@@ -132,8 +132,9 @@ qualifier.aspect_name(arguments);
 ```
 
 **Environment variables**
-Environment variables are globals anthat start with $ symbol. 
-All system variables are automatic imported from OS environment.
+
+* Environment variables are global and start with $ symbol. 
+* All system variables are automatic imported from OS environment.
   
 ## Global scope
 
