@@ -1,5 +1,5 @@
 +--------------------------
-   console inprint demos
+   console input demo
 --------------------------+
 #driver "hi"
 print "Hello. I'm Bee!";
@@ -13,7 +13,7 @@ print "hello:" & your_name;
 when (age < 21):
   print "have a candy!"
 else:
-  print "have a bear!"
+  print "have a beer!"
 when;
 
 over;
