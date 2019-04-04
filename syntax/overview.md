@@ -547,6 +547,11 @@ Controlled repetitive block:
 ```
 while (condition):
   -- repetitive block
+  ...
+  skip if condition; -- continue
+  ...
+  stop if condition; -- break
+  ...
 else:
   -- alternative path
 while;
@@ -573,23 +578,23 @@ while;
 print;
 ```
 
-### Nested while
+### Nested loop
 
-One while block can be nested.
+One while block statement can be nested:
 
 **pattern:** 
 
 ```
 while condition: 
-  -- outer block 
+  -- outer loop 
   
   while condition:
-    -- inner block 
+    -- inner loop
   while;  
-  -- continue outer block
+  -- continue outer loop
   ...
   while condition:
-    -- inner block
+    -- inner loop
     ...
   while;  
   ...       

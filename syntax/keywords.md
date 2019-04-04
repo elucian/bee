@@ -1,10 +1,10 @@
 ## Bee Keywords
 
-Bee uses 30 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 32 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 03: if, is, in
-10: type, make, rule, read, exit, fail, pass, over, else, none 
+12: type, make, rule, read, exit, fail, pass, over, stop, skip, else, none 
 11: write, print, alter, scrap, apply, while, trial, error, other, after, panic
 06: define, switch, #import, #driver, #library, #module
 ```
@@ -55,6 +55,8 @@ These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
+| stop     | Interrupt a while loop and continue after end 
+| skip     | Skip forward in while block to continue from beginning
 | exit     | Early termination of a rule with no error 
 | fail     | Interrupt rule or program with recoverable error
 | pass     | Null statement. It does absolutely nothing.
