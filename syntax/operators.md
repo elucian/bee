@@ -21,21 +21,20 @@ symbol  | description
  'x'    | Limited capacity ASCII string literal 
  "y"    | Variable capacity Unicode string literals
 
-
 ## Single Symbols
 
 symbol| description
 ------|----------------------------------------------------------------
  \#   | Compiler directives prefix \| Template placeholder
   $   | Global variables prefix \| System environment constants
+  @   | Define a reference \| Define output parameter 
   :   | Pair up key-value in a collection or rule call
   ;   | End of statement \| Statement enumerator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
-  \_  | Space constant:' ' \| Anonymous variable
+  \_  | Anonymous variable \| Has constant value one space (_ = ' ')
   \*  | Replicate value \| [*] Multiple elements  \|Variable arguments  
   \\  | Escape character (\\n := New Line) \| maybe regular expressions
-
 
 ## Numeric operators  
 
@@ -72,7 +71,7 @@ symbol| description
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
- @    | Define a reference \| Define output parameter 
+ 
 
 
 **Note:**  Triple symbol: "..."  is used in switch statement
@@ -187,7 +186,6 @@ symbol  | description
 Symbol| Description
 ------|---------------------------------------------------------------
  *    | String pattern repetition \| String generator
- `_`  | concatenate two strings with one space and trim
  `&`  | concatenate two strings as they are
  `/`  | concatenate two strings with / and de-duplicate last
  `\\` | concatenate two strings with \\ and de-duplicate last

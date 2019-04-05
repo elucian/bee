@@ -124,8 +124,8 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |0xFF       | hexadecimal integer: (0x,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
 |0.5        | real number: (., 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 ,9)
 |0.0        | real number: (.,0,1,2,3,4,5,6,7,8,9) 
-|5E2        | real number: 5⋅10²  := 500  (E use positive exponent)
-|5e2        | real number: 5⋅10⁻² := 0.05 (e use negative exponent)
+|5E2        | real number: 5×10²  := 500  (E use positive exponent)
+|5e2        | real number: 5×10⁻² := 0.05 (e use negative exponent)
 
 ## Collection types
 

@@ -644,23 +644,25 @@ All operators below will concatenate two strings.
 symbol| description
 ------|--------------------------------------------------------------------------
   `&` | Concatenate two strings as tye are no trim is performed!
-  `_` | Concatenate two strings and trim both strings to one space separator
   `/` | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
   `\\`| Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
 
 **examples**
 ```
-make u, c ∈ S; -- default S length is 255
+make u, c, s ∈ S; -- default S length is 255
 
 -- string concatenation
-alter u := "This is" & " a long string.";
-alter c := "This is" _ 'fix size'; 
+alter u := "This is"  & " a long string.";
+alter c := "This is " & 'fix size'; 
+
+-- automatic conversion to string
+alter s := 40 & 5;  --> '405'
 
 -- path concatenation
 make test_file := $pro/"src"/"test.bee";
 
 -- when $pro = c:\work\project\
-print test_file;  --> "c:\work\project\src\test.bee"
+print test_file; --> "c:\work\project\src\test.bee"
 ```
 
 **Note:** You can concatenate a string with a number or two numbers using &
@@ -866,8 +868,8 @@ apply test.bar();
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
 * Rules can be overwritten in other modules;
-* Rules of a type can be private to module or public using dot prefix;
-* If the object type is public, the constructor must also be public;
+* Rules can be private to module or public using dot prefix;
+* If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
