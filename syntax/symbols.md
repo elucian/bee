@@ -43,6 +43,13 @@ A ᵃ ᵇ ᶜ ᵈ ᵉ ᶠ ᵍ ʰ ⁱ ʲ ᵏ ᶩ ᵐ ⁿ ᵒ ᵖ ʳ ˢ ᵗ ᵘ �
 B ᴬ ᴮ ᴰ ᴱ ᴳ ᴴ ᴵ ᴶ ᴷ ᴸ ᴹ ᴺ ᴼ ᴾ ᴿ ᵀ ᵁ ᵂ 
 ```
 
+**Note:** Limited superscript expressions:
+```
+x ⁻¹ 
+xⁿ⁻¹
+xⁿ⁺¹
+```
+
 **Subscript**
 
 Subscript symbol can be used for identifiers as a second letter or digit.
@@ -67,6 +74,13 @@ Greek letters can be used for variable names.
 ```
 Γ Δ Ξ Π Σ Φ Ψ Ω 
 α β δ ζ η θ λ μ ν ξ ο π ρ σ ς τ υ φ
+```
+
+**Cyrillic Symbols**
+We have eliminated the ones looking like Latin symbols or numbers.
+```
+Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я 
+б г д ж з и ф ц ч ш щ   я 
 ```
 
 ## Editor Font
