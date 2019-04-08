@@ -36,7 +36,7 @@ Each graphic element is a composite data type.
 ∘ ∙ ↻ ∟ ⊞ ⊠ ⊗ ⊕ ♀ ♂ ☺ ↱ ⎋ ⎋
 ```
 
-Type   | Signature                 |
+Type   | Signature                 | Description
 -------|---------------------------|-------------------------------------------------
 Δ      | \<: R[0..+]               | Distance or length
 V      | {o ∈ ⊡, d ∈ Δ}            | 2D vectorial space
