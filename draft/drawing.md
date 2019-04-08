@@ -19,27 +19,21 @@ Each graphic element is a composite data type.
   ∠    | Angle    | <: N[0..2 · π] 
   ⊡    | Point    | {x, y ∈ R}
   ↗    | Vector   | {o, p ∈ ⊡}
-  ↺    | Polar    | {o ∈ ⊡, r ∈ Δ, α ∈ ∠ }  
-  ○    | Circle   | {o ∈ ⊡, r ∈ Δ}  
-  ◴    | Arc      | {o ∈ ⊡, r ∈ Δ, α,β ∈ ∠ }
-  □    | Square   | {o ∈ ⊡, b ∈ Δ}
-  ◁    | Triangle | {o ∈ ⊡, b ∈ Δ, α,β,ɣ ∈ ∠}
+  ↺    | Polar    | {o ∈ ⊡, r ∈ P, α ∈ ∠ }  
+  ○    | Circle   | {o ∈ ⊡, r ∈ P}  
+  ◴    | Arc      | {o ∈ ⊡, r ∈ P, α,β ∈ ∠ }
+  □    | Square   | {o ∈ ⊡, b ∈ P}
+  ◁    | Triangle | {o ∈ ⊡, b ∈ P, α,β,ɣ ∈ ∠}
   ◇    | Diamond  | {o ∈ ⊡, α,β ∈ ∠} 
-  ⎊    | Regular  | {o ∈ ⊡, r ∈ +Δ, n ∈ Δ}
+  ⎊    | Regular  | {o ∈ ⊡, r, n ∈ P}
   ⌂    | Shape    | {o ∈ ⊡, s @ [⊡]}
   ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
 
 
-**unused**
-
-```  
-∘ ∙ ↻ ∟ ⊞ ⊠ ⊗ ⊕ ♀ ♂ ☺ ↱ ⎋ ⎋
-```
-
 Type   | Signature                 | Description
 -------|---------------------------|-------------------------------------------------
-Δ      | \<: R[0..+]               | Distance or length
-V      | {o ∈ ⊡, d ∈ Δ}            | 2D vectorial space
+P      | \<: R[0..+]               | Positive number representing distance or length
+V      | {o ∈ ⊡, d ∈ P}            | 2D vectorial space
 H      | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }    | Any shape, with origin and rotation
 Y      | {c ∈ N, v @ [L], m @ [H]} | 2D Layer with c = color, m = set of shapes
 G      | {o ∈ ⊡, w,h ∈ Z, m @ [Y]} | Graphic canvas (with points and shapes)

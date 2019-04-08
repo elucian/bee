@@ -90,6 +90,7 @@ Basic types are represented with one single upper-case character.
 | Integer     |Z  | 8   |Signed large discrete number
 | Natural     |N  | 8   |Unsigned large discrete number 
 | Real        |R  | 8   |Double precision number 
+| Positive    |P  | 8   |Double precision positive numbers: [0..+] 
 | Rational    |Q  | 8   |Fraction of two binary numbers: like ¹⁄₂ ¹⁄₃ ²⁄₃ ... 
 
 **Note:** 
