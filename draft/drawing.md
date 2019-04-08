@@ -20,7 +20,7 @@ Each graphic element is a composite data type.
   ⊡    | Point    | {x, y ∈ R}
   ↗    | Vector   | {o, p ∈ ⊡}
   ↺    | Polar    | {o ∈ ⊡, r ∈ Δ, α ∈ ∠ }  
-  ◯    | Circle   | {o ∈ ⊡, r ∈ Δ}  
+  ○    | Circle   | {o ∈ ⊡, r ∈ Δ}  
   ◴    | Arc      | {o ∈ ⊡, r ∈ Δ, α,β ∈ ∠ }
   □    | Square   | {o ∈ ⊡, b ∈ Δ}
   ◁    | Triangle | {o ∈ ⊡, b ∈ Δ, α,β,ɣ ∈ ∠}
