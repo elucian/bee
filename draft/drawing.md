@@ -38,7 +38,7 @@ Each graphic element is a composite data type.
 
 Type   | Signature                 |
 -------|---------------------------|-------------------------------------------------
-Δ      | <: R[0..+]                | Distance or length
+Δ      | \<: R[0..+]               | Distance or length
 V      | {o ∈ ⊡, d ∈ Δ}            | 2D vectorial space
 H      | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }    | Any shape, with origin and rotation
 Y      | {c ∈ N, v ∈ [L], m @ [H]} | 2D Layer with c = color, m = set of shapes
