@@ -21,14 +21,14 @@ Composite types are complex data structures.
 
 Bee uses composite types to ...
 
-* declare data types using type, "<:" and "∈"
-* declare constants  using define, ":=" and "∈"
-* declare variables  using make, ":=" and "∈"
-* declare parameters using symbols "*", ":=", "@:" and "∈"
+* declare data types using type   and "<:"
+* declare constants  using define and ":=" and "@" or "∈"
+* declare variables  using make   and ":=" and "@" or "∈"
+* declare parameters using symbols: "@" or "∈" and ":=" (optional)
 
 ## Range
 
-Range notation is used to type a subtype.
+Range notation is used to create a subtype.
 
 **syntax**
 
@@ -54,10 +54,11 @@ when;
 
 **Notes:**
 
-* Anonymous range expression [n..m] is of type Z
-* Range can apply only to discrete basic types (A,B,Z,N)
-* Control variables can be declared in range using "∈"
-* To check value is in range use operator "∈"
+* A range member/element is a native type;
+* Anonymous range expression [n..m] is of type Z;
+* Range can apply only to discrete basic types (A,B,Z,N);
+* Control variables can be declared in range using "∈";
+* To check value is in range use operator "∈";
 
 ## Ordinal
 
@@ -88,11 +89,11 @@ alter  b := name1; -- b value := 1
 
 ## List
 
-A list is an ordered collection of values separated by comma and enclosed in brackets.
+A list is an ordered collection of values separated by comma and enclosed in brackets. Observe that a list is a reference since it is a composite type.
 
 **Syntax**
 ```
-type <variable> := () ∈ (value_type);
+type <variable> := () @ (value_type);
 ```
 
 **Notes**: List members must have same data type
@@ -100,10 +101,10 @@ type <variable> := () ∈ (value_type);
 **example**
 ```
 -- create a list of ASCII characters
-make a := () ∈ (A);
+make a := () @ (A);
 
 -- create a list using a literal
-make b := ('1','a','2','b') ∈ (A); 
+make b := ('1','a','2','b') @ (A); 
 ```
 
 **empty list**
@@ -203,8 +204,8 @@ make list := (`a`, `b`, `c`);
 make x :: list[!] @ A;
 while ¬ (x ≡ list[?]):
   write x;
-  alter x :: next(x);
-  write ',';  
+  alter x :: list.next(x);
+  write ',';
 while;
 ```
 
@@ -251,9 +252,9 @@ A set is a sorted collection of unique values.
 ```
 --define a set
 
-make s1 := {1,2,3} ∈ {N}; 
-make s2 := {2,3,4} ∈ {N};
-make s  := {}      ∈ {N}; -- empty
+make s1 := {1,2,3} @ {N}; 
+make s2 := {2,3,4} @ {N};
+make s  := {}      @ {N}; -- empty
 
 
 -- specific operations
@@ -263,7 +264,7 @@ alter s := s1 - s2; --{1}       -- difference 1
 alter s := s2 - s1; --{4}       -- difference 2
 
 -- declare a new set
-make a := {1,2,3} ∈ {N};
+make a := {1,2,3} @ {N};
 
 -- using operator +/- to mutate set a
 alter a := a + 4; --> {1,2,3,4} --append 4
@@ -287,7 +288,7 @@ A map is a set of (key:value) pairs sorted by key.
 type type_name <: {(key_type : value_type)}
 
 -- declare a new empty map
-make new_map := {} ∈ type_name;
+make new_map := {} @ type_name;
 ```
 
 **example**
@@ -319,9 +320,9 @@ print map;      --> expected: {'b'="second", 'c'="third"}
 We can check if an element is included in a collection.
 
 ```
-type  Tmap ∈ {(A:U)};
+type  Tmap <: {(A:U)};
 
-make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
+make map  := {('a':"first"), ('b':"second")} @ Tmap;
 
 when ('a' ∈ map):
   print("a is found");
@@ -350,7 +351,7 @@ make array_name ∈  [type](n,m); --two dimensions with capacity n x m
 
 ```
 -- define array with 10 Real elements
-make test ∈ [R](10); 
+make test @ [R](10); 
 make m := length(test)-1;  
 
 print test[0];   -- first element
@@ -401,7 +402,7 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-make zum ∈ [Z](10);
+make zum @ [Z](10);
 
 -- add 1 to each element
 alter zum[*] += 1; 
@@ -410,7 +411,7 @@ print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 
 **differed initialization**
 ```
-make vec ∈ [A];
+make vec @ [A];
 
 -- element multiply "*"
 alter vec := `x` * 10;
@@ -426,7 +427,7 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-make array_name ∈ [element_type](c);
+make array_name @ [element_type](c);
 
 -- slice creation using "::"
 make slice_name :: array_name[n..m];
@@ -467,7 +468,7 @@ Default assignment ":=" and slicing operator "[..]" makes a copy.
 
 ```
 make a := [0,1,2,3,4];
-make e,f,r ∈ [Z]; -- empty array
+make e,f,r @ [Z]; -- empty array references
 
 -- by default modify ":=" copy/clone an entire collection
 alter e := a; 
@@ -490,7 +491,7 @@ It is an array with 2 or more indexes. We can have 2D or 3D array.
 
 **Example:** 
 ```
-make mat ∈ [R](4,4); -- define matrix
+make mat @ [R](4,4); -- define matrix
 
 -- modify matrix using ":=" operator
 alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
@@ -537,7 +538,7 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-rule foo(*bar ∈ [Z]) => (x ∈ Z):
+rule foo(*bar @ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
   when (c = 0):
@@ -566,8 +567,9 @@ print foo(1,2,3);--> 6
 * A can be used to create arrays of ASCII characters compatible with C strings; 
 
 ```
-make str ∈ S(25);   -- string with capacity 25 Extended ASCHII characters
-make a   ∈ [A](25); -- array of 25 characters
+-- two compatible representation of strings
+make str @ S(25);   -- string with capacity   25x4 = 100 bytes
+make a   @ [A](25); -- array of 25 characters 25x4 = 100 bytes
 
 alter str := 'Long string'; 
 alter a   := split(str);
@@ -584,29 +586,9 @@ alter x := parse("123.5",2,",.");       --convert to real 123.5
 alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 ```
 
-### ASCII Encoding
-Default _code page_ [437](https://en.wikipedia.org/wiki/Code_page_437) is used for MS-DOS and Windows console. Greek alphabet _code page_ [737](https://en.wikipedia.org/wiki/Code_page_737) is prefered for mathematic algebra.
-
-### Change code page on Windows
-Programmers working in Bee can decide to use a console editor (like edit) that is capable to display 
-correct the characters for specific code page. User can verify or change the console code page using command chcp:
-```
- >chcp 737  
- >edit
-```
-
-**Note:** Bee is using Extended ASCII characters to define program symbols and operators. 
-
-For strings programmers can use several additional characters specific to a language or region. 
-In Bee we use this list of characters to represent the strings: 
-
-[Code ASCII Standard](https://en.wikipedia.org/wiki/ASCII)
-
-
 ### Double quoted string
 
-Double quoted strings are Unicode dynamic strings with more features than ASCII strings. 
-Bee support "escape" notation using escape `\` symbol only in double quoted strings.
+Double quoted strings are Unicode UTF8 dynamic strings.  Bee support "escape" notation using escape `\` symbol in double quoted strings.
 
 ```
 print("this represents \n new line in string")
@@ -639,7 +621,7 @@ print type(s); -- Print: U
 
 ### Concatenation
 
-All operators below will concatenate two strings.
+Below operators will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
@@ -649,7 +631,7 @@ symbol| description
 
 **examples**
 ```
-make u, c, s ∈ S; -- default S length is 255
+make u, c, s @ S; -- default S length is 255
 
 -- string concatenation
 alter u := "This is"  & " a long string.";
@@ -696,12 +678,12 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-make str := constant * n ∈ S(n);
+make str := constant * n @ S(n);
 ```
 
 **Example:**
 ```
-make sep ∈ U;
+make sep @ U;
 alter sep := "+" & "-" * 18 & "+";
 
 print sep;
@@ -756,13 +738,13 @@ make var1,var2... <+ object_name;
 ```
 -- define recursive type Person
 type Person <: {
-      name ∈ S, 
+      name @ S, 
       age  ∈ N,  
-      children ∈ (Person)
+      children @ (Person)
     }; 
 
 -- create two objects of type Person
-make r1,r2 ∈ Person;
+make r1,r2 @ Person;
 
 -- person with no children          
 alter r1 := {name:'Mica', age:21};
@@ -791,10 +773,10 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name ∈ U, age ∈ N};
+type  Person <: {name @ U, age ∈ N};
 
 -- array of 10 persons
-make catalog ∈ [Person](10); 
+make catalog @ [Person](10); 
   
 -- initialize value using literals
 make catalog[0] := {name:"Cleopatra", age:15};
@@ -819,16 +801,16 @@ An aggregate type can store references to other composite types.
 **example**
 ```
 -- a list of lists of integers
-make Dlist ∈ ((Z));
+make Dlist @ ((Z));
 
 -- an array of 10 lists of integers
-make Alist ∈ [(Z)](10);
+make Alist @ [(Z)](10);
 
 -- an array of arrays of integers
-make Aheap ∈ [[Z](5)](10);
+make Aheap @ [[Z](5)](10);
 
 -- an catalog of persons
-make Acat ∈ {(S:Person)};
+make Acatp @ {(S:Person)};
 
 ```
 
@@ -859,7 +841,6 @@ make test :: foo(p:1);
 apply test.bar();  
 -- a = 1
 -- b = 1
-
 ```
 **See also:** 
 * [me.bee](me.bee) -- numeral with rules

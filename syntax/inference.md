@@ -106,7 +106,7 @@ Using "*" we can create smarter literals that are repeating one value.
 
 ```
 -- create a vector of 10 integers
-make a *= 0 ∈ [Z](10);
+make a *= 0 @ [Z](10);
 
 -- equivalent of previous declaration
 make a := [0 * 10];
@@ -114,7 +114,7 @@ make a := [0 * 10];
 
 ```
 -- create string of 10 spaces
-make s *= ' ' ∈ S(10);
+make s *= ' ' @ S(10);
 
 -- equivalent of previous declaration
 make s := ' ' * 10;

@@ -18,5 +18,7 @@ For voting on next feature that is going to be promoted I use twitter.
 * [Generic](generic.md) - generic rule
 * [Dynamic](dynamic.md) - dynamic programming
 * [Builder](builder.md) - set builder
+* [Drawings](drawings.md)   - vector graphics
+* [Geography](geography.md) - earth maps and GIS
 
 **Read next:** [index](../index.md)

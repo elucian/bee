@@ -103,7 +103,7 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-type .open(name ∈ S, mode ∈ A) => (f ∈ F);
+type .open(name @ S, mode ∈ A) => (f ∈ F);
 type .close(f ∈ F);
 ...
 
@@ -145,7 +145,7 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-type E <: {code ∈ Z, message ∈ S};
+type E <: {code ∈ Z, message @ S};
 ```
 
 ```

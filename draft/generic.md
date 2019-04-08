@@ -46,7 +46,7 @@ rule;
 **sort usage**
 
 ```
-type Person  <: { name ∈ S, age ∈ N };
+type Person  <: { name @ S, age ∈ N };
 
 -- tagine order action for array of Persons
 rule order(cat @ [Person]):

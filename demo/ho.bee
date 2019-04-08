@@ -24,7 +24,7 @@ make count := generator(0,9);
 
 -- test rule object zero_count
 trial:  
-  make set := {} ∈ {Z}; 
+  make set := {} @ {Z}; 
   while $T:
     alter set += count();
     write set.index; -- progressive grow

@@ -84,25 +84,25 @@ Basic types are represented with one single upper-case character.
 
 | Name        |Bee|Bytes|Description
 |-------------|---|-----|------------------------------------------------------------
-| Binary      |B  | 2   |Small unsigned number
-| Logical     |L  | 2   |Logical number {0,1}       
-| Character   |A  | 2   |Alphanumeric ASCII character 
-| Rational    |Q  | 4   |Fraction of two small numbers: like ¹⁄₂ ¹⁄₃ ²⁄₃ ... 
+| Binary      |B  | 4   |Small unsigned number < 4,294,967,295
+| Logical     |L  | 4   |Logical number {0,1}       
+| Character   |A  | 4   |Alphanumeric UTF32 symbol
 | Integer     |Z  | 8   |Signed large discrete number
 | Natural     |N  | 8   |Unsigned large discrete number 
 | Real        |R  | 8   |Double precision number 
+| Rational    |Q  | 8   |Fraction of two binary numbers: like ¹⁄₂ ¹⁄₃ ²⁄₃ ... 
 
 **Note:** 
-* Basic types are not objects nor references;
+* Basic types are values;
 * Basic types are mapped to native OS types;
-* Basic types are allocated usually on the stack;
+* Basic types are allocated on the stack;
 
 **Composite types**
 
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
-| String      |S  | Limited capacity (ASCII) string. Default capacity 255 bytes
-| Unicode     |U  | Unicode string  of variable capacity. (UTF8)
+| String      |S  | Limited capacity UTF32: Default capacity 128x4 = 512 bytes
+| Unicode     |U  | Unlimited capacity string (UTF8)
 | Date        |D  | DD/MM/YYYY 
 | Time        |T  | hh:mm,ms
 | Complex     |C  | Complex number
@@ -110,7 +110,8 @@ Basic types are represented with one single upper-case character.
 
 **Notes:**
 * Composite types are objects;
-* Composite types are allocated usually on the heap;
+* Composite types are allocated on the heap;
+* Reference to composite type can be pass around.
 
 ## Literals
 
@@ -156,6 +157,7 @@ Variables are defined using keyword "create" and next operators:
 sym | purpose
 ----|------------------------------------------------------------------
  ∈  | declare variable type | member type | parameter type
+ @  | declare reference to composite type or native type
  :  | pair-up member value to a constant/expression or constructor
  := | initialize variable using a constant/expression or constructor
  :: | initialize variable using a reference to another variable
@@ -204,7 +206,7 @@ print  b;          -- expected 11
 **Examples:**
 ```
 -- declare a constant that can't change it's value
-define pi := 3.14;
+define pi := 3.14 ∈ R;
 
 -- declare multiple variables using modify
 make a   ∈ Z; -- Integer 
@@ -257,17 +259,17 @@ alter x := b -> R;
 print  x; --> expect 20.0
 ```
 
-## ASCII type
+## Alphanumeric type
 
-Bee define A := ASCII character as native type.
+Bee define A := Single UTF character: native type.
 
 ```
-make a, b ∈ A; --ASCII character
+make a, b ∈ A; --Alphanumeric symbol
 make x, y ∈ B; --Binary number 
 
 alter a := `0`;    -- representation of 0
 alter x := a -> B; -- convert to 30
-alter y := 30;     -- ASCII code for '0'
+alter y := 30;     -- UTF code for '0'
 alter b := y -> A; -- convert to '0'
 ```
 ## Type checking
@@ -275,11 +277,11 @@ alter b := y -> A; -- convert to '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0;    --integer variable 
-make b := 0.0;  --real variable 
+make a := 0;    -- integer variable 
+make b := 0.0;  -- real variable 
 
-alter b := 10;   --FAIL: b is of type: Real
-alter a := 10.5; --FAIL: a is of type: Integer
+alter b := 10;  -- FAIL: b is of type: Real
+alter a := 10.5;-- FAIL: a is of type: Integer
 ```
 
 ## Logic type
@@ -306,7 +308,7 @@ Precedence: { ¬, ∧, ∨, ~, ↔ }
 **comparison**
 Comparison operators will create a logical response: $F = 0 or $T = 1.
 
-* comparison ( ±, ≈, =, ≠, ≡, >, <, ≤, ≥ ); 
+* comparison ( ±, ↔, =, ≠, ≡, >, <, ≤, ≥ ); 
 * belonging  ( ∈, ⊃, ⊂ );
 
 **Precedence:** 
@@ -355,8 +357,8 @@ alter y := b -> L; -- y = $T
 **Notes:** 
 * Only integer part of a number is used in conversion;
 * Fraction is truncated before conversion to logic type;
-* A string that contains "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: $T
-* A string that contains "No", "no", "False", "true", "F" or "f" or "0" convert to: $F
+* A string: "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: $T
+* A string: "No", "no", "False", "true", "F" or "f" or "0" convert to: $F
 
 ## Reference
 
@@ -365,19 +367,20 @@ All composite variables are references to objects.
 **modify**
 
 * New references are declared using "@" instead of "∈"
-* References can be initialized using operator ":="
-* Existing reference can be cloned using operator: "::"
+* Reference can be borrowed using operator: "::"
+* Reference content can be initialized using operator ":="
+* Reference content/value can be cloned using operator ":="
 
 **example**
 ```
 make i := 10 ∈ Z;  -- basic type
-make j :: i  @ Z;  -- reference
+make j :: i  @ Z;  -- reference to i
 make k @ Z;        -- null reference
 
 -- borrowing address / boxing
 alter k :: i; -- boxing i := 12 
 alter i += 1; -- modify i := 13
-print  k; --> expect 13 (modified)
+print k; --> expect 13 (modified)
 
 -- verify boxing effect
 print k ≡ j; -- $T (same)
@@ -448,7 +451,7 @@ dx   := default expression (optional condition).
 make x := `0`;
 read (x,"x:>");
 
-make kind := ("digit" if x ∈ [`0`..`9`], "letter" if x ∈ [`a`..`z`], "unknown");
+make kind := ("digit" if x @ [`0`..`9`], "letter" if x @ [`a`..`z`], "unknown");
 print "x is ".kind; -- expect: "x is digit"
 over;
 ```
@@ -678,7 +681,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type E <: {code ∈ Z, message ∈ S, line ∈ Z};
+type E <: {code ∈ Z, message @ S, line ∈ Z};
 
 -- global system error
 make $error ∈ E;

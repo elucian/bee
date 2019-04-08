@@ -6,7 +6,7 @@
 -- this type is public (uses dot prefix)
 type .Data <: {key:A, value:N};
 -- make variable using defubed alias
-make  x ∈ Data;
+make  x @ Data;
 alter x := {key:`a`, make:10};
 +---------------------------------------------------+ 
 |* public enumeration type with public elements    *|

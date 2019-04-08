@@ -3,7 +3,7 @@
 -----------------------------------------+
 #driver "dc"
 make n ∈ Z;   -- Integer on 64 bit
-make h ∈ S;   -- Default 255 char string
+make h @ S;   -- Default 255 char string
 make l ∈ L;   -- Logical value False := 0
 -----------------------------------------
 -- printing initial makes

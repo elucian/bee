@@ -23,10 +23,10 @@ when;
 
 -- mutual exclusive multi-path selector
 alter a := 2;
-when (a ∈ [0..4]):
+when (a @ [0..4]):
   -- this is true since a = 2
   print ('a is between 0 and 4');
-else: (a ∈ [2..5]):
+else: (a @ [2..5]):
   -- this is also true since a = 2
   print ('a is between 2 and 5');   
 else: (a < 0):

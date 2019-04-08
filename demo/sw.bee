@@ -3,7 +3,7 @@
 ---------------------------+
 #driver "sw"
 
-make msg ∈ S;
+make msg @ S;
 make var ∈ Z;
 read(var,"var:>");
 switch var:
