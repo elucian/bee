@@ -41,7 +41,7 @@ Type   | Signature                 | Description
 Δ      | \<: R[0..+]               | Distance or length
 V      | {o ∈ ⊡, d ∈ Δ}            | 2D vectorial space
 H      | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }    | Any shape, with origin and rotation
-Y      | {c ∈ N, v ∈ [L], m @ [H]} | 2D Layer with c = color, m = set of shapes
+Y      | {c ∈ N, v @ [L], m @ [H]} | 2D Layer with c = color, m = set of shapes
 G      | {o ∈ ⊡, w,h ∈ Z, m @ [Y]} | Graphic canvas (with points and shapes)
 
 **legend**
