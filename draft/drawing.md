@@ -29,10 +29,11 @@ Each graphic element is a composite data type.
   ⌂    | Shape    | {o ∈ ⊡, s @ [⊡]}
   ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
 
+
 **unused**
 
 ```  
-∘ ∙  ↺ ↻ ∟ ⊞ ⊠ ⊗ ⊕ ♀ ♂ ☺ ↱ ⎋ ⎋ ↺↗
+∘ ∙ ↻ ∟ ⊞ ⊠ ⊗ ⊕ ♀ ♂ ☺ ↱ ⎋ ⎋
 ```
 
 Type   | Signature                 |
