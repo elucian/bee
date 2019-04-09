@@ -10,7 +10,7 @@ rule sort(this @ [Z]):
   make swap := $T ∈ L;  
   while swap:
     alter i := 0;
-    alter swap := $T;
+    alter swap := $F;
     while (i ≤ n): 
       -- this pair is out of order ?
       when (this[i] < this[i+1]):
