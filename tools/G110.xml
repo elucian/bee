@@ -260,17 +260,6 @@
           <text hasdelay="false" playback="unicode" delay="0">≠</text>
         </textblock>
       </macro>
-      <macro name="⊕" color="4278246655" guid="{B9A750DC-4EAB-4680-A689-EB69493ED277}" hidden="false">
-        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
-          <text hasdelay="false" playback="unicode" delay="0">⊕</text>
-        </textblock>
-      </macro>
-      <macro name="QuickMacro" color="4278246655" guid="{3ECFA2B3-F1B7-4EFD-9029-E9DDF699D391}" hidden="false">
-        <multikey xmlns="http://www.logitech.com/Cassandra/2010.1/Macros/MultiKey">
-          <key direction="down" value="LEFT"/>
-          <key direction="up" value="LEFT"/>
-        </multikey>
-      </macro>
       <macro name="∞" color="4278246655" guid="{67513BBE-411F-4584-BC8F-362BFBEB568A}" hidden="false">
         <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
           <text hasdelay="false" playback="unicode" delay="0">∞</text>
@@ -284,6 +273,31 @@
       <macro name="S" color="4278246655" guid="{30798BFF-1DCE-4B3B-B052-AFA47A94DD07}" hidden="false">
         <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
           <text hasdelay="false" playback="unicode" delay="0">⁺ ⁻  ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ </text>
+        </textblock>
+      </macro>
+      <macro name="ɣ" color="4278246655" guid="{2B39B599-CEF1-44B3-AE5D-246CAE992645}" hidden="false">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text hasdelay="false" playback="unicode" delay="0">ɣ</text>
+        </textblock>
+      </macro>
+      <macro name="Φ" color="4278246655" guid="{420996F9-F135-4556-9793-F211B087938A}" hidden="false">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text hasdelay="false" playback="unicode" delay="0">Φ</text>
+        </textblock>
+      </macro>
+      <macro name="Λ" color="4278246655" guid="{E36F5E06-27CC-4B16-9756-93A9E5738BCC}" hidden="false">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text hasdelay="false" playback="unicode" delay="0">Λ</text>
+        </textblock>
+      </macro>
+      <macro name="ω" color="4278246655" guid="{E5378D12-F6F1-48FB-83BC-0AC03196362A}" hidden="false">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text hasdelay="false" playback="unicode" delay="0">ω</text>
+        </textblock>
+      </macro>
+      <macro name="G" color="4278246655" guid="{D6C6B9FE-745B-4B9B-AA33-70EF3995F1E4}" hidden="false">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text hasdelay="false" playback="unicode" delay="0">⊥ ∠ ⊡ ↺ ↗ ○ ◴ □ ◁ ◇ ⌂ ◪ ⎊ ■ ▤ ▥ ▦ ▧ ▨ ▩ </text>
         </textblock>
       </macro>
     </macros>
@@ -342,14 +356,17 @@
       <assignment original="false" shiftstate="3" contextid="G5" macroguid="{C0091771-171E-43C6-8084-1D0F267BCA49}" backup="false"/>
       <assignment original="false" shiftstate="3" contextid="G2" macroguid="{54388C03-82AB-4AA2-8079-8BFD764F280A}" backup="false"/>
       <assignment original="false" shiftstate="3" contextid="G1" macroguid="{4945F4A9-48A3-41F5-AD52-C1AB66744CCE}" backup="false"/>
-      <assignment original="false" shiftstate="3" contextid="G7" macroguid="{5F878A05-A0F6-436B-AA76-0E627D3197A9}" backup="false"/>
-      <assignment original="false" shiftstate="3" contextid="G4" macroguid="{CA5AA8E4-E00D-4D47-BFC5-C3D46C8A253A}" backup="false"/>
       <assignment original="false" shiftstate="1" contextid="G5" macroguid="{44A3C213-59E9-48AA-BA6B-C777FD575828}" backup="false"/>
       <assignment original="false" shiftstate="1" contextid="G3" macroguid="{7B15F236-CB5B-4734-B861-0FDC6CDF9128}" backup="false"/>
       <assignment original="false" shiftstate="1" contextid="G10" macroguid="{EA369AA8-CFA0-4B46-BCC7-BFB2002DE25C}" backup="false"/>
       <assignment original="false" shiftstate="1" contextid="G11" macroguid="{082CCA35-69D0-4E5E-A79D-F827CD6BD7F5}" backup="false"/>
-      <assignment original="false" shiftstate="2" contextid="G7" macroguid="{F706F6AD-EC7E-4221-8C22-EF61B976C44A}" backup="false"/>
-      <assignment original="false" shiftstate="2" contextid="G8" macroguid="{F9FAE23E-F87A-4322-844B-F34B5EAD9D56}" backup="false"/>
+      <assignment original="false" shiftstate="3" contextid="G7" macroguid="{5F878A05-A0F6-436B-AA76-0E627D3197A9}" backup="false"/>
+      <assignment original="false" shiftstate="2" contextid="G8" macroguid="{420996F9-F135-4556-9793-F211B087938A}" backup="false"/>
+      <assignment original="false" shiftstate="2" contextid="G7" macroguid="{E36F5E06-27CC-4B16-9756-93A9E5738BCC}" backup="false"/>
+      <assignment original="false" shiftstate="3" contextid="G8" macroguid="{CA5AA8E4-E00D-4D47-BFC5-C3D46C8A253A}" backup="false"/>
+      <assignment original="false" shiftstate="3" contextid="G4" macroguid="{2B39B599-CEF1-44B3-AE5D-246CAE992645}" backup="false"/>
+      <assignment original="false" shiftstate="3" contextid="G10" macroguid="{E5378D12-F6F1-48FB-83BC-0AC03196362A}" backup="false"/>
+      <assignment original="false" shiftstate="3" contextid="G11" macroguid="{D6C6B9FE-745B-4B9B-AA33-70EF3995F1E4}" backup="false"/>
     </assignments>
     <assignments devicecategory="Logitech.Gaming.LeftHandedController">
       <assignment original="false" shiftstate="1" contextid="G1" macroguid="{0E5FBC48-AEF2-4D47-AB9A-52FF8DE7A581}" backup="false"/>
