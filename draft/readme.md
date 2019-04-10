@@ -22,4 +22,4 @@ For voting on next feature that is going to be promoted I use twitter.
 * [Drawing](drawing.md) - vector graphics
 * [Geography](geography.md) - earth maps and GIS
 
-**Read next:** [index](../index.md)
+**Read next:** [index](../syntax/index.md)
