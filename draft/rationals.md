@@ -1,10 +1,9 @@
 ## Rational numbers
 
-In mathematics rational number is any number that can be expressed as the fraction p\\q of two numbers:
-numerator `p` of type _integer_ and a non-zero denominator `q` of type _natural_ > 0.  
+In mathematics rational number is any number that can be expressed as the fraction p\\q of two integer numbers: numerator `p` of type _integer_ and a non-zero denominator `q` of type _natural_ > 0.  
 since `q` may be equal to 1, every binary integer is also a rational number.
 
-**Note:** Q numbers are approximate numbers
+**Note:** Q numbers are approximated numbers.
 
 * Default resolution for Q numbers is 0.001 (micro)
 * Default resolution can be regulated with directive: #resolution:x 
@@ -16,12 +15,19 @@ It can be used with type inference to create Q numbers:
 
 **Example:**
 ```
-make x := 0    ∈ Q;  -- = 0    with resolution 0.001 and precision
-make x := 1/2  ∈ Q;  -- = 0.5  with resolution 0.5
-make v := 1/4  ∈ Q;  -- = 0.25 with resolution 0.25 
-make x := 0/8  ∈ Q;  -- = 0    with resolution 0.125
-make x := 0/64 ∈ Q;  -- = 0    with resolution 0.015
+make x := 0    ∈ Q;  -- 0     
+make a := 1/2  ∈ Q;  -- 0.5   
+make b := 1/4  ∈ Q;  -- 0.25  
+make c := 1/8  ∈ Q;  -- 0.125 
+make d := 1/8  ∈ Q;  -- 0.062
+make e := 1/8  ∈ Q;  -- 0.031
 ```
+
+**Note:** 
+
+* The inch is a unit of length in the British imperial and United States 
+* It is equal to ​1/36 yard or ​1/12 of a foot
+* One inch is divided in 1/2, 1/4, 1/8, 1/16 and 1/32
 
 See also: [wikipedia](https://en.wikipedia.org/wiki/Rational_data_type)
 
@@ -46,31 +52,20 @@ A number format "Q5.2" can store in range(-32.00 to 31.75) on 8 bits.
 * to value:    2⁵ - 2⁻² = 32 - 0.25 = 31.75
 
 ```
-make v ∈ Q5.2;
+make  v ∈ Q5.2;
 alter v := -32;   ** minim value
 alter v := 31.75; ** maxim value
 ```
 
 See also: [wikipedia](https://en.wikipedia.org/wiki/Q_(number_format))
 
-## Default Q number
-
-If the magnitude and resolution are not specified the Q number is using 64 bytes.
-
-**Q53.10** 
-Default Q numbers has resolution = 0.001 ≈ 2⁻¹⁰
-
-* Min:-9007199254740992
-* Max:+9007199254740991
-* Res: 0.0009765625
-
 ## Typical Q numbers
 
 Next I have predefined some numbers for orientation.
 
-| RES   |  1\\4  | 1\\8  | 1\\16  | 1\\32 | 1\\64 
+|Bytes  |  1\\4  | 1\\8  | 1\\16  | 1\\32 | 1\\64 
 |-------|--------|-------|--------|-------|-------
-| Bytes | 0.25   | 0.125 | 0.062  | 0.031 | 0.015 
+| r ≈   | 0.25   | 0.125 | 0.062  | 0.031 | 0.015 
 |-------|--------|-------|--------|-------|-------
 |  8    | Q5.2   | Q4.3  | Q3.4   | Q2.5  | Q1.6   
 |  16   | Q13.2  | Q12.3 | Q11.4  | Q10.5 | Q9.6  
@@ -78,7 +73,7 @@ Next I have predefined some numbers for orientation.
 |  64   | Q61.2  | Q60.3 | Q59.4  | Q58.5 | Q56.6 
 |  128  | Q125.2 | Q124.3|Q123.4  | Q122.5| Q121.6
 
-**Note:** RES is the approximate resolution.
+**Note:** r ≈ is the approximate resolution.
 
 **Examples:**
 
@@ -96,7 +91,17 @@ A number on 32 bit with resolution = 0.0005:
 * Max: 1048575
 * Res: 0.00048828125
 
-## Comparison
+## Default Q number
+
+**Q53.10** 
+
+Default Q number has resolution 2⁻¹⁰ ≈ 0.001 and occupy 64 bit.
+
+* Min:-9007199254740992
+* Max:+9007199254740991
+* Res: 0.0009765625
+
+## Approximate comparison
 
 Rational numbers and other numbers can be compared using "≈" instead of "=". 
 
@@ -121,4 +126,6 @@ print (a ≈ b ± 0.1)  ; ** true
 print (a ≈ c ± 0.5)  ; ** true
 print (b ≈ c ± 0.5)  ; ** true
 ```
+
+**Note:** Bee is an efficient language.
 

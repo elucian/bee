@@ -15,11 +15,13 @@ For voting on next feature that is going to be promoted I use twitter.
 
 ## Draft list
 
-* [Generic](generic.md) - generic rule
+* [Generic](generic.md) - generic rules
 * [Dynamic](dynamic.md) - dynamic programming
 * [Concurrent](concurrent.md) - concurrent programming
 * [Builder](builder.md) - set builder
+* [Rationals](rationals.md) - fixed point arithmetics
 * [Drawing](drawing.md) - vector graphics
 * [Geography](geography.md) - earth maps and GIS
+
 
 **Read next:** [index](../syntax/index.md)
