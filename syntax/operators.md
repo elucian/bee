@@ -1,6 +1,6 @@
 ## Operators
 
-In Bee operators are created using Extended ASCII symbols.   
+In Bee operators are created using Unicode symbols.   
 Read about supported symbols here: [symbols](symbols.md)
 
 ## Brackets
@@ -17,9 +17,9 @@ symbol| description
 
 symbol  | description
 --------|-----------------------------------------------------
- \`z\`  | Back quote (grave accent) single ASCII character 
- 'x'    | Limited capacity ASCII string literal 
- "y"    | Variable capacity Unicode string literals
+ \`z\`  | Back quote (grave accent) single symbols
+ 'x'    | Limited capacity string literal 
+ "y"    | Variable capacity string literal
 
 ## Single Symbols
 

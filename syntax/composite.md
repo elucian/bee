@@ -538,7 +538,7 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-rule foo(*bar @ [Z]) => (x ∈ Z):
+rule foo( *bar @ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
   when (c = 0):
@@ -563,8 +563,9 @@ print foo(1,2,3);--> 6
 
 ## String
 
-* S strings are _tries_ data structures (radix tree) having unlimited capacity;
-* A can be used to create arrays of ASCII characters compatible with C strings; 
+* S: strings are arrays data structures with limited capacity;
+* U: strings are _tries_ data structures (radix tree) having unlimited capacity;
+* A: can be used to create arrays of ASCII characters compatible with C strings; 
 
 ```
 -- two compatible representation of strings
@@ -576,7 +577,7 @@ alter a   := split(str);
 ```
 
 **conversion**
-Conversion of a string into number is when; using _parse_ rule:
+Conversion of a string into number is done using _parse_ rule:
 
 ```
 make x,y ∈ R;

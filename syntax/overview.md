@@ -84,34 +84,37 @@ Basic types are represented with one single upper-case character.
 
 | Name        |Bee|Bytes|Description
 |-------------|---|-----|------------------------------------------------------------
-| Binary      |B  | 4   |Small unsigned number < 4,294,967,295
-| Logical     |L  | 4   |Logical number {0,1}       
-| Character   |A  | 4   |Alphanumeric UTF32 symbol
-| Integer     |Z  | 8   |Signed large discrete number
-| Natural     |N  | 8   |Unsigned large discrete number 
-| Real        |R  | 8   |Double precision number 
-| Positive    |P  | 8   |Double precision positive numbers: [0..+] 
-| Rational    |Q  | 8   |Fraction of two binary numbers: like ¹⁄₂ ¹⁄₃ ²⁄₃ ... 
+| Logical     |L  | 2   |Logical number {0,1} (aligned to 2 bit)
+| Alphanumeric|A  | 4   |UTF32 code point (32 bit integer)
+| Binary      |B  | 4   |Unsigned 32 bit integer < 4294967296
+| Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2
+| Natural     |N  | 8   |Unsigned large positive number     [0..+]
+| Integer     |Z  | 8   |Signed large discrete number       [-..+]
+| Positive    |P  | 8   |Double precision positive numbers: (0..+)
+| Real        |R  | 8   |Double precision number            (-..+)
+| Complex     |C  |16   |Complex number
 
 **Note:** 
 * Basic types are values;
+* Basic types have fixed size;
 * Basic types are mapped to native OS types;
 * Basic types are allocated on the stack;
 
 **Composite types**
 
 | Name        |Bee| Description
-|-------------|---|-------------------------------------------------------------
-| String      |S  | Limited capacity UTF32: Default capacity 128x4 = 512 bytes
-| Unicode     |U  | Unlimited capacity string (UTF8)
+|-------------|---|----------------------------------------------------------------
+| String      |S  | Limited capacity string UTF32:  Default capacity 1024 bytes
+| Unlimited   |U  | Unlimited capacity string UTF8: Usually contains a single row
+| Text        |X  | Large UTF8 blob text that can have multiple rows 
 | Date        |D  | DD/MM/YYYY 
 | Time        |T  | hh:mm,ms
-| Complex     |C  | Complex number
 | Exception   |E  | Exception object: {code, message, line}
 
 **Notes:**
 * Composite types are objects;
 * Composite types are allocated on the heap;
+* Composite types have usually variable size;
 * Reference to composite type can be pass around.
 
 ## Literals
@@ -122,12 +125,12 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |-----------|-----------------------------------------------------------
 |0          | integer zero
 |1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
-|0b10101010 | binary integer : {0b,0,1}
-|0xFF       | hexadecimal integer: (0x,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
-|0.5        | real number: (., 0 , 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 ,9)
-|0.0        | real number: (.,0,1,2,3,4,5,6,7,8,9) 
-|5E2        | real number: 5×10²  := 500  (E use positive exponent)
-|5e2        | real number: 5×10⁻² := 0.05 (e use negative exponent)
+|0b10101010 | binary integer : (b,0,1)
+|0xFFFFFFFF | hexadecimal integer: (x,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
+|0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
+|1E10       | real number: 1×10¹⁰  :=   10000000000  
+|1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
+|1/2        | rational number: 1/2 = 0.5 
 
 ## Collection types
 
@@ -163,7 +166,6 @@ sym | purpose
  := | initialize variable using a constant/expression or constructor
  :: | initialize variable using a reference to another variable
 
-
 ```
 -- full declarations with type and initial value
 make var_name ∈  type_name;
@@ -197,7 +199,7 @@ One can modify variables using "modify" statement.
 make a := 10, b := 0 ∈ Z;  
 
 alter b := a + 1; -- modify b 10->11 
-print  b;          -- expected 11
+print b;          -- expected 11
 ```
 
 **notes:** 
@@ -253,11 +255,11 @@ make v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
 alter a := v -> N;
-print  a; -- truncated to 10 
+print a ; -- truncated to 10 
 
 --explicit conversion
 alter x := b -> R;
-print  x; --> expect 20.0
+print x ; --> expect 20.0
 ```
 
 ## Alphanumeric type
@@ -856,7 +858,7 @@ rule
 
 **notes:**
 * Parent rule is referred as rule constructor or rule factory;
-* A rule object can have public attributes starting with prefix "."
+* A rule object can have public attributes starting with dot prefix ".";
 * A rule object can communicate with constructor using parent attributes;
 * A rule object is binding external states into local scope;
 
