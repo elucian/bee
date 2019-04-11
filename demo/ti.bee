@@ -10,8 +10,8 @@ define f := $F;  -- L  (logic false)
 define t := $T;  -- L  (logic true)
 -- variable type inference
 make v := (1,2,3);    -- List of Z
-make s := 'string';   -- String capacity 128
-make c := `c`         -- Single character
+make s := 'string';   -- String capacity 256
+make c := 'c'         -- Single character
 -- explicit conversion + inference
 make t := '1:45am'     -> T12; -- Time
 make t := '23:45'      -> T24; -- Time

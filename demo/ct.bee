@@ -27,7 +27,7 @@ make v2 := [R](2,3); -- matrix of 2 rows and 3 columns
 make p := {A};    -- alter collection of ASCII characters
 make m := {(R:S)};  -- hash map of strings with real key
 -- Establish map using literals
-alter m := {`a`:1, `b`:2, `c`:3};
+alter m := {'a':1, 'b':2, 'c':3};
 -- complex list examples
 make := (A);        -- a list of characters
 make := (R);        -- a list of real numbers
@@ -48,12 +48,12 @@ alter s1 := s1 + 2; -- {0,1,2}
 alter s1 := s1 - 1; -- {0,2}
 alter s1 := s1 - 2; -- {0}
 -- set literals using type inference
-make s3 := {`a`,`b`,`c`}; -- set of 3 ASCII characters
-make s4 := {`a`,`b`,`d`}; -- set of 3 ASCII characters
+make s3 := {'a','b','c'}; -- set of 3 ASCII characters
+make s4 := {'a','b','d'}; -- set of 3 ASCII characters
 -- union between 2 sets (a, b) are nod duplicated
-print (s3 ∨ s4); -- {`a`,`b`,`c`,`d`}
+print (s3 ∨ s4); -- {'a','b','c','d'}
 -- intersection between 2 sets
-print (s3 ∧ s4);-- {`a`,`b`}
+print (s3 ∧ s4);-- {'a','b'}
 -- difference between two sets
 print (s3 - s4);-- {'c'}
 print (s4 - s3);-- {'d'}

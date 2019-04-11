@@ -7,7 +7,7 @@
 type .Data <: {key:A, value:N};
 -- make variable using defubed alias
 make  x @ Data;
-alter x := {key:`a`, make:10};
+alter x := {key:'a', make:10};
 +---------------------------------------------------+ 
 |* public enumeration type with public elements    *|
 |* elements starting with "." do not need qualifier*|

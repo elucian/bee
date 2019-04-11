@@ -180,9 +180,6 @@ Arity = 2
 
 ## String operators
 
-symbol  | description
---------|------------------------------------------------------
-
 Symbol| Description
 ------|---------------------------------------------------------------
  *    | String pattern repetition \| String generator

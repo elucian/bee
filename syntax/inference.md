@@ -7,15 +7,15 @@ Each literal has a "default" type that is automatic assigned for specific notati
 
 ```
 -- character expressions
-make c := `a`;        -- type = A (capacity = 1)
+make c := 'a';        -- type = A (capacity = 1)
 make s := 'str';      -- type = S (capacity = 255)
-make b := "Unicode";  -- type = U (Unicode capacity)
+make b := "Unicode";  -- type = U (unlimited capacity)
 
 -- numeric expressions
 make i := 0;   -- type := Z
 make j := 0.5; -- type := R
 
--- define synonims for logic constants
+-- define synonyms for logic constants
 define false := $F; -- type L = 0
 define true  := $T; -- type L = 1
 
@@ -34,24 +34,23 @@ Composite structures are using () [] and {} to create different types:
 -- create one list of integers
 make t := (1,2); 
 
--- create one list of ASCII chars
+-- create one list of symbols
 make l := ('a','b');
 
--- create an Array with capacity of 4
+-- create an Array with capacity of 4 integers
 make d := [1,2,3,4];
 
--- create an Array with capacity of 10
--- all elements initialized with 0.0
+-- create an Array with capacity of 10 real numbers
 make e := [0.0](10);
 
--- create a data set of integer
+-- create a data set of integers
 make s := {1,2,3,4};
 
--- create a hash map
+-- create a hash map of (Z:U)
 make c := {(1:"storage"),(2:"string")};
 
--- create a complex data structure
-make  b := {name:'Goliath', age:'30'};
+-- create an object with two attributes
+make  b := {name:'Goliath', age:30};
 
 ```
 
@@ -64,7 +63,7 @@ In rule foo, parameters a, b are optional.
 
 ```
 -- result type is missing
-rule foo(a,b:0) => ( a + b ) ∈ Z; 
+rule foo(a,b: 0) ∈ Z => ( a + b ); 
                                   
 print foo();   -- 0               
 print foo(1);  -- 1
@@ -76,7 +75,7 @@ print foo(1,2);-- 3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-rule foo(a,b ∈ Z, c:0 ) => (a+b+c) ∈ Z;
+rule foo(a,b ∈ Z, c:0 )  ∈ Z => (a+b+c);
 
 print foo(1,2);   -- 3
 print foo(1,2,3); -- 6
@@ -91,7 +90,7 @@ We can use parameter name and pair-up ":" symbol for argument value.
 ```
 -- fn with optional parameters
 -- result type is missing
-rule bar(a,b,c:0) => (a+b+c) ∈ Z;
+rule bar(a,b,c:0)  ∈ Z => (a+b+c);
 
 -- observe we use pair-up to new value to argument
 print bar(a:1); -- print 1 because (b,c := 0) 
@@ -106,15 +105,15 @@ Using "*" we can create smarter literals that are repeating one value.
 
 ```
 -- create a vector of 10 integers
-make a *= 0 @ [Z](10);
+make a := 0 @ [Z](10);
 
 -- equivalent of previous declaration
-make a := [0 * 10];
+make a := 0 * 10;
 ```
 
 ```
 -- create string of 10 spaces
-make s *= ' ' @ S(10);
+make s := ' ' @ S(10);
 
 -- equivalent of previous declaration
 make s := ' ' * 10;

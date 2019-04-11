@@ -100,7 +100,7 @@ type <variable> := () @ (value_type);
 
 **example**
 ```
--- create a list of ASCII characters
+-- create a list of symbols
 make a := () @ (A);
 
 -- create a list using a literal
@@ -200,7 +200,7 @@ alter l5 := l2 - l1;  -- (4)
 **List traversal**
 
 ```
-make list := (`a`, `b`, `c`);
+make list := ('a', 'b', 'c');
 make x :: list[!] @ A;
 while ¬ (x ≡ list[?]):
   write x;
@@ -415,7 +415,7 @@ make vec @ [A];
 
 -- element multiply "*"
 alter vec := `x` * 10;
-print vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+print vec; -- expect ['x','x','x','x','x','x','x','x','x','x']
 
 ```
 
@@ -563,9 +563,20 @@ print foo(1,2,3);--> 6
 
 ## String
 
-* S: strings are arrays data structures with limited capacity;
-* U: strings are _tries_ data structures (radix tree) having unlimited capacity;
-* A: can be used to create arrays of ASCII characters compatible with C strings; 
+Bee has 3 kind of strings: {S, U, X} and single symbol encoding: { A }
+
+* A: Is UTF32 encoded symbol; 
+* S: Is an array of A with a fix capacity;
+* U: Is UTF8 encoded string with unlimited capacity;
+* X: Is UTF8 encoded radix tree with unlimited capacity;
+
+**Note:** 
+* A: literals are looking like this: U+003F
+* A: literals can look also like this: '?'
+
+### Single quoted strings
+
+Single quoted strings are Unicode strings with limited capacity of 1024 bytes.
 
 ```
 -- two compatible representation of strings
@@ -589,7 +600,7 @@ alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
 
 ### Double quoted string
 
-Double quoted strings are Unicode UTF8 dynamic strings.  Bee support "escape" notation using escape `\` symbol in double quoted strings.
+Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape `\` symbol in double quoted strings. This will be internally replaced by code point of course. Print command will render the encoded string and will represent it to output device.
 
 ```
 print("this represents \n new line in string")
@@ -613,6 +624,7 @@ DEC|HEX|CODE|ESCAPE|NAME
 13 |0D |CR  |\r    |Carriage Return
 27 |1B |ESC |\e    |Escape
 
+
 ```
 make s := "This is a Unicode string";
 print type(s); -- Print: U
@@ -626,33 +638,33 @@ Below operators will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
-  `&` | Concatenate two strings as tye are no trim is performed!
+  `&` | Concatenate two strings as they are no trim is performed!
   `/` | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
   `\\`| Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
 
 **examples**
 ```
-make u, c, s @ S; -- default S length is 255
+make u, c, s @ S; -- default length is 256 symbols
 
 -- string concatenation
-alter u := "This is"  & " a long string.";
-alter c := "This is " & 'fix size'; 
+alter u := 'This is'  & ' a short string.';
+alter c := 'This is ' & 'fixed size'; 
 
 -- automatic conversion to string
 alter s := 40 & 5;  --> '405'
 
 -- path concatenation
-make test_file := $pro/"src"/"test.bee";
+make test_file := $pro/'src'/'test.bee';
 
 -- when $pro = c:\work\project\
-print test_file; --> "c:\work\project\src\test.bee"
+print test_file; --> c:\work\project\src\test.bee
 ```
 
 **Note:** You can concatenate a string with a number or two numbers using &
 
 ### Template
 
-* We can include numbers into a string using template operator "<+" or "+>"
+* We can include numbers into a string using template operator "<+"
 * Inside template we use "{n}" notation to find a value using the member index
 * Template must be included in double quotes " " 
 * If a placeholder index is not found then it is preserved as is

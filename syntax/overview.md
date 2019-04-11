@@ -264,13 +264,13 @@ print x ; --> expect 20.0
 
 ## Alphanumeric type
 
-Bee define A := Single UTF character: native type.
+Bee define A := Single UTF32 character as native type.
 
 ```
 make a, b ∈ A; --Alphanumeric symbol
 make x, y ∈ B; --Binary number 
 
-alter a := `0`;    -- representation of 0
+alter a := '0';    -- representation of 0
 alter x := a -> B; -- convert to 30
 alter y := 30;     -- UTF code for '0'
 alter b := y -> A; -- convert to '0'
@@ -451,10 +451,10 @@ dx   := default expression (optional condition).
 
 **example**
 ```
-make x := `0`;
+make x := '0';
 read (x,"x:>");
 
-make kind := ("digit" if x @ [`0`..`9`], "letter" if x @ [`a`..`z`], "unknown");
+make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown");
 print "x is ".kind; -- expect: "x is digit"
 over;
 ```

@@ -15,13 +15,13 @@ Following types are included in standard library:
 
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
-| ASCII       |A  | ASCII character       (two bytes)
-| Binary      |B  | Positive short number (two bytes)
-| Natural     |N  | Positive large numbar 
+| Logical     |L  | Logical number {0,1}  (2 bytes)
+| Alphanumeric|A  | URF32 character       (4 bytes)
+| Binary      |B  | Positive short number (4 bytes)
+| Natural     |N  | Positive large numbar (8 bytes)
 | Integer     |Z  | Positive or negative number 
-| Logical     |L  | Logical number {0,1}
 | Real        |R  | Real number (double precision)
-| Rational    |Q  | Rational number precision control by #resolution:(n,m)
+| Rational    |Q  | Rational number precision control by #resolution:0.001
 
 **Composite types**
 

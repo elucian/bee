@@ -288,12 +288,8 @@ In next example we are using various comments into a demo program.
 
 over;
 *******************************************************************
-**  This is a documentation to explain more about program scope. **
-**  It can span multiple rows and can terminate with separators. **
-*******************************************************************
-" After end of program we can have text based comments or normal 
-  comments. These kind of comments are also available inside the  
-  program body. "
+ After end of program we can use free text or normal comments. 
+ These kind of comments are not available inside the program body. 
 *******************************************************************
 ```
 ## Using Modules
