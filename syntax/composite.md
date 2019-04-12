@@ -22,9 +22,8 @@ Composite types are complex data structures.
 Bee uses composite types to ...
 
 * declare data types using: "<:" and "∈"
-* declare constants  using: ":=" and "@" or "∈"
-* declare variables  using: ":=" and "@" or "∈" 
-* declare parameters using: ":"  and "@" or "∈"
+* declare constants  using: ":=" and "@"
+* declare references using: ":=" and "@" 
 
 ## Range
 
@@ -365,7 +364,7 @@ make array_name ∈  [type](n,m); --two dimensions with capacity n x m
 ```
 
 **Note:** 
-* Empty parenthesis () are not required for unknown capacity.
+* Empty parenthesis () are not required for unknown (deferred) capacity.
 * Arrays are initialized using ":=" and can not be declared with ∈.
 
 **example**
@@ -397,7 +396,7 @@ over;
 
 **Notes:**
 
-* Array of untagined capacity have no members and is equivalent to [].
+* Array of undefined capacity have no members and is equivalent to [] and can not be used.
 * Array with capacity is automatically initialized, elements of new array are by default zero.
 
 **custom index**
@@ -434,9 +433,9 @@ print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 ```
 make vec @ [U];
 
--- element multiply "*"
+-- vector is initialized with 10 `x` symbols
 alter vec := `x` * 10;
-print vec; -- expect ['x','x','x','x','x','x','x','x','x','x']
+print vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
 ```
 
@@ -547,11 +546,12 @@ print m -> matrix();
 Will print:
 
 ```
-| 1  2  3  4|
-| 5  6  7  8|
-| 9 10 11 12|
-|13 14 15 16|
+⎡ 1  2  3  4⎤
+⎢ 5  6  7  8⎥
+⎢ 9 10 11 12⎥
+⎣13 14 15 16⎦
 ```
+
 ## Varargs
 
 One rule or rule can receive variable number of arguments.   
@@ -599,12 +599,12 @@ Literals for strings are enclosed in 3 kind of quotes:
 
 **Alternative literals**
 * Using wrong quotes can trigger implicit type coercion
-* Notation U+FFFF is for UTF16 code point 
-* Notation U-FFFFFFFF is for UFT32 code point
+* Notation U+FFFF is for UTF16 code points 
+* Notation U-FFFFFFFF is for UTF32 code points
 
-### Single quoted strings
+### Single quoted
 
-Single quoted strings are Unicode strings with limited capacity of 1024 bit ≤ 128 code points.
+Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 code points.
 
 ```
 -- two compatible representation of strings
@@ -628,11 +628,11 @@ alter y := parse('10,000.3333',2,',.'); --convert to real 10000.33
 
 **Notes:** 
 
-* Single quoted strings are null terminated Arrays and are immutable.
-* Single quoted strings have no support for templates.
+* These strings are NUL terminated Arrays and are immutable;
+* These strings have no support for templates {} notation;
+* Default capacity must be specified to support longer strings;
 
-
-### Double quoted string
+### Double quoted
 
 Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape \\ symbol in double quoted strings. This will be internally replaced by a code point. Print command will render the encoded string and will represent it to output device.
 
@@ -648,7 +648,7 @@ this represents
 new line in string
 ```
 
-### Control codes:
+### Control codes
 
 For each escape character Bee also define a constant CODE.
 
@@ -666,9 +666,11 @@ DEC|HEX|CODE|ESCAPE|NAME
 13 |0D |CR  |\r    |Carriage Return
 27 |1B |ESC |\e    |Escape
 
+**additional escape**
 
-* "\\\\"    backslash
-* "\\\""	double quote
+* "\\\\"    escape backslash with backslash 
+* "\\\""	double quote escape is necessary in double quoted strings
+* "\\\'"	single quote escape is necessary in single quoted strings
 * "\\d"     decimal representation for next 1 symbol
 * "\\h"     hexadecimal representation for next 1 symbol
 * "\\x"  	next 2 characters is hexadecimal code for ASCII symbol
@@ -682,7 +684,10 @@ DEC|HEX|CODE|ESCAPE|NAME
 * "\\u2208" indicates ∈
 
 
-**Note:** Internal representation for double quoted string is optimized for string manipulation. That can be "rope" or "radix tree". This kind of string is mutable.
+**Note:** 
+
+* This kind of string is mutable;
+* This string can be a "rope" or "radix tree";
 
 **See also:** [symbols.md](symbols.md)
 

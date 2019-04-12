@@ -163,7 +163,7 @@ sym | purpose
 ----|------------------------------------------------------------------
  ∈  | declare variable type | member type | parameter type
  @  | declare reference to composite type or native type
- :  | pair-up member value to a constant/expression or constructor
+ :  | pair-up member/parameter to a constant/expression or constructor
  := | initialize variable using a constant/expression or constructor
  :: | initialize variable using a reference to another variable
 
