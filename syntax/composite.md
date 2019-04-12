@@ -608,8 +608,8 @@ alter y := parse('10,000.3333',2,',.'); --convert to real 10000.33
 
 **Notes:** 
 
-* Single quoted strings are null terminated Arrays
-* Single quoted strings do not support escape: \\?
+* Single quoted strings are null terminated Arrays and are immutable.
+* Single quoted strings have no support for templates.
 
 
 ### Double quoted string
@@ -661,6 +661,8 @@ DEC|HEX|CODE|ESCAPE|NAME
 * "\\x2A"   indicates \*
 * "\\u2208" indicates ∈
 
+
+**Note:** Internal representation for double quoted string is optimized for string manipulation. That can be "rope" or "radix tree". This kind of string is mutable.
 
 **See also:** [symbols.md](symbols.md)
 
@@ -718,16 +720,15 @@ print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
 
 **Escaping**
 
-Template stings and escape sequence can be combined
+Template stings can use special escape sequences:
 
-
-** \\H = hexadecimal representation for number
-** \\B = binary representation for a number
-** \\U = U+ Unicode representation for symbol
+** \\B = binary representation 
+** \\H = hexadecimal representation
+** \\U = U+ Unicode representation
 
 ```
 print ("This: \\H{1} is hexadecimal code for \\\"*\\\"" <+ 42);
-print ("This: \\U{1} is hexadecimal code for \\\"*\\\"" <+ '*');
+print ("This: \\U{1} is hexadecimal code for \\\"*\\\"" <+ `*`);
 ```
 
 Expected output:
