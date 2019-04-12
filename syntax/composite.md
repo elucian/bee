@@ -314,7 +314,7 @@ make new_map := {} @ type_name;
 **example**
 ```
 -- initial value of map
-alter map := {'a':"first", 'b':"second"};
+alter map := {('a':"first"), ('b':"second")};
 
 -- create new element
 alter map['c'] := "third";
