@@ -86,7 +86,6 @@ Basic types are represented with one single upper-case character.
 | Logical     |L  | 2   |Logical number {0,1} (aligned to 2 bit)
 | Unicode     |U  | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
 | Binary      |B  | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
-| Hexadecimal |H  | 8   |Hexadecimal 64 bit, max:0xFFFFFFFF
 | Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2 (resolution 0.001)
 | Natural     |N  | 8   |Unsigned large positive number     [0..+]
 | Integer     |Z  | 8   |Signed large discrete number       [-..+]

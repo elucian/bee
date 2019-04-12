@@ -667,7 +667,7 @@ print type(s); -- X
 
 Template stings and escape sequence can be combined
 ```
-print ("This: \\h*{1} is hexadecimal code for \\\"*\\\"" <+ 42);
+print ("This: \\h{1} is hexadecimal code for \\\"*\\\"" <+ 42);
 ```
 
 Expected output:
