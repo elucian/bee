@@ -571,12 +571,15 @@ Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
 * X = Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
+Literals for strings are enclosed in 3 kind of quotes:
+
 * U: like: \`?\` 
 * S: like: '?'
 * X: like: "?"
 
 **Alternative literals**
-* Notation U+FFFF is for UTF16 code point
+* Using wrong quotes can trigger implicit type coercion
+* Notation U+FFFF is for UTF16 code point 
 * Notation U-FFFFFFFF is for UFT32 code point
 
 ### Single quoted strings
