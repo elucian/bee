@@ -569,10 +569,14 @@ when;
 make a := 0;
 when (a < 0):
   print 'a < 0';
-else (a > 0):
-  print 'a > 0';
+else if (a > 10):
+  print 'a > 100';      
+else if (a > 10):
+  print 'a > 2';  
+else if (a > 1):
+  print 'a > 1';
 else:
-  print "a = 0"; 
+  print "a ≥ 0"; 
 when;
 ```
 
