@@ -10,15 +10,15 @@ For syntax notation we use modified BNF convention:
 
 * [Expression](#expression)
 * [Basic types](#basic-types)
-* [Constant Literals](#constant-literals)
+* [Constant literals](#constant-literals)
 * [Composite types](#composite-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
 * [Logical expression](#logical-expression)
 * [Reference](#reference)
 * [Conditional](#conditional)
-* [Pattern Matching](#pattern-matching)
-* [Control Flow](#control-flow)
+* [Pattern matching](#pattern-matching)
+* [Control flow](#control-flow)
 * [Exceptions](#exceptions)
 * [Rules](#rules)
 * [Parameters](#parameters)
@@ -66,7 +66,7 @@ print  x; -- expect x = 5
 * multiple arguments are separated by comma;
 * multiple arguments are enclosed in parenthesis;
 
-## Data types
+**Data types**
 
 Bee use 3 kind of data types:
 
@@ -74,7 +74,7 @@ Bee use 3 kind of data types:
 2. composite data types;
 3. user defined types;
 
-**Basic Types**
+## Basic Types
 
 Bee basic data types have information about: 
 
