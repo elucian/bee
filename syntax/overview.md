@@ -10,6 +10,9 @@ For syntax notation we use modified BNF convention:
 
 * [Expression](#expression)
 * [Data type](#data-type)
+* [Composite types](#composite-types)
+* [Type declaration](#type-declaration)
+* [Range subtypes](#range-subtypes)
 * [Logical expression](#logical-expression)
 * [Reference](#reference)
 * [Conditional](#conditional)
@@ -99,7 +102,7 @@ Basic types are represented with one single upper-case character.
 * Basic types are mapped to native OS types;
 * Basic types are allocated on the stack;
 
-**Composite types**
+## Composite types
 
 | Name        |Bee| Description
 |-------------|---|----------------------------------------------------------------
@@ -115,7 +118,17 @@ Basic types are represented with one single upper-case character.
 * Composite types have usually variable size;
 * Reference to composite type can be pass around.
 
-## Literals
+## Collection types
+
+Bee define a collection using a special notation based on brackets.
+
+| sym| Collection type
+|----|------------------------------------------------------------------
+| () | List \| Expression
+| [] | Array \|  Matrix 
+| {} | Set \| Map \| Object
+
+## Constant Literals
 
 Bee has support for numeric constants. These can be used in expressions to represent numbers.
 
@@ -133,15 +146,72 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |9r+9i      | complex number r = real part, i = imaginary part (no spaces)
 |9r-9i      | complex number r = real part, i = imaginary part (no spaces)
 
-## Collection types
+## Type declaration
 
-Bee define a collection using a special notation based on brackets.
+User can define composite types and sub-types using operator "<:" (sub-type).
 
-| sym| Collection type
-|----|------------------------------------------------------------------
-| () | List \| Expression
-| [] | Array \|  Matrix 
-| {} | Set \| Map \| Object
+```
+--declare new type
+type type_name <: type_descriptor;
+
+--using new type
+make var_name,var_name ... ∈ type_name;
+```
+
+## Range Subtypes
+
+Range notation is used to create a subtype.
+
+**syntax**
+
+```
+-- discrete range
+type range_name <: basic_type[min..max]
+
+-- continuous range
+type range_name <: basic_type(min..max)
+```
+
+**Examples:**
+```
+-- sub-type declarations
+type Positive  <: R(0..);
+type Negative  <: R(..-1);
+type Digit     <: B[0..9];
+type Alpha     <: U[`A`..`z`];
+type Latin     <: U[U+0041..U+FB02];
+
+--Check variable belong to sub-type
+when (`x` ∈ Alpha):
+  print 'yes';
+else:
+  print 'no';
+when;
+```
+
+**Notes:**
+
+* A range member/element is a native type;
+* Anonymous range expression [n..m] is of type Z;
+* Range can apply only to discrete basic types (B,U,Z,N);
+* Control variables can be declared in range using "∈";
+* To check value is in range use operator "∈";
+* A dynamic range can be created using variables for limits;
+* Using [n.!m] will exclude upper limit from range;
+* Using [n!!m] will exclude both limits from range;
+* Using (n..m) is necessary for a continuous type like Q, Z, N, P;
+* For continuous ranges the lower or upper missing represent ∞ number;
+
+**dynamic range**
+```
+#resolution:0.1
+make n:=10, m:=15
+
+print ([n..m])  --> 10,11,12,13,14,15
+print ([n...m]) --> 10,11,12,13,14
+print (Q(0.!1)) --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
+print (Q(0!!1)) --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+```
 
 ## Constant declaration
 
@@ -225,18 +295,6 @@ alter a -= 1;   -- decrement value of a := 10
 -- modify two variables using one constant
 alter q, p := $T;    -- modify value of q and p
 alter x, y := 10.5;  -- modify value of x and y
-```
-
-## Type declaration
-
-User can define composite types and sub-types using operator "<:" (sub-type).
-
-```
---declare new type
-type type_name <: type_descriptor;
-
---using new type
-make var_name,var_name ... ∈ type_name;
 ```
 
 ## Type conversion

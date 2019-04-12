@@ -4,7 +4,6 @@ Composite types are complex data structures.
 
 **Bookmarks**
 
-* [range](#range)
 * [ordinal](#ordinal)
 * [list](#list)
 * [set](#set)
@@ -25,60 +24,7 @@ Bee uses composite types to ...
 * declare constants  using: ":=" and "@"
 * declare references using: ":=" and "@" 
 
-## Range
 
-Range notation is used to create a subtype.
-
-**syntax**
-
-```
--- discrete range
-type range_name <: basic_type[min..max]
-
--- continuous range
-type range_name <: basic_type(min..max)
-```
-
-**Examples:**
-```
--- sub-type declarations
-type Positive  <: R(0..);
-type Negative  <: R(..-1);
-type Digit     <: B[0..9];
-type Alpha     <: U[`A`..`z`];
-type Latin     <: U[U+0041..U+FB02];
-
---Check variable belong to sub-type
-when (`x` ∈ Alpha):
-  print 'yes';
-else:
-  print 'no';
-when;
-```
-
-**Notes:**
-
-* A range member/element is a native type;
-* Anonymous range expression [n..m] is of type Z;
-* Range can apply only to discrete basic types (B,U,Z,N);
-* Control variables can be declared in range using "∈";
-* To check value is in range use operator "∈";
-* A dynamic range can be created using variables for limits;
-* Using [n.!m] will exclude upper limit from range;
-* Using [n!!m] will exclude both limits from range;
-* Using (n..m) is necessary for a continuous type like Q, Z, N, P;
-* For continuous ranges the lower or upper missing represent ∞ number;
-
-**dynamic range**
-```
-#resolution:0.1
-make n:=10, m:=15
-
-print ([n..m])  --> 10,11,12,13,14,15
-print ([n...m]) --> 10,11,12,13,14
-print (Q(0.!1)) --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
-print (Q(0!!1)) --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
-```
 ## Ordinal
 
 Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1 by default. Ordinal values can start with a different number. Only first value can be specified using ":".
