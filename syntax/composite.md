@@ -12,7 +12,7 @@ Composite types are complex data structures.
 * [array](#array)
 * [slice](#slice)
 * [varargs](#varargs)
-* [string](#string)
+* [strings](#strings)
 * [object](#object)
 * [aggregate](#agregate)
 * [binding](#binding)
@@ -21,10 +21,10 @@ Composite types are complex data structures.
 
 Bee uses composite types to ...
 
-* declare data types using type   and "<:"
-* declare constants  using define and ":=" and "@" or "∈"
-* declare variables  using make   and ":=" and "@" or "∈"
-* declare parameters using symbols: "@" or "∈" and ":=" (optional)
+* declare data types using: "<:" and "∈"
+* declare constants  using: ":=" and "@" or "∈"
+* declare variables  using: ":=" and "@" or "∈" 
+* declare parameters using: ":"  and "@" or "∈"
 
 ## Range
 
@@ -40,12 +40,12 @@ type range_name <: basic_type[min..max]
 ```
 -- sub-type declarations
 type Small     <: B[0..9];
-type Alfa      <: A['a'..'Z'];
+type Alpha     <: U[`a`..`Z`];
 type Positive  <: Z[0...];
 type Negative  <: Z[...-1];
 
 --Check variable belong to sub-type
-when ('x' ∈ Alfa):
+when (`x` ∈ Alpha):
   print 'yes';
 else:
   print 'no';
@@ -100,11 +100,11 @@ type <variable> := () @ (value_type);
 
 **example**
 ```
--- create a list of symbols
-make a := () @ (A);
+-- create a list of code points
+make a := () @ (U);
 
--- create a list using a literal
-make b := ('1','a','2','b') @ (A); 
+-- create a list using literals
+make b := ('1','a','2','b') @ (U); 
 ```
 
 **empty list**
@@ -139,6 +139,7 @@ print z; -->  40
 make s := "{0} > {1} > {2}" <+ (x, y, z); 
 print s; -- "97 > 65 > 40"
 ```
+
 
 **Multiple results**
 
@@ -411,7 +412,7 @@ print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
 
 **differed initialization**
 ```
-make vec @ [A];
+make vec @ [U];
 
 -- element multiply "*"
 alter vec := `x` * 10;
@@ -558,32 +559,36 @@ print foo();     --> 0
 print foo(1);    --> 1
 print foo(1,2);  --> 3
 print foo(1,2,3);--> 6
-
+
 ```
 
-## String
+## Strings
 
-Bee has 3 kind of strings: {S, U, X} and single symbol encoding: { A }
+Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
 
-* A: Is UTF32 encoded symbol; 
-* S: Is an array of A with a fix capacity;
-* U: Is UTF8 encoded string with unlimited capacity;
-* X: Is UTF8 encoded radix tree with unlimited capacity;
+* U = Is UTF32 encoded alphanumeric code point or symbol; 
+* S = Is UTF8 array with a limited capacity: 1024 bit;
+* X = Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
-* A: literals are looking like this: U+003F
-* A: literals can look also like this: '?'
+* U: like: `?` 
+* S: like: '?'
+* X: like: "?"
+
+**Alternative literals**
+* Notation U+FFFF is for UTF16 code point
+* Notation U-FFFFFFFF is for UFT32 code point
 
 ### Single quoted strings
 
-Single quoted strings are Unicode strings with limited capacity of 1024 bytes.
+Single quoted strings are Unicode strings with limited capacity of 1024 bit ≤ 128 code points.
 
 ```
 -- two compatible representation of strings
-make str @ S(25);   -- string with capacity   25x4 = 100 bytes
-make a   @ [A](25); -- array of 25 characters 25x4 = 100 bytes
+make str @ S(25);   -- string with capacity   25x8 = 200 bit
+make a   @ [U](25); -- array of 25 characters 25x8 = 200 bit
 
-alter str := 'Long string'; 
+alter str := 'Short string'; 
 alter a   := split(str);
 ```
 
@@ -594,16 +599,31 @@ Conversion of a string into number is done using _parse_ rule:
 make x,y ∈ R;
 
 -- rule parse return a Real number
-alter x := parse("123.5",2,",.");       --convert to real 123.5
-alter y := parse("10,000.3333",2,",."); --convert to real 10000.33
+alter x := parse('123.5',2,',.');       --convert to real 123.5
+alter y := parse('10,000.3333',2,',.'); --convert to real 10000.33
 ```
+
+**Notes:** 
+
+* Single quoted strings are null terminated Arrays
+* Single quoted strings do not support escape: "\\"
+* Single quoted strings can not be nested
+* Single quoted strings do not support inclusion of character "'"
 
 ### Double quoted string
 
-Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape `\` symbol in double quoted strings. This will be internally replaced by code point of course. Print command will render the encoded string and will represent it to output device.
+Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape `\` symbol in double quoted strings. This will be internally replaced by a code point. Print command will render the encoded string and will represent it to output device.
 
+
+**example**
 ```
 print("this represents \n new line in string")
+```
+
+output:
+```
+this represents 
+new line in string
 ```
 
 ### Control codes:
@@ -625,9 +645,34 @@ DEC|HEX|CODE|ESCAPE|NAME
 27 |1B |ESC |\e    |Escape
 
 
+* "\\\\"    backslash
+* "\\\""	double quote
+* "\\d"     decimal representation: d{n}
+* "\\h"     hexadecimal representation
+* "\\x"  	next 2 characters is hexadecimal code for ASCII symbol
+* "\\u"     next 4 characters is hexadecimal code for Unicode symbol
+
+**Examples:**
+
+* "\\h*"    indicates 2A
+* "\\x2A"   indicates \*
+* "\\u2208" indicates ∈
 ```
+
 make s := "This is a Unicode string";
-print type(s); -- Print: U
+print type(s); -- X
+```
+
+**Template:**
+
+Template stings and escape sequence can be combined
+```
+print ("This: \\h*{1} is hexadecimal code for \\\"*\\\"" <+ 42);
+```
+
+Expected output:
+```
+This: 2A is hexadecimal code for "*"
 ```
 
 **See also:** [symbols.md](symbols.md)
@@ -644,7 +689,7 @@ symbol| description
 
 **examples**
 ```
-make u, c, s @ S; -- default length is 256 symbols
+make u, c, s @ S; -- default length is 128 octets = 1024 bit
 
 -- string concatenation
 alter u := 'This is'  & ' a short string.';
@@ -660,7 +705,7 @@ make test_file := $pro/'src'/'test.bee';
 print test_file; --> c:\work\project\src\test.bee
 ```
 
-**Note:** You can concatenate a string with a number or two numbers using &
+**Note:** You can concatenate a string with a number or two numbers
 
 ### Template
 
@@ -696,11 +741,11 @@ make str := constant * n @ S(n);
 
 **Example:**
 ```
-make sep @ U;
-alter sep := "+" & "-" * 18 & "+";
+make sep @ S;
+alter sep := '+' & '-' * 18 & '+';
 
 print sep;
-print "|*  this is a test  *|";
+print '|*  this is a test  *|';
 print sep;
 ```
 
@@ -786,7 +831,7 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name @ U, age ∈ N};
+type  Person <: {name @ S, age ∈ N};
 
 -- array of 10 persons
 make catalog @ [Person](10); 

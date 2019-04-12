@@ -4,7 +4,7 @@
 -- define: structured data
 #driver "dt"
 -- this type is public (uses dot prefix)
-type .Data <: {key:A, value:N};
+type .Data <: {key:U, value:N};
 -- make variable using defubed alias
 make  x @ Data;
 alter x := {key:'a', make:10};

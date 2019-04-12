@@ -7,9 +7,9 @@ Each literal has a "default" type that is automatic assigned for specific notati
 
 ```
 -- character expressions
-make c := 'a';        -- type = A (capacity = 1)
-make s := 'str';      -- type = S (capacity = 255)
-make b := "Unicode";  -- type = U (unlimited capacity)
+make c := `a`;        -- type = U 
+make s := 'a';        -- type = S 
+make b := "Unicode";  -- type = X 
 
 -- numeric expressions
 make i := 0;   -- type := Z

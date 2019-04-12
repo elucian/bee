@@ -77,22 +77,22 @@ Bee basic data types have information about:
 1. name
 1. capacity
 1. limits  (min/max)
-1. internal representation
-
+1. literal notation
 
 Basic types are represented with one single upper-case character.
 
 | Name        |Bee|Bytes|Description
 |-------------|---|-----|------------------------------------------------------------
 | Logical     |L  | 2   |Logical number {0,1} (aligned to 2 bit)
-| Alphanumeric|A  | 4   |UTF32 code point (32 bit integer)
-| Binary      |B  | 4   |Unsigned 32 bit integer < 4294967296
-| Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2
+| Unicode     |U  | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
+| Binary      |B  | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
+| Hexadecimal |H  | 8   |Hexadecimal 64 bit, max:0xFFFFFFFF
+| Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2 (resolution 0.001)
 | Natural     |N  | 8   |Unsigned large positive number     [0..+]
 | Integer     |Z  | 8   |Signed large discrete number       [-..+]
 | Positive    |P  | 8   |Double precision positive numbers: (0..+)
 | Real        |R  | 8   |Double precision number            (-..+)
-| Complex     |C  |16   |Complex number
+| Complex     |C  |16   |Complex number: pairs like (r+i)
 
 **Note:** 
 * Basic types are values;
@@ -104,9 +104,8 @@ Basic types are represented with one single upper-case character.
 
 | Name        |Bee| Description
 |-------------|---|----------------------------------------------------------------
-| String      |S  | Limited capacity string UTF32:  Default capacity 1024 bytes
-| Unlimited   |U  | Unlimited capacity string UTF8: Usually contains a single row
-| Text        |X  | Large UTF8 blob text that can have multiple rows 
+| String      |S  | Short string encoded as UTF8 (Array)
+| Text        |X  | Large blob text encoded as UTF8 (Rope or Radix Tree) 
 | Date        |D  | DD/MM/YYYY 
 | Time        |T  | hh:mm,ms
 | Exception   |E  | Exception object: {code, message, line}
@@ -125,12 +124,15 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |-----------|-----------------------------------------------------------
 |0          | integer zero
 |1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
-|0b10101010 | binary integer : (b,0,1)
-|0xFFFFFFFF | hexadecimal integer: (x,0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
+|0b10101010 | binary integer : (0b) & (0,1)
+|U+FFFF     | Unicode code point: (U+) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
+|0xFFFFFFFF | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
 |0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
 |1E10       | real number: 1×10¹⁰  :=   10000000000  
 |1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
 |1/2        | rational number: 1/2 = 0.5 
+|9r+9i      | complex number r = real part, i = imaginary part (no spaces)
+|9r-9i      | complex number r = real part, i = imaginary part (no spaces)
 
 ## Collection types
 
@@ -264,17 +266,20 @@ print x ; --> expect 20.0
 
 ## Alphanumeric type
 
-Bee define A := Single UTF32 character as native type.
+Bee define U as single UTF32 code point with representation: U+HHHH
 
 ```
-make a, b ∈ A; --Alphanumeric symbol
-make x, y ∈ B; --Binary number 
+make a, b ∈ U; --Unicode 
+make x, y ∈ B; --Binary
 
 alter a := '0';    -- representation of 0
 alter x := a -> B; -- convert to 30
 alter y := 30;     -- UTF code for '0'
 alter b := y -> A; -- convert to '0'
 ```
+
+**Note:** The "U+" notation is useful. It gives a way of marking hexadecimal digits as being Unicode code points, instead of octets. The "U" suggests "Union" of character encoding or "Unicode".
+
 ## Type checking
 
 We can use variable type to validate expression type.
@@ -404,8 +409,8 @@ The statement is executed only if the condition is 1 = $T.
 **notes:**
 1. Conditional expression must be enclosed in ();
 1. Conditional can not be associated with type statement;
-1. Conditional can not be associated with value statement;
-1. Conditional can not be associated with any block statement;
+1. Conditional can not be associated with make statement;
+1. Conditional can not be associated with a block statement;
 
 ```
 make a := 0 ∈ Z;
