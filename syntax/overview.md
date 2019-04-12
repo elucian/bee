@@ -159,7 +159,7 @@ type type_name <: type_descriptor;
 make var_name,var_name ... ∈ type_name;
 ```
 
-## Range Subtypes
+## Range subtypes
 
 Range notation is used to create a subtype.
 

@@ -7,7 +7,7 @@ Composite types are complex data structures.
 * [ordinal](#ordinal)
 * [list](#list)
 * [set](#set)
-* [map](#map)
+* [hash map](#hash-map)
 * [array](#array)
 * [slice](#slice)
 * [varargs](#varargs)
@@ -244,9 +244,9 @@ alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
 * Sets are not recommended to create queues or stacks;
 * Usually you do not remove elements from a set but only append;
 
-## Map
+## Hash map
 
-A map is a set of (key:value) pairs sorted by key.
+A hash map is a set of (key:value) pairs sorted by key.
 
 **syntax**
 ```
@@ -279,7 +279,13 @@ print map;      --> expected: {'b'="second", 'c'="third"}
 
 ```
 
-**Note:** Hash map operators work like for sets
+**Notes:** 
+* Hash map is also known as dictionary or associative array;
+* Hash map operators work like for sets. Key is unique;
+* Hash map key type is usually one of: {B,U,Z,N,P,R,Q,C,D,T};
+* Hash map key type can also be a range subtype or a string: { S };
+* Hash map key type can not be double quoted string or collection;
+
 
 ## Check for inclusion
 
@@ -298,7 +304,7 @@ when;
     
 ```
 
-## Array
+## Arrays
 
 Bee define Array variable using notation := `[]()`.
 
@@ -368,21 +374,30 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-make zum @ [Z](10);
+make zum := 1 @ [Z](1..10);
 
 -- add 1 to each element
 alter zum[*] += 1; 
 print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
+
+alter zum[1]  := 1; 
+alter zum[10] := 10; 
+print zum; -- expect [1,2,2,2,2,2,2,2,2,10]
+
 ```
 
 **differed initialization**
 ```
 make vec @ [U];
+make nec @ [N];
 
 -- vector is initialized with 10 `x` symbols
 alter vec := `x` * 10;
 print vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
+-- vector is initialized with 10 numbers = 9
+alter nec := 9 * 10;
+print nec; -- expect [9,9,9,9,9,9,9,9,9,9]
 ```
 
 ## Slice
