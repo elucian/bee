@@ -9,7 +9,8 @@ For syntax notation we use modified BNF convention:
 **bookmarks**
 
 * [Expression](#expression)
-* [Data type](#data-type)
+* [Basic types](#basic-types)
+* [Constant Literals](#constant-literals)
 * [Composite types](#composite-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
@@ -65,7 +66,7 @@ print  x; -- expect x = 5
 * multiple arguments are separated by comma;
 * multiple arguments are enclosed in parenthesis;
 
-## Data type
+## Data types
 
 Bee use 3 kind of data types:
 
@@ -102,6 +103,24 @@ Basic types are represented with one single upper-case character.
 * Basic types are mapped to native OS types;
 * Basic types are allocated on the stack;
 
+## Constant Literals
+
+Bee has support for numeric constants. These can be used in expressions to represent numbers.
+
+|   Literal | Description
+|-----------|-----------------------------------------------------------
+|0          | integer zero
+|1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
+|0b10101010 | binary integer : (0b) & (0,1)
+|U+FFFF     | Unicode code point: (U+) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
+|0xFFFFFFFF | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
+|0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
+|1E10       | real number: 1×10¹⁰  :=   10000000000  
+|1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
+|1/2        | rational number: 1/2 = 0.5 
+|9r+9i      | complex number r = real part, i = imaginary part (no spaces)
+|9r-9i      | complex number r = real part, i = imaginary part (no spaces)
+
 ## Composite types
 
 | Name        |Bee| Description
@@ -127,24 +146,6 @@ Bee define a collection using a special notation based on brackets.
 | () | List \| Expression
 | [] | Array \|  Matrix 
 | {} | Set \| Map \| Object
-
-## Constant Literals
-
-Bee has support for numeric constants. These can be used in expressions to represent numbers.
-
-|   Literal | Description
-|-----------|-----------------------------------------------------------
-|0          | integer zero
-|1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
-|0b10101010 | binary integer : (0b) & (0,1)
-|U+FFFF     | Unicode code point: (U+) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
-|0xFFFFFFFF | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
-|0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
-|1E10       | real number: 1×10¹⁰  :=   10000000000  
-|1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
-|1/2        | rational number: 1/2 = 0.5 
-|9r+9i      | complex number r = real part, i = imaginary part (no spaces)
-|9r-9i      | complex number r = real part, i = imaginary part (no spaces)
 
 ## Type declaration
 
