@@ -135,7 +135,7 @@ print x; -->  97
 print y; -->  65
 print z; -->  40
 
---anonymous list with string template
+--anonymous list unpacking in text template
 make s := "{0} > {1} > {2}" <+ (x, y, z); 
 print s; -- "97 > 65 > 40"
 ```
@@ -571,7 +571,7 @@ Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
 * X = Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
-* U: like: `?` 
+* U: like: ``?\`` 
 * S: like: '?'
 * X: like: "?"
 
@@ -606,13 +606,12 @@ alter y := parse('10,000.3333',2,',.'); --convert to real 10000.33
 **Notes:** 
 
 * Single quoted strings are null terminated Arrays
-* Single quoted strings do not support escape: "\\"
-* Single quoted strings can not be nested
-* Single quoted strings do not support inclusion of character "'"
+* Single quoted strings do not support escape: \\?
+
 
 ### Double quoted string
 
-Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape `\` symbol in double quoted strings. This will be internally replaced by a code point. Print command will render the encoded string and will represent it to output device.
+Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape \\ symbol in double quoted strings. This will be internally replaced by a code point. Print command will render the encoded string and will represent it to output device.
 
 
 **example**
@@ -647,33 +646,18 @@ DEC|HEX|CODE|ESCAPE|NAME
 
 * "\\\\"    backslash
 * "\\\""	double quote
-* "\\d"     decimal representation: d{n}
-* "\\h"     hexadecimal representation
+* "\\d"     decimal representation for next 1 symbol
+* "\\h"     hexadecimal representation for next 1 symbol
 * "\\x"  	next 2 characters is hexadecimal code for ASCII symbol
 * "\\u"     next 4 characters is hexadecimal code for Unicode symbol
 
 **Examples:**
 
+* "\\d*"    indicates 42
 * "\\h*"    indicates 2A
 * "\\x2A"   indicates \*
 * "\\u2208" indicates ∈
-```
 
-make s := "This is a Unicode string";
-print type(s); -- X
-```
-
-**Template:**
-
-Template stings and escape sequence can be combined
-```
-print ("This: \\h{1} is hexadecimal code for \\\"*\\\"" <+ 42);
-```
-
-Expected output:
-```
-This: 2A is hexadecimal code for "*"
-```
 
 **See also:** [symbols.md](symbols.md)
 
@@ -728,6 +712,28 @@ make y := 41; -- Code ASCII A
 print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
   
 ```
+
+**Escaping**
+
+Template stings and escape sequence can be combined
+
+
+** \\H = hexadecimal representation for number
+** \\B = binary representation for a number
+** \\U = U+ Unicode representation for symbol
+
+```
+print ("This: \\H{1} is hexadecimal code for \\\"*\\\"" <+ 42);
+print ("This: \\U{1} is hexadecimal code for \\\"*\\\"" <+ '*');
+```
+
+Expected output:
+```
+This: 2A is hexadecimal representation for "*"
+This: U+002A is Unicode representation for "*"
+```
+
+**Note:** More complex string formating require explicit conversion using format() built-in.
 
 ### String Generator
 
