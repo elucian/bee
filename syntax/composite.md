@@ -571,7 +571,7 @@ Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
 * X = Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
-* U: like: ``?\`` 
+* U: like: \`?\` 
 * S: like: '?'
 * X: like: "?"
 
