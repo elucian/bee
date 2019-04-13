@@ -12,9 +12,8 @@
 * [External Code](#external-code)
 * [Global scope](#global-scope)
 * [Public members](#public-members)
-* [Execution](#execution)
+* [Program Execution](#execution)
 * [Comments](#comments)
-* [Data types](#data-types)
 
 ## Project
 
@@ -292,72 +291,7 @@ print myLib.fib(5);
 
 To understand more about interacting with other languages check this article about ABI:
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
- 
-## Comments
 
-Bee enable several notations for comments: 
-
-### Single line comment**
-
-For single line comments we use a pair of two symbols: 
-
-{ "--", "**", "##" } 
-
-**Comment conventions:**
-
-* You can use \#\# in your program as title comments starting at beginning of a line.
-* You can use \-\- as the end of a line comment. You can also use \-\-\> like an arrow.
-
-**Notes:** These are chosen for following reasons:
-
-1. In Wiki "**" is for making titles bold. So Bee is Wiki friendly.
-2. In Wiki "##" represents title 2. Iʼm using Wiki notation to print Bee documentation.
-3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
-
-The only problem is the apostrophe must not use "'" instead you can use Unicode symbol: ` ʼ `
-
-**Possible separators:**
-
-If a program is very large you can use separators to create large sections of code.
-
-```
-------------------------
-************************
-```
-
-### Multi-line comments
-
-For multi-line comments we have 3 possible comments.
-
-```
-1. Vertical bar comment:      |* .... *| (expression comment)
-2. (+/-) comment  block:      +- .....-+ (start program comment)
-3. A rogue string that is not used in a statement is ignored by the compiler. 
-```
-
-**Example:**
-
-In next example we are using various comments into a demo program.
-
-```
-+----------------------------------------------------------------
-   At the beginning of program we can have  several comments    
-   to explain how the program works. This notation is preferred.
-----------------------------------------------------------------+
-#driver "demo"
-
-## This is a title in program
-
-** This is a sub-title in program
-
--- this is a demo driver with comments
-
-over;
-*******************************************************************
- After end of program we can use free text or normal comments. 
- These kind of comments are not available inside the program body. 
-*******************************************************************
-```
 
 ## Program Execution
 
@@ -443,5 +377,70 @@ return v,z ∈ N; -- define two results "v" and "z"
 * only one accept is used for one aspect;
 * only one return is used for one aspect;
 
+## Comments
+
+Bee enable several notations for comments: 
+
+### Single line comment**
+
+For single line comments we use a pair of two symbols: 
+
+{ "--", "**", "##" } 
+
+**Comment conventions:**
+
+* You can use \#\# in your program as title comments starting at beginning of a line.
+* You can use \-\- as the end of a line comment. You can also use \-\-\> like an arrow.
+
+**Notes:** These are chosen for following reasons:
+
+1. In Wiki "**" is for making titles bold. So Bee is Wiki friendly.
+2. In Wiki "##" represents title 2. Iʼm using Wiki notation to print Bee documentation.
+3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
+
+The only problem is the apostrophe must not use "'" instead you can use Unicode symbol: ` ʼ `
+
+**Possible separators:**
+
+If a program is very large you can use separators to create large sections of code.
+
+```
+------------------------
+************************
+```
+
+### Multi-line comments
+
+For multi-line comments we have 3 possible comments.
+
+```
+1. Vertical bar comment:      |* .... *| (expression comment)
+2. (+/-) comment  block:      +- .....-+ (start program comment)
+3. A rogue string that is not used in a statement is ignored by the compiler. 
+```
+
+**Example:**
+
+In next example we are using various comments into a demo program.
+
+```
++----------------------------------------------------------------
+   At the beginning of program we can have  several comments    
+   to explain how the program works. This notation is preferred.
+----------------------------------------------------------------+
+#driver "demo"
+
+## This is a title in program
+
+** This is a sub-title in program
+
+-- this is a demo driver with comments
+
+over;
+*******************************************************************
+ After end of program we can use free text or normal comments. 
+ These kind of comments are not available inside the program body. 
+*******************************************************************
+```
 
 **Read next:** [Syntax Overview](overview.md)
