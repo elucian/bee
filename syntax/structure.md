@@ -443,12 +443,5 @@ return v,z ∈ N; -- define two results "v" and "z"
 * only one accept is used for one aspect;
 * only one return is used for one aspect;
 
-## Data types
-
-Bee define basic types, composite types and collections. These types can be used to declare constants or create variables or parameters for aspects and rules. Composite types can have members of different types while collections can have several members of same type.
-
-Users can define sub-types and super-types using symbol "<:" and a _type descriptor_. User types will inherit all rules of the original type and can have additional rules.
-
-Bee is not object oriented. It has objects but do not have polymorphism. Instead, one object can have rules and it can be extended using mix-ins. You can not add new attributes to an existing type. 
 
 **Read next:** [Syntax Overview](overview.md)
