@@ -76,7 +76,7 @@ Following types are included in standard library:
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | module rule y := \|x\|  
+| mod      | aspect rule y := \|x\|  
 
 ## System Library
 

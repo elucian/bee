@@ -902,8 +902,8 @@ apply test.bar();
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
-* Rules can be overwritten in other modules;
-* Rules can be private to module or public using dot prefix;
+* Rules can be overwritten in other aspects;
+* Rules can be private to aspect or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;

@@ -506,7 +506,7 @@ alter var_name := (
 **Legend:**
  
 ```
-var  := pretagined variable
+var  := predefined variable
 xp1  := expression of same type with <v>
 cnd1 := condition for <xp1>
 dx   := default expression (optional condition).

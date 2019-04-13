@@ -1,6 +1,8 @@
 +-------------------------------------
       vector graphics prospect
 ------------------------------------+
+#driver "vg"
+
 -- define two points and two vectors
 make p1, p2 @ Point;  
 make v1, v2 @ Vector; 

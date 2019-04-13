@@ -48,12 +48,12 @@ rule;
 ```
 type Person  <: { name @ S, age ∈ N };
 
--- tagine order action for array of Persons
+-- define order action for array of Persons
 rule order(cat @ [Person]):
   apply sort<Person>(cat, (a, b) => (a.name > b.name));
 rule;
 
--- tagine clients and suppliers
+-- define clients and suppliers
 make clients   := [Person](100);
 make suppliers := [Person](10);
 -- populate somehow
