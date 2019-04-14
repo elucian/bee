@@ -21,14 +21,14 @@
 Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture. 
 
 ## Aspects
-One aspect is a project file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to resolve one or multiple concerns. A good architect will separate concerns in specialized aspect files with sugestive names.
+One aspect is a project file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to play one or multiple concerns. A good architect will separate concerns in specialized aspect files with sugestive names.
 
 One aspect can accept parameters and can produce one or multiple results. Aspect file contains statements and declarations. Usually all aspect members are private in local scope except parameter names that are public. 
 
 ## Libraries
 Libraries are reusable project components. A library is a file that contains public: types, constants and rules, called _members_. Libraries and aspects have the same file extension: *.bee. Aspects are specific to one project while libraries can be used into multiple projects.
 
-Library members are usually public. One library can not have parameters and does not produce results. Instead a driver can import a library and combine itʼs members into statements and expressions.
+Library members are usually public. One library can not have parameters and does not produce results. Instead a driver can load a library and combine itʼs members into statements and expressions.
 
 There are two kind of libraries: Standard libraries, provided by Bee runtime environment and project specific libraries. These libraries are stored usually in _"lib"_ folder and are used by one or more aspects.
 
@@ -90,7 +90,7 @@ Bee has 3 kind of program files each with different role:
 
 Bee is using 4 kind of declarations:
 
-* import  -- define: library
+* load  -- define: library
 * alias   -- define: aspect name
 * define  -- define: constant
 * accept  -- define: aspect parameters
@@ -108,7 +108,7 @@ Each statement start with one keyword.
 * alter   --change/modify variable value or assign new value
 * read    --accept input from console into a variable
 * write   --output to console result of an expressions
-* resolve --resolve one aspect of a larger problem
+* play --play one aspect of a larger problem
 
 Any statement is mandatory terminated by ";" 
 Multiple statements on a single line are separated by ";"
@@ -116,15 +116,15 @@ Multiple statements on a single line are separated by ";"
 ## Code blocks
 Statements can be contained in blocks of code.
 
-* Each block of code start with a specific keyword.
-* Block of code is ending with same keyword and ";"
-
-**Keywords:**
-
 * when    -- create multi-path selector using conditions
-* switch  -- create multi-path selector using a value
+* quest   -- create multi-path selector using a value
 * while   -- create repetitive block of code
 * trial   -- create a block of code to handle exceptions
+
+**notes:**
+
+* Each block of code start with a specific keyword.
+* Block of code is ending with same keyword and ";"
 
 ## Driver file
 
@@ -170,7 +170,7 @@ In Bee library can be imported like this:
 **Imports:**
 
 ```
-#import bee_lib;
+#load bee_lib;
 ```
 
 * use :* all public members are used
@@ -180,9 +180,9 @@ Using a qualifier for Bee aspect members:
 
 **pattern**
 ```
--- import with qualifier
-#import qualifier := path/library_name:(*);
-#import qualifier := path/library_name:(member_list);
+-- load with qualifier
+#load qualifier := path/library_name:(*);
+#load qualifier := path/library_name:(member_list);
 
 -- use qualifier for rule execution:
 apply qualifier.rule_name(arguments);
@@ -212,16 +212,16 @@ $pro  = $BEE_PRO   --contains path to current program
 $bee  = $BEE_HOME  --contains path to Bee runtime 
 $params --contains a list of parameters
 $error  --contains last exception
-$dres   --contains default resolution for Q = 0.001
+$dres   --contains default precision for Q = 0.001
 ```
 
 **importing**
 
 ```
-#import cpp_lib := $bee.cpp.myLib:(*) --import cpp library
-#import asm_lib := $bee.asm.myLib:(*) --import asm library
-#import bee_lib := $bee.lib.myLib:(*) --import core library
-#import pro_lib := $pro.lib.myLib:(*) --import project library
+#load cpp_lib := $bee.cpp.myLib:(*) --load cpp library
+#load asm_lib := $bee.asm.myLib:(*) --load asm library
+#load bee_lib := $bee.lib.myLib:(*) --load core library
+#load pro_lib := $pro.lib.myLib:(*) --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -268,7 +268,7 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-#import $bee.cpp.myLib.(*); -- load cpp library
+#load $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z):
@@ -280,8 +280,8 @@ rule;
 This is the driver file.
 ```
 #driver "main"
--- import library
-#import $bee.lib.myLib.(*);
+-- load library
+#load $bee.lib.myLib.(*);
 
 --use external rule
 print myLib.fib(5);
@@ -297,7 +297,7 @@ When a program is executed the driver is located and executed first. If a progra
 
 * A #driver is the program main entry point. It is executed only once;
 * A #library usually do not contain rogue statements do not have parameters;
-* An #aspect can be executed multiple times using "resolve" statement;
+* An #aspect can be executed multiple times using "play" statement;
 
 One library is loaded only once. If a library is imported in many aspects and contain rogue statements these are executed when the library is imported. So these statement if they exist will "initialize" the library.
 
@@ -319,14 +319,14 @@ A large program can have multiple _aspects_. The driver control the execution of
 -- declare an alias for an aspect file
 alias aspect_name := $pro.src.file_name.bee;
 
--- resolve when aspect do not have any result:
-resolve aspect_name(parameter_list);
+-- play when aspect do not have any result:
+play aspect_name(parameter_list);
 
 -- result can be captured using ":=" or any other modifier:
-resolve result := aspect_name(parameter_list);
+play result := aspect_name(parameter_list);
 
 -- resolving and capture results in a list;
-resolve result_list <+ aspect_name(parameter_list);
+play result_list <+ aspect_name(parameter_list);
 ```
 
 **parameters**
@@ -356,8 +356,8 @@ make result ∈ N;
 alias mod := $pro/mod.bee
 
 -- execute aspect "mod"
-resolve result := mod(-3) ;
-print   result; --> expect: 3
+play  result := mod(-3) ;
+print result; --> expect: 3
 
 over;
 ```

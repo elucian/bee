@@ -80,7 +80,7 @@ Following types are included in standard library:
 
 ## System Library
 
-Interaction with operating system require import from library.
+Interaction with operating system require load from library.
 
 ```
 +-------------------------

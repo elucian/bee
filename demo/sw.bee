@@ -1,25 +1,25 @@
 +--------------------------
- Switch statement demo
+ quest statement demo
 ---------------------------+
 #driver "sw"
 
 make msg @ S;
 make var ∈ Z;
 read(var,"var:>");
-switch var:
-  is 0:
+quest var:
+  case 0:
     alter msg := "zero";
-  is 1:
+  case 1:
     alter msg := "one";
-  in (1,3,5,7,9):
+  case (1,3,5,7,9):
     alter msg := "odd";
-  in [1..3]:
+  case [1..3]:
     alter msg := "small";
-  in [4..9]:
+  case [4..9]:
     msg := "large";
-other:
+cover:
   msg := "Undexpected";
-switch;
+quest;
 
 print msg;
 

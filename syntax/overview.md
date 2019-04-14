@@ -90,7 +90,7 @@ Basic types are represented with one single upper-case character.
 | Logical     |L  | 2   |Logical number {0,1} (aligned to 2 bit)
 | Unicode     |U  | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
 | Binary      |B  | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
-| Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2 (resolution 0.001)
+| Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
 | Natural     |N  | 8   |Unsigned large positive number     [0..+]
 | Integer     |Z  | 8   |Signed large discrete number       [-..+]
 | Positive    |P  | 8   |Double precision positive numbers: (0..+)
@@ -205,7 +205,7 @@ when;
 
 **dynamic range**
 ```
-#resolution:0.1
+#precision:0.1
 make n:=10, m:=15
 
 print ([n..m])  --> 10,11,12,13,14,15
@@ -524,7 +524,7 @@ over;
 
 ## Control Flow
 
-Bee has 3 control flow statements { when, while, trial }:
+Bee has 4 control flow statements { when, quest, while, trial }:
 
 ### when
 
@@ -580,7 +580,7 @@ else:
 when;
 ```
 
-### Switch
+### quest
 
 Is a multi-path selector based on a single value:
 
@@ -591,26 +591,26 @@ Is a multi-path selector based on a single value:
 * "..." is optional but an actual symbol;
 
 ```
-switch var:  
-  is val1:
+quest var:  
+  case val1:
     -- match first
     ...
-  is val2:
+  case val2:
     -- match second
     ...
-  in (val1,val2,val3 ...):
+  case (val1,val2,val3 ...):
     -- match third
     ...
-  in [min..max]:
+  case [min..max]:
     -- match forth
-other:
+cover:
   -- default branch
-switch;
+quest;
 ```
 
 **Note:**: 
 
-* Switch is automatically break at first match unless "..." is used;
+* quest is automatically break at first match unless "..." is used;
 * If a case end with "..." after ";" the next case is also evaluated;
 
 ### While
@@ -626,7 +626,7 @@ while (condition):
   stop if condition; -- break
   ...
 else:
-  -- alternative path
+  -- alternate path
 while;
 ```
 
@@ -732,7 +732,7 @@ trial;
 
 **error**
 
-Error regions are "exception handlers". Each can resolve one single error with a specific code.
+Error regions are "exception handlers". Each can play one single error with a specific code.
 
 **other**
 
@@ -778,7 +778,7 @@ panic -n ; -- end program and exit with error code = -n
 
 ## Rules
 
-An rule is a named code block that can resolve one or multiple tasks. 
+An rule is a named code block that can play one or multiple tasks. 
 
 **pattern**
 ```

@@ -31,7 +31,7 @@ Unverified demo source files:
 1. [do.bee](../demo/do.bee) - Repetitive statements
 1. [in.bee](../demo/in.bee) - Input multiple values
 1. [cs.bee](../demo/cs.bee) - Control structures
-1. [sw.bee](../demo/sw.bee) - Switch statement
+1. [sw.bee](../demo/sw.bee) - quest statement
 1. [fn.bee](../demo/fn.bee) - Rule declaration
 1. [fi.bee](../demo/fi.bee) - Recursive rule
 1. [gv.bee](../demo/gv.bee) - Global variables

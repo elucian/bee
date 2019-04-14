@@ -74,7 +74,7 @@ symbol| description
  
 
 
-**Note:**  Triple symbol: "..."  is used in switch statement
+**Note:**  Triple symbol: "..."  is used in quest statement
 
 ## Arithmetic modifiers
 

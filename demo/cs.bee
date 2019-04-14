@@ -32,7 +32,7 @@ else: (a @ [2..5]):
 else: (a < 0):
   -- this is not true since a > 0
   print ('a ≤ 0');
-none:
+else:
   print ('a ≥ 5'); -- no match
 when;
 +-------------------------------------------
