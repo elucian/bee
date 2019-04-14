@@ -923,7 +923,6 @@ clone name:: prototype{arguments};
 ```
 
 **notes:**
-* Rule prototype can be cloned;
 * A rule prototype can not be used until is cloned;
 * A rule object is binding external states into local context;
 
@@ -935,8 +934,8 @@ rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
 rule shift;
 
 -- instantiate two rule objects:
-clone inc := shift (s: +1);  -- increment 
-clone dec := shift (s: -1);  -- decrement 
+clone inc := shift{s: +1};  -- increment 
+clone dec := shift{s: -1};  -- decrement 
 
 -- verify object properties
 print inc.s; -- expect: 1
