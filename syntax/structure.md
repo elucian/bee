@@ -4,7 +4,7 @@
 * All program files have the same extension:  *.bee
 
 **bookmarks**
-* [Project](#project)
+* [Projects](#projects)
 * [Aspects](#aspects)
 * [Directives](#directives)
 * [Declarations](#declarations)
@@ -16,7 +16,7 @@
 * [Program Execution](#execution)
 * [Comments](#comments)
 
-## Project
+## Projects
 
 Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture. 
 
