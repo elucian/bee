@@ -85,9 +85,6 @@ Bee has 3 kind of program files each with different role:
 * A driver can include several libraries;
 * A driver can execute multiple aspects;
 * A library can be included in another library;
-* An aspect can not be included in a library;
-* Global variables are shared between driver an aspects;
-* One aspect instance is identified by aspect qualifier;
 
 ## Declarations
 
@@ -306,16 +303,15 @@ One library is loaded only once. If a library is imported in many aspects and co
 
 ## Aspect Execution
 
-In Bee you can split a large problem into multiple _aspects_. You can resolve one aspect at a time synchronously. The driver control the execution of aspects in specified order top down. Before resolving an aspect the driver can interact with the user to ask for input. After resolving an aspect the driver can retrieve, combine, report or save the results. Some aspects can be self sufficient and require minimum interaction with the driver.
+A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before resolving an aspect the driver can interact with the user to ask for input. After resolving an aspect the driver can retrieve and report or combine the results.
 
 **properties**
 
 * An aspect can be executed once or multiple times; 
 * One aspect of a problem is executed using keyword _resolve_;
-* When aspect is resolved all rogue statements are executed;
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, never in parallel;
-* An aspect can not be used in expressions except unpacking and assignment;
+* An aspect can not be used in expressions except unpacking or assignment;
 
 **pattern**
 
