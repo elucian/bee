@@ -4,12 +4,12 @@
 #driver "rp"
 
 -- declare rule with rule "cmp" as parameter
-rule compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r ∈ L):
+rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
   alter r := cmp(a,b);
 rule;
 
 -- declare a rule:
-rule lt(a,b ∈ Z) => (a < b) ∈ L;
+rule lt(a,b ∈ Z) ∈ L => (a < b);
 make test ∈ L
 
 -- delegate using rule "lt"
@@ -17,7 +17,7 @@ alter test := compare(1,2,cmp::lt);
 print test; -- expect 1
 
 -- delegate using anonymous rule
-alter test := compare(1, 2, cmd:: (a,b) => (a ≥ b));
+alter test := compare(1, 2, (a,b) => (a ≥ b));
 print test; -- expect 1
 
 over;
