@@ -931,7 +931,7 @@ clone name:: prototype{arguments};
 -- this rule can create a rule object
 rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
   make r := (s + i);
-rule shift;
+rule;
 
 -- instantiate two rule objects:
 clone inc := shift{s: +1};  -- increment 

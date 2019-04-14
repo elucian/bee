@@ -59,14 +59,14 @@ yield   | interrupting current thread and give priority to other thread
 make n ∈ N; -- control variable
 
 -- first coroutine
-rule foo(x ∈ N)
+rule foo(x ∈ N):
   alter x := x + 1;
   wait 5;  
   yield bar if (x < 10);
-rule foo;
+rule;
 
 -- second coroutine
-rule bar(x ∈ N) 
+rule bar(x ∈ N):
   alter x = x + 1;
   wait 10;    
   yield foo if x < 10;
