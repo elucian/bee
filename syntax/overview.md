@@ -698,16 +698,16 @@ The "trial" statement execute a process that can fail for some reason.
 **Keywords:**
 
 | word  | description
-|-------|------------------------------------------------
+|-------|---------------------------------------------------
 | trial | start and end trial block
 | error | catch and fix error code
 | other | catch other errors
 | after | executed after trial ends
-| pass  | scrub $error record and end trial
-| exit  | stop current rule/rule 
-| fail  | interrupt and raize exception (default 0)
-| over  | unconditional stop program
-| panic | unrecoverable error, stop program (default -1)
+| pass  | scrub $error record and end trial block
+| exit  | stop current rule and continue program
+| fail  | interrupt trial and raise exception (default 0)
+| over  | unconditional stop program normally with result 0
+| panic | unrecoverable error, stop program with result -1
 | $error| system last error record (clear by pass)
 
 ```
@@ -773,7 +773,7 @@ fail $custom_error if (condition);
 **example**
 
 ```
-panic -1 ; -- end program and exit with error code = -1
+panic -n ; -- end program and exit with error code = -n
 ```
 
 ## Rules
@@ -804,12 +804,12 @@ apply foo;
 * A rule can be executed using keyword "apply";
 * A rule can have input/output parameters;
 * A rule can be terminated early using "exit";
-* A rule can be interrupted using "fail","panic";
-* A program can be terminated from a rule using "over";
+* A rule can be interrupted with error using "fail";
+* A program can be terminated from a rule using _panic_ or _over_;
 
 ## Parameters
 
-Parameters are variables defined in rule signature.
+Parameters are special variables defined in rule signature.
 
 **Notes:**   
 * Basic arguments and literal arguments are pass by value;
@@ -818,7 +818,7 @@ Parameters are variables defined in rule signature.
 
 **note**
 * Parameters with initial value are optional;
-* Optional parameters must be last parameters;
+* Optional parameters must be enumerated last in parameter list;
 * Optional parameters are initialized with pair-up operator ":";
 
 ## Static rules
@@ -853,64 +853,56 @@ print c; -- print 1
 
 **Notes:** 
 
-* Result name is explicit declared;
-* All statements are executed;
 * Rules can be used in expressions;
-* There is no return statement;
+* There is no return statement in a rule;
 
 **properties:** 
 
-* Static rules can create one or more results;
 * Static rules can have local states and local scope;
 * Static rules can receive input/output parameters;
 * Static rules can have side-effects;
-* Static rules results can be captured using unpacking `<+`
+* Static rules results can be captured using unpacking `<+`;
 * Static rules can have public attributes using dot prefix;
+* Static rules are defined once and can not be redefined;
 
 **See also:**
 * [bs.bee](../demo/bs.bee) -- Bubble Sort
 
 ## Expression rules
 
-Expression rules are based on a single expression. 
+Expression rules are based on a single expressions. 
 
 **syntax**
 ```
-rule name(param ∈ type,...) => (expression) ∈ type;
+rule name(param ∈ type,...) ∈ type => (expression);
 ```
 
 **Example:** 
 
 ```
 -- define "exp" a rule
-rule exp(x,y ∈ Z) => (x + y) ∈ Z; 
+rule exp(x,y ∈ Z) ∈ Z => (x + y); 
 
--- using the rule in other expression
+-- using the rule in other expressions
 make z := exp(1,1) + 1; 
 print  z; -- print 3
 ```
 
 **notes**
 
-* Expression rules have single result;
+* Expression rules have a single result;
 * Expression rules are deterministic;
 * Expression rules are binding external states;
 * Expression rules are using referential transparency;
 * Expression rules can be created at runtime;
+* Expression rules can be overwritten or recreated;
+* Expression rules do not have side-effects;
 
 **See also:**
 * [pm.bee](../demo/pm.bee) -- expression rule
 * [fn.bee](../demo/fn.bee) -- pattern matching rule
 * [fi.bee](../demo/fi.bee) -- recursive rule
 * [rp.bee](../demo/rp.bee) -- rule as parameter
-
-**notes**
-
-I have used KISS principles to design rules: 
-
-* Explicit is better than implicit;
-* Efficient is better than pure; 
-* Keep it simple stupid;
 
 ## Rule object
 
@@ -920,31 +912,31 @@ A rule object is a rule created at runtime by another rule.
 ```
 rule rule_name(parameters) => result_rule(parameters):
   rule result_rule(parameters) => (expression) ∈ type;
-rule
+rule;
 ```
 
 **notes:**
 * Parent rule is referred as rule constructor or rule factory;
-* A rule object can have public attributes starting with dot prefix ".";
-* A rule object can communicate with constructor using parent attributes;
 * A rule object is binding external states into local scope;
+
 
 **example**
 ```
 -- this rule can create a rule object
 rule shift(i ∈ Z) => g(s ∈ Z):
-  rule g(s ∈ Z) => (s + i) ∈ Z;
+  -- creating the rule object g:
+  rule g(s ∈ Z) ∈ Z => (s + i);
 rule shift;
 
--- instantiate two rule objects
+-- instantiate two rule objects:
 make inc := shift(+1);  -- increment 
 make dec := shift(-1);  -- decrement 
 
--- test rule object "inc"
+-- test first rule object "inc"
 print inc(1); --> 2
 print inc(4); --> 5
 
--- test rule object "dec"
+-- test second rule object "dec"
 print dec(1); -->  0
 print dec(2); -->  1
 print dec(0); --> -1

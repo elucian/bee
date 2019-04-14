@@ -15,7 +15,7 @@ rule;
 **bubble sort**
 
 ```
-rule sort<X>(array @ [X], gt @ (X,X) ∈ L ):
+rule sort<X>(array @ [X], gt(X,X) ∈ L ):
   make n := length(array)-1 ∈ N; 
   make swap := $T ∈ L;
   make temp ∈ X;
@@ -78,15 +78,17 @@ This can be used to create an argument for a _signature reference_:
 
 **signature**
 ```
- ( id @ (type,type, ...) ∈ type)
+rule foo( id(type,type, ...) ∈ type):
+...
 ```
 
-To modify an anonymous rule as argument by name Bee uses: "::"
+Using anonymous rule for parameter named id():
 
 ```
- (id :: (param ,param ...) => (...))
+-- anonymous rule ↓ 
+apply foo((param ,param ...) => (...))
 ```
 
-Where: "id" is parameter name representing reference to rule.
+Where: "id" is parameter name representing a rule.
 
 **Read next:** [overview](../syntax/overview.md)

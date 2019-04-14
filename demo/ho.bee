@@ -19,12 +19,13 @@ rule generator(min, max ∈ Z) => object():
   rule;
 rule;
 
--- instantiate two rule objects
+-- instantiate one rule object
 make count := generator(0,9);  
 
--- test rule object zero_count
+-- test rule object: count
 trial:  
   make set := {} @ {Z}; 
+  -- this loop is infinite
   while $T:
     alter set += count();
     write set.index; -- progressive grow
@@ -32,9 +33,20 @@ trial:
   while;
   print; -- expect 0,1,2,3,4,5,6,7,8,9,  
 other:
+  -- loop was failing
   print set;  
 trial;
--- expectation verify: 
+-- use rule properties to check rule status
+print count.max;   -- 9
+print count.index; -- 10 (count is finished)
+
+-- expectation verification: 
 fail if set ≠ {0,1,2,3,4,5,6,7,8,9};
+
+-- try to create count second time
+-- instantiate another rule object
+alter count := generator(4,12);  
+print count.max;  -- expect 12
+print count.index;-- expect 4
 
 over;
