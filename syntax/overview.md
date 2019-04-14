@@ -707,7 +707,7 @@ The "trial" statement execute a process that can fail for some reason.
 | exit  | stop current rule and continue program
 | fail  | interrupt trial and raise exception (default 0)
 | over  | unconditional stop program normally with result 0
-| panic | unrecoverable error, stop program with result -1
+| halt  | unrecoverable error, stop program with result -1
 | $error| system last error record (clear by pass)
 
 ```
@@ -768,12 +768,12 @@ fail $custom_error if (condition);
 
 **Notes:**
 * Error code <  200 are system reserved error codes.
-* Error code ≤ -1   are unrecoverable panic errors
+* Error code ≤ -1   are unrecoverable errors
 
 **example**
 
 ```
-panic -n ; -- end program and exit with error code = -n
+halt -n ; -- end program and exit with error code = -n
 ```
 
 ## Rules
@@ -805,7 +805,7 @@ apply foo;
 * A rule can have input/output parameters;
 * A rule can be terminated early using "exit";
 * A rule can be interrupted with error using "fail";
-* A program can be terminated from a rule using _panic_ or _over_;
+* A program can be terminated from a rule using _halt_ or _over_;
 
 ## Parameters
 
@@ -858,45 +858,47 @@ print c; -- print 1
 
 **properties:** 
 
-* Static rules can have local states and local scope;
-* Static rules can receive input/output parameters;
-* Static rules can have side-effects;
-* Static rules results can be captured using unpacking `<+`;
-* Static rules can have public attributes using dot prefix;
-* Static rules are defined once and can not be redefined;
+Static rules ...
+* can have local states and local context;
+* can receive input/output parameters;
+* can have side-effects;
+* results can be captured using unpacking `<+`;
+* can have public attributes using dot prefix;
+* are defined once and can not be redefined;
 
 **See also:**
 * [bs.bee](../demo/bs.bee) -- Bubble Sort
 
 ## Expression rules
 
-Expression rules are based on a single expressions. 
+Expression rules are based on a single expression. 
 
 **syntax**
 ```
-rule name(param ∈ type,...) ∈ type => (expression);
+rule name(param ∈ Type,...) ∈ Type => (expression);
 ```
 
 **Example:** 
 
 ```
 -- define "exp" a rule
-rule exp(x,y ∈ Z) ∈ Z => (x + y); 
+rule xp(x,y ∈ Z) ∈ Z => (x + y); 
 
 -- using the rule in other expressions
-make z := exp(1,1) + 1; 
+make z := xp(1,1) + 1; 
 print  z; -- print 3
 ```
 
-**notes**
+**properties**
 
-* Expression rules have a single result;
-* Expression rules are deterministic;
-* Expression rules are binding external states;
-* Expression rules are using referential transparency;
-* Expression rules can be created at runtime;
-* Expression rules can be overwritten or recreated;
-* Expression rules do not have side-effects;
+Expression rules...
+* have a single result;
+* are deterministic;
+* are binding external states;
+* are using referential transparency;
+* can be created at runtime;
+* can be overwritten or recreated;
+* do not have side-effects;
 
 **See also:**
 * [pm.bee](../demo/pm.bee) -- expression rule
@@ -904,39 +906,47 @@ print  z; -- print 3
 * [fi.bee](../demo/fi.bee) -- recursive rule
 * [rp.bee](../demo/rp.bee) -- rule as parameter
 
-## Rule object
+## Rule prototype
 
-A rule object is a rule created at runtime by another rule.
+A rule prototype is a generic rule that can be cloned.
 
 **pattern**
 ```
-rule rule_name(parameters) => result_rule(parameters):
-  rule result_rule(parameters) => (expression) ∈ type;
+-- define a rule prototype
+rule prototype{attributes}(parameters) => (result ∈ Type):
+  -- compute the result
+  alter result := expression(parameters); 
 rule;
+
+-- making a rule clone from prototype
+clone name:: prototype{arguments};
 ```
 
 **notes:**
-* Parent rule is referred as rule constructor or rule factory;
-* A rule object is binding external states into local scope;
-
+* Rule prototype can be cloned;
+* A rule prototype can not be used until is cloned;
+* A rule object is binding external states into local context;
 
 **example**
 ```
 -- this rule can create a rule object
-rule shift(i ∈ Z) => g(s ∈ Z):
-  -- creating the rule object g:
-  rule g(s ∈ Z) ∈ Z => (s + i);
+rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
+  make r := (s + i);
 rule shift;
 
 -- instantiate two rule objects:
-make inc := shift(+1);  -- increment 
-make dec := shift(-1);  -- decrement 
+clone inc := shift (s: +1);  -- increment 
+clone dec := shift (s: -1);  -- decrement 
 
--- test first rule object "inc"
+-- verify object properties
+print inc.s; -- expect: 1
+print dec.s; -- expect:-1
+
+-- use first rule object "inc"
 print inc(1); --> 2
 print inc(4); --> 5
 
--- test second rule object "dec"
+-- use second rule object "dec"
 print dec(1); -->  0
 print dec(2); -->  1
 print dec(0); --> -1

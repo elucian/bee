@@ -1,11 +1,11 @@
 ## Bee Keywords
 
-Bee uses 34 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 35 reserved keywords to create statements. You can not use these keywords as identifiers. 
 
 ```
 02: if, is
 05: #driver, #library, #aspect, #timer, #precision
-08: alias, type, make, rule, load, define, accept, return
+09: type, make, rule, load, alias, clone, define, accept, return
 07: read, play, write, print, alter, scrap, apply 
 09: while, trial, error, other, after, else, quest, case, cover
 07: exit, fail, pass, over, stop, halt, skip
@@ -34,12 +34,13 @@ Next statements are used to load aspects or declare something.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| define   | Declare a constant
+| define   | Declare a constant 
 | load     | Load a library and assign a qualifier
-| alias    | Declare a local name for an aspect
-| type     | Declare data type
-| make     | Declare a variable 
-| rule     | Declare a subroutine
+| alias    | Declare a local synonym for an aspect file
+| type     | Declare data super-type or sub-type
+| rule     | Declare a subroutine or object prototype
+| make     | Create a new variable 
+| clone    | Create a new rule object
 
 ### Execution statements
 

@@ -4,14 +4,15 @@ A set builder is a declarative structure used to create a sub-set from a set of 
 
 **syntax**
 ```
-make set_name := { f(element) | element ∈ Source ∧ filter };
-make map_name := { (key: expression) | key ∈ Source ∧ filter };
+make set_name := { f(element)    | element ∈ source ∧ filter };
+make map_name := { (key: f(key)) | key ∈ source ∧ filter };
 
 ```
 
 **legend**
 
-* f = rule or rule
+* f   = rule(element) or expression
+* key = new key in hash map pair
 * source = collection or range
 * filter = logic expression
 * expression = rule or rule dependent upon key
@@ -19,13 +20,15 @@ make map_name := { (key: expression) | key ∈ Source ∧ filter };
 **example**
 ```
 make source := [1,2,1,2,3];
-make test @ {Z};
+make test1, test2 @ {Z};
 
 -- copy source elements
-alter test := {x | x ∈ Source};
+alter test1 := { x | x ∈ Source};
+alter test2 := { x²| x ∈ Source};
 
 -- expected result
-print test ; -- {1,2,3}
+print test1 ; -- {1,2,3}
+print test2 ; -- {1,4,9}
 ```
 
 **Note:**

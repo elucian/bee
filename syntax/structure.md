@@ -11,7 +11,7 @@
 * [Statements](#statements)
 * [Code blocks](#code-blocks)
 * [External Code](#external-code)
-* [Global scope](#global-scope)
+* [Global context](#global-context)
 * [Public members](#public-members)
 * [Program Execution](#execution)
 * [Comments](#comments)
@@ -23,7 +23,7 @@ Bee project is a folder with a specific structure. This folder contains one or m
 ## Aspects
 One aspect is a project file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to play one or multiple concerns. A good architect will separate concerns in specialized aspect files with sugestive names.
 
-One aspect can accept parameters and can produce one or multiple results. Aspect file contains statements and declarations. Usually all aspect members are private in local scope except parameter names that are public. 
+One aspect can accept parameters and can produce one or multiple results. Aspect file contains statements and declarations. Usually all aspect members are private in local context except parameter names that are public. 
 
 ## Libraries
 Libraries are reusable project components. A library is a file that contains public: types, constants and rules, called _members_. Libraries and aspects have the same file extension: *.bee. Aspects are specific to one project while libraries can be used into multiple projects.
@@ -193,18 +193,18 @@ apply qualifier.rule_name(arguments);
 * Environment variables are global, usual uppercase and start with $ symbol. 
 * All system variables are automatic imported from OS environment into global variables.
   
-## Global scope
+## Global context
 
 **usability**
 
-* Bee is using one global scope. Global variables are usually lowercase;
+* Bee is using one global context. Global variables are usually lowercase;
 * Global variables are unique and are visible in all project components;
 * Global variable name start with symbol "$" and are declared usually first; 
 * Global variables do not need dot qualifier and are usually defined by libraries;
 
 **system variables*
 
-Some Bee pre-defined variables are available in global scope.
+Some Bee pre-defined variables are available in global context.
 
 ```
 $path = $BEE_PATH  --contains a list of folders
@@ -226,10 +226,10 @@ $dres   --contains default precision for Q = 0.001
 
 **See example:** [gv.bee](../demo/gv.bee)
 
-## Local scope
+## Local context
 
-Local scope is a private memory space;
-Local variables are private inside local scope;
+Local context is a private memory space;
+Local variables are private inside local context;
 One aspect can have local constants, variables and rules;
 One library can have local constants, variables and rules;
 Bee rules can have local declarations or public declarations. 

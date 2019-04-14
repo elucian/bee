@@ -4,21 +4,51 @@ A generic rule is using a type parameter.
 
 **pattern**
 ```
-rule name<type_name>(param ∈ type_name, result @ type_name):
-   make local ∈ type_name;   
-   alter result := ...
+rule pattern{Type}(param ∈ Type, result @ type_name):
+   make local ∈ Type;   
+   alter result := expression(param)
 rule;
 ```
 
-**Note:** Angle brackets `<type_name>` are actually used.
+**note:** 
+* Type can be any known type or sub-type;
+* Type is first class value and is of type: "type";
+
+## Anonymous Rule
+
+This design uses one _anonymous_ rule:
+
+**anonymous rule**
+```
+ (param, param,...) => (expression)
+```
+
+This can be used to create an argument for a _signature reference_
+
+**signature**
+```
+rule foo(id(type,type, ...) ∈ Type):
+...
+```
+
+Using anonymous rule for parameter named id():
+
+```
+-- anonymous rule ↓ 
+apply foo(id::(param ,param ...) => (expression))
+```
+
+Where: "id" is parameter name representing a rule.
+
 
 **bubble sort**
 
 ```
-rule sort<X>(array @ [X], gt(X,X) ∈ L ):
+-- this sort is generic 
+rule bubble{Type}(array @ [Type], gt(Type,Type) ∈ L ):
   make n := length(array)-1 ∈ N; 
   make swap := $T ∈ L;
-  make temp ∈ X;
+  make temp ∈ Wat;
   make i ∈ N;
   while swap:
     alter i := 0;
@@ -48,47 +78,19 @@ rule;
 ```
 type Person  <: { name @ S, age ∈ N };
 
--- define order action for array of Persons
-rule order(cat @ [Person]):
-  apply sort<Person>(cat, (a, b) => (a.name > b.name));
-rule;
+-- define sort rule for Person, as a clone of bubble
+clone sort :: bubble{Type:Person};
 
 -- define clients and suppliers
-make clients   := [Person](100);
-make suppliers := [Person](10);
--- populate somehow
+make clients   @ [Person](100);
+make suppliers @ [Person](10);
+
+-- populate clients and suppliers somehow
 ...
 
--- use new order action to sort
-apply order(clients);
-apply order(suppliers);
+-- use new order action to sort clients and suppliers
+apply sort(clients);
+apply sort(suppliers);
 ```
-
-## Anonymous Rule
-
-This design uses one _anonymous_ rule:
-
-
-**rule**
-```
- (param, param,...) => (expression)
-```
-
-This can be used to create an argument for a _signature reference_:
-
-**signature**
-```
-rule foo( id(type,type, ...) ∈ type):
-...
-```
-
-Using anonymous rule for parameter named id():
-
-```
--- anonymous rule ↓ 
-apply foo((param ,param ...) => (...))
-```
-
-Where: "id" is parameter name representing a rule.
 
 **Read next:** [overview](../syntax/overview.md)
