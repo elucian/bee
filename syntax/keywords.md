@@ -4,11 +4,11 @@ Bee uses 34 reserved keywords to create statements. You can not use these keywor
 
 ```
 02: if, is
-07: exit, fail, pass, over, stop, halt, skip
+05: #driver, #library, #aspect, #timer, #precision
+08: alias, type, make, rule, load, define, accept, return
 07: read, play, write, print, alter, scrap, apply 
 09: while, trial, error, other, after, else, quest, case, cover
-08: alias, type, make, rule, load, define, accept, return
-05: #driver, #library, #aspect, #timer, #precision
+07: exit, fail, pass, over, stop, halt, skip
 ```
 
 ### Operators
@@ -22,9 +22,9 @@ Bee uses 34 reserved keywords to create statements. You can not use these keywor
 
 | Keyword     | Purpose
 |-------------|--------------------------------------------------------
-| #driver     | Declare file name for main module
-| #library    | Declare file name for a library
+| #driver     | Declare file name for a primary module
 | #aspect     | Declare file name for a secondary module
+| #library    | Declare file name for a library
 | #timer      | Declare maximum time spent for a program to run
 | #precision  | Declare maximum precision to use for decimal numbers
 
