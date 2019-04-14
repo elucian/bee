@@ -5,6 +5,7 @@
 
 **bookmarks**
 * [Project](#project)
+* [Aspects](#aspects)
 * [Directives](#directives)
 * [Declarations](#declarations)
 * [Statements](#statements)
@@ -17,21 +18,21 @@
 
 ## Project
 
-Bee project is a folder with a specific structure. This contains one or many programs that can run independent or simultaneously. Programs can be used to collaborate into n-tire applications. 
+Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture. 
 
 ## Aspects
-One aspect is a file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to resolve one or multiple concerns. A good architect will separate concerns in related aspects.
+One aspect is a project file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to resolve one or multiple concerns. A good architect will separate concerns in specialized aspect files with sugestive names.
 
-All aspect members are usually private. One aspect can accept parameters and can produce one or multiple results. Also one aspect can use global variables. This method is discouraged. It is better to use parameters and results for communication.
+One aspect can accept parameters and can produce one or multiple results. Aspect file contains statements and declarations. Usually all aspect members are private in local scope except parameter names that are public. 
 
 ## Libraries
-Libraries are reusable program components. A library is a file that contains public: types, constants and rules, called _members_. Libraries and aspects have the same file extension: *.bee. Aspects are specific to one project while libraries can be used into one or multiple projects.
+Libraries are reusable project components. A library is a file that contains public: types, constants and rules, called _members_. Libraries and aspects have the same file extension: *.bee. Aspects are specific to one project while libraries can be used into multiple projects.
 
 Library members are usually public. One library can not have parameters and does not produce results. Instead a driver can import a library and combine itʼs members into statements and expressions.
 
 There are two kind of libraries: Standard libraries, provided by Bee runtime environment and project specific libraries. These libraries are stored usually in _"lib"_ folder and are used by one or more aspects.
 
-**tree**
+**project tree**
 ```
 $PRO_HOME
   |-- bin

@@ -303,10 +303,10 @@ alter x, y := 10.5;  -- modify value of x and y
 Bee is an explicit language. We avoid implicit conversion.   
 When data type mismatch we must perform explicit conversion.
 
-* Explicit conversion is when; using _pipeline operator: "->"
-* This is unsafe operation. And a range check is recommended before conversion.
+* Explicit conversion is using pipeline operator: "->"
+* This is unsafe operation. A range check is recommended before conversion.
 * Data precision may suffer. Some decimals may be lost.
-* If data do not fit in the new type overflow exception is created.
+* If data do not fit in the new type overflow exception is raised.
 
 **example:**
 ```
