@@ -1,14 +1,15 @@
 ## Syntax Overview
 
-For syntax notation we use modified BNF convention:
+For syntax notation I use a very simple convention:
 
-* We use \<name\> to represent identifier names;
-* We use  ...  to represent repetitive sequence;
-* We use notes or examples to explain optional things;
+* I use suggestive names to represent identifiers;
+* I use "..." to represent repetitive sequences;
+* I use "--"  to make comments for multi-block statements;
+* I use notes or examples to explain design patterns;
 
 **bookmarks**
 
-* [Expression](#expression)
+* [Expressions](#expressions)
 * [Basic types](#basic-types)
 * [Constant literals](#constant-literals)
 * [Composite types](#composite-types)
@@ -23,7 +24,7 @@ For syntax notation we use modified BNF convention:
 * [Rules](#rules)
 * [Parameters](#parameters)
 
-## Expression
+## Expressions
 Expressions are created using identifiers, operators, rules and constant literals. 
 
 * can be enumerated using comma separator ","
@@ -44,19 +45,23 @@ print "this is a test";
 print (10 + 10 + 15);   -- math
 print (10 > 5 | 2 < 3); -- logical
 
---multiple expressions in a line
-print (1,',',2,',',3); --expect 1,2,3
-print (10, 11, 12);    --expected 101112   
+-- multiple expressions in a line
+-- print: separate multiple values with one space
+print (1,',',2,',',3); --expect 1, 2, 3
+print (10, 11, 12);    --expect 10 11 12   
 
---avoid new line after 2
+--to avoid new line and spaces use "write"
+write 0
 write (1,2);
-write (3,4);  --> expect 1234
+write (3,4);  
 
--- calculation that fail will do nothing.
+-- after write use print to write a new line
+print; --> 01234
+
+-- Calculation that fail will do nothing
 alter x := 5 ∈ R;
-alter x := x ÷ 0; -- no effect
-
-print  x; -- expect x = 5
+alter x := x ÷ 0;  -- silent fail
+print x; --> x = 5 -- wrong result
 ```
 
 **Notes:** 
