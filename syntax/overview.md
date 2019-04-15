@@ -904,6 +904,7 @@ Expression rules...
 * can be created at runtime;
 * can be overwritten or recreated;
 * do not have side-effects;
+* can not be interrupted from execution;
 
 **See also:**
 * [pm.bee](../demo/pm.bee) -- expression rule
