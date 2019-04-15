@@ -52,4 +52,4 @@ print test.index;-- expect 4
 print generator.max;  -- expect 0
 print generator.min;  -- expect 0
 
-over;
+over.

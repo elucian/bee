@@ -12,4 +12,4 @@ print add(-10, 10);  -- print 0
 rule  fac(n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
 print fac(3); -- expect 6
  
-over;
+over.

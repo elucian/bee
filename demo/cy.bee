@@ -20,4 +20,4 @@ while (x ≥ 0):
   when;  
   alter x -= 1;
 while;  
-over;
+over.

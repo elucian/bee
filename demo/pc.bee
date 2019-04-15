@@ -48,4 +48,4 @@ while (x < 100):
   alter x += 1; 
 while;
 
-over;
+over.

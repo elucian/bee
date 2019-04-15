@@ -31,4 +31,4 @@ while;
 apply foo.reset();
 
 fail if ( foo.ci ≠ 10); -- expect: 10
-over;
+over.

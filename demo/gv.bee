@@ -29,4 +29,4 @@ apply add2;  -- print 1
 apply add2;  -- print 1
 print x; -- x remain 4
  
-over;
+over.

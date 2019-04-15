@@ -20,4 +20,4 @@ trial;
  
 -- test modifier effect
 fail if ¬ (s ≡ d); 
-over;
+over.

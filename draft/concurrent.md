@@ -79,7 +79,7 @@ start bar(n);
 -- wait for both foo and bar to finish
 rest;
 
-over;
+over.
 ``` 
 
 **See also:** [pc.wee](../demo/pc.wee) -- producer consumer example

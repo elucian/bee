@@ -17,4 +17,4 @@ alter x := 0;  -- make x make
 apply add;   -- will print 1
 apply add;   -- will print 2
 print x; -- x = 2 (modified)
-over;
+over.

@@ -36,4 +36,4 @@ rule;
 make i,k := 0;  -- references
 apply inc(i);   --> i = 1 
 apply inc(i,k); --> i = 2 and k = 1
-over;
+over.

@@ -2,7 +2,7 @@
        repetitive statement demo
 -----------------------------------------+
 #driver "do"
-make a := [Z](10);      -- array of 10 Words
+make a := [Z](10);     -- array of 10 Words
 make n := a.count()-1; -- index of last element
 -- use range for iteration
 make i @ [0..n];
@@ -10,4 +10,4 @@ while (i ≤ n):
    print ('r[{0}] := {1}' <+ (i, a[i]));
    alter i += 1;
 while;
-over;
+over.

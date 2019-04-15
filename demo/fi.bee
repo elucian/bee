@@ -14,4 +14,4 @@ rule;
 make r := fib(5):
 -- print the result
 print r;
-over;
+over.

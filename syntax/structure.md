@@ -153,14 +153,14 @@ while (i > c):
 while;
 -- print the buffer to console
 
-over;
+over.
 ```
 
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
 * $params is a global system variable available in #driver and #aspect;
 * Parameter _params_ is of type [S] that is a list are strings;
-* Bee file is ending with "over;" that is mandatory keyword;
+* Bee file is ending with "over." that is mandatory keyword;
 
 Do not try to understand the example. This is just a worm-up :)
 
@@ -343,7 +343,7 @@ else:
   alter v := i;
 when;  
 
-over;
+over.
 ```
 
 ```
@@ -359,7 +359,7 @@ alias mod := $pro/mod.bee
 play  result := mod(-3) ;
 print result; --> expect: 3
 
-over;
+over.
 ```
 
 **multiple**
@@ -433,7 +433,7 @@ In next example we are using various comments into a demo program.
 
 -- this is a demo driver with comments
 
-over;
+over.
 *******************************************************************
  After end of program we can use free text or normal comments. 
  These kind of comments are not available inside the program body. 

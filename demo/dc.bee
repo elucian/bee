@@ -34,4 +34,4 @@ print m[2,2]; -- will print 1
 -- use slice to alter elements
 alter a[2..?] := 1; --> [5,5,1,1,1,1,1,1,1,1] 
 alter a[0..5] := 2; --> [2,2,2,2,2,2,1,1,1,1] 
-over;
+over.

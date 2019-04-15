@@ -338,7 +338,7 @@ while;
 
 -- print all elements of array
 print test;
-over;
+over.
 ```
 
 **Output:**

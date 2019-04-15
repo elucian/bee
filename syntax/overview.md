@@ -524,7 +524,7 @@ read (x,"x:>");
 
 make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown");
 print "x is ".kind; -- expect: "x is digit"
-over;
+over.
 ```
 
 ## Control Flow
