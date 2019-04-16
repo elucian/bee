@@ -9,13 +9,13 @@ print "x = 0" if (x = 0);
 -- single branch
 when (x = 1):
   print "x = 1";
-when;
+ready;
 -- two branches
 when (x ≠ 5):
   print "x ≠ 5";
 else:
   print "x = 5";   
-when;
+ready;
 -- nested branches
 alter x := 1;
 when (x ≥ 1):
@@ -24,10 +24,10 @@ when (x ≥ 1):
     print "x = 1";
   else:
     print "x > 1";  
-  when; 
+  ready; 
 else:
   print "x < 1";
-when;
+ready;
  
 -- x ≥ 1
 -- x = 1
@@ -39,7 +39,7 @@ else:
     print "x > 1";
   else:
     print "x = 1";
-  when;   
-when;
+  ready;   
+ready;
 -- expect x = 1
 over.

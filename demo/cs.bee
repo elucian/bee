@@ -12,14 +12,14 @@ print ("a > b") if (a > b);
 -- single branch decision
 when (a = b):
   print ("a = b");
-when;
+ready;
 
 -- decision with alternate branch
 when (a < 5):
   print "a < 5";
 else:
   print "no";
-when;
+ready;
 
 -- mutual exclusive multi-path selector
 alter a := 2;
@@ -34,7 +34,7 @@ else: (a < 0):
   print ('a ≤ 0');
 else:
   print ('a ≥ 5'); -- no match
-when;
+ready;
 +-------------------------------------------
   when is breaking at first match           
   therefore only one message is produced:   
@@ -47,12 +47,12 @@ when (a ∧ b):
   print ("a ≠ 0 and b ≠ 0");
   when (a ≥ b):
     print ("a ≥ b");
-  when;  
+  ready;  
   when (a > b):
      print ("a > b");  
-  when;     
+  ready;     
 else:
   print ("a = 0 and b = 0");  
-when;
+ready;
 
 over. 

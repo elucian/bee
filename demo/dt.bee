@@ -35,5 +35,5 @@ when (a = zero):
   print "zero";
 else:
   print "life is misery";
-when;
+ready;
 over.

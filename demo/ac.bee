@@ -6,14 +6,14 @@
 -- suspend for 2.5 sec
 rule test():
   wait 2.5;
-rule;
+over;
 
 -- start 4 threads
 make i := 0; -- control variable
 while (i ≤ 4):
   start test;    
   alter i += 1;    
-while;
+repeat;
 rest;
 
 over.

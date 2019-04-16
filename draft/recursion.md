@@ -13,8 +13,8 @@ rule fact(n ∈ N) => (r ∈ N):
     alter r := 1;
   else:  
     alter r := n · fact(n-1);
-  when;  
-rule;
+  ready;  
+over;
 ``` 
 
 **Example2**
@@ -25,12 +25,12 @@ rule tail(n ∈ N, acc ∈ N) => (r ∈ N):
     alter r:= acc;
   else:   
     alter r:= tail(n-1, acc · n);
-  when; 
-rule;
+  ready; 
+over;
 
 rule fact(n ∈ N) => (r ∈ N):
   alter r := tail(n , 1);
-rule;  
+over;  
 ```  
 
 **Example3**
@@ -42,6 +42,6 @@ rule fact(a ∈ N, b ∈ N) => (r ∈ N):
     alter b := b - 1;  
   else:
     alter r := a; 
-  while;
-rule;
+  repeat;
+over;
 ```  

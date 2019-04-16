@@ -115,7 +115,7 @@ An rule can produce multiple results in a list.
 rule test(x,y ∈ Z) => (r, c ∈ Z):
   alter r += x+1;
   alter c += y+1;
-rule;
+over;
 
 make n, m ∈ Z;
 
@@ -172,7 +172,7 @@ while ¬ (x ≡ list[?]):
   write x;
   alter x :: list.next(x);
   write ',';
-while;
+repeat;
 ```
 
 ## Stack
@@ -300,7 +300,7 @@ when ('a' ∈ map):
   print("a is found");
 else:
   print("not found");
-when;
+ready;
     
 ```
 
@@ -334,7 +334,7 @@ make x := 0;
 while (x < m): 
   alter test[i] := x;
   alter x += 1;
-while;
+repeat;
 
 -- print all elements of array
 print test;
@@ -494,7 +494,7 @@ make x := length(mat);
 while (i < x):   
   write (mat[x], ',');
   i += 1;
-while;
+repeat;
 
 ```
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
@@ -526,14 +526,14 @@ rule foo( *bar @ [Z]) => (x ∈ Z):
   when (c = 0):
     alter x := 0; 
     exit;
-  when;
+  ready;
   alter i := 0; 
   -- sum all parameters  
   while (i < c):
     alter x += bar[i];
     alter i += 1;
-  while;
-rule;
+  repeat;
+over;
 
 --we can call foo with variable number of arguments
 print foo();     --> 0
@@ -880,13 +880,13 @@ type Foo <: {a, b ∈ N};
 -- foo is a constructor for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
-rule;
+over;
 
 -- second rule for Foo type
 rule bar(me @ Foo):
   print "a ="._.me.a;
   print "b ="._.me.b;
-rule;
+over;
 
 -- reference capture "::" result Foo object 
 make test :: foo(p:1);

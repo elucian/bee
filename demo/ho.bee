@@ -13,8 +13,8 @@ rule generator{min, max ∈ Z}() => (r ∈ Z):
   else:
     alter r := .index;    
     alter .index += 1;    
-  when;  
-rule;
+  ready;  
+over;
 
 -- instantiate one rule object
 clone count :: generator{0,9};  
@@ -30,12 +30,12 @@ trial:
     alter set += count();
     write set.index; -- progressive grow
     write ','
-  while;
+  repeat;
   print; -- expect 0,1,2,3,4,5,6,7,8,9,  
 other:
   -- loop was failing
   print set;  
-trial;
+ready;
 
 -- use rule properties to check rule status
 print count.max;   -- 9

@@ -9,5 +9,5 @@ make i @ [0..n];
 while (i ≤ n):
    print ('r[{0}] := {1}' <+ (i, a[i]));
    alter i += 1;
-while;
+repeat;
 over.

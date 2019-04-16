@@ -7,7 +7,7 @@ A generic rule is using a type parameter.
 rule pattern{Type}(param ∈ Type, result @ type_name):
    make local ∈ Type;   
    alter result := expression(param)
-rule;
+over;
 ```
 
 **note:** 
@@ -61,11 +61,11 @@ rule bubble{Type}(array @ [Type], gt(Type,Type) ∈ L ):
         alter array[i]  :: array[i+1];
         alter array[i+1]:: temp;
         alter swap := $T; -- true
-      when;
+      ready;
       alter i +=1;
-    while; 
-  while;
-rule;
+    repeat; 
+  repeat;
+over;
 ```
 
 **Notes:**

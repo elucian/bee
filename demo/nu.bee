@@ -16,7 +16,7 @@ trial
 other
   -- expect error "Null reference error"
   print "failed:".$error.message;
-trial;
+ready;
  
 -- test modifier effect
 fail if ¬ (s ≡ d); 

@@ -19,7 +19,7 @@ quest var:
     msg := "large";
 cover:
   msg := "Undexpected";
-quest;
+ready;
 
 print msg;
 

@@ -12,7 +12,7 @@ print;
 -- later implement the rule
 rule plus(a,b ∈ Z) => (r ∈ Z):
   alter r := (a + b);
-rule;  
+over;  
 
 over.
 ```

@@ -93,8 +93,8 @@ Bee is using 4 kind of declarations:
 * load  -- define: library
 * alias   -- define: aspect name
 * define  -- define: constant
-* accept  -- define: aspect parameters
-* return  -- define: aspect results
+* input   -- define: aspect parameters
+* output  -- define: aspect results
 * type    -- define: data types
 * make    -- define: variable
 * rule    -- define: rule
@@ -117,14 +117,14 @@ Multiple statements on a single line are separated by ";"
 Statements can be contained in blocks of code.
 
 * when    -- create multi-path selector using conditions
-* quest   -- create multi-path selector using a value
-* while   -- create repetitive block of code
+* cycle   -- create unconditional repetitive block of code
+* while   -- create conditional repetitive block of code
 * trial   -- create a block of code to handle exceptions
 
 **notes:**
 
 * Each block of code start with a specific keyword.
-* Block of code is ending with same keyword and ";"
+* Block of code is ending with keywords ("repeat", "ready", "next")
 
 ## Driver file
 
@@ -144,13 +144,13 @@ Rogue statements are executed top down in synchronous mode.
 make i, c ∈ Z;
 alter c := $params.count;
 
-over if (c = 0);
+halt if (c = 0);
 -- comma separated parameters
 while (i > c):
   write $params[i];
   alter i += 1;
   write "," if (i < c);
-while;
+repeat;
 -- print the buffer to console
 
 over.
@@ -256,7 +256,7 @@ rule .f(x ∈ N) => (x + 1) ∈ N;
 --public rule
 rule .m(x, y ∈ N, r @ N):
   alter r := x + y;
-rule;
+over;
 
 ```
 ## Rule ABI mapping
@@ -273,7 +273,7 @@ This is myLib.bee file:
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z):
   alter x := myLib.fib(n -> Z);
-rule;
+over;
 
 ```
 
@@ -334,14 +334,14 @@ play result_list <+ aspect_name(parameter_list);
 ```
 #aspect "mod"
 
-accept i ∈ Z; -- define parameter "i"
-return v ∈ N; -- define result "v"
+input  i ∈ Z; -- define parameter "i"
+output v ∈ N; -- define result "v"
 
 when (i < 0):
   alter v := -i;
 else:
   alter v := i;
-when;  
+ready;  
 
 over.
 ```
@@ -366,13 +366,13 @@ over.
 
 One aspect can have multiple parameters and multiple results:
 ```
-accept a,b ∈ Z, c ∈ R; -- define parameters "a,b,c"
-return v,z ∈ N; -- define two results "v" and "z"
+input a,b ∈ Z, c ∈ R; -- define parameters "a,b,c"
+output v,z ∈ N; -- define two results "v" and "z"
 ```
 
 **note:** 
-* only one accept is used for one aspect;
-* only one return is used for one aspect;
+* only one input statement is used for one aspect;
+* only one output statement is used for one aspect;
 
 ## Comments
 

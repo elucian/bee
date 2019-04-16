@@ -6,7 +6,7 @@
 rule test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x+1;
   alter b := y+1;
-rule; 
+over; 
 -- unpacking and make new variables
 make n,m <+ test(1,2);
 print (n, m) -- will print 2, 3
@@ -16,6 +16,6 @@ type Rec <: {x ∈ Z, y ∈ R};
 rule (x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.x := x;
   alter r.y := y;
-rule;
+over;
 print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 over. 

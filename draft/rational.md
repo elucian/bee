@@ -9,6 +9,13 @@ since `q` may be equal to 1, every binary integer is also a rational number.
 * Default precision can be regulated with directive: #precision:x 
 * Operator "≈" is using the default precision if ± is not used
 
+Other precision constants:
+
+*($deci  = 1d = 10⁻¹)
+*($centi = 1c = 10⁻²)
+*($mili  = 1m = 10⁻³)
+*($micro = 1μ = 10⁻⁶)
+
 **Literal Notation:** p/q 
 
 It can be used with type inference to create Q numbers:

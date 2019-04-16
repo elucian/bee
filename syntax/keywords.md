@@ -1,15 +1,18 @@
 ## Bee Keywords
 
-Bee uses 35 reserved keywords to create statements. You can not use these keywords as identifiers. 
+Bee uses 47 reserved keywords to create statements. 
 
 ```
 02: if, is
 05: #driver, #library, #aspect, #timer, #precision
-09: type, make, rule, load, alias, clone, define, accept, return
+08: rule, type, make, load, alias, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
-09: while, trial, error, other, after, else, quest, case, cover
-07: exit, fail, pass, over, stop, halt, skip
+08: when, else, cycle, while, repeat, scan, next, ready
+08: trial, case, error, cover, after
+08: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 ```
+
+**note:** You can not use these keywords as identifiers. 
 
 ### Operators
 
@@ -25,22 +28,26 @@ Bee uses 35 reserved keywords to create statements. You can not use these keywor
 | #driver     | Declare file name for a primary module
 | #aspect     | Declare file name for a secondary module
 | #library    | Declare file name for a library
-| #timer      | Declare maximum time spent for a program to run
-| #precision  | Declare maximum precision to use for decimal numbers
+| #timer      | Declare maximum time spent for a program to run. (default: 30s)
+| #precision  | Declare maximum precision to use for decimal numbers. (default: 1m) 
+
+**Note:** (1m = 10⁻³, 1μ =10⁻⁶)
 
 ### Definition statements
 
-Next statements are used to load aspects or declare something.
+Next statements are used to declare or create a module member.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
+| input    | Declare input parameters
+| output   | Declare output parameters
 | define   | Declare a constant 
-| load     | Load a library and assign a qualifier
+| load     | Declare a qualifier and load library
 | alias    | Declare a local synonym for an aspect file
 | type     | Declare data super-type or sub-type
-| rule     | Declare a subroutine or object prototype
-| make     | Create a new variable 
-| clone    | Create a new rule object
+| make     | Create a new variable or multiple variables
+| rule     | Create a new rule or rule prototype 
+| clone    | Create a new rule from an rule prototype
 
 ### Execution statements
 
@@ -64,27 +71,33 @@ Control statements are also known as decision statements.
 |----------|------------------------------------------------------
 | when     | Execute statement block only if condition true
 | else     | Alternative path for when statement
-| while    | Start point for repetitive block
+| cycle    | Start unconditional repetitive block
+| while    | Start conditional repetitive block
+| scan     | Start iteration loop for range or collection
+| repeat   | End repetitive block: cycle, while, scan
 | trial    | Protect a block of code that may have exceptions
-| error    | Associated with trial to patch one errors
-| other    | Associated with trial to patch other errors
-| after    | Associated with trial to finalize the trial block
-| quest    | Create a multi-path block of code
 | case     | One quest can cover multiple cases
-| cover    | Alternative case for quest statement
+| error    | Associated with trial to patch one errors
+| cover    | Associated with trial to patch other errors
+| after    | Associated with trial to finalize the trial block
+| ready    | Close when or trial control blocks
 
 ## Interruption keywords
 
 These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
-|----------|--------------------------------------------------
-| stop     | Interrupt a while loop and continue after end 
-| skip     | Skip forward in while block to continue from beginning
-| exit     | Early termination of a rule with no error 
-| fail     | Interrupt rule or program with recoverable error
+|----------|----------------------------------------------------------------
+| stop     | Interrupt a while loop and continue past repeat keyword
+| skip     | Skip the rest of while block and continue from the beginning
+| exit     | Force silent termination of a rule with no error 
+| fail     | Interrupt a rule or block with recoverable error
 | pass     | Null statement. It does absolutely nothing
-| over     | Finalize program and give control to OS
 | halt     | Create unrecoverable error and stop program
+| over     | End rule or program and give control back to caller or OS
+| abort    | Force silent early interruption of trial block
+| retry    | Execute a previous case into a trial block
+| solve    | Solve one forward case into a trial block
+| resume   | Used in trial block to continue next case after failure
 
 **Read next:** [Syntax Overview](overview.md)

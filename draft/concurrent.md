@@ -16,7 +16,7 @@ keyword | description
 start   | call a rule asynchronously and create new thread
 rest    | temporary suspend main thread and wait for all threads to synchronize
 wait    | suspend a thread for specific number of seconds, milliseconds
-yield   | suspend execution and wait until a specified thread is finished
+yield   | interrupting current thread and give priority to other thread
 
 **example**
 
@@ -26,14 +26,14 @@ Usually asynchronous call is done from a control loop.
 -- suspend for 2.5 sec
 rule test():
   wait 2.5;
-rule;
+over;
 
 -- start 4 threads
 make i := 0; -- control variable
 while (i ≤ 4):
   start test;    
   alter i += 1;    
-while;
+repeat;
 rest;
 ```
 
@@ -45,11 +45,6 @@ Coroutines are two methods that wait for each other to execute in turn.
 
 * coroutines can be executed on multiple threads
 * coroutines can be used in producer/consumer paradigm
-
-keyword | description
---------|---------------------------------------------------------------
-yield   | interrupting current thread and give priority to other thread
-
 
 **design pattern**
 
@@ -63,14 +58,14 @@ rule foo(x ∈ N):
   alter x := x + 1;
   wait 5;  
   yield bar if (x < 10);
-rule;
+over;
 
 -- second coroutine
 rule bar(x ∈ N):
   alter x = x + 1;
   wait 10;    
   yield foo if x < 10;
-rule;
+over;
 
 -- call foo and bar asynchronously
 start foo(n);

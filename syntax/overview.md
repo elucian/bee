@@ -1,6 +1,6 @@
 ## Syntax Overview
 
-For syntax notation I use a very simple convention:
+Syntax notation I use a very simple convention:
 
 * I use suggestive names to represent identifiers;
 * I use "..." to represent repetitive sequences;
@@ -19,7 +19,7 @@ For syntax notation I use a very simple convention:
 * [Reference](#reference)
 * [Conditional](#conditional)
 * [Pattern matching](#pattern-matching)
-* [Control flow](#control-flow)
+* [Conditionals](#conditionals)
 * [Exceptions](#exceptions)
 * [Rules](#rules)
 * [Parameters](#parameters)
@@ -192,7 +192,7 @@ when (`x` ∈ Alpha):
   print 'yes';
 else:
   print 'no';
-when;
+ready;
 ```
 
 **Notes:**
@@ -459,15 +459,15 @@ print k ≡ i; -- $T (same)
 print j ≡ i; -- $T (same)
 ```
 
-## Conditional
+## Conditionals
 
-A conditional is using symbol "if" that is implication to control one statement.   
+A conditional is a logic condition used to control statement execution.
 
 ```
  statement if (condition);
 ```
 
-The statement is executed only if the condition is 1 = $T. 
+The statement is executed only if the condition evaluate true = $T. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
@@ -527,229 +527,6 @@ print "x is ".kind; -- expect: "x is digit"
 over.
 ```
 
-## Control Flow
-
-Bee has 4 control flow statements { when, quest, while, trial }:
-
-### when
-
-Case is a decision statement selector based on one condition.
-
-**syntax**
-```
-when (condition):
-  statement;
-when;
-```
-
-Dual selector based on single logical expression:
-
-**pattern**
-```
-when (condition):
-  -- first branch;
-else:
-  -- second branch;
-when;
-```
-
-**Note:** Column ":" is mandatory after else keyword.
-
-**nested**
-
-```
-make a := 0;
-when (a ≤ 0):
-  print 'a ≤ 0';
-  when (a = 0):
-    print 'a = 0';
-  else:
-    print "a < 0"; 
-  when;  
-when;
-```
-
-**ladder**
-```
-make a := 0;
-when (a < 0):
-  print 'a < 0';
-else if (a > 10):
-  print 'a > 100';      
-else if (a > 10):
-  print 'a > 2';  
-else if (a > 1):
-  print 'a > 1';
-else:
-  print "a ≥ 0"; 
-when;
-```
-
-### quest
-
-Is a multi-path selector based on a single value:
-
-**pattern**
-
-* "var" can be any variable or expression;
-* "val" can be a value or expression;
-* "..." is optional but an actual symbol;
-
-```
-quest var:  
-  case val1:
-    -- match first
-    ...
-  case val2:
-    -- match second
-    ...
-  case (val1,val2,val3 ...):
-    -- match third
-    ...
-  case [min..max]:
-    -- match forth
-cover:
-  -- default branch
-quest;
-```
-
-**Note:**: 
-
-* quest is automatically break at first match unless "..." is used;
-* If a case end with "..." after ";" the next case is also evaluated;
-
-### While
-
-Controlled repetitive block:
-
-```
-while (condition):
-  -- repetitive block
-  ...
-  skip if condition; -- continue
-  ...
-  stop if condition; -- break
-  ...
-else:
-  -- alternate path
-while;
-```
-
-**Notes:** 
-* If condition is true all the time we can end-up in infinite loop;
-* Infinite while can be interrupted by timer directive: {#timer:10s};
-* When timer expire, the loop will terminate. By default timer is 0s;
-
-**example**
-
-```
-make a := 10;
-
-while (a > 0):
-  alter a -= 1;
-  -- conditional repetition
-  when (a % 2 ≠ 0);  
-    write a;  
-    write ','; 
-  when;
-while;
-print;
-```
-
-### Nested loop
-
-One while block statement can be nested:
-
-**pattern:** 
-
-```
-while condition: 
-  -- outer loop 
-  
-  while condition:
-    -- inner loop
-  while;  
-  -- continue outer loop
-  ...
-  while condition:
-    -- inner loop
-    ...
-  while;  
-  ...       
-while;
-```
-
-**example**
-
-```
-make x   := 9;
-make a,r := 0;
-
-while (x < 5):
-  alter r := x % 2;
-  alter a := (0 if r = 0, 1 if r = 0, 2);
-  write "{1}:{2}" <+ (x,a);
-  write ',' if (x < 5);
-  alter x -= 1;  
-while;
-
-print;--> 9:1, 8:0, 7:1, 6:0, 5:1
-```
-
-## Trial
-
-The "trial" statement execute a process that can fail for some reason.
-
-**Keywords:**
-
-| word  | description
-|-------|---------------------------------------------------
-| trial | start and end trial block
-| error | catch and fix error code
-| other | catch other errors
-| after | executed after trial ends
-| pass  | scrub $error record and end trial block
-| exit  | stop current rule and continue program
-| fail  | interrupt trial and raise exception (default 0)
-| over  | unconditional stop program normally with result 0
-| halt  | unrecoverable error, stop program with result -1
-| $error| system last error record (clear by pass)
-
-```
-trial:
-  -- protected region
-  ...
-  -- fail with error code
-  fail if (condition);
-  fail {code,"message"} if (condition);
-  ...    
-error code:
-  -- patch statement
-error code:
-  -- patch statement  
-...  
-other:
-  -- other errors  
-after:
-  -- finalization
-trial;
-```
-
-**error**
-
-Error regions are "exception handlers". Each can play one single error with a specific code.
-
-**other**
-
-The "other" region is executed when the error is not captured by a patch. In this region you can use control statements for a range of errors. 
-
-**after**
-
-This region is executed regardless if there is an error or not. It contains resource closing statements:
-
-* close a file or connection to databases 
-* close locked resources and free memory
-
 ## Exceptions
 An exception is a recoverable error. It can be declared by the user or by the system:
 
@@ -783,7 +560,7 @@ halt -n ; -- end program and exit with error code = -n
 
 ## Rules
 
-An rule is a named code block that can play one or multiple tasks. 
+An rule is a named code block that can resolve one or multiple tasks. 
 
 **pattern**
 ```
@@ -791,7 +568,7 @@ rule name(param ∈ type,...):
    -- executable statements
    exit if condition;
    ...
-rule;
+over;
 ```
 
 **example**
@@ -799,32 +576,31 @@ rule;
 -- a rule with side-effects and no parameter
 rule foo:
   print "hello, I am foo";
-rule;
+over;
 
 -- using apply + rule name will execute the rule  
 apply foo;
 ```
 
 **notes:**
+* A rule block is finalized with keyword "over;"
 * A rule can be executed using keyword "apply";
-* A rule can have input/output parameters;
 * A rule can be terminated early using "exit";
 * A rule can be interrupted with error using "fail";
-* A program can be terminated from a rule using _halt_ or _over_;
+* A program can be terminated from a rule using: "halt";
 
 ## Parameters
 
 Parameters are special variables defined in rule signature.
 
 **Notes:**   
-* Basic arguments and literal arguments are pass by value;
-* Composite type parameters can be pass by reference or by value;
-* For input/output parameters we are using "@" instead of "∈";
-
-**note**
+* A rule can have input/output parameters;
 * Parameters with initial value are optional;
 * Optional parameters must be enumerated last in parameter list;
 * Optional parameters are initialized with pair-up operator ":";
+* Basic arguments and literal arguments are pass by value;
+* Composite type parameters can be pass by reference or by value;
+* For input/output parameters we are using "@" instead of "∈";
 
 ## Static rules
 
@@ -837,7 +613,7 @@ rule name(param ∈ type,...) => (result ∈ type,...):
    ...   
    alter result := expression;
    ...
-rule;
+over;
 ```
 
 **Example:** 
@@ -847,7 +623,7 @@ rule;
 rule com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
   alter s := x + y; 
   alter d := x - y;
-rule;
+over;
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1); 
@@ -859,7 +635,7 @@ print c; -- print 1
 **Notes:** 
 
 * Rules can be used in expressions;
-* There is no return statement in a rule;
+* There is no return statement in a over;
 
 **properties:** 
 
@@ -922,7 +698,7 @@ A rule prototype is a generic rule that can be cloned.
 rule prototype{attributes}(parameters) => (result ∈ Type):
   -- compute the result
   alter result := expression(parameters); 
-rule;
+over;
 
 -- making a rule clone from prototype
 clone name:: prototype{arguments};
@@ -937,7 +713,7 @@ clone name:: prototype{arguments};
 -- this rule can create a rule object
 rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
   make r := (s + i);
-rule;
+over;
 
 -- instantiate two rule objects:
 clone inc := shift{s: +1};  -- increment 
@@ -960,4 +736,4 @@ print dec(0); --> -1
 **See also:**
 * [ho.bee](../demo/ho.bee) -- High order rule
 
-**Read Next:** [Composite Types](composite.md)
+**Read Next:** [Flow Control](control.md)

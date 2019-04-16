@@ -7,5 +7,5 @@ print "to stop enter 0";
 while (a ≠ 0):
   read (a, "enter a number:", "####.##");  
   print ("you have enter: " + a);
-while;
+repeat;
 over.

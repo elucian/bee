@@ -4,15 +4,15 @@ A set builder is a declarative structure used to create a sub-set from a set of 
 
 **syntax**
 ```
-make set_name := { f(element)    | element ∈ source ∧ filter };
-make map_name := { (key: f(key)) | key ∈ source ∧ filter };
+make set_name := { func(element)   : element ∈ source ∧ filter };
+make map_name := { (key: func(key)): key ∈ source ∧ filter };
 
 ```
 
 **legend**
 
-* f   = rule(element) or expression
-* key = new key in hash map pair
+* func = rule(element) or expression
+* key  = new key in hash map pair
 * source = collection or range
 * filter = logic expression
 * expression = rule or rule dependent upon key
