@@ -308,8 +308,6 @@ ready;
 | solve | solve one forward case in same trial and skip some
 | abort | silent early trial termination
 | pass  | scrub $error record and end trial block
-| $error| system last error record (clear by pass)
-
 
 **error**
 
