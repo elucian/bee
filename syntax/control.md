@@ -262,11 +262,11 @@ The "trial" statement execute a sequential process that can fail for some reason
 **Keywords:**
 
 | word  | description
-|-------|---------------------------------------------------
+|-------|--------------------------------------------------------
 | trial | start trial/error block
 | error | catch errors by code and start a patch region
-| cover | catch other all other errors
-| final | executed before trial is finish
+| cover | catch other errors not found by error regions
+| final | executed before trial is over after last case or error
 
 **pattern**
 ```
@@ -319,9 +319,9 @@ Error regions are "exception handlers". Each can catch one single error with a s
 
 The "cover" region is executed when the error is not captured. In this region you can use control statements to check for a range of errors or resolve any unknown error. 
 
-**after**
+**final**
 
-This region is executed regardless if there is an error or not. It contains resource closing statements:
+This final region is executed regardless if there is an error or not. It contains resource closing statements:
 
 * close a file or connection to databases 
 * close locked resources and free memory
