@@ -25,7 +25,7 @@
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close">*|</Keywords>
             <Keywords name="Keywords1">define load alias type make clone input output rule</Keywords>
-            <Keywords name="Keywords2">given begin when else while cycle scan next repeat trial case error after cover ready&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords2">given begin when else while cycle scan next repeat trial case error final cover ready&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords3">exit fail pass over halt stop skip return solve retry abort resume</Keywords>
             <Keywords name="Keywords4">play apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;plot draw show hide erase clear&#x000D;&#x000A;start wait rest yield &#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords5">exist open close remove files folders change new where save undo clean</Keywords>

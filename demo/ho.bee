@@ -32,7 +32,7 @@ trial:
     write ','
   repeat;
   print; -- expect 0,1,2,3,4,5,6,7,8,9,  
-other:
+cover:
   -- loop was failing
   print set;  
 ready;

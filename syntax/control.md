@@ -263,20 +263,12 @@ The "trial" statement execute a sequential process that can fail for some reason
 
 | word  | description
 |-------|---------------------------------------------------
-| trial | start and end trial block
-| error | catch and fix error code
-| cover | catch other errors
-| after | executed after trial ends
-| pass  | scrub $error record and end trial block
-| exit  | stop current rule and continue program
-| fail  | interrupt trial and raise exception (default 0)
-| halt  | unrecoverable error, interrupt program with result -1
-| retry | execute previous solved case or specified case
-| resume| continue next case after one case fail
-| solve | solve one forward case in same trial and skip some
-| abort | silent early trial termination
-| $error| system last error record (clear by pass)
+| trial | start trial/error block
+| error | catch errors by code and start a patch region
+| cover | catch other all other errors
+| final | executed before trial is finish
 
+**pattern**
 ```
 trial:
   -- declaration region
@@ -302,10 +294,22 @@ error code:
 ...  
 cover:
   -- other errors  
-after:
+final:
   -- finalization
 ready;
 ```
+
+**Interruptions**
+
+| word  | description
+|-------|---------------------------------------------------
+| retry | execute previous solved case or specified case
+| resume| continue next case after one case fail
+| solve | solve one forward case in same trial and skip some
+| abort | silent early trial termination
+| pass  | scrub $error record and end trial block
+| $error| system last error record (clear by pass)
+
 
 **error**
 
