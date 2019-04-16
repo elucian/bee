@@ -20,6 +20,7 @@ For voting on next feature that is going to be promoted I use twitter.
 * [Concurrent](concurrent.md) - concurrent programming
 * [Builder](builder.md) - set builder
 * [Rational](rational.md) - fixed point arithmetics
+* [Recursion](recursion.md) - tail recursion
 * [Drawing](drawing.md) - vector graphics
 * [Geography](geography.md) - earth maps and GIS
 
