@@ -5,11 +5,11 @@ Bee uses 47 reserved keywords to create statements.
 ```
 02: if, is
 05: #driver, #library, #aspect, #timer, #precision
-08: rule, type, make, load, alias, clone, define, input, output
+09: rule, type, make, load, alias, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
 08: when, else, cycle, while, repeat, scan, next, ready
-08: trial, case, error, cover, final
-08: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
+05: trial, case, error, cover, final
+11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 ```
 
 **note:** You can not use these keywords as identifiers. 
