@@ -1,6 +1,12 @@
 ## Control Flow
 
-Bee has 5 control flow statements { when, cycle, while, scan, trial }:
+Bee has 5 control flow statements:
+
+* [when](#when)
+* [cycle](#cycle)
+* [while](#while)
+* [scan](#scan)
+* [trial](#trial)
 
 ### when
 
