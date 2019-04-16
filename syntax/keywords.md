@@ -8,7 +8,7 @@ Bee uses 47 reserved keywords to create statements.
 08: rule, type, make, load, alias, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
 08: when, else, cycle, while, repeat, scan, next, ready
-08: trial, case, error, cover, after
+08: trial, case, error, cover, final
 08: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 ```
 
@@ -79,7 +79,7 @@ Control statements are also known as decision statements.
 | case     | One quest can cover multiple cases
 | error    | Associated with trial to patch one errors
 | cover    | Associated with trial to patch other errors
-| after    | Associated with trial to finalize the trial block
+| final    | Associated with trial to finalize the trial block
 | ready    | Close when or trial control blocks
 
 ## Interruption keywords
