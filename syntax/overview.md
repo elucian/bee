@@ -17,9 +17,8 @@ Syntax notation I use a very simple convention:
 * [Range subtypes](#range-subtypes)
 * [Logical expression](#logical-expression)
 * [Reference](#reference)
-* [Conditional](#conditional)
-* [Pattern matching](#pattern-matching)
 * [Conditionals](#conditionals)
+* [Pattern matching](#pattern-matching)
 * [Exceptions](#exceptions)
 * [Rules](#rules)
 * [Parameters](#parameters)
@@ -736,4 +735,4 @@ print dec(0); --> -1
 **See also:**
 * [ho.bee](../demo/ho.bee) -- High order rule
 
-**Read Next:** [Flow Control](control.md)
+**Read Next:** [Control Flow](control.md)

@@ -8,6 +8,7 @@ You can learn Bee in less than 2 hours:
 
 1. [Program Structure](structure.md)
 1. [Syntax Overview](overview.md)
+1. [Control FLow](control.md)
 1. [Composite Types](composite.md)
 1. [Type Inference](inference.md)
 1. [Standard Library](standard.md)
