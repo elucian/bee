@@ -7,7 +7,7 @@ Bee uses 47 reserved keywords to create statements.
 05: #driver, #library, #aspect, #timer, #precision
 09: rule, type, make, load, alias, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
-08: when, else, cycle, while, repeat, scan, next, ready
+08: when, else, cycle, while, repeat, count, next, ready
 05: trial, case, error, cover, final
 11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 ```
@@ -73,8 +73,9 @@ Control statements are also known as decision statements.
 | else     | Alternative path for when statement
 | cycle    | Start unconditional repetitive block
 | while    | Start conditional repetitive block
-| scan     | Start iteration loop for range or collection
-| repeat   | End repetitive block: cycle, while, scan
+| repeat   | End repetitive block: cycle, while
+| count    | Start iteration loop for range of numbers
+| next     | Continue counting until the last number in range
 | trial    | Protect a block of code that may have exceptions
 | case     | One quest can cover multiple cases
 | error    | Associated with trial to patch one errors

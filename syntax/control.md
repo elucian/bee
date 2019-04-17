@@ -5,7 +5,7 @@ Bee has 5 control flow statements:
 * [when](#when)
 * [cycle](#cycle)
 * [while](#while)
-* [scan](#scan)
+* [count](#count)
 * [trial](#trial)
 
 ### when
@@ -215,15 +215,15 @@ print;
 --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
-## Scan
+## Count 
 
-Scan a "range", that is a _subset_ from a discrete _type_ using syntax: `[n..m]`.  
+This is used to traverse a "range", that is a _subset_ from a discrete _type_.  
 
 **Pattern:**
 ``` 
 make min := constant ∈ N;
 make max := constant ∈ N; 
-scan var ∈ Z[min..max]:
+count var ∈ Z[min..max]:
   ** block statements;
   skip if (condition);
   ...
@@ -238,7 +238,7 @@ next;
 
 Example of forward iteration:
 ```
-scan i ∈ Z[0..10]:
+count i ∈ Z[0..10]:
   ** force next iteration
   when (i % 2 = 0):
     skip;
@@ -252,8 +252,8 @@ next;
 > 1,3,5,7,9
 
 **Notes:**
-* scan can be shortcut using skip;
-* scan can be terminated early using stop;
+* count can be shortcut using skip;
+* count can be terminated early using stop;
 
 ## Trial
 
