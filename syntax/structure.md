@@ -161,6 +161,7 @@ over.
 * $params is a global system variable available in #driver and #aspect;
 * Parameter _params_ is of type [S] that is a list are strings;
 * Bee file is ending with "over." that is mandatory keyword;
+* Early driver termination can be trigger by "halt" or "exit";
 
 Do not try to understand the example. This is just a worm-up :)
 
@@ -257,7 +258,6 @@ rule .f(x ∈ N) => (x + 1) ∈ N;
 rule .m(x, y ∈ N, r @ N):
   alter r := x + y;
 over;
-
 ```
 ## Rule ABI mapping
 In Bee one can use external rules written in Assembly, Ada, C or CPP.

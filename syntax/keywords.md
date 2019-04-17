@@ -90,7 +90,7 @@ These keywords are jumps or termination statements.
 |----------|----------------------------------------------------------------
 | stop     | Interrupt a while loop and continue past repeat keyword
 | skip     | Skip the rest of while block and continue from the beginning
-| exit     | Force silent termination of a rule with no error 
+| exit     | Force silent termination of a rule, aspect or driver
 | fail     | Interrupt a rule or block with recoverable error
 | pass     | Null statement. It does absolutely nothing
 | halt     | Create unrecoverable error and stop program
