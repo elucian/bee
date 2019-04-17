@@ -548,8 +548,13 @@ fail $custom_error if (condition);
 ```
 
 **Notes:**
-* Error code <  200 are system reserved error codes.
-* Error code ≤ -1   are unrecoverable errors
+* Keyword _fail_ can raise only recoverable errors with code > 200;
+* Keyword _fail_ can not terminate the main program only _halt_ or _exit_;
+* All recoverable errors must be analyzed by the program using trial block;
+* Error code <  200 are system reserved error codes;
+* Error code ≤ -1   are unrecoverable errors created with _halt_;
+* Keyword _halt_ will liberate the resources and terminate the program;
+
 
 **example**
 

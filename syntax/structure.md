@@ -108,7 +108,7 @@ Each statement start with one keyword.
 * alter   --change/modify variable value or assign new value
 * read    --accept input from console into a variable
 * write   --output to console result of an expressions
-* play --play one aspect of a larger problem
+* play    --play one aspect of a larger problem
 
 Any statement is mandatory terminated by ";" 
 Multiple statements on a single line are separated by ";"
@@ -312,6 +312,8 @@ A large program can have multiple _aspects_. The driver control the execution of
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, never in parallel;
 * An aspect can not be used in expressions except unpacking or assignment;
+* An aspect can be terminated early using silent:"exit" or "fail" with error;
+* Using "halt" in aspect cause the program to stop immediately with error.
 
 **pattern**
 
