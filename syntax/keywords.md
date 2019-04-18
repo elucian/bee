@@ -77,7 +77,7 @@ Control statements are also known as decision statements.
 | count    | Start iteration loop for range of numbers
 | next     | Continue counting until the last number in range
 | trial    | Protect a block of code that may have exceptions
-| case     | One quest can cover multiple cases
+| case     | One trial block can resolve multiple cases
 | error    | Associated with trial to patch one errors
 | cover    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
