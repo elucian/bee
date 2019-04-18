@@ -233,10 +233,10 @@ next;
 ```
 
 **Notes:**    
-* Control variable is automatic incremented;
 * Control variable must be declared in local scope;
+* Control variable is incremented using next;
 
-Example of forward iteration:
+Example of forward skip in counting iteration:
 ```
 count i ∈ Z[0..10]:
   ** force next iteration
