@@ -88,10 +88,9 @@ Bee has 3 kind of program files each with different role:
 
 ## Declarations
 
-Bee is using 4 kind of declarations:
+Bee is using 7 kind of declarations:
 
-* load  -- define: library
-* alias   -- define: aspect name
+* load    -- define: library/aspect
 * define  -- define: constant
 * input   -- define: aspect parameters
 * output  -- define: aspect results
@@ -171,7 +170,7 @@ In Bee library can be imported like this:
 **Imports:**
 
 ```
-#load bee_lib;
+load bee_lib;
 ```
 
 * use :* all public members are used
@@ -182,8 +181,8 @@ Using a qualifier for Bee aspect members:
 **pattern**
 ```
 -- load with qualifier
-#load qualifier := path/library_name:(*);
-#load qualifier := path/library_name:(member_list);
+load qualifier := path/library_name:(*);
+load qualifier := path/library_name:(member_list);
 
 -- use qualifier for rule execution:
 apply qualifier.rule_name(arguments);
@@ -219,10 +218,10 @@ $dres   --contains default precision for Q = 0.001
 **importing**
 
 ```
-#load cpp_lib := $bee.cpp.myLib:(*) --load cpp library
-#load asm_lib := $bee.asm.myLib:(*) --load asm library
-#load bee_lib := $bee.lib.myLib:(*) --load core library
-#load pro_lib := $pro.lib.myLib:(*) --load project library
+load cpp_lib := $bee.cpp.myLib:(*) --load cpp library
+load asm_lib := $bee.asm.myLib:(*) --load asm library
+load bee_lib := $bee.lib.myLib:(*) --load core library
+load pro_lib := $pro.lib.myLib:(*) --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -268,7 +267,7 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-#load $bee.cpp.myLib.(*); -- load cpp library
+library $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z):
@@ -281,7 +280,7 @@ This is the driver file.
 ```
 #driver "main"
 -- load library
-#load $bee.lib.myLib.(*);
+load $bee.lib.myLib.(*);
 
 --use external rule
 print myLib.fib(5);
@@ -319,7 +318,7 @@ A large program can have multiple _aspects_. The driver control the execution of
 
 ```
 -- declare an alias for an aspect file
-alias aspect_name := $pro.src.file_name.bee;
+load aspect_name := $pro.src.file_name.bee;
 
 -- play when aspect do not have any result:
 play aspect_name(parameter_list);
@@ -355,7 +354,7 @@ over.
 make result ∈ N;
 
 -- define aspect "mod"
-alias mod := $pro/mod.bee
+load mod := $pro/mod.bee
 
 -- execute aspect "mod"
 play  result := mod(-3) ;

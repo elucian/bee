@@ -1,11 +1,11 @@
 ## Bee Keywords
 
-Bee uses 47 reserved keywords to create statements. 
+Bee uses 46 reserved keywords to create statements. 
 
 ```
 02: if, is
 05: #driver, #library, #aspect, #timer, #precision
-09: rule, type, make, load, alias, clone, define, input, output
+08: rule, type, make, load, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
 08: when, else, cycle, while, repeat, count, next, ready
 05: trial, case, error, cover, final
@@ -38,12 +38,11 @@ Bee uses 47 reserved keywords to create statements.
 Next statements are used to declare or create a module member.
 
 | Keyword  | Purpose
-|----------|--------------------------------------------------
+|----------|---------------------------------------------------------
 | input    | Declare input parameters
 | output   | Declare output parameters
 | define   | Declare a constant 
-| load     | Declare a qualifier and load library
-| alias    | Declare a local synonym for an aspect file
+| load     | Load library or aspect and declare a qualifier or alias
 | type     | Declare data super-type or sub-type
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or rule prototype 
