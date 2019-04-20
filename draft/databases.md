@@ -55,6 +55,8 @@ A database library must provide basic functionality:
 |--------------|------------------------------
 | connect()    | Connect the database
 | disconnect() | Disconnect from database
+| query()      | Direct SQL execution
+| exec()       | Execute a stored procedure
 | commit()     | Save all updates
 | rollback()   | Rollback all updates
 
@@ -125,13 +127,13 @@ Data model can work with transactions. A transaction start automatically when yo
 
 We can scan one source table and manipulate data in a target table. 
 
-*[Append](#Append)
-*[Update](#Update)
-*[Delete](#Delete)
+* [Append](#Append)
+* [Update](#Update)
+* [Delete](#Delete)
 
 ### Append
 
-We can append data into target table using operator ":".
+Bee can append data into target table using operator ":".
 
 ```
 -- using append block
@@ -185,6 +187,30 @@ delete table_name[search_field:value,...];
 delete table_name[search_record];
 ```
 
+## Direct SQL
+
+Sometimes we need to bypass the ORM and execute native SQL:
+
+```
+-- apply a query to database
+apply db.query(query_template <+ list);
+apply db.query(query_template <+ record);
+
+-- apply a query that return a result
+apply db.query(query_string) +> record;
+apply db.query(query_string) +> list_of_records;
+
+```
+
+## Stored procedure
+
+Some databases have support for stored procedures:
+
+```
+apply db.exec(procedure_name <+ list); 
+apply db.exec(procedure_name <+ record); 
+```
+
 ## Introspection
 
 For debugging SQL Bee enable introspection. 
@@ -192,4 +218,3 @@ For debugging SQL Bee enable introspection.
 * Before execution database related statements are converted into SQL strings; 
 * We can visualize these strings by using: #echo:on to log query statements; 
 * We can use $query system object to print out last sql. 
-
