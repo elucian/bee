@@ -788,38 +788,6 @@ make var1,var2... <+ object_name;
 * Recursive
 * Hierarchical
 
-**Example:**
-```
--- define recursive type Person
-type Person <: {
-      name @ S, 
-      age  ∈ N,  
-      children @ (Person)
-    }; 
-
--- create two objects of type Person
-make r1,r2 @ Person;
-
--- person with no children          
-alter r1 := {name:'Mica', age:21};
-
--- person with two children
-alter r2 := {name:'Barbu', age:25, 
-             children : (
-               {name:'Telu', age:4},
-               {name:'Radu', age:1} 
-             )
-          };
-
--- object unpacking into new variables
-make r_name, r_age, r_children <+ r2;
-
--- using introspection
-print type(r_name) ; -- S
-print type(r_age)  ; -- N
-print type(r_children) ; -- (Person)
-           
-```
 
 **type size**
 
@@ -846,6 +814,28 @@ print type(Person.age);  -- will print W
 
 --print size of structure
 print size(Person);
+```
+
+**Recursive records**
+We can limit how deep a record become using a directive. "#recursive:100"
+
+```
+** example of single recursive node
+type Node <: { 
+  data ∈ Z,        -- integer data
+  previous ∈ Node  -- reference to previous node
+}
+```
+
+This kind of structure can be used to create a data chain.
+
+```
+** example of double recursive node
+type: Node <: {
+  data  ∈ Z,    ** integer data
+  prior ∈ Node, ** reference to previous node
+  next  ∈ Node  ** reference to next node
+}
 ```
 
 ## Aggregate

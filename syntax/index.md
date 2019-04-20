@@ -39,6 +39,7 @@ Unverified demo source files:
 1. [dt.bee](../demo/dt.bee) - User defined data types
 1. [ti.bee](../demo/ti.bee) - Type inference demo
 1. [up.bee](../demo/up.bee) - Unpacking demo
+1. [ro.bee](../demo/ro.bee) - Recursive objects
 1. [me.bee](../demo/me.bee) - Rule dispatch demo
 1. [pm.bee](../demo/pm.bee) - Pattern matching
 1. [fo.bee](../demo/fo.bee) - File input/output
