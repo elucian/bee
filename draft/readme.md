@@ -23,6 +23,7 @@ For voting on next feature that is going to be promoted I use twitter.
 * [Recursion](recursion.md) - tail recursion
 * [Drawing](drawing.md) - vector graphics
 * [Geography](geography.md) - earth maps and GIS
+* [Databases](databases.md) - database layer
 
 
 **Read next:** [index](../syntax/index.md)
