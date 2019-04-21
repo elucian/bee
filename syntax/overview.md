@@ -705,7 +705,7 @@ rule prototype{attributes}(parameters) => (result ∈ Type):
 return;
 
 -- making a rule clone from prototype
-clone name:: prototype{arguments};
+clone name:= prototype{arguments};
 ```
 
 **notes:**

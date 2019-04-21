@@ -1,51 +1,49 @@
 ## Generic Rules
 
-A generic rule is using a type parameter. 
+A generic rule is using one or more type parameters. 
 
 **pattern**
 ```
-rule pattern{Type}(param ∈ Type, result @ type_name):
-   make local ∈ Type;   
-   alter result := expression(param)
+rule name{Type,...}(param ∈ Type) => (result ∈ Type):
+   make var ∈ Type;   
+   alter result := expression(param);
 return;
 ```
 
 **note:** 
 * Type can be any known type or sub-type;
-* Type is first class value and is of type: "type";
+* Type is first class value and is of type: "Type";
 
 ## Anonymous Rule
 
-This design uses one _anonymous_ rule:
+Next design uses one _anonymous_ rule:
 
 **anonymous rule**
 ```
  (param, param,...) => (expression)
 ```
 
-This can be used to create an argument for a _signature reference_
+This can be used to create an argument for a _signature_
 
 **signature**
 ```
-rule foo(id(type,type, ...) ∈ Type):
+rule foo( id @ (type,type, ...)):
 ...
 ```
 
-Using anonymous rule for parameter named id():
+Using rule for argument using name: "id"
 
 ```
--- anonymous rule ↓ 
-apply foo(id::(param ,param ...) => (expression))
+--argument ↓  rule  ↓
+apply foo(id::(param ,param ...) => (expression));
 ```
-
-Where: "id" is parameter name representing a rule.
 
 
 **bubble sort**
 
 ```
 -- this sort is generic 
-rule bubble{Type}(array @ [Type], gt(Type,Type) ∈ L ):
+rule bubble{XT ∈ Type}(array @ [XT], gt @ (XT,XT) ∈ L ):
   make n := length(array)-1 ∈ N; 
   make swap := $T ∈ L;
   make temp ∈ Wat;
@@ -63,14 +61,14 @@ rule bubble{Type}(array @ [Type], gt(Type,Type) ∈ L ):
         alter swap := $T; -- true
       ready;
       alter i +=1;
-    repeat; 
+    repeat;
   repeat;
 return;
 ```
 
 **Notes:**
 
-* Rule "sort" receive type X using markup <X> 
+* Rule "sort" receive type Type using markup <X> 
 * Rule reference "gt" is received as argument.
 
 **sort usage**
@@ -79,7 +77,7 @@ return;
 type Person  <: { name @ S, age ∈ N };
 
 -- define sort rule for Person, as a clone of bubble
-clone sort :: bubble{Type:Person};
+clone sort := bubble{XT:Person};
 
 -- define clients and suppliers
 make clients   @ [Person](100);

@@ -17,23 +17,23 @@ rule generator{min, max ∈ Z}() => (r ∈ Z):
 return;
 
 -- instantiate one rule object
-clone count :: generator{0,9};  
+clone count := generator{0,9};  
 
 -- instantiate a fixture for test
-clone test  :: generator{4,12};  
+clone test  := generator{4,12};  
 
--- test cloned object: count
+-- test cloned rule: count()
 trial:  
-  make set := {} @ {Z}; 
+  make set @ {Z}; 
   -- this loop is infinite
-  while $T:
+  cycle:
     alter set += count();
     write set.index; -- progressive grow
     write ','
   repeat;
   print; -- expect 0,1,2,3,4,5,6,7,8,9,  
 cover:
-  -- loop was failing
+  -- count() is failing
   print set;  
 ready;
 
