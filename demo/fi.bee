@@ -9,7 +9,7 @@ rule fib(n ∈ N) => (y ∈ N):
   else:
     alter y := fib(n - 1) + fib(n - 2);
   ready;
-over;
+return;
 -- call define fib 
 make r := fib(5):
 -- print the result

@@ -8,7 +8,7 @@
 rule pro(a,b @ N):
   alter a +=  1; -- alter parameter a
   alter b +=  2; -- alter parameter b 
-over;
+return;
 -- define native integers using inference
 make x, y := 10; 
 -- execute pro and expect x, y  to be modified

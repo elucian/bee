@@ -143,7 +143,8 @@ Rogue statements are executed top down in synchronous mode.
 make i, c ∈ Z;
 alter c := $params.count;
 
-halt if (c = 0);
+halt -1 if (c = 0);
+
 -- comma separated parameters
 while (i > c):
   write $params[i];
@@ -151,7 +152,7 @@ while (i > c):
   write "," if (i < c);
 repeat;
 -- print the buffer to console
-
+print;
 over.
 ```
 
@@ -195,16 +196,19 @@ apply qualifier.rule_name(arguments);
   
 ## Global context
 
+One module or library is using a single global context. 
+
 **usability**
 
-* Bee is using one global context. Global variables are usually lowercase;
-* Global variables are unique and are visible in all project components;
-* Global variable name start with symbol "$" and are declared usually first; 
-* Global variables do not need dot qualifier and are usually defined by libraries;
+* Bee is using one global context. This context is accessible in all project components.
+* Global members are visible using project component name as qualifier for dot notation;
+* Global members can be public or private. Public members start with a dot prefix;
+
 
 **system variables*
 
-Some Bee pre-defined variables are available in global context.
+* System variable names start with symbol "$" and are declared first; 
+* Some pre-defined system variables are available in global context.
 
 ```
 $path = $BEE_PATH  --contains a list of folders
@@ -214,6 +218,8 @@ $params --contains a list of parameters
 $error  --contains last exception
 $dres   --contains default precision for Q = 0.001
 ```
+
+**note** System variable do not require context qualifier
 
 **importing**
 
@@ -228,20 +234,34 @@ load pro_lib := $pro.lib.myLib:(*) --load project library
 
 ## Local context
 
-Local context is a private memory space;
-Local variables are private inside local context;
-One aspect can have local constants, variables and rules;
-One library can have local constants, variables and rules;
-Bee rules can have local declarations or public declarations. 
+Local context is a private memory space.
 
+* Bee rules can have local declarations; 
+* Trial block can have local declarations;
+* Repetitive blocks can have local declarations;
+* Anonymous block _begin_ can have local declaration;
+
+```
+#driver "test"
+make i := 1 ∈ Z;   -- global
+local
+  make i := 2 ∈ Z; -- local
+begin:
+  print i; -- expected: 2
+ready;
+print i; -- expected: 1  
+
+over.
+```
 **See example:** [lv.bee](../demo/lv.bee)
 
 ## Public members
 
-In Bee all members that start with dot "." are public members.
+In Bee all members that begin with dot "." are public members.
 
-* A public member from a library can be access using dot qualifier;
-* A public member from one Ordinal number can be access without dot qualifier;
+* A public member from a library can be access with dot qualifier;
+* A public member from one Ordinal number can be access with dot qualifier;
+* We can use _with_ keyword to suppress dot qualifier;
 
 ```
 --public constant
@@ -256,7 +276,7 @@ rule .f(x ∈ N) => (x + 1) ∈ N;
 --public rule
 rule .m(x, y ∈ N, r @ N):
   alter r := x + y;
-over;
+return;
 ```
 ## Rule ABI mapping
 In Bee one can use external rules written in Assembly, Ada, C or CPP.
@@ -267,12 +287,12 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-library $bee.cpp.myLib.(*); -- load cpp library
+load $bee.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z):
   alter x := myLib.fib(n -> Z);
-over;
+return;
 
 ```
 

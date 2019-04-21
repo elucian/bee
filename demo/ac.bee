@@ -6,7 +6,7 @@
 -- suspend for 2.5 sec
 rule test():
   wait 2.5;
-over;
+return;
 
 -- start 4 threads
 make i := 0; -- control variable

@@ -1,18 +1,21 @@
 ## Bee Keywords
 
-Bee uses 46 reserved keywords to create statements. 
+Bee uses 51 reserved keywords to create basic statements: 
 
 ```
-02: if, is
+03: if, is, to
 05: #driver, #library, #aspect, #timer, #precision
 08: rule, type, make, load, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
-08: when, else, cycle, while, repeat, count, next, ready
-05: trial, case, error, cover, final
-11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
+08: when, else, cycle, while, repeat, scan, next, ready
+08: local, begin, with, trial, case, error, cover, final
+12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume, return
 ```
 
-**note:** You can not use these keywords as identifiers. 
+**notes:** 
+
+* You can not use these keywords as identifiers;
+* New keywords are going to be created in /draft;
 
 ### Operators
 
@@ -20,6 +23,7 @@ Bee uses 46 reserved keywords to create statements.
 |-------------|--------------------------------------------------------
 | if          | conditional suffix operator
 | is          | introspection operator (is of type)
+| to          | used in conjunction with append
 
 ### Directives
 
@@ -73,7 +77,7 @@ Control statements are also known as decision statements.
 | cycle    | Start unconditional repetitive block
 | while    | Start conditional repetitive block
 | repeat   | End repetitive block: cycle, while
-| count    | Start iteration loop for range of numbers
+| scan     | Start iteration loop for range of numbers
 | next     | Continue counting until the last number in range
 | trial    | Protect a block of code that may have exceptions
 | case     | One trial block can resolve multiple cases
@@ -81,6 +85,9 @@ Control statements are also known as decision statements.
 | cover    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
 | ready    | Close when or trial control blocks
+| local    | Start a local context for a block statement
+| begin    | Start unconditional anonymous block 
+| with     | Start qualifier suppression block
 
 ## Interruption keywords
 
@@ -90,14 +97,15 @@ These keywords are jumps or termination statements.
 |----------|----------------------------------------------------------------
 | stop     | Interrupt a while loop and continue past repeat keyword
 | skip     | Skip the rest of while block and continue from the beginning
-| exit     | Force silent termination of a rule, aspect or driver
+| exit     | Force silent termination of a rule, aspect, program or driver
 | fail     | Interrupt a rule or block with recoverable error
 | pass     | Null statement. It does absolutely nothing
-| halt     | Create unrecoverable error and stop program
-| over     | End rule or program and give control back to caller or OS
 | abort    | Force silent early interruption of trial block
 | retry    | Execute a previous case into a trial block
 | solve    | Solve one forward case into a trial block
 | resume   | Used in trial block to continue next case after failure
+| return   | End rule and return control to caller
+| halt     | Create unrecoverable error and stop program
+| over.    | End driver, library or module file. Dot suffix is mandatory.
 
 **Read next:** [Syntax Overview](overview.md)

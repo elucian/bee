@@ -19,19 +19,19 @@ make d := '10/10/2010' -> DMY; -- Date
 -- optional parameters inference
 rule add(x,y:0) => (z ∈ Z):
   alter z := x + y; 
-over;
+return;
 
 print add(1,1); -- will print 2
 -- argument x is mandatory, y is optional
 rule plus(x ∈ Z, y : 1) => (z ∈ Z):
   alter z := (x + y);  
-over;
+return;
 print plus(1); -- will print 2
 -- input/output arguments, y is optional 
 rule inc(x @ Z, y : 0):
   alter x += 1;  
   alter y += 1;
-over;
+return;
 
 make i,k := 0;  -- references
 apply inc(i);   --> i = 1 

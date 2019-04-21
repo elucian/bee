@@ -8,7 +8,7 @@ make x := 1;
 rule add:
   alter x := x + 1;
   print x;
-over;
+return;
 apply add; -- will print 2
 apply add; -- will print 3
 print x; -- x = 3 (is modified)

@@ -41,7 +41,7 @@ rule connect(user, password, dbname ∈ S):
   alter credential := user + '/' + password + '@'+ dbname;
   -- connect to database
   apply db.connect(credential); 
-over;
+return;
 ```
 
 **Note:**
@@ -98,9 +98,8 @@ You can modify table data using current_record fields. First you modify values f
 
 ```
 type: Record_Type <: {record_fields}
-
+make  index ∈ Z;
 local  
-  make buffer_count ∈ Z;
   make current_record ∈ Record_Type;
 scan db.table_name +> current_record:
   ** update current table
@@ -108,14 +107,15 @@ scan db.table_name +> current_record:
      alter field_name := new_value;
      ...
   ready;
-  ** update batch of 10
-  when index > 10:
+  index += 1;
+  ** commit batch of 10
+  when index = 10:
     apply db.commit();
     alter index := 0;
   ready;
 next;
 ** commit all pending updates
-db.commit();
+db.commit() if (index > 0);
 
 ```
 

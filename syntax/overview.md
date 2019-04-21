@@ -572,7 +572,7 @@ rule name(param ∈ type,...):
    -- executable statements
    exit if condition;
    ...
-over;
+return;
 ```
 
 **example**
@@ -580,7 +580,7 @@ over;
 -- a rule with side-effects and no parameter
 rule foo:
   print "hello, I am foo";
-over;
+return;
 
 -- using apply + rule name will execute the rule  
 apply foo;
@@ -617,7 +617,7 @@ rule name(param ∈ type,...) => (result ∈ type,...):
    ...   
    alter result := expression;
    ...
-over;
+return;
 ```
 
 **Example:** 
@@ -627,7 +627,7 @@ over;
 rule com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
   alter s := x + y; 
   alter d := x - y;
-over;
+return;
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1); 
@@ -639,7 +639,7 @@ print c; -- print 1
 **Notes:** 
 
 * Rules can be used in expressions;
-* There is no return statement in a over;
+* There is no return statement in a return;
 
 **properties:** 
 
@@ -702,7 +702,7 @@ A rule prototype is a generic rule that can be cloned.
 rule prototype{attributes}(parameters) => (result ∈ Type):
   -- compute the result
   alter result := expression(parameters); 
-over;
+return;
 
 -- making a rule clone from prototype
 clone name:: prototype{arguments};
@@ -717,7 +717,7 @@ clone name:: prototype{arguments};
 -- this rule can create a rule object
 rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
   make r := (s + i);
-over;
+return;
 
 -- instantiate two rule objects:
 clone inc := shift{s: +1};  -- increment 

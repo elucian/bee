@@ -26,7 +26,7 @@ Usually asynchronous call is done from a control loop.
 -- suspend for 2.5 sec
 rule test():
   wait 2.5;
-over;
+return;
 
 -- start 4 threads
 make i := 0; -- control variable
@@ -58,14 +58,14 @@ rule foo(x ∈ N):
   alter x := x + 1;
   wait 5;  
   yield bar if (x < 10);
-over;
+return;
 
 -- second coroutine
 rule bar(x ∈ N):
   alter x = x + 1;
   wait 10;    
   yield foo if x < 10;
-over;
+return;
 
 -- call foo and bar asynchronously
 start foo(n);

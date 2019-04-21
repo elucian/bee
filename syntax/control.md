@@ -1,14 +1,32 @@
 ## Control Flow
 
-Bee has 5 control flow statements:
+Bee has 7 control flow statements:
 
+* [with](#with)
 * [when](#when)
 * [cycle](#cycle)
 * [while](#while)
-* [count](#count)
+* [scan](#scan)
 * [trial](#trial)
 
-### when
+## with
+
+Define a qualifier block for a qualifier:
+
+```
+with qualifier:
+  -- local context
+  apply member();
+ready;
+```
+
+**note:**
+
+* _with_ can be used with a list of qualifiers;
+* _with_ can be used with libraries or collections;
+* _with_ can be used with object qualifiers;
+
+## when
 
 Case is a decision statement selector based on one condition.
 
@@ -63,13 +81,15 @@ else:
 ready;
 ```
 
-### Cycle
+## Cycle
 
 Create unconditional repetitive statement block.
 
 **pattern**
 
 ```
+local
+  -- define local context
 cycle:
   ...
   skip if (condition)
@@ -82,7 +102,8 @@ repeat;
 **example**
 
 ```
-make a := 10 ∈ Z;
+local
+  make a := 10 ∈ Z;
 cycle:
   alter a -= 1;
   ** conditional repetition
@@ -100,9 +121,9 @@ repeat;
 * If _stop_ condition is missing the cycle is infinite;
 * Infinite cycle is intrerupted automatic by #timer:??
 
-### Nested cycles
+**nested**
 
-Nested cycles can be labeled
+Nested cycles can be labeled. Local context is optional.
 
 **pattern:** 
 
@@ -123,8 +144,9 @@ repeat;
 **example**
 
 ```
-make x   := 9; 
-make a,r := 0;
+local
+  make x   := 9; 
+  make a,r := 0;
 cycle:
   alter r := x % 2
   alter a := (0: r = 0, 1)
@@ -137,11 +159,13 @@ repeat;
 print ** 9:1, 8:0, 7:1, 6:0, 5:1,
 ```
 
-### While
+## While
 
 Controlled repetitive block:
 
 ```
+local
+  -- local declarations
 while (condition):
   -- repetitive block
   ...
@@ -162,8 +186,8 @@ repeat;
 **example**
 
 ```
-make a := 10;
-
+local
+  make a := 10;
 while (a > 0):
   alter a -= 1;
   -- conditional repetition
@@ -182,6 +206,8 @@ One while block statement can be nested:
 **pattern:** 
 
 ```
+local
+  -- local declarations
 while condition: 
   -- outer loop   
   while condition:
@@ -200,9 +226,9 @@ repeat;
 **example**
 
 ```
-make x   := 9;
-make a,r := 0;
-
+local
+  make x   := 9;
+  make a,r := 0;
 while (x < 5):
   alter r := x % 2;
   alter a := (0 if r = 0, 1 if r = 0, 2);
@@ -215,15 +241,15 @@ print;
 --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
-## Count 
+## Scan 
 
-This is used to traverse a "range", that is a _subset_ from a discrete _type_.  
+This is used to traverse a _range_ or a _subset_ from a discrete _type_.  
 
 **Pattern:**
 ``` 
-make min := constant ∈ N;
-make max := constant ∈ N; 
-count var ∈ Z[min..max]:
+local
+  make var ∈ N; 
+scan N[min..max] +> var:
   ** block statements;
   skip if (condition);
   ...
@@ -238,7 +264,9 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-count i ∈ Z[0..10]:
+local
+  make i ∈ Z;
+scan Z[0..10] +> i:
   ** force next iteration
   when (i % 2 = 0):
     skip;
@@ -252,8 +280,8 @@ next;
 > 1,3,5,7,9
 
 **Notes:**
-* count can be shortcut using skip;
-* count can be terminated early using stop;
+* "scan" can be shortcut using skip;
+* "scan" can be terminated early using stop;
 
 ## Trial
 
@@ -270,8 +298,10 @@ The "trial" statement execute a sequential process that can fail for some reason
 
 **pattern**
 ```
+local
+  -- local context
 trial:
-  -- declaration region
+  -- private/setup region
   ...
   -- fail with error code
   fail code if (condition);
@@ -298,6 +328,9 @@ final:
   -- finalization
 ready;
 ```
+
+**note:**
+* Trial block has an optional local scope
 
 **Interruptions**
 

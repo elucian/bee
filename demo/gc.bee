@@ -9,16 +9,16 @@ rule reset(me @ GenI, p_min , p_max ∈ Z):
   alter me.min := p_min
   alter me.max := p_max
   alter me.ci:= p_min;    
-over;
+return;
 -- get next index
 rule next(me @ GenI) => (i ∈ Z):
   alter i  := me.ci;
   alter me.ci += 1;
-over;
+return;
 -- detect when finish
 rule finish(me @ GenI)  => (r ∈ L):
   alter r := (me.ci ≥ me.max);
-over;
+return;
 -- use GenI to make one instance: 
 make foo := {min:10,max:20} @ GenI;
 make x   := 0;

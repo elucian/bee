@@ -14,7 +14,7 @@ rule generator{min, max ∈ Z}() => (r ∈ Z):
     alter r := .index;    
     alter .index += 1;    
   ready;  
-over;
+return;
 
 -- instantiate one rule object
 clone count :: generator{0,9};  

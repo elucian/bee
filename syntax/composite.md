@@ -115,7 +115,7 @@ An rule can produce multiple results in a list.
 rule test(x,y ∈ Z) => (r, c ∈ Z):
   alter r += x+1;
   alter c += y+1;
-over;
+return;
 
 make n, m ∈ Z;
 
@@ -533,7 +533,7 @@ rule foo( *bar @ [Z]) => (x ∈ Z):
     alter x += bar[i];
     alter i += 1;
   repeat;
-over;
+return;
 
 --we can call foo with variable number of arguments
 print foo();     --> 0
@@ -870,13 +870,13 @@ type Foo <: {a, b ∈ N};
 -- foo is a constructor for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
-over;
+return;
 
 -- second rule for Foo type
 rule bar(me @ Foo):
   print "a ="._.me.a;
   print "b ="._.me.b;
-over;
+return;
 
 -- reference capture "::" result Foo object 
 make test :: foo(p:1);

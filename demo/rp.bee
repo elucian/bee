@@ -6,7 +6,7 @@
 -- declare rule with rule "cmp" as parameter
 rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
   alter r := cmp(a,b);
-over;
+return;
 
 -- declare a rule:
 rule lt(a,b ∈ Z) ∈ L => (a < b);

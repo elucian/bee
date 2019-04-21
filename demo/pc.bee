@@ -14,7 +14,7 @@ rule producer(ch @ [N]):
     alter ch    += item;
     yield consumer;  
   repeat;  
-over;
+return;
 
 --  ch is the communication channel
 rule consumer(ch @ [N]):
@@ -26,7 +26,7 @@ rule consumer(ch @ [N]):
     wait  30;   
     yield producer;
   repeat;  
-over;
+return;
 
 -- controller
 make i := 0;

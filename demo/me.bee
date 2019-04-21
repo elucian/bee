@@ -12,12 +12,12 @@ rule convert(x @ Number) => (y @ S):
               'one'   if x = one,
               'two'   if x = two,
               'none');
-over;
+return;
 
 -- a wrapper rule for convert
 rule equal(x @ Number, s @ S) => (r ∈ L):
   alter r := s = x.convert(); 
-over;
+return;
     
 -- calling test rules 
 print test.convert();     -- will print "zero"
