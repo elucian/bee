@@ -704,13 +704,13 @@ print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
 
 Template stings can use special escape sequences:
 
-** \\B = binary representation 
-** \\H = hexadecimal representation
-** \\U = U+ Unicode representation
+* \\b = binary representation 
+* \\h = hexadecimal representation
+* \\u = U+ Unicode representation
 
 ```
-print ("This: \\H{1} is hexadecimal code for \\\"*\\\"" <+ 42);
-print ("This: \\U{1} is hexadecimal code for \\\"*\\\"" <+ `*`);
+print ("This: \\h{1} is hexadecimal code for \\\"*\\\"" <+ 42);
+print ("This: \\u{1} is Unicode representation for \\\"*\\\"" <+ `*`);
 ```
 
 Expected output:
@@ -733,7 +733,7 @@ make str := constant * n @ String(n);
 
 **Example:**
 ```
-make sep @ S;
+make sep @ String;
 alter sep := '+' & '-' * 18 & '+';
 
 print sep;
