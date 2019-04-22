@@ -18,7 +18,7 @@ Following types are included in standard library:
 | Logical     |L  | Logical number {0,1}  (2 bytes)
 | Unicode     |U  | UTF32 code point      (4 bytes)
 | Binary      |B  | Positive short number (4 bytes)
-| Natural     |N  | Positive large numbar (8 bytes)
+| Natural     |N  | Positive large number (8 bytes)
 | Integer     |Z  | Positive or negative number 
 | Real        |R  | Real number (double precision)
 | Rational    |Q  | Rational number precision control by #resolution:0.001
@@ -145,7 +145,7 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-type Err <: {code ∈ Z, message @ S};
+type Error <: {code ∈ Z, message @ S};
 ```
 
 ```
