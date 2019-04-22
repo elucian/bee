@@ -35,9 +35,9 @@ One application can connect to multiple databases simultaneously. A specific kin
 make db ∈ Oracle.DB;
 
 -- create a wrapper for database connection
-rule connect(user, password, dbname ∈ S):
+rule connect(user, password, dbname ∈ String):
   -- prepare credentials
-  make credential ∈ S; 
+  make credential ∈ String; 
   alter credential := user + '/' + password + '@'+ dbname;
   -- connect to database
   apply db.connect(credential); 

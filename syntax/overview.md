@@ -91,15 +91,15 @@ Basic types are represented with one single upper-case character.
 
 | Name        |Bee|Bytes|Description
 |-------------|---|-----|------------------------------------------------------------
-| Logical     |L  | 2   |Logical number {0,1} (aligned to 2 bit)
-| Unicode     |U  | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
-| Binary      |B  | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
-| Rational    |Q  | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
-| Natural     |N  | 8   |Unsigned large positive number     [0..+]
-| Integer     |Z  | 8   |Signed large discrete number       [-..+]
-| Positive    |P  | 8   |Double precision positive numbers: (0..+)
-| Real        |R  | 8   |Double precision number            (-..+)
-| Complex     |C  |16   |Complex number: pairs like (r+i)
+| Logical     | L | 2   |Logical number {0,1} (aligned to 2 bit)
+| Unicode     | U | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
+| Binary      | B | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
+| Rational    | Q | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
+| Natural     | N | 8   |Unsigned large positive number     [0..+]
+| Integer     | Z | 8   |Signed large discrete number       [-..+]
+| Positive    | P | 8   |Double precision positive numbers: (0..+)
+| Real        | R | 8   |Double precision number            (-..+)
+| Complex     | C |16   |Complex number: pairs like (r+i)
 
 **Note:** 
 * Basic types are values;
@@ -116,8 +116,8 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |0          | integer zero
 |1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
 |0b10101010 | binary integer : (0b) & (0,1)
-|U+FFFF     | Unicode code point: (U+) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
-|0xFFFFFFFF | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)
+|U+FFFF     | Unicode code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0xFFFFFFFF | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
 |1E10       | real number: 1×10¹⁰  :=   10000000000  
 |1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
@@ -127,19 +127,20 @@ Bee has support for numeric constants. These can be used in expressions to repre
 
 ## Composite types
 
-| Name        |Bee| Description
-|-------------|---|----------------------------------------------------------------
-| String      |S  | Short string encoded as UTF8 (Array)
-| Text        |X  | Large blob text encoded as UTF8 (Rope or Radix Tree) 
-| Date        |D  | DD/MM/YYYY 
-| Time        |T  | hh:mm,ms
-| Exception   |E  | Exception object: {code, message, line}
+Composite types are using English full name and start with uppercase.
+
+| Name     | Description
+|----------|----------------------------------------------------------------
+| String   | Short string encoded as UTF8 (Array)
+| Text     | Large blob text encoded as UTF8 (Rope or Radix Tree) 
+| Date     | DD/MM/YYYY 
+| Time     | hh:mm,ms
+| Error    | Exception object: {code, message, line}
 
 **Notes:**
-* Composite types are objects;
+* Composite types are references;
 * Composite types are allocated on the heap;
 * Composite types have usually variable size;
-* Reference to composite type can be pass around.
 
 ## Collection types
 
@@ -257,7 +258,7 @@ make ref_name :: object_constructor;
 
 Multiple variables can be define in one single line using comma separator:
 ```
-make var_name, var_name ... ∈ type;
+make var_name, var_name ... ∈ Type;
 make var_name, var_name ... := expression;
 ```
 
@@ -284,7 +285,7 @@ print b;          -- expected 11
 
 **Examples:**
 ```
--- declare a constant that can't change it's value
+-- declare a constant that can't change its value
 define pi := 3.14 ∈ R;
 
 -- declare multiple variables using modify
@@ -532,7 +533,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type E <: {code ∈ Z, message @ S, line ∈ Z};
+type E <: {code ∈ Z, message @ String, line ∈ Z};
 
 -- global system error
 make $error ∈ E;
@@ -570,7 +571,7 @@ An rule is a named code block that can resolve one or multiple tasks.
 ```
 rule name(param ∈ type,...):
    -- executable statements
-   exit if condition;
+   exit if (condition);
    ...
 return;
 ```

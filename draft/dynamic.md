@@ -22,18 +22,18 @@ over.
 Expression signature is a type declaration;
 
 ```
-type CMP @ (Z,Z) ∈ L;
+type Cmp @ (Z,Z) ∈ L;
 
--- instantiate 3 expression rules like "CMP"
+-- instantiate 3 expression rules like "Cmp"
 rule gt(x, y ∈ Z) ∈ L => (x > y);
 rule lt(x, y ∈ Z) ∈ L => (x < y);
 rule eq(x, y ∈ Z) ∈ L => (x = y);
 
 -- define a dictionary of rules
-type DIC <: {(S(2):CMP)}
+type Dic <: {(String(2):Cmp)}
  
 -- define a hash map of expressions
-make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ DIC;
+make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic;
 
 -- call 3 rules in very unusual way
 print dic['gt'](3,1) -- expect $T

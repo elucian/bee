@@ -26,7 +26,7 @@ GM = Geographic Map
  type GL <: {snode, enode @ GN, shape @ [GN]} 
 
  -- point of interest
- type PI <: {(id ∈ N: labe @ S, lnode @ GN)} 
+ type PI <: {(id ∈ N: label @ String, lnode @ GN)} 
  
  -- geographic map
  type GM <: {origin @ GN, rotation ∈ ∠, scale ∈ Δ, pint @ [GN], links @ [GL]}

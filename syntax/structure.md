@@ -159,7 +159,7 @@ over.
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
 * $params is a global system variable available in #driver and #aspect;
-* Parameter _params_ is of type [S] that is a list are strings;
+* Parameter _params_ is of type [String] that is a list are strings;
 * Bee file is ending with "over." that is mandatory keyword;
 * Early driver termination can be trigger by "halt" or "exit";
 

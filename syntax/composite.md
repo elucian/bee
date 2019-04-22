@@ -282,8 +282,8 @@ print map;      --> expected: {'b'="second", 'c'="third"}
 **Notes:** 
 * Hash map is also known as dictionary or associative array;
 * Hash map operators work like for sets. Key is unique;
-* Hash map key type is usually one of: {B,U,Z,N,P,R,Q,C,D,T};
-* Hash map key type can also be a range subtype or a string: { S };
+* Hash map key type is usually one of: {B,U,Z,N,P,R,Q,C};
+* Hash map key type can also be composite type: {String, Date, Time};
 * Hash map key type can not be double quoted string or collection;
 
 
@@ -353,19 +353,17 @@ over.
 
 **custom index**
 
-Arrays can have optional index range [!..?]
+Arrays can have optional index range (n..m)
 
-* Symbol ! represents first index 
-* Symbol ? represents last index
-* Array capacity `c := ? - ! + 1`
+* Array capacity `c := m - n + 1`
 
 **syntax**
 ```
 --one dimensional array with elements starting from n to m
 make array_name := [member_type](n..m);  
 
-print array_name[!]; -- print first element
-print array_name[?]; -- print last element
+print array_name[n]; -- print first element
+print array_name[m]; -- print last element
 ```
 
 **initialize elements**
@@ -419,27 +417,25 @@ make slice_name :: array_name[n..m];
 **example**
 ```
 -- capacity is 5, last element is 0
-make   a := [1,2,3,4](5); 
-print  a; -- [1,2,3,4,0]
+make   a := [](5); 
+print  a; -- [0,0,0,0,0]
 
 -- making 4 slice views
-make b :: a[0..?]; -- [1,2,3,4,0]
-make c :: a[1..?]; -- [2,3,4,0]
-make d :: a[0..2]; -- [1,2,3]
-make e :: a[2..4]; -- [3,4,0]
+make b :: a[0...]; -- [0,0,0,0,0]
+make c :: a[1...]; -- [0,0,0,0]
+make e :: a[2..4]; -- [0,0,0]
 
 --modify slice elements
-alter c[0] := 8; -- first element in c slice
-alter e[0] := 0; -- first element in e slice
-alter e[?] := 9; -- last element  in e slice
+alter c[0] := 1; -- first element in c slice
+alter e[0] := 2; -- first element in e slice
 
 --original array is modified
---                 ↧ ↧   ↧                        
-print a;-- expect [1,8,0,4,9]
+--                   ↧ ↧                        
+print a;-- expect [0,1,2,0,0]
 
 --modify last 3 elements
-alter a[2..?] := 0;
-print  a; -- expect [1,8,0,0,0]
+alter a[3...] := 9;
+print a; -- expect [0,1,2,9,9]
 
 ```
 
@@ -459,7 +455,7 @@ print e = a; --> 1 (equal collections)
 print e ≡ a; --> 0 (different memory locations)
 
 -- by default a slice is a copy/clone of original data
-alter f := a[2..?];  -- copy data using slice notation
+alter f := a[2...];  -- copy data using slice notation
 
 -- you can also copy a data from a basic type
 alter r := Z[1..10]
@@ -507,10 +503,10 @@ print m -> matrix();
 Will print:
 
 ```
-⎡ 1  2  3  4⎤
-⎢ 5  6  7  8⎥
-⎢ 9 10 11 12⎥
-⎣13 14 15 16⎦
+⎡ 1  2  3  4 ⎤
+⎢ 5  6  7  8 ⎥
+⎢ 9 10 11 12 ⎥
+⎣13 14 15 16 ⎦
 ```
 
 ## Varargs
@@ -547,16 +543,16 @@ print foo(1,2,3);--> 6
 
 Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
 
-* U = Is UTF32 encoded alphanumeric code point or symbol; 
-* S = Is UTF8 array with a limited capacity: 1024 bit;
-* X = Is UTF8 encoded text with unrestricted capacity;
+* U   = Is UTF32 encoded alphanumeric code point or symbol; 
+* String = Is UTF8 array with a limited capacity: 1024 bit;
+* Txt = Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
 Literals for strings are enclosed in 3 kind of quotes:
 
-* U: like: \`?\` 
-* S: like: '?'
-* X: like: "?"
+* U:   like: \`?\` 
+* String: like: '?'
+* Txt: like: "?"
 
 **Alternative literals**
 * Using wrong quotes can trigger implicit type coercion
@@ -569,8 +565,8 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str @ S(25);   -- string with capacity   25x8 = 200 bit
-make a   @ [U](25); -- array of 25 characters 25x8 = 200 bit
+make str @ String(25); -- string with capacity   25x8 = 200 bit
+make a   @ [U](25);    -- array of 25 characters 25x8 = 200 bit
 
 alter str := 'Short string'; 
 alter a   := split(str);
@@ -664,7 +660,7 @@ symbol| description
 
 **examples**
 ```
-make u, c, s @ S; -- default length is 128 octets = 1024 bit
+make u, c, s @ String; -- default length is 128 octets = 1024 bit
 
 -- string concatenation
 alter u := 'This is'  & ' a short string.';
@@ -732,7 +728,7 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-make str := constant * n @ S(n);
+make str := constant * n @ String(n);
 ```
 
 **Example:**
@@ -795,7 +791,7 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name @ S, age ∈ N};
+type  Person <: {name @ String, age ∈ N};
 
 -- array of 10 persons
 make catalog @ [Person](10); 
@@ -854,7 +850,7 @@ make Alist @ [(Z)](10);
 make Aheap @ [[Z](5)](10);
 
 -- an catalog of persons
-make Acatp @ {(S:Person)};
+make Acatp @ {(String:Person)};
 
 ```
 

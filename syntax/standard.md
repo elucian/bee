@@ -16,7 +16,7 @@ Following types are included in standard library:
 | Name        |Bee| Description
 |-------------|---|-------------------------------------------------------------
 | Logical     |L  | Logical number {0,1}  (2 bytes)
-| Alphanumeric|A  | URF32 character       (4 bytes)
+| Unicode     |U  | UTF32 code point      (4 bytes)
 | Binary      |B  | Positive short number (4 bytes)
 | Natural     |N  | Positive large numbar (8 bytes)
 | Integer     |Z  | Positive or negative number 
@@ -25,11 +25,11 @@ Following types are included in standard library:
 
 **Composite types**
 
-| Name        |Bee| Description
-|-------------|---|-------------------------------------------------------------
-| String      |S  | Unlimited capacity string
-| Date        |D  | "YYYYDDMM" -> YDM, "DD/MM/YYYY" -> DMY, "MM/DD/YYYY" -> YDM
-| Time        |T  | "hh:mm,9999ms" -> T12 "hh:mm__, 9999ms" __={am/pm} + {T12, T24}
+| Name        | Description
+|-------------|------------------------------------------------------------
+| String      | Unlimited capacity string
+| Date        | "YYYYDDMM" -> YDM, "DD/MM/YYYY" -> DMY, "MM/DD/YYYY" -> YDM
+| Time        | "hh:mm,9999ms" -> T12 "hh:mm__, 9999ms" __={am/pm} + {T12, T24}
 
 ## Built-in rules
  
@@ -103,7 +103,7 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-type .open(name @ S, mode ∈ A) => (f ∈ F);
+type .open(name @ String, mode ∈ A) => (f ∈ F);
 type .close(f ∈ F);
 ...
 
@@ -145,7 +145,7 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-type E <: {code ∈ Z, message @ S};
+type Err <: {code ∈ Z, message @ S};
 ```
 
 ```

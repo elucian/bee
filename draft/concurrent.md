@@ -64,7 +64,7 @@ return;
 rule bar(x ∈ N):
   alter x = x + 1;
   wait 10;    
-  yield foo if x < 10;
+  yield foo if (x < 10);
 return;
 
 -- call foo and bar asynchronously
