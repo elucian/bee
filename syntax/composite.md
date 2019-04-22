@@ -628,18 +628,6 @@ DEC|HEX|CODE|ESCAPE|NAME
 * "\\\\"    escape backslash with backslash 
 * "\\\""	double quote escape is necessary in double quoted strings
 * "\\\'"	single quote escape is necessary in single quoted strings
-* "\\d"     decimal representation for next 1 symbol
-* "\\h"     hexadecimal representation for next 1 symbol
-* "\\x"  	next 2 characters is hexadecimal code for ASCII symbol
-* "\\u"     next 4 characters is hexadecimal code for Unicode symbol
-
-**Examples:**
-
-* "\\d*"    indicates 42
-* "\\h*"    indicates 2A
-* "\\x2A"   indicates \*
-* "\\u2208" indicates ∈
-
 
 **Note:** 
 
@@ -709,8 +697,8 @@ Template stings can use special escape sequences:
 * \\u = U+ Unicode representation
 
 ```
-print ("This: \\h{1} is hexadecimal code for \\\"*\\\"" <+ 42);
-print ("This: \\u{1} is Unicode representation for \\\"*\\\"" <+ `*`);
+print ("This: \h{1} is hexadecimal code for \"*\"" <+ 42);
+print ("This: \u{1} is Unicode representation for \"*\"" <+ `*`);
 ```
 
 Expected output:
