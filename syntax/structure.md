@@ -167,10 +167,10 @@ In Bee library can be imported like this:
 **Imports:**
 
 ```
-load bee_lib;
+load bee_lib:(*);
 ```
 
-* use :* all public members are used
+* use :(*) all public members are used
 * use :(x,y,z) only x,y,z members are used
 
 Using a qualifier for Bee aspect members:

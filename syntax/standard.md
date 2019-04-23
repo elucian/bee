@@ -149,12 +149,12 @@ type Error <: {code ∈ Z, message @ S};
 ```
 
 ```
-define $zero_div      := {100,"division by zero"}        ∈ E;
-define $null_ref      := {101,"null reference usage"}    ∈ E;
-define $val_overflow  := {102,"value overflow"}          ∈ E;
-define $out_of_range  := {103,"value out of range"}      ∈ E;
-define $over_capacity := {104,"value over capacity"}     ∈ E;
-define $out_of_domain := {105,"subscript out of domain"} ∈ E;
+define $zero_div      := {100,"division by zero"}        ∈ Error;
+define $null_ref      := {101,"null reference usage"}    ∈ Error;
+define $val_overflow  := {102,"value overflow"}          ∈ Error;
+define $out_of_range  := {103,"value out of range"}      ∈ Error;
+define $over_capacity := {104,"value over capacity"}     ∈ Error;
+define $out_of_domain := {105,"subscript out of domain"} ∈ Error;
 ```
 
 **Read next:** [Structure](structure.md)

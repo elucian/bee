@@ -102,10 +102,12 @@ Basic types are represented with one single upper-case character.
 | Complex     | C |16   |Complex number: pairs like (r+i)
 
 **Note:** 
-* Basic types are values;
-* Basic types have fixed size;
+* These capital letters are reserved and locked; 
+* Basic types represent values not memory locations;
+* Basic types have aligned fixed size;
 * Basic types are mapped to native OS types;
-* Basic types are allocated on the stack;
+* Basic types are usually allocated on the stack;
+
 
 ## Constant Literals
 
@@ -125,6 +127,20 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |9r+9i      | complex number r = real part, i = imaginary part (no spaces)
 |9r-9i      | complex number r = real part, i = imaginary part (no spaces)
 
+**pattern**
+```
+make name := constant ∈ Type;
+```
+
+**example**
+```
+make n := U+2200 ∈ U; -- ∀
+```
+
+**Note:** 
+* "U" is reserved, therefore compiler will find "U+" combination unique;
+* After U+ compiler is expecting 4,6 or 8 hexadecimal symbols;
+
 ## Composite types
 
 Composite types are using English full name and start with uppercase.
@@ -138,9 +154,20 @@ Composite types are using English full name and start with uppercase.
 | Error    | Exception object: {code, message, line}
 
 **Notes:**
-* Composite types are references;
-* Composite types are allocated on the heap;
+* Composite types are references to memory location;
+* Composite types are usually allocated on the heap;
 * Composite types have usually variable size;
+* Composity types are specified with symbol "@" instead of "∈";
+
+**pattern**
+```
+make name := constant @ Type;
+```
+
+**example**
+```
+make str := 'test' @ String;
+```
 
 ## Collection types
 
@@ -148,9 +175,9 @@ Bee define a collection using a special notation based on brackets.
 
 | sym| Collection type
 |----|------------------------------------------------------------------
-| () | List \| Expression
-| [] | Array \|  Matrix 
-| {} | Set \| Map \| Object
+| () | List / Expression
+| [] | Array /  Matrix 
+| {} | Set / Map / Object
 
 ## Type declaration
 
@@ -160,8 +187,8 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 --declare new type
 type type_name <: type_descriptor;
 
---using new type
-make var_name,var_name ... ∈ type_name;
+--declare new references;
+make var_name,var_name ... @ type_name;
 ```
 
 ## Range subtypes
@@ -206,17 +233,19 @@ ready;
 * Using [n.!m] will exclude upper limit from range;
 * Using [n!!m] will exclude both limits from range;
 * Using (n..m) is necessary for a continuous type like Q, Z, N, P;
-* For continuous ranges the lower or upper missing represent ∞ number;
+* The lower or upper limit missing represent unlimited: ("∞");
 
 **dynamic range**
 ```
 #precision:0.1
-make n:=10, m:=15
 
-print ([n..m])  --> 10,11,12,13,14,15
-print ([n...m]) --> 10,11,12,13,14
-print (Q(0.!1)) --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
-print (Q(0!!1)) --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+-- integer range
+print [0..5] --> 0,1,2,3,4,5
+print [0.!5] --> 0,1,2,3,4
+
+-- rational range
+print (0..1) --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+print (0.!1) --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 ```
 
 ## Constant declaration
@@ -252,6 +281,7 @@ make var_name := constant ∈ type_name;
 make var_name := expression; -- type inference
 
 -- reference declaration using using operator "::"
+make ref_name @  type_name;
 make ref_name :: var_name; 
 make ref_name :: object_constructor; 
 ```
@@ -341,7 +371,6 @@ alter y := 30;     -- UTF code for '0'
 alter b := y -> A; -- convert to '0'
 ```
 
-**Note:** The "U+" notation is useful. It gives a way of marking hexadecimal digits as being Unicode code points, instead of octets. The "U" suggests "Union" of character encoding or "Unicode".
 
 ## Type checking
 
@@ -357,7 +386,7 @@ alter a := 10.5;-- FAIL: a is of type: Integer
 
 ## Logic type
 
-Logic type is an enumeration of two public symbols: $F = 0 = False and $T = 1 = True
+Logic type is an enumeration of two public symbols: $F = False and $T = True
 
 ```
 type .L <: {.$F:0, .$T:1};
@@ -374,7 +403,6 @@ Bee uses several familiar operators:
 *  ↔ (inference)  
  
 Precedence: { ¬, ∧, ∨, ~, ↔ }
-
 
 **comparison**
 Comparison operators will create a logical response: $F = 0 or $T = 1.
@@ -464,7 +492,7 @@ print j ≡ i; -- $T (same)
 A conditional is a logic condition used to control statement execution.
 
 ```
- statement if (condition);
+statement if (condition);
 ```
 
 The statement is executed only if the condition evaluate true = $T. 
@@ -552,13 +580,13 @@ An error has template features. Operator <+ can be used:
 
 **example**
 ```
-make my_error  := {201,"exception: \q{1}"} ∈ Error; 
+make my_error  := {201,"exception: \s{1}"} ∈ Error; 
 
-fail my_error <+ "test";
+fail my_error <+ 'test';
 ```
 
 -- expected
-exception: "test"
+exception: 'test'
 
 **Notes:**
 * Keyword _fail_ can raise only recoverable errors with code > 200;

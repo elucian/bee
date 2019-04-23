@@ -11,20 +11,32 @@ Bee has 7 control flow statements:
 
 ## with
 
-Define a qualifier block for a qualifier:
+Define a qualifier suppresion block:
 
 ```
 with qualifier:
-  -- local context
-  apply member();
+  -- instead of qualifier.member()
+  apply member(); 
 ready;
 ```
 
-**note:**
+Using alias for qualifier:
 
-* _with_ can be used with a list of qualifiers;
-* _with_ can be used with libraries or collections;
-* _with_ can be used with object qualifiers;
+```
+with qualifier := qualifier.qualifier:
+  -- instead of long_qualifier.member()
+  apply short.member(); 
+ready;
+```
+
+Using 2 qualifiers for mapping assignment:
+
+```
+with (target := target_qualifier, source := source_qualifier):
+  -- copy value from source to target
+  alter target.member := source.member;
+ready;
+```
 
 ## when
 
