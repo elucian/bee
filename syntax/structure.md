@@ -14,23 +14,11 @@
 
 ## Project
 
-Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture. 
-
-## Aspect
-One aspect is a project file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to play one or multiple concerns. A good architect will separate concerns in specialized aspect files with sugestive names.
-
-One aspect can accept parameters and can produce one or multiple results. Aspect file contains statements and declarations. Usually all aspect members are private in local context except parameter names that are public. 
-
-## Library
-Libraries are reusable project components. A library is a file that contains public: types, constants and rules, called _members_. Libraries and aspects have the same file extension: *.bee. Aspects are specific to one project while libraries can be used into multiple projects.
-
-Library members are usually public. One library can not have parameters and does not produce results. Instead a driver can load a library and combine itʼs members into statements and expressions.
-
-There are two kind of libraries: Standard libraries, provided by Bee runtime environment and project specific libraries. These libraries are stored usually in _"lib"_ folder and are used by one or more aspects.
+Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture.
 
 **project tree**
 ```
-$PRO_HOME
+$pro_home
   |-- bin
   |
   |-- src
@@ -47,24 +35,38 @@ $PRO_HOME
   |-- client.bee
   |-- server.bee
 
-```
+``` 
 
 ## System Variable
 There are several predefined constants that program will provide for dealing with environment variables. System constants are using uppercase letters and "$" prefix. System variables can be used to locate project component files.
 
-## Project Folder
-The location where the Bee is installed is $BEE_HOME. Bee library folder is $BEE_LIB. These variables are created by Bee run-time environment. It can be the virtual machine or the compiled program itself.
+The location where the Bee is installed is $bee_home. Bee library folder is $bee_lib. These variables are created by Bee run-time environment. It can be the virtual machine or the compiled program itself.
 
 | Constant | Environment| Description                |
 |----------|------------|----------------------------|
-|$BEE_HOME | BEE_HOME   | Level home folder          |
-|$BEE_LIB  | BEE_LIB    | Level library home         |
-|$BEE_PATH | BEE_PATH   | Level library path         |
-|$PRO_HOME | N/A        | Program home folder        |
-|$PRO_LIB  | N/A        | Program library home       |
-|$PRO_MOD  | N/A        | Program modules home       |
-|$PRO_LOG  | N/A        | Reporting folder           |
+|$bee_home | bee_home   | Level home folder          |
+|$bee_lib  | bee_lib    | Level library home         |
+|$bee_path | bee_path   | Level library path         |
+|$pro_home | N/A        | Program home folder        |
+|$pro_lib  | N/A        | Program library home       |
+|$pro_mod  | N/A        | Program modules home       |
+|$pro_log  | N/A        | Reporting folder           |
 
+## Aspect
+One aspect is a project file usually located in _"src"_ folder that can be used from main driver. Aspects can call each other to play one or multiple concerns. A good architect will separate concerns in aspects with sugestive names.
+
+**notes:**
+* One aspect can accept parameters and can produce results; 
+* Aspect file contains statements and declarations; 
+* Usually all aspect members are private;
+
+## Library
+Libraries are reusable project components. A library is a file that contains public elements: types, constants or rules. Libraries can be re-used into multiple projects.
+
+**notes:**
+* Library members are usually public;
+* A library can not have parameters;
+* A library does not produce results. 
 
 ## Directive
 Compiler directive symbol "#" is used to identify type.
