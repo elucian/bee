@@ -8,7 +8,7 @@ Read about supported symbols here: [symbols](symbols.md)
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
 | `{*...*}` | Block comments \| Nested comments
-|`\|*...*\|`| Inside expression comments
+|`\|*...*\|`| Inside expression comment \| Boxed comment
 | `(_,_,_)` | Expression \| List literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map

@@ -285,7 +285,7 @@ print b;          -- expected 11
 
 **Examples:**
 ```
--- declare a constant that can't change its value
+-- declare a constant that can not change its value
 define pi := 3.14 ∈ R;
 
 -- declare multiple variables using modify
@@ -533,20 +533,32 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type E <: {code ∈ Z, message @ String, line ∈ Z};
+type Error <: {code ∈ Z, message @ String, line ∈ Z};
 
 -- global system error
-make $error ∈ E;
+make $error ∈ Error;
 ```
 
-User can define his own exceptions with code > 200:
+You can define exceptions with code > 200:
 
 **example**
 ```
-make $custom_error  := {200,"my first exception"} ∈ E; 
+make my_error  := {200,"my first exception"} ∈ Error; 
 
-fail $custom_error if (condition);
+fail my_error;
 ```
+
+An error has template features. Operator <+ can be used:
+
+**example**
+```
+make my_error  := {201,"exception: \q{1}"} ∈ Error; 
+
+fail my_error <+ "test";
+```
+
+-- expected
+exception: "test"
 
 **Notes:**
 * Keyword _fail_ can raise only recoverable errors with code > 200;
@@ -557,10 +569,12 @@ fail $custom_error if (condition);
 * Keyword _halt_ will liberate the resources and terminate the program;
 
 
-**example**
+**unrecoverable**
+
+Next we create unrecoverable exception:
 
 ```
-halt -n ; -- end program and exit with error code = -n
+halt -1 ; -- end program and exit code = -1
 ```
 
 ## Rules

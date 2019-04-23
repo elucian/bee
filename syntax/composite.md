@@ -614,9 +614,8 @@ For each escape character Bee also define a constant CODE.
 DEC|HEX|CODE|ESCAPE|NAME
 ---|---|----|------|---------
 0  |00 |NUL |\0    |Null
-7  |07 |BEL |\a    |Bell
 8  |08 |BS  |\b    |Backspace
-9  |09 |HT  |\t    |Horizontal Tab
+9  |09 |HT  |\y    |Horizontal Tab
 10 |0A |LF  |\n    |Line Feed
 11 |0B |VT  |\v    |Vertical Tab
 12 |0C |FF  |\f    |Form Feed
@@ -690,12 +689,13 @@ print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
 
 **Escaping**
 
-Template stings can use special escape sequences:
+Format/template stings can use uppercase escape sequence:
 
-* \\b = binary representation 
-* \\h = hexadecimal representation
-* \\u = U+ Unicode representation
-
+* \\B = binary representation 
+* \\H = hexadecimal representation
+* \\U = U+ Unicode representation
+* \\S = double quoted string
+* \\s = single quoted string
 ```
 print ("This: \h{1} is hexadecimal code for \"*\"" <+ 42);
 print ("This: \u{1} is Unicode representation for \"*\"" <+ `*`);
