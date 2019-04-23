@@ -120,12 +120,11 @@ db.commit() if (index > 0);
 ```
 
 ## Transactions
-Data model can work with transactions. A transaction start automatically when you make first modification. After all modifications are ready you can commit or rollback changes. Notice transactions are always clean. Nobody can read data that is not committed to disk. If you forget to commit the changes are lost when you close the database.
-
+Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When modifications are ready you can commit changes. If any table reference or constraint fail verification transaction is rolled back automatically and signal back an error.
 
 **data manipulation**
 
-We can scan one source table and manipulate data in a target table. 
+Any of the following opperations will start automatically a transaction:
 
 * [Append](#Append)
 * [Update](#Update)
@@ -133,16 +132,16 @@ We can scan one source table and manipulate data in a target table.
 
 ### Append
 
-Bee can append data into target table using operator ":".
+Bee can add new data records into one table using _append_ statement.
 
 ```
--- using append block
+-- using block statement
 append to table_name:
-  field_name:value;
+  field_name := value;
   ...
 ready;  
 
--- using append record;
+-- single line statement
 append to table_name: append_recod;
 ```
 
@@ -153,7 +152,7 @@ Bee can do single or multiple row updates.
 **Syntax:**
 
 ```
--- use mapping block:
+-- use mapping block
 update table_name[search_field:value]: 
    field_name := value;
    ...
