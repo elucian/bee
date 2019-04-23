@@ -4,28 +4,24 @@
 * All program files have the same extension:  *.bee
 
 **bookmarks**
-* [Projects](#projects)
-* [Aspects](#aspects)
-* [Directives](#directives)
-* [Declarations](#declarations)
-* [Statements](#statements)
-* [Code blocks](#code-blocks)
+* [Project](#project)
+* [Declaration](#declaration)
+* [Statement](#statement)
 * [External Code](#external-code)
-* [Global context](#global-context)
-* [Public members](#public-members)
-* [Program Execution](#execution)
+* [Context](#global-context)
 * [Comments](#comments)
+* [Execution](#execution)
 
-## Projects
+## Project
 
 Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture. 
 
-## Aspects
+## Aspect
 One aspect is a project file usually located in _"src"_ folder that can be used from main program. Aspects can call each other to play one or multiple concerns. A good architect will separate concerns in specialized aspect files with sugestive names.
 
 One aspect can accept parameters and can produce one or multiple results. Aspect file contains statements and declarations. Usually all aspect members are private in local context except parameter names that are public. 
 
-## Libraries
+## Library
 Libraries are reusable project components. A library is a file that contains public: types, constants and rules, called _members_. Libraries and aspects have the same file extension: *.bee. Aspects are specific to one project while libraries can be used into multiple projects.
 
 Library members are usually public. One library can not have parameters and does not produce results. Instead a driver can load a library and combine itʼs members into statements and expressions.
@@ -53,10 +49,10 @@ $PRO_HOME
 
 ```
 
-## System Variables
+## System Variable
 There are several predefined constants that program will provide for dealing with environment variables. System constants are using uppercase letters and "$" prefix. System variables can be used to locate project component files.
 
-## Project Folders
+## Project Folder
 The location where the Bee is installed is $BEE_HOME. Bee library folder is $BEE_LIB. These variables are created by Bee run-time environment. It can be the virtual machine or the compiled program itself.
 
 | Constant | Environment| Description                |
@@ -70,7 +66,7 @@ The location where the Bee is installed is $BEE_HOME. Bee library folder is $BEE
 |$PRO_LOG  | N/A        | Reporting folder           |
 
 
-## Directives
+## Directive
 Compiler directive symbol "#" is used to identify type.
 Bee has 3 kind of program files each with different role: 
 
@@ -86,7 +82,7 @@ Bee has 3 kind of program files each with different role:
 * A driver can execute multiple aspects;
 * A library can be included in another library;
 
-## Declarations
+## Declaration
 
 Bee is using 7 kind of declarations:
 
@@ -98,7 +94,7 @@ Bee is using 7 kind of declarations:
 * make    -- define: variable
 * rule    -- define: rule
 
-## Statements
+## Statement
 
 Each statement start with one keyword. 
 
@@ -112,7 +108,7 @@ Each statement start with one keyword.
 Any statement is mandatory terminated by ";" 
 Multiple statements on a single line are separated by ";"
 
-## Code blocks
+## Code block
 Statements can be contained in blocks of code.
 
 * when    -- create multi-path selector using conditions
@@ -165,7 +161,7 @@ over.
 
 Do not try to understand the example. This is just a worm-up :)
 
-## External Code
+## External code
 In Bee library can be imported like this:
 
 **Imports:**
@@ -255,7 +251,7 @@ over.
 ```
 **See example:** [lv.bee](../demo/lv.bee)
 
-## Public members
+## Public member
 
 In Bee all members that begin with dot "." are public members.
 
@@ -309,91 +305,6 @@ print myLib.fib(5);
 To understand more about interacting with other languages check this article about ABI:
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
 
-
-## Program Execution
-
-When a program is executed the driver is located and executed first. If a program do not have a "driver" file it can not be executed nor compiled into an executable file.
-
-* A #driver is the program main entry point. It is executed only once;
-* A #library usually do not contain rogue statements do not have parameters;
-* An #aspect can be executed multiple times using "play" statement;
-
-One library is loaded only once. If a library is imported in many aspects and contain rogue statements these are executed when the library is imported. So these statement if they exist will "initialize" the library.
-
-## Aspect Execution
-
-A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before resolving an aspect the driver can interact with the user to ask for input. After resolving an aspect the driver can retrieve and report or combine the results.
-
-**properties**
-
-* An aspect can be executed once or multiple times; 
-* One aspect of a problem is executed using keyword _resolve_;
-* An aspect can receive parameters and can produce results;
-* An aspect is always executed synchronously, never in parallel;
-* An aspect can not be used in expressions except unpacking or assignment;
-* An aspect can be terminated early using silent:"exit" or "fail" with error;
-* Using "halt" in aspect cause the program to stop immediately with error.
-
-**pattern**
-
-```
--- declare an alias for an aspect file
-load aspect_name := $pro.src.file_name.bee;
-
--- play when aspect do not have any result:
-play aspect_name(parameter_list);
-
--- result can be captured using ":=" or any other modifier:
-play result := aspect_name(parameter_list);
-
--- resolving and capture results in a list;
-play result_list <+ aspect_name(parameter_list);
-```
-
-**parameters**
-
-```
-#aspect "mod"
-
-input  i ∈ Z; -- define parameter "i"
-output v ∈ N; -- define result "v"
-
-when (i < 0):
-  alter v := -i;
-else:
-  alter v := i;
-ready;  
-
-over.
-```
-
-```
-#driver "main"
-
--- define local variable result
-make result ∈ N;
-
--- define aspect "mod"
-load mod := $pro/mod.bee
-
--- execute aspect "mod"
-play  result := mod(-3) ;
-print result; --> expect: 3
-
-over.
-```
-
-**multiple**
-
-One aspect can have multiple parameters and multiple results:
-```
-input a,b ∈ Z, c ∈ R; -- define parameters "a,b,c"
-output v,z ∈ N; -- define two results "v" and "z"
-```
-
-**note:** 
-* only one input statement is used for one aspect;
-* only one output statement is used for one aspect;
 
 ## Comments
 
@@ -460,5 +371,93 @@ over.
  These kind of comments are not available inside the program body. 
 *******************************************************************
 ```
+
+## Execution
+
+### Program Execution
+
+When a program is executed the driver is located and executed first. If a program do not have a "driver" file it can not be executed nor compiled into an executable file.
+
+* A #driver is the program main entry point. It is executed only once;
+* A #library usually do not contain rogue statements do not have parameters;
+* An #aspect can be executed multiple times using "play" statement;
+
+One library is loaded only once. If a library is imported in many aspects and contain rogue statements these are executed when the library is imported. So these statement if they exist will "initialize" the library.
+
+### Aspect Execution
+
+A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before resolving an aspect the driver can interact with the user to ask for input. After resolving an aspect the driver can retrieve and report or combine the results.
+
+**properties**
+
+* An aspect can be executed once or multiple times; 
+* One aspect of a problem is executed using keyword _resolve_;
+* An aspect can receive parameters and can produce results;
+* An aspect is always executed synchronously, never in parallel;
+* An aspect can not be used in expressions except unpacking or assignment;
+* An aspect can be terminated early using silent:"exit" or "fail" with error;
+* Using "halt" in aspect cause the program to stop immediately with error.
+
+**pattern**
+
+```
+-- declare an alias for an aspect file
+load aspect_name := $pro.src.file_name.bee;
+
+-- play when aspect do not have any result:
+play aspect_name(parameter_list);
+
+-- result can be captured using ":=" or any other modifier:
+play result := aspect_name(parameter_list);
+
+-- resolving and capture results in a list;
+play result_list <+ aspect_name(parameter_list);
+```
+
+### Parameters
+
+```
+#aspect "mod"
+
+input  i ∈ Z; -- define parameter "i"
+output v ∈ N; -- define result "v"
+
+when (i < 0):
+  alter v := -i;
+else:
+  alter v := i;
+ready;  
+
+over.
+```
+
+```
+#driver "main"
+
+-- define local variable result
+make result ∈ N;
+
+-- define aspect "mod"
+load mod := $pro/mod.bee
+
+-- execute aspect "mod"
+play  result := mod(-3) ;
+print result; --> expect: 3
+
+over.
+```
+
+**multiple**
+
+One aspect can have multiple parameters and multiple results:
+```
+input a,b ∈ Z, c ∈ R; -- define parameters "a,b,c"
+output v,z ∈ N; -- define two results "v" and "z"
+```
+
+**note:** 
+* only one input statement is used for one aspect;
+* only one output statement is used for one aspect;
+
 
 **Read next:** [Syntax Overview](overview.md)

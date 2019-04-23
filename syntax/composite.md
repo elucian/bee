@@ -13,7 +13,7 @@ Composite types are complex data structures.
 * [varargs](#varargs)
 * [strings](#strings)
 * [object](#object)
-* [aggregate](#agregate)
+* [aggregate](#aggregate)
 * [binding](#binding)
 
 ## Usability
@@ -304,7 +304,7 @@ ready;
     
 ```
 
-## Arrays
+## Array
 
 Bee define Array variable using notation := `[]()`.
 

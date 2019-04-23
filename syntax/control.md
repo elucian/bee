@@ -337,10 +337,10 @@ ready;
 | word  | description
 |-------|---------------------------------------------------
 | retry | execute previous solved case or specified case
-| resume| continue next case after one case fail
 | solve | solve one forward case in same trial and skip some
 | abort | silent early trial termination
 | pass  | scrub $error record and end trial block
+| resume| continue next case after one case fail
 
 **error**
 

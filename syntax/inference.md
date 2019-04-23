@@ -2,7 +2,13 @@
 
 Type inference is a logical deduction of type from constant literals.
 
-## Default type
+**bookmarks**
+* [Default](#Default)
+* [Composite](#Composite)
+* [Parameters](#Parameters)
+* [Multiply](#Multiply)
+
+## Default
 Each literal has a "default" type that is automatic assigned for specific notation.
 
 ```
@@ -26,7 +32,7 @@ make x,y,z := 5;    -- type := Z
 make n := 0, m := 0.5 -- types Z and R
 ```
 
-## Composite inference
+## Composite
 
 Composite structures are using () [] and {} to create different types:
 
@@ -54,7 +60,7 @@ make  b := {name:'Goliath', age:30};
 
 ```
 
-## Inference for Parameters
+## Parameters
 When we define parameters we can use type inference for: 
 
 **Optional Parameters:**
@@ -98,24 +104,31 @@ print bar(b:1); -- print 1 because (a,b := 0)
 print bar(c:1); -- print 1 because (a,b := 0) 
 ```
 
-## Multiply "*"
+## Multiply
 
-Using "*" we can create smarter literals that are repeating one value.
-
-```
--- create a vector of 10 integers
-make a := 0 @ [Z](10);
-
--- equivalent of previous declaration
-make a := 0 * 10;
-```
+Multiply operator: "*" will create a string string:
 
 ```
 -- create string of 10 spaces
-make s := ' ' @ String(10);
+make s := ' ' * 10;
 
 -- equivalent of previous declaration
-make s := ' ' * 10;
+make s := ' ' @ String(10);
+```
+
+
+```
+-- create a string of 10 digits
+make a := '00000000';
+
+-- equivalent of previous declaration
+make a := 0 * 8;
+
+-- used in expression will generate string
+make b := (a & ' ') * 4;
+
+-- expect: 00000000 00000000 00000000 00000000
+print b 
 ```
 
 **Read next:** [standard.md](standard.md)
