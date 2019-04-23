@@ -3,21 +3,22 @@
 In Bee operators are created using Unicode symbols.   
 Read about supported symbols here: [symbols](symbols.md)
 
-## Brackets
-
-Bee is using brackets for expressions and data structures.
-
-symbol| description
-------|-----------------------------------------------------
-  ()  | Comma separated List of values or expressions
-  []  | Array or range \| access of elements by index 
-  {}  | Enumeration, structure, set or hash map
-
 ## Delimiters
+
+|Symbol     | Description
+|-----------|--------------------------------------------------------------
+| {`*_*`}   | Block comments \| Nested comments
+| \|`*_*`\| | Inside expression comments
+| (`_,_,_`) | Expression \| List literal \| Data record
+| [`_,_,_`] | Range \| Index \| Array literals \| Parameterize types
+| {`_,_,_`} | Ordinal type \| Set of values \| Hash map
+
+
+## Strings
 
 symbol  | description
 --------|-----------------------------------------------------
- \`z\`  | Back quote (grave accent) single symbols
+ \`z\`  | Back quote (grave accent) single symbol
  'x'    | Limited capacity string literal 
  "y"    | Variable capacity string literal
 
@@ -59,18 +60,18 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------
-\|\*  | Begin expression comment, or nested comment
- \*\| | End expression comment or nested comment
  \+-  | Start for multiple line comments
+ \-+  | End for multiple line comments  
  \--  | Start for single line comment /separator
  \**  | Start for a subtitle comment /separator
  \##  | Start for a title comment /separator  
- \-+  | End for multiple line comments 
  ..   | Define range [n..m] \| Define slice from Array
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
+ ::   | explicit reference \| explicit boxing
+ :=   | modify value \| deep copy
  
 
 
@@ -82,8 +83,6 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
 ------|------------------------------------------------------------------
- ::   | explicit clone a reference, or create a slice  \| explicit boxing
- :=   | modify value \| copy value
  +=   | increment value
  -=   | decrement value
  ·=   | multiplication modifier 
@@ -182,7 +181,7 @@ Arity = 2
 
 Symbol| Description
 ------|---------------------------------------------------------------
- *    | String pattern repetition \| String generator
+ \*   | String pattern repetition \| String generator
  `&`  | concatenate two strings as they are
  `/`  | concatenate two strings with / and de-duplicate last
  `\\` | concatenate two strings with \\ and de-duplicate last
