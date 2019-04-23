@@ -31,9 +31,9 @@ type Number <: {
 -- example of use
 make a := 0;
 -- example of use
-when (a = zero):
+when (a = zero)
   print "zero";
-else:
+else
   print "life is misery";
 ready;
 over.

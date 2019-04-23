@@ -30,7 +30,7 @@ return;
 
 -- start 4 threads
 make i := 0; -- control variable
-while (i ≤ 4):
+while (i ≤ 4)
   start test;    
   alter i += 1;    
 repeat;

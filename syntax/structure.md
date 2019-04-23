@@ -61,21 +61,21 @@ One aspect is a project file usually located in _"src"_ folder that can be used 
 * Usually all aspect members are private;
 
 ## Library
-Libraries are reusable project components. A library is a file that contains public elements: types, constants or rules. Libraries can be re-used into multiple projects.
+Libraries are reusable project components usually located in _"lib"_ folder. A library is a file that contains public elements. A library can be re-used in multiple programs.
 
 **notes:**
 * Library members are usually public;
-* A library can not have parameters;
-* A library does not produce results. 
+* A library does not have parameters;
+* A library does not produce results;
+
 
 ## Directive
-Compiler directive symbol "#" is used to identify type.
-Bee has 3 kind of program files each with different role: 
+Symbol "#" is used to create a compiler directive. Bee has 3 kind of program files each with different role: 
 
 ```
-#library -- reusable library
-#aspect  -- one aspect of a problem
-#driver  -- main program
+#library -- declare reusable library
+#aspect  -- declare one aspect of a problem
+#driver  -- declare main program
 ```
 
 **Notes**
@@ -107,8 +107,10 @@ Each statement start with one keyword.
 * write   --output to console result of an expressions
 * play    --play one aspect of a larger problem
 
-Any statement is mandatory terminated by ";" 
-Multiple statements on a single line are separated by ";"
+**notes:**
+
+* Any statement is mandatory terminated by ";" 
+* Multiple statements on a single line are separated by ";"
 
 ## Code block
 Statements can be contained in blocks of code.
@@ -116,6 +118,7 @@ Statements can be contained in blocks of code.
 * when    -- create multi-path selector using conditions
 * cycle   -- create unconditional repetitive block of code
 * while   -- create conditional repetitive block of code
+* scan    -- create a block of cote to visit elements in a collection
 * trial   -- create a block of code to handle exceptions
 
 **notes:**
@@ -131,33 +134,38 @@ This is the program entry point. One program can have a single _driver_ and many
 
 A _driver_ can contain statements that do not belong to any rule.
 These are called _rogue_ statements and are driving the program execution.
-Rogue statements are executed top down in synchronous mode.
+Rogue statements are executed top down until over keyword is riched.
 
 **Example:**
 
 ```
 #driver "main"
 
-make i, c ∈ Z;
-alter c := $params.count;
+-- declare input parameters
+input *params ∈ [String]; 
 
+make c := params.count;
 halt -1 if (c = 0);
 
 -- comma separated parameters
-while (i > c):
-  write $params[i];
+begin
+  make i:= 0 ∈ Z;
+while (i < c)
+  write params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
 -- print the buffer to console
 print;
+
+-- end of "main" program:
 over.
 ```
 
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
-* $params is a global system variable available in #driver and #aspect;
-* Parameter _params_ is of type [String] that is a list are strings;
+* Variable _*params_ is a variable argument;
+* Parameter variable _*params_ is an Array of strings;
 * Bee file is ending with "over." that is mandatory keyword;
 * Early driver termination can be trigger by "halt" or "exit";
 
@@ -198,9 +206,9 @@ One module or library is using a single global context.
 
 **usability**
 
-* Bee is using one global context. This context is accessible in all project components.
-* Global members are visible using project component name as qualifier for dot notation;
+* Bee is using one global context. This context is accessible in all files.
 * Global members can be public or private. Public members start with a dot prefix;
+* Global members are visible with qualifier name using dot notation;
 
 
 **system variables*
@@ -209,12 +217,13 @@ One module or library is using a single global context.
 * Some pre-defined system variables are available in global context.
 
 ```
-$path = $BEE_PATH  --contains a list of folders
-$pro  = $BEE_PRO   --contains path to current program
-$bee  = $BEE_HOME  --contains path to Bee runtime 
-$params --contains a list of parameters
-$error  --contains last exception
-$dres   --contains default precision for Q = 0.001
+$path    = $bee_path  --contains a list of folders
+$program = $bee_pro   --contains path to current program
+$runtime = $bee_home  --contains path to Bee runtime home
+$error       --contains last exception/error created by "fail"
+$precision   --contains default precision for Q = 0.001
+$global      --global context: universal qualifier
+$local       --local context: universal qualifier
 ```
 
 **note** System variable do not require context qualifier
@@ -222,10 +231,10 @@ $dres   --contains default precision for Q = 0.001
 **importing**
 
 ```
-load cpp_lib := $bee.cpp.myLib:(*) --load cpp library
-load asm_lib := $bee.asm.myLib:(*) --load asm library
-load bee_lib := $bee.lib.myLib:(*) --load core library
-load pro_lib := $pro.lib.myLib:(*) --load project library
+load cpp_lib := $runtime.cpp.myLib:(*) --load cpp library
+load asm_lib := $runtime.asm.myLib:(*) --load asm library
+load bee_lib := $runtime.lib.myLib:(*) --load core library
+load pro_lib := $program.lib.myLib:(*) --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -234,17 +243,14 @@ load pro_lib := $pro.lib.myLib:(*) --load project library
 
 Local context is a private memory space.
 
-* Bee rules can have local declarations; 
-* Trial block can have local declarations;
-* Repetitive blocks can have local declarations;
-* Anonymous block _begin_ can have local declaration;
-
+**example**
 ```
 #driver "test"
-make i := 1 ∈ Z;   -- global
-local
-  make i := 2 ∈ Z; -- local
+** global context
+make i := 1 ∈ Z;   
 begin:
+  ** local context
+  make i := 2 ∈ Z; 
   print i; -- expected: 2
 ready;
 print i; -- expected: 1  
@@ -285,7 +291,7 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-load $bee.cpp.myLib.(*); -- load cpp library
+load $runtime.cpp.myLib.(*); -- load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z):
@@ -424,9 +430,9 @@ play result_list <+ aspect_name(parameter_list);
 input  i ∈ Z; -- define parameter "i"
 output v ∈ N; -- define result "v"
 
-when (i < 0):
+when (i < 0)
   alter v := -i;
-else:
+else
   alter v := i;
 ready;  
 
@@ -436,7 +442,7 @@ over.
 ```
 #driver "main"
 
--- define local variable result
+-- define variable result
 make result ∈ N;
 
 -- define aspect "mod"

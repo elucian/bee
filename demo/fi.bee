@@ -4,9 +4,9 @@
 #driver "fi"
 -- declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N): 
-  when (n = 1 ∨ n = 0):
+  when (n = 1 ∨ n = 0)
     alter y := 1;
-  else:
+  else
     alter y := fib(n - 1) + fib(n - 2);
   ready;
 return;

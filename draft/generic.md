@@ -51,7 +51,7 @@ rule bubble{XT ∈ Type}(array @ [XT], gt @ (XT,XT) ∈ L ):
   while swap:
     alter i := 0;
     alter swap := $F; -- false
-    while (i ≤ n): 
+    while (i ≤ n) 
       -- this pair is out of order ?
       when gt(array[i], array[i+1]):
         -- swap pair and set swap flag = true

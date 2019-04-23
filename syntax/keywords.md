@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee uses 51 reserved keywords to create basic statements: 
+Bee uses 50 reserved keywords to create basic statements: 
 
 ```
 03: if, is, to
@@ -8,7 +8,7 @@ Bee uses 51 reserved keywords to create basic statements:
 08: rule, type, make, load, clone, define, input, output
 07: read, play, write, print, alter, scrap, apply 
 08: when, else, cycle, while, repeat, scan, next, ready
-08: local, begin, with, trial, case, error, cover, final
+07: begin, with, trial, case, error, cover, final
 12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume, return
 ```
 
@@ -85,8 +85,7 @@ Control statements are also known as decision statements.
 | cover    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
 | ready    | Close when or trial control blocks
-| local    | Start a local context for a block statement
-| begin    | Start unconditional anonymous block 
+| begin    | Start unconditional anonymous block / local context 
 | with     | Start qualifier suppression block
 
 ## Interruption keywords

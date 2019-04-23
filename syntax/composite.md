@@ -168,7 +168,7 @@ alter l5 := l2 - l1;  -- (4)
 ```
 make list := ('a', 'b', 'c');
 make x :: list[!] @ A;
-while ¬ (x ≡ list[?]):
+while ¬ (x ≡ list[?])
   write x;
   alter x :: list.next(x);
   write ',';
@@ -296,9 +296,9 @@ type  Tmap <: {(A:U)};
 
 make map  := {('a':"first"), ('b':"second")} @ Tmap;
 
-when ('a' ∈ map):
+when ('a' ∈ map)
   print("a is found");
-else:
+else
   print("not found");
 ready;
     
@@ -331,7 +331,7 @@ print test[m];   -- last element
 
 -- set value of element := subscript
 make x := 0;
-while (x < m): 
+while (x < m)
   alter test[i] := x;
   alter x += 1;
 repeat;
@@ -487,7 +487,7 @@ So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 make i := 0;
 make x := length(mat);
   
-while (i < x):   
+while (i < x)
   write (mat[x], ',');
   i += 1;
 repeat;
@@ -519,13 +519,13 @@ We declare an array using prefix "*" for variable parameter name.
 rule foo( *bar @ [Z]) => (x ∈ Z):
   value c := bar.count();  
   -- precondition
-  when (c = 0):
+  when (c = 0)
     alter x := 0; 
     exit;
   ready;
   alter i := 0; 
   -- sum all parameters  
-  while (i < c):
+  while (i < c)
     alter x += bar[i];
     alter i += 1;
   repeat;

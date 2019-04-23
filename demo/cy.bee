@@ -12,10 +12,10 @@ while (i < 10):
 repeat;
 -- while shortcut
 make x := 10;
-while (x ≥ 0):
-  when (x % 2 = 0):
+while (x ≥ 0)
+  when (x % 2 = 0)
     alter x -= 1;
-  else:
+  else
     print x;    
   ready;  
   alter x -= 1;

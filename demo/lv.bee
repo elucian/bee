@@ -2,19 +2,36 @@
    demo for local variable site-effect
 -------------------------------------------+
 #driver "lv"
--- local variable
+-- global variable
 make x := 1;
+
 -- rule side-effects
-rule add:
+rule add():
   alter x := x + 1;
   print x;
 return;
+
 apply add; -- will print 2
 apply add; -- will print 3
 print x; -- x = 3 (is modified)
+
+
+-- local context attribute
+rule add2():
+  make .x := 0; -- static attribute
+  alter x := x + 1;
+  print x;
+return;
+
+
 -- changing x influence rule
 alter x := 0;  -- make x make 
-apply add;   -- will print 1
-apply add;   -- will print 2
-print x; -- x = 2 (modified)
+apply add2;    -- will print 1
+apply add2;    -- will print 2
+print add2.x;  -- x = 2 (modified)
+
+-- verify global variable x
+print x;        -- x = 0 (umodified)
+print $global.x; -- x = 0 (umodified)
+
 over.

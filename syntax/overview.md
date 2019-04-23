@@ -215,9 +215,9 @@ type Alpha     <: U[`A`..`z`];
 type Latin     <: U[U+0041..U+FB02];
 
 --Check variable belong to sub-type
-when (`x` ∈ Alpha):
+when (`x` ∈ Alpha)
   print 'yes';
-else:
+else
   print 'no';
 ready;
 ```
@@ -621,7 +621,7 @@ return;
 **example**
 ```
 -- a rule with side-effects and no parameter
-rule foo:
+rule foo():
   print "hello, I am foo";
 return;
 
@@ -667,16 +667,26 @@ return;
 
 ```
 -- rule with two results "s" and "d"
-rule com(x,y ∈ Z) => (s ∈ Z, d ∈ Z):
+rule com(x,y ∈ Z) => (s, d ∈ Z):
   alter s := x + y; 
-  alter d := x - y;
+  alter d := y - x;
 return;
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1); 
+print b; -- 3 
+print c; -- 1 
 
-print b; -- print 3 
-print c; -- print 1 
+-- alternative rule call:
+alter b,c <+ com(4,5); 
+print b; -- 9 
+print c; -- 1 
+
+-- alternative rule call:
+apply com(0,1) +> b,c;
+print b; -- 1 
+print c; -- 1 
+
 ```
 
 **Notes:** 
