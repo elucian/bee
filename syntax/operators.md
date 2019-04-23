@@ -7,11 +7,11 @@ Read about supported symbols here: [symbols](symbols.md)
 
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
-| {`*_*`}   | Block comments \| Nested comments
-| \|`*_*`\| | Inside expression comments
-| (`_,_,_`) | Expression \| List literal \| Data record
-| [`_,_,_`] | Range \| Index \| Array literals \| Parameterize types
-| {`_,_,_`} | Ordinal type \| Set of values \| Hash map
+| '{*...*}' | Block comments \| Nested comments
+| `|*...*|` | Inside expression comments
+| '(_,_,_)' | Expression \| List literal \| Data record
+| '[_,_,_]' | Range \| Index \| Array literals \| Parameterize types
+| '{_,_,_}' | Ordinal type \| Set of values \| Hash map
 
 
 ## Strings
@@ -181,12 +181,11 @@ Arity = 2
 
 Symbol| Description
 ------|---------------------------------------------------------------
- \*   | String pattern repetition \| String generator
+ `*`  | String pattern repetition \| String generator
  `&`  | concatenate two strings as they are
  `/`  | concatenate two strings with / and de-duplicate last
- `\\` | concatenate two strings with \\ and de-duplicate last
+ `\`  | concatenate two strings with \\ and de-duplicate last
 
 
-**Note:** Except "." , all other operators can work with numbers.
  
 **Read Next:** [keywords](keywords.md)
