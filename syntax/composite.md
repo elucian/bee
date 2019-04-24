@@ -31,25 +31,25 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 
 **pattern**
 ```
-type type_name <: { name1:0, name2, name3};
+type type_name <: { name1:0, name2, name3}
 
-make a, b, c ∈ type_name;
+make a, b, c ∈ type_name
 
-alter a := type_name.name1; -- a=2
-alter b := type_name.name2; -- b=3
-alter c := type_name.name3; -- c=4
+alter a := type_name.name1  -- a=2
+alter b := type_name.name2  -- b=3
+alter c := type_name.name3  -- c=4
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for individual values
 
 ```
 -- using public elements in enumeration
-type type_names <: { .name0, .name1 };
+type type_names <: { .name0, .name1 }
 
-make a, b ∈ type_name;
+make a, b ∈ type_name
 
-alter  a := name0; -- a value := 0
-alter  b := name1; -- b value := 1
+alter  a := name0  -- a value := 0
+alter  b := name1  -- b value := 1
 ```
 
 ## List
@@ -58,7 +58,7 @@ A list is an ordered collection of values separated by comma and enclosed in bra
 
 **Syntax**
 ```
-type <variable> := () @ (value_type);
+type <variable> := () @ (value_type)
 ```
 
 **Notes**: List members must have same data type
@@ -66,10 +66,10 @@ type <variable> := () @ (value_type);
 **example**
 ```
 -- create a list of code points
-make a := () @ (U);
+make a := () @ (U)
 
 -- create a list using literals
-make b := ('1','a','2','b') @ (U); 
+make b := ('1','a','2','b') @ (U) 
 ```
 
 **empty list**
@@ -77,10 +77,10 @@ make b := ('1','a','2','b') @ (U);
 An empty list is represented like this: ()
 
 ```
-make a := ();      -- empty list
-make b := (1,2,3); -- initialize list using modify
+make a := () -- empty list
+make b := (1,2,3) -- initialize list using modify
 
-alter a := b; -- modify a and throw to garbage ()
+alter a := b -- modify a and throw to garbage ()
 ```
 
 **Unpacking**
@@ -91,18 +91,18 @@ A list can be assigned to multiple variables using unpacking:
 
 ```
 --create 3 new variables using list literal
-make x, y, z ∈ Z;
+make x, y, z ∈ Z
 
 --unpacking modify all 3 value
-alter x, y, z <+ (97, 65, 40);
+alter x, y, z <+ (97, 65, 40)
 
-print x; -->  97
-print y; -->  65
-print z; -->  40
+print x  -->  97
+print y  -->  65
+print z  -->  40
 
 --anonymous list unpacking in text template
-make s := "{0} > {1} > {2}" <+ (x, y, z); 
-print s; -- "97 > 65 > 40"
+make s := "{0} > {1} > {2}" <+ (x, y, z) 
+print s  -- "97 > 65 > 40"
 ```
 
 
@@ -113,20 +113,20 @@ An rule can produce multiple results in a list.
 ```
 -- have a list of results
 rule test(x,y ∈ Z) => (r, c ∈ Z):
-  alter r += x+1;
-  alter c += y+1;
+  alter r += x+1
+  alter c += y+1
 return;
 
-make n, m ∈ Z;
+make n, m ∈ Z
 
 -- unpacking the result
-alter n, m <+ test(1,2);
+alter n, m <+ test(1,2)
 
-print n; --will print 2
-print m; --will print 3
+print n  --will print 2
+print m  --will print 3
 
 -- ignoring first result
-alter _,m <+ test(3,4);
+alter _,m <+ test(3,4)
 
 ```
 
@@ -135,11 +135,11 @@ alter _,m <+ test(3,4);
 List members can be ignored when unpacking using anonymous variable: "_"
 
 ```
-make lst := (0, 1, 2, 3, 4, 5);
-make x, y, z ∈ Z;
+make lst := (0, 1, 2, 3, 4, 5)
+make x, y, z ∈ Z
 
 -- first element and last 2 are ignored
-alter _,x,y,z <+ lst;
+alter _,x,y,z <+ lst
 
 ```
 
@@ -151,27 +151,27 @@ alter _,x,y,z <+ lst;
 ### List processing
 
 ```
-make l1 := (1, 2, 3);
-make l2 := (2, 3, 4);
-make l3, l4, l5 := ();
+make l1 := (1, 2, 3)
+make l2 := (2, 3, 4)
+make l3, l4, l5 := ()
 
 --addition between lists "+" 
-alter l3 := l1 + l2; --(1,2,3,2,3,4)
+alter l3 := l1 + l2 --(1,2,3,2,3,4)
 
 --difference between lists "-"
-alter l4 := l1 - l2;  -- (1)
-alter l5 := l2 - l1;  -- (4)
+alter l4 := l1 - l2 -- (1)
+alter l5 := l2 - l1 -- (4)
 ```
 
 **List traversal**
 
 ```
-make list := ('a', 'b', 'c');
-make x :: list[!] @ A;
-while ¬ (x ≡ list[?])
-  write x;
-  alter x :: list.next(x);
-  write ',';
+make list := ('a', 'b', 'c')
+make x :: list[!] @ A
+while ¬ (x ≡ list[?]):
+  write x
+  alter x :: list.next(x)
+  write ','
 repeat;
 ```
 
@@ -180,17 +180,17 @@ repeat;
 A stack is a LIFO collection of elements.
 
 ```
-make a := (1, 2, 3);
-make last ∈ N;
+make a := (1, 2, 3)
+make last ∈ N
 
 -- using stack with operator "+="
-alter a += 4; -- (1,2,3,4)
+alter a += 4  -- (1,2,3,4)
 
 -- read last element using "-="
-alter last := a[?];  -- last = 4
+alter last := a[?]   -- last = 4
 
 -- remove last element using -=
-alter a -= a[?];  -- a = (1,2,3)
+alter a -= a[?]   -- a = (1,2,3)
 ```
 
 ## Queue
@@ -198,17 +198,17 @@ alter a -= a[?];  -- a = (1,2,3)
 A queue is a FIFO collection of elements.
 
 ```
-make q := (1,2,3);
-make first : N;
+make q := (1,2,3)
+make first : N
 
 -- using enqueue operator "+:" 
-alter q += 4; -- (1,2,3,4)
+alter q += 4  -- (1,2,3,4)
 
 -- read first element using "=" and "modify"
-alter first := a[!]; --> first = 1
+alter first := a[!]  --> first = 1
 
 -- dequeue first element using "-=" operator
-alter a -= a[!]; --> a = (2,3,4)
+alter a -= a[!]  --> a = (2,3,4)
 ```
 
 ## Set
@@ -218,23 +218,23 @@ A set is a sorted collection of unique values.
 ```
 --define a set
 
-make s1 := {1,2,3} @ {N}; 
-make s2 := {2,3,4} @ {N};
-make s  := {}      @ {N}; -- empty
+make s1 := {1,2,3} @ {N} 
+make s2 := {2,3,4} @ {N}
+make s  := {}      @ {N}  -- empty
 
 
 -- specific operations
-alter s := s1 ∪ s2; --{1,2,3,4} -- union
-alter s := s1 ∩ s2; --{2,3}     -- intersection
-alter s := s1 - s2; --{1}       -- difference 1
-alter s := s2 - s1; --{4}       -- difference 2
+alter s := s1 ∪ s2  --{1,2,3,4}  -- union
+alter s := s1 ∩ s2  --{2,3}      -- intersection
+alter s := s1 - s2  --{1}        -- difference 1
+alter s := s2 - s1  --{4}        -- difference 2
 
 -- declare a new set
-make a := {1,2,3} @ {N};
+make a := {1,2,3} @ {N}
 
 -- using operator +/- to mutate set a
-alter a := a + 4; --> {1,2,3,4} --append 4
-alter a := a - 3; --> {1,2,4}   --remove 3 (not 3)
+alter a := a + 4 --> {1,2,3,4}  --append 4
+alter a := a - 3 --> {1,2,4}    --remove 3 (not 3)
 
 ```
 
@@ -254,28 +254,28 @@ A hash map is a set of (key:value) pairs sorted by key.
 type type_name <: {(key_type : value_type)}
 
 -- declare a new empty map
-make new_map := {} @ type_name;
+make new_map := {} @ type_name
 ```
 
 **example**
 ```
 -- initial value of map
-alter map := {('a':"first"), ('b':"second")};
+alter map := {('a':"first"), ('b':"second")}
 
 -- create new element
-alter map['c'] := "third";
+alter map['c'] := "third"
 
 -- modification of non existent element will fail
-alter map['e'] := "forth"; --> ERROR
+alter map['e'] := "forth"  --> ERROR
 
 -- finding elements by key
-print map['a']; -- first
-print map['b']; -- second
-print map['c']; -- third
+print map['a']  -- first
+print map['b']  -- second
+print map['c']  -- third
 
 -- remove an element by key
-scrap map['a']; --> remove "first" element
-print map;      --> expected: {'b'="second", 'c'="third"}
+scrap map['a']  --> remove "first" element
+print map       --> expected: {'b'="second", 'c'="third"}
 
 ```
 
@@ -294,12 +294,12 @@ We can check if an element is included in a collection.
 ```
 type  Tmap <: {(A:U)};
 
-make map  := {('a':"first"), ('b':"second")} @ Tmap;
+make map  := {('a':"first"), ('b':"second")} @ Tmap
 
-when ('a' ∈ map)
-  print("a is found");
-else
-  print("not found");
+when ('a' ∈ map):
+  print("a is found")
+else:
+  print("not found")
 ready;
     
 ```
@@ -310,9 +310,9 @@ Bee define Array variable using notation := `[]()`.
 
 **syntax**
 ```
-make array_name ∈  [type];      --one dimension array with unknown capacity
-make array_name ∈  [type](c);   --one dimension with capacity c
-make array_name ∈  [type](n,m); --two dimensions with capacity n x m
+make array_name ∈  [type]       --one dimension array with unknown capacity
+make array_name ∈  [type](c)    --one dimension with capacity c
+make array_name ∈  [type](n,m)  --two dimensions with capacity n x m
 ```
 
 **Note:** 
@@ -323,21 +323,21 @@ make array_name ∈  [type](n,m); --two dimensions with capacity n x m
 
 ```
 -- define array with 10 Real elements
-make test @ [R](10); 
-make m := length(test)-1;  
+make test @ [R](10)
+make m := length(test)-1
 
-print test[0];   -- first element
-print test[m];   -- last element
+print test[0]  -- first element
+print test[m]  -- last element
 
 -- set value of element := subscript
-make x := 0;
-while (x < m)
-  alter test[i] := x;
-  alter x += 1;
+make x := 0
+while (x < m):
+  alter test[i] := x
+  alter x += 1
 repeat;
 
 -- print all elements of array
-print test;
+print test
 over.
 ```
 
@@ -360,10 +360,10 @@ Arrays can have optional index range (n..m)
 **syntax**
 ```
 --one dimensional array with elements starting from n to m
-make array_name := [member_type](n..m);  
+make array_name := [member_type](n..m)
 
-print array_name[n]; -- print first element
-print array_name[m]; -- print last element
+print array_name[n] -- print first element
+print array_name[m] -- print last element
 ```
 
 **initialize elements**
@@ -372,30 +372,30 @@ Initial value for all elements in array are zero. We use notation [*] for all el
 
 ```
 -- declare array of integers with initial value 
-make zum := 1 @ [Z](1..10);
+make zum := 1 @ [Z](1..10)
 
 -- add 1 to each element
-alter zum[*] += 1; 
-print zum; -- expect [2,2,2,2,2,2,2,2,2,2]
+alter zum[*] += 1 
+print zum  -- expect [2,2,2,2,2,2,2,2,2,2]
 
-alter zum[1]  := 1; 
-alter zum[10] := 10; 
-print zum; -- expect [1,2,2,2,2,2,2,2,2,10]
+alter zum[1]  := 1 
+alter zum[10] := 10 
+print zum  -- expect [1,2,2,2,2,2,2,2,2,10]
 
 ```
 
 **differed initialization**
 ```
-make vec @ [U];
-make nec @ [N];
+make vec @ [U]
+make nec @ [N]
 
 -- vector is initialized with 10 `x` symbols
-alter vec := `x` * 10;
-print vec; -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+alter vec := `x` * 10
+print vec  -- expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
 -- vector is initialized with 10 numbers = 9
-alter nec := 9 * 10;
-print nec; -- expect [9,9,9,9,9,9,9,9,9,9]
+alter nec := 9 * 10
+print nec  -- expect [9,9,9,9,9,9,9,9,9,9]
 ```
 
 ## Slice
@@ -406,10 +406,10 @@ We can define a section of array using [n..m] notation. This is called slice. Th
 
 ```
 -- declare an array with capacity (n)
-make array_name @ [element_type](c);
+make array_name @ [element_type](c)
 
 -- slice creation using "::"
-make slice_name :: array_name[n..m];
+make slice_name :: array_name[n..m]
 ```
 
 **Note:** Slice has references or a copy of original members;
@@ -417,25 +417,25 @@ make slice_name :: array_name[n..m];
 **example**
 ```
 -- capacity is 5, last element is 0
-make   a := [](5); 
-print  a; -- [0,0,0,0,0]
+make   a := [](5) 
+print  a -- [0,0,0,0,0]
 
 -- making 4 slice views
-make b :: a[0...]; -- [0,0,0,0,0]
-make c :: a[1...]; -- [0,0,0,0]
-make e :: a[2..4]; -- [0,0,0]
+make b :: a[0...] -- [0,0,0,0,0]
+make c :: a[1...] -- [0,0,0,0]
+make e :: a[2..4] -- [0,0,0]
 
 --modify slice elements
-alter c[0] := 1; -- first element in c slice
-alter e[0] := 2; -- first element in e slice
+alter c[0] := 1 -- first element in c slice
+alter e[0] := 2 -- first element in e slice
 
 --original array is modified
 --                   ↧ ↧                        
-print a;-- expect [0,1,2,0,0]
+print a -- expect [0,1,2,0,0]
 
 --modify last 3 elements
-alter a[3...] := 9;
-print a; -- expect [0,1,2,9,9]
+alter a[3...] := 9
+print a -- expect [0,1,2,9,9]
 
 ```
 
@@ -444,22 +444,22 @@ print a; -- expect [0,1,2,9,9]
 Default assignment ":=" and slicing operator "[..]" makes a copy.   
 
 ```
-make a := [0,1,2,3,4];
-make e,f,r @ [Z]; -- empty array references
+make a := [0,1,2,3,4]
+make e,f,r @ [Z]  -- empty array references
 
 -- by default modify ":=" copy/clone an entire collection
-alter e := a; 
+alter e := a 
 
 -- compare two collections
-print e = a; --> 1 (equal collections)
-print e ≡ a; --> 0 (different memory locations)
+print e = a  --> 1 (equal collections)
+print e ≡ a  --> 0 (different memory locations)
 
 -- by default a slice is a copy/clone of original data
-alter f := a[2...];  -- copy data using slice notation
+alter f := a[2...]   -- copy data using slice notation
 
 -- you can also copy a data from a basic type
 alter r := Z[1..10]
-print r; -- expect [1,2,3,4,5,6,7,8,9,10]
+print r  -- expect [1,2,3,4,5,6,7,8,9,10]
 ```
 
 ## Matrix
@@ -468,13 +468,12 @@ It is an array with 2 or more indexes. We can have 2D or 3D array.
 
 **Example:** 
 ```
-make mat @ [R](4,4); -- define matrix
+make mat @ [R](4,4)  -- define matrix
 
 -- modify matrix using ":=" operator
-alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
-
-print mat[0,0]; --first element
-print mat[3,3]; --last element
+alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+print mat[0,0]  --first element
+print mat[3,3]  --last element
 
 ```
 
@@ -484,20 +483,20 @@ So next program will print: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```
 -- elements in matrix can be accessed using while
-make i := 0;
-make x := length(mat);
+make i := 0
+make x := length(mat)
   
-while (i < x)
-  write (mat[x], ',');
-  i += 1;
+while (i < x):
+  write (mat[x], ',')
+  i += 1
 repeat;
 
 ```
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
 
 ```
-make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
-print m -> matrix();
+make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+print m -> matrix()
 ```
 
 Will print:
@@ -517,25 +516,25 @@ We declare an array using prefix "*" for variable parameter name.
 ```
 --parameter *bar is an array
 rule foo( *bar @ [Z]) => (x ∈ Z):
-  value c := bar.count();  
-  -- precondition
-  when (c = 0)
-    alter x := 0; 
-    exit;
+  make c := bar.count()
+   -- precondition
+  when (c = 0):
+    alter x := 0
+    exit
   ready;
-  alter i := 0; 
-  -- sum all parameters  
-  while (i < c)
-    alter x += bar[i];
-    alter i += 1;
+  alter i := 0 
+   -- sum all parameters  
+  while (i < c):
+    alter x += bar[i]
+    alter i += 1
   repeat;
 return;
 
 --we can call foo with variable number of arguments
-print foo();     --> 0
-print foo(1);    --> 1
-print foo(1,2);  --> 3
-print foo(1,2,3);--> 6
+print foo()      --> 0
+print foo(1)     --> 1
+print foo(1,2)   --> 3
+print foo(1,2,3) --> 6
 
 ```
 
@@ -565,22 +564,22 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str @ String(25); -- string with capacity   25x8 = 200 bit
-make a   @ [U](25);    -- array of 25 characters 25x8 = 200 bit
+make str @ String(25) -- string with capacity   25x8 = 200 bit
+make a   @ [U](25) -- array of 25 characters 25x8 = 200 bit
 
-alter str := 'Short string'; 
-alter a   := split(str);
+alter str := 'Short string' 
+alter a   := split(str)
 ```
 
 **conversion**
 Conversion of a string into number is done using _parse_ rule:
 
 ```
-make x,y ∈ R;
+make x,y ∈ R
 
 -- rule parse return a Real number
-alter x := parse('123.5',2,',.');       --convert to real 123.5
-alter y := parse('10,000.3333',2,',.'); --convert to real 10000.33
+alter x := parse('123.5',2,',.') --convert to real 123.5
+alter y := parse('10,000.3333',2,',.') --convert to real 10000.33
 ```
 
 **Notes:** 
@@ -647,20 +646,20 @@ symbol| description
 
 **examples**
 ```
-make u, c, s @ String; -- default length is 128 octets = 1024 bit
+make u, c, s @ String -- default length is 128 octets = 1024 bit
 
 -- string concatenation
-alter u := 'This is'  & ' a short string.';
-alter c := 'This is ' & 'fixed size'; 
+alter u := 'This is'  & ' a short string.'
+alter c := 'This is ' & 'fixed size' 
 
 -- automatic conversion to string
-alter s := 40 & 5;  --> '405'
+alter s := 40 & 5 --> '405'
 
 -- path concatenation
-make test_file := $pro/'src'/'test.bee';
+make test_file := $pro/'src'/'test.bee'
 
 -- when $pro = c:\work\project\
-print test_file; --> c:\work\project\src\test.bee
+print test_file  --> c:\work\project\src\test.bee
 ```
 
 **Note:** You can concatenate a string with a number or two numbers
@@ -673,17 +672,17 @@ print test_file; --> c:\work\project\src\test.bee
 * If a placeholder index is not found then it is preserved as is
 
 ```
-make var_name := template <+ (variable);
-make var_name := template <+ (var1,var2,...);
+make var_name := template <+ (variable)
+make var_name := template <+ (var1,var2,...)
 ```
 
 **Examples:**
 ```
-make x := 30; -- Code ASCII 0
-make y := 41; -- Code ASCII A
+make x := 30 -- Code ASCII 0
+make y := 41 -- Code ASCII A
 
 --template writing
-print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
+print ("{0} > {1} > {2}" <+ (x,y)) --print "30 > 41 > {2}"
   
 ```
 
@@ -697,8 +696,8 @@ Format/template stings can use uppercase escape sequence:
 * \\S = double quoted string
 * \\s = single quoted string
 ```
-print ("This: \h{1} is hexadecimal code for \"*\"" <+ 42);
-print ("This: \u{1} is Unicode representation for \"*\"" <+ `*`);
+print ("This: \h{1} is hexadecimal code for \"*\"" <+ 42)
+print ("This: \u{1} is Unicode representation for \"*\"" <+ `*`)
 ```
 
 Expected output:
@@ -716,25 +715,24 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-make str := constant * n @ String(n);
+make str := constant * n @ String(n)
 ```
 
 **Example:**
 ```
-make sep @ String;
-alter sep := '+' & '-' * 18 & '+';
+make sep := '-' * 19
 
-print sep;
-print '|*  this is a test  *|';
-print sep;
+print '+' & sep
+print '|   this is a test   |'
+print sep & '+'
 ```
 
 **Output:**
 
 ```
-+-------------------+
-|*  this is a test *|
-+-------------------+
++--------------------
+|  this is a test   |
+--------------------+
 ```
 
 **Note:** Operator "*" have higher precedence then "."
@@ -746,24 +744,24 @@ Object types are data structures with elements enclosed in curly brackets { , , 
 **Pattern:**
 ```
 -- declare a category of objects
-type  type_name <: {attribute ∈ type_name, ...};
+type  type_name <: {attribute ∈ type_name, ...}
 
 -- create an object instance using default constructor
 make item_name := {
        attribute : constant,
        ...
-       } ∈ type_name;
+       } ∈ type_name
 
 -- modify one object attribute
-alter object_name.attribute := new_value;
+alter object_name.attribute := new_value
 
 -- declare receivers
-make var1 ∈ type_1;
-make var2 ∈ type_2;
+make var1 ∈ type_1
+make var2 ∈ type_2
 ...
 
 -- unpacking object attributes
-make var1,var2... <+ object_name;
+make var1,var2... <+ object_name
 ```
 
 **Object structure can be ...**
@@ -779,22 +777,22 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name @ String, age ∈ N};
+type  Person <: {name @ String, age ∈ N}
 
 -- array of 10 persons
-make catalog @ [Person](10); 
+make catalog @ [Person](10) 
   
 -- initialize value using literals
-make catalog[0] := {name:"Cleopatra", age:15};
-make catalog[1] := {name:"Martin", age:17};
+make catalog[0] := {name:"Cleopatra", age:15}
+make catalog[1] := {name:"Martin", age:17}
 
 --using one element with dot operators
-print caralog[0].name; --will print Cleopatra
-print caralog[1].name; --will print Martin
+print caralog[0].name --will print Cleopatra
+print caralog[1].name --will print Martin
 
 --member type can be check using _type()_ built in
-print type(Person.name); -- will print U
-print type(Person.age);  -- will print W
+print type(Person.name) -- will print U
+print type(Person.age) -- will print W
 
 --print size of structure
 print size(Person);
@@ -806,8 +804,8 @@ We can limit how deep a record become using a directive. "#recursive:100"
 ```
 ** example of single recursive node
 type Node <: { 
-  data ∈ Z,        -- integer data
-  previous ∈ Node  -- reference to previous node
+  data ∈ Z,         -- integer data
+  previous ∈ Node   -- reference to previous node
 }
 ```
 
@@ -829,16 +827,16 @@ An aggregate type can store references to other composite types.
 **example**
 ```
 -- a list of lists of integers
-make Dlist @ ((Z));
+make Dlist @ ((Z))
 
 -- an array of 10 lists of integers
-make Alist @ [(Z)](10);
+make Alist @ [(Z)](10)
 
 -- an array of arrays of integers
-make Aheap @ [[Z](5)](10);
+make Aheap @ [[Z](5)](10)
 
 -- an catalog of persons
-make Acatp @ {(String:Person)};
+make Acatp @ {(String:Person)}
 
 ```
 
@@ -849,30 +847,30 @@ An object can have associated rules:
 **pattern**
 ```
 -- define Foo as object with 2 public attributes:
-type Foo <: {a, b ∈ N};
+type Foo <: {a, b ∈ N}
   
 -- foo is a constructor for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo):
-  make me := {a:p1, b:p2};
+  make me := {a:p1, b:p2}
 return;
 
 -- second rule for Foo type
 rule bar(me @ Foo):
-  print "a ="._.me.a;
-  print "b ="._.me.b;
+  print "a =" & me.a
+  print "b =" & me.b
 return;
 
 -- reference capture "::" result Foo object 
-make test :: foo(p:1);
+make test :: foo(p:1)
 
 -- test object rule
-apply test.bar();  
+apply test.bar()
 -- a = 1
 -- b = 1
 ```
 **See also:** 
-* [me.bee](me.bee) -- numeral with rules
-* [gc.bee](gc.bee) -- generator class
+* [me.bee](me.bee)  -- numeral with rules
+* [gc.bee](gc.bee)  -- generator class
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;

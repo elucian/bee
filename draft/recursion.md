@@ -9,10 +9,10 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 ```
 --this function is not optimized:
 rule fact(n ∈ N) => (r ∈ N):
-  when n = 0
-    alter r := 1;
-  else  
-    alter r := n · fact(n-1);
+  when (n = 0):
+    alter r := 1
+  else:  
+    alter r := n · fact(n-1)
   ready;  
 return;
 ``` 
@@ -21,15 +21,15 @@ return;
 ```
 --this function can be optimized:
 rule tail(n ∈ N, acc ∈ N) => (r ∈ N):
-  when n = 0
-    alter r:= acc;
-  else   
-    alter r:= tail(n-1, acc · n);
+  when (n = 0):
+    alter r:= acc
+  else:
+    alter r:= tail(n-1, acc · n)
   ready; 
 return;
 
 rule fact(n ∈ N) => (r ∈ N):
-  alter r := tail(n , 1);
+  alter r := tail(n , 1)
 return;  
 ```  
 
@@ -37,11 +37,11 @@ return;
 ```
 --this function is manually optimized:
 rule fact(a ∈ N, b ∈ N) => (r ∈ N):
-  while (b > 1)
-    alter a := a · a + a;
-    alter b := b - 1;  
-  else
-    alter r := a; 
+  while (b > 1):
+    alter a := a · a + a
+    alter b := b - 1  
+  else:
+    alter r := a 
   repeat;
 return;
 ```  

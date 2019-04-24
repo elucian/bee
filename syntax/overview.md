@@ -4,7 +4,7 @@ Syntax notation I use a very simple convention:
 
 * I use suggestive names to represent identifiers;
 * I use "..." to represent repetitive sequences;
-* I use "--"  to make comments for multi-block statements;
+* I use " --"  to make comments for multi-block statements;
 * I use notes or examples to explain design patterns;
 
 **bookmarks**
@@ -37,30 +37,30 @@ Expressions are created using identifiers, operators, rules and constant literal
 ```
 -- simple expressions in print statement
 -- no need for parentheses for a single value
-print 10; -- print 10
-print "this is a test";
+print 10 -- print 10
+print "this is a test"
 
 --complex expressions can use ()  
-print (10 + 10 + 15);   -- math
-print (10 > 5 | 2 < 3); -- logical
+print (10 + 10 + 15)   -- math
+print (10 > 5 | 2 < 3) -- logical
 
 -- multiple expressions in a line
 -- print: separate multiple values with one space
-print (1,',',2,',',3); --expect 1, 2, 3
-print (10, 11, 12);    --expect 10 11 12   
+print (1,',',2,',',3) --expect 1, 2, 3
+print (10, 11, 12) --expect 10 11 12   
 
 --to avoid new line and spaces use "write"
 write 0
-write (1,2);
-write (3,4);  
+write (1,2)
+write (3,4)
 
 -- after write use print to write a new line
-print; --> 01234
+print --> 01234
 
 -- Calculation that fail will do nothing
-alter x := 5 ∈ R;
-alter x := x ÷ 0;  -- silent fail
-print x; --> x = 5 -- wrong result
+alter x := 5 ∈ R
+alter x := x ÷ 0 -- silent fail
+print x --> x = 5  -- wrong result
 ```
 
 **Notes:** 
@@ -129,12 +129,12 @@ Bee has support for numeric constants. These can be used in expressions to repre
 
 **pattern**
 ```
-make name := constant ∈ Type;
+make name := constant ∈ Type
 ```
 
 **example**
 ```
-make n := U+2200 ∈ U; -- ∀
+make n := U+2200 ∈ U -- ∀
 ```
 
 **Note:** 
@@ -161,12 +161,12 @@ Composite types are using English full name and start with uppercase.
 
 **pattern**
 ```
-make name := constant @ Type;
+make name := constant @ Type
 ```
 
 **example**
 ```
-make str := 'test' @ String;
+make str := 'test' @ String
 ```
 
 ## Collection types
@@ -185,10 +185,10 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
 --declare new type
-type type_name <: type_descriptor;
+type type_name <: type_descriptor
 
---declare new references;
-make var_name,var_name ... @ type_name;
+--declare new references
+make var_name,var_name ... @ type_name
 ```
 
 ## Range subtypes
@@ -208,17 +208,17 @@ type range_name <: basic_type(min..max)
 **Examples:**
 ```
 -- sub-type declarations
-type Positive  <: R(0..);
-type Negative  <: R(..-1);
-type Digit     <: B[0..9];
-type Alpha     <: U[`A`..`z`];
-type Latin     <: U[U+0041..U+FB02];
+type Positive  <: R(0..)
+type Negative  <: R(..-1)
+type Digit     <: B[0..9]
+type Alpha     <: U[`A`..`z`]
+type Latin     <: U[U+0041..U+FB02]
 
 --Check variable belong to sub-type
-when (`x` ∈ Alpha)
-  print 'yes';
-else
-  print 'no';
+when (`x` ∈ Alpha):
+  print 'yes'
+else:
+  print 'no'
 ready;
 ```
 
@@ -240,12 +240,12 @@ ready;
 #precision:0.1
 
 -- integer range
-print [0..5] --> 0,1,2,3,4,5
-print [0.!5] --> 0,1,2,3,4
+print [0..5]  --> 0,1,2,3,4,5
+print [0.!5]  --> 0,1,2,3,4
 
 -- rational range
-print (0..1) --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
-print (0.!1) --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
+print (0..1)  --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+print (0.!1)  --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 ```
 
 ## Constant declaration
@@ -253,7 +253,7 @@ print (0.!1) --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-define constant_name := constant_literal;
+define constant_name := constant_literal
 ```
 
 **Notes:** 
@@ -274,22 +274,22 @@ sym | purpose
 
 ```
 -- full declarations with type and initial value
-make var_name ∈  type_name;
-make var_name := constant ∈ type_name;
+make var_name ∈  type_name
+make var_name := constant ∈ type_name
 
 -- partial declaration using type inference
-make var_name := expression; -- type inference
+make var_name := expression -- type inference
 
 -- reference declaration using using operator "::"
-make ref_name @  type_name;
-make ref_name :: var_name; 
-make ref_name :: object_constructor; 
+make ref_name @  type_name
+make ref_name :: var_name
+make ref_name :: object_constructor
 ```
 
 Multiple variables can be define in one single line using comma separator:
 ```
-make var_name, var_name ... ∈ Type;
-make var_name, var_name ... := expression;
+make var_name, var_name ... ∈ Type
+make var_name, var_name ... := expression
 ```
 
 **Notes:** 
@@ -303,10 +303,10 @@ One can modify variables using "modify" statement.
 
 **example**
 ```
-make a := 10, b := 0 ∈ Z;  
+make a := 10, b := 0 ∈ Z
 
-alter b := a + 1; -- modify b 10->11 
-print b;          -- expected 11
+alter b := a + 1 -- modify b 10->11 
+print b          -- expected 11
 ```
 
 **notes:** 
@@ -316,21 +316,21 @@ print b;          -- expected 11
 **Examples:**
 ```
 -- declare a constant that can not change its value
-define pi := 3.14 ∈ R;
+define pi := 3.14 ∈ R
 
 -- declare multiple variables using modify
-make a   ∈ Z; -- Integer 
-make x,y ∈ R; -- Double
-make q,p ∈ L; -- Logic
+make a   ∈ Z -- Integer 
+make x,y ∈ R -- Double
+make q,p ∈ L -- Logic
 
 --using modifier expressions
-alter a := 10;  -- modify value of a := 10
-alter a += 1;   -- increment value of a := 11
-alter a -= 1;   -- decrement value of a := 10
+alter a := 10 -- modify value of a := 10
+alter a += 1 -- increment value of a := 11
+alter a -= 1 -- decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p := $T;    -- modify value of q and p
-alter x, y := 10.5;  -- modify value of x and y
+alter q, p := $T -- modify value of q and p
+alter x, y := 10.5 -- modify value of x and y
 ```
 
 ## Type conversion
@@ -345,16 +345,16 @@ When data type mismatch we must perform explicit conversion.
 
 **example:**
 ```
-make a := 0, b := 20 ∈ Z;   
-make v := 10.5, x := 0.0 ∈ R;
+make a := 0, b := 20 ∈ Z
+make v := 10.5, x := 0.0 ∈ R
 
 --explicit conversion
-alter a := v -> N;
-print a ; -- truncated to 10 
+alter a := v -> N
+print a  -- truncated to 10 
 
 --explicit conversion
-alter x := b -> R;
-print x ; --> expect 20.0
+alter x := b -> R
+print x  --> expect 20.0
 ```
 
 ## Alphanumeric type
@@ -362,13 +362,13 @@ print x ; --> expect 20.0
 Bee define U as single UTF32 code point with representation: U+HHHH
 
 ```
-make a, b ∈ U; --Unicode 
-make x, y ∈ B; --Binary
+make a, b ∈ U --Unicode 
+make x, y ∈ B --Binary
 
-alter a := '0';    -- representation of 0
-alter x := a -> B; -- convert to 30
-alter y := 30;     -- UTF code for '0'
-alter b := y -> A; -- convert to '0'
+alter a := '0' -- representation of 0
+alter x := a -> B -- convert to 30
+alter y := 30 -- UTF code for '0'
+alter b := y -> A -- convert to '0'
 ```
 
 
@@ -377,11 +377,11 @@ alter b := y -> A; -- convert to '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0;    -- integer variable 
-make b := 0.0;  -- real variable 
+make a := 0   -- integer variable 
+make b := 0.0 -- real variable 
 
-alter b := 10;  -- FAIL: b is of type: Real
-alter a := 10.5;-- FAIL: a is of type: Integer
+alter b := 10   -- FAIL: b is of type: Real
+alter a := 10.5 -- FAIL: a is of type: Integer
 ```
 
 ## Logic type
@@ -389,7 +389,7 @@ alter a := 10.5;-- FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: $F = False and $T = True
 
 ```
-type .L <: {.$F:0, .$T:1};
+type .L <: {.$F:0, .$T:1}
 ```
 
 ## Logic operations
@@ -407,8 +407,8 @@ Precedence: { ¬, ∧, ∨, ~, ↔ }
 **comparison**
 Comparison operators will create a logical response: $F = 0 or $T = 1.
 
-* comparison ( ±, ↔, =, ≠, ≡, >, <, ≤, ≥ ); 
-* belonging  ( ∈, ⊃, ⊂ );
+* comparison ( ±, ↔, =, ≠, ≡, >, <, ≤, ≥ )
+* belonging  ( ∈, ⊃, ⊂ )
 
 **Precedence:** 
 
@@ -420,20 +420,20 @@ Comparison operators will create a logical response: $F = 0 or $T = 1.
 Logical expression have value { $F, $T }
 
 ```
-make x := $F; -- false
-make y := $T; -- true
+make x := $F -- false
+make y := $T -- true
 
 --simple expressions
-print   x; -- $F = 0
-print ¬ x; -- $T = 1
+print   x -- $F = 0
+print ¬ x -- $T = 1
 
 --complex expressions
-print  (x ↔ y);  --  0
-print ¬(x ↔ y);  --  1
-print  (x < y);  --  1
-print  (x > y);  --  0
-print  (x ∧ y);  --  0
-print  (x ∨ y);  --  1
+print  (x ↔ y) --  0
+print ¬(x ↔ y) --  1
+print  (x < y) --  1
+print  (x > y) --  0
+print  (x ∧ y) --  0
+print  (x ∨ y) --  1
 
 ```
 **Notes:** 
@@ -446,11 +446,11 @@ print  (x ∨ y);  --  1
 Any numeric expression ca be converted to logic using coercion operation `-> L`
 
 ```
-make x, y ∈ L;
-make a := 0.0, b := 1.5 ;
+make x, y ∈ L
+make a := 0.0, b := 1.5
 
-alter x := a -> L; -- x = $F
-alter y := b -> L; -- y = $T
+alter x := a -> L -- x = $F
+alter y := b -> L -- y = $T
 ```
 
 **Notes:** 
@@ -472,19 +472,19 @@ All composite variables are references to objects.
 
 **example**
 ```
-make i := 10 ∈ Z;  -- basic type
-make j :: i  @ Z;  -- reference to i
-make k @ Z;        -- null reference
+make i := 10 ∈ Z -- basic type
+make j :: i  @ Z -- reference to i
+make k @ Z -- null reference
 
 -- borrowing address / boxing
-alter k :: i; -- boxing i := 12 
-alter i += 1; -- modify i := 13
-print k; --> expect 13 (modified)
+alter k :: i -- boxing i := 12 
+alter i += 1 -- modify i := 13
+print k --> expect 13 (modified)
 
 -- verify boxing effect
-print k ≡ j; -- $T (same)
-print k ≡ i; -- $T (same)
-print j ≡ i; -- $T (same)
+print k ≡ j -- $T (same)
+print k ≡ i -- $T (same)
+print j ≡ i -- $T (same)
 ```
 
 ## Conditionals
@@ -492,7 +492,7 @@ print j ≡ i; -- $T (same)
 A conditional is a logic condition used to control statement execution.
 
 ```
-statement if (condition);
+statement if (condition)
 ```
 
 The statement is executed only if the condition evaluate true = $T. 
@@ -504,14 +504,14 @@ The statement is executed only if the condition evaluate true = $T.
 1. Conditional can not be associated with a block statement;
 
 ```
-make a := 0 ∈ Z;
+make a := 0 ∈ Z
 
 -- conditional execution
-alter a := 1 if (a = 0);
+alter a := 1 if (a = 0)
 
 -- conditional print
-print "a is 0" if (a = 0);
-print "a >  0" if (a ≥ 0); 
+print "a is 0" if (a = 0)
+print "a >  0" if (a ≥ 0) 
 ```
 
 **Notes:** Keyword "if" and "else" are not related.
@@ -524,16 +524,16 @@ These expressions are separated by coma and enclosed in ().
 **Syntax:**
 
 ```
-make var_name ∈ type;
+make var_name ∈ type
 
 -- multiple matching with default value
-alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
+alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx)
 
 -- alternative code alignment
 alter var_name := (
    xp1 if cnd1,
    xp2 if cnd2,
-   dx  );
+   dx  )
 ```
 
 **Legend:**
@@ -547,11 +547,11 @@ dx   := default expression (optional condition).
 
 **example**
 ```
-make x := '0';
-read (x,"x:>");
+make x := '0'
+read (x,"x:>")
 
-make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown");
-print "x is ".kind; -- expect: "x is digit"
+make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown")
+print "x is ".kind -- expect: "x is digit"
 over.
 ```
 
@@ -561,28 +561,28 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type Error <: {code ∈ Z, message @ String, line ∈ Z};
+type Error <: {code ∈ Z, message @ String, line ∈ Z}
 
 -- global system error
-make $error ∈ Error;
+make $error ∈ Error
 ```
 
 You can define exceptions with code > 200:
 
 **example**
 ```
-make my_error  := {200,"my first exception"} ∈ Error; 
+make my_error  := {200,"my first exception"} ∈ Error 
 
-fail my_error;
+fail my_error
 ```
 
 An error has template features. Operator <+ can be used:
 
 **example**
 ```
-make my_error  := {201,"exception: \s{1}"} ∈ Error; 
+make my_error  := {201,"exception: \s{1}"} ∈ Error
 
-fail my_error <+ 'test';
+fail my_error <+ 'test'
 ```
 
 -- expected
@@ -602,7 +602,7 @@ exception: 'test'
 Next we create unrecoverable exception:
 
 ```
-halt -1 ; -- end program and exit code = -1
+halt -1  -- end program and exit code = -1
 ```
 
 ## Rules
@@ -612,8 +612,8 @@ An rule is a named code block that can resolve one or multiple tasks.
 **pattern**
 ```
 rule name(param ∈ type,...):
-   -- executable statements
-   exit if (condition);
+    -- executable statements
+   exit if (condition)
    ...
 return;
 ```
@@ -622,11 +622,11 @@ return;
 ```
 -- a rule with side-effects and no parameter
 rule foo():
-  print "hello, I am foo";
+  print "hello, I am foo"
 return;
 
 -- using apply + rule name will execute the rule  
-apply foo;
+apply foo
 ```
 
 **notes:**
@@ -656,9 +656,9 @@ Static rules are named code blocks with results:
 **pattern**
 ```
 rule name(param ∈ type,...) => (result ∈ type,...):
-   make local_variable;
+   make local_variable
    ...   
-   alter result := expression;
+   alter result := expression
    ...
 return;
 ```
@@ -668,24 +668,24 @@ return;
 ```
 -- rule with two results "s" and "d"
 rule com(x,y ∈ Z) => (s, d ∈ Z):
-  alter s := x + y; 
-  alter d := y - x;
+  alter s := x + y 
+  alter d := y - x
 return;
 
 -- unpack result to "b","c" using "<+"  
-make b,c <+ com(2,1); 
-print b; -- 3 
-print c; -- 1 
+make b,c <+ com(2,1) 
+print b -- 3 
+print c -- 1 
 
 -- alternative rule call:
-alter b,c <+ com(4,5); 
-print b; -- 9 
-print c; -- 1 
+alter b,c <+ com(4,5) 
+print b -- 9 
+print c -- 1 
 
 -- alternative rule call:
 apply com(0,1) +> b,c;
-print b; -- 1 
-print c; -- 1 
+print b -- 1 
+print c -- 1 
 
 ```
 
@@ -705,7 +705,7 @@ Static rules ...
 * are defined once and can not be redefined;
 
 **See also:**
-* [bs.bee](../demo/bs.bee) -- Bubble Sort
+* [bs.bee](../demo/bs.bee)  -- Bubble Sort
 
 ## Expression rules
 
@@ -713,18 +713,18 @@ Expression rules are based on a single expression.
 
 **syntax**
 ```
-rule name(param ∈ Type,...) ∈ Type => (expression);
+rule name(param ∈ Type,...) ∈ Type => (expression)
 ```
 
 **Example:** 
 
 ```
 -- define "exp" a rule
-rule xp(x,y ∈ Z) ∈ Z => (x + y); 
+rule xp(x,y ∈ Z) ∈ Z => (x + y)
 
 -- using the rule in other expressions
-make z := xp(1,1) + 1; 
-print  z; -- print 3
+make z := xp(1,1) + 1
+print  z -- print 3
 ```
 
 **properties**
@@ -740,10 +740,10 @@ Expression rules...
 * can not be interrupted from execution;
 
 **See also:**
-* [pm.bee](../demo/pm.bee) -- expression rule
-* [fn.bee](../demo/fn.bee) -- pattern matching rule
-* [fi.bee](../demo/fi.bee) -- recursive rule
-* [rp.bee](../demo/rp.bee) -- rule as parameter
+* [pm.bee](../demo/pm.bee)  -- expression rule
+* [fn.bee](../demo/fn.bee)  -- pattern matching rule
+* [fi.bee](../demo/fi.bee)  -- recursive rule
+* [rp.bee](../demo/rp.bee)  -- rule as parameter
 
 ## Rule prototype
 
@@ -753,12 +753,12 @@ A rule prototype is a generic rule that can be cloned.
 ```
 -- define a rule prototype
 rule prototype{attributes}(parameters) => (result ∈ Type):
-  -- compute the result
-  alter result := expression(parameters); 
+   -- compute the result
+  alter result := expression(parameters)
 return;
 
 -- making a rule clone from prototype
-clone name:= prototype{arguments};
+clone name:= prototype{arguments}
 ```
 
 **notes:**
@@ -769,28 +769,28 @@ clone name:= prototype{arguments};
 ```
 -- this rule can create a rule object
 rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
-  make r := (s + i);
+  make r := (s + i)
 return;
 
 -- instantiate two rule objects:
-clone inc := shift{s: +1};  -- increment 
-clone dec := shift{s: -1};  -- decrement 
+clone inc := shift{s: +1} -- increment 
+clone dec := shift{s: -1} -- decrement 
 
 -- verify object properties
-print inc.s; -- expect: 1
-print dec.s; -- expect:-1
+print inc.s -- expect: 1
+print dec.s -- expect:-1
 
 -- use first rule object "inc"
-print inc(1); --> 2
-print inc(4); --> 5
+print inc(1) --> 2
+print inc(4) --> 5
 
 -- use second rule object "dec"
-print dec(1); -->  0
-print dec(2); -->  1
-print dec(0); --> -1
+print dec(1) -->  0
+print dec(2) -->  1
+print dec(0) --> -1
 ```
 
 **See also:**
-* [ho.bee](../demo/ho.bee) -- High order rule
+* [ho.bee](../demo/ho.bee)  -- High order rule
 
 **Read Next:** [Control Flow](control.md)

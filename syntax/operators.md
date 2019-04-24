@@ -8,7 +8,6 @@ Read about supported symbols here: [symbols](symbols.md)
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
 | `{*...*}` | Block comments \| Nested comments
-|`\|*...*\|`| Inside expression comment \| Boxed comment
 | `(_,_,_)` | Expression \| List literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
@@ -30,7 +29,7 @@ symbol| description
   $   | Global variables prefix \| System environment constants
   @   | Define a reference \| Define output parameter 
   :   | Pair up key-value in a collection or rule call
-  ;   | End of statement \| Statement enumerator
+  ;   | End of block statement \| Statement enumerator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Anonymous variable \| Has constant value one space (_ = ' ')
@@ -72,6 +71,7 @@ symbol| description
  \<:  | Define subset \| User composite type
  ::   | explicit reference \| explicit boxing
  :=   | modify value \| deep copy
+ ==   | create qualifier \| alias for qualifier
  
 
 
@@ -110,8 +110,8 @@ symbol | meaning
 
 **patterns:** 
 ```
- ¬(x ≡ y) -- divergence of two references, (not the same address)
- ¬(x = y) -- divergence of two values, objects or collections
+ ¬(x ≡ y)  -- divergence of two references, (not the same address)
+ ¬(x = y)  -- divergence of two values, objects or collections
 ```
 
 ## Collection operators

@@ -4,34 +4,33 @@
 #driver "bs"
 -- bubble sort
 rule sort(this @ [Z]):
-  make n := length(this)-1;
-  make i := 0 ∈ N;
-  make temp @ Z;  
-  make swap := $T ∈ L;  
+  make n := length(this)-1
+  make i := 0 ∈ N
+  make temp @ Z
+  make swap := $T ∈ L
   while swap:
-    alter i := 0;
-    alter swap := $F;
+    alter i := 0
+    alter swap := $F
     while (i ≤ n): 
       -- this pair is out of order ?
       when (this[i] < this[i+1]):
         -- swap pair and set swap flag = true
-        alter temp     :: this[i];
-        alter this[i]  :: this[i+1];
-        alter this[i+1]:: temp;
-        alter swap := $T;
+        alter temp     :: this[i]
+        alter this[i]  :: this[i+1]
+        alter this[i+1]:: temp
+        alter swap := $T
       ready;
-      alter i += 1; 
+      alter i += 1
     repeat;
   repeat;
 return;
 -- define test & result fixture
-make test   := [1,4,1,5,9,2,6,5,3,5];
-make result := [1,1,2,3,4,5,5,5,6,9];
+make test   := [1,4,1,5,9,2,6,5,3,5]
+make result := [1,1,2,3,4,5,5,5,6,9]
 -- test sort rule
-apply sort(test);
-print test;
-
+apply sort(test)
+print test
 -- check result
-fail if (test ≠ result);
+fail if (test ≠ result)
 
 over.

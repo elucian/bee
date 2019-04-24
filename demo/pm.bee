@@ -8,11 +8,11 @@ rule pm(p1,p2 ∈ N) ∈ N =>
   ,1 if (p2 = 0 ) 
   ,2 if (p1 = p2) 
   ,3 if (p1 > p2)
-  ,4 if $T );
+  ,4 if $T )
 -- execute pm expression
-print pm(0,2);  -- will print 0
-print pm(1,0);  -- will print 1
-print pm(1,1);  -- will print 2
-print pm(1,2);  -- will print 3
-print pm(2,1);  -- will print 4
+print pm(0,2)  -- will print 0
+print pm(1,0)  -- will print 1
+print pm(1,1)  -- will print 2
+print pm(1,2)  -- will print 3
+print pm(2,1)  -- will print 4
 over.

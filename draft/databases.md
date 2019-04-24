@@ -32,15 +32,15 @@ One application can connect to multiple databases simultaneously. A specific kin
 **pattern**
 ```
 -- create a database instance
-make db ∈ Oracle.DB;
+make db ∈ Oracle.DB
 
 -- create a wrapper for database connection
 rule connect(user, password, dbname ∈ String):
-  -- prepare credentials
-  make credential ∈ String; 
-  alter credential := user + '/' + password + '@'+ dbname;
-  -- connect to database
-  apply db.connect(credential); 
+   -- prepare credentials
+  make credential ∈ String 
+  alter credential := user + '/' + password + '@'+ dbname
+   -- connect to database
+  apply db.connect(credential) 
 return;
 ```
 
@@ -82,9 +82,9 @@ You can scan one table like a collection:
 
 **pattern**
 ```
-begin
+begin:
   ** declare current record
-  make  current_record ∈ {record_field ∈ data_type, ...};
+  make  current_record ∈ {record_field ∈ data_type, ...}
 scan db.table_name +> current_record:
   with current_record:
     ** use current_record fields
@@ -98,24 +98,24 @@ You can modify table data using current_record fields. First you modify values f
 
 ```
 type: Record_Type <: {record_fields}
-make  index ∈ Z;
-begin
-  make current_record ∈ Record_Type;
+make  index ∈ Z
+begin:
+  make current_record ∈ Record_Type
 scan db.table_name +> current_record:
   ** update current table
   update db.table_name[rowid:current_record.rowid]:
-     alter field_name := new_value;
+     alter field_name := new_value
      ...
   ready;
-  index += 1;
+  alter index += 1
   ** commit batch of 10
-  when index = 10
-    apply db.commit();
-    alter index := 0;
+  when (index = 10):
+    apply db.commit()
+    alter index := 0
   ready;
 next;
 ** commit all pending updates
-db.commit() if (index > 0);
+apply db.commit() if (index > 0)
 
 ```
 
@@ -137,12 +137,12 @@ Bee can add new data records into one table using _append_ statement.
 ```
 -- using block statement
 append to table_name:
-  field_name := value;
+  field_name := value
   ...
 ready;  
 
 -- single line statement
-append to table_name: append_recod;
+append to table_name: append_recod
 ```
 
 ### Update
@@ -154,15 +154,15 @@ Bee can do single or multiple row updates.
 ```
 -- use mapping block
 update table_name[search_field:value]: 
-   field_name := value;
+   field_name := value
    ...
 ready;   
 
 -- Use search fields: 
-update table_name[search_field:value, ...]: update_record;
+update table_name[search_field:value, ...]: update_record
 
 -- Use search record:
-update table_name[search_record]: update_record;
+update table_name[search_record]: update_record
 ```
 
 
@@ -180,10 +180,10 @@ This statement will remove one or more records from a table.
 
 ```
 -- Using search fields
-delete table_name[search_field:value,...];
+delete table_name[search_field:value,...]
 
 -- Using search record
-delete table_name[search_record];
+delete table_name[search_record]
 ```
 
 ## Direct SQL
@@ -192,12 +192,12 @@ Sometimes we need to bypass the ORM and execute native SQL:
 
 ```
 -- apply a query to database
-apply db.query(query_template <+ list);
-apply db.query(query_template <+ record);
+apply db.query(query_template <+ list)
+apply db.query(query_template <+ record)
 
 -- apply a query that return a result
-apply db.query(query_string) +> record;
-apply db.query(query_string) +> list_of_records;
+apply db.query(query_string) +> record
+apply db.query(query_string) +> list_of_records
 
 ```
 
@@ -206,8 +206,8 @@ apply db.query(query_string) +> list_of_records;
 Some databases have support for stored procedures:
 
 ```
-apply db.exec(procedure_name <+ list); 
-apply db.exec(procedure_name <+ record); 
+apply db.exec(procedure_name <+ list) 
+apply db.exec(procedure_name <+ record) 
 ```
 
 ## Introspection

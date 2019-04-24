@@ -4,8 +4,8 @@ A set builder is a declarative structure used to create a sub-set from a set of 
 
 **syntax**
 ```
-make set_name := { func(element)   : element ∈ source ∧ filter };
-make map_name := { (key: func(key)): key ∈ source ∧ filter };
+make set_name := { func(element)   : element ∈ source ∧ filter }
+make map_name := { (key: func(key)): key ∈ source ∧ filter }
 
 ```
 
@@ -19,16 +19,16 @@ make map_name := { (key: func(key)): key ∈ source ∧ filter };
 
 **example**
 ```
-make source := [1,2,1,2,3];
-make test1, test2 @ {Z};
+make source := [1,2,1,2,3]
+make test1, test2 @ {Z}
 
 -- copy source elements
-alter test1 := { x | x ∈ Source};
-alter test2 := { x²| x ∈ Source};
+alter test1 := { x | x ∈ Source}
+alter test2 := { x²| x ∈ Source}
 
 -- expected result
-print test1 ; -- {1,2,3}
-print test2 ; -- {1,4,9}
+print test1   -- {1,2,3}
+print test2   -- {1,4,9}
 ```
 
 **Note:**

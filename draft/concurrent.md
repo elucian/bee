@@ -25,19 +25,19 @@ Usually asynchronous call is done from a control loop.
 ```
 -- suspend for 2.5 sec
 rule test():
-  wait 2.5;
+  wait 2.5
 return;
 
 -- start 4 threads
-make i := 0; -- control variable
-while (i ≤ 4)
-  start test;    
-  alter i += 1;    
+make i := 0 -- control variable
+while (i ≤ 4):
+  start test    
+  alter i += 1
 repeat;
 rest;
 ```
 
-**file:** [ac.md](demo/ac.md) -- asynchronous call
+**file:** [ac.md](demo/ac.md)  -- asynchronous call
 
 ## Resumable Coroutines 
 
@@ -51,30 +51,30 @@ Coroutines are two methods that wait for each other to execute in turn.
 ```
 #driver
 
-make n ∈ N; -- control variable
+make n ∈ N -- control variable
 
 -- first coroutine
 rule foo(x ∈ N):
-  alter x := x + 1;
-  wait 5;  
-  yield bar if (x < 10);
+  alter x := x + 1
+  wait 5  
+  yield bar if (x < 10)
 return;
 
 -- second coroutine
 rule bar(x ∈ N):
-  alter x = x + 1;
-  wait 10;    
-  yield foo if (x < 10);
+  alter x = x + 1
+  wait 10
+  yield foo if (x < 10)
 return;
 
 -- call foo and bar asynchronously
-start foo(n);
-start bar(n);
+start foo(n)
+start bar(n)
 
 -- wait for both foo and bar to finish
-rest;
+rest
 
 over.
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee) -- producer consumer example
+**See also:** [pc.wee](../demo/pc.wee)  -- producer consumer example

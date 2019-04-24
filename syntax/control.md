@@ -12,47 +12,52 @@ Bee has 7 control flow statements:
 
 ## begin
 
-Define local context for any block of code;
+Define local context for a block of code;
 
 ```
-begin
-  -- local context
+begin:
+   -- local context
   ...
 ready;
 ```
 
 **Note:**
 * local context is ending with _ready_ keyword;
-* begin is anonymous block of code;
+* after ready you must use ";" as block terminator;
+* after begin you can use ":" to suggest "define" block;
 
 ## with
 
 Define a qualifier suppresion block:
 
 ```
-with qualifier
-  -- instead of qualifier.member()
-  apply member(); 
+with qualifier:
+   -- instead of qualifier.member()
+  apply member()
 ready;
 ```
 
 Using alias for qualifier:
 
 ```
-with (short: long.qualifier)
-  -- instead of long_qualifier.member()
-  apply short.member(); 
+with short == long.qualifier:
+   -- instead of long_qualifier.member()
+  apply short.member() 
 ready;
 ```
 
 Using 2 qualifiers for mapping assignment:
 
 ```
-with (target:target_qualifier, source:source_qualifier)
-  -- copy value from source to target
-  alter target.member := source.member;
+with (target == target_qualifier, source == source_qualifier):
+   -- copy value from source to target
+  alter target.member := source.member
 ready;
 ```
+
+**Note:** 
+* paranthesis are required if you enumerate more then one qualifier;
+* after with () you must use ":" to suggest beggining of block pathway.
 
 ## when
 
@@ -60,8 +65,8 @@ Case is a decision statement selector based on one condition.
 
 **syntax**
 ```
-when (condition)
-  -- statement;
+when (condition):
+   -- statement
 ready;
 ```
 
@@ -69,10 +74,10 @@ Dual selector based on single logical expression:
 
 **pattern**
 ```
-when (condition)
-  -- first branch;
-else
-  -- second branch;
+when (condition):
+   -- first branch
+else:
+   -- second branch
 ready;
 ```
 
@@ -80,31 +85,31 @@ ready;
 **nested**
 
 ```
-make a := 0;
-when (a ≤ 0)
-  print 'a ≤ 0';
-  when (a = 0)
-    print 'a = 0';
-  else
-    print "a < 0"; 
-  ready;  
+make a := 0
+when (a ≤ 0):
+  print 'a ≤ 0'
+  when (a = 0):
+    print 'a = 0'
+  else:
+    print "a < 0" 
+  ready;
 ready;
 ```
 
 **ladder**
 
 ```
-make a := 0;
-when (a < 0)
-  print 'a < 0';
-else if (a > 10)
-  print 'a > 100';      
-else if (a > 10)
-  print 'a > 2';  
-else if (a > 1)
-  print 'a > 1';
-else
-  print "a ≥ 0"; 
+make a := 0
+when (a < 0):
+  print 'a < 0'
+else if (a > 10):
+  print 'a > 100'
+else if (a > 10):
+  print 'a > 2'
+else if (a > 1):
+  print 'a > 1'
+else:
+  print "a ≥ 0"
 ready;
 ```
 
@@ -115,9 +120,9 @@ Create unconditional repetitive statement block.
 **pattern**
 
 ```
-begin
-  -- define local context
-cycle
+begin:
+   -- define local context
+cycle:
   ...
   skip if (condition)
   ...
@@ -133,16 +138,16 @@ repeat;
 **example**
 
 ```
-begin
-  make a := 10 ∈ Z;
-cycle
-  alter a -= 1;
+begin:
+  make a := 10 ∈ Z
+cycle:
+  alter a -= 1
   ** conditional repetition
-  skip if (a % 2 = 0);
-  write a;  
+  skip if (a % 2 = 0)
+  write a  
   ** conditional termination
-  write ','; 
-  stop if (a < 0);
+  write ',' 
+  stop if (a < 0)
 repeat;
 ```
 
@@ -160,11 +165,11 @@ Nested cycles can be labeled. Local context is optional.
 
 ```
 ** label 2 nested cycles 
-begin
+begin:
   ** local context
-cycle outer
+cycle outer:
   ** outer cycle
-  cycle inner
+  cycle inner:
     ** skip both cycles
     skip outer if (condition)
     ...    
@@ -177,16 +182,16 @@ repeat;
 **example**
 
 ```
-begin
-  make x   := 9; 
-  make a,r := 0;
-cycle
-  alter r := x % 2;
-  alter a := (0: r = 0, 1);
+begin:
+  make x   := 9 
+  make a,r := 0
+cycle:
+  alter r := x % 2
+  alter a := (0: r = 0, 1)
   write "{1}:{2}" <+ (x,a)
-  alter x -= 1;
-  write ',';
-  stop if (x < 5);
+  alter x -= 1
+  write ','
+  stop if (x < 5)
 repeat;
 
 print ** 9:1, 8:0, 7:1, 6:0, 5:1,
@@ -197,17 +202,17 @@ print ** 9:1, 8:0, 7:1, 6:0, 5:1,
 Controlled repetitive block:
 
 ```
-begin
-  -- local declarations
-while (condition)
-  -- repetitive block
+begin:
+   -- local declarations
+while (condition):
+   -- repetitive block
   ...
-  skip if condition; -- continue
+  skip if (condition)  -- continue
   ...
-  stop if condition; -- break
+  stop if (condition)  -- break
   ...
-else
-  -- alternate path
+else:
+   -- alternate path
 repeat;
 ```
 
@@ -219,14 +224,14 @@ repeat;
 **example**
 
 ```
-begin
-  make a := 10;
-while (a > 0)
-  alter a -= 1;
-  -- conditional repetition
-  when (a % 2 ≠ 0)  
-    write a;  
-    write ','; 
+begin:
+  make a := 10
+while (a > 0):
+  alter a -= 1
+   -- conditional repetition
+  when (a % 2 ≠ 0):
+    write a  
+    write ',' 
   ready;
 repeat;
 print;
@@ -239,17 +244,17 @@ One while block statement can be nested:
 **pattern:** 
 
 ```
-begin
-  -- local declarations
-while (condition) 
-  -- outer loop   
-  while condition:
-    -- inner loop
+begin:
+   -- local declarations
+while (condition):
+   -- outer loop   
+  while (condition):
+     -- inner loop
   repeat;  
-  -- continue outer loop
+   -- continue outer loop
   ...
-  while condition:
-    -- inner loop
+  while (condition):
+     -- inner loop
     ...
   repeat;
   ...       
@@ -259,18 +264,18 @@ repeat;
 **example**
 
 ```
-begin
-  make x   := 9;
-  make a,r := 0;
-while (x < 5)
-  alter r := x % 2;
-  alter a := (0 if r = 0, 1 if r = 0, 2);
-  write "{1}:{2}" <+ (x,a);
-  write ',' if (x < 5);
-  alter x -= 1;  
+begin:
+  make x   := 9
+  make a,r := 0
+while (x < 5):
+  alter r := x % 2
+  alter a := (0 if r = 0, 1 if r = 0, 2)
+  write "{1}:{2}" <+ (x,a)
+  write ',' if (x < 5)
+  alter x -= 1  
 repeat;
 
-print;
+print
 --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
@@ -280,13 +285,13 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ``` 
-local
-  make var ∈ N; 
-scan N[min..max] +> var
-  ** block statements;
-  skip if (condition);
+begin:
+  make var ∈ N 
+scan N[min..max] +> var:
+  ** block statements
+  skip if (condition)
   ...
-  stop if (condition);
+  stop if (condition)
   ...
 next;
 ```
@@ -297,16 +302,16 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-begin
-  make i ∈ Z;
-scan Z[0..10] +> i
+begin:
+  make i ∈ Z
+scan Z[0..10] +> i:
   ** force next iteration
-  when (i % 2 = 0)
-    skip;
-  else
+  when (i % 2 = 0):
+    skip
+  else:
     ** write only odd numbers
-    write(i);
-    write(',') if (i < 10);
+    write(i)
+    write(',') if (i < 10)
   ready;
 next;
 ```
@@ -331,34 +336,34 @@ The "trial" statement execute a sequential process that can fail for some reason
 
 **pattern**
 ```
-begin
-  -- local context
-trial
-  -- private/setup region
+begin:
+   -- local context
+trial:
+   -- private/setup region
   ...
-  -- fail with error code
-  fail code if (condition);
+   -- fail with error code
+  fail code if (condition)
 
-  -- fail with error code and message
-  fail {code,"message"} if (condition);
+   -- fail with error code and message
+  fail {code,"message"} if (condition)
 
-  -- multiple use cases
-  case name_1
-    abort if (condition);
-  case name_2
-    retry name_1 if (condition);
-  case name_3
-    solve name_4 if (condition);  
+   -- multiple use cases
+  case name_1:
+    abort if (condition)
+  case name_2:
+    retry name_1 if (condition)
+  case name_3:
+    solve name_4 if (condition)  
   ...    
-error code
-  -- patch statement
-error code
-  -- patch statement  
+error code:
+   -- patch statement
+error code:
+   -- patch statement  
 ...  
-cover
-  -- other errors  
-final
-  -- finalization
+cover:
+   -- other errors  
+final:
+   -- finalization
 ready;
 ```
 

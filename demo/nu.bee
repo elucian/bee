@@ -2,22 +2,22 @@
           Working with references              
 ----------------------------------------------+
 #driver "nu"
-make d, e @ Z;    --reference to natural number
-make s := 10 ∈ Z; --> define integer
+make d, e @ Z    --reference to natural number
+make s := 10 ∈ Z --> define integer
 -- assign "by reference" 
-alter d :: s; -- explicit boxing address for "s"
-alter d += 1; -- alter underline value of d that is s  
-print s; --> s = 11  (modified)
-print d; --> d = 11  (modified) 
+alter d :: s -- explicit boxing address for "s"
+alter d += 1 -- alter underline value of d that is s  
+print s--> s = 11  (modified)
+print d--> d = 11  (modified) 
 
 -- wrong assignment using "::"
-trial
-  alter e := s; 
-other
+trial:
+  alter e := s
+cover:
   -- expect error "Null reference error"
-  print "failed:".$error.message;
+  print "failed:".$error.message
 ready;
  
 -- test modifier effect
-fail if ¬ (s ≡ d); 
+fail if ¬ (s ≡ d)
 over.

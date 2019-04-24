@@ -8,44 +8,44 @@ make  ch := [N](c)   -- define channel
 
 --  ch is the communication channel
 rule producer(ch @ [N]):
-  make item := 0 ∈ N;
+  make item := 0 ∈ N
   while (len(ch) < c):
-    alter item  := random(10);
-    alter ch    += item;
-    yield consumer;  
-  repeat;  
+    alter item  := random(10)
+    alter ch    += item
+    yield consumer
+  repeat;
 return;
 
 --  ch is the communication channel
 rule consumer(ch @ [N]):
-  make item ∈ N;
-  while
-    stop if (len(ch) = 0);     
-    alter item := ch[?]; 
-    alter ch   -= ch[?]; -- FIFO
-    wait  30;   
-    yield producer;
-  repeat;  
+  make item ∈ N
+  cycle:
+    stop if (len(ch) = 0)
+    alter item := ch[?]
+    alter ch   -= ch[?]-- FIFO
+    wait  30
+    yield producer
+  repeat;
 return;
 
 -- controller
-make i := 0;
-make x := 0;
+make i := 0
+make x := 0
 while (x < 100):
   -- produce on 4 threads   
-  alter i := 0;
-  while i < 4;
-     start producer(q);
-     alter i += 1;      
-  repeat;   
-  alter i := 0;
+  alter i := 0
+  while (i < 4):
+     start producer(q)
+     alter i += 1
+  repeat;
+  alter i := 0
   -- consume on 8 threads  
-  while stop < 8;
-     start consumer(ch);     
-     alter i += 1;
-  repeat;  
-  rest;
-  alter x += 1; 
+  while (i < 8)
+     start consumer(ch)
+     alter i += 1
+  repeat;
+  rest
+  alter x += 1
 repeat;
 
 over.

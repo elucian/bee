@@ -22,15 +22,15 @@ $pro_home
   |-- bin
   |
   |-- src
-  |    |-- aspect1.bee
-  |    |-- aspect2.bee
+  |   |-- aspect1.bee
+  |   |-- aspect2.bee
   |
   |-- lib
-  |    |-- library1.bee
-  |    |-- library2.bee
+  |   |-- library1.bee
+  |   |-- library2.bee
   |
   |-- doc
-  |    |-- readme.md
+  |   |-- readme.md
   |
   |-- client.bee
   |-- server.bee
@@ -73,9 +73,9 @@ Libraries are reusable project components usually located in _"lib"_ folder. A l
 Symbol "#" is used to create a compiler directive. Bee has 3 kind of program files each with different role: 
 
 ```
-#library -- declare reusable library
-#aspect  -- declare one aspect of a problem
-#driver  -- declare main program
+#library  -- declare reusable library
+#aspect   -- declare one aspect of a problem
+#driver   -- declare main program
 ```
 
 **Notes**
@@ -88,13 +88,13 @@ Symbol "#" is used to create a compiler directive. Bee has 3 kind of program fil
 
 Bee is using 7 kind of declarations:
 
-* load    -- define: library/aspect
-* define  -- define: constant
-* input   -- define: aspect parameters
-* output  -- define: aspect results
-* type    -- define: data types
-* make    -- define: variable
-* rule    -- define: rule
+* load     -- define: library/aspect
+* define   -- define: constant
+* input    -- define: aspect parameters
+* output   -- define: aspect results
+* type     -- define: data types
+* make     -- define: variable
+* rule     -- define: rule
 
 ## Statement
 
@@ -102,29 +102,30 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* alter   --change/modify variable value or assign new value
-* read    --accept input from console into a variable
-* write   --output to console result of an expressions
-* play    --play one aspect of a larger problem
+* alter    --change/modify variable value or assign new value
+* read     --accept input from console into a variable
+* write    --output to console result of an expressions
+* play     --play one aspect of a larger problem
 
 **notes:**
 
-* Any statement is mandatory terminated by ";" 
+* One statement is usually ending at end of line;
 * Multiple statements on a single line are separated by ";"
 
 ## Code block
 Statements can be contained in blocks of code.
 
-* when    -- create multi-path selector using conditions
-* cycle   -- create unconditional repetitive block of code
-* while   -- create conditional repetitive block of code
-* scan    -- create a block of cote to visit elements in a collection
-* trial   -- create a block of code to handle exceptions
+* when     -- create multi-path selector using conditions
+* cycle    -- create unconditional repetitive block of code
+* while    -- create conditional repetitive block of code
+* scan     -- create a block of cote to visit elements in a collection
+* trial    -- create a block of code to handle exceptions
 
 **notes:**
 
-* Each block of code start with a specific keyword.
-* Block of code is ending with keywords ("repeat", "ready", "next")
+* Each block of code start with a specific keyword;
+* Block of code is ending with one of keywords: ("repeat", "ready", "next");
+* Block of code require ";" after the finalization keyword;
 
 ## Driver file
 
@@ -142,21 +143,21 @@ Rogue statements are executed top down until over keyword is riched.
 #driver "main"
 
 -- declare input parameters
-input *params ∈ [String]; 
+input *params ∈ [String] 
 
-make c := params.count;
-halt -1 if (c = 0);
+make c := params.count
+halt -1 if (c = 0)
 
 -- comma separated parameters
-begin
-  make i:= 0 ∈ Z;
-while (i < c)
-  write params[i];
-  alter i += 1;
-  write "," if (i < c);
+begin:
+  make i:= 0 ∈ Z
+while (i < c):
+  write params[i]
+  alter i += 1
+  write "," if (i < c)
 repeat;
 -- print the buffer to console
-print;
+print
 
 -- end of "main" program:
 over.
@@ -177,7 +178,7 @@ In Bee library can be imported like this:
 **Imports:**
 
 ```
-load bee_lib:(*);
+load bee_lib:(*)
 ```
 
 * use :(*) all public members are used
@@ -188,8 +189,8 @@ Using a qualifier for Bee aspect members:
 **pattern**
 ```
 -- load with qualifier
-load qualifier := path/library_name:(*);
-load qualifier := path/library_name:(member_list);
+load qualifier == path/library_name:(*)
+load qualifier == path/library_name:(member_list)
 
 -- use qualifier for rule execution:
 apply qualifier.rule_name(arguments);
@@ -217,13 +218,13 @@ One module or library is using a single global context.
 * Some pre-defined system variables are available in global context.
 
 ```
-$path    = $bee_path  --contains a list of folders
-$program = $bee_pro   --contains path to current program
-$runtime = $bee_home  --contains path to Bee runtime home
-$error       --contains last exception/error created by "fail"
-$precision   --contains default precision for Q = 0.001
-$global      --global context: universal qualifier
-$local       --local context: universal qualifier
+$path    = $bee_path   --contains a list of folders
+$program = $bee_pro    --contains path to current program
+$runtime = $bee_home   --contains path to Bee runtime home
+$error        --contains last exception/error created by "fail"
+$precision    --contains default precision for Q = 0.001
+$global       --global context: universal qualifier
+$local        --local context: universal qualifier
 ```
 
 **note** System variable do not require context qualifier
@@ -231,10 +232,10 @@ $local       --local context: universal qualifier
 **importing**
 
 ```
-load cpp_lib := $runtime.cpp.myLib:(*) --load cpp library
-load asm_lib := $runtime.asm.myLib:(*) --load asm library
-load bee_lib := $runtime.lib.myLib:(*) --load core library
-load pro_lib := $program.lib.myLib:(*) --load project library
+load cpp_lib == $runtime.cpp.myLib:(*)  --load cpp library
+load asm_lib == $runtime.asm.myLib:(*)  --load asm library
+load bee_lib == $runtime.lib.myLib:(*)  --load core library
+load pro_lib == $program.lib.myLib:(*)  --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -247,13 +248,13 @@ Local context is a private memory space.
 ```
 #driver "test"
 ** global context
-make i := 1 ∈ Z;   
+make i := 1 ∈ Z  
 begin:
   ** local context
-  make i := 2 ∈ Z; 
-  print i; -- expected: 2
+  make i := 2 ∈ Z
+  print i -- expected: 2
 ready;
-print i; -- expected: 1  
+print i -- expected: 1  
 
 over.
 ```
@@ -269,17 +270,17 @@ In Bee all members that begin with dot "." are public members.
 
 ```
 --public constant
-define .pi := 3.14;
+define .pi := 3.14
 
 --public variable
-make .v ∈ N;
+make .v ∈ N
 
 --public rule
-rule .f(x ∈ N) => (x + 1) ∈ N;
+rule .f(x ∈ N) => (x + 1) ∈ N
 
 --public rule
 rule .m(x, y ∈ N, r @ N):
-  alter r := x + y;
+  alter r := x + y
 return;
 ```
 ## Rule ABI mapping
@@ -291,11 +292,11 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-load $runtime.cpp.myLib.(*); -- load cpp library
+load $runtime.cpp.myLib.(*) -- load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z):
-  alter x := myLib.fib(n -> Z);
+  alter x := myLib.fib(n -> Z)
 return;
 
 ```
@@ -304,10 +305,10 @@ This is the driver file.
 ```
 #driver "main"
 -- load library
-load $bee.lib.myLib.(*);
+load $bee.lib.myLib.(*)
 
 --use external rule
-print myLib.fib(5);
+print myLib.fib(5)
 ```
 
 To understand more about interacting with other languages check this article about ABI:
@@ -322,7 +323,7 @@ Bee enable several notations for comments:
 
 For single line comments we use a pair of two symbols: 
 
-{ "--", "**", "##" } 
+{ " --", "**", "##" } 
 
 **Comment conventions:**
 
@@ -335,25 +336,23 @@ For single line comments we use a pair of two symbols:
 2. In Wiki "##" represents title 2. Iʼm using Wiki notation to print Bee documentation.
 3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
 
-The only problem is the apostrophe must not use "'" instead you can use Unicode symbol: ` ʼ `
+The only problem is the apostrophe must not use "'" instead you can use Unicode symbol: `ʼ`
 
 **Possible separators:**
 
 If a program is very large you can use separators to create large sections of code.
 
 ```
-------------------------
 ************************
 ```
 
 ### Multi-line comments
 
-For multi-line comments we have 3 possible comments.
+For multi-line comments we have 2 possible comments.
 
 ```
-1. Vertical bar comment:      |* .... *| (expression comment)
-2. (+/-) comment  block:      +- .....-+ (start program comment)
-3. A rogue string that is not used in a statement is ignored by the compiler. 
+1. Outline: {* .... *} (nested comment/expression comment)
+2. Box comment: +-..-+ (beginning of program/section comment)
 ```
 
 **Example:**
@@ -367,18 +366,17 @@ In next example we are using various comments into a demo program.
 ----------------------------------------------------------------+
 #driver "demo"
 
+
 ## This is a title in program
 
 ** This is a sub-title in program
 
--- this is a demo driver with comments
-
-over.
-*******************************************************************
- After end of program we can use free text or normal comments. 
- These kind of comments are not available inside the program body. 
-*******************************************************************
+over.  -- end of program
 ```
+
+**note:** 
+Any test after the end of programm is considered a comment and
+is ignored by the compiler. After last "." nothing else is parsed.
 
 ## Execution
 
@@ -394,14 +392,14 @@ One library is loaded only once. If a library is imported in many aspects and co
 
 ### Aspect Execution
 
-A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before resolving an aspect the driver can interact with the user to ask for input. After resolving an aspect the driver can retrieve and report or combine the results.
+A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver who can report the results or a provide a summary feedback.
 
 **properties**
 
 * An aspect can be executed once or multiple times; 
 * One aspect of a problem is executed using keyword _resolve_;
 * An aspect can receive parameters and can produce results;
-* An aspect is always executed synchronously, never in parallel;
+* An aspect is always executed synchronously, not in parallel;
 * An aspect can not be used in expressions except unpacking or assignment;
 * An aspect can be terminated early using silent:"exit" or "fail" with error;
 * Using "halt" in aspect cause the program to stop immediately with error.
@@ -410,16 +408,13 @@ A large program can have multiple _aspects_. The driver control the execution of
 
 ```
 -- declare an alias for an aspect file
-load aspect_name := $pro.src.file_name.bee;
+load aspect_name := $pro.src.file_name.bee
 
 -- play when aspect do not have any result:
-play aspect_name(parameter_list);
+play aspect_name(parameter_list)
 
 -- result can be captured using ":=" or any other modifier:
-play result := aspect_name(parameter_list);
-
--- resolving and capture results in a list;
-play result_list <+ aspect_name(parameter_list);
+play aspect_name(parameter_list) +> result
 ```
 
 ### Parameters
@@ -427,13 +422,13 @@ play result_list <+ aspect_name(parameter_list);
 ```
 #aspect "mod"
 
-input  i ∈ Z; -- define parameter "i"
-output v ∈ N; -- define result "v"
+input  i ∈ Z -- define parameter "i"
+output v ∈ N -- define result "v"
 
-when (i < 0)
-  alter v := -i;
-else
-  alter v := i;
+when (i < 0):
+  alter v := -i
+else:
+  alter v := i
 ready;  
 
 over.
@@ -443,14 +438,14 @@ over.
 #driver "main"
 
 -- define variable result
-make result ∈ N;
+make result ∈ N
 
 -- define aspect "mod"
 load mod := $pro/mod.bee
 
 -- execute aspect "mod"
-play  result := mod(-3) ;
-print result; --> expect: 3
+play  mod(-3) +> result
+print result --> expect: 3
 
 over.
 ```
@@ -459,8 +454,8 @@ over.
 
 One aspect can have multiple parameters and multiple results:
 ```
-input a,b ∈ Z, c ∈ R; -- define parameters "a,b,c"
-output v,z ∈ N; -- define two results "v" and "z"
+input a,b ∈ Z, c ∈ R -- define parameters "a,b,c"
+output v,z ∈ N -- define two results "v" and "z"
 ```
 
 **note:** 
