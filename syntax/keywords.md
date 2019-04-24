@@ -5,11 +5,11 @@ Bee uses 50 reserved keywords to create basic statements:
 ```
 03: if, is, to
 05: #driver, #library, #aspect, #timer, #precision
-08: rule, type, make, load, clone, define, input, output
+08: rule, type, make, load, clone, define, input, output, return
 07: read, play, write, print, alter, scrap, apply 
 08: when, else, cycle, while, repeat, scan, next, ready
 07: begin, with, trial, case, error, cover, final
-12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume, return
+12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 ```
 
 **notes:** 
@@ -51,6 +51,7 @@ Next statements are used to declare or create a module member.
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or rule prototype 
 | clone    | Create a new rule from an rule prototype
+| return   | End rule declaration and return control to caller
 
 ### Execution statements
 
@@ -103,7 +104,6 @@ These keywords are jumps or termination statements.
 | retry    | Execute a previous case into a trial block
 | solve    | Solve one forward case into a trial block
 | resume   | Used in trial block to continue next case after failure
-| return   | End rule and return control to caller
 | halt     | Create unrecoverable error and stop program
 | over.    | End driver, library or module file. Dot suffix is mandatory.
 
