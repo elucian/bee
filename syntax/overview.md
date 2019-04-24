@@ -630,11 +630,11 @@ apply foo
 ```
 
 **notes:**
-* A rule block is finalized with keyword "over;"
-* A rule can be executed using keyword "apply";
-* A rule can be terminated early using "exit";
-* A rule can be interrupted with error using "fail";
-* A program can be terminated from a rule using: "halt";
+* A rule block is finalized with keyword: _over_;
+* A rule can be executed using keyword: _apply_;
+* A rule can be terminated early using: _exit_;
+* A rule can be interrupted with error using: _fail_;
+* A program can be terminated from a rule using: _halt_;
 
 ## Parameters
 
@@ -648,6 +648,35 @@ Parameters are special variables defined in rule signature.
 * Basic arguments and literal arguments are pass by value;
 * Composite type parameters can be pass by reference or by value;
 * For input/output parameters we are using "@" instead of "∈";
+
+
+## Dynamic rules
+
+A rule that change itself during runtime is called _dynamic rule_. 
+
+**attributes**
+
+A dynamic rule can have state variables defined with dot prefix:
+
+* Static variables are called rule attributes;
+* Rule attributes are public and can be accessed using dot qualifier;
+
+**pattern**
+```
+rule name(param ∈ type,...):
+   -- define x,y,z states
+   make .x, .y, .z := 0 ∈ Z   
+   ...
+return;
+
+-- modify rule states
+alter rule.x = 1
+alter rule.y = 2
+alter rule.z = 3
+
+-- read rule states
+print rule.x, rule.y, rule.z -- 1 2 3
+```
 
 ## Static rules
 
@@ -689,63 +718,19 @@ print c -- 1
 
 ```
 
-**Notes:** 
-
-* Rules can be used in expressions;
-* There is no return statement in a return;
-
 **properties:** 
 
 Static rules ...
 * can have local states and local context;
 * can receive input/output parameters;
-* can have side-effects;
-* results can be captured using unpacking `<+`;
-* can have public attributes using dot prefix;
-* are defined once and can not be redefined;
+* can be overvritten using different parameters;
+* can have results to be captured using +>;
+
 
 **See also:**
 * [bs.bee](../demo/bs.bee)  -- Bubble Sort
 
-## Expression rules
-
-Expression rules are based on a single expression. 
-
-**syntax**
-```
-rule name(param ∈ Type,...) ∈ Type => (expression)
-```
-
-**Example:** 
-
-```
--- define "exp" a rule
-rule xp(x,y ∈ Z) ∈ Z => (x + y)
-
--- using the rule in other expressions
-make z := xp(1,1) + 1
-print  z -- print 3
-```
-
-**properties**
-
-Expression rules...
-* have a single result;
-* are deterministic;
-* are binding external states;
-* are using referential transparency;
-* can be created at runtime;
-* can be overwritten or recreated;
-* do not have side-effects;
-* can not be interrupted from execution;
-
-**See also:**
-* [pm.bee](../demo/pm.bee)  -- expression rule
-* [fn.bee](../demo/fn.bee)  -- pattern matching rule
-* [fi.bee](../demo/fi.bee)  -- recursive rule
-* [rp.bee](../demo/rp.bee)  -- rule as parameter
-
-## Rule prototype
+## Generic rules
 
 A rule prototype is a generic rule that can be cloned.
 
@@ -789,6 +774,44 @@ print dec(1) -->  0
 print dec(2) -->  1
 print dec(0) --> -1
 ```
+
+## Expression rules
+
+Expression rules are based on a single expression. 
+
+**syntax**
+```
+rule name(param ∈ Type,...) ∈ Type => (expression)
+```
+
+**Example:** 
+
+```
+-- define "exp" a rule
+rule xp(x,y ∈ Z) ∈ Z => (x + y)
+
+-- using the rule in other expressions
+make z := xp(1,1) + 1
+print  z -- print 3
+```
+
+**properties**
+
+Expression rules...
+* have a single result;
+* are deterministic;
+* are binding external states;
+* are using referential transparency;
+* can be created at runtime;
+* can be overwritten or recreated;
+* do not have side-effects;
+* can not be interrupted from execution;
+
+**See also:**
+* [pm.bee](../demo/pm.bee)  -- expression rule
+* [fn.bee](../demo/fn.bee)  -- pattern matching rule
+* [fi.bee](../demo/fi.bee)  -- recursive rule
+* [rp.bee](../demo/rp.bee)  -- rule as parameter
 
 **See also:**
 * [ho.bee](../demo/ho.bee)  -- High order rule
