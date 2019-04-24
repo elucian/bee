@@ -42,12 +42,12 @@ type Φ <: R[-90..+90]   ;
 
 **legend**
 
-λ = latitude
-φ = longitude
-ε = elevation
-pint  = point of interest
-snode = start node
-enode = end node
+* λ = latitude
+* φ = longitude
+* ε = elevation
+* pint  = point of interest
+* snode = start node
+* enode = end node
 
 
 ## Enumerations
