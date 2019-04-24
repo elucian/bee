@@ -83,14 +83,16 @@ You can scan one table like a collection:
 **pattern**
 ```
 begin:
-  ** declare current record
-  make  current_record ∈ {record_field ∈ data_type, ...}
-scan db.table_name +> current_record:
-  with current_record:
-    ** use current_record fields
-    ... 
-  ready; 
-repeat;
+  -- declare current record
+  make  current_record ∈ {record_field ∈ data_type, ...}  
+  scan db.table_name +> current_record:
+    -- establish qualifier suppressor 
+    with current_record:
+      ** use current_record fields
+      ... 
+    ready; 
+  repeat; 
+ready;
 ```
 
 **Mutating data**
@@ -98,24 +100,25 @@ You can modify table data using current_record fields. First you modify values f
 
 ```
 type: Record_Type <: {record_fields}
-make  index ∈ Z
 begin:
   make current_record ∈ Record_Type
-scan db.table_name +> current_record:
-  ** update current table
-  update db.table_name[rowid:current_record.rowid]:
-     alter field_name := new_value
-     ...
-  ready;
-  alter index += 1
-  ** commit batch of 10
-  when (index = 10):
-    apply db.commit()
-    alter index := 0
-  ready;
-next;
-** commit all pending updates
-apply db.commit() if (index > 0)
+  make index ∈ Z
+  scan db.table_name +> current_record:
+    ** update current table
+    update db.table_name[rowid:current_record.rowid]:
+       alter field_name := new_value
+       ...
+    ready;
+    alter index += 1
+    ** commit batch of 10
+    when (index = 10):
+      apply db.commit()
+      alter index := 0
+    ready;
+  next;
+  ** commit all pending updates
+  apply db.commit() if (index > 0)
+ready;  
 
 ```
 

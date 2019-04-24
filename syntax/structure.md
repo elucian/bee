@@ -151,13 +151,14 @@ halt -1 if (c = 0)
 -- comma separated parameters
 begin:
   make i:= 0 ∈ Z
-while (i < c):
-  write params[i]
-  alter i += 1
-  write "," if (i < c)
-repeat;
--- print the buffer to console
-print
+  while (i < c):
+    write params[i]
+    alter i += 1
+    write "," if (i < c)
+  repeat;
+  -- print the buffer to console
+  print
+ready;  
 
 -- end of "main" program:
 over.

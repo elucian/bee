@@ -12,7 +12,7 @@ Bee has 7 control flow statements:
 
 ## begin
 
-Define local context for a block of code;
+Define anonumous block of code;
 
 ```
 begin:
@@ -22,9 +22,8 @@ ready;
 ```
 
 **Note:**
-* local context is ending with _ready_ keyword;
-* after ready you must use ";" as block terminator;
 * after begin you can use ":" to suggest "define" block;
+* after ready you must use ";" as block terminator;
 
 ## with
 
@@ -120,8 +119,6 @@ Create unconditional repetitive statement block.
 **pattern**
 
 ```
-begin:
-   -- define local context
 cycle:
   ...
   skip if (condition)
@@ -140,15 +137,16 @@ repeat;
 ```
 begin:
   make a := 10 ∈ Z
-cycle:
-  alter a -= 1
-  ** conditional repetition
-  skip if (a % 2 = 0)
-  write a  
-  ** conditional termination
-  write ',' 
-  stop if (a < 0)
-repeat;
+  cycle:
+    alter a -= 1
+    ** conditional repetition
+    skip if (a % 2 = 0)
+    write a  
+    ** conditional termination
+    write ',' 
+    stop if (a < 0)
+  repeat;
+ready;
 ```
 
 **Notes:** 
@@ -165,8 +163,6 @@ Nested cycles can be labeled. Local context is optional.
 
 ```
 ** label 2 nested cycles 
-begin:
-  ** local context
 cycle outer:
   ** outer cycle
   cycle inner:
@@ -185,16 +181,16 @@ repeat;
 begin:
   make x   := 9 
   make a,r := 0
-cycle:
-  alter r := x % 2
-  alter a := (0: r = 0, 1)
-  write "{1}:{2}" <+ (x,a)
-  alter x -= 1
-  write ','
-  stop if (x < 5)
-repeat;
-
-print ** 9:1, 8:0, 7:1, 6:0, 5:1,
+  cycle:
+    alter r := x % 2
+    alter a := (0: r = 0, 1)
+    write "{1}:{2}" <+ (x,a)
+    alter x -= 1
+    write ','
+    stop if (x < 5)
+  repeat;
+  print -- expect 9:1, 8:0, 7:1, 6:0, 5:1,
+ready;
 ```
 
 ## While
@@ -203,17 +199,18 @@ Controlled repetitive block:
 
 ```
 begin:
-   -- local declarations
-while (condition):
-   -- repetitive block
-  ...
-  skip if (condition)  -- continue
-  ...
-  stop if (condition)  -- break
-  ...
-else:
-   -- alternate path
-repeat;
+  -- local declarations
+  while (condition):
+     -- repetitive block
+    ...
+    skip if (condition)  -- continue
+    ...
+    stop if (condition)  -- break
+    ...
+  else:
+     -- alternate path
+  repeat;
+ready;   
 ```
 
 **Notes:** 
@@ -224,8 +221,8 @@ repeat;
 **example**
 
 ```
-begin:
-  make a := 10
+-- use global context
+make a := 10 
 while (a > 0):
   alter a -= 1
    -- conditional repetition
@@ -244,8 +241,6 @@ One while block statement can be nested:
 **pattern:** 
 
 ```
-begin:
-   -- local declarations
 while (condition):
    -- outer loop   
   while (condition):
@@ -264,9 +259,9 @@ repeat;
 **example**
 
 ```
-begin:
-  make x   := 9
-  make a,r := 0
+-- use global context
+make x   := 9
+make a,r := 0
 while (x < 5):
   alter r := x % 2
   alter a := (0 if r = 0, 1 if r = 0, 2)
@@ -274,9 +269,7 @@ while (x < 5):
   write ',' if (x < 5)
   alter x -= 1  
 repeat;
-
-print
---> 9:1, 8:0, 7:1, 6:0, 5:1
+print --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
 ## Scan 
@@ -285,8 +278,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ``` 
-begin:
-  make var ∈ N 
+make var ∈ N 
 scan N[min..max] +> var:
   ** block statements
   skip if (condition)
@@ -302,8 +294,7 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-begin:
-  make i ∈ Z
+make i ∈ Z
 scan Z[0..10] +> i:
   ** force next iteration
   when (i % 2 = 0):
@@ -336,10 +327,8 @@ The "trial" statement execute a sequential process that can fail for some reason
 
 **pattern**
 ```
-begin:
-   -- local context
 trial:
-   -- private/setup region
+   -- private/setup context
   ...
    -- fail with error code
   fail code if (condition)
@@ -347,7 +336,7 @@ trial:
    -- fail with error code and message
   fail {code,"message"} if (condition)
 
-   -- multiple use cases
+  -- multiple use cases
   case name_1:
     abort if (condition)
   case name_2:
