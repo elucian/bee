@@ -115,17 +115,17 @@ Each statement start with one keyword.
 ## Code block
 Statements can be contained in blocks of code.
 
-* when     -- create multi-path selector using conditions
+* begin    -- create unconditional local context
+* when     -- create multi-path conditional selector
 * cycle    -- create unconditional repetitive block of code
 * while    -- create conditional repetitive block of code
-* scan     -- create a block of cote to visit elements in a collection
-* trial    -- create a block of code to handle exceptions
+* scan     -- create visitor block for all elements in a collection
+* trial    -- create trial/error block of code to handle exceptions
 
 **notes:**
 
-* Each block of code start with a specific keyword;
-* Block of code is ending with one of keywords: ("repeat", "ready", "next");
-* Block of code require ";" after the finalization keyword;
+* Each block of code start with a specific keyword,
+* Each block of code is ending with a specific keyword and ";"
 
 ## Driver file
 
@@ -145,10 +145,11 @@ Rogue statements are executed top down until over keyword is riched.
 -- declare input parameters
 input *params ∈ [String] 
 
+-- check existence of parameters
 make c := params.count
 halt -1 if (c = 0)
 
--- comma separated parameters
+-- print comma separated parameters
 begin:
   make i:= 0 ∈ Z
   while (i < c):
@@ -164,17 +165,17 @@ ready;
 over.
 ```
 
+Do not try to understand the example. This is just a worm-up! 
+
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
-* Variable _*params_ is a variable argument;
-* Parameter variable _*params_ is an Array of strings;
-* Bee file is ending with "over." that is mandatory keyword;
+* Variable parameter _*params_ is an array of strings;
+* Any Bee module is ending with "over." that is mandatory keyword;
 * Early driver termination can be trigger by "halt" or "exit";
 
-Do not try to understand the example. This is just a worm-up :)
-
 ## External code
-In Bee library can be imported like this:
+
+Library modules can be imported like this:
 
 **Imports:**
 
@@ -189,7 +190,7 @@ Using a qualifier for Bee aspect members:
 
 **pattern**
 ```
--- load with qualifier
+-- load library, with qualifier:
 load qualifier == path/library_name:(*)
 load qualifier == path/library_name:(member_list)
 
@@ -228,7 +229,7 @@ $global       --global context: universal qualifier
 $local        --local context: universal qualifier
 ```
 
-**note** System variable do not require context qualifier
+**note** System variable do not require context qualifiers:
 
 **importing**
 
