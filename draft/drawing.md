@@ -16,12 +16,12 @@ Each graphic element is a composite data type.
 
  Type  | Name     | Description
 -------|----------|---------------------------------
-  ∠    | Angle    | <: N[0..2 · π] 
   ⊡    | Point    | {x, y ∈ R}
-  ↗    | Vector   | {o, p ∈ ⊡}
-  ↺    | Polar    | {o ∈ ⊡, r ∈ P, α ∈ ∠ }  
+  ⊙    | Polar    | {o ∈ ⊡, r ∈ P, α ∈ ∠ }  
+  ↗    | Vector   | {o, p ∈ ⊡}  
+  ∠    | Angle    | <: N[0..2 · π] 
   ○    | Circle   | {o ∈ ⊡, r ∈ P}  
-  ◴    | Arc      | {o ∈ ⊡, r ∈ P, α,β ∈ ∠ }
+  ◷    | Arc      | {o ∈ ⊡, r ∈ P, α,β ∈ ∠ }
   □    | Square   | {o ∈ ⊡, b ∈ P}
   ◁    | Triangle | {o ∈ ⊡, b ∈ P, α,β,ɣ ∈ ∠}
   ◇    | Diamond  | {o ∈ ⊡, α,β ∈ ∠} 
@@ -32,7 +32,7 @@ Each graphic element is a composite data type.
 
 Type   | Signature                 | Description
 -------|---------------------------|-------------------------------------------------
-P      | R[0..+]                  | Positive number representing distance or length
+P      | R[0..+]                   | Positive number representing distance or length
 V      | {o ∈ ⊡, d ∈ P}            | 2D vectorial space
 H      | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }    | Any shape, with origin and rotation
 Y      | {c ∈ N, v @ [L], m @ [H]} | 2D Layer with c = color, m = set of shapes
