@@ -16,7 +16,7 @@ Each graphic element is a composite data type.
 
  Type  | Name     | Description
 -------|----------|---------------------------------
-  ⊡    | Point    | {x, y ∈ R}
+  ⊡    | Cartesian| {x, y ∈ R}
   ⊙    | Polar    | {o ∈ ⊡, r ∈ P, α ∈ ∠ }  
   ↗    | Vector   | {o, p ∈ ⊡}  
   ∠    | Angle    | <: N[0..2 · π] 
