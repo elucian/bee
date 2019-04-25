@@ -132,7 +132,7 @@ Bee is using constants:  $T = 1 = True and  $F = 0 = False
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
-  ↔   | Inference  | equivalence (if and only if)
+  ↔   | Equivalent | if and only if
   ¬   | NOT        | unary operator
   ∧   | AND        | shortcut operator
   ∨   | OR         | shortcut operator

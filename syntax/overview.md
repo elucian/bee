@@ -394,26 +394,34 @@ type .L <: {.$F:0, .$T:1}
 
 ## Logic operations
 
-Bee uses several familiar operators:
+Bee uses several familiar logic operators:
 
 *  ¬ (not) 
 *  ∧ (and) 
 *  ∨ (or)  
 *  ~ (xor)  
-*  ↔ (inference)  
+*  ↔ (if and only if)  
  
-Precedence: { ¬, ∧, ∨, ~, ↔ }
+Precedence: { ¬, ∧, ∨, ~ }
 
 **comparison**
 Comparison operators will create a logical response: $F = 0 or $T = 1.
 
-* comparison ( ±, ↔, =, ≠, ≡, >, <, ≤, ≥ )
+* comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥, ↔)
 * belonging  ( ∈, ⊃, ⊂ )
 
+**example**
+```
+make x ∈ Z
+when (x = 4 ↔ x - 4 = 0):
+  print "True"
+else:
+  print "False"  
+ready;
+```
 **Precedence:** 
 
-* Logic operators have greater precedence than comparison. 
-
+Logic operators have greater precedence than comparison.
 
 ## Logical expression
 
@@ -440,7 +448,7 @@ print  (x ∨ y) --  1
 * Operators { ¬    } is unary operator;
 * Operators { ∧, ∨ } are also bitwise operators;
 * Operators { ¬, ~ } are also bitwise operators;
-* Operators { ←, →, ↑, ↓ } are bitwise operators;
+* Operators { ←, → } are bitwise operators;
 
 **coercion**
 Any numeric expression ca be converted to logic using coercion operation `-> L`
