@@ -60,12 +60,13 @@ ready;
 
 ## when
 
-Case is a decision statement selector based on one condition.
+The _when_ keyword is a multi-passwey conditional selector.
 
 **syntax**
 ```
 when (condition):
-   -- statement
+   -- statements
+   ...
 ready;
 ```
 
@@ -74,12 +75,11 @@ Dual selector based on single logical expression:
 **pattern**
 ```
 when (condition):
-   -- first branch
+   -- first passway
 else:
-   -- second branch
+   -- second passway
 ready;
 ```
-
 
 **nested**
 
@@ -129,8 +129,8 @@ repeat;
 ```
 
 **notes**
-* It is forbitten to _make_  a new variable in a cycle;
-* It is forbitten to _begin_ a new local context in a nested cycle;
+* It is forbiden to _make_  a new variable in a cycle;
+* It is forbiden to _begin_ a new local context in a nested cycle;
 
 **example**
 
@@ -198,19 +198,16 @@ ready;
 Controlled repetitive block:
 
 ```
-begin:
-  -- local declarations
-  while (condition):
-     -- repetitive block
-    ...
-    skip if (condition)  -- continue
-    ...
-    stop if (condition)  -- break
-    ...
-  else:
-     -- alternate path
-  repeat;
-ready;   
+while (condition):
+   -- repetitive block
+  ...
+  skip if (condition)  -- continue
+  ...
+  stop if (condition)  -- break
+  ...
+else:
+   -- alternate path
+repeat;
 ```
 
 **Notes:** 
@@ -231,7 +228,7 @@ while (a > 0):
     write ',' 
   ready;
 repeat;
-print;
+print
 ```
 
 **Nested loop**
@@ -277,9 +274,9 @@ print --> 9:1, 8:0, 7:1, 6:0, 5:1
 This is used to traverse a _range_ or a _subset_ from a discrete _type_.  
 
 **Pattern:**
-``` 
+```
 make var ∈ N 
-scan N[min..max] +> var:
+scan [min..max] +> var:
   ** block statements
   skip if (condition)
   ...
@@ -328,22 +325,26 @@ The "trial" statement execute a sequential process that can fail for some reason
 **pattern**
 ```
 trial:
-   -- private/setup context
-  ...
-   -- fail with error code
-  fail code if (condition)
-
-   -- fail with error code and message
-  fail {code,"message"} if (condition)
-
+  -- private context
+  ...  
   -- multiple use cases
+  case first:
+    fail code if (condition)
+    ...    
+  case second:
+    fail {code,"message"} if (condition)  
+    ...
   case name_1:
     abort if (condition)
+    ...
   case name_2:
     retry name_1 if (condition)
+    ...
   case name_3:
     solve name_4 if (condition)  
-  ...    
+    ...       
+  case name_4:    
+    ...
 error code:
    -- patch statement
 error code:

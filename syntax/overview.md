@@ -20,7 +20,7 @@ Syntax notation I use a very simple convention:
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
 * [Exceptions](#exceptions)
-* [Rules](#rules)
+* [Basic rules](#basic-rules)
 * [Parameters](#parameters)
 
 ## Expressions
@@ -605,9 +605,9 @@ Next we create unrecoverable exception:
 halt -1  -- end program and exit code = -1
 ```
 
-## Rules
+## Basic rules
 
-An rule is a named code block that can resolve one or multiple tasks. 
+An basic rule is a named block of code that can resolve one or multiple tasks. 
 
 **pattern**
 ```
@@ -630,11 +630,11 @@ apply foo
 ```
 
 **notes:**
-* A rule block is finalized with keyword: _over_;
-* A rule can be executed using keyword: _apply_;
-* A rule can be terminated early using: _exit_;
-* A rule can be interrupted with error using: _fail_;
-* A program can be terminated from a rule using: _halt_;
+A basic rule block ...
+* is finalized with: _return_ keyword;
+* can be executed using: _apply_ keyword;
+* can be terminated early using: _exit_ keyword;
+* can raise and error using: _fail_ keywrod;
 
 ## Parameters
 
@@ -648,35 +648,6 @@ Parameters are special variables defined in rule signature.
 * Basic arguments and literal arguments are pass by value;
 * Composite type parameters can be pass by reference or by value;
 * For input/output parameters we are using "@" instead of "∈";
-
-
-## Dynamic rules
-
-A rule that change itself during runtime is called _dynamic rule_. 
-
-**attributes**
-
-A dynamic rule can have state variables defined with dot prefix:
-
-* Static variables are called rule attributes;
-* Rule attributes are public and can be accessed using dot qualifier;
-
-**pattern**
-```
-rule name(param ∈ type,...):
-   -- define x,y,z states
-   make .x, .y, .z := 0 ∈ Z   
-   ...
-return;
-
--- modify rule states
-alter rule.x = 1
-alter rule.y = 2
-alter rule.z = 3
-
--- read rule states
-print rule.x, rule.y, rule.z -- 1 2 3
-```
 
 ## Static rules
 
@@ -726,24 +697,51 @@ Static rules ...
 * can be overvritten using different parameters;
 * can have results to be captured using +>;
 
+## Dynamic rules
+
+A rule that can be changed during runtime is called _dynamic rule_. 
+
+**attributes**
+
+Attributes of a rule are state variables. That are variables starting with dot prefix.
+
+* Rule attributes are public and can be accessed using dot qualifier;
+* Rule attributes are static: initialized one single time;
+
+**pattern**
+```
+rule name(param ∈ type,...):
+   -- define x,y,z states
+   make .x, .y, .z := 0 ∈ Z   
+   ...
+return;
+
+-- modify rule states
+alter rule.x = 1
+alter rule.y = 2
+alter rule.z = 3
+
+-- read rule states
+print rule.x, rule.y, rule.z -- 1 2 3
+```
 
 **See also:**
 * [bs.bee](../demo/bs.bee)  -- Bubble Sort
 
 ## Generic rules
 
-A rule prototype is a generic rule that can be cloned.
+A generic rule is a rule template. Is a prototype that can be cloned.
 
 **pattern**
 ```
 -- define a rule prototype
-rule prototype{attributes}(parameters) => (result ∈ Type):
+rule prototype_name{attributes}(parameters) => (result ∈ Type):
    -- compute the result
   alter result := expression(parameters)
 return;
 
 -- making a rule clone from prototype
-clone name:= prototype{arguments}
+clone new_name:= prototype_name{arguments}
 ```
 
 **notes:**
@@ -798,13 +796,13 @@ print  z -- print 3
 **properties**
 
 Expression rules...
-* have a single result;
-* are deterministic;
+* have a single result not a list;
+* do not have side-effects;
+* are always deterministic;
 * are binding external states;
 * are using referential transparency;
 * can be created at runtime;
 * can be overwritten or recreated;
-* do not have side-effects;
 * can not be interrupted from execution;
 
 **See also:**
