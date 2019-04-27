@@ -70,8 +70,7 @@ symbol| description
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
  ::   | explicit reference \| explicit boxing
- :=   | modify value \| deep copy
- ==   | create qualifier \| alias for qualifier
+ :=   | modify value \| deep copy \| alias qualifier
  
 
 

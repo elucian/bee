@@ -39,7 +39,7 @@ ready;
 Using alias for qualifier:
 
 ```
-with short == long.qualifier:
+with short := long.qualifier:
    -- instead of long_qualifier.member()
   apply short.member() 
 ready;
@@ -48,7 +48,7 @@ ready;
 Using 2 qualifiers for mapping assignment:
 
 ```
-with (target == target_qualifier, source == source_qualifier):
+with (target := target_qualifier, source := source_qualifier):
    -- copy value from source to target
   alter target.member := source.member
 ready;

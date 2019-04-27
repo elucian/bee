@@ -191,8 +191,8 @@ Using a qualifier for Bee aspect members:
 **pattern**
 ```
 -- load library, with qualifier:
-load qualifier == path/library_name:(*)
-load qualifier == path/library_name:(member_list)
+load qualifier := path/library_name:(*)
+load qualifier := path/library_name:(member_list)
 
 -- use qualifier for rule execution:
 apply qualifier.rule_name(arguments);
@@ -234,10 +234,10 @@ $local        --local context: universal qualifier
 **importing**
 
 ```
-load cpp_lib == $runtime.cpp.myLib:(*)  --load cpp library
-load asm_lib == $runtime.asm.myLib:(*)  --load asm library
-load bee_lib == $runtime.lib.myLib:(*)  --load core library
-load pro_lib == $program.lib.myLib:(*)  --load project library
+load cpp_lib := $runtime.cpp.myLib:(*)  --load cpp library
+load asm_lib := $runtime.asm.myLib:(*)  --load asm library
+load bee_lib := $runtime.lib.myLib:(*)  --load core library
+load pro_lib := $program.lib.myLib:(*)  --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
