@@ -4,7 +4,7 @@
 </a>
 </p>
 
-<p align="center"> <a href=syntax/index.md>Bee Syntax</a></p>
+<p align="center"> <a href=syntax/readme.md>Bee Syntax</a></p>
 
 <p align="center">
 Copyright 2018 Elucian Moise

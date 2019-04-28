@@ -30,4 +30,4 @@ So far we have following features pending approval:
 1. [Databases](databases.md) - database layer
 
 
-**Read next:** [index](../syntax/index.md)
+**Read next:** [index](../syntax/readme.md)

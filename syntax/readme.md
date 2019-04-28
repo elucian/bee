@@ -50,20 +50,6 @@ Unverified demo source files:
 1. [gc.bee](../demo/gc.bee) - Generator class demo
 1. [bs.bee](../demo/bs.bee) - Bubble sort algorithm
 
-## Draft
-
-So far we have following features pending approval:
-
-1. [Generic](../draft/generic.md) - generic rules
-1. [Dynamic](../draft/dynamic.md) - dynamic programming
-1. [Concurrent](../draft/concurrent.md) - concurrent programming
-1. [Builder](../draft/builder.md) - set builder
-1. [Rational](../draft/rational.md) - fixed point arithmetics
-1. [Recursion](../draft/recursion.md) - tail recursion
-1. [Drawing](../draft/drawing.md) - vector graphics
-1. [Geography](../draft/geography.md) - earth maps and GIS
-1. [Databases](../draft/databases.md) - database layer
-
 ## Tools
 
 For syntax highlighter you can use Notepad++.
