@@ -1,11 +1,12 @@
 ## Syntax Overview
 
-Syntax notation I use a very simple convention:
+Syntax notation I use a examples with a simple convention:
 
-* I use suggestive names to represent identifiers;
-* I use "..." to represent repetitive sequences;
-* I use " --"  to make comments for multi-block statements;
-* I use notes or examples to explain design patterns;
+* Instead of BNF, I use a design _prototype_;
+* With suggestive names to represent identifiers;
+* I have used "..." for repetitive sequences;
+* I have used "--"  to make comments about statements;
+* I use examples and notes to explain semantics;
 
 **bookmarks**
 
