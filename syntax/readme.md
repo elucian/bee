@@ -9,7 +9,7 @@ These are Bee core ingredients:
 1. [operators](operators.md)
 1. [keywords](keywords.md)
 1. [symbols](symbols.md)
-1. [demo](../demo/readme.xml)
+1. [demo code](../demo/readme.md)
 
 ## User manual
 
