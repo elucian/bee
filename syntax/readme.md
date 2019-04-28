@@ -39,7 +39,7 @@ For syntax highlighter you can use Notepad++.
 
 ## Community
 
-We are active on Reddit and Discord.
+Follow us on Reddit and Discord:
 
-**Reddit:** [bee-lang](https://www.reddit.com/r/bee_lang/)
-**Discord:** [sage-code](https://discordapp.com/invite/sNrcHur)
+*  [reddit: bee-lang](https://www.reddit.com/r/bee_lang/)
+*  [discord: sage-code](https://discordapp.com/invite/sNrcHur)
