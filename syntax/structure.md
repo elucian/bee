@@ -53,7 +53,7 @@ The location where the Bee is installed is $bee_home. Bee library folder is $bee
 |$pro_log  | N/A        | Reporting folder           |
 
 ## Aspect
-One aspect is a project file usually located in _"src"_ folder that can be used from main driver. Aspects can call each other to play one or multiple concerns. A good architect will separate concerns in aspects with sugestive names.
+One aspect is a project file usually located in _"src"_ folder that can be executed from driver. Aspects can play each otherand and communicate using parameters. A good architect will separate concerns in multiple aspects with sugestive names.
 
 **notes:**
 * One aspect can accept parameters and can produce results; 
@@ -88,7 +88,7 @@ Symbol "#" is used to create a compiler directive. Bee has 3 kind of program fil
 
 Bee is using 7 kind of declarations:
 
-* load     -- define: library/aspect
+* load     -- define: library
 * define   -- define: constant
 * input    -- define: aspect parameters
 * output   -- define: aspect results
@@ -102,10 +102,11 @@ Each statement start with one keyword.
 
 **Examples:**
 
-* alter    --change/modify variable value or assign new value
-* read     --accept input from console into a variable
-* write    --output to console result of an expressions
-* play     --play one aspect of a larger problem
+* alter    -- change/modify variable value or assign new value
+* read     -- accept input from console into a variable
+* write    -- output to console result of an expressions
+* play     -- play one aspect of a program synchronously
+* apply    -- execute one or more rules separated by ";"
 
 **notes:**
 
@@ -150,19 +151,18 @@ make c := params.count
 halt -1 if (c = 0)
 
 -- print comma separated parameters
-begin:
+begin
   make i:= 0 ∈ Z
-  while (i < c):
+  while (i < c)
     write params[i]
     alter i += 1
     write "," if (i < c)
-  repeat;
+  repeat
   -- print the buffer to console
   print
-ready;  
+ready  
 
--- end of "main" program:
-over.
+over -- end of "main" program
 ```
 
 Do not try to understand the example. This is just a worm-up! 
@@ -170,33 +170,23 @@ Do not try to understand the example. This is just a worm-up!
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
 * Variable parameter _*params_ is an array of strings;
-* Any Bee module is ending with "over." that is mandatory keyword;
+* Any Bee module is ending with "over" that is mandatory keyword;
 * Early driver termination can be trigger by "halt" or "exit";
 
 ## External code
 
-Library modules can be imported like this:
+Libraries and modules can be imported like this:
 
 **Imports:**
 
 ```
-load bee_lib:(*)
+load $bee_lib/folder_name/file_name.eve
+load $bee_lib/folder_name:(*)
+load $bee_lib/folder_name:(x,y,z)
 ```
 
-* use :(*) all public members are used
-* use :(x,y,z) only x,y,z members are used
-
-Using a qualifier for Bee aspect members:
-
-**pattern**
-```
--- load library, with qualifier:
-load qualifier := path/library_name:(*)
-load qualifier := path/library_name:(member_list)
-
--- use qualifier for rule execution:
-apply qualifier.rule_name(arguments);
-```
+* use :(*) all files with extension *.bee are included
+* use :(x,y,z) only x,y,z files are found and included
 
 **Environment variables**
 
@@ -234,10 +224,10 @@ $local        --local context: universal qualifier
 **importing**
 
 ```
-load cpp_lib := $runtime.cpp.myLib:(*)  --load cpp library
-load asm_lib := $runtime.asm.myLib:(*)  --load asm library
-load bee_lib := $runtime.lib.myLib:(*)  --load core library
-load pro_lib := $program.lib.myLib:(*)  --load project library
+load $runtime.cpp_lib:(*)  --load cpp library
+load $runtime.asm_lib:(*)  --load asm library
+load $runtime.bee_lib:(*)  --load core library
+load $program.pro_lib:(*)  --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -251,14 +241,14 @@ Local context is a private memory space.
 #driver "test"
 ** global context
 make i := 1 ∈ Z  
-begin:
+begin
   ** local context
   make i := 2 ∈ Z
   print i -- expected: 2
-ready;
+ready
 print i -- expected: 1  
 
-over.
+over
 ```
 **See example:** [lv.bee](../demo/lv.bee)
 
@@ -281,9 +271,9 @@ make .v ∈ N
 rule .f(x ∈ N) => (x + 1) ∈ N
 
 --public rule
-rule .m(x, y ∈ N, r @ N):
+rule .m(x, y ∈ N, r @ N)
   alter r := x + y
-return;
+return
 ```
 ## Rule ABI mapping
 In Bee one can use external rules written in Assembly, Ada, C or CPP.
@@ -297,9 +287,9 @@ This is myLib.bee file:
 load $runtime.cpp.myLib.(*) -- load cpp library
 
 -- define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x ∈ Z):
+rule fib(n ∈ Z) => (x ∈ Z)
   alter x := myLib.fib(n -> Z)
-return;
+return
 
 ```
 
@@ -373,7 +363,7 @@ In next example we are using various comments into a demo program.
 
 ** This is a sub-title in program
 
-over.  -- end of program
+over  -- end of program
 ```
 
 **note:** 
@@ -384,33 +374,31 @@ is ignored by the compiler. After last "." nothing else is parsed.
 
 ### Program Execution
 
-When a program is executed the driver is located and executed first. If a program do not have a "driver" file it can not be executed nor compiled into an executable file.
+When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled into an executable file. 
 
 * A #driver is the program main entry point. It is executed only once;
-* A #library usually do not contain rogue statements do not have parameters;
-* An #aspect can be executed multiple times using "play" statement;
-
-One library is loaded only once. If a library is imported in many aspects and contain rogue statements these are executed when the library is imported. So these statement if they exist will "initialize" the library.
+* A #library do not contain rogue statements and do not have parameters;
+* An #aspect can contain rogue statements that are executed using "play";
 
 ### Aspect Execution
 
-A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver who can report the results or a provide a summary feedback.
+A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver can report results or a provide feedback.
 
 **properties**
 
 * An aspect can be executed once or multiple times; 
-* One aspect of a problem is executed using keyword _resolve_;
+* One aspect of a problem is executed using keyword _play_;
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, not in parallel;
 * An aspect can not be used in expressions except unpacking or assignment;
-* An aspect can be terminated early using silent:"exit" or "fail" with error;
-* Using "halt" in aspect cause the program to stop immediately with error.
+* An aspect can be terminated early using:"exit" or "fail";
+* Using "halt" in aspect cause the program to stop immediately.
 
 **pattern**
 
 ```
 -- declare an alias for an aspect file
-load aspect_name := $pro.src.file_name.bee
+load $pro.src.file_name.bee
 
 -- play when aspect do not have any result:
 play aspect_name(parameter_list)
@@ -427,13 +415,13 @@ play aspect_name(parameter_list) +> result
 input  i ∈ Z -- define parameter "i"
 output v ∈ N -- define result "v"
 
-when (i < 0):
+when (i < 0)
   alter v := -i
-else:
+else
   alter v := i
-ready;  
+ready  
 
-over.
+over
 ```
 
 ```
@@ -443,13 +431,13 @@ over.
 make result ∈ N
 
 -- define aspect "mod"
-load mod := $pro/mod.bee
+load $pro/mod.bee
 
 -- execute aspect "mod"
 play  mod(-3) +> result
 print result --> expect: 3
 
-over.
+over
 ```
 
 **multiple**
@@ -463,6 +451,5 @@ output v,z ∈ N -- define two results "v" and "z"
 **note:** 
 * only one input statement is used for one aspect;
 * only one output statement is used for one aspect;
-
 
 **Read next:** [Syntax Overview](overview.md)

@@ -6,15 +6,15 @@
 ** create a rule prototype
  
 -- this rule can be used or cloned 
-rule generator{min, max ∈ Z}() => (r ∈ Z):
+rule generator{min, max ∈ Z}() => (r ∈ Z)
   make .index := min ∈ Z
-  when (.index > max):
+  when (.index > max)
     fail (201, "index out of bounds")
-  else:
+  else
     alter r := .index
     alter .index += 1
-  ready;
-return;
+  ready
+return
 
 -- instantiate one rule object
 clone count := generator{0,9}
@@ -30,12 +30,12 @@ trial:
     alter set += count()
     write set.index-- progressive grow
     write ','
-  repeat;
+  repeat
   print-- expect 0,1,2,3,4,5,6,7,8,9,  
 cover:
   -- count() is failing
   print set
-ready;
+ready
 
 -- use rule properties to check rule status
 print count.max   -- 9
@@ -52,4 +52,4 @@ print test.index -- expect 4
 print generator.max  -- expect 0
 print generator.min  -- expect 0
 
-over.
+over

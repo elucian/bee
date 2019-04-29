@@ -57,4 +57,4 @@ print (s3 ∧ s4) -- {'a','b'}
 -- difference between two sets
 print (s3 - s4) -- {'c'}
 print (s4 - s3) -- {'d'}
-over.
+over

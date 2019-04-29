@@ -215,11 +215,11 @@ type Alpha     <: U[`A`..`z`]
 type Latin     <: U[U+0041..U+FB02]
 
 --Check variable belong to sub-type
-when (`x` ∈ Alpha):
+when (`x` ∈ Alpha)
   print 'yes'
-else:
+else
   print 'no'
-ready;
+ready
 ```
 
 **Notes:**
@@ -413,11 +413,11 @@ Comparison operators will create a logical response: $F = 0 or $T = 1.
 **example**
 ```
 make x ∈ Z
-when (x = 4 ↔ x - 4 = 0):
+when (x = 4 ↔ x - 4 = 0)
   print "True"
-else:
+else
   print "False"  
-ready;
+ready
 ```
 **Precedence:** 
 
@@ -560,7 +560,7 @@ read (x,"x:>")
 
 make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown")
 print "x is ".kind -- expect: "x is digit"
-over.
+over
 ```
 
 ## Exceptions
@@ -619,19 +619,19 @@ An basic rule is a named block of code that can resolve one or multiple tasks.
 
 **pattern**
 ```
-rule name(param ∈ type,...):
+rule name(param ∈ type,...)
     -- executable statements
    exit if (condition)
    ...
-return;
+return
 ```
 
 **example**
 ```
 -- a rule with side-effects and no parameter
-rule foo():
+rule foo()
   print "hello, I am foo"
-return;
+return
 
 -- using apply + rule name will execute the rule  
 apply foo
@@ -663,22 +663,22 @@ Static rules are named code blocks with results:
 
 **pattern**
 ```
-rule name(param ∈ type,...) => (result ∈ type,...):
+rule name(param ∈ type,...) => (result ∈ type,...)
    make local_variable
    ...   
    alter result := expression
    ...
-return;
+return
 ```
 
 **Example:** 
 
 ```
 -- rule with two results "s" and "d"
-rule com(x,y ∈ Z) => (s, d ∈ Z):
+rule com(x,y ∈ Z) => (s, d ∈ Z)
   alter s := x + y 
   alter d := y - x
-return;
+return
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1) 
@@ -718,11 +718,11 @@ Attributes of a rule are state variables. That are variables starting with dot p
 
 **pattern**
 ```
-rule name(param ∈ type,...):
+rule name(param ∈ type,...)
    -- define x,y,z states
    make .x, .y, .z := 0 ∈ Z   
    ...
-return;
+return
 
 -- modify rule states
 alter rule.x = 1
@@ -743,10 +743,10 @@ A generic rule is a rule template. Is a prototype that can be cloned.
 **pattern**
 ```
 -- define a rule prototype
-rule prototype_name{attributes}(parameters) => (result ∈ Type):
+rule prototype_name{attributes}(parameters) => (result ∈ Type)
    -- compute the result
   alter result := expression(parameters)
-return;
+return
 
 -- making a rule clone from prototype
 clone new_name:= prototype_name{arguments}
@@ -759,9 +759,9 @@ clone new_name:= prototype_name{arguments}
 **example**
 ```
 -- this rule can create a rule object
-rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
+rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z)
   make r := (s + i)
-return;
+return
 
 -- instantiate two rule objects:
 clone inc := shift{s: +1} -- increment 

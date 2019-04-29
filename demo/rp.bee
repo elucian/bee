@@ -4,9 +4,9 @@
 #driver "rp"
 
 -- declare rule with rule "cmp" as parameter
-rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
+rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L)
   alter r := cmp(a,b)
-return;
+return
 
 -- declare a rule:
 rule lt(a,b ∈ Z) ∈ L => (a < b)
@@ -20,4 +20,4 @@ print test-- expect 1
 alter test := compare(1, 2, (a,b) => (a ≥ b))
 print test-- expect 1
 
-over.
+over

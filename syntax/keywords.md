@@ -46,7 +46,7 @@ Next statements are used to declare or create a module member.
 | input    | Declare input parameters
 | output   | Declare output parameters
 | define   | Declare a constant 
-| load     | Load library or aspect and declare a qualifier or alias
+| load     | Load library or aspect
 | type     | Declare data super-type or sub-type
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or rule prototype 
@@ -105,6 +105,6 @@ These keywords are jumps or termination statements.
 | solve    | Solve one forward case into a trial block
 | resume   | Used in trial block to continue next case after failure
 | halt     | Create unrecoverable error and stop program
-| over.    | End driver, library or module file. Dot suffix is mandatory.
+| over    | End driver, library or module file. Dot suffix is mandatory.
 
 **Read next:** [Syntax Overview](overview.md)

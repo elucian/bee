@@ -5,10 +5,10 @@
 -- rule with inprint output parameters
 -- operator "@"  define input/output reference 
 -- operator "::" pass named argument by reference
-rule pro(a,b @ N):
+rule pro(a,b @ N)
   alter a +=  1 -- alter parameter a
   alter b +=  2 -- alter parameter b 
-return;
+return
 -- define native integers using inference
 make x, y := 10
 -- execute pro and expect x, y  to be modified
@@ -19,4 +19,4 @@ print y --> will print 12
 -- negative test
 apply pro(a : 1, b : 2)--> "ERROR: a, b expect references!"
   
-over.
+over

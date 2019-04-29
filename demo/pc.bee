@@ -7,17 +7,17 @@ make  c  := 100 ∈ N  -- channel capacity
 make  ch := [N](c)   -- define channel
 
 --  ch is the communication channel
-rule producer(ch @ [N]):
+rule producer(ch @ [N])
   make item := 0 ∈ N
-  while (len(ch) < c):
+  while (len(ch) < c)
     alter item  := random(10)
     alter ch    += item
     yield consumer
-  repeat;
-return;
+  repeat
+return
 
 --  ch is the communication channel
-rule consumer(ch @ [N]):
+rule consumer(ch @ [N])
   make item ∈ N
   cycle:
     stop if (len(ch) = 0)
@@ -25,27 +25,27 @@ rule consumer(ch @ [N]):
     alter ch   -= ch[?]-- FIFO
     wait  30
     yield producer
-  repeat;
-return;
+  repeat
+return
 
 -- controller
 make i := 0
 make x := 0
-while (x < 100):
+while (x < 100)
   -- produce on 4 threads   
   alter i := 0
-  while (i < 4):
+  while (i < 4)
      start producer(q)
      alter i += 1
-  repeat;
+  repeat
   alter i := 0
   -- consume on 8 threads  
   while (i < 8)
      start consumer(ch)
      alter i += 1
-  repeat;
+  repeat
   rest
   alter x += 1
-repeat;
+repeat
 
-over.
+over

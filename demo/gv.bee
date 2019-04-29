@@ -11,7 +11,7 @@ make x := 1
 rule add1:
   alter x += 1
   print x
-return;
+return
 -- call a subroutine by name
 apply add1 -- print 2
 apply add1 -- print 3
@@ -23,10 +23,10 @@ rule add2:
   make  x := 0     -- make a variable x 
   alter x := x + 1 -- increment local variable
   print x;          -- print local x
-return;
+return
 apply add2  -- print 1
 apply add2  -- print 1
 apply add2  -- print 1
 print x -- x remain 4
  
-over.
+over

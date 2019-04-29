@@ -22,7 +22,7 @@ Bee has basic interaction with relational databases.
 A model is a complex data structure mapping Bee data types to database. Bee can read and update a database using an internal data model. This kind of applications are called _data-centric_. A model is connecting to a databases using API function library.
 
 ```
-load Oracle := $bee_lib.db.oracle
+load $bee_lib.db.oracle:(*)
 ```
 
 ## Connections
@@ -35,13 +35,13 @@ One application can connect to multiple databases simultaneously. A specific kin
 make db ∈ Oracle.DB
 
 -- create a wrapper for database connection
-rule connect(user, password, dbname ∈ String):
+rule connect(user, password, dbname ∈ String)
    -- prepare credentials
   make credential ∈ String 
   alter credential := user + '/' + password + '@'+ dbname
    -- connect to database
   apply db.connect(credential) 
-return;
+return
 ```
 
 **Note:**
@@ -82,7 +82,7 @@ You can scan one table like a collection:
 
 **pattern**
 ```
-begin:
+begin
   -- declare current record
   make  current_record ∈ {record_field ∈ data_type, ...}  
   scan db.table_name +> current_record:
@@ -90,9 +90,9 @@ begin:
     with current_record:
       ** use current_record fields
       ... 
-    ready; 
-  repeat; 
-ready;
+    ready 
+  repeat 
+ready
 ```
 
 **Mutating data**
@@ -100,7 +100,7 @@ You can modify table data using current_record fields. First you modify values f
 
 ```
 type: Record_Type <: {record_fields}
-begin:
+begin
   make current_record ∈ Record_Type
   make index ∈ Z
   scan db.table_name +> current_record:
@@ -108,17 +108,17 @@ begin:
     update db.table_name[rowid:current_record.rowid]:
        alter field_name := new_value
        ...
-    ready;
+    ready
     alter index += 1
     ** commit batch of 10
-    when (index = 10):
+    when (index = 10)
       apply db.commit()
       alter index := 0
-    ready;
-  next;
+    ready
+  next
   ** commit all pending updates
   apply db.commit() if (index > 0)
-ready;  
+ready  
 
 ```
 
@@ -142,7 +142,7 @@ Bee can add new data records into one table using _append_ statement.
 append to table_name:
   field_name := value
   ...
-ready;  
+ready  
 
 -- single line statement
 append to table_name: append_recod
@@ -159,7 +159,7 @@ Bee can do single or multiple row updates.
 update table_name[search_field:value]: 
    field_name := value
    ...
-ready;   
+ready   
 
 -- Use search fields: 
 update table_name[search_field:value, ...]: update_record

@@ -10,10 +10,10 @@ read(your_name , "Your name?:")
 read(your_age  , "Your age:")
 print "hello:" & your_name
 
-when (age < 21):
+when (age < 21)
   print "have a candy!"
-else:
+else
   print "have a beer!"
-ready;
+ready
 
-over.
+over

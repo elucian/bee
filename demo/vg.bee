@@ -46,4 +46,4 @@ plot c1, c2
 show c -- activate canvas
 wait 30
 
-over.
+over

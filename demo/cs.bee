@@ -10,31 +10,31 @@ print ("a < b") if (a < b)
 print ("a > b") if (a > b)
 
 -- single branch decision
-when (a = b):
+when (a = b)
   print ("a = b")
-ready;
+ready
 
 -- decision with alternate branch
-when (a < 5):
+when (a < 5)
   print "a < 5"
-else:
+else
   print "no"
-ready;
+ready
 
 -- mutual exclusive multi-path selector
 alter a := 2
-when (a @ [0..4]):
+when (a @ [0..4])
   -- this is true since a = 2
   print ('a is between 0 and 4')
-else (a @ [2..5]):
+else (a @ [2..5])
   -- this is also true since a = 2
   print ('a is between 2 and 5')
-else (a < 0):
+else (a < 0)
   -- this is not true since a > 0
   print ('a ≤ 0')
-else:
+else
   print ('a ≥ 5') -- no match
-ready;
+ready
 +-------------------------------------------
   when is breaking at first match           
   therefore only one message is produced:   
@@ -43,16 +43,16 @@ ready;
 
 -- nested statements are supported
 alter a := $T, b := $F
-when (a ∧ b):
+when (a ∧ b)
   print ("a ≠ 0 and b ≠ 0")
-  when (a ≥ b):
+  when (a ≥ b)
     print ("a ≥ b")
-  ready;
-  when (a > b):
+  ready
+  when (a > b)
      print ("a > b")
-  ready;
-else:
+  ready
+else
   print ("a = 0 and b = 0")
-ready;
+ready
 
-over. 
+over 

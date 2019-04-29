@@ -4,8 +4,8 @@
 #driver "in"
 make a ∈ N
 print "to stop enter 0"
-while (a ≠ 0):
+while (a ≠ 0)
   read (a, "enter a number:", "####.##")
   print ("you have enter: " + a)
-repeat;
-over.
+repeat
+over

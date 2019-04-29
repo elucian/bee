@@ -16,8 +16,8 @@ trial:
 cover:
   -- expect error "Null reference error"
   print "failed:".$error.message
-ready;
+ready
  
 -- test modifier effect
 fail if ¬ (s ≡ d)
-over.
+over

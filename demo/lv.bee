@@ -6,10 +6,10 @@
 make x := 1
 
 -- rule side-effects
-rule add():
+rule add()
   alter x := x + 1
   print x
-return;
+return
 
 apply add -- will print 2
 apply add -- will print 3
@@ -17,11 +17,11 @@ print x -- x = 3 (is modified)
 
 
 -- local context attribute
-rule add2():
+rule add2()
   make .x := 0-- static attribute
   alter x := x + 1
   print x
-return;
+return
 
 
 -- changing x influence rule
@@ -34,4 +34,4 @@ print add2.x  -- x = 2 (modified)
 print x         -- x = 0 (umodified)
 print $global.x -- x = 0 (umodified)
 
-over.
+over
