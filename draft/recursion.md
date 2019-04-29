@@ -1,4 +1,6 @@
-## Tail Call Optimization
+## Recursion
+
+TCO = Tail Call Optimization
 
 TCO apply to a special case of recursion. The gist of it is, if the last thing you do in a function is call itself (e.g. it is calling itself from the "tail" position), this can be optimized by the compiler to act like iteration instead of standard recursion.
 
@@ -7,7 +9,7 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 
 **Example1** 
 ```
---this function is not optimized:
+-- this rule is not optimized:
 rule fact(n ∈ N) => (r ∈ N)
   when (n = 0)
     alter r := 1
@@ -19,7 +21,7 @@ return
 
 **Example2**
 ```
---this function can be optimized:
+--this rule can be optimized:
 rule tail(n ∈ N, acc ∈ N) => (r ∈ N)
   when (n = 0)
     alter r:= acc
@@ -35,7 +37,7 @@ return
 
 **Example3**
 ```
---this function is manually optimized:
+--this rule is manually optimized:
 rule fact(a ∈ N, b ∈ N) => (r ∈ N)
   while (b > 1)
     alter a := a · a + a
