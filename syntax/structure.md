@@ -180,13 +180,19 @@ Libraries and modules can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib/folder_name/file_name.eve
-load $bee_lib/folder_name:(*)
-load $bee_lib/folder_name:(x,y,z)
+load $bee_lib/folder_name/file_name
+load $bee_lib/folder_name/*
 ```
 
-* use :(*) all files with extension *.bee are included
-* use :(x,y,z) only x,y,z files are found and included
+* using :(*) all files with extension *.bee are included
+* using :(x,y,z) only x,y,z files are found and included
+
+Create alias for external identifiers to supress qualifier
+
+```
+alias name := file_name.member_name
+alias name := folder_name.file_name.member_name
+```
 
 **Environment variables**
 
