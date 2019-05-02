@@ -106,6 +106,6 @@ These keywords are jumps or termination statements.
 | solve    | Solve one forward case into a trial block
 | resume   | Used in trial block to continue next case after failure
 | halt     | Create unrecoverable error and stop program
-| over    | End driver, library or module file. Dot suffix is mandatory.
+| over     | End driver, library or module file. Dot suffix is mandatory.
 
 **Read next:** [Syntax Overview](overview.md)

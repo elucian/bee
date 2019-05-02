@@ -255,10 +255,10 @@ make x   := 9
 make a,r := 0
 while (x < 5)
   alter r := x % 2
-  alter a := (0 if r = 0, 1 if r = 0, 2)
+  alter a := 0 if r = 0, 1 if r = 0, 2
   write "{1}:{2}" <+ (x,a)
   write ',' if (x < 5)
-  alter x -= 1  
+  alter x -= 1
 repeat
 print --> 9:1, 8:0, 7:1, 6:0, 5:1
 ```
@@ -288,12 +288,12 @@ Example of forward skip in counting iteration:
 make i ∈ Z
 scan [0..10] +> i
   ** force next iteration
-  when (i % 2 = 0)
+  when i % 2 = 0
     skip
   else
     ** write only odd numbers
-    write(i)
-    write(',') if (i < 10)
+    write (i)
+    write (',') if (i < 10)
   ready
 next
 ```

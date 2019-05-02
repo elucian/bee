@@ -30,7 +30,7 @@ return
 
 -- start 4 threads
 make i := 0 -- control variable
-while (i ≤ 4)
+while i ≤ 4
   start test    
   alter i += 1
 repeat
@@ -57,14 +57,14 @@ make n ∈ N -- control variable
 rule foo(x ∈ N)
   alter x := x + 1
   wait 5  
-  yield bar if (x < 10)
+  yield bar if x < 10
 return
 
 -- second coroutine
 rule bar(x ∈ N)
   alter x = x + 1
   wait 10
-  yield foo if (x < 10)
+  yield foo if x < 10
 return
 
 -- call foo and bar asynchronously
