@@ -7,39 +7,39 @@ read (x ,"define a number:")
 -- only if conditional
 print "x = 0" if (x = 0)
 -- single branch
-when (x = 1)
+when (x = 1) do
   print "x = 1"
-ready
+done
 -- two branches
-when (x ≠ 5)
+when (x ≠ 5) do
   print "x ≠ 5"
 else
   print "x = 5"
-ready
+done
 -- nested branches
 alter x := 1
-when (x ≥ 1)
+when (x ≥ 1) do
   print "x ≥ 1"
-  when (x = 1)
+  when (x = 1) do
     print "x = 1"
   else
     print "x > 1"
-  ready
+  done
 else
   print "x < 1"
-ready
+done
  
 -- x ≥ 1
 -- x = 1
 -- nested when
-when (x < 1)
+when (x < 1) do
   print "x < 1"
 else
   when (x > 1)
     print "x > 1"
   else
     print "x = 1"
-  ready
-ready
+  done
+done
 -- expect x = 1
-over
+over.

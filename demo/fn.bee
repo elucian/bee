@@ -5,11 +5,11 @@
 ** simple rule
 rule add(a, b ∈ Z) ∈ Z => (a + b)
 -- call rule
-print add(1, 2)     -- print 3
-print add(-10, 10)  -- print 0
+print add(1, 2)     ; print 3
+print add(-10, 10)  ; print 0
 
 ** recursive rule
 rule  fac(n ∈ N) ∈ N => (1 if n = 0, fac(n-1))
-print fac(3) -- expect 6
+print fac(3) ; expect 6
  
-over
+over.

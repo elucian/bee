@@ -29,7 +29,7 @@ symbol| description
   $   | Global variables prefix \| System environment constants
   @   | Define a reference \| Define output parameter 
   :   | Pair up key-value in a collection or rule call
-  ;   | End of block statement \| Statement enumerator
+  ;   | End of line comments
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Anonymous variable \| Has constant value one space (_ = ' ')
@@ -61,9 +61,9 @@ symbol| description
 ------|------------------------------------------------------
  \+-  | Start for multiple line comments
  \-+  | End for multiple line comments  
- \--  | Start for single line comment /separator
- \**  | Start for a subtitle comment /separator
- \##  | Start for a title comment /separator  
+ \##  | Start for a title comment    
+ \**  | Start for a subtitle comment
+ \--  | Start for single line comment
  ..   | Define range [n..m] \| Define slice from Array
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
@@ -71,10 +71,7 @@ symbol| description
  \<:  | Define subset \| User composite type
  ::   | explicit reference \| explicit boxing
  :=   | modify value \| deep copy \| alias qualifier
- 
 
-
-**Note:**  Triple symbol: "..."  is used in quest statement
 
 ## Arithmetic modifiers
 
@@ -109,8 +106,8 @@ symbol | meaning
 
 **patterns:** 
 ```
- ¬(x ≡ y)  -- divergence of two references, (not the same address)
- ¬(x = y)  -- divergence of two values, objects or collections
+ ¬(x ≡ y)  ; divergence of two references, (not the same address)
+ ¬(x = y)  ; divergence of two values, objects or collections
 ```
 
 ## Collection operators
@@ -127,7 +124,7 @@ symbol | `=>`       |meaning
                                           
 ## Logic Operators 
 
-Bee is using constants:  $T = 1 = True and  $F = 0 = False 
+Bee is using constants:  True = 1 and  False = 0
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
@@ -184,7 +181,5 @@ Symbol| Description
  `&`  | concatenate two strings as they are
  `/`  | concatenate two strings with / and de-duplicate last
  `\`  | concatenate two strings with \\ and de-duplicate last
-
-
  
 **Read Next:** [keywords](keywords.md)

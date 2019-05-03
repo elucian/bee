@@ -45,22 +45,22 @@ apply foo(id::(param ,param ...) => (expression))
 -- this sort is generic 
 rule bubble{XT ∈ Type}(array @ [XT], gt @ (XT,XT) ∈ L )
   make n := length(array)-1 ∈ N 
-  make swap := $T ∈ L
+  make swap := True ∈ L
   make temp ∈ XT
   make i ∈ N
-  while swap:
+  while swap do
     alter i := 0
-    alter swap := $F  -- false
-    while (i ≤ n)
+    alter swap := False
+    while (i ≤ n) do
        -- this pair is out of order ?
-      when gt(array[i], array[i+1])
+      when gt(array[i], array[i+1]) do
          -- swap pair and set swap flag = true
         alter temp :: array[i]
         alter array[i]  :: array[i+1]
         alter array[i+1]:: temp
-        alter swap := $T  -- true
-      ready
-      alter i +=1
+        alter swap := True
+      done
+      alter i += 1
     repeat
   repeat
 return

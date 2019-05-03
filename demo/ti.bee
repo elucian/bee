@@ -3,19 +3,19 @@
 -----------------------------------+
 #driver "ti"
 -- constant type inference
-define a := 10  -- Z (integer on 64bit)
-define x := 0.5 -- R (double precision)
-define y := 1/2 -- Q  (rational number)
-define f := $F  -- L  (logic false)
-define t := $T  -- L  (logic true)
+define a := 10  ; Z (integer on 64bit)
+define x := 0.5 ; R (double precision)
+define y := 1/2 ; Q  (rational number)
+define f := $F  ; L  (logic false)
+define t := $T  ; L  (logic true)
 -- variable type inference
-make v := (1,2,3)    -- List of Z
-make s := 'string'   -- String capacity 256
-make c := 'c'        -- Single character
+make v := (1,2,3)    ; List of Z
+make s := 'string'   ; String capacity 256
+make c := 'c'        ; Single character
 -- explicit conversion + inference
-make t := '1:45am'     -> T12 -- Time
-make t := '23:45'      -> T24 -- Time
-make d := '10/10/2010' -> DMY -- Date
+make t := '1:45am'     -> T12 ; Time
+make t := '23:45'      -> T24 ; Time
+make d := '10/10/2010' -> DMY ; Date
 -- optional parameters inference
 rule add(x,y:0) => (z ∈ Z)
   alter z := x + y
@@ -33,7 +33,7 @@ rule inc(x @ Z, y : 0)
   alter y += 1
 return
 
-make i,k := 0  -- references
-apply inc(i)   --> i = 1 
-apply inc(i,k)--> i = 2 and k = 1
-over
+make i,k := 0  ; references
+apply inc(i)   ; i = 1 
+apply inc(i,k) ; i = 2 and k = 1
+over.

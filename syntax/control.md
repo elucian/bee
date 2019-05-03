@@ -10,100 +10,104 @@ Bee has 7 control flow statements:
 * [scan](#scan)
 * [trial](#trial)
 
-## begin
+## do
 
-Define anonumous block of code;
+Define anonymous block of code;
 
 ```
-begin
-   -- local context
+do
+  -- local context
   ...
-ready
+done
 ```
 
 
 ## with
 
-Define a qualifier suppresion block:
+Define a qualifier suppression block:
 
 ```
-with qualifier
-   -- instead of qualifier.member()
+with qualifier do
+  -- instead of qualifier.member()
   apply member()
-ready
+done
 ```
 
 Using alias for qualifier:
 
 ```
-with (short: long.qualifier)
-   -- instead of long_qualifier.member()
+with (short: long.qualifier) do
+  -- instead of long_qualifier.member()
   apply short.member() 
-ready
+done
 ```
 
 Using 2 qualifiers for mapping assignment:
 
 ```
-with (target: target_qualifier, source: source_qualifier)
-   -- copy value from source to target
+with (target: target_qualifier, source: source_qualifier) do
+  -- copy value from source to target
   alter target.member := source.member
-ready
+done
 ```
 
 
 ## when
 
-The _when_ keyword is a multi-passwey conditional selector.
+The _when_ keyword is a multi-conditional selector.
 
 **syntax**
 ```
-when (condition)
-   -- statements
-   ...
-ready
+when (condition) do
+  -- statements
+  ...
+done
 ```
 
 Dual selector based on single logical expression:
 
 **pattern**
 ```
-when (condition)
-   -- first passway
+when condition do
+  -- first pass-way
 else
-   -- second passway
-ready
+  -- second pass-way
+done
 ```
 
 **nested**
 
 ```
 make a := 0
-when (a ≤ 0)
+-- first decision
+when a ≤ 0 do 
   print 'a ≤ 0'
-  when (a = 0)
+  -- second decision
+  when a = 0 do 
     print 'a = 0'
   else
     print "a < 0" 
-  ready
-ready
+  done;a ≤ 0
+done;a = 0
 ```
+
+**note:** I have used comments ";" after "do" and "done"
 
 **ladder**
 
 ```
 make a := 0
-when (a < 0)
+when a < 0 do
   print 'a < 0'
-else if (a > 10)
+else if a > 10 do
   print 'a > 100'
-else if (a > 10)
+else if a > 10 do
   print 'a > 2'
-else if (a > 1)
+else if a > 1 do
   print 'a > 1'
 else
   print "a ≥ 0"
-ready
+done 
 ```
 
 ## Cycle
@@ -115,9 +119,9 @@ Create unconditional repetitive statement block.
 ```
 cycle
   ...
-  skip if (condition)
+  skip if condition
   ...
-  stop if (condition)
+  stop if condition
   ...
 repeat
 ```
@@ -129,7 +133,7 @@ repeat
 **example**
 
 ```
-begin
+do ;local
   make a := 10 ∈ Z
   cycle
     alter a -= 1
@@ -139,15 +143,16 @@ begin
     ** conditional termination
     write ',' 
     stop if (a < 0)
-  repeat
-ready
+  repeat ;cycle
+  print a
+done ;local
 ```
 
 **Notes:** 
 
 * The cycle can be controlled using conditional if;
 * If _stop_ condition is missing the cycle is infinite;
-* Infinite cycle is intrerupted automatic by #timer:??
+* Infinite cycle is interrupted automatic by #timer:??
 
 **nested**
 
@@ -165,14 +170,14 @@ cycle outer
     ...    
     ** stop both cycles
     stop outer if (condition)
-  repeat
-repeat
+  repeat ;inner
+repeat ;outer
 ```
 
 **example**
 
 ```
-begin
+do
   make x   := 9 
   make a,r := 0
   cycle
@@ -183,8 +188,8 @@ begin
     write ','
     stop if (x < 5)
   repeat
-  print -- expect 9:1, 8:0, 7:1, 6:0, 5:1,
-ready
+  print ;expect 9:1, 8:0, 7:1, 6:0, 5:1,
+done
 ```
 
 ## While
@@ -192,15 +197,15 @@ ready
 Controlled repetitive block:
 
 ```
-while (condition)
-   -- repetitive block
+while condition do
+  -- repetitive block
   ...
-  skip if (condition)  -- continue
+  skip if (condition)  ; continue
   ...
-  stop if (condition)  -- break
+  stop if (condition)  ; break
   ...
 else
-   -- alternate path
+  -- alternate path
 repeat
 ```
 
@@ -214,13 +219,13 @@ repeat
 ```
 -- use global context
 make a := 10 
-while (a > 0)
+while a > 0 do
   alter a -= 1
-   -- conditional repetition
-  when (a % 2 ≠ 0)
+  -- conditional repetition
+  when a % 2 ≠ 0 do
     write a  
     write ',' 
-  ready
+  done
 repeat
 print
 ```
@@ -232,18 +237,14 @@ One while block statement can be nested:
 **pattern:** 
 
 ```
-while (condition)
-   -- outer loop   
-  while (condition)
-     -- inner loop
+** outer loop   
+while (condition) do
+  ** inner loop
+  while (condition) do
+     -- statements
+     ...
   repeat  
-   -- continue outer loop
-  ...
-  while (condition)
-     -- inner loop
-    ...
-  repeat
-  ...       
+  ...  
 repeat
 ```
 
@@ -253,14 +254,14 @@ repeat
 -- use global context
 make x   := 9
 make a,r := 0
-while (x < 5)
+while (x < 5) do
   alter r := x % 2
   alter a := 0 if r = 0, 1 if r = 0, 2
   write "{1}:{2}" <+ (x,a)
   write ',' if (x < 5)
   alter x -= 1
 repeat
-print --> 9:1, 8:0, 7:1, 6:0, 5:1
+print ; 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
 ## Scan 
@@ -270,7 +271,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 **Pattern:**
 ```
 make var ∈ N 
-scan [min..max] +> var
+scan [min..max] +> var do
   ** block statements
   skip if (condition)
   ...
@@ -286,15 +287,15 @@ next
 Example of forward skip in counting iteration:
 ```
 make i ∈ Z
-scan [0..10] +> i
+scan [0..10] +> i do
   ** force next iteration
-  when i % 2 = 0
+  when i % 2 = 0 do
     skip
   else
     ** write only odd numbers
     write (i)
     write (',') if (i < 10)
-  ready
+  done
 next
 ```
 > 1,3,5,7,9
@@ -322,33 +323,33 @@ trial
   -- private context
   ...  
   -- multiple use cases
-  case first
+  case first do
     fail code if (condition)
     ...    
-  case second
+  case second do
     fail {code,"message"} if (condition)  
     ...
-  case name_1
+  case name_1 do
     abort if (condition)
     ...
-  case name_2
+  case name_2 do
     retry name_1 if (condition)
     ...
-  case name_3
+  case name_3 do
     solve name_4 if (condition)  
     ...       
-  case name_4    
+  case name_4 do
     ...
-error code
+error code do
    -- patch statement
-error code
+error code do
    -- patch statement  
 ...  
 cover
    -- other errors  
 final
    -- finalization
-ready
+done
 ```
 
 **note:**

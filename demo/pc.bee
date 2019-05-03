@@ -3,8 +3,8 @@
 -----------------------------------+
 #driver "pc"
 
-make  c  := 100 ∈ N  -- channel capacity
-make  ch := [N](c)   -- define channel
+make  c  := 100 ∈ N  ; channel capacity
+make  ch := [N](c)   ; define channel
 
 --  ch is the communication channel
 rule producer(ch @ [N])
@@ -32,14 +32,14 @@ return
 make i := 0
 make x := 0
 while (x < 100)
-  -- produce on 4 threads   
+  ; produce on 4 threads   
   alter i := 0
   while (i < 4)
      start producer(q)
      alter i += 1
   repeat
   alter i := 0
-  -- consume on 8 threads  
+  ; consume on 8 threads  
   while (i < 8)
      start consumer(ch)
      alter i += 1
@@ -48,4 +48,4 @@ while (x < 100)
   alter x += 1
 repeat
 
-over
+over.

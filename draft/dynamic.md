@@ -14,7 +14,7 @@ rule plus(a,b ∈ Z) => (r ∈ Z)
   alter r := (a + b)
 return
 
-over
+over.
 ```
 
 ## Expression signature
@@ -36,9 +36,9 @@ type Dic <: {(String(2):Cmp)}
 make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic
 
 -- call 3 rules in very unusual way
-print dic['gt'](3,1)  -- expect $T
-print dic['lt'](3,1)  -- expect $F
-print dic['eq'](3,1)  -- expect $F
+print dic['gt'](3,1)  ; expect $T
+print dic['lt'](3,1)  ; expect $F
+print dic['eq'](3,1)  ; expect $F
 
-over
+over.
 ```

@@ -35,11 +35,11 @@ One application can connect to multiple databases simultaneously. A specific kin
 make db ∈ Oracle.DB
 
 -- create a wrapper for database connection
-rule connect(user, password, dbname ∈ String)
-   -- prepare credentials
-  make credential ∈ String 
+rule connect(user, password, dbname ∈ String):
+  -- prepare credentials
+  make credential ∈ String
   alter credential := user + '/' + password + '@'+ dbname
-   -- connect to database
+  -- connect to database
   apply db.connect(credential) 
 return
 ```
@@ -85,13 +85,13 @@ You can scan one table like a collection:
 begin
   -- declare current record
   make  current_record ∈ {record_field ∈ data_type, ...}  
-  scan db.table_name +> current_record:
+  scan db.table_name +> current_record do
     -- establish qualifier suppressor 
-    with current_record:
+    with current_record do
       ** use current_record fields
       ... 
-    ready 
-  repeat 
+    done
+  repeat
 ready
 ```
 
@@ -103,23 +103,22 @@ type: Record_Type <: {record_fields}
 begin
   make current_record ∈ Record_Type
   make index ∈ Z
-  scan db.table_name +> current_record:
+  scan db.table_name +> current_record do
     ** update current table
-    update db.table_name[rowid:current_record.rowid]:
+    update [rowid:current_record.rowid]
        alter field_name := new_value
        ...
-    ready
+    in db.table_name
     alter index += 1
     ** commit batch of 10
-    when (index = 10)
+    when (index = 10) do
       apply db.commit()
       alter index := 0
-    ready
+    done
   next
   ** commit all pending updates
   apply db.commit() if (index > 0)
-ready  
-
+ready
 ```
 
 ## Transactions
@@ -139,13 +138,10 @@ Bee can add new data records into one table using _append_ statement.
 
 ```
 -- using block statement
-append to table_name:
+append
   field_name := value
   ...
-ready  
-
--- single line statement
-append to table_name: append_recod
+to table_name
 ```
 
 ### Update
@@ -155,17 +151,11 @@ Bee can do single or multiple row updates.
 **Syntax:**
 
 ```
--- use mapping block
-update table_name[search_field:value]: 
-   field_name := value
-   ...
-ready   
-
--- Use search fields: 
-update table_name[search_field:value, ...]: update_record
-
--- Use search record:
-update table_name[search_record]: update_record
+-- use search fields and values
+update [search_field:value]
+   alter field_name := value
+   alter ...
+in table_name
 ```
 
 
@@ -183,10 +173,12 @@ This statement will remove one or more records from a table.
 
 ```
 -- Using search fields
-delete table_name[search_field:value,...]
+delete [search_field:value,...] 
+  from table_name
 
 -- Using search record
-delete table_name[search_record]
+delete [search_record] 
+  from table_name
 ```
 
 ## Direct SQL

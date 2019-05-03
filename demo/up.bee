@@ -9,7 +9,7 @@ rule test(x, y ∈ Z) => (a,b ∈ Z)
 return
 -- unpacking and make new variables
 make n,m <+ test(1,2)
-print (n, m) -- will print 2, 3
+print (n, m) ; will print 2, 3
 
 ** rule with structured result
 type Rec <: {x ∈ Z, y ∈ R}
@@ -18,4 +18,4 @@ rule (x ∈ Z, y ∈ R) => (r ∈ Rec)
   alter r.y := y
 return
 print demo(4,5.5)-- will print { x: 4, y: 5.5 }
-over 
+over. 

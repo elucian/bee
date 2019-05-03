@@ -1,6 +1,6 @@
-+-------------------------------
-    control structure demo       
--------------------------------+
++--------------------------------
+|    control structure demo     |  
++-------------------------------+
 #driver "cs"
 -- declare two natural numbers
 make a := 10, b := 5 ∈ N
@@ -10,31 +10,32 @@ print ("a < b") if (a < b)
 print ("a > b") if (a > b)
 
 -- single branch decision
-when (a = b)
+when (a = b) do
   print ("a = b")
-ready
+done
 
 -- decision with alternate branch
-when (a < 5)
+when (a < 5) do
   print "a < 5"
 else
   print "no"
-ready
+done
 
 -- mutual exclusive multi-path selector
 alter a := 2
-when (a @ [0..4])
+when (a @ [0..4]) do
   -- this is true since a = 2
   print ('a is between 0 and 4')
-else (a @ [2..5])
+else if (a ∈ [2..5]) do
   -- this is also true since a = 2
   print ('a is between 2 and 5')
-else (a < 0)
+else if (a < 0) do
   -- this is not true since a > 0
   print ('a ≤ 0')
 else
-  print ('a ≥ 5') -- no match
-ready
+  print ('a ≥ 5') ; no match
+done
+
 +-------------------------------------------
   when is breaking at first match           
   therefore only one message is produced:   
@@ -43,16 +44,16 @@ ready
 
 -- nested statements are supported
 alter a := $T, b := $F
-when (a ∧ b)
+when (a ∧ b) do
   print ("a ≠ 0 and b ≠ 0")
-  when (a ≥ b)
+  when (a ≥ b) do
     print ("a ≥ b")
-  ready
-  when (a > b)
+  done
+  when (a > b) do
      print ("a > b")
-  ready
+  done
 else
   print ("a = 0 and b = 0")
-ready
+done
 
-over 
+over..

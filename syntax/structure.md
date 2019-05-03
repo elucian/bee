@@ -73,9 +73,9 @@ Libraries are reusable project components usually located in _"lib"_ folder. A l
 Symbol "#" is used to create a compiler directive. Bee has 3 kind of program files each with different role: 
 
 ```
-#library  -- declare reusable library
-#aspect   -- declare one aspect of a problem
-#driver   -- declare main program
+#library -- declare reusable library
+#aspect  -- declare one aspect of a problem
+#driver  -- declare main program
 ```
 
 **Notes**
@@ -106,27 +106,30 @@ Each statement start with one keyword.
 * read     -- accept input from console into a variable
 * write    -- output to console result of an expressions
 * play     -- play one aspect of a program synchronously
-* apply    -- execute one or more rules separated by ";"
+* apply    -- execute one rule in synchronous mode
+* start    -- execute one rule in asynchronous mode
 
 **notes:**
 
-* One statement is usually ending at end of line;
-* Multiple statements on a single line are separated by ";"
+* One statement is ending at end of line if expression is finish;
+* One statement can extend on multiple lines if expression is unfinished;
+* You can not have multiple statements in a single line, except if statement;
+* You can have a comment at end of line using ";" but this do not end the statement;
 
 ## Code block
 Statements can be contained in blocks of code.
 
-* begin    -- create unconditional local context
-* when     -- create multi-path conditional selector
-* cycle    -- create unconditional repetitive block of code
-* while    -- create conditional repetitive block of code
-* scan     -- create visitor block for all elements in a collection
-* trial    -- create trial/error block of code to handle exceptions
+* begin -- create unconditional local context
+* trial -- create trial/error block of code to handle exceptions
+* when  -- create multi-path conditional selector
+* scan  -- create visitor block for all elements in a collection
+* cycle -- create unconditional repetitive block of code
+* while -- create conditional repetitive block of code
 
 **notes:**
 
-* Each block of code start with a specific keyword,
-* Each block of code is ending with a specific keyword and ";"
+* Each block is finalized with a different keyword:
+* It can be: {"ready, done, repeat, next, over"}
 
 ## Driver file
 
@@ -162,7 +165,7 @@ begin
   print
 ready  
 
-over -- end of "main" program
+over ; end of "main" program
 ```
 
 Do not try to understand the example. This is just a worm-up! 
@@ -216,13 +219,13 @@ One module or library is using a single global context.
 * Some pre-defined system variables are available in global context.
 
 ```
-$path    = $bee_path   --contains a list of folders
-$program = $bee_pro    --contains path to current program
-$runtime = $bee_home   --contains path to Bee runtime home
-$error        --contains last exception/error created by "fail"
-$precision    --contains default precision for Q = 0.001
-$global       --global context: universal qualifier
-$local        --local context: universal qualifier
+$path    = $bee_path  -- contains a list of folders
+$program = $bee_pro   -- contains path to current program
+$runtime = $bee_home  -- contains path to Bee runtime home
+$error        -- contains last exception/error created by "fail"
+$precision    -- contains default precision for Q = 0.001
+$global       -- global context: universal qualifier
+$local        -- local context: universal qualifier
 ```
 
 **note** System variable do not require context qualifiers:
@@ -230,10 +233,10 @@ $local        --local context: universal qualifier
 **importing**
 
 ```
-load $runtime.cpp_lib:(*)  --load cpp library
-load $runtime.asm_lib:(*)  --load asm library
-load $runtime.bee_lib:(*)  --load core library
-load $program.pro_lib:(*)  --load project library
+load $runtime.cpp_lib:(*)  ; load cpp library
+load $runtime.asm_lib:(*)  ; load asm library
+load $runtime.bee_lib:(*)  ; load core library
+load $program.pro_lib:(*)  ; load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -250,11 +253,11 @@ make i := 1 ∈ Z
 begin
   ** local context
   make i := 2 ∈ Z
-  print i -- expected: 2
+  print i ;expected: 2
 ready
-print i -- expected: 1  
+print i ;expected: 1  
 
-over
+over.
 ```
 **See example:** [lv.bee](../demo/lv.bee)
 
@@ -290,7 +293,7 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-load $runtime.cpp.myLib.(*) -- load cpp library
+load $runtime.cpp.myLib.(*) ; load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z)
@@ -317,40 +320,57 @@ To understand more about interacting with other languages check this article abo
 
 Bee enable several notations for comments: 
 
-### Single line comment**
+**End of line**
+
+For end of line comment Bee used semi-column ";"
+
+**Single line**
 
 For single line comments we use a pair of two symbols: 
 
-{ " --", "**", "##" } 
-
-**Comment conventions:**
+{ "--", "**", "##" } 
 
 * You can use \#\# in your program as title comments starting at beginning of a line.
-* You can use \-\- as the end of a line comment. You can also use \-\-\> like an arrow.
+* You can use \-\- as indented comments. You can also use \-\-\ as a long line separator.
 
 **Notes:** These are chosen for following reasons:
 
 1. In Wiki "**" is for making titles bold. So Bee is Wiki friendly.
 2. In Wiki "##" represents title 2. Iʼm using Wiki notation to print Bee documentation.
 3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
+4. In wiki pages apostrophe can not use "'" instead use Unicode symbol: `ʼ`
 
-The only problem is the apostrophe must not use "'" instead you can use Unicode symbol: `ʼ`
+
+**Boxed comments**
+
+For boxed comments we use two symbols "+- ... -+".
+
+```
++----------------------------------
+| Boxed comment:                  |
+|  - Do not support nesting       |
+|  - Upper left + corner missing  |
++---------------------------------+
+```
+
+**Block comments**
+Comment out a block of code using: "|*......*|"
+
+```
+|*
+print "commented out"
+*|
+
+```
 
 **Possible separators:**
 
 If a program is very large you can use separators to create large sections of code.
 
 ```
-************************
-```
-
-### Multi-line comments
-
-For multi-line comments we have 2 possible comments.
-
-```
-1. Outline: {* .... *} (nested comment/expression comment)
-2. Box comment: +-..-+ (beginning of program/section comment)
+####
+****
+----
 ```
 
 **Example:**
@@ -358,18 +378,18 @@ For multi-line comments we have 2 possible comments.
 In next example we are using various comments into a demo program.
 
 ```
-+----------------------------------------------------------------
-   At the beginning of program we can have  several comments    
-   to explain how the program works. This notation is preferred.
-----------------------------------------------------------------+
++---------------------------------------------------------------
+| At the beginning of program we can have  several comments    | 
+| to explain how the program works. This notation is preferred.|
+---------------------------------------------------------------+
 #driver "demo"
-
-
 ## This is a title in program
-
-** This is a sub-title in program
-
-over  -- end of program
+   ** This is a sub-title in program
+----------------------------------------------------------------      
+over. ;end of program
+****************************************************************
+** Alternative boxed comment for ancient matrix printers      **
+****************************************************************
 ```
 
 **note:** 
@@ -378,7 +398,7 @@ is ignored by the compiler. After last "." nothing else is parsed.
 
 ## Execution
 
-### Program Execution
+#### Program Execution
 
 When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled into an executable file. 
 
@@ -386,7 +406,7 @@ When a program is executed the driver is located and executed first. If a progra
 * A #library do not contain rogue statements and do not have parameters;
 * An #aspect can contain rogue statements that are executed using "play";
 
-### Aspect Execution
+#### Aspect Execution
 
 A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver can report results or a provide feedback.
 
@@ -413,13 +433,13 @@ play aspect_name(parameter_list)
 play aspect_name(parameter_list) +> result
 ```
 
-### Parameters
+#### Parameters
 
 ```
 #aspect "mod"
 
-input  i ∈ Z -- define parameter "i"
-output v ∈ N -- define result "v"
+input  i ∈ Z ; define parameter "i"
+output v ∈ N ; define result "v"
 
 when (i < 0)
   alter v := -i
@@ -427,7 +447,7 @@ else
   alter v := i
 ready  
 
-over
+over.
 ```
 
 ```
@@ -441,17 +461,15 @@ load $pro/mod.bee
 
 -- execute aspect "mod"
 play  mod(-3) +> result
-print result --> expect: 3
+print result ; expect: 3
 
-over
+over.
 ```
-
-**multiple**
 
 One aspect can have multiple parameters and multiple results:
 ```
-input a,b ∈ Z, c ∈ R -- define parameters "a,b,c"
-output v,z ∈ N -- define two results "v" and "z"
+input a,b ∈ Z, c ∈ R ; define parameters "a,b,c"
+output v,z ∈ N ; define two results "v" and "z"
 ```
 
 **note:** 

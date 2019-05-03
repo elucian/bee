@@ -8,12 +8,12 @@
 -- this rule can be used or cloned 
 rule generator{min, max ∈ Z}() => (r ∈ Z)
   make .index := min ∈ Z
-  when (.index > max)
+  when (.index > max) do
     fail (201, "index out of bounds")
   else
     alter r := .index
     alter .index += 1
-  ready
+  done
 return
 
 -- instantiate one rule object
@@ -23,33 +23,33 @@ clone count := generator{0,9}
 clone test  := generator{4,12}
 
 -- test cloned rule: count()
-trial:
+trial
   make set @ {Z}
   -- this loop is infinite
-  cycle:
+  cycle
     alter set += count()
     write set.index-- progressive grow
     write ','
   repeat
-  print-- expect 0,1,2,3,4,5,6,7,8,9,  
-cover:
+  print  ;expect 0,1,2,3,4,5,6,7,8,9,  
+cover
   -- count() is failing
   print set
-ready
+done
 
 -- use rule properties to check rule status
-print count.max   -- 9
+print count.max   ; 9
 print count.index-- 10 (count is finished)
 
 -- expectation verification: 
 fail if set ≠ {0,1,2,3,4,5,6,7,8,9}
 
 -- inspect the other clone object
-print test.max  -- expect 12
-print test.index -- expect 4
+print test.max   ; expect 12
+print test.index ; expect 4
 
 -- inspect the prototype
-print generator.max  -- expect 0
-print generator.min  -- expect 0
+print generator.max  ; expect 0
+print generator.min  ; expect 0
 
-over
+over.

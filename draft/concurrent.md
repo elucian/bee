@@ -29,15 +29,15 @@ rule test()
 return
 
 -- start 4 threads
-make i := 0 -- control variable
-while i ≤ 4
+make i := 0 ;control variable
+while i ≤ 4 do
   start test    
   alter i += 1
 repeat
 rest
 ```
 
-**file:** [ac.md](demo/ac.md)  -- asynchronous call
+**file:** [ac.md](demo/ac.md)  ; asynchronous call
 
 ## Resumable Coroutines 
 
@@ -51,7 +51,7 @@ Coroutines are two methods that wait for each other to execute in turn.
 ```
 #driver
 
-make n ∈ N -- control variable
+make n ∈ N ;control variable
 
 -- first coroutine
 rule foo(x ∈ N)
@@ -74,7 +74,7 @@ start bar(n)
 -- wait for both foo and bar to finish
 rest
 
-over
+over.
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee)  -- producer consumer example
+**See also:** [pc.wee](../demo/pc.wee)  ; producer consumer example

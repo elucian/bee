@@ -37,17 +37,17 @@ Expressions are created using identifiers, operators, rules and constant literal
 ```
 -- simple expressions in print statement
 -- no need for parentheses for a single value
-print 10 -- print 10
+print 10 ; print 10
 print "this is a test"
 
 --complex expressions can use ()  
-print (10 + 10 + 15)   -- math
-print (10 > 5 | 2 < 3) -- logical
+print (10 + 10 + 15)   ; math
+print (10 > 5 | 2 < 3) ; logical
 
 -- multiple expressions in a line
 -- print: separate multiple values with one space
-print (1,',',2,',',3) --expect 1, 2, 3
-print (10, 11, 12) --expect 10 11 12   
+print (1,',',2,',',3) ; expect 1, 2, 3
+print (10, 11, 12) ; expect 10 11 12   
 
 --to avoid new line and spaces use "write"
 write 0
@@ -55,12 +55,12 @@ write (1,2)
 write (3,4)
 
 -- after write use print to write a new line
-print --> 01234
+print ; 01234
 
 -- Calculation that fail will do nothing
 alter x := 5 ∈ R
-alter x := x ÷ 0 -- silent fail
-print x --> x = 5  -- wrong result
+alter x := x ÷ 0 ; silent fail
+print x ; x = 5  ; wrong result
 ```
 
 **Notes:** 
@@ -134,7 +134,7 @@ make name := constant ∈ Type
 
 **example**
 ```
-make n := U+2200 ∈ U -- ∀
+make n := U+2200 ∈ U ; ∀
 ```
 
 **Note:** 
@@ -240,12 +240,12 @@ ready
 #precision:0.1
 
 -- integer range
-print [0..5]  --> 0,1,2,3,4,5
-print [0.!5]  --> 0,1,2,3,4
+print [0..5]  ; 0,1,2,3,4,5
+print [0.!5]  ; 0,1,2,3,4
 
 -- rational range
-print (0..1)  --> 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
-print (0.!1)  --> 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
+print (0..1)  ; 0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+print (0.!1)  ; 0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 ```
 
 ## Constant declaration
@@ -278,7 +278,7 @@ make var_name ∈  type_name
 make var_name := constant ∈ type_name
 
 -- partial declaration using type inference
-make var_name := expression -- type inference
+make var_name := expression ; type inference
 
 -- reference declaration using using operator "::"
 make ref_name @  type_name
@@ -305,8 +305,8 @@ One can modify variables using "modify" statement.
 ```
 make a := 10, b := 0 ∈ Z
 
-alter b := a + 1 -- modify b 10->11 
-print b          -- expected 11
+alter b := a + 1 ; modify b 10->11 
+print b          ; expected 11
 ```
 
 **notes:** 
@@ -319,18 +319,18 @@ print b          -- expected 11
 define pi := 3.14 ∈ R
 
 -- declare multiple variables using modify
-make a   ∈ Z -- Integer 
-make x,y ∈ R -- Double
-make q,p ∈ L -- Logic
+make a   ∈ Z ; Integer 
+make x,y ∈ R ; Double
+make q,p ∈ L ; Logic
 
 --using modifier expressions
-alter a := 10 -- modify value of a := 10
-alter a += 1 -- increment value of a := 11
-alter a -= 1 -- decrement value of a := 10
+alter a := 10 ; modify value of a := 10
+alter a += 1 ; increment value of a := 11
+alter a -= 1 ; decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p := $T -- modify value of q and p
-alter x, y := 10.5 -- modify value of x and y
+alter q, p := $T ; modify value of q and p
+alter x, y := 10.5 ; modify value of x and y
 ```
 
 ## Type conversion
@@ -350,11 +350,11 @@ make v := 10.5, x := 0.0 ∈ R
 
 --explicit conversion
 alter a := v -> N
-print a  -- truncated to 10 
+print a  ; truncated to 10 
 
 --explicit conversion
 alter x := b -> R
-print x  --> expect 20.0
+print x  ; expect 20.0
 ```
 
 ## Alphanumeric type
@@ -362,13 +362,13 @@ print x  --> expect 20.0
 Bee define U as single UTF32 code point with representation: U+HHHH
 
 ```
-make a, b ∈ U --Unicode 
-make x, y ∈ B --Binary
+make a, b ∈ U ; Unicode 
+make x, y ∈ B ; Binary
 
-alter a := '0' -- representation of 0
-alter x := a -> B -- convert to 30
-alter y := 30 -- UTF code for '0'
-alter b := y -> A -- convert to '0'
+alter a := '0' ; representation of 0
+alter x := a -> B ; convert to 30
+alter y := 30 ; UTF code for '0'
+alter b := y -> A ; convert to '0'
 ```
 
 
@@ -377,11 +377,11 @@ alter b := y -> A -- convert to '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0   -- integer variable 
-make b := 0.0 -- real variable 
+make a := 0   ; integer variable 
+make b := 0.0 ; real variable 
 
-alter b := 10   -- FAIL: b is of type: Real
-alter a := 10.5 -- FAIL: a is of type: Integer
+alter b := 10   ; FAIL: b is of type: Real
+alter a := 10.5 ; FAIL: a is of type: Integer
 ```
 
 ## Logic type
@@ -428,20 +428,20 @@ Logic operators have greater precedence than comparison.
 Logical expression have value { $F, $T }
 
 ```
-make x := $F -- false
-make y := $T -- true
+make x := $F ; false
+make y := $T ; true
 
 --simple expressions
-print   x -- $F = 0
-print ¬ x -- $T = 1
+print   x ; $F = 0
+print ¬ x ; $T = 1
 
 --complex expressions
-print  (x ↔ y) --  0
-print ¬(x ↔ y) --  1
-print  (x < y) --  1
-print  (x > y) --  0
-print  (x ∧ y) --  0
-print  (x ∨ y) --  1
+print  (x ↔ y) ;  0
+print ¬(x ↔ y) ;  1
+print  (x < y) ;  1
+print  (x > y) ;  0
+print  (x ∧ y) ;  0
+print  (x ∨ y) ;  1
 
 ```
 **Notes:** 
@@ -457,8 +457,8 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L
 make a := 0.0, b := 1.5
 
-alter x := a -> L -- x = $F
-alter y := b -> L -- y = $T
+alter x := a -> L ; x = $F
+alter y := b -> L ; y = $T
 ```
 
 **Notes:** 
@@ -480,19 +480,19 @@ All composite variables are references to objects.
 
 **example**
 ```
-make i := 10 ∈ Z -- basic type
-make j :: i  @ Z -- reference to i
-make k @ Z -- null reference
+make i := 10 ∈ Z ; basic type
+make j :: i  @ Z ; reference to i
+make k @ Z ; null reference
 
 -- borrowing address / boxing
-alter k :: i -- boxing i := 12 
-alter i += 1 -- modify i := 13
-print k --> expect 13 (modified)
+alter k :: i ; boxing i := 12 
+alter i += 1 ; modify i := 13
+print k ; expect 13 (modified)
 
 -- verify boxing effect
-print k ≡ j -- $T (same)
-print k ≡ i -- $T (same)
-print j ≡ i -- $T (same)
+print k ≡ j ; $T (same)
+print k ≡ i ; $T (same)
+print j ≡ i ; $T (same)
 ```
 
 ## Conditionals
@@ -559,8 +559,8 @@ make x := '0'
 read (x,"x:>")
 
 make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown")
-print "x is ".kind -- expect: "x is digit"
-over
+print "x is ".kind ; expect: "x is digit"
+over.
 ```
 
 ## Exceptions
@@ -610,7 +610,7 @@ exception: 'test'
 Next we create unrecoverable exception:
 
 ```
-halt -1  -- end program and exit code = -1
+halt -1  ; end program and exit code = -1
 ```
 
 ## Basic rules
@@ -682,18 +682,18 @@ return
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1) 
-print b -- 3 
-print c -- 1 
+print b ; 3 
+print c ; 1 
 
 -- alternative rule call:
 alter b,c <+ com(4,5) 
-print b -- 9 
-print c -- 1 
+print b ; 9 
+print c ; 1 
 
 -- alternative rule call:
 apply com(0,1) +> b,c;
-print b -- 1 
-print c -- 1 
+print b ; 1 
+print c ; 1 
 
 ```
 
@@ -719,7 +719,7 @@ Attributes of a rule are state variables. That are variables starting with dot p
 **pattern**
 ```
 rule name(param ∈ type,...)
-   -- define x,y,z states
+  -- define x,y,z states
    make .x, .y, .z := 0 ∈ Z   
    ...
 return
@@ -730,11 +730,11 @@ alter rule.y = 2
 alter rule.z = 3
 
 -- read rule states
-print rule.x, rule.y, rule.z -- 1 2 3
+print rule.x, rule.y, rule.z ; 1 2 3
 ```
 
 **See also:**
-* [bs.bee](../demo/bs.bee)  -- Bubble Sort
+* [bs.bee](../demo/bs.bee)  ; Bubble Sort
 
 ## Generic rules
 
@@ -744,7 +744,7 @@ A generic rule is a rule template. Is a prototype that can be cloned.
 ```
 -- define a rule prototype
 rule prototype_name{attributes}(parameters) => (result ∈ Type)
-   -- compute the result
+  -- compute the result
   alter result := expression(parameters)
 return
 
@@ -764,21 +764,21 @@ rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z)
 return
 
 -- instantiate two rule objects:
-clone inc := shift{s: +1} -- increment 
-clone dec := shift{s: -1} -- decrement 
+clone inc := shift{s: +1} ; increment 
+clone dec := shift{s: -1} ; decrement 
 
 -- verify object properties
-print inc.s -- expect: 1
-print dec.s -- expect:-1
+print inc.s ; expect: 1
+print dec.s ; expect:-1
 
 -- use first rule object "inc"
-print inc(1) --> 2
-print inc(4) --> 5
+print inc(1) ; 2
+print inc(4) ; 5
 
 -- use second rule object "dec"
-print dec(1) -->  0
-print dec(2) -->  1
-print dec(0) --> -1
+print dec(1) ;  0
+print dec(2) ;  1
+print dec(0) ; -1
 ```
 
 ## Expression rules
@@ -798,7 +798,7 @@ rule xp(x,y ∈ Z) ∈ Z => (x + y)
 
 -- using the rule in other expressions
 make z := xp(1,1) + 1
-print  z -- print 3
+print  z ; print 3
 ```
 
 **properties**
@@ -814,12 +814,12 @@ Expression rules...
 * can not be interrupted from execution;
 
 **See also:**
-* [pm.bee](../demo/pm.bee)  -- expression rule
-* [fn.bee](../demo/fn.bee)  -- pattern matching rule
-* [fi.bee](../demo/fi.bee)  -- recursive rule
-* [rp.bee](../demo/rp.bee)  -- rule as parameter
+* [pm.bee](../demo/pm.bee)  ; expression rule
+* [fn.bee](../demo/fn.bee)  ; pattern matching rule
+* [fi.bee](../demo/fi.bee)  ; recursive rule
+* [rp.bee](../demo/rp.bee)  ; rule as parameter
 
 **See also:**
-* [ho.bee](../demo/ho.bee)  -- High order rule
+* [ho.bee](../demo/ho.bee)  ; High order rule
 
 **Read Next:** [Control Flow](control.md)

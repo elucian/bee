@@ -3,21 +3,22 @@
 ----------------------------------------------+
 #driver "nu"
 make d, e @ Z    --reference to natural number
-make s := 10 ∈ Z --> define integer
+make s := 10 ∈ Z  ; define integer
 -- assign "by reference" 
-alter d :: s -- explicit boxing address for "s"
-alter d += 1 -- alter underline value of d that is s  
-print s--> s = 11  (modified)
-print d--> d = 11  (modified) 
+alter d :: s ; explicit boxing address for "s"
+alter d += 1 ; alter underline value of d that is s  
+print s ; s = 11  (modified)
+print d ; d = 11  (modified) 
 
 -- wrong assignment using "::"
-trial:
+trial
   alter e := s
-cover:
-  -- expect error "Null reference error"
+cover
+  ; expect error "Null reference error"
   print "failed:".$error.message
-ready
+done
  
 -- test modifier effect
 fail if ¬ (s ≡ d)
-over
+
+over.

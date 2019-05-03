@@ -27,8 +27,8 @@ alter test1 := { x | x ∈ Source}
 alter test2 := { x²| x ∈ Source}
 
 -- expected result
-print test1   -- {1,2,3}
-print test2   -- {1,4,9}
+print test1  ; {1,2,3}
+print test2  ; {1,4,9}
 ```
 
 **Note:**

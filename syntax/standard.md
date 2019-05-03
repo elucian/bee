@@ -86,10 +86,10 @@ Interaction with operating system require load from library.
 +-------------------------
 \bee 
   |
-  | -->system
-  |     | -->io.bee
+  |-- system
+  |     | -- io.bee
   |
-  --->db
+  |-- db
   ...
 -------------------------+  
 ```

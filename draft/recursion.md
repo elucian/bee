@@ -11,11 +11,11 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 ```
 -- this rule is not optimized:
 rule fact(n ∈ N) => (r ∈ N)
-  when (n = 0)
+  when (n = 0) do
     alter r := 1
   else  
     alter r := n · fact(n-1)
-  ready  
+  done  
 return
 ``` 
 
@@ -23,11 +23,11 @@ return
 ```
 --this rule can be optimized:
 rule tail(n ∈ N, acc ∈ N) => (r ∈ N)
-  when (n = 0)
+  when (n = 0) do
     alter r:= acc
   else
     alter r:= tail(n-1, acc · n)
-  ready 
+  done 
 return
 
 rule fact(n ∈ N) => (r ∈ N)
@@ -39,7 +39,7 @@ return
 ```
 --this rule is manually optimized:
 rule fact(a ∈ N, b ∈ N) => (r ∈ N)
-  while (b > 1)
+  while (b > 1) do
     alter a := a · a + a
     alter b := b - 1  
   else

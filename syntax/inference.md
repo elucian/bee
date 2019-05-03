@@ -13,23 +13,23 @@ Each literal has a "default" type that is automatic assigned for specific notati
 
 ```
 -- character expressions
-make c := `a` -- type = Unicode 
-make s := 'a' -- type = String 
-make b := "Text" -- type = Text
+make c := `a`    ;type = Unicode 
+make s := 'a'    ;type = String 
+make b := "Text" ;type = Text
 
 -- numeric expressions
-make i := 0 -- type := Z
-make j := 0.5 -- type := R
+make i := 0   ;type := Z
+make j := 0.5 ;type := R
 
 -- define synonyms for logic constants
-define false := $F -- type L = 0
-define true  := $T -- type L = 1
+define false := $F ;type L = 0
+define true  := $T ;type L = 1
 
 -- multiple variables
-make x,y,z := 5 -- type := Z
+make x,y,z := 5 ;type := Z
 
 -- combination of types
-make n := 0, m := 0.5  -- types Z and R
+make n := 0, m := 0.5  ;types Z and R
 ```
 
 ## Composite
@@ -71,9 +71,9 @@ In rule foo, parameters a, b are optional.
 -- result type is Z
 rule foo(a,b: 0) ∈ Z => (a + b)
                                   
-print foo()    -- 0               
-print foo(1)   -- 1
-print foo(1,2) -- 3
+print foo()    ; 0               
+print foo(1)   ; 1
+print foo(1,2) ; 3
 ```
 
 **Multiple parameters:**
@@ -83,9 +83,9 @@ Parameters: a, b are mandatory, c is optional.
 ```
 rule foo(a,b ∈ Z, c: 0)  ∈ Z => (a+b+c)
 
-print foo(1,2) -- 3
-print foo(1,2,3) -- 6
-print foo(1) -- Error: Expected 2 arguments, 1 is value!
+print foo(1,2)   ;3
+print foo(1,2,3) ;6
+print foo(1)     ;Error: expected 2 arguments
 
 ```
 
@@ -99,9 +99,9 @@ We can use parameter name and pair-up ":" symbol for argument value.
 rule bar(a,b,c:0)  ∈ Z => (a+b+c)
 
 -- observe we use pair-up to new value to argument
-print bar(a:1) -- print 1 because (b,c := 0) 
-print bar(b:1) -- print 1 because (a,b := 0) 
-print bar(c:1) -- print 1 because (a,b := 0) 
+print bar(a:1) ; print 1 because (b,c := 0) 
+print bar(b:1) ; print 1 because (a,b := 0) 
+print bar(c:1) ; print 1 because (a,b := 0) 
 ```
 
 ## Multiply
