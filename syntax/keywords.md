@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee uses 51 reserved keywords to create basic statements: 
+Bee uses 58 reserved keywords so far: 
 
 ```
 04: if, is, to, in
@@ -16,9 +16,9 @@ Bee uses 51 reserved keywords to create basic statements:
 **notes:** 
 
 * You can not use these keywords as identifiers;
-* New keywords are going to be created for /draft;
+* New keywords are going to be created in /draft folder;
 
-### Operators
+### Semantic keywords
 
 | Keyword     | Purpose
 |-------------|--------------------------------------------------------
@@ -26,7 +26,6 @@ Bee uses 51 reserved keywords to create basic statements:
 | is          | introspection operator (is of type)
 | to          | used in conjunction with append
 | in          | used in conjunction with update 
-| from        | used in conjunction with delete
 
 ### Directives
 
@@ -118,9 +117,9 @@ These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
 |----------|----------------------------------------------------------------
-| append   | append a record to a table
-| update   | update a record in a table
-| delete   | delete a record from a table
-
+| append   | create a record to a table 
+| update   | alter a record in a table
+| delete   | remove a record from a table
+| from     | associated with delete statement
 
 **Read next:** [Syntax Overview](overview.md)

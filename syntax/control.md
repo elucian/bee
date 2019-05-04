@@ -2,14 +2,16 @@
 
 Bee has 8 control flow statements:
 
-* [do](#do)
-* [with](#with)
-* [when](#when)
-* [quest](#quest)
-* [cycle](#cycle)
-* [while](#while)
-* [scan](#scan)
-* [trial](#trial)
+Name             | Description
+-----------------|----------------------------------
+[do](#do)        | anonymous block
+[with](#with)    | qualifier suppression
+[when](#when)    | decision statement
+[quest](#quest)  | multi-path selector
+[cycle](#cycle)  | unconditional loop
+[while](#while)  | conditional loop
+[scan](#scan)    | for visitor pattern
+[trial](#trial)  | trial work-flow
 
 ## do
 
@@ -159,7 +161,7 @@ repeat
 In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
-do ;local
+do
   make a := 10 ∈ Z
   cycle
     alter a -= 1
@@ -167,11 +169,11 @@ do ;local
     skip if (a % 2 = 0)
     write a  
     ** conditional termination
-    write ',' 
+    write ','
     stop if (a < 0)
-  repeat ;cycle
+  repeat
   print a
-done ;local
+done
 ```
 
 **Notes:** 
