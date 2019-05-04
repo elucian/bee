@@ -82,7 +82,7 @@ You can scan one table like a collection:
 
 **pattern**
 ```
-begin
+local
   -- declare current record
   make  current_record ∈ {record_field ∈ data_type, ...}  
   scan db.table_name +> current_record do
@@ -92,7 +92,7 @@ begin
       ... 
     done
   repeat
-ready
+c
 ```
 
 **Mutating data**
@@ -100,7 +100,7 @@ You can modify table data using current_record fields. First you modify values f
 
 ```
 type: Record_Type <: {record_fields}
-begin
+do
   make current_record ∈ Record_Type
   make index ∈ Z
   scan db.table_name +> current_record do
@@ -118,7 +118,7 @@ begin
   next
   ** commit all pending updates
   apply db.commit() if (index > 0)
-ready
+done
 ```
 
 ## Transactions

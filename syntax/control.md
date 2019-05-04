@@ -1,10 +1,11 @@
 ## Control Flow
 
-Bee has 7 control flow statements:
+Bee has 8 control flow statements:
 
-* [begin](#begin)
+* [do](#do)
 * [with](#with)
 * [when](#when)
+* [quest](#quest)
 * [cycle](#cycle)
 * [while](#while)
 * [scan](#scan)
@@ -12,7 +13,7 @@ Bee has 7 control flow statements:
 
 ## do
 
-Define anonymous block of code;
+Anonymous block of code:
 
 ```
 do
@@ -21,6 +22,9 @@ do
 done
 ```
 
+**Note:** 
+* This is the most simple block of code,
+* In practice we use more complex blocks.
 
 ## with
 
@@ -58,7 +62,7 @@ The _when_ keyword is a multi-conditional selector.
 
 **syntax**
 ```
-when (condition) do
+when condition do
   -- statements
   ...
 done
@@ -87,8 +91,8 @@ when a ≤ 0 do
     print 'a = 0'
   else
     print "a < 0" 
-  done;a ≤ 0
-done;a = 0
+  done ;a ≤ 0
+done ;a = 0
 ```
 
 **note:** I have used comments ";" after "do" and "done"
@@ -103,11 +107,32 @@ else if a > 10 do
   print 'a > 100'
 else if a > 10 do
   print 'a > 2'
-else if a > 1 do
+else if a > 1  do
   print 'a > 1'
 else
   print "a ≥ 0"
 done 
+```
+
+## Quest
+
+The quest is a multi-path value based selector. 
+It is used in conjunction with { "do", "other", "done"}
+
+**syntax:**
+
+```
+value_typ: val := expression
+quest val
+  match constant1 do
+    ** first path
+  match constant2 do
+    ** second path
+  match constant3 do
+    ** third path
+none
+  ** default path
+done;
 ```
 
 ## Cycle
@@ -127,10 +152,12 @@ repeat
 ```
 
 **notes**
-* It is forbiden to _make_  a new variable in a cycle;
-* It is forbiden to _begin_ a new local context in a nested cycle;
+* It is forbidden to declare new variables in a cycle;
+* It is forbidden to start a nested context in a cycle;
 
 **example**
+
+In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
 do ;local
@@ -152,7 +179,7 @@ done ;local
 
 * The cycle can be controlled using conditional if;
 * If _stop_ condition is missing the cycle is infinite;
-* Infinite cycle is interrupted automatic by #timer:??
+* Infinite cycle is interrupted automatic by a #timer
 
 **nested**
 
@@ -238,9 +265,9 @@ One while block statement can be nested:
 
 ```
 ** outer loop   
-while (condition) do
+while condition do
   ** inner loop
-  while (condition) do
+  while condition do
      -- statements
      ...
   repeat  
@@ -254,7 +281,7 @@ repeat
 -- use global context
 make x   := 9
 make a,r := 0
-while (x < 5) do
+while x < 5 do
   alter r := x % 2
   alter a := 0 if r = 0, 1 if r = 0, 2
   write "{1}:{2}" <+ (x,a)
@@ -314,7 +341,7 @@ The "trial" statement execute a sequential process that can fail for some reason
 |-------|--------------------------------------------------------
 | trial | start trial/error block
 | error | catch errors by code and start a patch region
-| cover | catch other errors not found by error regions
+| other | catch other errors not found by error regions
 | final | executed before trial is over after last case or error
 
 **pattern**
@@ -323,33 +350,33 @@ trial
   -- private context
   ...  
   -- multiple use cases
-  case first do
+  case first go
     fail code if (condition)
     ...    
-  case second do
+  case second go
     fail {code,"message"} if (condition)  
     ...
-  case name_1 do
+  case name_1 go
     abort if (condition)
     ...
-  case name_2 do
+  case name_2 go
     retry name_1 if (condition)
     ...
-  case name_3 do
+  case name_3 go
     solve name_4 if (condition)  
     ...       
-  case name_4 do
+  case name_4 go
     ...
 error code do
    -- patch statement
 error code do
    -- patch statement  
 ...  
-cover
-   -- other errors  
+other
+   -- covering all other errors
 final
    -- finalization
-done
+done;
 ```
 
 **note:**

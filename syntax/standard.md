@@ -135,9 +135,8 @@ Rules without rules in syste.io
 | save    | Save file modifications to disk
 | undo    | Restore file modification before save
 | close   | Close a file after using it
-| clean   | Remove one or more file from disk
 | new     | Make a new directory
-| remove  | Remove a directory / with files
+| remove  | Remove a file / directory / with files
 | change  | Change current working folder
 
 ## Exception

@@ -250,11 +250,11 @@ Local context is a private memory space.
 #driver "test"
 ** global context
 make i := 1 ∈ Z  
-begin
+do  
   ** local context
   make i := 2 ∈ Z
   print i ;expected: 2
-ready
+done
 print i ;expected: 1  
 
 over.

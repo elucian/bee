@@ -70,4 +70,4 @@ show     | show canvas
 hide     | hide canvas
 wait     | wait a number of seconds
 erase    | remove a drawing shape
-clear    | remove all drawings from a layer
+scrub    | remove all drawings from a layer

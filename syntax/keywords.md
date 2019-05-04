@@ -3,19 +3,20 @@
 Bee uses 51 reserved keywords to create basic statements: 
 
 ```
-03: if, is, to
+04: if, is, to, in
 05: #driver, #library, #aspect, #timer, #precision
 09: load, alias, type, define, make, rule, clone, input, output, return
 07: read, play, write, print, alter, scrap, apply 
-08: when, else, cycle, while, repeat, scan, next, ready
-07: begin, with, trial, case, error, cover, final
+08: do, when, with, quest, cycle, while, scan, trial
+10: else, case, error, other, final, match, none, repeat, next, done
 12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
+03: append, update, delete, from
 ```
 
 **notes:** 
 
 * You can not use these keywords as identifiers;
-* New keywords are going to be created in /draft;
+* New keywords are going to be created for /draft;
 
 ### Operators
 
@@ -24,6 +25,8 @@ Bee uses 51 reserved keywords to create basic statements:
 | if          | conditional suffix operator
 | is          | introspection operator (is of type)
 | to          | used in conjunction with append
+| in          | used in conjunction with update 
+| from        | used in conjunction with delete
 
 ### Directives
 
@@ -84,11 +87,14 @@ Control statements are also known as decision statements.
 | trial    | Protect a block of code that may have exceptions
 | case     | One trial block can resolve multiple cases
 | error    | Associated with trial to patch one errors
-| cover    | Associated with trial to patch other errors
+| other    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
-| ready    | Close when or trial control blocks
-| begin    | Start unconditional anonymous block / local context 
+| done     | Close do, when and trial control blocks
+| do       | Start unconditional anonymous block / local context 
 | with     | Start qualifier suppression block
+| quest    | Create a multi-block selection statement
+| match    | Associated to quest, create one branch
+| none     | Assicuated to quses, create alternative branch
 
 ## Interruption keywords
 
@@ -107,5 +113,14 @@ These keywords are jumps or termination statements.
 | resume   | Used in trial block to continue next case after failure
 | halt     | Create unrecoverable error and stop program
 | over     | End driver, library or module file. Dot suffix is mandatory.
+
+## Database operations
+
+| Keyword  | Purpose
+|----------|----------------------------------------------------------------
+| append   | append a record to a table
+| update   | update a record in a table
+| delete   | delete a record from a table
+
 
 **Read next:** [Syntax Overview](overview.md)
