@@ -13,7 +13,7 @@
             <Keywords name="Numbers, suffix1"></Keywords>
             <Keywords name="Numbers, suffix2">r i d c m &#x03BC;</Keywords>
             <Keywords name="Numbers, range"></Keywords>
-            <Keywords name="Operators1">. , ~ + - : ; @ / % = &lt; &gt; ! ? | &amp; ^</Keywords>
+            <Keywords name="Operators1">. , ~ + - : @ / % = &lt; &gt; ! ? | &amp; ^</Keywords>
             <Keywords name="Operators2">_ &#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; &#x2194; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x2190; &#x2192; &#x2191; &#x2193; if is</Keywords>
             <Keywords name="Folders in code1, open"></Keywords>
             <Keywords name="Folders in code1, middle"></Keywords>

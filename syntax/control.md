@@ -117,13 +117,12 @@ done
 ## Quest
 
 The quest is a multi-path value based selector. 
-It is used in conjunction with { "do", "other", "done"}
+It is used in conjunction with: do, none, done
 
 **syntax:**
 
 ```
-value_typ: val := expression
-quest val
+quest expression 
   match constant1 do
     ** first path
   match constant2 do
@@ -132,7 +131,7 @@ quest val
     ** third path
 none
   ** default path
-done;
+done; end quest
 ```
 
 ## Cycle
