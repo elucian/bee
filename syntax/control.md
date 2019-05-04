@@ -397,9 +397,9 @@ done;
 
 Error regions are "exception handlers". Each can catch one single error with a specific code.
 
-**cover**
+**other**
 
-The "cover" region is executed when the error is not captured. In this region you can use control statements to check for a range of errors or resolve any unknown error. 
+The "other" region is executed when the error is not captured. In this region you can use control statements to check for a range of errors or resolve any unknown error. This may be very generic like printing the error message to console. 
 
 **final**
 
