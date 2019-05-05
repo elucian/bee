@@ -5,6 +5,7 @@ Composite types are complex data structures.
 **Bookmarks**
 
 * [ordinal](#ordinal)
+* [tuple](#tuple)
 * [list](#list)
 * [set](#set)
 * [hash map](#hash-map)
@@ -52,21 +53,50 @@ alter  a := name0  ; a value := 0
 alter  b := name1  ; b value := 1
 ```
 
+## Tuple
+
+It is a comma separated list of values or expressions. 
+
+**declare a tuple
+```
+(Z, Z, U)
+(a, b ∈ Z, c ∈ U)
+```
+
+**notes**
+* Tuples have a static structure;
+* You can not have a variable of type tuple;
+* Expressions in a tuple can have different data types;
+
+**usability**
+* You can not define a variable of type tuple;
+* Tuples are used as list of parameters;
+* Tuples are used to define list of results;
+* Tuples can be used to assign values to variables using unpacking "<+"
+
+**example**
+```
+new a,b,s <+ (1,1,'A') 
+```
+
 ## List
 
-A list is an ordered collection of values separated by comma and enclosed in brackets. Observe that a list is a reference since it is a composite type.
+A list is an ordered collection of values separated by comma and enclosed in brackets. Observe that a list is a reference since it is a composite type. That means you declare a list using @ instead of ∈.
 
 **Syntax**
 ```
-type <variable> := () @ (value_type)
+type variable := () @ (value_type)
 ```
 
-**Notes**: List members must have same data type
+**Notes**: 
+* List members have the same data type;
+* A list literal is a tuple having unique data type;
+* A list has variable and unrestrictive length;
 
 **example**
 ```
 -- create a list of code points
-make a := () @ (U)
+make a := () @ (U) ; empty list
 
 -- create a list using literals
 make b := ('1','a','2','b') @ (U) 
@@ -78,10 +108,15 @@ An empty list is represented like this: ()
 
 ```
 make a := () ; empty list
-make b := (1,2,3) ; initialize list using modify
+make b := (1,2,3) ; initialize list using literal
 
 alter a := b ; modify a and throw to garbage ()
 ```
+
+**First & Last**
+
+* First element in a list: list[!]
+* Last element in a list: list[?]
 
 **Unpacking**
 
@@ -96,9 +131,9 @@ make x, y, z ∈ Z
 --unpacking modify all 3 value
 alter x, y, z <+ (97, 65, 40)
 
-print x  ;  97
-print y  ;  65
-print z  ;  40
+print x  ;97
+print y  ;65
+print z  ;40
 
 --anonymous list unpacking in text template
 make s := "{0} > {1} > {2}" <+ (x, y, z) 
@@ -106,9 +141,9 @@ print s  ; "97 > 65 > 40"
 ```
 
 
-**Multiple results**
+**Unpacking results**
 
-An rule can produce multiple results in a list.
+A rule can have multiple results in form of list or tuple:
 
 ```
 -- have a list of results
@@ -119,15 +154,22 @@ return
 
 make n, m ∈ Z
 
--- unpacking the result
+-- unpacking the results
 alter n, m <+ test(1,2)
 
 print n  ; will print 2
 print m  ; will print 3
 
 -- ignoring first result
-alter _,m <+ test(3,4)
+alter _, m <+ test(3,4)
 
+-- ignoring second result
+alter n <+ test(3,4)
+
+-- capture the list
+make l := test(1,2)
+fail if l ≠ (2,3) ;check
+print type(l) ;expect: List(Z) 
 ```
 
 **Partial unpacking**
@@ -144,9 +186,10 @@ alter _,x,y,z <+ lst
 ```
 
 **Unpacking Notes:**
-* To unpack a list it must use at least one comma separated variables;
+* You can visit a list one by one using operator +> is a scan block;
+* You can visit a list two by two in pairs using (a,b) in a scan block;
 * If list is greater than target variables the rest of values are ignored;
-* If the list is shorter than the number of variables the rest of variables are set to zero value;
+* If the list is shorter last variables are set to zero, no error is raised;
 
 ### List processing
 
@@ -155,22 +198,27 @@ make l1 := (1, 2, 3)
 make l2 := (2, 3, 4)
 make l3, l4, l5 := ()
 
---addition between lists "+" 
+-- addition between two lists "+" 
 alter l3 := l1 + l2 ; (1,2,3,2,3,4)
 
---difference between lists "-"
+-- difference between two lists "-"
 alter l4 := l1 - l2 ; (1)
 alter l5 := l2 - l1 ; (4)
+
+-- intersection between two lists "+" 
+alter l3 := l1 & l2 ; (2,3)
+
+-- union between two lists "|" 
+alter l3 := l1 | l2 ; (1,2,3,4)
 ```
 
 **List traversal**
 
 ```
 make list := ('a', 'b', 'c')
-make x :: list[!] @ A
-while ¬ (x ≡ list[?])
-  write x
-  alter x :: list.next(x)
+make c @ U
+scan list +> c do
+  write c
   write ','
 repeat
 ```
@@ -204,10 +252,10 @@ make first : N
 -- using enqueue operator "+:" 
 alter q += 4  ; (1,2,3,4)
 
--- read first element using "=" and "modify"
+-- read first element using ":="
 alter first := a[!]  ; first = 1
 
--- dequeue first element using "-=" operator
+-- dequeue first element using "-="
 alter a -= a[!]  ; a = (2,3,4)
 ```
 
@@ -240,9 +288,9 @@ alter a := a - 3 ;{1,2,4}    -- remove 3 (not 3)
 
 **Notes:** 
 
-* Sets are internally sorted not indexed;
-* Sets are not recommended to create queues or stacks;
-* Usually you do not remove elements from a set but only append;
+* Elements in a set have the same data type;
+* Set are internally sorted not indexed;
+* Set elements must be sortable
 
 ## Hash map
 
@@ -280,16 +328,14 @@ print map       ; expected: {'b'="second", 'c'="third"}
 ```
 
 **Notes:** 
-* Hash map is also known as dictionary or associative array;
-* Hash map operators work like for sets. Key is unique;
-* Hash map key type is usually one of: {B,U,Z,N,P,R,Q,C};
-* Hash map key type can also be composite type: {String, Date, Time};
-* Hash map key type can not be double quoted string or collection;
+* Hash operators are working like for a set of keys;
+* Hash key type must be numeric or sortable:{String, Date, Time};
+* Hash key type can not be double quoted string or other collection;
 
 
 ## Check for inclusion
 
-We can check if an element is included in a collection.
+We can check if an element is included in a collection using "∈".
 
 ```
 type  Tmap <: {(A:U)};
@@ -301,7 +347,7 @@ when ('a' ∈ map) do
 else
   print("not found")
 done
-    
+  
 ```
 
 ## Array
@@ -434,7 +480,7 @@ alter e[0] := 2 ; first element in e slice
 print a ; expect [0,1,2,0,0]
 
 --modify last 3 elements
-alter a[3...] := 9
+alter a[3..?] := 9
 print a ; expect [0,1,2,9,9]
 
 ```
@@ -455,7 +501,7 @@ print e = a  ;1 -- (equal collections)
 print e ≡ a  ;0 -- (different memory locations)
 
 -- by default a slice is a copy/clone of original data
-alter f := a[2...]  ;copy data using slice notation
+alter f := a[2..?]  ;copy data using slice notation
 
 -- you can also copy a data from a basic type
 alter r := Z[1..10]
@@ -813,7 +859,7 @@ This kind of structure can be used to create a data chain.
 
 ```
 ** example of double recursive node
-type: Node <: {
+type Node <: {
   data  ∈ Z,    ;integer data
   prior ∈ Node, ;reference to previous node
   next  ∈ Node  ;reference to next node
@@ -879,6 +925,5 @@ apply test.bar()
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 * Bee do not have inheritance and polymorphism instead you can use mix-ins;
-
 
 **Read next:** [Type Inference](inference.md) 

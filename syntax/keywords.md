@@ -5,10 +5,10 @@ Bee uses 58 reserved keywords so far:
 ```
 04: if, is, to, in
 05: #driver, #library, #aspect, #timer, #precision
-09: load, alias, type, define, make, rule, clone, input, output, return
-07: read, play, write, print, alter, scrap, apply 
-08: do, when, with, quest, cycle, while, scan, trial
-10: else, case, error, other, final, match, none, repeat, next, done
+09: define, make, rule, clone, input, output, load, alias, type, return
+07: read, write, print, alter, scrap, apply, play 
+07: when, with, quest, cycle, while, scan, trial
+11: else, case, error, other, final, match, none, repeat, next, do, done
 12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 03: append, update, delete, from
 ```
@@ -75,7 +75,7 @@ Next statements represents actions. Also called Imperative statements.
 Control statements are also known as decision statements.
 
 | Keyword  | Purpose
-|----------|------------------------------------------------------
+|----------|------------------------------------------------------------
 | when     | Execute statement block only if condition true
 | else     | Alternative path for when statement
 | cycle    | Start unconditional repetitive block
@@ -88,12 +88,12 @@ Control statements are also known as decision statements.
 | error    | Associated with trial to patch one errors
 | other    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
-| done     | Close do, when and trial control blocks
-| do       | Start unconditional anonymous block / local context 
+| do       | Begin a statement region for when, quest and trial blocks
+| done     | Finalize when, quest and trial control blocks
 | with     | Start qualifier suppression block
 | quest    | Create a multi-block selection statement
 | match    | Associated to quest, create one branch
-| none     | Assicuated to quses, create alternative branch
+| none     | Associated to quest, create alternative branch
 
 ## Interruption keywords
 

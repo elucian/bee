@@ -2,6 +2,7 @@
    demo for local variable site-effect
 -------------------------------------------+
 #driver "lv"
+
 -- global variable
 make x := 1
 
@@ -18,20 +19,18 @@ print x ; x = 3 (is modified)
 
 -- local context attribute
 rule add2()
-  make .x := 0-- static attribute
+  make  x := 0 ; local
   alter x := x + 1
   print x
 return
 
-
 -- changing x influence rule
-alter x := 0  ; make x make 
-apply add2    ; will print 1
-apply add2    ; will print 2
-print add2.x  ; x = 2 (modified)
+alter x := 1  ;global x = 1
+apply add2    ;will print 1
+apply add2    ;will print 2
 
 -- verify global variable x
-print x         ; x = 0 (umodified)
-print $global.x ; x = 0 (umodified)
+print x          ;x = 1 (unmodified)
+print $Global.x  ;x = 1 (unmodified)
 
 over.

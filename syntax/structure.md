@@ -119,17 +119,19 @@ Each statement start with one keyword.
 ## Code block
 Statements can be contained in blocks of code.
 
-* begin -- create unconditional local context
 * trial -- create trial/error block of code to handle exceptions
 * when  -- create multi-path conditional selector
+* quest -- create a multi-path value selector
 * scan  -- create visitor block for all elements in a collection
 * cycle -- create unconditional repetitive block of code
 * while -- create conditional repetitive block of code
+* with  -- create a qualifier suppression block/ mapping block
+
 
 **notes:**
 
 * Each block is finalized with a different keyword:
-* It can be: {"ready, done, repeat, next, over"}
+* Closing keyword can be one of: { done, repeat, next };
 
 ## Driver file
 
@@ -139,7 +141,7 @@ This is the program entry point. One program can have a single _driver_ and many
 
 A _driver_ can contain statements that do not belong to any rule.
 These are called _rogue_ statements and are driving the program execution.
-Rogue statements are executed top down until over keyword is riched.
+Rogue statements are executed top down until to last over keyword.
 
 **Example:**
 
@@ -154,27 +156,25 @@ make c := params.count
 halt -1 if (c = 0)
 
 -- print comma separated parameters
-begin
-  make i:= 0 ∈ Z
-  while (i < c)
-    write params[i]
-    alter i += 1
-    write "," if (i < c)
-  repeat
-  -- print the buffer to console
-  print
-ready  
-
-over ; end of "main" program
+make i:= 0 ∈ Z
+while (i < c)
+  write params[i]
+  alter i += 1
+  write "," if (i < c)
+repeat
+-- print the buffer to console
+print
+  
+over ; end of driver
 ```
 
-Do not try to understand the example. This is just a worm-up! 
+Do not try to understand the example. It is just a worm-up! 
 
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
-* Variable parameter _*params_ is an array of strings;
+* Input parameter _*params_ is an array of strings;
 * Any Bee module is ending with "over" that is mandatory keyword;
-* Early driver termination can be trigger by "halt" or "exit";
+* Early driver termination can be trigger using: halt or exit;
 
 ## External code
 
@@ -183,35 +183,40 @@ Libraries and modules can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib/folder_name/file_name
-load $bee_lib/folder_name/*
+load $bee_lib/folder_name/*.bee
+load $bee_lib/folder_name/(x,y,z)
 ```
 
-* using :(*) all files with extension *.bee are included
-* using :(x,y,z) only x,y,z files are found and included
+* using: /*.bee  all files with extension _bee_ are found on disk and parsed
+* using: (x,y,z) only x,y,z files are found on disk and parsed
 
-Create alias for external identifiers to supress qualifier
+Create alias for external identifiers to suppress qualifier for all members
 
 ```
 alias name := file_name.member_name
 alias name := folder_name.file_name.member_name
 ```
 
+**note:**
+* Only public members are accessible using alias _name_, 
+* Members who do not have alias can be accessed using _file_name_ as qualifier,
+* You can establish an alias for a file_name and call all members using the new qualifier.
+
 **Environment variables**
 
-* Environment variables are global, usual uppercase and start with $ symbol. 
-* All system variables are automatic imported from OS environment into global variables.
+* Environment variables are usual uppercase and start with $ symbol, 
+* All system variables are automatic created from OS environment.
+* You can create new system variables visible in Bee session and not visible in OS;
   
 ## Global context
 
-One module or library is using a single global context. 
+One module is loaded in global context. In this context only public variables are visible.
 
 **usability**
 
-* Bee is using one global context. This context is accessible in all files.
 * Global members can be public or private. Public members start with a dot prefix;
 * Global members are visible with qualifier name using dot notation;
-
+* A module can create a single context, even if you load a module multiple times;
 
 **system variables*
 
@@ -243,14 +248,14 @@ load $program.pro_lib:(*)  ; load project library
 
 ## Local context
 
-Local context is a private memory space.
+Local context is a private memory space available in a _rule_ or _trial_ block.
 
 **example**
 ```
 #driver "test"
 ** global context
 make i := 1 ∈ Z  
-do  
+trial
   ** local context
   make i := 2 ∈ Z
   print i ;expected: 2

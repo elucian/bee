@@ -1,10 +1,9 @@
 ## Control Flow
 
-Bee has 8 control flow statements:
+Bee has 7 control flow statements:
 
 Name             | Description
 -----------------|----------------------------------
-[do](#do)        | anonymous block
 [with](#with)    | qualifier suppression
 [when](#when)    | decision statement
 [quest](#quest)  | multi-path selector
@@ -12,21 +11,6 @@ Name             | Description
 [while](#while)  | conditional loop
 [scan](#scan)    | for visitor pattern
 [trial](#trial)  | trial work-flow
-
-## do
-
-Anonymous block of code:
-
-```
-do
-  -- local context
-  ...
-done
-```
-
-**Note:** 
-* This is the most simple block of code,
-* In practice we use more complex blocks.
 
 ## with
 
@@ -119,7 +103,6 @@ done
 ## Quest
 
 The quest is a multi-path value based selector. 
-It is used in conjunction with: do, none, done
 
 **syntax:**
 
@@ -133,47 +116,52 @@ quest expression
     ** third path
 none
   ** default path
-done; end quest
+done;end quest
 ```
+
+**Notes:** 
+* in other language this statement is called _switch_,
+* this statement is mapping to a _"jump table"_,
+* you can not use same constant two or more times,
+* there is not break statement, we break after first match, 
+* default path _none_ is executed only when there is no match.
 
 ## Cycle
 
-Create unconditional repetitive statement block.
+Create unconditional repetitive block.
 
 **pattern**
 
 ```
 cycle
   ...
-  skip if condition
+  skip if condition 
   ...
-  stop if condition
+  stop if condition 
   ...
 repeat
 ```
 
 **notes**
-* It is forbidden to declare new variables in a cycle;
-* It is forbidden to start a nested context in a cycle;
+* If stop statement is missing you can create infinite loop;
+* You can leave an infinite loop using other interruption statements;
+* It is forbidden to make a new variables in a cycle;
 
 **example**
 
 In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
-do
-  make a := 10 ∈ Z
-  cycle
-    alter a -= 1
-    ** conditional repetition
-    skip if (a % 2 = 0)
-    write a  
-    ** conditional termination
-    write ','
-    stop if (a < 0)
-  repeat
-  print a
-done
+make a := 10 ∈ Z ;global
+cycle
+  alter a -= 1
+  ** conditional repetition
+  skip if (a % 2 = 0)
+  write a  
+  ** conditional termination
+  write ','
+  stop if (a < 0)
+repeat
 ```
 
 **Notes:** 
@@ -184,7 +172,7 @@ done
 
 **nested**
 
-Nested cycles can be labeled. Local context is optional.
+Nested cycles can be labeled and can be used for interruption.
 
 **pattern:** 
 
@@ -205,24 +193,22 @@ repeat ;outer
 **example**
 
 ```
-do
-  make x   := 9 
-  make a,r := 0
-  cycle
-    alter r := x % 2
-    alter a := (0: r = 0, 1)
-    write "{1}:{2}" <+ (x,a)
-    alter x -= 1
-    write ','
-    stop if (x < 5)
-  repeat
-  print ;expect 9:1, 8:0, 7:1, 6:0, 5:1,
-done
+make x   := 9; local 
+make a,r := 0; locals
+cycle
+  alter r := x % 2
+  alter a := (0: r = 0, 1)
+  write "{1}:{2}" <+ (x,a)
+  alter x -= 1
+  write ','
+  stop if (x < 5)
+repeat
+print ;expect 9:1, 8:0, 7:1, 6:0, 5:1,
 ```
 
 ## While
 
-Controlled repetitive block:
+Conditional repetitive block:
 
 ```
 while condition do
@@ -245,8 +231,7 @@ repeat
 **example**
 
 ```
--- use global context
-make a := 10 
+make a := 10 ; global
 while a > 0 do
   alter a -= 1
   -- conditional repetition
@@ -279,9 +264,8 @@ repeat
 **example**
 
 ```
--- use global context
-make x   := 9
-make a,r := 0
+make x   := 9 ;local
+make a,r := 0 ;locals
 while x < 5 do
   alter r := x % 2
   alter a := 0 if r = 0, 1 if r = 0, 2
@@ -298,7 +282,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ```
-make var ∈ N 
+make var ∈ N ; local
 scan [min..max] +> var do
   ** block statements
   skip if (condition)
@@ -314,7 +298,7 @@ next
 
 Example of forward skip in counting iteration:
 ```
-make i ∈ Z
+make i ∈ Z ;global
 scan [0..10] +> i do
   ** force next iteration
   when i % 2 = 0 do
@@ -325,6 +309,7 @@ scan [0..10] +> i do
     write (',') if (i < 10)
   done
 next
+print i ;still available
 ```
 > 1,3,5,7,9
 
@@ -351,22 +336,22 @@ trial
   -- private context
   ...  
   -- multiple use cases
-  case first go
+  case name_0 do
     fail code if (condition)
     ...    
-  case second go
+  case name_1 do
     fail {code,"message"} if (condition)  
     ...
-  case name_1 go
+  case name_2 do
     abort if (condition)
     ...
-  case name_2 go
+  case name_3 do
     retry name_1 if (condition)
     ...
-  case name_3 go
-    solve name_4 if (condition)  
+  case name_4 do
+    solve name_5 if (condition)
     ...       
-  case name_4 go
+  case name_5 do
     ...
 error code do
    -- patch statement
@@ -374,14 +359,15 @@ error code do
    -- patch statement  
 ...  
 other
-   -- covering all other errors
+   -- covering all other errors 
 final
    -- finalization
-done;
+done
 ```
 
 **note:**
 * Trial block has an optional local scope
+* Local variables will disappear after done
 
 **Interruptions**
 

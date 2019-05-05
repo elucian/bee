@@ -26,12 +26,12 @@ Instead of BNF, I have used a design _prototype_ and examples.
 ## Expressions
 Expressions are created using identifiers, operators, rules and constant literals. 
 
+* can use () to establish order of operations;
 * can be enumerated using comma separator ","
 * can be combined to create more complex expressions;
 * have type that is calculated using type inference;
 * can be assigned to variables using "value" or "modify" statements;
 * can be printed to console using "print" or "write" actions;
-* can use () to establish order of operations;
 
 **Examples**
 ```
@@ -44,7 +44,7 @@ print "this is a test"
 print (10 + 10 + 15)   ; math
 print (10 > 5 | 2 < 3) ; logical
 
--- multiple expressions in a line
+-- enumeration of multiple expressions
 -- print: separate multiple values with one space
 print (1,',',2,',',3) ; expect 1, 2, 3
 print (10, 11, 12) ; expect 10 11 12   
@@ -64,11 +64,11 @@ print x ; x = 5  ; wrong result
 ```
 
 **Notes:** 
-* print statement can receive multiple parameters;
-* print statement add new line by default;
-* write statement can be used to avoid new line;
+* print statement can receive multiple arguments;
 * multiple arguments are separated by comma;
 * multiple arguments are enclosed in parenthesis;
+* print statement add new line by default;
+* write statement can be used to avoid new line;
 
 **Data types**
 
