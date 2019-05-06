@@ -36,9 +36,9 @@ type Dic <: {(String(2):Cmp)}
 make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic
 
 -- call 3 rules in very unusual way
-print dic['gt'](3,1)  ; expect $T
-print dic['lt'](3,1)  ; expect $F
-print dic['eq'](3,1)  ; expect $F
+print dic['gt'](3,1)  ;1
+print dic['lt'](3,1)  ;0
+print dic['eq'](3,1)  ;0
 
 over.
 ```

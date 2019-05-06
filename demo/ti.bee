@@ -3,11 +3,11 @@
 -----------------------------------+
 #driver "ti"
 -- constant type inference
-define a := 10  ; Z (integer on 64bit)
-define x := 0.5 ; R (double precision)
-define y := 1/2 ; Q  (rational number)
-define f := $F  ; L  (logic false)
-define t := $T  ; L  (logic true)
+define a := 10    ;Z (integer on 64bit)
+define x := 0.5   ;R (double precision)
+define y := 1/2   ;Q  (rational number)
+define f := False ;L  (logic)
+define t := True  ;L  (logic)
 -- variable type inference
 make v := (1,2,3)    ; List of Z
 make s := 'string'   ; String capacity 256
@@ -26,7 +26,7 @@ print add(1,1)-- will print 2
 rule plus(x ∈ Z, y : 1) => (z ∈ Z)
   alter z := (x + y)
 return
-print plus(1)-- will print 2
+print plus(1) -- will print 2
 -- input/output arguments, y is optional 
 rule inc(x @ Z, y : 0)
   alter x += 1

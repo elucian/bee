@@ -43,7 +43,7 @@ done
 -- 'a is between 0 and 4'
 
 -- nested statements are supported
-alter a := $T, b := $F
+alter a := True, b := False
 when (a ∧ b) do
   print ("a ≠ 0 and b ≠ 0")
   when (a ≥ b) do

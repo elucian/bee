@@ -7,7 +7,7 @@ rule sort(this @ [Z])
   make n := length(this)-1
   make i := 0 ∈ N
   make temp @ Z
-  make swap := $T ∈ L
+  make swap := True ∈ L
   while swap
     alter i := 0
     alter swap := $F
@@ -18,7 +18,7 @@ rule sort(this @ [Z])
         alter temp     :: this[i]
         alter this[i]  :: this[i+1]
         alter this[i+1]:: temp
-        alter swap := $T
+        alter swap := True
       done
       alter i += 1
     repeat

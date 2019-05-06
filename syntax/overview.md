@@ -1,11 +1,11 @@
 ## Syntax Overview
 
-Instead of BNF, I have used a design _prototype_ and examples.
+I have used a simple design notation based on examples and notes:
 
-* I have used suggestive names for identifiers;
-* I have used "..." for repetitive sequences;
-* I have used "--"  for comments about statements;
 * I have used notes to explain the semantics;
+* I have used suggestive descriptor names;
+* I have used "::=" to explain a descriptor;
+* I have used "..." for repetitive sequences;
 
 **bookmarks**
 
@@ -37,17 +37,17 @@ Expressions are created using identifiers, operators, rules and constant literal
 ```
 -- simple expressions in print statement
 -- no need for parentheses for a single value
-print 10 ; print 10
+print 10 
 print "this is a test"
 
 --complex expressions can use ()  
-print (10 + 10 + 15)   ; math
-print (10 > 5 | 2 < 3) ; logical
+print (10 + 10 + 15)  
+print (10 > 5 | 2 < 3)
 
 -- enumeration of multiple expressions
 -- print: separate multiple values with one space
-print (1,',',2,',',3) ; expect 1, 2, 3
-print (10, 11, 12) ; expect 10 11 12   
+print (1,',',2,',',3)
+print (10, 11, 12) 
 
 --to avoid new line and spaces use "write"
 write 0
@@ -57,10 +57,9 @@ write (3,4)
 -- after write use print to write a new line
 print ; 01234
 
--- Calculation that fail will do nothing
+-- Calculation that fail will generate an error
 alter x := 5 ∈ R
-alter x := x ÷ 0 ; silent fail
-print x ; x = 5  ; wrong result
+alter x := x ÷ 0 ; error: division by 0
 ```
 
 **Notes:** 
@@ -177,8 +176,8 @@ Bee define a collection using a special notation based on brackets.
 | sym| Collection type
 |----|------------------------------------------------------------------
 | () | Tuple / Expression
-| [] | Array /  Matrix 
-| {} | Set / Map / Object
+| [] | List / Array /  Matrix 
+| {} | Set / Hash  / Object
 
 ## Type declaration
 
@@ -330,7 +329,7 @@ alter a += 1 ; increment value of a := 11
 alter a -= 1 ; decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p := $T ; modify value of q and p
+alter q, p := True ; modify value of q and p
 alter x, y := 10.5 ; modify value of x and y
 ```
 
@@ -387,10 +386,14 @@ alter a := 10.5 ; FAIL: a is of type: Integer
 
 ## Logic type
 
-Logic type is an enumeration of two public symbols: $F = False and $T = True
+Logic type is an enumeration of two public symbols: False and True
 
 ```
-type .L <: {.$F:0, .$T:1}
+type .L <: {.False:0, .True:1}
+
+** printing logical values
+print True  ;1
+print False ;0
 ```
 
 ## Logic operations
@@ -406,7 +409,7 @@ Bee uses several familiar logic operators:
 Precedence: { ¬, ∧, ∨, ~ }
 
 **comparison**
-Comparison operators will create a logical response: $F = 0 or $T = 1.
+Comparison operators will create a logical response: False = 0 or True = 1.
 
 * comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥, ↔)
 * belonging  ( ∈, ⊃, ⊂ )
@@ -420,21 +423,30 @@ else
   print "False"  
 done
 ```
+
+
+**design**
+```
+-- logic values are numeric
+print False - True ;-1 
+print True  + True ; 2
+```
+
 **Precedence:** 
 
 Logic operators have greater precedence than comparison.
 
 ## Logical expression
 
-Logical expression have value { $F, $T }
+Logical expression have value { False, True }
 
 ```
-make x := $F ; false
-make y := $T ; true
+make x := False ; Type = L
+make y := True  ; Type = L
 
 --simple expressions
-print   x ; $F = 0
-print ¬ x ; $T = 1
+print   x ; 0
+print ¬ x ; 1
 
 --complex expressions
 print  (x ↔ y) ;  0
@@ -458,15 +470,15 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L
 make a := 0.0, b := 1.5
 
-alter x := a -> L ; x = $F
-alter y := b -> L ; y = $T
+alter x := a -> L ; 0
+alter y := b -> L ; 1
 ```
 
 **Notes:** 
 * Only integer part of a number is used in conversion;
 * Fraction is truncated before conversion to logic type;
-* A string: "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: $T
-* A string: "No", "no", "False", "true", "F" or "f" or "0" convert to: $F
+* A string: "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: True = 1
+* A string: "No", "no", "False", "true", "F" or "f" or "0" convert to: False= 0
 
 ## Reference
 
@@ -491,9 +503,9 @@ alter i += 1 ; modify i := 13
 print k ; expect 13 (modified)
 
 -- verify boxing effect
-print k ≡ j ; $T (same)
-print k ≡ i ; $T (same)
-print j ≡ i ; $T (same)
+print k ≡ j ; 1 = True (same)
+print k ≡ i ; 1 = True (same)
+print j ≡ i ; 1 = True (same)
 ```
 
 ## Conditionals
@@ -504,7 +516,7 @@ A conditional is a logic condition used to control statement execution.
 statement if (condition)
 ```
 
-The statement is executed only if the condition evaluate true = $T. 
+The statement is executed only if the condition evaluate true = True. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
