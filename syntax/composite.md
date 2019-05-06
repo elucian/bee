@@ -6,10 +6,9 @@ Composite types are complex data structures.
 
 * [ordinal](#ordinal)
 * [tuple](#tuple)
-* [list](#list)
+* [array](#array)
 * [set](#set)
 * [hash map](#hash-map)
-* [array](#array)
 * [slice](#slice)
 * [varargs](#varargs)
 * [strings](#strings)
@@ -55,7 +54,7 @@ alter  b := name1  ; b value := 1
 
 ## Tuple
 
-It is a comma separated list of values or expressions. 
+It is a comma separated enumeration of values or expressions. 
 
 **declare a tuple
 ```
@@ -63,69 +62,40 @@ It is a comma separated list of values or expressions.
 (a, b ∈ Z, c ∈ U)
 ```
 
+Definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
+
 **notes**
-* Tuples have a static structure;
-* You can not have a variable of type tuple;
+* Tuples have a static structure and are immutable;
 * Expressions in a tuple can have different data types;
 
-**usability**
-* You can not define a variable of type tuple;
-* Tuples are used as list of parameters;
-* Tuples are used to define list of results;
-* Tuples can be used to assign values to variables using unpacking "<+"
 
-**example**
+**define**
 ```
-new a,b,s <+ (1,1,'A') 
-```
+type tuple_type <: (Type,...)
 
-## List
-
-A list is an ordered collection of values separated by comma and enclosed in brackets. Observe that a list is a reference since it is a composite type. That means you declare a list using @ instead of ∈.
-
-**Syntax**
-```
-type variable := () @ (value_type)
+new t : = (value,...) @ tuple_type  
 ```
 
 **Notes**: 
-* List members have the same data type;
-* A list literal is a tuple having unique data type;
-* A list has variable and unrestrictive length;
+
+* Tuple members can have divergent data types;
+* You can address elements of tuple only after unpacking;
+* Elements of tuple are ordered, but can not be addressed by index. 
 
 **example**
 ```
--- create a list of code points
-make a := () @ (U) ; empty list
-
--- create a list using literals
-make b := ('1','a','2','b') @ (U) 
+-- create a tuple using implicit declaration
+make b := ('1','a','2','b')
 ```
 
-**empty list**
+**unpacking**
 
-An empty list is represented like this: ()
-
-```
-make a := () ; empty list
-make b := (1,2,3) ; initialize list using literal
-
-alter a := b ; modify a and throw to garbage ()
-```
-
-**First & Last**
-
-* First element in a list: list[!]
-* Last element in a list: list[?]
-
-**Unpacking**
-
-A list can be assigned to multiple variables using unpacking:
+A tuple can be unpack into multiple variables using operator "<+"
 
 **Example:**
 
 ```
---create 3 new variables using list literal
+--create 3 new variables using literal
 make x, y, z ∈ Z
 
 --unpacking modify all 3 value
@@ -135,18 +105,21 @@ print x  ;97
 print y  ;65
 print z  ;40
 
---anonymous list unpacking in text template
+-- tuple unpacking using template
 make s := "{0} > {1} > {2}" <+ (x, y, z) 
 print s  ; "97 > 65 > 40"
 ```
 
+**Unpacking Notes:**
+* If tuple has more elements than target variables the rest of values are ignored;
+* If tuple has less elements, last variables are set to zero, no error is raised;
+* Sometimes unpacking result is injected into a template;
 
-**Unpacking results**
-
-A rule can have multiple results in form of list or tuple:
+**multiple results**
+A rule can have multiple results in form of a tuple:
 
 ```
--- have a list of results
+-- rule with multiple results
 rule test(x,y ∈ Z) => (r, c ∈ Z)
   alter r += x+1
   alter c += y+1
@@ -160,64 +133,318 @@ alter n, m <+ test(1,2)
 print n  ; will print 2
 print m  ; will print 3
 
--- ignoring first result
-alter _, m <+ test(3,4)
+-- capture the entire tuple
+make t := test(1,2)
 
--- ignoring second result
-alter n <+ test(3,4)
-
--- capture the list
-make l := test(1,2)
-fail if l ≠ (2,3) ;check
-print type(l) ;expect: List(Z) 
+print t ; expect: (2,3)
+print type(l) ;expect: (Z)
 ```
 
 **Partial unpacking**
 
-List members can be ignored when unpacking using anonymous variable: "_"
+Some tuple members can be ignored when unpacking using anonymous variable: "_"
 
 ```
-make lst := (0, 1, 2, 3, 4, 5)
-make x, y, z ∈ Z
+make tuple := (0, 1, 2, 3, 4, 5)
+make x, y, z, w ∈ Z
 
 -- first element and last 2 are ignored
-alter _,x,y,z <+ lst
+alter _,x,y,z <+ tuple
+
+-- ignore all elements and unpack the last element
+alter *,w <+ tuple
+print w ; expect 5
+```
+
+## Array
+
+Bee define Arrays using notation []().
+
+**syntax**
+```
+make array_name @ [type]        ;list
+make array_name @ [type](c)     ;vector
+make array_name @ [type](n,m)   ;matrix
+```
+
+**Note:** 
+* Arrays are references therefore we define arrays using "@";
+* Default array index start from 0 to c-1 where c is capacity;
+
+**example**
+
+```
+make test @ [R](10) ;vector of 10 real numbers
+make m := length(test)-1
+
+-- default array index start from 0
+print test[0]  ; first element
+print test[m]  ; last element
+
+-- array traversal 
+make x := 0
+while (x < m) do
+  alter test[i] := x
+  alter x += 1
+repeat
+
+-- print all elements of array
+print test
+over.
+```
+
+**Output:**
+```
+[0,1,2,3,4,5,6,7,8,9]
+```
+
+**Notes:**
+
+* Array can be initially empty [] with capacity 0. 
+* Arrays with capacity are automatically initialized.
+
+**custom index**
+
+Arrays can have optional index range: (n..m). 
+
+**syntax**
+```
+-- define vector with elements starting from n to m
+make array_name := [member_type](n..m)
+
+print array_name[n] ; print first element
+print array_name[m] ; print last element
+```
+
+Array capacity is calculated automatic with formula: `c = m-n+1`
+
+**initialize elements**
+
+Initial value for elements can be set during declaration:
+
+```
+-- you can use 2 optional notations 
+make zum := 1 @ [Z](1..10) ; explicit initialization
+make zet := [1](1..10) ; using type inference
+
+-- modify one element by index
+alter zum[1]  := 1 
+alter zum[10] := 10 
+print zum  ; expect [1,2,2,2,2,2,2,2,2,10]
+
+-- modify all elements
+alter zum[*] += 1 
+print zum  ; expect [2,3,3,3,3,3,3,3,3,11]
+
+-- reset all elements
+alter zum[*] := 0 ; [0,0,0,0,0,0,0,0,0,0]
+
+-- modify multiple elements using a list
+alter zum := [1,2,3]
+print zum  ; expect [1,2,3,0,0,0,0,0,0,0]
+
+-- reset zum reference (replace zum)
+alter zum :: [1,2,3]
+print zum ;expect [1,2,3]
+```
+
+**differed initialization**
+```
+-- define fixed array without members
+make vec @ [U]() ;unknown capacity array 
+make nec @ [N]() ;unknown capacity array
+
+-- empty arrays
+print vec = [] ; True
+print nec = [] ; True
+
+-- array capacity becomes: 10
+alter vec := `x` * 10
+print vec  ; expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+
+-- array capacity becomes: 10
+alter nec := 0 * 10
+print nec  ; expect [0,0,0,0,0,0,0,0,0,0]
+
+-- vector capacity
+print nec.count() ;10
+```
+
+## Slice
+
+A slice is a section of array using notation: [n..m]. 
+
+**Syntax:**
+
+```
+-- declare vector with capacity (n)
+make array_name @ [element_type](c)
+
+-- slice creation using "::"
+make slice_name :: array_name[n..m]
+```
+
+**Note:** 
+* Slices have references to original members;
+* Slices can be named or unnamed/anonymous;
+
+**example**
+```
+make   a := [0](5) 
+print  a ; [0,0,0,0,0]
+
+-- making slice views
+make c :: a[0..2] ; [0,0,0]
+make e :: a[3..4] ; [0,0]
+
+--modify slice elements
+alter c[*] := 1 ; 
+alter e[*] := 2 ; 
+
+--original array is modified
+print a ; expect [1,1,1,2,2]
+
+--modify last 2 elements using anonymous slice
+alter a[3..?] := 0
+
+--                      ↓ ↓
+print a ; expect [1,1,1,0,0]
+```
+
+## Copy
+
+Assignment ":=" and slicing notation "[..]" can be used to copy elements of an array.
+
+```
+make a := [0,1,2,3,4] ;type inference array
+make e,f,r @ [Z]()    ;deferred initialization
+
+-- by default modify ":=" copy/clone an entire array
+alter e := a 
+
+-- compare two collections
+print e = a  ;True  -- (equal collections)
+print e ≡ a  ;False -- (different memory locations)
+
+-- copy/clone original data
+alter f := a[2..?]  ;initialize f with capacity 3
+
+-- you can also copy data from range of native type
+alter r := Z[1..10] ;initialize array of 10 integers
+print r  ;expect [1,2,3,4,5,6,7,8,9,10]
+```
+
+
+## Matrix
+
+A matrix is an array with 2 or more dimensions.
+
+**Example:** 
+```
+make mat @ [R](4,4)  ; define matrix
+
+-- modify matrix using ":=" operator
+alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+print mat[0,0]  ; first element
+print mat[3,3]  ; last element
 
 ```
 
-**Unpacking Notes:**
-* You can visit a list one by one using operator +> is a scan block;
-* You can visit a list two by two in pairs using (a,b) in a scan block;
-* If list is greater than target variables the rest of values are ignored;
-* If the list is shorter last variables are set to zero, no error is raised;
+**Note:** Elements are organized in _row-major_ order.
 
-### List processing
+So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```
-make l1 := (1, 2, 3)
-make l2 := (2, 3, 4)
-make l3, l4, l5 := ()
+-- elements in matrix can be accessed using while
+make i := 0
+make x := length(mat)
+  
+while (i < x) do
+  write (mat[x], ',')
+  i += 1
+repeat
 
--- addition between two lists "+" 
-alter l3 := l1 + l2 ; (1,2,3,2,3,4)
-
--- difference between two lists "-"
-alter l4 := l1 - l2 ; (1)
-alter l5 := l2 - l1 ; (4)
-
--- intersection between two lists "+" 
-alter l3 := l1 & l2 ; (2,3)
-
--- union between two lists "|" 
-alter l3 := l1 | l2 ; (1,2,3,4)
+over.
 ```
 
-**List traversal**
+Printing the entire matrix will use multiple rows to represent a matrix approximation.
 
 ```
-make list := ('a', 'b', 'c')
+make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+print m
+over.
+```
+
+output:
+```
+⎡ 1  2  3  4 ⎤
+⎢ 5  6  7  8 ⎥
+⎢ 9 10 11 12 ⎥
+⎣13 14 15 16 ⎦
+```
+
+## Varargs
+
+One rule or rule can receive variable number of arguments.   
+We declare an array using prefix "*" for variable parameter name.
+
+```
+--parameter *bar is an array
+rule foo( *bar @ [Z]) => (x ∈ Z)
+  make c := bar.count()
+  -- precondition
+  when (c = 0) do
+    alter x := 0
+    exit
+  done
+  alter i := 0 
+  -- sum all parameters  
+  while (i < c) do
+    alter x += bar[i]
+    alter i += 1
+  repeat
+return
+
+--we can call foo with variable number of arguments
+print foo()      ; 0
+print foo(1)     ; 1
+print foo(1,2)   ; 3
+print foo(1,2,3) ; 6
+
+```
+
+**first & last**
+
+* First element in array: array_name[!]
+* Last element in array: array_name[?]
+
+### Array processing
+
+```
+make a1 := [1, 2, 3] 
+make a2 := [2, 3, 4] 
+make a3, a4, a5 := []
+
+-- addition between two Arrays "+" 
+alter a3 := a1 + a2 ;[1,2,3,2,3,4]
+
+-- difference between two Arrays "-"
+alter a4 := l1 - l2 ;[1]
+alter a5 := l2 - l1 ;[4]
+
+-- intersection between two Arrays "&" 
+alter a3 := a1 & a2 ;[2,3]
+
+-- union between two Arrays "|" 
+alter a3 := a1 | a2 ;[1,2,3,4]
+```
+
+**Array traversal**
+
+```
+make array := ['a', 'b', 'c']
 make c @ U
-scan list +> c do
+scan array +> c do
   write c
   write ','
 repeat
@@ -228,17 +455,17 @@ repeat
 A stack is a LIFO collection of elements.
 
 ```
-make a := (1, 2, 3)
+make a := [1, 2, 3] ;list array
 make last ∈ N
 
 -- using stack with operator "+="
-alter a += 4  ;(1,2,3,4)
+alter a += 4  ;[1,2,3,4]
 
 -- read last element using "-="
 alter last := a[?] ;last = 4
 
 -- remove last element using -=
-alter a -= a[?] ;a = (1,2,3)
+alter a -= a[?] ;a = [1,2,3]
 ```
 
 ## Queue
@@ -246,17 +473,17 @@ alter a -= a[?] ;a = (1,2,3)
 A queue is a FIFO collection of elements.
 
 ```
-make q := (1,2,3)
+make q := [1,2,3] ;list array
 make first : N
 
 -- using enqueue operator "+:" 
-alter q += 4  ; (1,2,3,4)
+alter q += 4  ; [1,2,3,4]
 
 -- read first element using ":="
 alter first := a[!]  ; first = 1
 
 -- dequeue first element using "-="
-alter a -= a[!]  ; a = (2,3,4)
+alter a -= a[!]  ; a = [2,3,4]
 ```
 
 ## Set
@@ -266,9 +493,9 @@ A set is a sorted collection of unique values.
 ```
 --define a set
 
-make s1 := {1,2,3} @ {N} 
-make s2 := {2,3,4} @ {N}
-make s  := {}      @ {N}  ; empty
+make s  := {}      @ {N}  ; empty set
+make s1 := {1,2,3} @ {N}  ; 3 elements
+make s2 := {2,3,4} @ {N}  ; 3 elements  
 
 
 -- specific operations
@@ -276,6 +503,10 @@ alter s := s1 ∪ s2;{1,2,3,4}  -- union
 alter s := s1 ∩ s2;{2,3}      -- intersection
 alter s := s1 - s2;{1}        -- difference 1
 alter s := s2 - s1;{4}        -- difference 2
+
+-- belonging check
+print s1 ⊂ s  ; True
+print s  ⊃ s2 ; True
 
 -- declare a new set
 make a := {1,2,3} @ {N}
@@ -290,7 +521,7 @@ alter a := a - 3 ;{1,2,4}    -- remove 3 (not 3)
 
 * Elements in a set have the same data type;
 * Set are internally sorted not indexed;
-* Set elements must be sortable
+* Set elements must be sortable types;
 
 ## Hash map
 
@@ -350,254 +581,20 @@ done
   
 ```
 
-## Array
-
-Bee define Array variable using notation := `[]()`.
-
-**syntax**
-```
-make array_name ∈  [type]      ;one dimension array with unknown capacity
-make array_name ∈  [type](c)   ;one dimension with capacity c
-make array_name ∈  [type](n,m) ;two dimensions with capacity n x m
-```
-
-**Note:** 
-* Empty parenthesis () are not required for unknown (deferred) capacity.
-* Arrays are initialized using ":=" and can not be declared with ∈.
-
-**example**
-
-```
--- define array with 10 Real elements
-make test @ [R](10)
-make m := length(test)-1
-
-print test[0]  ; first element
-print test[m]  ; last element
-
--- set value of element := subscript
-make x := 0
-while (x < m) do
-  alter test[i] := x
-  alter x += 1
-repeat
-
--- print all elements of array
-print test
-over.
-```
-
-**Output:**
-```
- [0,1,2,3,4,5,6,7,8,9]
-```
-
-**Notes:**
-
-* Array of undefined capacity have no members and is equivalent to [] and can not be used.
-* Array with capacity is automatically initialized, elements of new array are by default zero.
-
-**custom index**
-
-Arrays can have optional index range (n..m)
-
-* Array capacity `c := m - n + 1`
-
-**syntax**
-```
---one dimensional array with elements starting from n to m
-make array_name := [member_type](n..m)
-
-print array_name[n] ; print first element
-print array_name[m] ; print last element
-```
-
-**initialize elements**
-
-Initial value for all elements in array are zero. We use notation [*] for all elements.
-
-```
--- declare array of integers with initial value 
-make zum := 1 @ [Z](1..10)
-
--- add 1 to each element
-alter zum[*] += 1 
-print zum  ; expect [2,2,2,2,2,2,2,2,2,2]
-
-alter zum[1]  := 1 
-alter zum[10] := 10 
-print zum  ; expect [1,2,2,2,2,2,2,2,2,10]
-
-```
-
-**differed initialization**
-```
-make vec @ [U]
-make nec @ [N]
-
--- vector is initialized with 10 `x` symbols
-alter vec := `x` * 10
-print vec  ; expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
-
--- vector is initialized with 10 numbers = 9
-alter nec := 9 * 10
-print nec  ; expect [9,9,9,9,9,9,9,9,9,9]
-```
-
-## Slice
-
-We can define a section of array using [n..m] notation. This is called slice. The numbers n and m represent the subscript of array element. Slices maintain references to array elements.
-
-**Syntax:**
-
-```
--- declare an array with capacity (n)
-make array_name @ [element_type](c)
-
--- slice creation using "::"
-make slice_name :: array_name[n..m]
-```
-
-**Note:** Slice has references or a copy of original members;
-
-**example**
-```
--- capacity is 5, last element is 0
-make   a := [](5) 
-print  a ; [0,0,0,0,0]
-
--- making 4 slice views
-make b :: a[0...] ; [0,0,0,0,0]
-make c :: a[1...] ; [0,0,0,0]
-make e :: a[2..4] ; [0,0,0]
-
---modify slice elements
-alter c[0] := 1 ; first element in c slice
-alter e[0] := 2 ; first element in e slice
-
---original array is modified
---                   ↧ ↧                        
-print a ; expect [0,1,2,0,0]
-
---modify last 3 elements
-alter a[3..?] := 9
-print a ; expect [0,1,2,9,9]
-
-```
-
-## Copy
-
-Default assignment ":=" and slicing operator "[..]" makes a copy.   
-
-```
-make a := [0,1,2,3,4]
-make e,f,r @ [Z]  ; empty array references
-
--- by default modify ":=" copy/clone an entire collection
-alter e := a 
-
--- compare two collections
-print e = a  ;1 -- (equal collections)
-print e ≡ a  ;0 -- (different memory locations)
-
--- by default a slice is a copy/clone of original data
-alter f := a[2..?]  ;copy data using slice notation
-
--- you can also copy a data from a basic type
-alter r := Z[1..10]
-print r  ;expect [1,2,3,4,5,6,7,8,9,10]
-```
-
-## Matrix
-
-It is an array with 2 or more indexes. We can have 2D or 3D array.
-
-**Example:** 
-```
-make mat @ [R](4,4)  ; define matrix
-
--- modify matrix using ":=" operator
-alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-print mat[0,0]  ; first element
-print mat[3,3]  ; last element
-
-```
-
-**Note:** Elements are organized in _row-major_ order.
-
-So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
-
-```
--- elements in matrix can be accessed using while
-make i := 0
-make x := length(mat)
-  
-while (i < x) do
-  write (mat[x], ',')
-  i += 1
-repeat
-
-```
-Printing the entire matrix will use multiple rows to represent a matrix approximation.
-
-```
-make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-print m -> matrix()
-```
-
-Will print:
-
-```
-⎡ 1  2  3  4 ⎤
-⎢ 5  6  7  8 ⎥
-⎢ 9 10 11 12 ⎥
-⎣13 14 15 16 ⎦
-```
-
-## Varargs
-
-One rule or rule can receive variable number of arguments.   
-We declare an array using prefix "*" for variable parameter name.
-
-```
---parameter *bar is an array
-rule foo( *bar @ [Z]) => (x ∈ Z)
-  make c := bar.count()
-  -- precondition
-  when (c = 0)
-    alter x := 0
-    exit
-  done
-  alter i := 0 
-  -- sum all parameters  
-  while (i < c)
-    alter x += bar[i]
-    alter i += 1
-  repeat
-return
-
---we can call foo with variable number of arguments
-print foo()      ; 0
-print foo(1)     ; 1
-print foo(1,2)   ; 3
-print foo(1,2,3) ; 6
-
-```
-
 ## Strings
 
 Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
 
-* U   = Is UTF32 encoded alphanumeric code point or symbol; 
-* String = Is UTF8 array with a limited capacity: 1024 bit;
-* Txt = Is UTF8 encoded text with unrestricted capacity;
+* U:       Is UTF32 encoded alphanumeric code point or symbol; 
+* String:  Is UTF8 array with a limited capacity: 1024 bit;
+* Text:    Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
 Literals for strings are enclosed in 3 kind of quotes:
 
 * U:   like: \`?\` 
 * String: like: '?'
-* Txt: like: "?"
+* Text: like: "?"
 
 **Alternative literals**
 * Using wrong quotes can trigger implicit type coercion
@@ -686,9 +683,10 @@ Below operators will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
+  `+` | Trim first string, (remove last spaces) and concatenate with second string.
   `&` | Concatenate two strings as they are no trim is performed!
-  `/` | Concatenate two strings with "/" separator, trim and de-duplicate "//"   
-  `\\`| Concatenate two strings with "\\" separator, trim and de-duplicate "\\"   
+  `/` | Trim, de-duplicate "/" and concatenate two strings using "/" separator
+  `\\`| Trim, de-duplicate "\\" and concatenate two strings using "\\" separator 
 
 **examples**
 ```
@@ -696,19 +694,17 @@ make u, c, s @ String ; default length is 128 octets = 1024 bit
 
 -- string concatenation
 alter u := 'This is'  & ' a short string.'
-alter c := 'This is ' & 'fixed size' 
+alter c := 'This is ' & 'fixed size string' 
 
 -- automatic conversion to string
 alter s := 40 & 5 ; '405'
 
--- path concatenation
+-- URL/path concatenation
 make test_file := $pro/'src'/'test.bee'
 
 -- when $pro = c:\work\project\
-print test_file  ; c:\work\project\src\test.bee
+print test_file ; c:\work\project\src\test.bee
 ```
-
-**Note:** You can concatenate a string with a number or two numbers
 
 ### Template
 
@@ -872,17 +868,14 @@ An aggregate type can store references to other composite types.
 
 **example**
 ```
--- a list of lists of integers
-make Dlist @ ((Z))
+-- a set of tuples
+make STuple @ {(Z,Z,U)}
 
--- an array of 10 lists of integers
-make Alist @ [(Z)](10)
-
--- an array of arrays of integers
-make Aheap @ [[Z](5)](10)
+-- an array of pairs
+make Aheap  @ [(U,Z)](10)
 
 -- an catalog of persons
-make Acatp @ {(String:Person)}
+make Acatp  @ {(String:Person)}
 
 ```
 

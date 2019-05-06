@@ -15,7 +15,7 @@ To create a mew draft you follow a simple procedure:
 
 If your suggestion accepted, we will implement it into the compiler.   
 
-## Draft list
+## Draft proposals
 
 So far we have following features pending approval:
 

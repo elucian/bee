@@ -122,7 +122,7 @@ done
 ```
 
 ## Transactions
-Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When modifications are ready you can commit changes. If any table reference or constraint fail verification transaction is rolled back automatically and signal back an error.
+Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When modifications are done you can commit changes. If any table reference or constraint fail verification transaction is rolled back automatically and signal back an error.
 
 **data manipulation**
 
@@ -187,12 +187,12 @@ Sometimes we need to bypass the ORM and execute native SQL:
 
 ```
 -- apply a query to database
-apply db.query(query_template <+ list)
+apply db.query(query_template <+ array)
 apply db.query(query_template <+ record)
 
 -- apply a query that return a result
 apply db.query(query_string) +> record
-apply db.query(query_string) +> list_of_records
+apply db.query(query_string) +> array_of_records
 
 ```
 
@@ -201,7 +201,7 @@ apply db.query(query_string) +> list_of_records
 Some databases have support for stored procedures:
 
 ```
-apply db.exec(procedure_name <+ list) 
+apply db.exec(procedure_name <+ array) 
 apply db.exec(procedure_name <+ record) 
 ```
 

@@ -141,6 +141,7 @@ make n := U+2200 ∈ U ; ∀
 * "U" is reserved, therefore compiler will find "U+" combination unique;
 * After U+ compiler is expecting 4,6 or 8 hexadecimal symbols;
 
+
 ## Composite types
 
 Composite types are using English full name and start with uppercase.
@@ -175,7 +176,7 @@ Bee define a collection using a special notation based on brackets.
 
 | sym| Collection type
 |----|------------------------------------------------------------------
-| () | List / Expression
+| () | Tuple / Expression
 | [] | Array /  Matrix 
 | {} | Set / Map / Object
 
@@ -215,11 +216,11 @@ type Alpha     <: U[`A`..`z`]
 type Latin     <: U[U+0041..U+FB02]
 
 --Check variable belong to sub-type
-when (`x` ∈ Alpha)
+when (`x` ∈ Alpha) do
   print 'yes'
 else
   print 'no'
-ready
+done
 ```
 
 **Notes:**
@@ -294,7 +295,7 @@ make var_name, var_name ... := expression
 
 **Notes:** 
 
-* Each variable in the list will be initialized in a different location;
+* Each variable in the enumeration will be initialized to a different location;
 * If operator "::" is used you can create multiple references for same location;
 
 ## Modify values
@@ -413,11 +414,11 @@ Comparison operators will create a logical response: $F = 0 or $T = 1.
 **example**
 ```
 make x ∈ Z
-when (x = 4 ↔ x - 4 = 0)
+when (x = 4 ↔ x - 4 = 0) do
   print "True"
 else
   print "False"  
-ready
+done
 ```
 **Precedence:** 
 

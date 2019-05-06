@@ -8,7 +8,7 @@ Read about supported symbols here: [symbols](symbols.md)
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
 | `{*...*}` | Block comments \| Nested comments
-| `(_,_,_)` | Expression \| List literal \| Data record
+| `(_,_,_)` | Expression \| Tuple literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
 
@@ -118,7 +118,7 @@ symbol | `=>`       |meaning
   ∪    | Set        |Union between two collections
   ⊂    | Logic      |set is included in superset: "⊂"
   ⊃    | Logic      |set contain subset: "⊃"  
-  \+   | List       |Concatenation between two lists
+  \+   | Array      |Concatenation between two arrays
   \+=  | collection |Append element to collection 
   \-=  | collection |Remove element from collection 
                                           

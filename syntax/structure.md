@@ -14,12 +14,14 @@
 
 ## Project
 
-Bee project is a folder with a specific structure. This folder contains one or many programs that can run independent of each other on same computer or multiple computers. Programs can be designed to collaborate with each other into n-tire application architecture.
+Bee project is a folder with a specific structure. A project contains one or more programs that can run independent of each other on same computer or a group of computers. Programs can be designed to collaborate with each other into n-tire application architecture.
 
 **project tree**
 ```
 $pro_home
   |-- bin
+  |   |--client.exe
+  |   |--server.exe
   |
   |-- src
   |   |-- aspect1.bee
@@ -38,7 +40,7 @@ $pro_home
 ``` 
 
 ## System Variable
-There are several predefined constants that program will provide for dealing with environment variables. System constants are using uppercase letters and "$" prefix. System variables can be used to locate project component files.
+There are several predefined variables available in Bee. System variables are using "$" prefix. These variables can be used to locate project files. You can define new system variables at the beginning of each module.
 
 The location where the Bee is installed is $bee_home. Bee library folder is $bee_lib. These variables are created by Bee run-time environment. It can be the virtual machine or the compiled program itself.
 
@@ -53,15 +55,15 @@ The location where the Bee is installed is $bee_home. Bee library folder is $bee
 |$pro_log  | N/A        | Reporting folder           |
 
 ## Aspect
-One aspect is a project file usually located in _"src"_ folder that can be executed from driver. Aspects can play each otherand and communicate using parameters. A good architect will separate concerns in multiple aspects with sugestive names.
+One aspect is a project file usually located in _"src"_ folder that can be executed from driver. A driver or an aspects can _play_ other aspect with parameters. A good architect will separate concerns in multiple aspects with suggestive names.
 
 **notes:**
-* One aspect can accept parameters and can produce results; 
-* Aspect file contains statements and declarations; 
-* Usually all aspect members are private;
+* One aspect can accept parameters;
+* One aspect can produce results; 
+* Usually aspect members are private;
 
 ## Library
-Libraries are reusable project components usually located in _"lib"_ folder. A library is a file that contains public elements. A library can be re-used in multiple programs.
+Libraries are reusable modules usually located in _"lib"_ folder. A library is a file that contains public elements. A library can be loaded in memory from any module.
 
 **notes:**
 * Library members are usually public;
@@ -70,7 +72,7 @@ Libraries are reusable project components usually located in _"lib"_ folder. A l
 
 
 ## Directive
-Symbol "#" is used to create a compiler directive. Bee has 3 kind of program files each with different role: 
+Symbol "#" is used to create a _compiler directive_. Bee has 3 kind of program files each with different role: 
 
 ```
 #library -- declare reusable library
@@ -89,16 +91,17 @@ Symbol "#" is used to create a compiler directive. Bee has 3 kind of program fil
 Bee is using 7 kind of declarations:
 
 * load     -- define: library
+* alias    -- define: alternative name
 * define   -- define: constant
 * input    -- define: aspect parameters
 * output   -- define: aspect results
 * type     -- define: data types
 * make     -- define: variable
-* rule     -- define: rule
+* rule     -- define: named code block
 
 ## Statement
 
-Each statement start with one keyword. 
+Each statement start with one imperative keyword: 
 
 **Examples:**
 
@@ -111,8 +114,8 @@ Each statement start with one keyword.
 
 **notes:**
 
-* One statement is ending at end of line if expression is finish;
-* One statement can extend on multiple lines if expression is unfinished;
+* One statement is usually ending at end of line;
+* One expression in a statement can extend on multiple lines;
 * You can not have multiple statements in a single line, except if statement;
 * You can have a comment at end of line using ";" but this do not end the statement;
 
@@ -132,12 +135,15 @@ Statements can be contained in blocks of code.
 
 * Each block is finalized with a different keyword:
 * Closing keyword can be one of: { done, repeat, next };
+* Statements and nested blocks are using indentation at 2 spaces;
 
 ## Driver file
 
-Bee is a free form language. That means indentation of code is not relevant.
-In Bee there is no _main()_ function. Instead we define a _driver_ file using directive #driver. 
-This is the program entry point. One program can have a single _driver_ and many _aspects_.
+Bee is a space sensitive language. That means indentation of code and spaces are relevant.
+In Bee there is no _main_ function. Instead we define a _driver_ file using directive #driver. 
+This is the program entry point. One program can have a single _driver_ module and many _aspects_.
+
+**rogue statements**
 
 A _driver_ can contain statements that do not belong to any rule.
 These are called _rogue_ statements and are driving the program execution.
@@ -168,12 +174,12 @@ print
 over ; end of driver
 ```
 
-Do not try to understand the example. It is just a worm-up! 
+Do not try to understand this example. It is just a worm-up! 
 
 **Notes:** 
 * This program is a #driver having file-name "main.bee";
 * Input parameter _*params_ is an array of strings;
-* Any Bee module is ending with "over" that is mandatory keyword;
+* Any Bee module is ending with mandatory keyword: _"over"_ ;
 * Early driver termination can be trigger using: halt or exit;
 
 ## External code
@@ -187,41 +193,43 @@ load $bee_lib/folder_name/*.bee
 load $bee_lib/folder_name/(x,y,z)
 ```
 
-* using: /*.bee  all files with extension _bee_ are found on disk and parsed
-* using: (x,y,z) only x,y,z files are found on disk and parsed
+* using: /*.bee  all files with extension _bee_ are found on disk and parsed;
+* using: (x,y,z) only x,y,z files are found on disk and parsed;
 
-Create alias for external identifiers to suppress qualifier for all members
+**Qualifier**
+Bee use _"dot notation"_ to locate external members. After import the file name becomes qualifier for this notation.
 
 ```
-alias name := file_name.member_name
-alias name := folder_name.file_name.member_name
+qualifier.member_name
 ```
 
-**note:**
-* Only public members are accessible using alias _name_, 
-* Members who do not have alias can be accessed using _file_name_ as qualifier,
-* You can establish an alias for a file_name and call all members using the new qualifier.
+qualifier ::= file_name
+qualifier ::= folder_name.file_name
 
-**Environment variables**
+**Alias**
 
-* Environment variables are usual uppercase and start with $ symbol, 
-* All system variables are automatic created from OS environment.
-* You can create new system variables visible in Bee session and not visible in OS;
+You can create an alias for a qualifier or for specific members:
+
+```
+alias qualifier := folder_name.file_name
+alias element   := qualifier.member_name
+```
   
 ## Global context
 
-One module is loaded in global context. In this context only public variables are visible.
+One module has a global context where members are defined and used.
 
 **usability**
 
-* Global members can be public or private. Public members start with a dot prefix;
-* Global members are visible with qualifier name using dot notation;
-* A module can create a single context, even if you load a module multiple times;
+* A module member can be public or private. Public members start with a dot prefix;
+* A public member is accessible with qualifier name using dot notation in global context;
+* When modules are loaded, all public members are merged in a single global context;
 
 **system variables*
 
 * System variable names start with symbol "$" and are declared first; 
-* Some pre-defined system variables are available in global context.
+* Several predefined system variables are available in _global context_;
+* All environment variables are automatically imported as system variables;
 
 ```
 $path    = $bee_path  -- contains a list of folders
@@ -233,7 +241,7 @@ $global       -- global context: universal qualifier
 $local        -- local context: universal qualifier
 ```
 
-**note** System variable do not require context qualifiers:
+**note** System variable do not require qualifier:
 
 **importing**
 
@@ -358,14 +366,15 @@ For boxed comments we use two symbols "+- ... -+".
 +---------------------------------+
 ```
 
-**Block comments**
-Comment out a block of code using: "|*......*|"
+**Gray comments**
+
+You can comment out a block of code using notation: "|*......*|"
 
 ```
-|*
-print "commented out"
-*|
-
+|***************************|
+|* print "commented out"   *|
+|* old style block comment *|
+|***************************|
 ```
 
 **Possible separators:**
@@ -446,11 +455,11 @@ play aspect_name(parameter_list) +> result
 input  i ∈ Z ; define parameter "i"
 output v ∈ N ; define result "v"
 
-when (i < 0)
+when (i < 0) do
   alter v := -i
 else
   alter v := i
-ready  
+done  
 
 over.
 ```
