@@ -175,8 +175,8 @@ Bee define a collection using a special notation based on brackets.
 
 | sym| Collection type
 |----|------------------------------------------------------------------
-| () | Tuple / Expression
-| [] | List / Array /  Matrix 
+| () | Tuple / List  / Expression
+| [] | Array/ Matrix/ Dynamic Array
 | {} | Set / Hash  / Object
 
 ## Type declaration

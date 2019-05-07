@@ -6,6 +6,7 @@ Composite types are complex data structures.
 
 * [ordinal](#ordinal)
 * [tuple](#tuple)
+* [list](#list)
 * [array](#array)
 * [set](#set)
 * [hash map](#hash-map)
@@ -54,66 +55,53 @@ alter  b := name1  ; b value := 1
 
 ## Tuple
 
-It is a comma separated enumeration of values or expressions. 
+It is a list literal, list of values or symbols enclosed in round brackets: 
 
-**declare a tuple
+**examples**
 ```
-(Z, Z, U)
-(a, b ∈ Z, c ∈ U)
+(a, b ∈ Z, c ∈ U) ; parameters
+('a','b','c')     ; strings
+(1,2,3)           ; numbers
+(1,'2','x')       ; mixed types
 ```
 
 Definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
 
 **notes**
-* Tuples have a static structure and are immutable;
-* Expressions in a tuple can have different data types;
-
-
-**define**
-```
-type tuple_type <: (Type,...)
-
-new t : = (value,...) @ tuple_type  
-```
-
-**Notes**: 
-
-* Tuple members can have divergent data types;
+* Tuples are source code literals have a static structure;
+* Values in a tuple can have different data types;
 * You can address elements of tuple only after unpacking;
-* Elements of tuple are ordered, but can not be addressed by index. 
-
-**example**
-```
--- create a tuple using implicit declaration
-make b := ('1','a','2','b')
-```
+* Elements of tuple are ordered, but can not be addressed by index;
+* You can not define a variable of type tuple;
 
 **unpacking**
 
-A tuple can be unpack into multiple variables using operator "<+"
+A tuple can be _unpacked_ into multiple variables using operator "<+";
 
 **Example:**
 
 ```
---create 3 new variables using literal
-make x, y, z ∈ Z
+--receiver variables
+make x, y ∈ Z
+make z ∈ S
+make a := 40
 
---unpacking modify all 3 value
-alter x, y, z <+ (97, 65, 40)
+--unpacking: modify all 3 variables
+alter x, y, z <+ (97, 65, 'a')
 
 print x  ;97
 print y  ;65
-print z  ;40
+print z  ;a
 
--- tuple unpacking using template
+-- tuple unpacking using a template
 make s := "{0} > {1} > {2}" <+ (x, y, z) 
-print s  ; "97 > 65 > 40"
+print 'a = ' + a ; a = 40
+print s  ; 97 > 65 > a
 ```
 
 **Unpacking Notes:**
-* If tuple has more elements than target variables the rest of values are ignored;
-* If tuple has less elements, last variables are set to zero, no error is raised;
-* Sometimes unpacking result is injected into a template;
+* If tuple has more elements, the rest of values are ignored;
+* If tuple has less elements, last values are set to zero;
 
 **multiple results**
 A rule can have multiple results in form of a tuple:
@@ -130,30 +118,97 @@ make n, m ∈ Z
 -- unpacking the results
 alter n, m <+ test(1,2)
 
-print n  ; will print 2
-print m  ; will print 3
+print n  ;2
+print m  ;3
 
--- capture the entire tuple
-make t := test(1,2)
-
-print t ; expect: (2,3)
-print type(l) ;expect: (Z)
-```
-
-**Partial unpacking**
-
-Some tuple members can be ignored when unpacking using anonymous variable: "_"
+-- ignore one result using "_"
+alter n, _ <+ test(3,0)
+print n  ;4
 
 ```
-make tuple := (0, 1, 2, 3, 4, 5)
-make x, y, z, w ∈ Z
 
--- first element and last 2 are ignored
-alter _,x,y,z <+ tuple
+## List
 
--- ignore all elements and unpack the last element
-alter *,w <+ tuple
-print w ; expect 5
+A list is a dynamic collection of references.
+
+**user type**
+
+```
+type type_name <: (@Type) ; a type of list
+```
+
+**variable**
+You can use one of three forms of declarations:
+
+```
+make name ∈  (@Type) ;explicit type
+make name := (value,...) ;implicit type
+make name := (value,) ∈ (@Type) ;initial value and type
+```
+
+**properties**
+* a list can be initially empty = () usual,
+* all elements in a list have the same type,
+* elements in a list are ordered by index,
+* elements in a list are references,
+* list elements can be found using index but slow,
+* finding first element in a list is fast: list_name[!],
+* finding last element in a list is fast: list_name[?],
+* you can add a new element at the end very fast,
+* you can remove elements from beginning or end of list.
+
+**notes:** 
+* A list can be used as stack or queue,
+* A list literal is a tuple.
+
+**example**
+
+```
+make list := (0, 1, 2, 3, 4, 5)
+
+-- list traversal
+make x ∈ Z
+scan list +> x do
+  write x
+  write _ if x ≡ list[?]  ; Note: "_" = " "
+next
+print ;0 1 2 3 4 5
+```
+
+## Stack
+
+A stack is a LIFO list of elements: LIFO = (last in first out)
+
+```
+make a := (1, 2, 3) ;list
+make last ∈ N
+
+-- append to stack with operator "+="
+alter a += 4  ;(1,2,3,4)
+
+-- read last element using "-="
+alter last := a[?] ;last = 4
+
+-- remove last element using -=
+alter a -= a[?] ;a = (1,2,3)
+```
+
+## Queue
+
+A queue is a FIFO collection of elements: (first in first out)
+
+```
+make q := (1,2,3) ;list
+make first : N
+
+-- enqueue new element into list "+=" 
+alter q += 4  ; (1,2,3,4)
+
+-- read first element using ":="
+alter first := a[!]  ; first = 1
+
+-- dequeue first element using "-="
+alter a -= a[!]  ; a = (2,3,4)
 ```
 
 ## Array
@@ -162,9 +217,9 @@ Bee define Arrays using notation []().
 
 **syntax**
 ```
-make array_name @ [type]        ;list
-make array_name @ [type](c)     ;vector
-make array_name @ [type](n,m)   ;matrix
+make array_name @ [type]()      ;undefined capacity
+make array_name @ [type](c)     ;capacity c
+make array_name @ [type](n,m)   ;capacity c = n·m
 ```
 
 **Note:** 
@@ -200,8 +255,8 @@ over.
 
 **Notes:**
 
-* Array can be initially empty [] with capacity 0. 
-* Arrays with capacity are automatically initialized.
+* Array can be initially empty [] with default capacity = 0, 
+* Arrays with defined capacity are automatically initialized.
 
 **custom index**
 
@@ -239,22 +294,28 @@ print zum  ; expect [2,3,3,3,3,3,3,3,3,11]
 -- reset all elements
 alter zum[*] := 0 ; [0,0,0,0,0,0,0,0,0,0]
 
--- modify multiple elements using a list
-alter zum := [1,2,3]
-print zum  ; expect [1,2,3,0,0,0,0,0,0,0]
+-- modify multiple elements using an Array literal
+alter zum[*] := [1,2,3]
+print zum  ; expect [1,2,3,1,2,3,1,2,3,1]
 
 -- reset zum reference (replace zum)
-alter zum :: [1,2,3]
+alter zum := [1,2,3]
 print zum ;expect [1,2,3]
+
+-- transfer a reference 
+alter zum :: zet
+print zum ;expect [1,1,1,1,1,1,1,1,1,1]
 ```
 
 **differed initialization**
-```
--- define fixed array without members
-make vec @ [U]() ;unknown capacity array 
-make nec @ [N]() ;unknown capacity array
+We can define an empty array and initialize elements later.
 
--- empty arrays
+```
+-- array without members
+make vec @ [U]() 
+make nec @ [N]() 
+
+-- arrays are empty
 print vec = [] ; True
 print nec = [] ; True
 
@@ -265,14 +326,11 @@ print vec  ; expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 -- array capacity becomes: 10
 alter nec := 0 * 10
 print nec  ; expect [0,0,0,0,0,0,0,0,0,0]
-
--- vector capacity
-print nec.count() ;10
 ```
 
 ## Slice
 
-A slice is a section of array using notation: [n..m]. 
+A slice is a view of a section from an array.
 
 **Syntax:**
 
@@ -280,7 +338,7 @@ A slice is a section of array using notation: [n..m].
 -- declare vector with capacity (n)
 make array_name @ [element_type](c)
 
--- slice creation using "::"
+-- slice creation using "::" and ".."
 make slice_name :: array_name[n..m]
 ```
 
@@ -304,11 +362,11 @@ alter e[*] := 2 ;
 --original array is modified
 print a ; expect [1,1,1,2,2]
 
---modify last 2 elements using anonymous slice
-alter a[3..?] := 0
+--modify last 2 elements using anonymous slicing
+alter a[3..?] := [2,3]
 
 --                      ↓ ↓
-print a ; expect [1,1,1,0,0]
+print a ; expect [1,1,1,2,3]
 ```
 
 ## Copy
@@ -333,7 +391,6 @@ alter f := a[2..?]  ;initialize f with capacity 3
 alter r := Z[1..10] ;initialize array of 10 integers
 print r  ;expect [1,2,3,4,5,6,7,8,9,10]
 ```
-
 
 ## Matrix
 
@@ -448,42 +505,6 @@ scan array +> c do
   write c
   write ','
 repeat
-```
-
-## Stack
-
-A stack is a LIFO collection of elements.
-
-```
-make a := [1, 2, 3] ;list array
-make last ∈ N
-
--- using stack with operator "+="
-alter a += 4  ;[1,2,3,4]
-
--- read last element using "-="
-alter last := a[?] ;last = 4
-
--- remove last element using -=
-alter a -= a[?] ;a = [1,2,3]
-```
-
-## Queue
-
-A queue is a FIFO collection of elements.
-
-```
-make q := [1,2,3] ;list array
-make first : N
-
--- using enqueue operator "+:" 
-alter q += 4  ; [1,2,3,4]
-
--- read first element using ":="
-alter first := a[!]  ; first = 1
-
--- dequeue first element using "-="
-alter a -= a[!]  ; a = [2,3,4]
 ```
 
 ## Set
