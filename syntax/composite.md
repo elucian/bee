@@ -798,8 +798,6 @@ print sep & '+'
 --------------------+
 ```
 
-**Note:** Operator "*" have higher precedence then "."
-
 ## Object
 
 Object types are data structures with elements enclosed in curly brackets { , , ,} and separated by comma. 
@@ -861,8 +859,8 @@ print type(Person.age) ; will print W
 print size(Person);
 ```
 
-**Recursive records**
-We can limit how deep a record become using a directive. "#recursive:100"
+**Recursive objects**
+We can limit how deep a structure become using a directive. "#recursive:100"
 
 ```
 ** example of single recursive node
@@ -889,14 +887,14 @@ An aggregate type can store references to other composite types.
 
 **example**
 ```
--- a set of tuples
-make STuple @ {(Z,Z,U)}
+-- a set of objects
+make SetObject @ {{a,b ∈ Z, c ∈ U}}
 
--- an array of pairs
-make Aheap  @ [(U,Z)](10)
+-- a list of persons
+make Catalog  @ (Person)
 
--- an catalog of persons
-make Acatp  @ {(String:Person)}
+-- an array of 10 nodes
+make ArrauObject @ [Node](10)
 
 ```
 
@@ -909,35 +907,35 @@ An object can have associated rules:
 -- define Foo as object with 2 public attributes:
 type Foo <: {a, b ∈ N}
   
--- foo is a constructor for Foo
+-- constructor rule for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo)
   make me := {a:p1, b:p2}
 return
 
--- second rule for Foo type
+-- second rule for Foo
 rule bar(me @ Foo)
   print "a =" & me.a
   print "b =" & me.b
 return
 
 -- reference capture "::" result Foo object 
-make test :: foo(p:1)
+make test :: foo(1,1)
 
--- test object rule
+-- test bar() that is an object rule
 apply test.bar()
--- a = 1
--- b = 1
+fail if test.a ≠ 1
+fail is test.b ≠ 1
 ```
+
 **See also:** 
 * [me.bee](me.bee)  ; numeral with rules
 * [gc.bee](gc.bee)  ; generator class
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
-* Rules can be overwritten in other aspects;
-* Rules can be private to aspect or public using dot prefix;
+* Rules can be overwritten in other modules;
+* Rules can be private or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
-* Bee do not have inheritance and polymorphism instead you can use mix-ins;
 
 **Read next:** [Type Inference](inference.md) 
