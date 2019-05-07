@@ -81,7 +81,7 @@ when a ≤ 0 do
 done ;a = 0
 ```
 
-**note:** I have used comments ";" after "do" and "done"
+**note:** I have used comments ";" after "done"
 
 **ladder**
 
@@ -116,7 +116,7 @@ quest expression
     ** third path
 none
   ** default path
-done;end quest
+done
 ```
 
 **Notes:** 
@@ -305,8 +305,8 @@ scan [0..10] +> i do
     skip
   else
     ** write only odd numbers
-    write (i)
-    write (',') if (i < 10)
+    write i
+    write ',' if (i < 10)
   done
 next
 print i ;still available
