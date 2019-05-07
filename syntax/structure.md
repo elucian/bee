@@ -1,7 +1,6 @@
 # Program structure
 
-* One Bee program has one driver and multiple aspects.
-* All program files have the same extension:  *.bee
+Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file can have extension *.bee and it represents a module. Next we describe better the structure of Bee modules.
 
 **bookmarks**
 * [Project](#project)
@@ -39,6 +38,21 @@ $pro_home
 
 ``` 
 
+## Directive
+At the beginning of each Bee module there is one or more compiler directives. Symbol "#" is used to create a _directive_. Bee has 3 kind of modules, each with different role: 
+
+```
+#driver  -- declare main program
+#aspect  -- declare one aspect of a problem
+#library -- declare a reusable library
+```
+
+**Notes**
+* A program can have one single _driver_;
+* A driver can load one or more libraries;
+* A driver can execute one or multiple aspects;
+* An aspect or driver can load several libraries;
+
 ## System Variable
 There are several predefined variables available in Bee. System variables are using "$" prefix. These variables can be used to locate project files. You can define new system variables at the beginning of each module.
 
@@ -55,49 +69,34 @@ The location where the Bee is installed is $bee_home. Bee library folder is $bee
 |$pro_log  | N/A        | Reporting folder           |
 
 ## Aspect
-One aspect is a project file usually located in _"src"_ folder that can be executed from driver. A driver or an aspects can _play_ other aspect with parameters. A good architect will separate concerns in multiple aspects with suggestive names.
+One aspect is a project file usually located in _"src"_ folder that can be executed from driver. A driver can _play_ an aspect with parameters and capture results. An application architect can separate system concerns in multiple aspects.
 
 **notes:**
 * One aspect can accept parameters;
 * One aspect can produce results; 
 * Usually aspect members are private;
+* To execute one aspect you use keyword: _play_
 
 ## Library
-Libraries are reusable modules usually located in _"lib"_ folder. A library is a file that contains public elements. A library can be loaded in memory from any module.
+Libraries are reusable modules usually located in _"lib"_ folder. A library is a file that contains public elements. A library can be loaded in memory from any kind of module: {driver, aspect, library}
 
 **notes:**
 * Library members are usually public;
 * A library does not have parameters;
 * A library does not produce results;
 
-
-## Directive
-Symbol "#" is used to create a _compiler directive_. Bee has 3 kind of program files each with different role: 
-
-```
-#library -- declare reusable library
-#aspect  -- declare one aspect of a problem
-#driver  -- declare main program
-```
-
-**Notes**
-* A program must have one single driver file;
-* A driver can include several libraries;
-* A driver can execute multiple aspects;
-* A library can be included in another library;
-
 ## Declaration
 
 Bee is using 7 kind of declarations:
 
-* load     -- define: library
-* alias    -- define: alternative name
-* define   -- define: constant
-* input    -- define: aspect parameters
-* output   -- define: aspect results
-* type     -- define: data types
-* make     -- define: variable
-* rule     -- define: named code block
+* load     -- import : a library in global scope
+* alias    -- declare: alternative name for library or aspect
+* define   -- declare: constant
+* input    -- declare: aspect parameters
+* output   -- declare: aspect results
+* type     -- declare: data types
+* make     -- declare: variable
+* rule     -- declare: named code block
 
 ## Statement
 
@@ -114,10 +113,12 @@ Each statement start with one imperative keyword:
 
 **notes:**
 
-* One statement is usually ending at end of line;
+* One statement is usually indented 2 space;
+* One statement is usually described in a single line;
 * One expression in a statement can extend on multiple lines;
-* You can not have multiple statements in a single line, except if statement;
-* You can have a comment at end of line using ";" but this do not end the statement;
+* You can not have multiple statements in a single line;
+* You can have a comment at end of line using ";" 
+* A statement may continue after the end of line comment;
 
 ## Code block
 Statements can be contained in blocks of code.
