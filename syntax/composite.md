@@ -887,14 +887,14 @@ An aggregate type can store references to other composite types.
 
 **example**
 ```
--- a set of objects
-make SetObject @ {{a,b ∈ Z, c ∈ U}}
+-- a list of objects
+make ListObject @ ({a,b ∈ Z, c ∈ U})
 
 -- a list of persons
-make Catalog  @ (Person)
+make ListObject  @ (Person)
 
--- an array of 10 nodes
-make ArrauObject @ [Node](10)
+-- an array of nodes
+make ArrayObject @ [Node](10)
 
 ```
 
