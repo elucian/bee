@@ -14,8 +14,7 @@ Composite types are complex data structures.
 * [varargs](#varargs)
 * [strings](#strings)
 * [object](#object)
-* [aggregate](#aggregate)
-* [binding](#binding)
+* [method](#method)
 
 ## Usability
 
@@ -831,10 +830,11 @@ make var1,var2... <+ object_name
 * Recursive
 * Hierarchical
 
-
 **type size**
 
 Type size is a constant that can be calculated using size(T).
+
+### Flat object
 
 **Example:**
 ```
@@ -859,7 +859,7 @@ print type(Person.age) ; will print W
 print size(Person);
 ```
 
-**Recursive objects**
+### Recursive
 We can limit how deep a structure become using a directive. "#recursive:100"
 
 ```
@@ -881,50 +881,33 @@ type Node <: {
 }
 ```
 
-## Aggregate
+## Method
 
-An aggregate type can store references to other composite types.
-
-**example**
-```
--- a list of objects
-make ListObject @ ({a,b ∈ Z, c ∈ U})
-
--- a list of persons
-make ListObject  @ (Person)
-
--- an array of nodes
-make ArrayObject @ [Node](10)
-
-```
-
-## Binding
-
-An object can have associated rules:
+An object can have associated rules that are called _methods_:
 
 **pattern**
 ```
 -- define Foo as object with 2 public attributes:
 type Foo <: {a, b ∈ N}
   
--- constructor rule for Foo
+-- constructor method for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo)
   make me := {a:p1, b:p2}
 return
 
--- second rule for Foo
+-- define a method for Foo
 rule bar(me @ Foo)
   print "a =" & me.a
   print "b =" & me.b
 return
 
--- reference capture "::" result Foo object 
+-- reference capture, using "::" from constructor
 make test :: foo(1,1)
 
--- test bar() that is an object rule
+-- run bar() method using object test as dot qualifier
 apply test.bar()
-fail if test.a ≠ 1
-fail is test.b ≠ 1
+fail if test.a ≠ 1 ;verify attribute a
+fail if test.b ≠ 1 ;verify attribute b
 ```
 
 **See also:** 
