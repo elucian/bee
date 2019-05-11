@@ -36,4 +36,5 @@ when (a = zero)
 else
   print "life is misery"
 done
-over.
+
+over

@@ -37,7 +37,7 @@ repeat
 rest
 ```
 
-**file:** [ac.md](demo/ac.md)  ; asynchronous call
+**file:** [ac.md](demo/ac.md)  ; --asynchronous call
 
 ## Resumable Coroutines 
 
@@ -74,7 +74,7 @@ start bar(n)
 -- wait for both foo and bar to finish
 rest
 
-over.
+over
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee)  ; producer consumer example
+**See also:** [pc.wee](../demo/pc.wee)  ; --producer consumer example

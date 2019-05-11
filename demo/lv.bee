@@ -33,4 +33,4 @@ apply add2    ;will print 2
 print x          ;x = 1 (unmodified)
 print $Global.x  ;x = 1 (unmodified)
 
-over.
+over

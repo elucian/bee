@@ -16,4 +16,4 @@ while (i ≤ 4)
 repeat
 rest ;synchronize
 
-over.
+over

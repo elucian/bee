@@ -107,7 +107,7 @@ The quest is a multi-path value based selector.
 **syntax:**
 
 ```
-quest expression 
+quest expression: 
   match constant1 do
     ** first path
   match constant2 do
@@ -133,13 +133,13 @@ Create unconditional repetitive block.
 **pattern**
 
 ```
-cycle
+cycle:
   ...
-  skip if condition 
+  skip if condition;
   ...
-  stop if condition 
+  stop if condition;
   ...
-repeat
+repeat;
 ```
 
 **notes**
@@ -153,7 +153,7 @@ In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
 make a := 10 ∈ Z ;global
-cycle
+cycle:
   alter a -= 1
   ** conditional repetition
   skip if (a % 2 = 0)
@@ -161,7 +161,7 @@ cycle
   ** conditional termination
   write ','
   stop if (a < 0)
-repeat
+repeat;
 ```
 
 **Notes:** 
@@ -186,8 +186,8 @@ cycle outer
     ...    
     ** stop both cycles
     stop outer if (condition)
-  repeat ;inner
-repeat ;outer
+  repeat; --inner
+repeat; --outer
 ```
 
 **example**
@@ -196,14 +196,14 @@ repeat ;outer
 make x   := 9; local 
 make a,r := 0; locals
 cycle
-  alter r := x % 2
+  alter r := x % 2;
   alter a := (0: r = 0, 1)
   write "{1}:{2}" <+ (x,a)
   alter x -= 1
   write ','
   stop if (x < 5)
 repeat
-print ;expect 9:1, 8:0, 7:1, 6:0, 5:1,
+print ; expect 9:1, 8:0, 7:1, 6:0, 5:1,
 ```
 
 ## While
@@ -273,7 +273,7 @@ while x < 5 do
   write ',' if (x < 5)
   alter x -= 1
 repeat
-print ; 9:1, 8:0, 7:1, 6:0, 5:1
+print ; --9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
 ## Scan 
@@ -282,7 +282,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ```
-make var ∈ N ; local
+make var ∈ N ; --local
 scan [min..max] +> var do
   ** block statements
   skip if (condition)
@@ -298,7 +298,7 @@ next
 
 Example of forward skip in counting iteration:
 ```
-make i ∈ Z ;global
+make i ∈ Z ; global
 scan [0..10] +> i do
   ** force next iteration
   when i % 2 = 0 do
@@ -309,7 +309,7 @@ scan [0..10] +> i do
     write ',' if (i < 10)
   done
 next
-print i ;still available
+print i; still available
 ```
 > 1,3,5,7,9
 
@@ -362,7 +362,7 @@ other
    -- covering all other errors 
 final
    -- finalization
-done
+done;
 ```
 
 **note:**

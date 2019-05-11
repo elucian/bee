@@ -18,4 +18,6 @@ rule (x ∈ Z, y ∈ R) => (r ∈ Rec)
   alter r.y := y
 return
 print demo(4,5.5)-- will print { x: 4, y: 5.5 }
-over. 
+
+over
+ 

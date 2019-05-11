@@ -71,9 +71,9 @@ In rule foo, parameters a, b are optional.
 -- result type is Z
 rule foo(a,b: 0) ∈ Z => (a + b)
                                   
-print foo()    ; 0               
-print foo(1)   ; 1
-print foo(1,2) ; 3
+print foo()    ; --0               
+print foo(1)   ; --1
+print foo(1,2) ; --3
 ```
 
 **Multiple parameters:**
@@ -99,9 +99,9 @@ We can use parameter name and pair-up ":" symbol for argument value.
 rule bar(a,b,c:0)  ∈ Z => (a+b+c)
 
 -- observe we use pair-up to new value to argument
-print bar(a:1) ; print 1 because (b,c := 0) 
-print bar(b:1) ; print 1 because (a,b := 0) 
-print bar(c:1) ; print 1 because (a,b := 0) 
+print bar(a:1) ; --print 1 because (b,c := 0) 
+print bar(b:1) ; --print 1 because (a,b := 0) 
+print bar(c:1) ; --print 1 because (a,b := 0) 
 ```
 
 ## Multiply

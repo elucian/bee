@@ -29,7 +29,7 @@ symbol| description
   $   | Global variables prefix \| System environment constants
   @   | Define a reference \| Define output parameter 
   :   | Pair up key-value in a collection or rule call
-  ;   | End of line comments
+  ; --  | End of line comments
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Anonymous variable \| Has constant value one space (_ = ' ')
@@ -106,8 +106,8 @@ symbol | meaning
 
 **patterns:** 
 ```
- ¬(x ≡ y)  ; divergence of two references, (not the same address)
- ¬(x = y)  ; divergence of two values, objects or collections
+ ¬(x ≡ y)  ; --divergence of two references, (not the same address)
+ ¬(x = y)  ; --divergence of two values, objects or collections
 ```
 
 ## Collection operators

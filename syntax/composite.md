@@ -35,9 +35,9 @@ type type_name <: { name1:0, name2, name3}
 
 make a, b, c ∈ type_name
 
-alter a := type_name.name1  ; a=2
-alter b := type_name.name2  ; b=3
-alter c := type_name.name3  ; c=4
+alter a := type_name.name1  ; --a=2
+alter b := type_name.name2  ; --b=3
+alter c := type_name.name3  ; --c=4
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for individual values
@@ -48,8 +48,8 @@ type type_names <: { .name0, .name1 }
 
 make a, b ∈ type_name
 
-alter  a := name0  ; a value := 0
-alter  b := name1  ; b value := 1
+alter  a := name0  ; --a value := 0
+alter  b := name1  ; --b value := 1
 ```
 
 ## Tuple
@@ -58,10 +58,10 @@ It is a list literal, list of values or symbols enclosed in round brackets:
 
 **examples**
 ```
-(a, b ∈ Z, c ∈ U) ; parameters
-('a','b','c')     ; strings
-(1,2,3)           ; numbers
-(1,'2','x')       ; mixed types
+(a, b ∈ Z, c ∈ U) ; --parameters
+('a','b','c')     ; --strings
+(1,2,3)           ; --numbers
+(1,'2','x')       ; --mixed types
 ```
 
 Definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
@@ -94,8 +94,8 @@ print z  ;a
 
 -- tuple unpacking using a template
 make s := "{0} > {1} > {2}" <+ (x, y, z) 
-print 'a = ' + a ; a = 40
-print s  ; 97 > 65 > a
+print 'a = ' + a ; --a = 40
+print s  ; --97 > 65 > a
 ```
 
 **Unpacking Notes:**
@@ -133,7 +133,7 @@ A list is a dynamic collection of references.
 **user type**
 
 ```
-type type_name <: (@Type) ; a type of list
+type type_name <: (@Type) ; --a type of list
 ```
 
 **variable**
@@ -169,7 +169,7 @@ make list := (0, 1, 2, 3, 4, 5)
 make x ∈ Z
 scan list +> x do
   write x
-  write _ if x ≡ list[?]  ; Note: "_" = " "
+  write _ if x ≡ list[?]  ; --Note: "_" = " "
 next
 print ;0 1 2 3 4 5
 ```
@@ -179,17 +179,17 @@ print ;0 1 2 3 4 5
 A stack is a LIFO list of elements: LIFO = (last in first out)
 
 ```
-make a := (1, 2, 3) ;list
+make a := (1, 2, 3); --list
 make last ∈ N
 
 -- append to stack with operator "+="
-alter a += 4  ;(1,2,3,4)
+alter a += 4; -- (1,2,3,4)
 
 -- read last element using "-="
-alter last := a[?] ;last = 4
+alter last := a[?]; --last = 4
 
 -- remove last element using -=
-alter a -= a[?] ;a = (1,2,3)
+alter a -= a[?]; -- a = (1,2,3)
 ```
 
 ## Queue
@@ -201,13 +201,13 @@ make q := (1,2,3) ;list
 make first : N
 
 -- enqueue new element into list "+=" 
-alter q += 4  ; (1,2,3,4)
+alter q += 4  ; --(1,2,3,4)
 
 -- read first element using ":="
-alter first := a[!]  ; first = 1
+alter first := a[!]  ; --first = 1
 
 -- dequeue first element using "-="
-alter a -= a[!]  ; a = (2,3,4)
+alter a -= a[!]  ; --a = (2,3,4)
 ```
 
 ## Array
@@ -232,8 +232,8 @@ make test @ [R](10) ;vector of 10 real numbers
 make m := length(test)-1
 
 -- default array index start from 0
-print test[0]  ; first element
-print test[m]  ; last element
+print test[0]  ; --first element
+print test[m]  ; --last element
 
 -- array traversal 
 make x := 0
@@ -244,7 +244,7 @@ repeat
 
 -- print all elements of array
 print test
-over.
+over
 ```
 
 **Output:**
@@ -266,8 +266,8 @@ Arrays can have optional index range: (n..m).
 -- define vector with elements starting from n to m
 make array_name := [member_type](n..m)
 
-print array_name[n] ; print first element
-print array_name[m] ; print last element
+print array_name[n] ; --print first element
+print array_name[m] ; --print last element
 ```
 
 Array capacity is calculated automatic with formula: `c = m-n+1`
@@ -278,24 +278,24 @@ Initial value for elements can be set during declaration:
 
 ```
 -- you can use 2 optional notations 
-make zum := 1 @ [Z](1..10) ; explicit initialization
-make zet := [1](1..10) ; using type inference
+make zum := 1 @ [Z](1..10) ; --explicit initialization
+make zet := [1](1..10) ; --using type inference
 
 -- modify one element by index
 alter zum[1]  := 1 
 alter zum[10] := 10 
-print zum  ; expect [1,2,2,2,2,2,2,2,2,10]
+print zum  ; --expect [1,2,2,2,2,2,2,2,2,10]
 
 -- modify all elements
 alter zum[*] += 1 
-print zum  ; expect [2,3,3,3,3,3,3,3,3,11]
+print zum  ; --expect [2,3,3,3,3,3,3,3,3,11]
 
 -- reset all elements
-alter zum[*] := 0 ; [0,0,0,0,0,0,0,0,0,0]
+alter zum[*] := 0 ; --[0,0,0,0,0,0,0,0,0,0]
 
 -- modify multiple elements using an Array literal
 alter zum[*] := [1,2,3]
-print zum  ; expect [1,2,3,1,2,3,1,2,3,1]
+print zum  ; --expect [1,2,3,1,2,3,1,2,3,1]
 
 -- reset zum reference (replace zum)
 alter zum := [1,2,3]
@@ -315,16 +315,16 @@ make vec @ [U]()
 make nec @ [N]() 
 
 -- arrays are empty
-print vec = [] ; True
-print nec = [] ; True
+print vec = [] ; --True
+print nec = [] ; --True
 
 -- array capacity becomes: 10
 alter vec := `x` * 10
-print vec  ; expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+print vec  ; --expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
 
 -- array capacity becomes: 10
 alter nec := 0 * 10
-print nec  ; expect [0,0,0,0,0,0,0,0,0,0]
+print nec  ; --expect [0,0,0,0,0,0,0,0,0,0]
 ```
 
 ## Slice
@@ -348,24 +348,24 @@ make slice_name :: array_name[n..m]
 **example**
 ```
 make   a := [0](5) 
-print  a ; [0,0,0,0,0]
+print  a ; --[0,0,0,0,0]
 
 -- making slice views
-make c :: a[0..2] ; [0,0,0]
-make e :: a[3..4] ; [0,0]
+make c :: a[0..2] ; --[0,0,0]
+make e :: a[3..4] ; --[0,0]
 
 --modify slice elements
-alter c[*] := 1 ; 
-alter e[*] := 2 ; 
+alter c[*] := 1 ; --
+alter e[*] := 2 ; --
 
 --original array is modified
-print a ; expect [1,1,1,2,2]
+print a ; --expect [1,1,1,2,2]
 
 --modify last 2 elements using anonymous slicing
 alter a[3..?] := [2,3]
 
 --                      ↓ ↓
-print a ; expect [1,1,1,2,3]
+print a ; --expect [1,1,1,2,3]
 ```
 
 ## Copy
@@ -397,12 +397,12 @@ A matrix is an array with 2 or more dimensions.
 
 **Example:** 
 ```
-make mat @ [R](4,4)  ; define matrix
+make mat @ [R](4,4)  ; --define matrix
 
 -- modify matrix using ":=" operator
 alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-print mat[0,0]  ; first element
-print mat[3,3]  ; last element
+print mat[0,0]  ; --first element
+print mat[3,3]  ; --last element
 
 ```
 
@@ -420,7 +420,7 @@ while (i < x) do
   i += 1
 repeat
 
-over.
+over
 ```
 
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
@@ -428,7 +428,7 @@ Printing the entire matrix will use multiple rows to represent a matrix approxim
 ```
 make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 print m
-over.
+over
 ```
 
 output:
@@ -462,10 +462,10 @@ rule foo( *bar @ [Z]) => (x ∈ Z)
 return
 
 --we can call foo with variable number of arguments
-print foo()      ; 0
-print foo(1)     ; 1
-print foo(1,2)   ; 3
-print foo(1,2,3) ; 6
+print foo()      ; --0
+print foo(1)     ; --1
+print foo(1,2)   ; --3
+print foo(1,2,3) ; --6
 
 ```
 
@@ -513,9 +513,9 @@ A set is a sorted collection of unique values.
 ```
 --define a set
 
-make s  := {}      @ {N}  ; empty set
-make s1 := {1,2,3} @ {N}  ; 3 elements
-make s2 := {2,3,4} @ {N}  ; 3 elements  
+make s  := {}      @ {N}  ; --empty set
+make s1 := {1,2,3} @ {N}  ; --3 elements
+make s2 := {2,3,4} @ {N}  ; --3 elements  
 
 
 -- specific operations
@@ -525,8 +525,8 @@ alter s := s1 - s2;{1}        -- difference 1
 alter s := s2 - s1;{4}        -- difference 2
 
 -- belonging check
-print s1 ⊂ s  ; True
-print s  ⊃ s2 ; True
+print s1 ⊂ s  ; --True
+print s  ⊃ s2 ; --True
 
 -- declare a new set
 make a := {1,2,3} @ {N}
@@ -565,16 +565,16 @@ alter map := {('a':"first"), ('b':"second")}
 alter map['c'] := "third"
 
 -- modification of non existent element will fail
-alter map['e'] := "forth"  ; ERROR
+alter map['e'] := "forth"  ; --ERROR
 
 -- finding elements by key
-print map['a']  ; first
-print map['b']  ; second
-print map['c']  ; third
+print map['a']  ; --first
+print map['b']  ; --second
+print map['c']  ; --third
 
 -- remove an element by key
-scrap map['a']  ; remove "first" element
-print map       ; expected: {'b'="second", 'c'="third"}
+scrap map['a']  ; --remove "first" element
+print map       ; --expected: {'b'="second", 'c'="third"}
 
 ```
 
@@ -627,8 +627,8 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str @ String(25) ; string with capacity   25x8 = 200 bit
-make a   @ [U](25) ; array of 25 characters 25x8 = 200 bit
+make str @ String(25) ; --string with capacity   25x8 = 200 bit
+make a   @ [U](25) ; --array of 25 characters 25x8 = 200 bit
 
 alter str := 'Short string' 
 alter a   := split(str)
@@ -641,8 +641,8 @@ Conversion of a string into number is done using _parse_ rule:
 make x,y ∈ R
 
 -- rule parse return a Real number
-alter x := parse('123.5',2,',.') ; convert to real 123.5
-alter y := parse('10,000.3333',2,',.') ; convert to real 10000.33
+alter x := parse('123.5',2,',.') ; --convert to real 123.5
+alter y := parse('10,000.3333',2,',.') ; --convert to real 10000.33
 ```
 
 **Notes:** 
@@ -710,20 +710,20 @@ symbol| description
 
 **examples**
 ```
-make u, c, s @ String ; default length is 128 octets = 1024 bit
+make u, c, s @ String ; --default length is 128 octets = 1024 bit
 
 -- string concatenation
 alter u := 'This is'  & ' a short string.'
 alter c := 'This is ' & 'fixed size string' 
 
 -- automatic conversion to string
-alter s := 40 & 5 ; '405'
+alter s := 40 & 5 ; --'405'
 
 -- URL/path concatenation
 make test_file := $pro/'src'/'test.bee'
 
 -- when $pro = c:\work\project\
-print test_file ; c:\work\project\src\test.bee
+print test_file ; --c:\work\project\src\test.bee
 ```
 
 ### Template
@@ -740,11 +740,11 @@ make var_name := template <+ (var1,var2,...)
 
 **Examples:**
 ```
-make x := 30 ; Code ASCII 0
-make y := 41 ; Code ASCII A
+make x := 30 ; --Code ASCII 0
+make y := 41 ; --Code ASCII A
 
 --template writing
-print ("{0} > {1} > {2}" <+ (x,y)) ; print "30 > 41 > {2}"
+print ("{0} > {1} > {2}" <+ (x,y)) ; --print "30 > 41 > {2}"
   
 ```
 
@@ -848,12 +848,12 @@ make catalog[0] := {name:"Cleopatra", age:15}
 make catalog[1] := {name:"Martin", age:17}
 
 --using one element with dot operators
-print caralog[0].name ; will print Cleopatra
-print caralog[1].name ; will print Martin
+print caralog[0].name ; --will print Cleopatra
+print caralog[1].name ; --will print Martin
 
 --member type can be check using _type()_ built in
-print type(Person.name) ; will print U
-print type(Person.age) ; will print W
+print type(Person.name) ; --will print U
+print type(Person.age) ; --will print W
 
 --print size of structure
 print size(Person);
@@ -911,8 +911,8 @@ fail if test.b ≠ 1 ;verify attribute b
 ```
 
 **See also:** 
-* [me.bee](me.bee)  ; numeral with rules
-* [gc.bee](gc.bee)  ; generator class
+* [me.bee](me.bee)  ; --numeral with rules
+* [gc.bee](gc.bee)  ; --generator class
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;

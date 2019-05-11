@@ -22,4 +22,5 @@ return
 -- calling test rules 
 print test.convert()     ; will print "zero"
 print test.equal('zero') ; will print 1
-over.
+
+over

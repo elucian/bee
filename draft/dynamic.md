@@ -14,7 +14,7 @@ rule plus(a,b ∈ Z) => (r ∈ Z)
   alter r := (a + b)
 return
 
-over.
+over
 ```
 
 ## Expression signature
@@ -40,5 +40,5 @@ print dic['gt'](3,1)  ;1
 print dic['lt'](3,1)  ;0
 print dic['eq'](3,1)  ;0
 
-over.
+over
 ```

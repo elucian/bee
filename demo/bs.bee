@@ -33,4 +33,4 @@ print test
 -- check result
 fail if (test ≠ result)
 
-over.
+over
