@@ -172,7 +172,7 @@ repeat
 -- print the buffer to console
 print
   
-over ; end of driver
+over ; --end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -247,10 +247,10 @@ $local        -- local context: universal qualifier
 **importing**
 
 ```
-load $runtime.cpp_lib:(*)  ; load cpp library
-load $runtime.asm_lib:(*)  ; load asm library
-load $runtime.bee_lib:(*)  ; load core library
-load $program.pro_lib:(*)  ; load project library
+load $runtime.cpp_lib:(*)  ; --load cpp library
+load $runtime.asm_lib:(*)  ; --load asm library
+load $runtime.bee_lib:(*)  ; --load core library
+load $program.pro_lib:(*)  ; --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -271,7 +271,7 @@ trial
 done
 print i ;expected: 1  
 
-over.
+over
 ```
 **See example:** [lv.bee](../demo/lv.bee)
 
@@ -307,7 +307,7 @@ This is myLib.bee file:
 ```
 #library "mLib"
 
-load $runtime.cpp.myLib.(*) ; load cpp library
+load $runtime.cpp.myLib.(*) ; --load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z)
@@ -332,11 +332,15 @@ To understand more about interacting with other languages check this article abo
 
 ## Comments
 
-Bee enable several notations for comments: 
+Bee enable several notations for comments:
 
 **End of line**
 
-For end of line comment Bee used semi-column ";"
+For each line of code you can use optional ";" follow by a short comment.
+ 
+* ";" is necessary only when you add a comment;
+* you can use ";" in the middle of expression and continue on next line;
+* you can not create multiple statement in one single line;
 
 **Single line**
 
@@ -344,8 +348,9 @@ For single line comments we use a pair of two symbols:
 
 { "--", "**", "##" } 
 
-* You can use \#\# in your program as title comments starting at beginning of a line.
-* You can use \-\- as indented comments. You can also use \-\-\ as a long line separator.
+* You can use `##` in your program as title comments starting at beginning of a line;
+* You can use `**` in your program as sub-title comments or long line separator;
+* You can use `--` as end of line comment or single line comment.
 
 **Notes:** These are chosen for following reasons:
 
@@ -367,7 +372,7 @@ For boxed comments we use two symbols "+- ... -+".
 +---------------------------------+
 ```
 
-**Gray comments**
+**Outline comment**
 
 You can comment out a block of code using notation: "|*......*|"
 
@@ -383,7 +388,6 @@ You can comment out a block of code using notation: "|*......*|"
 If a program is very large you can use separators to create large sections of code.
 
 ```
-####
 ****
 ----
 ```
@@ -400,8 +404,7 @@ In next example we are using various comments into a demo program.
 #driver "demo"
 ## This is a title in program
    ** This is a sub-title in program
-----------------------------------------------------------------      
-over. ;end of program
+over;end of program
 ****************************************************************
 ** Alternative boxed comment for ancient matrix printers      **
 ****************************************************************
@@ -453,8 +456,8 @@ play aspect_name(parameter_list) +> result
 ```
 #aspect "mod"
 
-input  i ∈ Z ; define parameter "i"
-output v ∈ N ; define result "v"
+input  i ∈ Z ; --define parameter "i"
+output v ∈ N ; --define result "v"
 
 when (i < 0) do
   alter v := -i
@@ -462,7 +465,7 @@ else
   alter v := i
 done  
 
-over.
+over
 ```
 
 ```
@@ -476,15 +479,15 @@ load $pro/mod.bee
 
 -- execute aspect "mod"
 play  mod(-3) +> result
-print result ; expect: 3
+print result ; --expect: 3
 
-over.
+over
 ```
 
 One aspect can have multiple parameters and multiple results:
 ```
-input a,b ∈ Z, c ∈ R ; define parameters "a,b,c"
-output v,z ∈ N ; define two results "v" and "z"
+input a,b ∈ Z, c ∈ R ; --define parameters "a,b,c"
+output v,z ∈ N ; --define two results "v" and "z"
 ```
 
 **note:** 

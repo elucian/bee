@@ -4,8 +4,8 @@
 #driver "vg"
 
 -- define two points and two vectors
-make p1, p2 @ Point
-make v1, v2 @ Vector
+make p1, p2 @Point
+make v1, v2 @Vector
 
 -- setup the points
 alter p1 := {x:0,  y:0}  ; origin
@@ -17,7 +17,7 @@ alter v1 := {o:p1, p:p2} ; a vector
 alter v2 := {o:p2, p:p1} ; apposite vector to v1
 
 -- define one 2D graphic layer
-make c @ Canvas(0,0)
+make c @Canvas(0,0)
 
 -- check canvas properties
 alter c.size  := 400
@@ -38,12 +38,12 @@ hide c
 
 -- define two circles
 -- circles in p1, p2 radius 5
-make c1 := {o:p1,r:5} @ Canvas
-make c2 := {o:p2,r:5} @ Canvas
+make c1 := {o:p1,r:5} @Canvas
+make c2 := {o:p2,r:5} @Canvas
 
 draw c
 plot c1, c2
 show c ; activate canvas
 wait 30
 
-over.
+over
