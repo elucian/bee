@@ -19,7 +19,6 @@ I have used a simple design notation based on examples and notes:
 * [Reference](#reference)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
-* [Exceptions](#exceptions)
 * [Basic rules](#basic-rules)
 * [Parameters](#parameters)
 
@@ -341,7 +340,7 @@ When data type mismatch we must perform explicit conversion.
 * Explicit conversion is using pipeline operator: "->"
 * This is unsafe operation. A range check is recommended before conversion.
 * Data precision may suffer. Some decimals may be lost.
-* If data do not fit in the new type overflow exception is raised.
+* If data do not fit in the new type, the overflow exception is raised.
 
 **example:**
 ```
@@ -359,7 +358,7 @@ print x  ; --expect 20.0
 
 ## Alphanumeric type
 
-Bee define U as single UTF32 code point with representation: U+HHHH
+Bee define U as single UTF32 code point with representation: U+HHHH or U+HHHHHH
 
 ```
 make a, b ∈ U ; --Unicode 
@@ -576,55 +575,6 @@ print "x is ".kind ; --expect: "x is digit"
 over
 ```
 
-## Exceptions
-An exception is a recoverable error. It can be declared by the user or by the system:
-
-**definition**
-```
--- global exception type
-type Error <: {code ∈ Z, message @ String, line ∈ Z}
-
--- global system error
-make $error ∈ Error
-```
-
-You can define exceptions with code > 200:
-
-**example**
-```
-make my_error  := {200,"my first exception"} ∈ Error 
-
-fail my_error
-```
-
-An error has template features. Operator <+ can be used:
-
-**example**
-```
-make my_error  := {201,"exception: \s{1}"} ∈ Error
-
-fail my_error <+ 'test'
-```
-
--- expected
-exception: 'test'
-
-**Notes:**
-* Keyword _fail_ can raise only recoverable errors with code > 200;
-* Keyword _fail_ can not terminate the main program only _halt_ or _exit_;
-* All recoverable errors must be analyzed by the program using trial block;
-* Error code <  200 are system reserved error codes;
-* Error code ≤ -1   are unrecoverable errors created with _halt_;
-* Keyword _halt_ will liberate the resources and terminate the program;
-
-
-**unrecoverable**
-
-Next we create unrecoverable exception:
-
-```
-halt -1  ; --end program and exit code = -1
-```
 
 ## Basic rules
 

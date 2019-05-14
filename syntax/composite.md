@@ -15,19 +15,19 @@ Composite types are complex data structures.
 * [strings](#strings)
 * [object](#object)
 * [method](#method)
+* [exception](#exception)
 
 ## Usability
 
-Bee uses composite types to ...
+Bee uses composite types to declare ...
 
-* declare data types using: "<:" and "∈"
-* declare constants  using: ":=" and "@"
-* declare references using: ":=" and "@" 
-
+* declare composite variables
+* declare composite constants
+* declare new data types
 
 ## Ordinal
 
-Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1 by default. Ordinal values can start with a different number. Only first value can be specified using ":".
+Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1 by default. Associated values can start with a different number. Only first value can be specified using pair up operator ":".
 
 **pattern**
 ```
@@ -35,9 +35,9 @@ type type_name <: { name1:0, name2, name3}
 
 make a, b, c ∈ type_name
 
-alter a := type_name.name1  ; --a=2
-alter b := type_name.name2  ; --b=3
-alter c := type_name.name3  ; --c=4
+alter a := type_name.name1; --a=2
+alter b := type_name.name2; --b=3
+alter c := type_name.name3; --c=4
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for individual values
@@ -920,5 +920,55 @@ fail if test.b ≠ 1 ;verify attribute b
 * Rules can be private or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
+
+## Exception
+An exception is a recoverable error. It can be declared by the user or by the system:
+
+**definition**
+```
+-- global exception type
+type Error <: {code ∈ Z, message @ String, line ∈ Z}
+
+-- global system error
+make $error ∈ Error
+```
+
+You can define exceptions with code > 200:
+
+**example**
+```
+make my_error  := {200,"my first exception"} ∈ Error 
+
+fail my_error
+```
+
+An error has template features. Operator <+ can be used:
+
+**example**
+```
+make my_error  := {201,"exception: \s{1}"} ∈ Error
+
+fail my_error <+ 'test'
+```
+
+-- expected
+exception: 'test'
+
+**Notes:**
+* Keyword _fail_ can raise only recoverable errors with code > 200;
+* Keyword _fail_ can not terminate the main program only _halt_ or _exit_;
+* All recoverable errors must be analyzed by the program using trial block;
+* Error code <  200 are system reserved error codes;
+* Error code ≤ -1   are unrecoverable errors created with _halt_;
+* Keyword _halt_ will liberate the resources and terminate the program;
+
+
+**unrecoverable**
+
+Next we create unrecoverable exception:
+
+```
+halt -1  ; --end program and exit code = -1
+```
 
 **Read next:** [Type Inference](inference.md) 
