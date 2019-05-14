@@ -14,7 +14,7 @@ These are Bee core ingredients:
 
 ## User manual
 
-Learn Bee language in about 5 hours:
+Read next pages in order to learn Bee syntax:
 
 1. [Program Structure](structure.md)
 1. [Syntax Overview](overview.md)
@@ -23,9 +23,9 @@ Learn Bee language in about 5 hours:
 1. [Type Inference](inference.md)
 1. [Standard Library](standard.md)
 
-## Work in progress
+## Experimental
 
-Work in progress, unfinished and unverified:
+For new features and demo examples:
 
 1. [Demo code](../demo/readme.md)
 1. [Draft features](../draft/readme.md)
