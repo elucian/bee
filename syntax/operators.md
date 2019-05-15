@@ -7,7 +7,7 @@ Read about supported symbols here: [symbols](symbols.md)
 
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
-| `|*...*|` | Block comments \| Nested comments
+|`\|\*...\*\|` | Block comments \| Nested comments
 | `(_,_,_)` | Expression \| Tuple literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
