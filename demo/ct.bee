@@ -3,59 +3,59 @@
 ----------------------------------+
 #driver "ct"
 -- enumeration is a type 
-type Enum := {fst:1, snd, trd}
+type Enum := {fst:1, snd, trd};
 -- print enumeration members
-print (Enum.fst) ; 1
-print (Enum.snd) ; 2
-print (Enum.trd) ; 3
+print (Enum.fst) ; -- 1
+print (Enum.snd) ; -- 2
+print (Enum.trd) ; -- 3
 -- define hash map variable
-make s @ {(U:N)}
+make s @ {(U:N)};
 -- assign (key:value) pairs
 alter s :=
   {
    ("first" : 1), 
    ("secont": 2),
    ("third" : 3)
-  }
-print s["first"]  ; 1
-print s["second"]-- 2
-print s["third"]  ; 3
+  };
+print s["first"];  -- 1
+print s["second"]; -- 2
+print s["third"];  -- 3
 -- array with capacity
-make v1 := [Z](10)  ; vector of 10 integer elements
-make v2 := [R](2,3)-- matrix of 2 rows and 3 columns
+make v1 := [Z](10);  -- vector of 10 integer elements
+make v2 := [R](2,3); -- matrix of 2 rows and 3 columns
 -- dynamic alter / map collections
-make p := {U}      ; alter collection of symbols
-make m := {(R:S)}  ; hash map of strings with real key
+make p := {U};     -- alter collection of symbols
+make m := {(R:S)}; -- hash map of strings with real key
 -- Establish map using literals
 alter m := {'a':1, 'b':2, 'c':3}
 -- complex list examples
-make := (U);        ; a list of characters
-make := (R);        ; a list of real numbers
-make := ((U))      ; a list of lists of symbols
-make := ([U](10))  ; a list of array with 10 symbols
+make := (U);   -- a list of characters
+make := (R);   -- a list of real numbers
+make := ((U)); -- a list of lists of symbols
+make := ([U](10)); -- a list of array with 10 symbols
 -- Array and Matrix literals
-make l2 := [1,2,3]      ; array of 3 elements
-make m2 := [[1,1],[2,2]] ; matrix of 2x2
+make l2 := [1,2,3]       ; -- array of 3 elements
+make m2 := [[1,1],[2,2]] ; -- matrix of 2x2
 -- Demo for "set" operations
-make s1 := {Z}-- empty set of strings
+make s1 := {Z}; -- empty set of strings
 -- Initialized set of 3 elements
-make s2 := {1, 2, 3}
+make s2 := {1, 2, 3};
 -- append one element into a set
-alter s1 := s1 + 0 ; {0}
-alter s1 := s1 + 1 ; {0,1}
-alter s1 := s1 + 2 ; {0,1,2}
+alter s1 := s1 + 0; -- {0}
+alter s1 := s1 + 1; -- {0,1}
+alter s1 := s1 + 2; -- {0,1,2}
 -- remove one element from set
-alter s1 := s1 - 1 ; {0,2}
-alter s1 := s1 - 2 ; {0}
+alter s1 := s1 - 1; -- {0,2}
+alter s1 := s1 - 2; -- {0}
 -- set literals using type inference
-make s3 := {'a','b','c'} ; set of 3 symbols
-make s4 := {'a','b','d'} ; set of 3 symbols
+make s3 := {'a','b','c'}; -- set of 3 symbols
+make s4 := {'a','b','d'}; -- set of 3 symbols
 -- union between 2 sets (a, b) are nod duplicated
-print (s3 ∨ s4) ; {'a','b','c','d'}
+print (s3 ∨ s4); -- {'a','b','c','d'}
 -- intersection between 2 sets
-print (s3 ∧ s4) ; {'a','b'}
+print (s3 ∧ s4); -- {'a','b'}
 -- difference between two sets
-print (s3 - s4) ; {'c'}
-print (s4 - s3) ; {'d'}
+print (s3 - s4); -- {'c'}
+print (s4 - s3); -- {'d'}
 
-over
+over.

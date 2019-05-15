@@ -4,16 +4,16 @@
 #driver "ro"
 -- define recursive type Person
 type Person <: {
-      name @ S, 
+      name @ String, 
       age  ∈ N,  
-      children @ (Person)
-    }
+      children @ (@Person)
+     };
 
 -- create two objects of type Person
-make r1,r2 @ Person
+make r1,r2 @ Person;
 
 -- person with no children          
-alter r1 := {name:'Mica', age:21}
+alter r1 := {name:'Mica', age:21};
 
 -- person with two children
 alter r2 := {name:'Barbu', age:25, 
@@ -21,14 +21,14 @@ alter r2 := {name:'Barbu', age:25,
                {name:'Telu', age:4},
                {name:'Radu', age:1} 
              )
-          }
+          };
 
 -- object unpacking into new variables
-make r_name, r_age, r_children <+ r2
+make r_name, r_age, r_children <+ r2;
 
 -- using introspection
-print type(r_name) ; S
-print type(r_age)  ; N
-print type(r_children) ; (Person)
+print type(r_name); -- S
+print type(r_age); -- N
+print type(r_children); -- (@Person)
            
-over
+over.

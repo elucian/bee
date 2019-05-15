@@ -4,10 +4,10 @@
 -- define: structured data
 #driver "dt"
 -- this type is public (uses dot prefix)
-type .Data <: {key:U, value:N}
+type .Data <: {key:U, value:N};
 -- make variable using defubed alias
-make  x @ Data
-alter x := {key:'a', make:10}
+make  x @ Data;
+alter x := {key:'a', make:10};
 +---------------------------------------------------- 
 |  public enumeration type with public elements     |
 |  elements starting with "." do not need qualifier |
@@ -23,18 +23,18 @@ type Number <: {
    .seven, 
    .eight, 
    .nine 
-}
+};
 +--------------------------------------------------- 
 | Note: first element has assigned a value := 0,   | 
 | all other elements have previous value  + 1      |
 ---------------------------------------------------+
 -- example of use
-make a := 0
+make a := 0;
 -- example of use
-when (a = zero)
-  print "zero"
+when (a = zero) do
+  print "zero";
 else
-  print "life is misery"
-done
+  print "life is misery";
+done;
 
-over
+over.

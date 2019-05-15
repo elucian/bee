@@ -11,10 +11,10 @@ since `q` may be equal to 1, every binary integer is also a rational number.
 
 Other precision constants:
 
-*($deci  = 1d = 10⁻¹)
-*($centi = 1c = 10⁻²)
-*($mili  = 1m = 10⁻³)
-*($micro = 1μ = 10⁻⁶)
+* $deci  = 1d = 10⁻¹
+* $centi = 1c = 10⁻²
+* $mili  = 1m = 10⁻³
+* $micro = 1μ = 10⁻⁶
 
 **Literal Notation:** p/q 
 
@@ -22,12 +22,12 @@ It can be used with type inference to create Q numbers:
 
 **Example:**
 ```
-make x := 0    ∈ Q ; --0     
-make a := 1/2  ∈ Q ; --0.5   
-make b := 1/4  ∈ Q ; --0.25  
-make c := 1/8  ∈ Q ; --0.125 
-make d := 1/8  ∈ Q ; --0.062
-make e := 1/8  ∈ Q ; --0.031
+make x := 0    ∈ Q; --0     
+make a := 1/2  ∈ Q; --0.5   
+make b := 1/4  ∈ Q; --0.25  
+make c := 1/8  ∈ Q; --0.125 
+make d := 1/8  ∈ Q; --0.062
+make e := 1/8  ∈ Q; --0.031
 ```
 
 **Note:** 
@@ -59,9 +59,9 @@ A number format "Q5.2" can store in range(-32.00 to 31.75) on 8 bits.
 * to value:    2⁵ - 2⁻² = 32 - 0.25 = 31.75
 
 ```
-make  v ∈ Q5.2
-alter v := -32   ** minim value
-alter v := 31.75 ** maxim value
+make  v ∈ Q5.2;
+alter v := -32;   ** minim value
+alter v := 31.75; ** maxim value
 ```
 
 See also: [wikipedia](https://en.wikipedia.org/wiki/Q_(number_format))

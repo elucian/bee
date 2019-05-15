@@ -37,11 +37,11 @@ make db ∈ Oracle.DB
 -- create a wrapper for database connection
 rule connect(user, password, dbname ∈ String):
   -- prepare credentials
-  make credential ∈ String
-  alter credential := user + '/' + password + '@'+ dbname
+  make credential ∈ String;
+  alter credential := user + '/' + password + '@'+ dbname;
   -- connect to database
-  apply db.connect(credential) 
-return
+  apply db.connect(credential);
+return;
 ```
 
 **Note:**
@@ -90,8 +90,8 @@ local
     with current_record do
       ** use current_record fields
       ... 
-    done
-  repeat
+    done;
+  repeat;
 c
 ```
 
@@ -105,24 +105,24 @@ do
   make index ∈ Z
   scan db.table_name +> current_record do
     ** update current table
-    update [rowid:current_record.rowid]
-       alter field_name := new_value
+    update (rowid:current_record.rowid)
+      alter field_name := new_value
        ...
-    in db.table_name
+    in db.table_name;
     alter index += 1
     ** commit batch of 10
     when (index = 10) do
       apply db.commit()
       alter index := 0
-    done
-  next
+    done;;
+  next;;
   ** commit all pending updates
   apply db.commit() if (index > 0)
-done
+done;;
 ```
 
 ## Transactions
-Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When modifications are done you can commit changes. If any table reference or constraint fail verification transaction is rolled back automatically and signal back an error.
+Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When modifications are done; you can commit changes. If any table reference or constraint fail verification transaction is rolled back automatically and signal back an error.
 
 **data manipulation**
 
@@ -152,7 +152,7 @@ Bee can do single or multiple row updates.
 
 ```
 -- use search fields and values
-update [search_field:value]
+update (search_field:value, search_field:value ...)
    alter field_name := value
    alter ...
 in table_name
@@ -173,11 +173,7 @@ This statement will remove one or more records from a table.
 
 ```
 -- Using search fields
-delete [search_field:value,...] 
-  from table_name
-
--- Using search record
-delete [search_record] 
+delete (search_field:value,...) 
   from table_name
 ```
 
@@ -190,7 +186,7 @@ Sometimes we need to bypass the ORM and execute native SQL:
 apply db.query(query_template <+ array)
 apply db.query(query_template <+ record)
 
--- apply a query that return a result
+-- apply a query that return; a result
 apply db.query(query_string) +> record
 apply db.query(query_string) +> array_of_records
 

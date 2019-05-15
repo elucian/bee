@@ -19,8 +19,10 @@ I have used a simple design notation based on examples and notes:
 * [Reference](#reference)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
-* [Basic rules](#basic-rules)
-* [Parameters](#parameters)
+* [Static rules](#static-rules)
+* [Dynamic rules](#dynamic-rules)
+* [Generic rules](#generic-rules)
+* [Expression rules](#expression-rules)
 
 ## Expressions
 Expressions are created using identifiers, operators, rules and constant literals. 
@@ -36,29 +38,29 @@ Expressions are created using identifiers, operators, rules and constant literal
 ```
 -- simple expressions in print statement
 -- no need for parentheses for a single value
-print 10 
-print "this is a test"
+print 10; 
+print "this is a test";
 
 --complex expressions can use ()  
-print (10 + 10 + 15)  
-print (10 > 5 | 2 < 3)
+print (10 + 10 + 15);  
+print (10 > 5 | 2 < 3);
 
 -- enumeration of multiple expressions
 -- print: separate multiple values with one space
-print (1,',',2,',',3)
-print (10, 11, 12) 
+print (1,',',2,',',3);
+print (10, 11, 12);
 
 --to avoid new line and spaces use "write"
-write 0
-write (1,2)
-write (3,4)
+write 0;
+write (1,2);
+write (3,4);
 
 -- after write use print to write a new line
-print ; --01234
+print; --01234
 
 -- Calculation that fail will generate an error
-alter x := 5 ∈ R
-alter x := x ÷ 0 ; --error: division by 0
+alter x := 5 ∈ R;
+alter x := x ÷ 0; --error: division by 0
 ```
 
 **Notes:** 
@@ -207,18 +209,18 @@ type range_name <: basic_type(min..max)
 **Examples:**
 ```
 -- sub-type declarations
-type Positive  <: R(0..)
-type Negative  <: R(..-1)
-type Digit     <: B[0..9]
-type Alpha     <: U[`A`..`z`]
-type Latin     <: U[U+0041..U+FB02]
+type Positive  <: R(0..);
+type Negative  <: R(..-1);
+type Digit     <: B[0..9];
+type Alpha     <: U[`A`..`z`];
+type Latin     <: U[U+0041..U+FB02];
 
 --Check variable belong to sub-type
 when (`x` ∈ Alpha) do
-  print 'yes'
+  print 'yes';
 else
-  print 'no'
-done
+  print 'no';
+done;
 ```
 
 **Notes:**
@@ -273,22 +275,22 @@ sym | purpose
 
 ```
 -- full declarations with type and initial value
-make var_name ∈  type_name
-make var_name := constant ∈ type_name
+make var_name ∈  type_name;
+make var_name := constant ∈ type_name;
 
 -- partial declaration using type inference
 make var_name := expression ; --type inference
 
 -- reference declaration using using operator "::"
-make ref_name @  type_name
-make ref_name :: var_name
-make ref_name :: object_constructor
+make ref_name @  type_name;
+make ref_name :: var_name;
+make ref_name :: object_constructor;
 ```
 
 Multiple variables can be define in one single line using comma separator:
 ```
-make var_name, var_name ... ∈ Type
-make var_name, var_name ... := expression
+make var_name, var_name ... ∈ Type;
+make var_name, var_name ... := expression;
 ```
 
 **Notes:** 
@@ -302,7 +304,7 @@ One can modify variables using "modify" statement.
 
 **example**
 ```
-make a := 10, b := 0 ∈ Z
+make a := 10, b := 0 ∈ Z;
 
 alter b := a + 1 ; --modify b 10->11 
 print b          ; --expected 11
@@ -315,7 +317,7 @@ print b          ; --expected 11
 **Examples:**
 ```
 -- declare a constant that can not change its value
-define pi := 3.14 ∈ R
+define pi := 3.14 ∈ R;
 
 -- declare multiple variables using modify
 make a   ∈ Z ; --Integer 
@@ -324,8 +326,8 @@ make q,p ∈ L ; --Logic
 
 --using modifier expressions
 alter a := 10 ; --modify value of a := 10
-alter a += 1 ; --increment value of a := 11
-alter a -= 1 ; --decrement value of a := 10
+alter a += 1  ; --increment value of a := 11
+alter a -= 1  ; --decrement value of a := 10
 
 -- modify two variables using one constant
 alter q, p := True ; --modify value of q and p
@@ -344,15 +346,15 @@ When data type mismatch we must perform explicit conversion.
 
 **example:**
 ```
-make a := 0, b := 20 ∈ Z
-make v := 10.5, x := 0.0 ∈ R
+make a := 0, b := 20 ∈ Z;
+make v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
-alter a := v -> N
+alter a := v -> N;
 print a  ; --truncated to 10 
 
 --explicit conversion
-alter x := b -> R
+alter x := b -> R;
 print x  ; --expect 20.0
 ```
 
@@ -388,11 +390,11 @@ alter a := 10.5 ; --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: False and True
 
 ```
-type .L <: {.False:0, .True:1}
+type .L <: {.False:0, .True:1};
 
 ** printing logical values
-print True  ;1
-print False ;0
+print True  ; -- 1
+print False ; -- 0
 ```
 
 ## Logic operations
@@ -417,18 +419,18 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 ```
 make x ∈ Z
 when (x = 4 ↔ x - 4 = 0) do
-  print "True"
+  print "True";
 else
-  print "False"  
-done
+  print "False";  
+done;
 ```
 
 
 **design**
 ```
 -- logic values are numeric
-print False - True ;-1 
-print True  + True ; --2
+print False - True ; --> -1 
+print True  + True ; --> +2
 ```
 
 **Precedence:** 
@@ -444,16 +446,16 @@ make x := False ; --Type = L
 make y := True  ; --Type = L
 
 --simple expressions
-print   x ; --0
-print ¬ x ; --1
+print   x; --0
+print ¬ x; --1
 
 --complex expressions
-print  (x ↔ y) ; -- 0
-print ¬(x ↔ y) ; -- 1
-print  (x < y) ; -- 1
-print  (x > y) ; -- 0
-print  (x ∧ y) ; -- 0
-print  (x ∨ y) ; -- 1
+print  (x ↔ y); -- 0
+print ¬(x ↔ y); -- 1
+print  (x < y); -- 1
+print  (x > y); -- 0
+print  (x ∧ y); -- 0
+print  (x ∨ y); -- 1
 
 ```
 **Notes:** 
@@ -466,11 +468,11 @@ print  (x ∨ y) ; -- 1
 Any numeric expression ca be converted to logic using coercion operation `-> L`
 
 ```
-make x, y ∈ L
-make a := 0.0, b := 1.5
+make x, y ∈ L;
+make a := 0.0, b := 1.5;
 
-alter x := a -> L ; --0
-alter y := b -> L ; --1
+alter x := a -> L; --0
+alter y := b -> L; --1
 ```
 
 **Notes:** 
@@ -492,13 +494,13 @@ All composite variables are references to objects.
 
 **example**
 ```
-make i := 10 ∈ Z ; basic type
-make j :: i  @ Z ; reference to i
-make k @ Z ; null reference
+make i := 10 ∈ Z ; -- basic type
+make j :: i  @ Z ; -- reference to i
+make k @ Z ; -- null reference
 
 -- borrowing address / boxing
-alter k :: i ; boxing i := 12 
-alter i += 1 ; modify i := 13
+alter k :: i ; -- boxing i := 12 
+alter i += 1 ; -- modify i := 13
 print k ; --expect 13 (modified)
 
 -- verify boxing effect
@@ -524,14 +526,14 @@ The statement is executed only if the condition evaluate true = True.
 1. Conditional can not be associated with a block statement;
 
 ```
-make a := 0 ∈ Z
+make a := 0 ∈ Z;
 
 -- conditional execution
-alter a := 1 if (a = 0)
+alter a := 1 if (a = 0);
 
 -- conditional print
-print "a is 0" if (a = 0)
-print "a >  0" if (a ≥ 0) 
+print "a is 0" if (a = 0);
+print "a >  0" if (a ≥ 0);
 ```
 
 **Notes:** Keyword "if" and "else" are not related.
@@ -544,16 +546,16 @@ These expressions are separated by coma and enclosed in ().
 **Syntax:**
 
 ```
-make var_name ∈ type
+make var_name ∈ type;
 
 -- multiple matching with default value
-alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx)
+alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
 
 -- alternative code alignment
 alter var_name := (
    xp1 if cnd1,
    xp2 if cnd2,
-   dx)
+   dx);
 ```
 
 **Legend:**
@@ -567,47 +569,35 @@ dx   := default expression (optional condition).
 
 **example**
 ```
-make x := '0'
-read (x,"x:>")
+make x := '0';
+read (x,"x:>");
 
-make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown")
-print "x is ".kind ; --expect: "x is digit"
-over
+make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown");
+print ("x is " & kind); --expect: "x is digit"
+over.
 ```
 
+## Static rules
 
-## Basic rules
-
-An basic rule is a named block of code that can resolve one or multiple tasks. 
+An static rule is a named block of code that can resolve one specific task. 
 
 **pattern**
 ```
-rule name(param ∈ type,...)
+rule name(param ∈ type,...):
     -- executable statements
-   exit if (condition)
+   exit if (condition);
    ...
-return
-```
-
-**example**
-```
--- a rule with side-effects and no parameter
-rule foo()
-  print "hello, I am foo"
-return
-
--- using apply + rule name will execute the rule  
-apply foo
+return;
 ```
 
 **notes:**
-A basic rule block ...
+A static rule block ...
 * is finalized with: _return_ keyword;
 * can be executed using: _apply_ keyword;
 * can be terminated early using: _exit_ keyword;
-* can raise and error using: _fail_ keywrod;
+* can raise and error using: _fail_ keyword;
 
-## Parameters
+### Parameters
 
 Parameters are special variables defined in rule signature.
 
@@ -620,53 +610,72 @@ Parameters are special variables defined in rule signature.
 * Composite type parameters can be pass by reference or by value;
 * For input/output parameters we are using "@" instead of "∈";
 
-## Static rules
+Static rules can have side-effects:
 
-Static rules are named code blocks with results:
+**example**
+```
+-- a rule with side-effects and no parameter
+rule foo(name ∈ @String):
+  print "hello:" & name & ". I am Foo. Nice to meet you!";
+return;
+
+-- using apply + rule name will execute the rule  
+apply foo("Bee");
+
+over.
+```
+
+Expected output:
+
+```
+hello: Bee. I am Foo. Nice to meet you!
+```
+
+
+### Rule result
+
+A static rules can have one or multiple results:
 
 **pattern**
 ```
-rule name(param ∈ type,...) => (result ∈ type,...)
-   make local_variable
+rule name(param ∈ type,...) => (result ∈ type,...):
+   make local_variable;
    ...   
-   alter result := expression
+   alter result := expression;
    ...
-return
+return;
 ```
 
 **Example:** 
 
 ```
 -- rule with two results "s" and "d"
-rule com(x,y ∈ Z) => (s, d ∈ Z)
-  alter s := x + y 
-  alter d := y - x
-return
+rule com(x,y ∈ Z) => (s, d ∈ Z):
+  alter s := x + y; 
+  alter d := y - x;
+return;
 
 -- unpack result to "b","c" using "<+"  
-make b,c <+ com(2,1) 
+make b,c <+ com(2,1);
 print b ; --3 
 print c ; --1 
 
 -- alternative rule call:
-alter b,c <+ com(4,5) 
+alter b,c <+ com(4,5);
 print b ; --9 
 print c ; --1 
 
 -- alternative rule call:
-apply com(0,1) +> b,c;
+apply com(0,1) +> (b,c);
 print b ; --1 
 print c ; --1 
 
 ```
 
-**properties:** 
-
-Static rules ...
-* can have local states and local context;
-* can receive input/output parameters;
-* can be overvritten using different parameters;
-* can have results to be captured using +>;
+**static rules:**
+* have a local context where we define local variables;
+* can be overwritten using different parameters;
+* can have one or multiple results;
 
 ## Dynamic rules
 
@@ -676,21 +685,22 @@ A rule that can be changed during runtime is called _dynamic rule_.
 
 Attributes of a rule are state variables. That are variables starting with dot prefix.
 
+* Dynamic rules look exactly like static rules, except they have states;
 * Rule attributes are public and can be accessed using dot qualifier;
 * Rule attributes are static: initialized one single time;
 
 **pattern**
 ```
-rule name(param ∈ type,...)
+rule name(param ∈ type,...):
   -- define x,y,z states
-   make .x, .y, .z := 0 ∈ Z   
+   make .x, .y, .z := 0 ∈ Z;  
    ...
-return
+return;
 
 -- modify rule states
-alter rule.x = 1
-alter rule.y = 2
-alter rule.z = 3
+alter rule.x = 1;
+alter rule.y = 2;
+alter rule.z = 3;
 
 -- read rule states
 print rule.x, rule.y, rule.z ; --1 2 3
@@ -701,32 +711,34 @@ print rule.x, rule.y, rule.z ; --1 2 3
 
 ## Generic rules
 
-A generic rule is a rule template. Is a prototype that can be cloned.
+A generic rule is a rule prototype that can be cloned.
 
 **pattern**
 ```
--- define a rule prototype
-rule prototype_name{attributes}(parameters) => (result ∈ Type)
+-- define a rule prototype 
+rule prototype_name{attributes}(parameters) => (result ∈ Type):
   -- compute the result
-  alter result := expression(parameters)
-return
+  alter result := expression(parameters);
+return;
 
 -- making a rule clone from prototype
-clone new_name:= prototype_name{arguments}
+clone new_name:= prototype_name{arguments};
 ```
 
 **notes:**
 * A rule prototype can not be used until is cloned;
-* A rule object is binding external states into local context;
+* A rule prototype can be dynamic or static;
+* A rule clone is binding external states into local context;
+* A rule clone is sharing state attributes with the prototype;
 
 **example**
 ```
 -- this rule can create a rule object
-rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z)
-  make r := (s + i)
-return
+rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
+  make r := (s + i);
+return;
 
--- instantiate two rule objects:
+-- instantiate two rule clones:
 clone inc := shift{s: +1} ; --increment 
 clone dec := shift{s: -1} ; --decrement 
 
@@ -750,31 +762,36 @@ Expression rules are based on a single expression.
 
 **syntax**
 ```
-rule name(param ∈ Type,...) ∈ Type => (expression)
+rule name(param ∈ Type,...) ∈ Type => (expression);
 ```
 
 **Example:** 
 
 ```
 -- define "exp" a rule
-rule xp(x,y ∈ Z) ∈ Z => (x + y)
+rule xp(x,y ∈ Z) ∈ Z => (x + y);
 
 -- using the rule in other expressions
-make z := xp(1,1) + 1
+make z := xp(1,1) + 1;
 print  z ; --print 3
 ```
 
 **properties**
 
 Expression rules...
-* have a single result not a list;
-* do not have side-effects;
-* are always deterministic;
+* have a single result;
 * are binding external states;
-* are using referential transparency;
 * can be created at runtime;
 * can be overwritten or recreated;
 * can not be interrupted from execution;
+* can not have internal states;
+* do not have side-effects;
+* do not depend on external states;
+
+**notes:**
+
+* Expression rules are similar to mathematical functions;
+* Expression rules can be created by other rules;
 
 **See also:**
 * [pm.bee](../demo/pm.bee)  ; --expression rule

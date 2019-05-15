@@ -3,38 +3,38 @@
 +-------------------------------+
 #driver "cs"
 -- declare two natural numbers
-make a := 10, b := 5 ∈ N
+make a := 10, b := 5 ∈ N;
 -- simple decision 
-print ("a = b") if (a = b)
-print ("a < b") if (a < b)
-print ("a > b") if (a > b)
+print ("a = b") if (a = b);
+print ("a < b") if (a < b);
+print ("a > b") if (a > b);
 
 -- single branch decision
 when (a = b) do
-  print ("a = b")
-done
+  print ("a = b");
+done;
 
 -- decision with alternate branch
 when (a < 5) do
-  print "a < 5"
+  print "a < 5";
 else
-  print "no"
-done
+  print "no";
+done;
 
 -- mutual exclusive multi-path selector
 alter a := 2
 when (a @ [0..4]) do
   -- this is true since a = 2
-  print ('a is between 0 and 4')
+  print ('a is between 0 and 4');
 else if (a ∈ [2..5]) do
   -- this is also true since a = 2
-  print ('a is between 2 and 5')
+  print ('a is between 2 and 5');
 else if (a < 0) do
   -- this is not true since a > 0
-  print ('a ≤ 0')
+  print ('a ≤ 0');
 else
-  print ('a ≥ 5') ; no match
-done
+  print ('a ≥ 5'); -- no match
+done;
 
 +-------------------------------------------
   when is breaking at first match           
@@ -43,18 +43,17 @@ done
 -- 'a is between 0 and 4'
 
 -- nested statements are supported
-alter a := True, b := False
+alter a := True, b := False;
 when (a ∧ b) do
-  print ("a ≠ 0 and b ≠ 0")
+  print ("a ≠ 0 and b ≠ 0");
   when (a ≥ b) do
-    print ("a ≥ b")
-  done
+    print ("a ≥ b");
+  done;
   when (a > b) do
-     print ("a > b")
-  done
+     print ("a > b");
+  done;
 else
-  print ("a = 0 and b = 0")
-done
+  print ("a = 0 and b = 0");
+done;
 
-over
-.
+over.

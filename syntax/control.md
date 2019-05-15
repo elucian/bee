@@ -20,7 +20,7 @@ Define a qualifier suppression block:
 with qualifier do
   -- instead of qualifier.member()
   apply member()
-done
+done;
 ```
 
 Using alias for qualifier:
@@ -29,7 +29,7 @@ Using alias for qualifier:
 with (short: long.qualifier) do
   -- instead of long_qualifier.member()
   apply short.member() 
-done
+done;
 ```
 
 Using 2 qualifiers for mapping assignment:
@@ -38,7 +38,7 @@ Using 2 qualifiers for mapping assignment:
 with (target: target_qualifier, source: source_qualifier) do
   -- copy value from source to target
   alter target.member := source.member
-done
+done;
 ```
 
 
@@ -51,7 +51,7 @@ The _when_ keyword is a multi-conditional selector.
 when condition do
   -- statements
   ...
-done
+done;
 ```
 
 Dual selector based on single logical expression:
@@ -62,7 +62,7 @@ when condition do
   -- first pass-way
 else
   -- second pass-way
-done
+done;
 ```
 
 **nested**
@@ -71,33 +71,33 @@ done
 make a := 0
 -- first decision
 when a ≤ 0 do 
-  print 'a ≤ 0'
+  print 'a ≤ 0';
   -- second decision
   when a = 0 do 
-    print 'a = 0'
+    print 'a = 0';
   else
-    print "a < 0" 
-  done ;a ≤ 0
-done ;a = 0
+    print "a < 0"; 
+  done; -- a ≤ 0
+done; -- a = 0
 ```
 
-**note:** I have used comments ";" after "done"
+**note:** I have used comments ";" after "done;"
 
 **ladder**
 
 ```
 make a := 0
 when a < 0 do
-  print 'a < 0'
+  print 'a < 0';
 else if a > 10 do
-  print 'a > 100'
+  print 'a > 100';
 else if a > 10 do
-  print 'a > 2'
+  print 'a > 2';
 else if a > 1  do
-  print 'a > 1'
+  print 'a > 1';
 else
-  print "a ≥ 0"
-done 
+  print "a ≥ 0";
+done; 
 ```
 
 ## Quest
@@ -116,7 +116,7 @@ quest expression:
     ** third path
 none
   ** default path
-done
+done;
 ```
 
 **Notes:** 
@@ -152,15 +152,15 @@ repeat;
 In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
-make a := 10 ∈ Z ;global
+make a := 10 ∈ Z -- ;global
 cycle:
-  alter a -= 1
+  alter a -= 1;
   ** conditional repetition
-  skip if (a % 2 = 0)
-  write a  
+  skip if (a % 2 = 0);
+  write a;  
   ** conditional termination
-  write ','
-  stop if (a < 0)
+  write ',';
+  stop if (a < 0);
 repeat;
 ```
 
@@ -178,14 +178,14 @@ Nested cycles can be labeled and can be used for interruption.
 
 ```
 ** label 2 nested cycles 
-cycle outer
+cycle outer:
   ** outer cycle
-  cycle inner
+  cycle inner:
     ** skip both cycles
-    skip outer if (condition)
+    skip outer if (condition);
     ...    
     ** stop both cycles
-    stop outer if (condition)
+    stop outer if (condition);
   repeat; --inner
 repeat; --outer
 ```
@@ -195,15 +195,15 @@ repeat; --outer
 ```
 make x   := 9; local 
 make a,r := 0; locals
-cycle
+cycle:
   alter r := x % 2;
-  alter a := (0: r = 0, 1)
-  write "{1}:{2}" <+ (x,a)
-  alter x -= 1
-  write ','
-  stop if (x < 5)
-repeat
-print ; expect 9:1, 8:0, 7:1, 6:0, 5:1,
+  alter a := (0: r = 0, 1);
+  write "{1}:{2}" <+ (x,a);
+  alter x -= 1;
+  write ',';
+  stop if (x < 5);
+repeat;
+print ; -- expect 9:1, 8:0, 7:1, 6:0, 5:1,
 ```
 
 ## While
@@ -214,13 +214,13 @@ Conditional repetitive block:
 while condition do
   -- repetitive block
   ...
-  skip if (condition)  ; continue
+  skip if (condition); -- continue
   ...
-  stop if (condition)  ; break
+  stop if (condition); -- break
   ...
 else
   -- alternate path
-repeat
+repeat;
 ```
 
 **Notes:** 
@@ -231,16 +231,16 @@ repeat
 **example**
 
 ```
-make a := 10 ; global
+make a := 10; --global
 while a > 0 do
-  alter a -= 1
+  alter a -= 1;
   -- conditional repetition
   when a % 2 ≠ 0 do
-    write a  
-    write ',' 
-  done
-repeat
-print
+    write a;  
+    write ',';
+  done;
+repeat;
+print;
 ```
 
 **Nested loop**
@@ -256,9 +256,9 @@ while condition do
   while condition do
      -- statements
      ...
-  repeat  
+  repeat;  
   ...  
-repeat
+repeat;
 ```
 
 **example**
@@ -267,13 +267,13 @@ repeat
 make x   := 9 ;local
 make a,r := 0 ;locals
 while x < 5 do
-  alter r := x % 2
-  alter a := 0 if r = 0, 1 if r = 0, 2
-  write "{1}:{2}" <+ (x,a)
-  write ',' if (x < 5)
-  alter x -= 1
-repeat
-print ; --9:1, 8:0, 7:1, 6:0, 5:1
+  alter r := x % 2;
+  alter a := 0 if r = 0, 1 if r = 0, 2;
+  write "{1}:{2}" <+ (x,a);
+  write ',' if (x < 5);
+  alter x -= 1;
+repeat;
+print; --9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
 ## Scan 
@@ -285,30 +285,30 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 make var ∈ N ; --local
 scan [min..max] +> var do
   ** block statements
-  skip if (condition)
+  skip if (condition);
   ...
-  stop if (condition)
+  stop if (condition);
   ...
-next
+next;
 ```
 
 **Notes:**    
 * Control variable must be declared in local scope;
-* Control variable is incremented using next
+* Control variable is incremented using next;
 
 Example of forward skip in counting iteration:
 ```
 make i ∈ Z ; global
 scan [0..10] +> i do
-  ** force next iteration
+  -- force next iteration
   when i % 2 = 0 do
-    skip
+    skip;
   else
-    ** write only odd numbers
-    write i
-    write ',' if (i < 10)
-  done
-next
+    -- write only odd numbers
+    write i;
+    write ',' if (i < 10);
+  done;
+next;
 print i; still available
 ```
 > 1,3,5,7,9
@@ -332,30 +332,30 @@ The "trial" statement execute a sequential process that can fail for some reason
 
 **pattern**
 ```
-trial
+trial:
   -- private context
   ...  
   -- multiple use cases
   case name_0 do
-    fail code if (condition)
+    fail code if (condition);
     ...    
   case name_1 do
-    fail {code,"message"} if (condition)  
+    fail {code,"message"} if (condition);
     ...
   case name_2 do
-    abort if (condition)
+    abort if (condition);
     ...
   case name_3 do
-    retry name_1 if (condition)
+    retry name_1 if (condition);
     ...
   case name_4 do
-    solve name_5 if (condition)
+    solve name_5 if (condition);
     ...       
   case name_5 do
     ...
-error code do
+error code:
    -- patch statement
-error code do
+error code:
    -- patch statement  
 ...  
 other
@@ -367,7 +367,7 @@ done;
 
 **note:**
 * Trial block has an optional local scope
-* Local variables will disappear after done
+* Local variables will disappear after done;
 
 **Interruptions**
 
@@ -377,7 +377,7 @@ done;
 | solve | solve one forward case in same trial and skip some
 | abort | silent early trial termination
 | pass  | scrub $error record and end trial block
-| resume| continue next case after one case fail
+| resume| continue next; case after one case fail
 
 **error**
 

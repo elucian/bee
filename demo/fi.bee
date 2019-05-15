@@ -3,16 +3,16 @@
 ---------------------------+
 #driver "fi"
 -- declare Fibonacci rule
-rule fib(n ∈ N) => (y ∈ N) 
-  when (n = 1 ∨ n = 0)
-    alter y := 1
+rule fib(n ∈ N) => (y ∈ N):
+  when (n = 1 ∨ n = 0) do
+    alter y := 1;
   else
-    alter y := fib(n - 1) + fib(n - 2)
-  done
-return
+    alter y := fib(n - 1) + fib(n - 2);
+  done;
+return;
 -- call define fib 
-make r := fib(5)
+make r := fib(5);
 -- print the result
-print r
+print r;
 
-over
+over.

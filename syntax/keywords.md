@@ -5,7 +5,7 @@ Bee uses 58 reserved keywords so far:
 ```
 04: if, is, to, in
 05: #driver, #library, #aspect, #timer, #precision
-09: define, make, rule, clone, input, output, load, alias, type, return
+09: define, make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, quest, cycle, while, scan, trial
 11: else, case, error, other, final, match, none, repeat, next, do, done
@@ -54,7 +54,7 @@ Next statements are used to declare or create a module member.
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or rule prototype 
 | clone    | Create a new rule from an rule prototype
-| return   | End rule declaration and return control to caller
+| return   | End rule declaration and return; control to caller
 
 ### Execution statements
 
@@ -101,7 +101,7 @@ These keywords are jumps or termination statements.
 
 | Keyword  | Purpose
 |----------|----------------------------------------------------------------
-| stop     | Interrupt a while loop and continue past repeat keyword
+| stop     | Interrupt a while loop and continue past repeat; keyword
 | skip     | Skip the rest of while block and continue from the beginning
 | exit     | Force silent termination of a rule, aspect, program or driver
 | fail     | Interrupt a rule or block with recoverable error

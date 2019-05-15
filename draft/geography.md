@@ -17,9 +17,9 @@ Geography data types are starting with G prefix and one ptjer uppercase letter.
 * Φ = Latitude
 
 ```
-type Δ <: R[0..+]       
-type Λ <: R[-180..+180] 
-type Φ <: R[-90..+90]   
+type Δ <: R[0..+];       
+type Λ <: R[-180..+180];
+type Φ <: R[-90..+90];
 ```
 
 * GL = Geographic Link
@@ -28,15 +28,15 @@ type Φ <: R[-90..+90]
 
 ```
   -- geographic node
-  type GN <: {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ}             
+  type GN <: {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ};             
  
   -- geographic link
-  type GL <: {snode, enode @ GN, shape @ [GN]} 
+  type GL <: {snode, enode @ GN, shape @ [GN]};
   -- point of interest
-  type PI <: {(id ∈ N: label @ String, lnode @ GN)} 
+  type PI <: {(id ∈ N: label @ String, lnode @ GN)};
  
   -- geographic map
-  type GM <: {origin @ GN, rotation ∈ ∠, scale ∈ Δ, pint @ [GN], links @ [GL]}
+  type GM <: {origin @ GN, rotation ∈ ∠, scale ∈ Δ, pint @ [GN], links @ [GL]};
 ```
 
 **legend**

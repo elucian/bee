@@ -2,18 +2,18 @@
    console input demo
 --------------------------+
 #driver "hi"
-print "Hello. I'm Bee!"
+print "Hello. I'm Bee!";
  
-make your_name @ S
-make your_age  ∈ N
-read(your_name , "Your name?:")
-read(your_age  , "Your age:")
-print "hello:" & your_name
+make your_name @ String;
+make your_age  ∈ N;
+read (your_name , "Your name?:");
+read (your_age  , "Your age:");
+print("hello:" & your_name);
 
-when (age < 21)
-  print "have a candy!"
+when (age < 21) do
+  print "have a candy!";
 else
-  print "have a beer!"
-done
+  print "have a beer!";
+done;
 
-over
+over.

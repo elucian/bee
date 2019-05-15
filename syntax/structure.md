@@ -156,23 +156,24 @@ Rogue statements are executed top down until to last over keyword.
 #driver "main"
 
 -- declare input parameters
-input *params ∈ [String] 
+input *params ∈ [String];
 
 -- check existence of parameters
-make c := params.count
-halt -1 if (c = 0)
+make c := params.count;
+halt -1 if (c = 0);
 
 -- print comma separated parameters
-make i:= 0 ∈ Z
-while (i < c)
-  write params[i]
-  alter i += 1
-  write "," if (i < c)
-repeat
+make i:= 0 ∈ Z;
+while (i < c) do
+  write params[i];
+  alter i += 1;
+  write "," if (i < c);
+repeat;
+
 -- print the buffer to console
-print
+print;
   
-over ; --end of driver
+over; --end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -190,8 +191,8 @@ Libraries and modules can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib/folder_name/*.bee
-load $bee_lib/folder_name/(x,y,z)
+load $bee_lib/folder_name/*.bee;
+load $bee_lib/folder_name/(x,y,z);
 ```
 
 * using: /*.bee  all files with extension _bee_ are found on disk and parsed;
@@ -247,10 +248,10 @@ $local        -- local context: universal qualifier
 **importing**
 
 ```
-load $runtime.cpp_lib:(*)  ; --load cpp library
-load $runtime.asm_lib:(*)  ; --load asm library
-load $runtime.bee_lib:(*)  ; --load core library
-load $program.pro_lib:(*)  ; --load project library
+load $runtime.cpp_lib:(*); --load cpp library
+load $runtime.asm_lib:(*); --load asm library
+load $runtime.bee_lib:(*); --load core library
+load $program.pro_lib:(*); --load project library
 ```
 
 **See example:** [gv.bee](../demo/gv.bee)
@@ -263,15 +264,15 @@ Local context is a private memory space available in a _rule_ or _trial_ block.
 ```
 #driver "test"
 ** global context
-make i := 1 ∈ Z  
+make i := 1 ∈ Z; 
 trial
   ** local context
-  make i := 2 ∈ Z
-  print i ;expected: 2
-done
-print i ;expected: 1  
+  make i := 2 ∈ Z;
+  print i ; -- expected: 2
+done;
+print i ; -- expected: 1  
 
-over
+over.
 ```
 **See example:** [lv.bee](../demo/lv.bee)
 
@@ -285,18 +286,18 @@ In Bee all members that begin with dot "." are public members.
 
 ```
 --public constant
-define .pi := 3.14
+define .pi := 3.14;
 
 --public variable
-make .v ∈ N
+make .v ∈ N;
 
 --public rule
-rule .f(x ∈ N) => (x + 1) ∈ N
+rule .f(x ∈ N) => (x + 1) ∈ N;
 
 --public rule
-rule .m(x, y ∈ N, r @ N)
-  alter r := x + y
-return
+rule .m(x, y ∈ N, r @ N);
+  alter r := x + y;
+return;
 ```
 ## Rule ABI mapping
 In Bee one can use external rules written in Assembly, Ada, C or CPP.
@@ -310,20 +311,20 @@ This is myLib.bee file:
 load $runtime.cpp.myLib.(*) ; --load cpp library
 
 -- define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x ∈ Z)
-  alter x := myLib.fib(n -> Z)
-return
+rule fib(n ∈ Z) => (x ∈ Z);
+  alter x := myLib.fib(n -> Z);
+return;
 
 ```
 
 This is the driver file.
 ```
-#driver "main"
+#driver "main";
 -- load library
-load $bee.lib.myLib.(*)
+load $bee.lib.myLib.(*);
 
 --use external rule
-print myLib.fib(5)
+print myLib.fib(5);
 ```
 
 To understand more about interacting with other languages check this article about ABI:
@@ -332,15 +333,14 @@ To understand more about interacting with other languages check this article abo
 
 ## Comments
 
-Bee enable several notations for comments:
+Bee enable redundant notations for comments:
 
 **End of line**
 
-For each line of code you can use optional ";" follow by a short comment.
+For each line of code you can use optional "--" follow by a short comment before end of line.
  
-* ";" is necessary only when you add a comment;
-* you can use ";" in the middle of expression and continue on next line;
-* you can not create multiple statement in one single line;
+* you can use "--" in the middle of an expression before end of statement ";" symbol;
+* you can have multiple statements separated by ";" in a single line but only one comment;
 
 **Single line**
 
@@ -348,9 +348,9 @@ For single line comments we use a pair of two symbols:
 
 { "--", "**", "##" } 
 
-* You can use `##` in your program as title comments starting at beginning of a line;
-* You can use `**` in your program as sub-title comments or long line separator;
-* You can use `--` as end of line comment or single line comment.
+* You can use \#\# in your program as title comments starting at beginning of a line;
+* You can use \*\* in your program as sub-title comments or line separator;
+* You can use \-\- as end of line comment or indented single line comment.
 
 **Notes:** These are chosen for following reasons:
 
@@ -404,14 +404,14 @@ In next example we are using various comments into a demo program.
 #driver "demo"
 ## This is a title in program
    ** This is a sub-title in program
-over;end of program
+over; -- end of program
 ****************************************************************
 ** Alternative boxed comment for ancient matrix printers      **
 ****************************************************************
 ```
 
 **note:** 
-Any test after the end of programm is considered a comment and
+Any test after the end of program is considered a comment and
 is ignored by the compiler. After last "." nothing else is parsed.
 
 ## Execution
@@ -442,10 +442,10 @@ A large program can have multiple _aspects_. The driver control the execution of
 
 ```
 -- declare an alias for an aspect file
-load $pro.src.file_name.bee
+load $pro.src.file_name.bee;
 
 -- play when aspect do not have any result:
-play aspect_name(parameter_list)
+play aspect_name(parameter_list);
 
 -- result can be captured using ":=" or any other modifier:
 play aspect_name(parameter_list) +> result
@@ -460,34 +460,34 @@ input  i ∈ Z ; --define parameter "i"
 output v ∈ N ; --define result "v"
 
 when (i < 0) do
-  alter v := -i
+  alter v := -i;
 else
-  alter v := i
-done  
+  alter v := i;
+done;  
 
-over
+over.
 ```
 
 ```
 #driver "main"
 
 -- define variable result
-make result ∈ N
+make result ∈ N;
 
 -- define aspect "mod"
-load $pro/mod.bee
+load $pro/mod.bee;
 
 -- execute aspect "mod"
-play  mod(-3) +> result
+play  mod(-3) +> result;
 print result ; --expect: 3
 
-over
+over.
 ```
 
 One aspect can have multiple parameters and multiple results:
 ```
-input a,b ∈ Z, c ∈ R ; --define parameters "a,b,c"
-output v,z ∈ N ; --define two results "v" and "z"
+input a,b ∈ Z, c ∈ R; --define parameters "a,b,c"
+output v,z ∈ N; --define two results "v" and "z"
 ```
 
 **note:** 

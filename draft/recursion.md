@@ -10,40 +10,40 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 **Example1** 
 ```
 -- this rule is not optimized:
-rule fact(n ∈ N) => (r ∈ N)
+rule fact(n ∈ N) => (r ∈ N):
   when (n = 0) do
-    alter r := 1
+    alter r := 1;
   else  
-    alter r := n · fact(n-1)
-  done  
-return
+    alter r := n · fact(n-1);
+  done;  
+return;
 ``` 
 
 **Example2**
 ```
 --this rule can be optimized:
-rule tail(n ∈ N, acc ∈ N) => (r ∈ N)
+rule tail(n ∈ N, acc ∈ N) => (r ∈ N):
   when (n = 0) do
-    alter r:= acc
+    alter r:= acc;
   else
-    alter r:= tail(n-1, acc · n)
-  done 
-return
+    alter r:= tail(n-1, acc · n);
+  done; 
+return;
 
-rule fact(n ∈ N) => (r ∈ N)
-  alter r := tail(n , 1)
-return  
+rule fact(n ∈ N) => (r ∈ N):
+  alter r := tail(n , 1);
+return;  
 ```  
 
 **Example3**
 ```
 --this rule is manually optimized:
-rule fact(a ∈ N, b ∈ N) => (r ∈ N)
+rule fact(a ∈ N, b ∈ N) => (r ∈ N):
   while (b > 1) do
-    alter a := a · a + a
-    alter b := b - 1  
+    alter a := a · a + a;
+    alter b := b - 1;
   else
-    alter r := a 
-  repeat
-return
-```  
+    alter r := a;
+  repeat;
+return;
+```
