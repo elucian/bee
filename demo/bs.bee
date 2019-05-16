@@ -1,7 +1,8 @@
 +----------------------
    Bubble Sort Demo
 -----------------------+
-#driver "bs"
+#module.name :=  "bs";
+
 -- bubble sort
 rule sort(this @ [Z]):
   make n := length(this)-1;

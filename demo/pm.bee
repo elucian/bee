@@ -1,7 +1,8 @@
 +-------------------------------
   pattern matching rule
 ------------------------------+
-#driver "pm"
+#module.name :=  "pm";
+
 -- pattern matching expression
 rule pm(p1,p2 ∈ N) ∈ N =>
   (0 if (p1 = 0 )

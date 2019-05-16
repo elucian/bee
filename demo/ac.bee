@@ -1,7 +1,7 @@
 +------------------------------------ 
 |  asynchronous call using "start"  |
 +-----------------------------------+
-#driver "ac"
+#module.name :=  "ac";
 
 -- suspend for 2.5 sec
 rule test():

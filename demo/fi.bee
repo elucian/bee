@@ -1,7 +1,8 @@
 +---------------------------
   Demo Fibonacci rule
 ---------------------------+
-#driver "fi"
+#module.name :=  "fi";
+
 -- declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):
   when (n = 1 ∨ n = 0) do

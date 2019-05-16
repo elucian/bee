@@ -1,7 +1,7 @@
 +---------------------------------
   High order rules & rule objects
 ----------------------------------+
-#driver "ho" 
+#module.name :=  "ho" ;
 
 ** create a rule prototype
  

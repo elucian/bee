@@ -1,8 +1,9 @@
 +----------------------------------------------------
 |              defined data types                   |
 ----------------------------------------------------+
--- define: structured data
-#driver "dt"
+#module.name :=  "dt";
+#module.description := "demo data types"
+
 -- this type is public (uses dot prefix)
 type .Data <: {key:U, value:N};
 -- make variable using defubed alias

@@ -1,7 +1,8 @@
 +-------------------------------
    "if" and "else" decisions
 -------------------------------+
-#driver "if"
+#module.name :=  "if";
+
 make x ∈ N;
 read (x ,"define a number:");
 -- only if conditional

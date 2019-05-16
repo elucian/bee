@@ -1,7 +1,7 @@
 +-----------------------------------
   Producer-consumer design pattern 
 -----------------------------------+
-#driver "pc"
+#module.name :=  "pc";
 
 make  c  := 100 ∈ N   ; -- channel capacity
 make  ch := () @ (@N) ; -- define empty channel

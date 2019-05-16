@@ -1,7 +1,8 @@
 +-----------------------------------
       type inference demo
 -----------------------------------+
-#driver "ti"
+#module.name :=  "ti";
+
 -- constant type inference
 define a := 10;     -- Z (integer on 64bit)
 define x := 0.5;    -- R (double precision)

@@ -1,7 +1,8 @@
 +--------------------------
    Bee input value demo
 --------------------------+
-#driver "in"
+#module.name :=  "in";
+
 make a ∈ N;
 print "to stop enter 0";
 while (a ≠ 0) do

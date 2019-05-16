@@ -1,7 +1,8 @@
 ***********************************
 **   Recursive object demo       **
 ***********************************
-#driver "ro"
+#module.name :=  "ro";
+
 -- define recursive type Person
 type Person <: {
       name @ String, 

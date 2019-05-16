@@ -1,7 +1,8 @@
 +--------------------------
    console input demo
 --------------------------+
-#driver "hi"
+#module.name :=  "hi";
+
 print "Hello. I'm Bee!";
  
 make your_name @ String;

@@ -1,7 +1,7 @@
 +------------------------
   Rule as parameter
 ------------------------+
-#driver "rp"
+#module.name :=  "rp";
 
 -- declare rule with rule "cmp" as parameter
 rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):

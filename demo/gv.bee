@@ -2,7 +2,8 @@
    global variables are public
    use prefix $ and lowercase
 ------------------------------+
-#driver "gv"
+#module.name :=  "gv";
+
 -- declare a global variable $xS
 make x := 1;
 -- use global variable x in rule "add"

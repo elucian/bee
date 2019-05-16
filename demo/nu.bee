@@ -1,8 +1,9 @@
 +----------------------------------------------
           Working with references              
 ----------------------------------------------+
-#driver "nu"
-make d, e @ Z;    --reference to natural number
+#module.name :=  "nu";
+
+make d, e @ Z;    -- reference to natural number
 make s := 10 ∈ Z; -- define integer
 -- assign "by reference" 
 alter d :: s ; -- explicit boxing address for "s"

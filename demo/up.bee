@@ -1,7 +1,8 @@
 +-------------------------------------
    rule unpacking demonstration 
 -------------------------------------+
-#driver "up"
+#module.name :=  "up";
+
 ** rule with two results
 rule test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x + 1;

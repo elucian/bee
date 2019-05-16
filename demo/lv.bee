@@ -1,7 +1,7 @@
 +-------------------------------------------
    demo for local variable site-effect
 -------------------------------------------+
-#driver "lv"
+#module.name :=  "lv";
 
 -- global variable
 make x := 1;

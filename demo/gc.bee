@@ -1,7 +1,8 @@
 +----------------------------------
   Generator Class demo 
 ----------------------------------+
-#driver "gc"
+#module.name :=  "gc";
+
 -- first make a class
 type GenI <: {min ,max ,ci:min ∈ Z};
 -- reset object

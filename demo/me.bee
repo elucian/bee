@@ -1,7 +1,8 @@
 +----------------------------------------
  demonstrate rule associated to a type
 ----------------------------------------+
-#driver "me"
+#module.name :=  "me";
+
 -- enumeration with public members
 type Number <: {.zero, .one, .two};
 make test ∈ Number;

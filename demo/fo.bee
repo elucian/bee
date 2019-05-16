@@ -1,7 +1,8 @@
 +--------------------------------
  open a file and write into it. 
 --------------------------------+
-#driver "fo"
+#module.name :=  "fo";
+
 -- initialize the system library 
 load io   := $bee.system.io.(*);
 load con  := $bee.system.console.(*);

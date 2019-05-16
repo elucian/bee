@@ -1,7 +1,8 @@
 +----------------------------------
         composite types
 ----------------------------------+
-#driver "ct"
+#module.name :=  "ct";
+
 -- enumeration is a type 
 type Enum := {fst:1, snd, trd};
 -- print enumeration members

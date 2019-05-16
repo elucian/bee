@@ -1,7 +1,8 @@
 +----------------------------------
     Demonstrate while statement
 -----------------------------------+
-#driver "cy"
+#module.name :=  "cy";
+
 -- declare array of 10 Words
 make a @ [Z](10);
 -- use while 
