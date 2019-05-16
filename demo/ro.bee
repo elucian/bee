@@ -5,9 +5,9 @@
 
 -- define recursive type Person
 type Person <: {
-      name @ String, 
+      name @ S, 
       age  ∈ N,  
-      children @ (@Person)
+      children @ (@Person) -- list of persons
      };
 
 -- create two objects of type Person
@@ -18,11 +18,11 @@ alter r1 := {name:'Mica', age:21};
 
 -- person with two children
 alter r2 := {name:'Barbu', age:25, 
-             children : (
-               {name:'Telu', age:4},
-               {name:'Radu', age:1} 
-             )
-          };
+              children: (
+                {name:'Telu', age:4},
+                {name:'Radu', age:1} 
+              )
+            };
 
 -- object unpacking into new variables
 make r_name, r_age, r_children <+ r2;

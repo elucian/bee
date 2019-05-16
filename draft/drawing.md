@@ -1,25 +1,25 @@
 ## Bee Graphic
 
-To be useful we have to extend Bee language with graphics.
-
+We define new data types and keywords to make dynamic 2D technical drawings:
 
 ## Constants
 
  symbol | value
---------|-------
+--------|-------------------------------------------
  π      | 3.14
  ⊥      | π/2
-
+ 
 ## Data types
 
 Each graphic element is a composite data type.
 
  Type  | Name     | Description
 -------|----------|---------------------------------
+  ∠    | Angle    | [0..2·π] 
   ⊡    | Cartesian| {x, y ∈ R}
-  ⊙    | Polar    | {o ∈ ⊡, r ∈ P, α ∈ ∠ }  
+  ⊙    | Polar    | {r ∈ P, α ∈ ∠ }  
   ↗    | Vector   | {o, p ∈ ⊡}  
-  ∠    | Angle    | <: N[0..2 · π] 
+  ↺    | Relative | {o ∈ ⊡, r ∈ P, α ∈ ∠ }    
   ○    | Circle   | {o ∈ ⊡, r ∈ P}  
   ◷    | Arc      | {o ∈ ⊡, r ∈ P, α,β ∈ ∠ }
   □    | Square   | {o ∈ ⊡, b ∈ P}
@@ -28,7 +28,6 @@ Each graphic element is a composite data type.
   ⎊    | Regular  | {o ∈ ⊡, r, n ∈ P}
   ⌂    | Shape    | {o ∈ ⊡, s @ [⊡]}
   ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
-
 
 Type   | Signature                 | Description
 -------|---------------------------|-------------------------------------------------
@@ -47,18 +46,6 @@ m = members
 d = distance
 v = visible 
 ```
-
-## Space objects
-
-Type     | Description
----------|-------------------------------------------------------------------------
-Galactic | Galactic space
-Solar    | Solar space
-Star     | A celestial body similar to the Sun with position relative to our Sun
-Planet   | Planed similar to Earth with: mass, radius, year duration, day duration
-Moon     | Natural celestial body bound to a planet by gravity
-Satellite| Artificial celestial body bound to a planet or moon by gravity
-Craft    | Space-craft capable to travel in space, not bounded to a planet
 
 ## Drawing keywords
 

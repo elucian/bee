@@ -113,7 +113,7 @@ Multiply operator: "*" will create a string string:
 make s := ' ' * 10;
 
 -- equivalent of previous declaration
-make s := ' ' @ String(10);
+make s := ' ' @ S(10);
 ```
 
 

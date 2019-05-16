@@ -74,7 +74,7 @@ return;
 **sort usage**
 
 ```
-type Person  <: { name @ String, age ∈ N };
+type Person  <: { name @ S, age ∈ N };
 
 -- define sort rule for Person, as a clone of bubble
 clone sort := bubble{XT:Person};

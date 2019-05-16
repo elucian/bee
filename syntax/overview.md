@@ -92,7 +92,7 @@ Basic types are represented with one single upper-case character.
 
 | Name        |Bee|Bytes|Description
 |-------------|---|-----|------------------------------------------------------------
-| Logical     | L | 2   |Logical number {0,1} (aligned to 2 bit)
+| Alpha       | A | 1   |American ASCII symbol (8 bit)
 | Unicode     | U | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
 | Binary      | B | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
 | Rational    | Q | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
@@ -147,13 +147,14 @@ make n := U+2200 ∈ U ; --∀
 
 Composite types are using English full name and start with uppercase.
 
-| Name     | Description
-|----------|----------------------------------------------------------------
-| String   | Short string encoded as UTF8 (Array)
-| Text     | Large blob text encoded as UTF8 (Rope or Radix Tree) 
-| Date     | DD/MM/YYYY 
-| Time     | hh:mm,ms
-| Error    | Exception object: {code, message, line}
+| Name    | Bee | Description
+|---------|-----|----------------------------------------------------------------
+| Logical | L   | Enumeration: {False,True} 
+| String  | S   | Short string encoded as UTF8 (Array)
+| Text    | X   | Large blob text encoded as UTF8 (Rope or Radix Tree) 
+| Date    | D   | DD/MM/YYYY 
+| Time    | T   | hh:mm,ms
+| Error   | E   | Exception object: {code, message, line}
 
 **Notes:**
 * Composite types are references to memory location;
@@ -168,7 +169,7 @@ make name := constant @ Type
 
 **example**
 ```
-make str := 'test' @ String
+make str := 'test' @ S
 ```
 
 ## Collection types
@@ -179,7 +180,7 @@ Bee define a collection using a special notation based on brackets.
 |----|------------------------------------------------------------------
 | () | Tuple / List  / Expression
 | [] | Array/ Matrix/ Dynamic Array
-| {} | Set / Hash  / Object
+| {} | Ordinal / Set / Hash  / Object
 
 ## Type declaration
 
@@ -321,18 +322,18 @@ print b          ; --expected 11
 define pi := 3.14 ∈ R;
 
 -- declare multiple variables using modify
-make a   ∈ Z ; --Integer 
-make x,y ∈ R ; --Double
-make q,p ∈ L ; --Logic
+make a   ∈ Z ; -- Integer 
+make x,y ∈ R ; -- Double
+make q,p ∈ L ; -- Logic
 
 --using modifier expressions
-alter a := 10 ; --modify value of a := 10
-alter a += 1  ; --increment value of a := 11
-alter a -= 1  ; --decrement value of a := 10
+alter a := 10 ; -- modify value of a := 10
+alter a += 1  ; -- increment value of a := 11
+alter a -= 1  ; -- decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p := True ; --modify value of q and p
-alter x, y := 10.5 ; --modify value of x and y
+alter q, p := True ; -- modify value of q and p
+alter x, y := 10.5 ; -- modify value of x and y
 ```
 
 ## Type conversion
@@ -367,9 +368,9 @@ Bee define U as single UTF32 code point with representation: U+HHHH or U+HHHHHH
 make a, b ∈ U ; --Unicode 
 make x, y ∈ B ; --Binary
 
-alter a := '0' ; --representation of 0
+alter a := '0'    ; --representation of 0
 alter x := a -> B ; --convert to 30
-alter y := 30 ; --UTF code for '0'
+alter y := 30     ; --UTF code for '0'
 alter b := y -> A ; --convert to '0'
 ```
 
@@ -418,7 +419,7 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 
 **example**
 ```
-make x ∈ Z
+make x ∈ Z;
 when (x = 4 ↔ x - 4 = 0) do
   print "True";
 else
@@ -443,8 +444,8 @@ Logic operators have greater precedence than comparison.
 Logical expression have value { False, True }
 
 ```
-make x := False ; --Type = L
-make y := True  ; --Type = L
+make x := False; --Type = L
+make y := True ; --Type = L
 
 --simple expressions
 print   x; --0
@@ -616,7 +617,7 @@ Static rules can have side-effects:
 **example**
 ```
 -- a rule with side-effects and no parameter
-rule foo(name ∈ @String):
+rule foo(name ∈ S):
   print "hello:" & name & ". I am Foo. Nice to meet you!";
 return;
 
@@ -668,8 +669,8 @@ print c ; --1
 
 -- alternative rule call:
 apply com(0,1) +> (b,c);
-print b ; --1 
-print c ; --1 
+print b; --1 
+print c; --1 
 
 ```
 
@@ -802,7 +803,8 @@ Usually these rules are implemented in a library component.
 **Example:**
 This is myLib.bee file: 
 ```
-#library "mLib"
+#module.role := "component";
+#module.name := "myLib";
 
 load $bee/lib/cpp/myLib.bee; --load cpp library
 

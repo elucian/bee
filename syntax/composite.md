@@ -632,7 +632,7 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str @ String(25) ; --string with capacity   25x8 = 200 bit
+make str @ S(25) ; --string with capacity   25x8 = 200 bit
 make a   @ [U](25) ; --array of 25 characters 25x8 = 200 bit
 
 alter str := 'Short string'; 
@@ -715,7 +715,7 @@ symbol| description
 
 **examples**
 ```
-make u, c, s @ String ; --default length is 128 octets = 1024 bit
+make u, c, s @ S ; --default length is 128 octets = 1024 bit
 
 -- string concatenation
 alter u := 'This is'  & ' a short string.';
@@ -782,7 +782,7 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-make str := constant * n @ String(n);
+make str := constant * n @ S(n);
 ```
 
 **Example:**
@@ -843,7 +843,7 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name @ String, age ∈ N};
+type  Person <: {name @ S, age ∈ N};
 
 -- array of 10 persons
 make catalog @ [Person](10);
@@ -932,7 +932,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type Error <: {code ∈ Z, message @ String, line ∈ Z};
+type Error <: {code ∈ Z, message @ S, line ∈ Z};
 
 -- global system error
 make $error ∈ Error;

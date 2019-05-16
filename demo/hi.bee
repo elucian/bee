@@ -5,7 +5,7 @@
 
 print "Hello. I'm Bee!";
  
-make your_name @ String;
+make your_name @ S;
 make your_age  ∈ N;
 read (your_name , "Your name?:");
 read (your_age  , "Your age:");
