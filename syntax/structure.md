@@ -59,17 +59,19 @@ At the beginning of each component we can define system variables using prefix "
 
 The #module is an system object that have pre-defined properties.
 
-* role: can have 3 exclusive values:_driver_, _aspect_, _component_
-* name: the driver name it is usually the same as the file name
-* description: a short description of the module
+* role: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
+* name: the driver name it is usually the same as the file name;
+* description: a short description of the module;
+* default role for a module with no role is _driver_;
 
 **Notes**
 * A program can have one single _driver_;
+* If a driver load a file its role becomes _component_; 
 * A driver can load one or more _components_;
 * A driver can execute one or multiple _aspects_;
 
 ### System Constants
-There are several predefined constants available in Bee. System constants are using "$" prefix. These constants can be used to locate project files. You can define new system constants at the beginning of your _driver_.
+There are several predefined constants available in Bee. System constants are using "$" prefix. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_.
 
 | Constant | Environment| Description                |
 |----------|------------|----------------------------|
@@ -80,6 +82,7 @@ There are several predefined constants available in Bee. System constants are us
 |$pro_lib  | N/A        | Program library home       |
 |$pro_mod  | N/A        | Program modules home       |
 |$pro_log  | N/A        | Reporting folder           |
+
 
 ### Configuration
 One application can load system constants from a configuration file. These are stored as "name:value" pairs of strings. Some system constants can be derived from environment variables. These are defined implicit in Bee runtime environment. 
