@@ -1,8 +1,11 @@
 # Program structure
 
-Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file can have extension *.bee and it represents a module. Next we describe better the structure of Bee modules.
+Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension *.bee or *.cfg and it represents a module or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
 
 **bookmarks**
+
+Next we describe better Bee structure:
+
 * [Project](#project)
 * [Declaration](#declaration)
 * [Statement](#statement)
@@ -13,9 +16,12 @@ Bee language enable developers to create small programs using a single file, or 
 
 ## Project
 
-Bee project is a folder with a specific structure. A project contains one or more programs that can run independent of each other on same computer or a group of computers. Programs can be designed to collaborate with each other into n-tire application architecture.
+Bee project is a folder with a specific structure. A project contains one or more applications that can run independent of each other on same computer or a group of computers. Applications can be designed to collaborate with each other into n-tire architecture.
 
 **project tree**
+
+Next project tree contains two applications: client/server
+
 ```
 $pro_home
   |-- bin
@@ -35,28 +41,35 @@ $pro_home
   |
   |-- client.bee
   |-- server.bee
+  |-- client.cfg
+  |-- server.cfg
 
 ``` 
 
-## Directive
-At the beginning of each Bee module there is one or more compiler directives. Symbol "#" is used to create a _directive_. Bee has 3 kind of modules, each with different role: 
+### System Variables
+At the beginning of each component we can define system variables using prefix "#".
 
 ```
-#driver  -- declare main program
-#aspect  -- declare one aspect of a problem
-#library -- declare a reusable library
+#module.role := "driver" | "aspect" | "component"
+#module.name := "name"
+#module.description := "description"
 ```
+
+**module**
+
+The #module is an system object that have pre-defined properties.
+
+* role: can have 3 exclusive values:_driver_, _aspect_, _component_
+* name: the driver name it is usually the same as the file name
+* description: a short description of the module
 
 **Notes**
 * A program can have one single _driver_;
-* A driver can load one or more libraries;
-* A driver can execute one or multiple aspects;
-* An aspect or driver can load several libraries;
+* A driver can load one or more _components_;
+* A driver can execute one or multiple _aspects_;
 
-## System Variable
-There are several predefined variables available in Bee. System variables are using "$" prefix. These variables can be used to locate project files. You can define new system variables at the beginning of each module.
-
-The location where the Bee is installed is $bee_home. Bee library folder is $bee_lib. These variables are created by Bee run-time environment. It can be the virtual machine or the compiled program itself.
+### System Constants
+There are several predefined constants available in Bee. System constants are using "$" prefix. These constants can be used to locate project files. You can define new system constants at the beginning of your _driver_.
 
 | Constant | Environment| Description                |
 |----------|------------|----------------------------|
@@ -68,8 +81,21 @@ The location where the Bee is installed is $bee_home. Bee library folder is $bee
 |$pro_mod  | N/A        | Program modules home       |
 |$pro_log  | N/A        | Reporting folder           |
 
-## Aspect
-One aspect is a project file usually located in _"src"_ folder that can be executed from driver. A driver can _play_ an aspect with parameters and capture results. An application architect can separate system concerns in multiple aspects.
+### Configuration
+One application can load system constants from a configuration file. These are stored as "name:value" pairs of strings. Some system constants can be derived from environment variables. These are defined implicit in Bee runtime environment. 
+
+Configuration file can be used by the compiler. This is called "compile-time" configuration file. Other configuration files are specific to a particular session. These are called "run-time" configuration files. There is no difference between the two except the file name and the values. 
+
+### Driver
+There is one single driver file for one application. This file has #module.role = "driver". You can interrogate any of module attributes using comparison operators. A driver has the role to lead the application main functionality. 
+
+A driver can define global variables, application menu and can connect to a database. When a driver is terminated the application stop. Usually a driver terminate with keyword: _over_ or _halt_.
+
+### Aspect
+One aspect is a module located in _"src"_ folder. A driver can _play_ an aspect with parameters and capture the results after driver execution. An application architect can separate system concerns in multiple aspects.
+
+**execution**
+Aspects can not be executed in parallel but sequential. We consider that aspects are depending on each other to be executed in order like a process. If one aspect fail to execute the application should analyze the error and continue or terminate the driver execution.
 
 **notes:**
 * One aspect can accept parameters;
@@ -77,13 +103,13 @@ One aspect is a project file usually located in _"src"_ folder that can be execu
 * Usually aspect members are private;
 * To execute one aspect you use keyword: _play_
 
-## Library
-Libraries are reusable modules usually located in _"lib"_ folder. A library is a file that contains public elements. A library can be loaded in memory from any kind of module: {driver, aspect, library}
+### Library
+Libraries are folders containing reusable components. A library in usually a sub-folder stored in _"lib"_ root folder. A reusable component contains public members. From a library you can load all components or specified components.
 
 **notes:**
-* Library members are usually public;
-* A library does not have parameters;
-* A library does not produce results;
+* A component must have public members;
+* A component does not have parameters;
+* A component does not produce results;
 
 ## Declaration
 
@@ -116,21 +142,20 @@ Each statement start with one imperative keyword:
 * One statement is usually indented 2 space;
 * One statement is usually described in a single line;
 * One expression in a statement can extend on multiple lines;
-* You can not have multiple statements in a single line;
-* You can have a comment at end of line using ";" 
+* Multiple statements on a single line are separated with ";"
+* You can have a comment at end of line using "--" 
 * A statement may continue after the end of line comment;
 
-## Code block
+### Code block
 Statements can be contained in blocks of code.
 
-* trial -- create trial/error block of code to handle exceptions
+* with  -- create a scope qualifier suppression block/ mapping block
 * when  -- create multi-path conditional selector
 * quest -- create a multi-path value selector
-* scan  -- create visitor block for all elements in a collection
 * cycle -- create unconditional repetitive block of code
 * while -- create conditional repetitive block of code
-* with  -- create a qualifier suppression block/ mapping block
-
+* scan  -- create visitor block for all elements in a collection
+* trial -- create trial/error block of code to handle exceptions
 
 **notes:**
 
@@ -138,17 +163,9 @@ Statements can be contained in blocks of code.
 * Closing keyword can be one of: { done, repeat, next };
 * Statements and nested blocks are using indentation at 2 spaces;
 
-## Driver file
+### Rogue statement
 
-Bee is a space sensitive language. That means indentation of code and spaces are relevant.
-In Bee there is no _main_ function. Instead we define a _driver_ file using directive #driver. 
-This is the program entry point. One program can have a single _driver_ module and many _aspects_.
-
-**rogue statements**
-
-A _driver_ can contain statements that do not belong to any rule.
-These are called _rogue_ statements and are driving the program execution.
-Rogue statements are executed top down until to last over keyword.
+A _driver_ or _aspect_ can contain statements that do not belong to any rule. These are called _rogue_ statements and are driving the program execution. Rogue statements are executed top down until to last keyword that is usually _over_.
 
 **Example:**
 
@@ -199,7 +216,7 @@ load $bee_lib/folder_name/(x,y,z);
 * using: (x,y,z) only x,y,z files are found on disk and parsed;
 
 **Qualifier**
-Bee use _"dot notation"_ to locate external members. After import the file name becomes qualifier for this notation.
+Bee use _"dot notation"_ to locate external members. After import the file name becomes scope qualifier for this notation.
 
 ```
 qualifier.member_name
@@ -216,36 +233,8 @@ You can create an alias for a qualifier or for specific members:
 alias qualifier := folder_name.file_name
 alias element   := qualifier.member_name
 ```
-  
-## Global context
 
-One module has a global context where members are defined and used.
-
-**usability**
-
-* A module member can be public or private. Public members start with a dot prefix;
-* A public member is accessible with qualifier name using dot notation in global context;
-* When modules are loaded, all public members are merged in a single global context;
-
-**system variables*
-
-* System variable names start with symbol "$" and are declared first; 
-* Several predefined system variables are available in _global context_;
-* All environment variables are automatically imported as system variables;
-
-```
-$path    = $bee_path  -- contains a list of folders
-$program = $bee_pro   -- contains path to current program
-$runtime = $bee_home  -- contains path to Bee runtime home
-$error        -- contains last exception/error created by "fail"
-$precision    -- contains default precision for Q = 0.001
-$global       -- global context: universal qualifier
-$local        -- local context: universal qualifier
-```
-
-**note** System variable do not require qualifier:
-
-**importing**
+**Examples:**
 
 ```
 load $runtime.cpp_lib:(*); --load cpp library
@@ -254,7 +243,12 @@ load $runtime.bee_lib:(*); --load core library
 load $program.pro_lib:(*); --load project library
 ```
 
-**See example:** [gv.bee](../demo/gv.bee)
+## Global context
+
+One application has a global context where variables and constants are allocated. Each application file can contribute with new elements that can be created in this context.
+
+* Global context helps to store and identify global data and public members;
+* When a module is loaded, all public members are defined in the global context;
 
 ## Local context
 
@@ -274,9 +268,25 @@ print i ; -- expected: 1
 
 over.
 ```
-**See example:** [lv.bee](../demo/lv.bee)
+**See examples:** 
+* [lv.bee](../demo/lv.bee)
+* [gv.bee](../demo/gv.bee)  
 
-## Public member
+## System variables
+
+* System variable names start with symbol "#" and are declared usually at beginning of module; 
+* Several predefined system variables are available in _global context_ with no declaration;
+
+```
+#error     -- contains last exception/error created by "fail"
+#precision -- contains default precision for Q = 0.001
+```
+
+**note** 
+* System variables are application states;
+* System variable do not require scope qualifier;
+
+## Public members
 
 In Bee all members that begin with dot "." are public members.
 
@@ -299,37 +309,6 @@ rule .m(x, y ∈ N, r @ N);
   alter r := x + y;
 return;
 ```
-## Rule ABI mapping
-In Bee one can use external rules written in Assembly, Ada, C or CPP.
-Usually these mappings are implemented in a #library file.
-
-**Example:**
-This is myLib.bee file: 
-```
-#library "mLib"
-
-load $runtime.cpp.myLib.(*) ; --load cpp library
-
--- define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x ∈ Z);
-  alter x := myLib.fib(n -> Z);
-return;
-
-```
-
-This is the driver file.
-```
-#driver "main";
--- load library
-load $bee.lib.myLib.(*);
-
---use external rule
-print myLib.fib(5);
-```
-
-To understand more about interacting with other languages check this article about ABI:
-[Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
-
 
 ## Comments
 

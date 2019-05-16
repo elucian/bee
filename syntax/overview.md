@@ -23,6 +23,7 @@ I have used a simple design notation based on examples and notes:
 * [Dynamic rules](#dynamic-rules)
 * [Generic rules](#generic-rules)
 * [Expression rules](#expression-rules)
+* [Rule mapping](#rule-mapping)
 
 ## Expressions
 Expressions are created using identifiers, operators, rules and constant literals. 
@@ -792,6 +793,38 @@ Expression rules...
 
 * Expression rules are similar to mathematical functions;
 * Expression rules can be created by other rules;
+
+## Rule mapping
+
+In Bee you can use external rules from Assembly or C.
+Usually these rules are implemented in a library component.
+
+**Example:**
+This is myLib.bee file: 
+```
+#library "mLib"
+
+load $bee/lib/cpp/myLib.bee; --load cpp library
+
+-- define a wrapper for external "fib"
+rule fib(n ∈ Z) => (x ∈ Z);
+  alter x := myLib.fib(n -> Z);
+return;
+
+```
+
+This is the driver file.
+```
+#driver "main";
+-- load library
+load $bee/lib/myLib.bee;
+alias myLib := bee.lib.myLib
+--use external rule
+print myLib.fib(5);
+```
+
+To understand more about interacting with other languages check this article about ABI:
+[Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
 
 **See also:**
 * [pm.bee](../demo/pm.bee)  ; --expression rule
