@@ -61,7 +61,7 @@ print; --01234
 
 -- Calculation that fail will generate an error
 alter x := 5 ∈ R;
-alter x := x ÷ 0; --error: division by 0
+alter x := x ÷ 0; -- error: division by 0
 ```
 
 **Notes:** 
@@ -741,21 +741,21 @@ rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
 return;
 
 -- instantiate two rule clones:
-clone inc := shift{s: +1} ; --increment 
-clone dec := shift{s: -1} ; --decrement 
+clone inc := shift{s: +1}; --increment 
+clone dec := shift{s: -1}; --decrement 
 
 -- verify object properties
-print inc.s ; --expect: 1
-print dec.s ; --expect:-1
+print inc.s; -- expect: 1
+print dec.s; -- expect:-1
 
 -- use first rule object "inc"
-print inc(1) ; --2
-print inc(4) ; --5
+print inc(1); -- 2
+print inc(4); -- 5
 
 -- use second rule object "dec"
-print dec(1) ; -- 0
-print dec(2) ; -- 1
-print dec(0) ; ---1
+print dec(1); -- 0
+print dec(2); -- 1
+print dec(0); ---1
 ```
 
 ## Expression rules
