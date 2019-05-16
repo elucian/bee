@@ -230,4 +230,4 @@ sym  |code
 ▐    | 222  
 ▀    | 223  
 
-**read next:* [operators](operators.md)
+**read next:** [operators](operators.md)

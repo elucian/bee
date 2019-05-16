@@ -152,7 +152,7 @@ repeat;
 In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
-make a := 10 ∈ Z -- ;global
+make a := 10 ∈ Z --; global
 cycle:
   alter a -= 1;
   ** conditional repetition
@@ -203,7 +203,7 @@ cycle:
   write ',';
   stop if (x < 5);
 repeat;
-print ; -- expect 9:1, 8:0, 7:1, 6:0, 5:1,
+print;  -- expect 9:1, 8:0, 7:1, 6:0, 5:1,
 ```
 
 ## While
@@ -264,8 +264,8 @@ repeat;
 **example**
 
 ```
-make x   := 9 ;local
-make a,r := 0 ;locals
+make x   := 9; local
+make a,r := 0; locals
 while x < 5 do
   alter r := x % 2;
   alter a := 0 if r = 0, 1 if r = 0, 2;
@@ -282,7 +282,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ```
-make var ∈ N ; --local
+make var ∈ N;  --local
 scan [min..max] +> var do
   ** block statements
   skip if (condition);
@@ -298,7 +298,7 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-make i ∈ Z ; global
+make i ∈ Z;  global
 scan [0..10] +> i do
   -- force next iteration
   when i % 2 = 0 do
@@ -376,7 +376,7 @@ done;
 | retry | execute previous solved case or specified case
 | solve | solve one forward case in same trial and skip some
 | abort | silent early trial termination
-| pass  | scrub $error record and end trial block
+| pass  | scrub #error record and end trial block
 | resume| continue next; case after one case fail
 
 **error**

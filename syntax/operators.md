@@ -29,7 +29,7 @@ symbol| description
   $   | Global variables prefix \| System environment constants
   @   | Define a reference \| Define output parameter 
   :   | Pair up key-value in a collection or rule call
-  ;   | End of statement \| Statement separator
+;     | End of statement \| Statement separator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Anonymous variable \| Has constant value one space (_ = ' ')
@@ -69,7 +69,6 @@ symbol| description
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
- ::   | explicit reference \| explicit boxing
  :=   | modify value \| deep copy \| alias qualifier
 
 
@@ -106,8 +105,8 @@ symbol | meaning
 
 **patterns:** 
 ```
- ¬(x ≡ y)  ; --divergence of two references, (not the same address)
- ¬(x = y)  ; --divergence of two values, objects or collections
+ ¬(x ≡ y);   --divergence of two references, (not the same address)
+ ¬(x = y);   --divergence of two values, objects or collections
 ```
 
 ## Collection operators

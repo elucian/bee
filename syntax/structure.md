@@ -202,7 +202,7 @@ Do not try to understand this example. It is just a worm-up!
 **Notes:** 
 * This program is a #module.role = "driver" having file-name "main.bee";
 * Input parameter _*params_ is an array of strings;
-* Any Bee module is ending with mandatory keyword: _"over"_ ;
+* Any Bee module is ending with mandatory keyword: _"over"_; 
 * Early driver termination can be trigger using: halt or exit;
 
 ## External code
@@ -267,9 +267,9 @@ make i := 1 ∈ Z;
 trial
   ** local context
   make i := 2 ∈ Z;
-  print i ; -- expected: 2
+  print i;  -- expected: 2
 done;
-print i ; -- expected: 1  
+print i;  -- expected: 1  
 
 over.
 ```
@@ -442,8 +442,8 @@ play aspect_name(parameter_list) +> result
 ```
 #aspect "mod"
 
-input  i ∈ Z ; --define parameter "i"
-output v ∈ N ; --define result "v"
+input  i ∈ Z;  --define parameter "i"
+output v ∈ N;  --define result "v"
 
 when (i < 0) do
   alter v := -i;
@@ -465,7 +465,7 @@ load $pro/mod.bee;
 
 -- execute aspect "mod"
 play  mod(-3) +> result;
-print result ; --expect: 3
+print result;  --expect: 3
 
 over.
 ```

@@ -6,17 +6,17 @@
 make d, e @ Z;    -- reference to natural number
 make s := 10 ∈ Z; -- define integer
 -- assign "by reference" 
-alter d :: s ; -- explicit boxing address for "s"
-alter d += 1 ; -- alter underline value of d that is s  
-print s ; -- s = 11  (modified)
-print d ; -- d = 11  (modified) 
+alter d @ s;  -- explicit boxing address for "s"
+alter d += 1; -- alter underline value of d that is s  
+print s; -- s = 11  (modified)
+print d; -- d = 11  (modified) 
 
--- wrong assignment using "::"
+-- wrong assignment using "@"
 trial:
   alter e := s;
 other
   -- expect error "Null reference error"
-  print "failed:".$error.message;
+  print "failed:".#error.message;
 done;
  
 -- test modifier effect

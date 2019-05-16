@@ -137,16 +137,16 @@ A list is a dynamic collection of references.
 **user type**
 
 ```
-type type_name <: (@Type); --a list type
+type type_name <: (Type); --a list type
 ```
 
 **variable**
 You can use one of three forms of declarations:
 
 ```
-make name ∈  (@Type); -- explicit list
+make name ∈  (Type); -- explicit list
 make name := (value,...); -- implicit list
-make name := (value,) ∈ (@Type); -- initial value and type
+make name := (value,) ∈ (Type); -- initial value and type
 ```
 
 **properties**
@@ -202,7 +202,7 @@ alter a -= a[?]; -- a = (1,2,3)
 A queue is a FIFO collection of elements: (first in first out)
 
 ```
-make q := (1,2,3) ;list
+make q := (1,2,3); list
 make first : N;
 
 -- enqueue new element into list "+=" 
@@ -221,19 +221,19 @@ Bee define Arrays using notation []().
 
 **syntax**
 ```
-make array_name @ [type]();      -- undefined capacity
-make array_name @ [type](c);     -- capacity c
-make array_name @ [type](n,m);   -- capacity c = n·m
+make array_name ∈ [type]();      -- undefined capacity
+make array_name ∈ [type](c);     -- capacity c
+make array_name ∈ [type](n,m);   -- capacity c = n·m
 ```
 
 **Note:** 
-* Arrays are references therefore we define arrays using "@";
 * Default array index start from 0 to c-1 where c is capacity;
+* Array index can start from a different, specified value;
 
 **example**
 
 ```
-make test @ [R](10); -- vector of 10 real numbers
+make test ∈ [R](10); -- vector of 10 real numbers
 make m := length(test)-1;
 
 -- default array index start from 0
@@ -283,8 +283,8 @@ Initial value for elements can be set during declaration:
 
 ```
 -- you can use 2 optional notations 
-make zum := 1 @ [Z](1..10); -- explicit initialization
-make zet := [1](1..10);     -- using type inference
+make zum := 1 ∈ [Z](1..10); -- explicit initialization
+make zet := [1*10](1..10);  -- using type inference
 
 -- modify one element by index
 alter zum[1]  := 1; 
@@ -307,7 +307,7 @@ alter zum := [1,2,3];
 print zum; --expect [1,2,3];
 
 -- transfer a reference 
-alter zum :: zet;
+alter zum @ zet;
 print zum; -- expect [1,1,1,1,1,1,1,1,1,1];
 ```
 
@@ -316,8 +316,8 @@ We can define an empty array and initialize elements later.
 
 ```
 -- array without members
-make vec @ [U](); 
-make nec @ [N](); 
+make vec ∈ [U](); 
+make nec ∈ [N](); 
 
 -- arrays are empty
 print vec = []; --True
@@ -340,10 +340,10 @@ A slice is a view of a section from an array.
 
 ```
 -- declare vector with capacity (n)
-make array_name @ [element_type](c);
+make array_name ∈ [element_type](c);
 
--- slice creation using "::" and ".."
-make slice_name :: array_name[n..m];
+-- slice creation using "@" and ".."
+make slice_name @ array_name[n..m];
 ```
 
 **Note:** 
@@ -353,11 +353,11 @@ make slice_name :: array_name[n..m];
 **example**
 ```
 make   a := [0](5);
-print  a ; --[0,0,0,0,0]
+print  a;  --[0,0,0,0,0]
 
 -- making slice views
-make c :: a[0..2]; --[0,0,0]
-make e :: a[3..4]; --[0,0]
+make c @ a[0..2]; --[0,0,0]
+make e @ a[3..4]; --[0,0]
 
 --modify slice elements
 alter c[*] := 1;
@@ -379,7 +379,7 @@ Assignment ":=" and slicing notation "[..]" can be used to copy elements of an a
 
 ```
 make a := [0,1,2,3,4]; --type inference array
-make e,f,r @ [Z]();    --deferred initialization
+make e,f,r ∈ [Z]();    --deferred initialization
 
 -- by default modify ":=" copy/clone an entire array
 alter e := a 
@@ -393,7 +393,7 @@ alter f := a[2..?]; --initialize f with capacity 3
 
 -- you can also copy data from range of native type
 alter r := Z[1..10]; --initialize array of 10 integers
-print r  ;expect [1,2,3,4,5,6,7,8,9,10]
+print r;  expect [1,2,3,4,5,6,7,8,9,10]
 ```
 
 ## Matrix
@@ -402,7 +402,7 @@ A matrix is an array with 2 or more dimensions.
 
 **Example:** 
 ```
-make mat @ [R](4,4) ; --define matrix
+make mat ∈ [R](4,4);  --define matrix
 
 -- modify matrix using ":=" operator
 alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
@@ -451,7 +451,7 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-rule foo( *bar @ [Z]) => (x ∈ Z):
+rule foo( *bar ∈ [Z]) => (x ∈ Z):
   make c := bar.count();
   -- precondition
   when (c = 0) do
@@ -467,10 +467,10 @@ rule foo( *bar @ [Z]) => (x ∈ Z):
 return;
 
 --we can call foo with variable number of arguments
-print foo()      ; --0
-print foo(1)     ; --1
-print foo(1,2)   ; --3
-print foo(1,2,3) ; --6
+print foo();       --0
+print foo(1);      --1
+print foo(1,2);    --3
+print foo(1,2,3);  --6
 
 ```
 
@@ -504,7 +504,7 @@ alter a3 := a1 | a2; -- [1,2,3,4]
 
 ```
 make array := ['a', 'b', 'c'];
-make c @ U;
+make c ∈ U;
 scan array +> c do
   write c;
   write ',';
@@ -518,9 +518,9 @@ A set is a sorted collection of unique values.
 ```
 --define a set
 
-make s  := {}      @ {N}; -- empty set
-make s1 := {1,2,3} @ {N}; -- 3 elements
-make s2 := {2,3,4} @ {N}; -- 3 elements  
+make s  := {}      ∈ {N}; -- empty set
+make s1 := {1,2,3} ∈ {N}; -- 3 elements
+make s2 := {2,3,4} ∈ {N}; -- 3 elements  
 
 
 -- specific operations
@@ -530,15 +530,15 @@ alter s := s1 - s2; -- {1}        :difference 1
 alter s := s2 - s1; -- {4}        :difference 2
 
 -- belonging check
-print s1 ⊂ s  ; --True
-print s  ⊃ s2 ; --True
+print s1 ⊂ s;   --True
+print s  ⊃ s2;  --True
 
 -- declare a new set
-make a := {1,2,3} @ {N};
+make a := {1,2,3} ∈ {N};
 
 -- using operator +/- to mutate set a
-alter a := a + 4 ;{1,2,3,4};  -- append 4
-alter a := a - 3 ;{1,2,4};    -- remove 3 (not 3)
+alter a := a + 4; {1,2,3,4};  -- append 4
+alter a := a - 3; {1,2,4};    -- remove 3 (not 3)
 
 ```
 
@@ -558,7 +558,7 @@ A hash map is a set of (key:value) pairs sorted by key.
 type type_name <: {(key_type : value_type)};
 
 -- declare a new empty map
-make new_map := {} @ type_name;
+make new_map := {} ∈ type_name;
 ```
 
 **example**
@@ -579,7 +579,7 @@ print map['c']; --third
 
 -- remove an element by key
 scrap map['a']; --remove "first" element
-print map     ; --expected: {'b'="second", 'c'="third"}
+print map;      --expected: {'b'="second", 'c'="third"}
 
 ```
 
@@ -596,7 +596,7 @@ We can check if an element is included in a collection using "∈".
 ```
 type  Tmap <: {(A:U)};
 
-make map  := {('a':"first"), ('b':"second")} @ Tmap;
+make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
 when ('a' ∈ map) do
   print("a is found");
@@ -632,8 +632,8 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str @ S(25) ; --string with capacity   25x8 = 200 bit
-make a   @ [U](25) ; --array of 25 characters 25x8 = 200 bit
+make str ∈ S(25);  --string with capacity   25x8 = 200 bit
+make a   ∈ [U](25);  --array of 25 characters 25x8 = 200 bit
 
 alter str := 'Short string'; 
 alter a   := split(str);
@@ -715,14 +715,14 @@ symbol| description
 
 **examples**
 ```
-make u, c, s @ S ; --default length is 128 octets = 1024 bit
+make u, c, s ∈ S;  --default length is 128 octets = 1024 bit
 
 -- string concatenation
 alter u := 'This is'  & ' a short string.';
 alter c := 'This is ' & 'fixed size string'; 
 
 -- automatic conversion to string
-alter s := 40 & 5 ; --'405'
+alter s := 40 & 5;  --'405'
 
 -- URL/path concatenation
 make test_file := $pro/'src'/'test.bee';
@@ -782,7 +782,7 @@ It is common to create strings automatically.
 **Operator:**  "*"
 
 ```
-make str := constant * n @ S(n);
+make str := constant * n ∈ S(n);
 ```
 
 **Example:**
@@ -843,10 +843,10 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name @ S, age ∈ N};
+type  Person <: {name ∈ S, age ∈ N};
 
 -- array of 10 persons
-make catalog @ [Person](10);
+make catalog ∈ [Person](10);
   
 -- initialize value using literals
 make catalog[0] := {name:"Cleopatra", age:15};
@@ -906,8 +906,8 @@ rule bar(me @ Foo):
   print "b =" & me.b;
 return;
 
--- reference capture, using "::" from constructor
-make test :: foo(1,1);
+-- reference capture, using "@" from constructor
+make test @ foo(1,1);
 
 -- run bar() method using object test as dot qualifier
 apply test.bar();
@@ -932,10 +932,10 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type Error <: {code ∈ Z, message @ S, line ∈ Z};
+type Error <: {code ∈ Z, message ∈ S, line ∈ Z};
 
 -- global system error
-make $error ∈ Error;
+make #error ∈ Error;
 ```
 
 You can define exceptions with code > 200:

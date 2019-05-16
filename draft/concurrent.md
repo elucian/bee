@@ -37,7 +37,7 @@ repeat;
 rest
 ```
 
-**file:** [ac.md](demo/ac.md)  ; --asynchronous call
+**file:** [ac.md](demo/ac.md);   --asynchronous call
 
 ## Resumable Coroutines 
 
@@ -77,4 +77,4 @@ rest;
 over.
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee)  ; --producer consumer example
+**See also:** [pc.wee](../demo/pc.wee);   --producer consumer example

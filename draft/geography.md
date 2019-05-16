@@ -31,12 +31,12 @@ Other data types are starting with G prefix and one uppercase letter.
   type GN <: {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ};             
  
   -- geographic link
-  type GL <: {snode, enode @ GN, shape @ [GN]};
+  type GL <: {snode, enode ∈ GN, shape ∈ [GN]};
   -- point of interest
-  type PI <: {(id ∈ N: label @ S, lnode @ GN)};
+  type PI <: {(id ∈ N: label ∈ S, lnode ∈ GN)};
  
   -- geographic map
-  type GM <: {origin @ GN, rotation ∈ ∠, scale ∈ Δ, pint @ [GN], links @ [GL]};
+  type GM <: {origin ∈ GN, rotation ∈ ∠, scale ∈ Δ, pint ∈ [GN], links ∈ [GL]};
 ```
 
 **legend**

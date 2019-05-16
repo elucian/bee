@@ -135,7 +135,7 @@ make name := constant ∈ Type
 
 **example**
 ```
-make n := U+2200 ∈ U ; --∀
+make n := U+2200 ∈ U;  -- Symbol: ∀
 ```
 
 **Note:** 
@@ -160,17 +160,6 @@ Composite types are using English full name and start with uppercase.
 * Composite types are references to memory location;
 * Composite types are usually allocated on the heap;
 * Composite types have usually variable size;
-* Composity types are specified with symbol "@" instead of "∈";
-
-**pattern**
-```
-make name := constant @ Type
-```
-
-**example**
-```
-make str := 'test' @ S
-```
 
 ## Collection types
 
@@ -191,7 +180,7 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 type type_name <: type_descriptor
 
 --declare new references
-make var_name,var_name ... @ type_name
+make var_name,var_name ... ∈ type_name
 ```
 
 ## Range subtypes
@@ -243,12 +232,12 @@ done;
 #precision:0.1
 
 -- integer range
-print [0..5]  ; --0,1,2,3,4,5
-print [0.!5]  ; --0,1,2,3,4
+print [0..5]; --0,1,2,3,4,5
+print [0.!5]; --0,1,2,3,4
 
 -- rational range
-print (0..1)  ; --0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
-print (0.!1)  ; --0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
+print (0..1); --0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+print (0.!1); --0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 ```
 
 ## Constant declaration
@@ -265,56 +254,49 @@ define constant_name := constant_literal
 
 ## Variable declarations
 
-Variables are defined using keyword "create" and next operators:
+Variables are defined using keyword _make_ plus one of the operators:
 
-sym | purpose
-----|------------------------------------------------------------------
- ∈  | declare variable type | member type | parameter type
- @  | declare reference to composite type or native type
- :  | pair-up member/parameter to a constant/expression or constructor
- := | initialize variable using a constant/expression or constructor
- :: | initialize variable using a reference to another variable
+operator | purpose
+---------|------------------------------------------------------------------
+ ∈       | declare variable type \| member type \| parameter type
+ @       | declare reference \| make a slice \| input/output parameter
+ :       | pair-up member/parameter to a constant/expression or constructor
+ :=      | initialize variable using a constant/expression or constructor
 
 ```
--- full declarations with type and initial value
+-- default variable declarations with type
 make var_name ∈  type_name;
 make var_name := constant ∈ type_name;
 
 -- partial declaration using type inference
-make var_name := expression ; --type inference
+make var_name := expression; 
 
--- reference declaration using using operator "::"
-make ref_name @  type_name;
-make ref_name :: var_name;
-make ref_name :: object_constructor;
+-- reference declaration using using operator "@"
+make ref_name @ type_name;
+make ref_name @ var_name;
 ```
 
 Multiple variables can be define in one single line using comma separator:
 ```
 make var_name, var_name ... ∈ Type;
-make var_name, var_name ... := expression;
+make var_name, var_name ... := expression ∈ Type;
 ```
-
-**Notes:** 
-
-* Each variable in the enumeration will be initialized to a different location;
-* If operator "::" is used you can create multiple references for same location;
 
 ## Modify values
 
-One can modify variables using "modify" statement.
+One can modify variables using _alter_ statement.
 
 **example**
 ```
 make a := 10, b := 0 ∈ Z;
 
-alter b := a + 1 ; --modify b 10->11 
-print b          ; --expected 11
+alter b := a + 1; -- modify b 10->11 
+print b;          -- expected 11
 ```
 
 **notes:** 
 * Multiple variables can be modified all at once when separated by comma;
-* The modify statement can use only operator ":=" or "::";
+* The alter statement can use only operator ":=" or a specific modifier;
 
 **Examples:**
 ```
@@ -322,28 +304,27 @@ print b          ; --expected 11
 define pi := 3.14 ∈ R;
 
 -- declare multiple variables using modify
-make a   ∈ Z ; -- Integer 
-make x,y ∈ R ; -- Double
-make q,p ∈ L ; -- Logic
+make a   ∈ Z;  -- Integer 
+make x,y ∈ R;  -- Double
+make q,p ∈ L;  -- Logic
 
 --using modifier expressions
-alter a := 10 ; -- modify value of a := 10
-alter a += 1  ; -- increment value of a := 11
-alter a -= 1  ; -- decrement value of a := 10
+alter a := 10;  -- modify value of a := 10
+alter a += 1;   -- increment value of a := 11
+alter a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p := True ; -- modify value of q and p
-alter x, y := 10.5 ; -- modify value of x and y
+alter q, p <+ (True, False);  -- modify value of q and p
+alter x, y := 10.5; -- modify value of x and y
 ```
 
 ## Type conversion
+ 
+When data type mismatch you must perform explicit conversion.
 
-Bee is an explicit language. We avoid implicit conversion.   
-When data type mismatch we must perform explicit conversion.
-
-* Explicit conversion is using pipeline operator: "->"
-* This is unsafe operation. A range check is recommended before conversion.
-* Data precision may suffer. Some decimals may be lost.
+* Explicit conversion is using a _pipeline operator_: "->";
+* This is unsafe operation. A range check is recommended before conversion;
+* Data precision may suffer. Some decimals may be lost;
 * If data do not fit in the new type, the overflow exception is raised.
 
 **example:**
@@ -353,11 +334,11 @@ make v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
 alter a := v -> N;
-print a  ; --truncated to 10 
+print a; --truncated to 10 
 
 --explicit conversion
 alter x := b -> R;
-print x  ; --expect 20.0
+print x; -- expect 20.0
 ```
 
 ## Alphanumeric type
@@ -365,26 +346,25 @@ print x  ; --expect 20.0
 Bee define U as single UTF32 code point with representation: U+HHHH or U+HHHHHH
 
 ```
-make a, b ∈ U ; --Unicode 
-make x, y ∈ B ; --Binary
+make a, b ∈ U;  -- Unicode 
+make x, y ∈ B;  -- Binary
 
-alter a := '0'    ; --representation of 0
-alter x := a -> B ; --convert to 30
-alter y := 30     ; --UTF code for '0'
-alter b := y -> A ; --convert to '0'
+alter a := '0';     -- representation of 0
+alter x := a -> B;  -- convert to 30
+alter y := 30;      -- UTF code for '0'
+alter b := y -> U;  -- convert to '0'
 ```
-
 
 ## Type checking
 
 We can use variable type to validate expression type.
 
 ```
-make a := 0   ; --integer variable 
-make b := 0.0 ; --real variable 
+make a := 0;    --integer variable 
+make b := 0.0;  --real variable 
 
-alter b := 10   ; --FAIL: b is of type: Real
-alter a := 10.5 ; --FAIL: a is of type: Integer
+alter b := 10;    --FAIL: b is of type: Real
+alter a := 10.5;  --FAIL: a is of type: Integer
 ```
 
 ## Logic type
@@ -395,8 +375,8 @@ Logic type is an enumeration of two public symbols: False and True
 type .L <: {.False:0, .True:1};
 
 ** printing logical values
-print True  ; -- 1
-print False ; -- 0
+print True;   --> 1
+print False;  --> 0
 ```
 
 ## Logic operations
@@ -431,8 +411,8 @@ done;
 **design**
 ```
 -- logic values are numeric
-print False - True ; --> -1 
-print True  + True ; --> +2
+print False - True;  --> -1 
+print True  + True;  --> +2
 ```
 
 **Precedence:** 
@@ -445,19 +425,19 @@ Logical expression have value { False, True }
 
 ```
 make x := False; --Type = L
-make y := True ; --Type = L
+make y := True;  --Type = L
 
 --simple expressions
-print   x; --0
-print ¬ x; --1
+print   x; --> 0
+print ¬ x; --> 1
 
 --complex expressions
-print  (x ↔ y); -- 0
-print ¬(x ↔ y); -- 1
-print  (x < y); -- 1
-print  (x > y); -- 0
-print  (x ∧ y); -- 0
-print  (x ∨ y); -- 1
+print  (x ↔ y); --> 0
+print ¬(x ↔ y); --> 1
+print  (x < y); --> 1
+print  (x > y); --> 0
+print  (x ∧ y); --> 0
+print  (x ∨ y); --> 1
 
 ```
 **Notes:** 
@@ -473,8 +453,8 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a -> L; --0
-alter y := b -> L; --1
+alter x := a -> L; --> 0
+alter y := b -> L; --> 1
 ```
 
 **Notes:** 
@@ -485,30 +465,32 @@ alter y := b -> L; --1
 
 ## Reference
 
-All composite variables are references to objects. 
+A reference is a special variable containing type information and a memory location.
 
-**modify**
+**notes:**
 
-* New references are declared using "@" instead of "∈"
-* Reference can be borrowed using operator: "::"
-* Reference content can be initialized using operator ":="
-* Reference content/value can be cloned using operator ":="
+* All composite variables are implicit references; 
+* Explicit references are declared using "@" instead of "∈";
+* Reference can be transferred using operator: "@" from other variable;
+* Reference location can be reset using operator ":=" to a new location;
+* Reference underline value can be cloned using operator ":=" into other variable;
 
 **example**
 ```
-make i := 10 ∈ Z ; -- basic type
-make j :: i  @ Z ; -- reference to i
-make k @ Z ; -- null reference
+make k @ Z; -- reference to integer
+make i := 10 ∈ Z;  -- basic type
 
 -- borrowing address / boxing
-alter k :: i ; -- boxing i := 12 
-alter i += 1 ; -- modify i := 13
-print k ; --expect 13 (modified)
+alter k @  i;  -- boxing i = 12 
+alter i += 1;  -- modify i = 13
+print k;  --expect 13 (modified)
 
--- verify boxing effect
-print k ≡ j; -- True (same)
-print k ≡ i; -- True (same)
-print j ≡ i; -- True (same)
+-- create new reference
+make  n @ i; -- boxing i
+print n ≡ i; -- True (same)
+
+-- reference identity is transient
+print n ≡ k; -- True (same)
 ```
 
 ## Conditionals
@@ -574,7 +556,7 @@ dx   := default expression (optional condition).
 make x := '0';
 read (x,"x:>");
 
-make kind := ("digit" if x @ ['0'..'9'], "letter" if x @ ['a'..'z'], "unknown");
+make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
 print ("x is " & kind); --expect: "x is digit"
 over.
 ```
@@ -607,10 +589,9 @@ Parameters are special variables defined in rule signature.
 * A rule can have input/output parameters;
 * Parameters with initial value are optional;
 * Optional parameters must be enumerated last in parameter list;
-* Optional parameters are initialized with pair-up operator ":";
-* Basic arguments and literal arguments are pass by value;
-* Composite type parameters can be pass by reference or by value;
-* For input/output parameters we are using "@" instead of "∈";
+* Optional parameters are initialized with pair-up operator ":" not ":=";
+* Parameters defined with "∈" are pass by value;
+* Parameters defined with "@" are pass by reference;
 
 Static rules can have side-effects:
 
@@ -659,13 +640,13 @@ return;
 
 -- unpack result to "b","c" using "<+"  
 make b,c <+ com(2,1);
-print b ; --3 
-print c ; --1 
+print b;  --3 
+print c;  --1 
 
 -- alternative rule call:
 alter b,c <+ com(4,5);
-print b ; --9 
-print c ; --1 
+print b;  --9 
+print c;  --1 
 
 -- alternative rule call:
 apply com(0,1) +> (b,c);
@@ -705,11 +686,11 @@ alter rule.y = 2;
 alter rule.z = 3;
 
 -- read rule states
-print rule.x, rule.y, rule.z ; --1 2 3
+print rule.x, rule.y, rule.z;  --1 2 3
 ```
 
 **See also:**
-* [bs.bee](../demo/bs.bee)  ; --Bubble Sort
+* [bs.bee](../demo/bs.bee);   --Bubble Sort
 
 ## Generic rules
 
@@ -735,27 +716,27 @@ clone new_name:= prototype_name{arguments};
 
 **example**
 ```
--- this rule can create a rule object
+-- this is a generic rule
 rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
   make r := (s + i);
 return;
 
--- instantiate two rule clones:
+-- instantiate two clones:
 clone inc := shift{s: +1}; --increment 
 clone dec := shift{s: -1}; --decrement 
 
--- verify object properties
-print inc.s; -- expect: 1
-print dec.s; -- expect:-1
+-- verify rule properties
+print inc.s; -->  1
+print dec.s; --> -1
 
--- use first rule object "inc"
-print inc(1); -- 2
-print inc(4); -- 5
+-- use first clone "inc"
+print inc(1); --> 2
+print inc(4); --> 5
 
--- use second rule object "dec"
-print dec(1); -- 0
-print dec(2); -- 1
-print dec(0); ---1
+-- use second clone "dec"
+print dec(1); -->  0
+print dec(2); -->  1
+print dec(0); --> -1
 ```
 
 ## Expression rules
@@ -775,7 +756,7 @@ rule xp(x,y ∈ Z) ∈ Z => (x + y);
 
 -- using the rule in other expressions
 make z := xp(1,1) + 1;
-print  z ; --print 3
+print  z;  --print 3
 ```
 
 **properties**

@@ -4,7 +4,7 @@
 #module.name :=  "rp";
 
 -- declare rule with rule "cmp" as parameter
-rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
+rule compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r ∈ L):
   alter r := cmp(a,b);
 return;
 
@@ -13,7 +13,7 @@ rule lt(a,b ∈ Z) ∈ L => (a < b);
 make test ∈ L;
 
 -- delegate using rule "lt"
-alter test := compare(1,2,cmp::lt);
+alter test := compare(1,2,lt);
 print test; -- expect 1
 
 -- delegate using anonymous rule

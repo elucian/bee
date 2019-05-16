@@ -123,15 +123,15 @@ In next example b = 0.33(3), delta = (b - a) = 0.083
 ** override default precision
 #precision:0.01
 
-make a := 0.25 ; --real
-make b := 1/3  ; --rational
+make a := 0.25;  --real
+make b := 1/3;   --rational
 
 ** using specified precision 0.01 < 0.083
-print (a ≈ b) ; --false
+print (a ≈ b);  --false
 
-print (a ≈ b ± 0.1) ; --true
-print (a ≈ c ± 0.5) ; --true
-print (b ≈ c ± 0.5) ; --true
+print (a ≈ b ± 0.1);  --true
+print (a ≈ c ± 0.5);  --true
+print (b ≈ c ± 0.5);  --true
 ```
 
 **Note:** Bee is an efficient language.

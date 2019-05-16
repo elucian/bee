@@ -27,15 +27,15 @@ This can be used to create an argument for a _signature_
 
 **signature**
 ```
-rule foo( id @ (type,type, ...)):
+rule foo( id @ (type,type, ...) ∈ type );
 ...
 ```
 
 Using rule for argument using name: "id"
 
 ```
---argument ↓  rule  ↓
-apply foo(id::(param ,param ...) => (expression)):
+--argument ↓  parameters  ↓ ... expression ↓
+apply foo(id @ (param ,param ...) ∈ type => (expression)):
 ```
 
 
@@ -43,21 +43,21 @@ apply foo(id::(param ,param ...) => (expression)):
 
 ```
 -- this sort is generic 
-rule bubble{XT ∈ Type}(array @ [XT], gt @ (XT,XT) ∈ L):
-  make n := length(array)-1 ∈ N; 
+rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT) ∈ L):
+  make n := length(array) ∈ N; 
   make swap := True ∈ L;
-  make temp ∈ XT;
+  make temp @ XT;
   make i ∈ N;
   while swap do
     alter i := 0;
     alter swap := False;
-    while (i ≤ n) do
+    while (i < n) do
        -- this pair is out of order ?
       when gt(array[i], array[i+1]) do
          -- swap pair and set swap flag = true
-        alter temp :: array[i];
-        alter array[i]  :: array[i+1];
-        alter array[i+1]:: temp;
+        alter temp @ array[i];
+        alter array[i]   @ array[i+1];
+        alter array[i+1] @ temp;
         alter swap := True;
       done;
       alter i += 1;
@@ -74,14 +74,15 @@ return;
 **sort usage**
 
 ```
-type Person  <: { name @ S, age ∈ N };
+-- define object type to be sorted
+type Person  <: { name ∈ S, age ∈ N };
 
 -- define sort rule for Person, as a clone of bubble
 clone sort := bubble{XT:Person};
 
 -- define clients and suppliers
-make clients   @ [Person](100);
-make suppliers @ [Person](10);
+make clients   ∈ [Person](100);
+make suppliers ∈ [Person](10);
 
 -- populate clients and suppliers somehow
 ...
