@@ -479,7 +479,7 @@ alter y := b -> L; --1
 **Notes:** 
 * Only integer part of a number is used in conversion;
 * Fraction is truncated before conversion to logic type;
-* A string: "Yes" "yes", "True", "true", "T" or "t" or "1" convert to: True = 1
+* A string: "Yes", "yes", "True", "true", "T" or "t" or "1" convert to: True = 1
 * A string: "No", "no", "False", "true", "F" or "f" or "0" convert to: False= 0
 
 ## Reference
@@ -505,9 +505,9 @@ alter i += 1 ; -- modify i := 13
 print k ; --expect 13 (modified)
 
 -- verify boxing effect
-print k ≡ j ;1 = True (same)
-print k ≡ i ;1 = True (same)
-print j ≡ i ;1 = True (same)
+print k ≡ j; -- True (same)
+print k ≡ i; -- True (same)
+print j ≡ i; -- True (same)
 ```
 
 ## Conditionals
@@ -815,7 +815,8 @@ return;
 
 This is the driver file.
 ```
-#driver "main";
+#module.role := "driver";
+
 -- load library
 load $bee/lib/myLib.bee;
 alias myLib := bee.lib.myLib
@@ -827,12 +828,12 @@ To understand more about interacting with other languages check this article abo
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
 
 **See also:**
-* [pm.bee](../demo/pm.bee)  ; --expression rule
-* [fn.bee](../demo/fn.bee)  ; --pattern matching rule
-* [fi.bee](../demo/fi.bee)  ; --recursive rule
-* [rp.bee](../demo/rp.bee)  ; --rule as parameter
+* [pm.bee](../demo/pm.bee); --expression rule
+* [fn.bee](../demo/fn.bee); --pattern matching rule
+* [fi.bee](../demo/fi.bee); --recursive rule
+* [rp.bee](../demo/rp.bee); --rule as parameter
 
 **See also:**
-* [ho.bee](../demo/ho.bee)  ; --High order rule
+* [ho.bee](../demo/ho.bee); --High order rule
 
 **Read Next:** [Control Flow](control.md)

@@ -4,7 +4,7 @@ Bee uses 58 reserved keywords so far:
 
 ```
 04: if, is, to, in
-05: #driver, #library, #aspect, #timer, #precision
+05: #module, #timer, #precision
 09: define, make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, quest, cycle, while, scan, trial
@@ -27,13 +27,11 @@ Bee uses 58 reserved keywords so far:
 | to          | used in conjunction with append
 | in          | used in conjunction with update 
 
-### Directives
+### Global Variables
 
 | Keyword     | Purpose
 |-------------|--------------------------------------------------------
-| #driver     | Declare file name for a primary module
-| #aspect     | Declare file name for a secondary module
-| #library    | Declare file name for a library
+| #module     | Declare module attributes
 | #timer      | Declare maximum time spent for a program to run. (default: 30s)
 | #precision  | Declare maximum precision to use for decimal numbers. (default: 1m) 
 

@@ -50,9 +50,9 @@ $pro_home
 At the beginning of each component we can define system variables using prefix "#".
 
 ```
-#module.role := "driver" | "aspect" | "component"
-#module.name := "name"
-#module.description := "description"
+#module.role := "driver";
+#module.name := "name";
+#module.description := "description";
 ```
 
 **module**
@@ -89,10 +89,10 @@ Configuration file can be used by the compiler. This is called "compile-time" co
 ### Driver
 There is one single driver file for one application. This file has #module.role = "driver". You can interrogate any of module attributes using comparison operators. A driver has the role to lead the application main functionality. 
 
-A driver can define global variables, application menu and can connect to a database. When a driver is terminated the application stop. Usually a driver terminate with keyword: _over_ or _halt_.
+A driver can define system constants, variables, application menus, database connections and such. When a driver is terminated the application stop running. Usually a driver terminate with keyword: _over_ or _halt_.
 
 ### Aspect
-One aspect is a module located in _"src"_ folder. A driver can _play_ an aspect with parameters and capture the results after driver execution. An application architect can separate system concerns in multiple aspects.
+An application architect can separate system concerns in multiple aspects. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters and capture the results after execution of each aspect. 
 
 **execution**
 Aspects can not be executed in parallel but sequential. We consider that aspects are depending on each other to be executed in order like a process. If one aspect fail to execute the application should analyze the error and continue or terminate the driver execution.
@@ -101,10 +101,10 @@ Aspects can not be executed in parallel but sequential. We consider that aspects
 * One aspect can accept parameters;
 * One aspect can produce results; 
 * Usually aspect members are private;
-* To execute one aspect you use keyword: _play_
+* To execute one aspect you use keyword: _play_.
 
 ### Library
-Libraries are folders containing reusable components. A library in usually a sub-folder stored in _"lib"_ root folder. A reusable component contains public members. From a library you can load all components or specified components.
+Libraries are folders containing reusable component files. A library in usually a sub-folder stored in _"lib"_ root folder. A reusable component is a module that contains public members. From a library you can load all components or specified components.
 
 **notes:**
 * A component must have public members;
@@ -170,7 +170,8 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-#driver "main"
+#module.role := "driver";
+#module.name := "main"
 
 -- declare input parameters
 input *params ∈ [String];
@@ -196,7 +197,7 @@ over; --end of driver
 Do not try to understand this example. It is just a worm-up! 
 
 **Notes:** 
-* This program is a #driver having file-name "main.bee";
+* This program is a #module.role = "driver" having file-name "main.bee";
 * Input parameter _*params_ is an array of strings;
 * Any Bee module is ending with mandatory keyword: _"over"_ ;
 * Early driver termination can be trigger using: halt or exit;
@@ -256,7 +257,8 @@ Local context is a private memory space available in a _rule_ or _trial_ block.
 
 **example**
 ```
-#driver "test"
+#module.role := "driver";
+
 ** global context
 make i := 1 ∈ Z; 
 trial
@@ -380,9 +382,11 @@ In next example we are using various comments into a demo program.
 | At the beginning of program we can have  several comments    | 
 | to explain how the program works. This notation is preferred.|
 ---------------------------------------------------------------+
-#driver "demo"
+#module.role := "driver"
+
 ## This is a title in program
    ** This is a sub-title in program
+   
 over; -- end of program
 ****************************************************************
 ** Alternative boxed comment for ancient matrix printers      **
@@ -399,9 +403,9 @@ is ignored by the compiler. After last "." nothing else is parsed.
 
 When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled into an executable file. 
 
-* A #driver is the program main entry point. It is executed only once;
-* A #library do not contain rogue statements and do not have parameters;
-* An #aspect can contain rogue statements that are executed using "play";
+* A driver is the program main entry point. It is executed only once;
+* A component do not contain rogue statements and do not have parameters;
+* An aspect can contain rogue statements that are executed using _play_;
 
 #### Aspect Execution
 
@@ -448,7 +452,7 @@ over.
 ```
 
 ```
-#driver "main"
+#module.role := "driver";
 
 -- define variable result
 make result ∈ N;
