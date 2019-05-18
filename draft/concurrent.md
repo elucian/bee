@@ -20,7 +20,7 @@ yield   | interrupting current thread and give priority to other thread
 
 **example**
 
-Usually asynchronous call is done; from a control loop.
+Asynchronous call can be done using a control loop:
 
 ```
 -- suspend for 2.5 sec
@@ -28,13 +28,14 @@ rule test():
   wait 2.5;
 return;
 
--- start 4 threads
-make i := 0; --control variable
+-- start control loop
+begin
+  make i := 0; 
 while i ≤ 4 do
-  start test    
-  alter i += 1
+  start test;
+  alter i += 1;
 repeat;
-rest
+rest;
 ```
 
 **file:** [ac.md](demo/ac.md);   --asynchronous call

@@ -58,7 +58,7 @@ A tuple is  a literal, that looks like a complex expression:
 
 **examples**
 ```
-(a, b ∈ Z, c ∈ U) --parameters
+(a, b ∈ Z, c @ B) --parameters
 ('a','b','c')     --strings
 (1,2,3)           --numbers
 (1,'2','x')       --mixed types
@@ -132,25 +132,25 @@ print (n,m); -- 1, 1
 
 ## List
 
-A list is a dynamic collection of references.
+A list is a dynamic collection of chain elements connected by references.
 
-**user type**
+**list type**
 
 ```
-type type_name <: (Type); --a list type
+type type_name <: (element_type); -- list type
 ```
 
 **variable**
 You can use one of three forms of declarations:
 
 ```
-make name ∈  (Type); -- explicit list
-make name := (value,...); -- implicit list
-make name := (value,) ∈ (Type); -- initial value and type
+make name ∈  (element_type); -- explicit declaration
+make name := (value,...);    -- implicit declaration
+make name := (value,) ∈ (element_type); -- full declaration
 ```
 
 **properties**
-* a list can be initially empty = () usual,
+* a list can be initially empty = (),
 * all elements in a list have the same type,
 * elements in a list are ordered by index,
 * elements in a list are references,
@@ -172,7 +172,7 @@ make list := (0, 1, 2, 3, 4, 5)
 
 -- list traversal
 make x ∈ Z
-scan list +> x do
+scan list :> x do
   write x
   write _ if x ≡ list[?]; -- Note: "_" = " "
 next;
@@ -307,7 +307,7 @@ alter zum := [1,2,3];
 print zum; --expect [1,2,3];
 
 -- transfer a reference 
-alter zum @ zet;
+alter zum := zet;
 print zum; -- expect [1,1,1,1,1,1,1,1,1,1];
 ```
 
@@ -334,7 +334,7 @@ print nec; --expect [0,0,0,0,0,0,0,0,0,0]
 
 ## Slice
 
-A slice is a view of a section from an array.
+A slice is a view of references from a range of array elements.
 
 **Syntax:**
 
@@ -342,58 +342,36 @@ A slice is a view of a section from an array.
 -- declare vector with capacity (n)
 make array_name ∈ [element_type](c);
 
--- slice creation using "@" and ".."
-make slice_name @ array_name[n..m];
+-- slice creation using ":=" and ".."
+make slice_name := array_name[n..m];
 ```
 
 **Note:** 
-* Slices have references to original members;
-* Slices can be named or unnamed/anonymous;
+* Slices are arrays of references to original elements;
+* Slices can be anonymous or can be named;
 
 **example**
 ```
-make   a := [0](5);
+-- original array
+make   a := [0](5); 
 print  a;  --[0,0,0,0,0]
 
--- making slice views
-make c @ a[0..2]; --[0,0,0]
-make e @ a[3..4]; --[0,0]
+-- making two slices
+make c := a[0..2]; --[0,0,0]
+make e := a[3..4]; --[0,0]
 
 --modify slice elements
 alter c[*] := 1;
 alter e[*] := 2;
 
 --original array is modified
-print a; --expect [1,1,1,2,2]
+print a; -- expect [1,1,1,2,2]
 
 --modify last 2 elements using anonymous slicing
 alter a[3..?] := [2,3];
 
 --                     ↓ ↓
 print a; --expect [1,1,1,2,3]
-```
-
-## Copy
-
-Assignment ":=" and slicing notation "[..]" can be used to copy elements of an array.
-
-```
-make a := [0,1,2,3,4]; --type inference array
-make e,f,r ∈ [Z]();    --deferred initialization
-
--- by default modify ":=" copy/clone an entire array
-alter e := a 
-
--- compare two collections
-print e = a; --True  -- (equal collections)
-print e ≡ a; --False -- (different memory locations)
-
--- copy/clone original data
-alter f := a[2..?]; --initialize f with capacity 3
-
--- you can also copy data from range of native type
-alter r := Z[1..10]; --initialize array of 10 integers
-print r;  expect [1,2,3,4,5,6,7,8,9,10]
 ```
 
 ## Matrix
@@ -451,7 +429,7 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-rule foo( *bar ∈ [Z]) => (x ∈ Z):
+rule foo(*bar ∈ [Z]) => (x ∈ Z):
   make c := bar.count();
   -- precondition
   when (c = 0) do
@@ -467,10 +445,10 @@ rule foo( *bar ∈ [Z]) => (x ∈ Z):
 return;
 
 --we can call foo with variable number of arguments
-print foo();       --0
-print foo(1);      --1
-print foo(1,2);    --3
-print foo(1,2,3);  --6
+print foo();       -- 0
+print foo(1);      -- 1
+print foo(1,2);    -- 3
+print foo(1,2,3);  -- 6
 
 ```
 
@@ -504,8 +482,8 @@ alter a3 := a1 | a2; -- [1,2,3,4]
 
 ```
 make array := ['a', 'b', 'c'];
-make c ∈ U;
-scan array +> c do
+make c ∈ A;
+scan array :> c do
   write c;
   write ',';
 repeat;
@@ -906,8 +884,8 @@ rule bar(me @ Foo):
   print "b =" & me.b;
 return;
 
--- reference capture, using "@" from constructor
-make test @ foo(1,1);
+-- call constructor
+make test := foo(1,1);
 
 -- run bar() method using object test as dot qualifier
 apply test.bar();

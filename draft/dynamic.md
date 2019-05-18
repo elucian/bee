@@ -23,7 +23,7 @@ over.
 Expression signature is a type declaration;
 
 ```
-type CMP @ (Z,Z) ∈ L;
+type CMP(Z,Z) ∈ L;
 
 -- instantiate 3 expression rules like "CMP"
 rule gt(x, y ∈ Z) ∈ L => (x > y);

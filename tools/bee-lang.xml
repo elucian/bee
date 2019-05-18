@@ -29,7 +29,7 @@
             <Keywords name="Keywords3">exit fail pass over halt stop skip solve retry abort resume yield rest wait</Keywords>
             <Keywords name="Keywords4">play start apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;plot draw show hide erase scrub</Keywords>
             <Keywords name="Keywords5">exist open close remove files folders change new where save undo clean&#x000D;&#x000A;append to update in delete from</Keywords>
-            <Keywords name="Keywords6">B C L N Q P R U Z &#x039B; &#x03A6; V Y W G H&#x000D;&#x000A;String Text Date Time Error True False &#x000D;&#x000A;Global Local&#x000D;&#x000A;Point Vector Canvas&#x000D;&#x000A;&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords6">A B C L N Q P R U Z S X D T E &#x039B; &#x03A6; V Y W G H &#x000D;&#x000A;c8 u8 z16 z32 z64 f32 f64&#x000D;&#x000A;GL GN GM&#x000D;&#x000A;True False&#x000D;&#x000A;&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$ #</Keywords>
             <Keywords name="Keywords8">&#x03C0; &#x22A5; &#x2220; &#x22A1; &#x21BA; &#x2299; &#x2197; &#x25CB; &#x25F7; &#x25A1; &#x25C1; &#x25C7; &#x2302; &#x25EA; &#x238A;&#x000D;&#x000A;&#x25A0; &#x25A4; &#x25A5; &#x25A6; &#x25A7; &#x25A8; &#x25A9; &#x000D;&#x000A;</Keywords>
             <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12``` 13 14``` 15&apos; 16\ 17&apos; 18-- 19 20&#x000D;&#x000A; 21|* 22 23*|</Keywords>

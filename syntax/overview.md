@@ -10,13 +10,13 @@ I have used a simple design notation based on examples and notes:
 **bookmarks**
 
 * [Expressions](#expressions)
-* [Basic types](#basic-types)
+* [Primitive types](#primitive-types)
+* [Reference types](#basic-types)
 * [Constant literals](#constant-literals)
 * [Composite types](#composite-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
 * [Logical expression](#logical-expression)
-* [Reference](#reference)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
 * [Static rules](#static-rules)
@@ -75,40 +75,115 @@ alter x := x ÷ 0; -- error: division by 0
 
 Bee use 3 kind of data types:
 
-1. basic data types;
-2. composite data types;
-3. user defined types;
+1. Primitive data types;
+2. Reference data types;
+3. Composite data types;
 
-## Basic Types
 
-Bee basic data types have information about: 
+## Primitive Types
 
-1. name
-1. capacity
+Primitive types are mapped to operating system native types:
+
+| Name    |Bee|Bytes|Description
+|---------|---|-----|------------------------------------------------------------
+| char    |c8 | 8   | ASCII character \`_\`
+| byte    |u8 | 8   | Unsigned byte: 0..255
+| short   |z16| 16  | Signed small integer -32767..32766
+| int     |z32| 32  | Signet integer
+| long    |z64| 64  | Signed large integer
+| float   |f32| 32  | Single precision number on 32 bit
+| double  |f64| 64  | Double precision number on 64 bit
+
+
+**Note:**
+* Floating point numbers are signed;
+* Integers are signed if start with "z";
+* Unsigned integers are starting with  "u";
+* Primitive types are usually allocated on the stack;
+
+## Reference Types
+
+A reference is a special variable containing type information and a memory location.
+
+
+**Reference attributes**
+
+1. variable name
+1. memory address
+1. data type
+1. capacity (bytes)
 1. limits  (min/max)
-1. literal notation
 
-Basic types are represented with one single upper-case character.
+Reference types are represented with one single upper-case character.
 
-| Name        |Bee|Bytes|Description
-|-------------|---|-----|------------------------------------------------------------
-| Alpha       | A | 1   |American ASCII symbol (8 bit)
-| Unicode     | U | 4   |Code point 32 bit, max: U+FFFF or U-FFFFFFFF
-| Binary      | B | 4   |Unsigned 32 bit, max: 0b11111111111111111111111111111111
-| Rational    | Q | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
-| Natural     | N | 8   |Unsigned large positive number     [0..+]
-| Integer     | Z | 8   |Signed large discrete number       [-..+]
-| Positive    | P | 8   |Double precision positive numbers: (0..+)
-| Real        | R | 8   |Double precision number            (-..+)
-| Complex     | C |16   |Complex number: pairs like (r+i)
+| Name        |Bee |Bytes|Description
+|-------------|----|-----|------------------------------------------------------------
+| Alpha       | A  | 1   |Alpha-numeric code point 8 bit, max: U+FF
+| Binary      | B  | 4   |Unsigned 32 bit, max: U+FFFF or U-FFFFFFFF
+| Rational    | Q  | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
+| Natural     | N  | 8   |Unsigned large positive number     [0..+]
+| Integer     | Z  | 8   |Signed large discrete number       [-..+]
+| Positive    | P  | 8   |Double precision positive numbers: (0..+)
+| Real        | R  | 8   |Double precision number            (-..+)
+| Complex     | C  |16   |Complex number: pairs like (r+i)
+| Logic       | L  | 1   |Numeric enumeration of two values: False:0, True:1 
 
-**Note:** 
-* These capital letters are reserved and locked; 
-* Basic types represent values not memory locations;
-* Basic types have aligned fixed size;
-* Basic types are mapped to native OS types;
-* Basic types are usually allocated on the stack;
+**boxing**
 
+Boxing is the process of converting a primitive type to reference type. This will wrap the value and stores it on the heap. Unboxing extracts the value from the reference. Boxing is implicit while unboxing is explicit. 
+
+```
+make k ∈ Z; -- reference to integer
+make n := 10 ∈ z64;  -- primitive type
+
+-- boxing a primitive
+alter k := i;  -- auto-boxing
+alter n += 2;  -- i = 12 (modified)
+print k;       -- k = 10 (unmodified)
+
+-- reference identity
+print n ≡ k; -- False (different location)
+print n = k; -- True (same value)
+```
+
+**unboxing**
+
+Unboxing must be explicit. It may fail at runtime if the data type do not match.
+
+```
+make r := 10 ∈ Z; -- reference to integer
+make n ∈ z64;     -- primitive type
+
+-- explicit unboxing
+alter r := n -> z64; --  n = 10 
+alter n += 2;  -- n = 12 (modified)
+print r;       -- r = 10 (unmodified)
+
+-- reference identity is transient
+print n = r; -- True (same value)
+print n ≡ r; -- False (different locations)
+
+```
+
+**make vs copy**
+
+A reference can share its location with other reference.
+
+```
+make a := 2 ∈ Z;
+
+-- transfer value by share
+make b := a ∈ Z;
+
+print a ≡ b; -- 1: same location
+print a = b; -- 1: same value
+
+-- transfer value by copy
+make c :: a ∈ Z; -- copy value from a
+
+print a ≡ b; -- 1: same location
+print a = b; -- 1: same value
+```
 
 ## Constant Literals
 
@@ -119,8 +194,9 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |0          | integer zero
 |1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
 |0b10101010 | binary integer : (0b) & (0,1)
-|U+FFFF     | Unicode code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0xFFFFFFFF | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U+FF       | A code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U+FFFF     | B code point: (U+,U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0xFFFF     | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
 |1E10       | real number: 1×10¹⁰  :=   10000000000  
 |1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
@@ -135,12 +211,13 @@ make name := constant ∈ Type
 
 **example**
 ```
-make n := U+2200 ∈ U;  -- Symbol: ∀
+make n := U+2200 ∈ B;  -- Symbol: ∀
 ```
 
 **Note:** 
-* "U" is reserved, therefore compiler will find "U+" combination unique;
-* After U+ compiler is expecting 4,6 or 8 hexadecimal symbols;
+* "U" is reserved letter, therefore compiler will find "U+" combination unique;
+* After U+ compiler is expecting 4 hexadecimal symbols;
+* After U- compiler is expecting 6 or 8 hexadecimal symbols;
 
 
 ## Composite types
@@ -149,7 +226,6 @@ Composite types are using English full name and start with uppercase.
 
 | Name    | Bee | Description
 |---------|-----|----------------------------------------------------------------
-| Logical | L   | Enumeration: {False,True} 
 | String  | S   | Short string encoded as UTF8 (Array)
 | Text    | X   | Large blob text encoded as UTF8 (Rope or Radix Tree) 
 | Date    | D   | DD/MM/YYYY 
@@ -157,9 +233,9 @@ Composite types are using English full name and start with uppercase.
 | Error   | E   | Exception object: {code, message, line}
 
 **Notes:**
-* Composite types are references to memory location;
-* Composite types are usually allocated on the heap;
-* Composite types have usually variable size;
+* Composite variables are references;
+* Composite variables have usually variable size;
+* Composite variables are usually allocated on the heap;
 
 ## Collection types
 
@@ -167,9 +243,13 @@ Bee define a collection using a special notation based on brackets.
 
 | sym| Collection type
 |----|------------------------------------------------------------------
-| () | Tuple / List  / Expression
+| () | Expression/ Tuple / List
 | [] | Array/ Matrix/ Dynamic Array
 | {} | Ordinal / Set / Hash  / Object
+
+**Notes** 
+* All collections are references; 
+* Collection members can be references or native types;
 
 ## Type declaration
 
@@ -177,11 +257,17 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
 --declare new type
-type type_name <: type_descriptor
+type Type_Identifier <: type_descriptor
 
 --declare new references
-make var_name,var_name ... ∈ type_name
+make var_name,var_name ... ∈ Type_Identifier
 ```
+
+**Notes:**
+
+* User defined types are reference types;
+* User defined types start with uppercase letter;
+* Public user types start with dot prefix;
 
 ## Range subtypes
 
@@ -191,10 +277,10 @@ Range notation is used to create a subtype.
 
 ```
 -- discrete range
-type range_name <: basic_type[min..max]
+type Range_Name <: basic_type[min..max]
 
 -- continuous range
-type range_name <: basic_type(min..max)
+type Range_Name <: basic_type(min..max)
 ```
 
 **Examples:**
@@ -203,8 +289,8 @@ type range_name <: basic_type(min..max)
 type Positive  <: R(0..);
 type Negative  <: R(..-1);
 type Digit     <: B[0..9];
-type Alpha     <: U[`A`..`z`];
-type Latin     <: U[U+0041..U+FB02];
+type Alpha     <: A[`A`..`z`];
+type Latin     <: B[U+0041..U+FB02];
 
 --Check variable belong to sub-type
 when (`x` ∈ Alpha) do
@@ -216,20 +302,14 @@ done;
 
 **Notes:**
 
-* A range member/element is a native type;
 * Anonymous range expression [n..m] is of type Z;
-* Range can apply only to discrete basic types (B,U,Z,N);
-* Control variables can be declared in range using "∈";
-* To check value is in range use operator "∈";
-* A dynamic range can be created using variables for limits;
-* Using [n.!m] will exclude upper limit from range;
-* Using [n!!m] will exclude both limits from range;
-* Using (n..m) is necessary for a continuous type like Q, Z, N, P;
-* The lower or upper limit missing represent unlimited: ("∞");
+* Use [n.!m] will exclude upper limit from range;
+* Use [n!!m] will exclude both limits from range;
+* Use (n..m) to create Real continuous sub-type;
 
-**dynamic range**
+**example:**
 ```
-#precision:0.1
+#module.precision := 0.1
 
 -- integer range
 print [0..5]; --0,1,2,3,4,5
@@ -259,8 +339,7 @@ Variables are defined using keyword _make_ plus one of the operators:
 operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable type \| member type \| parameter type
- @       | declare reference \| make a slice \| input/output parameter
- :       | pair-up member/parameter to a constant/expression or constructor
+ :       | pair-up \| parameter:value \| key:value
  :=      | initialize variable using a constant/expression or constructor
 
 ```
@@ -270,10 +349,6 @@ make var_name := constant ∈ type_name;
 
 -- partial declaration using type inference
 make var_name := expression; 
-
--- reference declaration using using operator "@"
-make ref_name @ type_name;
-make ref_name @ var_name;
 ```
 
 Multiple variables can be define in one single line using comma separator:
@@ -343,16 +418,16 @@ print x; -- expect 20.0
 
 ## Alphanumeric type
 
-Bee define U as single UTF32 code point with representation: U+HHHH or U+HHHHHH
+Bee define A as single UTF-8 code point with representation: U+HH
 
 ```
-make a, b ∈ U;  -- Unicode 
-make x, y ∈ B;  -- Binary
+make a, b ∈ A;  -- ASCII 
+make x, y ∈ u8; -- Unsigned
 
 alter a := '0';     -- representation of 0
-alter x := a -> B;  -- convert to 30
+alter x := a -> u8; -- convert to 30
 alter y := 30;      -- UTF code for '0'
-alter b := y -> U;  -- convert to '0'
+alter b := y -> A;  -- convert to '0'
 ```
 
 ## Type checking
@@ -463,35 +538,6 @@ alter y := b -> L; --> 1
 * A string: "Yes", "yes", "True", "true", "T" or "t" or "1" convert to: True = 1
 * A string: "No", "no", "False", "true", "F" or "f" or "0" convert to: False= 0
 
-## Reference
-
-A reference is a special variable containing type information and a memory location.
-
-**notes:**
-
-* All composite variables are implicit references; 
-* Explicit references are declared using "@" instead of "∈";
-* Reference can be transferred using operator: "@" from other variable;
-* Reference location can be reset using operator ":=" to a new location;
-* Reference underline value can be cloned using operator ":=" into other variable;
-
-**example**
-```
-make k @ Z; -- reference to integer
-make i := 10 ∈ Z;  -- basic type
-
--- borrowing address / boxing
-alter k @  i;  -- boxing i = 12 
-alter i += 1;  -- modify i = 13
-print k;  --expect 13 (modified)
-
--- create new reference
-make  n @ i; -- boxing i
-print n ≡ i; -- True (same)
-
--- reference identity is transient
-print n ≡ k; -- True (same)
-```
 
 ## Conditionals
 
@@ -590,8 +636,8 @@ Parameters are special variables defined in rule signature.
 * Parameters with initial value are optional;
 * Optional parameters must be enumerated last in parameter list;
 * Optional parameters are initialized with pair-up operator ":" not ":=";
-* Parameters defined with "∈" are pass by value;
-* Parameters defined with "@" are pass by reference;
+* Parameters defined with "∈" require value arguments;
+* Parameters defined with "@" require reference variable as argument;
 
 Static rules can have side-effects:
 
@@ -649,7 +695,7 @@ print b;  --9
 print c;  --1 
 
 -- alternative rule call:
-apply com(0,1) +> (b,c);
+apply com(0,1) +> b, c;
 print b; --1 
 print c; --1 
 

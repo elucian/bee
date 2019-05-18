@@ -1,6 +1,6 @@
 ## Bee Draft
 
-In /draft folder we store ideas for future developement.
+In /draft folder we store ideas for future development.
 
 ## Procedure
 
@@ -22,7 +22,7 @@ So far we have following features pending approval:
 1. [Generic](generic.md) - generic rules
 1. [Dynamic](dynamic.md) - dynamic programming
 1. [Concurrent](concurrent.md) - concurrent programming
-1. [Builder](builder.md) - set builder
+1. [Builder](builder.md) - set/collection builder
 1. [Rational](rational.md) - fixed point arithmetics
 1. [Recursion](recursion.md) - tail recursion
 1. [Drawing](drawing.md) - vector graphics

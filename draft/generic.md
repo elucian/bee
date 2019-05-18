@@ -35,7 +35,7 @@ Using rule for argument using name: "id"
 
 ```
 --argument ↓  parameters  ↓ ... expression ↓
-apply foo(id @ (param ,param ...) ∈ type => (expression)):
+apply foo((param ,param ...) => (expression)):
 ```
 
 
@@ -46,7 +46,7 @@ apply foo(id @ (param ,param ...) ∈ type => (expression)):
 rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT) ∈ L):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
-  make temp @ XT;
+  make temp ∈ XT;
   make i ∈ N;
   while swap do
     alter i := 0;
@@ -55,9 +55,9 @@ rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT) ∈ L):
        -- this pair is out of order ?
       when gt(array[i], array[i+1]) do
          -- swap pair and set swap flag = true
-        alter temp @ array[i];
-        alter array[i]   @ array[i+1];
-        alter array[i+1] @ temp;
+        alter temp := array[i];
+        alter array[i] := array[i+1];
+        alter array[i+1] := temp;
         alter swap := True;
       done;
       alter i += 1;

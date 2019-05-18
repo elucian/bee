@@ -12,11 +12,15 @@ Name             | Description
 [scan](#scan)    | for visitor pattern
 [trial](#trial)  | trial work-flow
 
+
+
 ## with
 
 Define a qualifier suppression block:
 
 ```
+begin
+  -- local declaration
 with qualifier do
   -- instead of qualifier.member()
   apply member()
@@ -283,7 +287,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 **Pattern:**
 ```
 make var ∈ N;  --local
-scan [min..max] +> var do
+scan [min..max] :> var do
   ** block statements
   skip if (condition);
   ...
@@ -299,7 +303,7 @@ next;
 Example of forward skip in counting iteration:
 ```
 make i ∈ Z;  global
-scan [0..10] +> i do
+scan [0..10] :> i do
   -- force next iteration
   when i % 2 = 0 do
     skip;

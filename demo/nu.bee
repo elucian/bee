@@ -4,22 +4,38 @@
 #module.name :=  "nu";
 
 make d, e @ Z;    -- reference to natural number
-make s := 10 ∈ Z; -- define integer
--- assign "by reference" 
-alter d @ s;  -- explicit boxing address for "s"
+make s := 10 ∈ Z; -- define integer reference
+
+-- assign "by share" 
+alter d := s; -- explicit transfer address for "s"
 alter d += 1; -- alter underline value of d that is s  
 print s; -- s = 11  (modified)
 print d; -- d = 11  (modified) 
 
--- wrong assignment using "@"
+-- verify identity
+print d = s; -- 1 same value
+print d ≡ s; -- 1 same reference
+
+-- assign "by value"
+alter e :: d; 
+print e; -- 11
+
+-- verify identity
+print e = d; -- 1 same value
+print e ≡ d; -- 0 different reference
+
+-- wrong unboxing
+make i ∈ z64; -- native type
 trial:
-  alter e := s;
+  alter i := d;
 other
-  -- expect error "Null reference error"
-  print "failed:".#error.message;
+  -- unboxing error
+  print "unboxing fail:".#error.message;
 done;
- 
--- test modifier effect
-fail if ¬ (s ≡ d);
+
+-- right unboxing
+alter i := d -> z64;
+print i = d; -- 1 same value
+print i ≡ d; -- 0 different types and locations
 
 over.

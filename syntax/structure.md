@@ -284,7 +284,10 @@ over.
 
 ```
 #error     -- contains last exception/error created by "fail"
-#precision -- contains default precision for Q = 0.001
+#precision -- contains default precision: Q = 0.001
+#timer     -- default stop time in seconds for infinite loop
+#recursion -- level of recursive calls
+#debug     -- turn debug on or off
 ```
 
 **note** 
@@ -420,7 +423,7 @@ A large program can have multiple _aspects_. The driver control the execution of
 * One aspect of a problem is executed using keyword _play_;
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, not in parallel;
-* An aspect can not be used in expressions except unpacking or assignment;
+* An aspect can not be used in expressions except unpacking;
 * An aspect can be terminated early using:"exit" or "fail";
 * Using "halt" in aspect cause the program to stop immediately.
 
@@ -433,8 +436,8 @@ load $pro.src.file_name.bee;
 -- play when aspect do not have any result:
 play aspect_name(parameter_list);
 
--- result can be captured using ":=" or any other modifier:
-play aspect_name(parameter_list) +> result
+-- result can be captured using "+>" or any other modifier:
+play aspect_name(parameter_list) +> (result,...)
 ```
 
 #### Parameters

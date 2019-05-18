@@ -27,9 +27,9 @@ symbol| description
 ------|----------------------------------------------------------------
  \#   | Compiler directives prefix \| Template placeholder
   $   | Global variables prefix \| System environment constants
-  @   | Define a reference \| Define output parameter 
+  @   | Define input/output parameter 
   :   | Pair up key-value in a collection or rule call
-;     | End of statement \| Statement separator
+  ;   | End of statement \| Statement separator
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Anonymous variable \| Has constant value one space (_ = ' ')
@@ -58,7 +58,7 @@ symbol| description
 Double symbols is a group of two ASCII symbols considered as one.    
 
 symbol| description
-------|------------------------------------------------------
+------|------------------------------------------------------------------
  \+-  | Start for multiple line comments
  \-+  | End for multiple line comments  
  \##  | Start for a title comment    
@@ -69,8 +69,10 @@ symbol| description
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
- :=   | modify value \| deep copy \| alias qualifier
-
+ :=   | Assign value  \| Transfer by sharing reference
+ ::   | Clone value   \| Transfer by copy value/attributes
+ :\>  | Create visitor from collection (usually in scan) 
+ \+\> | Result collector \| Used for _apply_ and _play_ statements
 
 ## Arithmetic modifiers
 
@@ -155,7 +157,7 @@ symbol| meaning       | notes
 
 Arity = 1
 
- A    | ¬ A | A ← 1 | A → 2  
+ a    | ¬ a | a ← 1 | a → 2  
 ------|-----|-------|--------
  0000 |1111 | 0000  | 0000   
  1111 |0000 | 1110  | 0011   
@@ -165,7 +167,7 @@ Arity = 1
 
 Arity = 2
  
- A    | B   | A ∧ B  | A ∨ B | A ~ B
+ a    | b   | a ∧ b  | a ∨ b | a ~ b
 ------|-----|--------|-------|--------
  00   | 00  | 00     | 00    |  11    
  01   | 00  | 00     | 01    |  10    

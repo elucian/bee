@@ -85,7 +85,7 @@ You can scan one table like a collection:
 local
   -- declare current record
   make  current_record ∈ {record_field ∈ data_type, ...}  
-  scan db.table_name +> current_record do
+  scan db.table_name :> current_record do
     -- establish qualifier suppressor 
     with current_record do
       ** use current_record fields
@@ -103,7 +103,7 @@ type: Record_Type <: {record_fields}
 do
   make current_record ∈ Record_Type
   make index ∈ Z
-  scan db.table_name +> current_record do
+  scan db.table_name :> current_record do
     ** update current table
     update (rowid:current_record.rowid)
       alter field_name := new_value
