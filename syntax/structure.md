@@ -84,7 +84,7 @@ Bee can use a runt-time configuration file:
 * Bee constant values yes/no can be used in configuration files
 
 
-## System Variables
+### System Variables
 At the beginning of each module or component you can define system variables using prefix "#". Some system variables have predefined names. You can create new system variables specific to you application.
 
 ```
@@ -98,7 +98,7 @@ At the beginning of each module or component you can define system variables usi
 #echo        := on
 ```
 
-### Module
+### Modules
 
 The #module is an _system object_ that have pre-defined properties.
 
@@ -113,12 +113,12 @@ The #module is an _system object_ that have pre-defined properties.
 * A driver can load one or more _components_;
 * A driver can execute one or multiple _aspects_;
 
-### Driver
+### Drivers
 There is one single driver file for one application. This file has #role = "driver". You can interrogate any of module attributes using comparison operators. A driver has the role to lead the application main functionality. 
 
 A driver can define system constants, variables, application menus, database connections and such. When a driver is terminated the application stop running. Usually a driver terminate with keyword: _over_ or _halt_.
 
-### Aspect
+### Aspects
 An application architect can separate system concerns in multiple aspects. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters and capture the results after execution of each aspect. 
 
 **execution**
@@ -130,8 +130,8 @@ Aspects can not be executed in parallel but sequential. We consider that aspects
 * Usually aspect members are private;
 * To execute one aspect you use keyword: _play_.
 
-### Library
-Libraries are folders containing reusable component files. A library in usually a sub-folder stored in _"lib"_ root folder. A reusable component is a module that contains public members. From a library you can load all components or specified components.
+### Components
+Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. A component contains public members but does not have rogue statements. One module can _load_ from a library one or more components. A component usually do not have rogue statements and is not executable using _play_ statement;
 
 **notes:**
 * A component must have public members;
