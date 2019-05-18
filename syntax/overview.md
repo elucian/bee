@@ -11,7 +11,7 @@ I have used a simple design notation based on examples and notes:
 
 * [Expressions](#expressions)
 * [Primitive types](#primitive-types)
-* [Reference types](#basic-types)
+* [Reference types](#reference-types)
 * [Constant literals](#constant-literals)
 * [Composite types](#composite-types)
 * [Type declaration](#type-declaration)
