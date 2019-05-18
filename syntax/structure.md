@@ -100,35 +100,37 @@ At the beginning of each module or component you can define system variables usi
 
 ### Modules
 
-The #module is an _system object_ that have pre-defined properties.
+One _module_ has several system variables:
 
-* role: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
-* name: the driver name it is usually the same as the file name;
-* description: a short description of the module;
-* default role for a module with no role is _driver_;
+* #role: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
+* #name: the driver name it is usually the same as the file name;
+* #description: a short description of the module;
 
 **Notes**
-* A program can have one single _driver_;
-* If a driver load a file its role becomes _component_; 
-* A driver can load one or more _components_;
-* A driver can execute one or multiple _aspects_;
+* Default role for a _module_ is _driver_;
+* One application can have one single _driver_;
+* One _driver_ can load one or more _components_;
+* One _driver_ can _play_ multiple _aspects_;
+* One _aspect_ can also load _components_;
+* One _aspect_ can also _play_ other aspects;
 
 ### Drivers
-There is one single driver file for one application. This file has #role = "driver". You can interrogate any of module attributes using comparison operators. A driver has the role to lead the application main functionality. 
+There is one single _driver file_ for one application. This file has #role = "driver". A _driver_ has the role to lead the application main functionality. When _driver_ is over the application stop and give control back to operating system. 
 
-A driver can define system constants, variables, application menus, database connections and such. When a driver is terminated the application stop running. Usually a driver terminate with keyword: _over_ or _halt_.
+A _driver_ can define read configuratin file, define system constants, system variables, application menus, database connections and such. A driver can be terminated early using keywords: {_halt_, _fail_} or normal using last statement: _over_ followed by a dot.
 
 ### Aspects
-An application architect can separate system concerns in multiple aspects. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters and capture the results after execution of each aspect. 
+An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters. Aspect result can be captured after execution using operator "+>". Not all _aspects_ have a result. 
 
 **execution**
-Aspects can not be executed in parallel but sequential. We consider that aspects are depending on each other to be executed in order like a process. If one aspect fail to execute the application should analyze the error and continue or terminate the driver execution.
+Aspects can not be executed in parallel but only sequential. We consider that various _aspects_ can depend on each other to be executed in order like a process. If one aspect fail the application should analyze the #error and continue or terminate the execution.
 
 **notes:**
 * One aspect can accept parameters;
 * One aspect can produce results; 
+* One aspect must have rogue statements;
 * Usually aspect members are private;
-* To execute one aspect you use keyword: _play_.
+* To execute one aspect you use keyword: _play_;
 
 ### Components
 Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. A component contains public members but does not have rogue statements. One module can _load_ from a library one or more components. A component usually do not have rogue statements and is not executable using _play_ statement;
