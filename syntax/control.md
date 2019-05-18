@@ -4,6 +4,7 @@ Bee has 7 control flow statements:
 
 Name             | Description
 -----------------|----------------------------------
+[do](#do)        | start anonymous local context
 [with](#with)    | qualifier suppression
 [when](#when)    | decision statement
 [quest](#quest)  | multi-path selector
@@ -12,18 +13,28 @@ Name             | Description
 [scan](#scan)    | for visitor pattern
 [trial](#trial)  | trial work-flow
 
+## do
 
+Define anonymous local context;
+
+```
+do
+  -- declarations
+  make var ∈ type_name;
+  -- statements
+  ...
+done;
+```
 
 ## with
 
 Define a qualifier suppression block:
 
 ```
-begin
-  -- local declaration
 with qualifier do
   -- instead of qualifier.member()
-  apply member()
+  apply member();
+  ...
 done;
 ```
 
@@ -32,7 +43,8 @@ Using alias for qualifier:
 ```
 with (short: long.qualifier) do
   -- instead of long_qualifier.member()
-  apply short.member() 
+  apply short.member();
+  ...
 done;
 ```
 
@@ -41,7 +53,8 @@ Using 2 qualifiers for mapping assignment:
 ```
 with (target: target_qualifier, source: source_qualifier) do
   -- copy value from source to target
-  alter target.member := source.member
+  alter target.member := source.member;
+  ...
 done;
 ```
 

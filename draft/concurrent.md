@@ -29,8 +29,7 @@ rule test():
 return;
 
 -- start control loop
-begin
-  make i := 0; 
+make i := 0; 
 while i ≤ 4 do
   start test;
   alter i += 1;

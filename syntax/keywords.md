@@ -1,16 +1,15 @@
 ## Bee Keywords
 
-Bee uses 58 reserved keywords so far: 
+Bee uses 54 reserved keywords so far: 
 
 ```
 04: if, is, to, in
-05: #module, #timer, #precision
-09: define, make, rule, clone, input, output, load, alias, type, return;
+10: define, make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, quest, cycle, while, scan, trial
 11: else, case, error, other, final, match, none, repeat, next, do, done
-12: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
-03: append, update, delete, from
+11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
+04: append, update, delete, from
 ```
 
 **notes:** 
@@ -26,14 +25,6 @@ Bee uses 58 reserved keywords so far:
 | is          | introspection operator (is of type)
 | to          | used in conjunction with append
 | in          | used in conjunction with update 
-
-### Global Variables
-
-| Keyword     | Purpose
-|-------------|--------------------------------------------------------
-| #module     | Declare module attributes
-| #timer      | Declare maximum time spent for a program to run. (default: 30s)
-| #precision  | Declare maximum precision to use for decimal numbers. (default: 1m) 
 
 **Note:** (1m = 10⁻³, 1μ =10⁻⁶)
 

@@ -16,7 +16,7 @@ print d; -- d = 11  (modified)
 print d = s; -- 1 same value
 print d ≡ s; -- 1 same reference
 
--- assign "by value"
+-- assign "by copy"
 alter e :: d; 
 print e; -- 11
 
