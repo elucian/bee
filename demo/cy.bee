@@ -1,7 +1,7 @@
 +----------------------------------
     Demonstrate while statement
 -----------------------------------+
-#module.name :=  "cy";
+#name :=  "cy";
 
 -- declare array of 10 Words
 make a @ [Z](10);

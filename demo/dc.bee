@@ -1,7 +1,7 @@
 +-----------------------------------------
       native declaration demo
 -----------------------------------------+
-#module.name :=  "dc";
+#name :=  "dc";
 
 make n ∈ Z; -- Integer on 64 bit
 make l ∈ L; -- Logical value False := 0

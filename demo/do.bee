@@ -1,7 +1,7 @@
 +-----------------------------------------
        repetitive statement demo
 -----------------------------------------+
-#module.name :=  "do";
+#name :=  "do";
 
 make a :=  [Z](10)  ; -- array of 10 Words
 make n :=  a.count(); -- index of last element

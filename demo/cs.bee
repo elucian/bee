@@ -1,7 +1,7 @@
 +--------------------------------
 |    control structure demo     |  
 +-------------------------------+
-#module.name :=  "cs";
+#name :=  "cs";
 
 -- declare two natural numbers
 make a := 10, b := 5 ∈ N;

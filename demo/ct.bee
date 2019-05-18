@@ -1,7 +1,7 @@
 +----------------------------------
         composite types
 ----------------------------------+
-#module.name :=  "ct";
+#name :=  "ct";
 
 -- enumeration is a type 
 type Enum := {fst:1, snd, trd};

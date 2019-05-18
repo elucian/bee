@@ -1,7 +1,7 @@
 +---------------------------
   Demo Fibonacci rule
 ---------------------------+
-#module.name :=  "fi";
+#name :=  "fi";
 
 -- declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):

@@ -1,7 +1,7 @@
 ***********************************
 **   Recursive object demo       **
 ***********************************
-#module.name :=  "ro";
+#name :=  "ro";
 
 -- define recursive type Person
 type Person <: {

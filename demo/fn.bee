@@ -1,7 +1,7 @@
 +-----------------------------------
   declare and use an expression rule
 -----------------------------------+
-#module.name :=  "fn";
+#name :=  "fn";
 
 ** simple rule
 rule add(a, b ∈ Z) ∈ Z => (a + b);

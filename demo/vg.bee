@@ -1,7 +1,7 @@
 +-------------------------------------
       vector graphics prospect
 ------------------------------------+
-#module.name := "vg";
+#name := "vg";
 
 -- define two points and two vectors
 make p1, p2 @ Point;

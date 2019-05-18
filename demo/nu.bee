@@ -1,9 +1,9 @@
 +----------------------------------------------
           Working with references              
 ----------------------------------------------+
-#module.name :=  "nu";
+#name :=  "nu";
 
-make d, e @ Z;    -- reference to natural number
+make d, e ∈ Z;    -- reference to natural number
 make s := 10 ∈ Z; -- define integer reference
 
 -- assign "by share" 
@@ -35,7 +35,9 @@ done;
 
 -- right unboxing
 alter i := d -> z64;
+
+-- verify identity
 print i = d; -- 1 same value
-print i ≡ d; -- 0 different types and locations
+print i ≡ d; -- 0 different locations
 
 over.

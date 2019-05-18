@@ -1,7 +1,7 @@
 +----------------------
    Bubble Sort Demo
 -----------------------+
-#module.name :=  "bs";
+#name :=  "bs";
 
 -- bubble sort
 rule sort(this @ [Z]):

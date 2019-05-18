@@ -1,7 +1,7 @@
 +----------------------------------------
  demonstrate rule associated to a type
 ----------------------------------------+
-#module.name :=  "me";
+#name :=  "me";
 
 -- enumeration with public members
 type Number <: {.zero, .one, .two};

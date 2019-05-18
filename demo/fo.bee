@@ -1,7 +1,7 @@
 +--------------------------------
  open a file and write into it. 
 --------------------------------+
-#module.name :=  "fo";
+#name :=  "fo";
 
 -- initialize the system library 
 load io   := $bee.system.io.(*);

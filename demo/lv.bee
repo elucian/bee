@@ -1,7 +1,7 @@
 +-------------------------------------------
    demo for local variable site-effect
 -------------------------------------------+
-#module.name :=  "lv";
+#name :=  "lv";
 
 -- global variable
 make x := 1;

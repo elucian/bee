@@ -1,7 +1,7 @@
 +-------------------------------------
    rule unpacking demonstration 
 -------------------------------------+
-#module.name :=  "up";
+#name :=  "up";
 
 ** rule with two results
 rule test(x, y ∈ Z) => (a,b ∈ Z):

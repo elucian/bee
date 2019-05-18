@@ -1,11 +1,12 @@
 +----------------------------------------------------
 |              defined data types                   |
 ----------------------------------------------------+
-#module.name :=  "dt";
-#module.description := "demo data types"
+#name :=  "dt";
+#description := "demo data types"
 
 -- this type is public (uses dot prefix)
 type .Data <: {key:U, value:N};
+
 -- make variable using defubed alias
 make  x @ Data;
 alter x := {key:'a', make:10};

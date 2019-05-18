@@ -120,7 +120,7 @@ Reference types are represented with one single upper-case character.
 |-------------|----|-----|------------------------------------------------------------
 | Alpha       | A  | 1   |Alpha-numeric code point 8 bit, max: U+FF
 | Binary      | B  | 4   |Unsigned 32 bit, max: U+FFFF or U-FFFFFFFF
-| Rational    | Q  | 8   |Fraction of two binary numbers like: 1/2 (precision 0.001)
+| Rational    | Q  | 8   |Fraction of two binary numbers like: 1/2 (precision = 0.001)
 | Natural     | N  | 8   |Unsigned large positive number     [0..+]
 | Integer     | Z  | 8   |Signed large discrete number       [-..+]
 | Positive    | P  | 8   |Double precision positive numbers: (0..+)
@@ -310,7 +310,7 @@ done;
 
 **example:**
 ```
-#module.precision := 0.1
+#precision := 0.1
 
 -- integer range
 print [0..5]; --0,1,2,3,4,5
@@ -831,8 +831,8 @@ Usually these rules are implemented in a library component.
 **Example:**
 This is myLib.bee file: 
 ```
-#module.role := "component";
-#module.name := "myLib";
+#role := "component";
+#name := "myLib";
 
 load $bee/lib/cpp/myLib.bee; --load cpp library
 
@@ -845,7 +845,7 @@ return;
 
 This is the driver file.
 ```
-#module.role := "driver";
+#role := "driver";
 
 -- load library
 load $bee/lib/myLib.bee;

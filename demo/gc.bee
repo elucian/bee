@@ -1,7 +1,7 @@
 +----------------------------------
   Generator Class demo 
 ----------------------------------+
-#module.name :=  "gc";
+#name :=  "gc";
 
 -- first make a class
 type GenI <: {min ,max ,ci:min ∈ Z};

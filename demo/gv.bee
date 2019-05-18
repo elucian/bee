@@ -2,7 +2,7 @@
    global variables are public
    use prefix $ and lowercase
 ------------------------------+
-#module.name :=  "gv";
+#name :=  "gv";
 
 -- declare a global variable $xS
 make x := 1;

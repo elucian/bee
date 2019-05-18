@@ -1,7 +1,7 @@
 +------------------------------------ 
 |  asynchronous call using "start"  |
 +-----------------------------------+
-#module.name :=  "ac";
+#name :=  "ac";
 
 -- suspend for 2.5 sec
 rule test():

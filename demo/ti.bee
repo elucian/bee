@@ -1,7 +1,7 @@
 +-----------------------------------
       type inference demo
 -----------------------------------+
-#module.name :=  "ti";
+#name :=  "ti";
 
 -- constant type inference
 define a := 10;     -- Z (integer on 64bit)

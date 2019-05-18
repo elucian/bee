@@ -4,7 +4,7 @@ Bee language enable developers to create small programs using a single file, or 
 
 **bookmarks**
 
-Next we describe better Bee structure:
+Next you can learn general concepts about Bee applications:
 
 * [Project](#project)
 * [Declaration](#declaration)
@@ -46,18 +46,61 @@ $pro_home
 
 ``` 
 
-### System Variables
-At the beginning of each component we can define system variables using prefix "#".
+### Configuration
+One application can load system constants from a configuration file. These are stored as "$name:value" pairs. Some system constants can be derived from environment variables using concatenation operators "&","+", "/" or "\\". 
+
+A configuration file have extension *.cfg. It can be used by the compiler or by the application. One application can run with different configuration files. Application documentation must contain description of configuration constants.
+
+Sometimes a _file template_ is provided to for copy and modify. Template file may contain comments using Bee syntax that you will learn later. Bee application will automatically parse configuration file to read values for: _system constants_.
+
+**compiling:**
+Bee can use a compile-time configuration file:
+```
+\>bee program_name -c file_name.cfg
+```
+
+**running:**
+Bee can use a runt-time configuration file:
+```
+\>program_name -c file_name.cfg
+```
+
+### System Constants
+ System constants are using "$" prefix. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ module.
+
+| Constant | Environment| Description                |
+|----------|------------|----------------------------|
+|$bee_home | bee_home   | Level home folder          |
+|$bee_lib  | bee_lib    | Level library home         |
+|$bee_path | bee_path   | Level library path         |
+|$pro_home | N/A        | Program home folder        |
+|$pro_lib  | N/A        | Program library home       |
+|$pro_mod  | N/A        | Program modules home       |
+|$pro_log  | N/A        | Reporting folder           |
+
+**note:** 
+* Bee constant values on/off can be used also in configuration files
+* Bee constant values true/false can be used in configuration files
+* Bee constant values yes/no can be used in configuration files
+
+
+## System Variables
+At the beginning of each module or component you can define system variables using prefix "#". Some system variables have predefined names. You can create new system variables specific to you application.
 
 ```
-#module.role := "driver";
-#module.name := "name";
-#module.description := "description";
+#name := "name";
+#role := "driver";
+#description := "module description"
+#precision   := 0.001
+#recursion   := 20
+#timer       := 10
+#debug       := on
+#echo        := on
 ```
 
-**module**
+### Module
 
-The #module is an system object that have pre-defined properties.
+The #module is an _system object_ that have pre-defined properties.
 
 * role: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
 * name: the driver name it is usually the same as the file name;
@@ -70,27 +113,8 @@ The #module is an system object that have pre-defined properties.
 * A driver can load one or more _components_;
 * A driver can execute one or multiple _aspects_;
 
-### System Constants
-There are several predefined constants available in Bee. System constants are using "$" prefix. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_.
-
-| Constant | Environment| Description                |
-|----------|------------|----------------------------|
-|$bee_home | bee_home   | Level home folder          |
-|$bee_lib  | bee_lib    | Level library home         |
-|$bee_path | bee_path   | Level library path         |
-|$pro_home | N/A        | Program home folder        |
-|$pro_lib  | N/A        | Program library home       |
-|$pro_mod  | N/A        | Program modules home       |
-|$pro_log  | N/A        | Reporting folder           |
-
-
-### Configuration
-One application can load system constants from a configuration file. These are stored as "name:value" pairs of strings. Some system constants can be derived from environment variables. These are defined implicit in Bee runtime environment. 
-
-Configuration file can be used by the compiler. This is called "compile-time" configuration file. Other configuration files are specific to a particular session. These are called "run-time" configuration files. There is no difference between the two except the file name and the values. 
-
 ### Driver
-There is one single driver file for one application. This file has #module.role = "driver". You can interrogate any of module attributes using comparison operators. A driver has the role to lead the application main functionality. 
+There is one single driver file for one application. This file has #role = "driver". You can interrogate any of module attributes using comparison operators. A driver has the role to lead the application main functionality. 
 
 A driver can define system constants, variables, application menus, database connections and such. When a driver is terminated the application stop running. Usually a driver terminate with keyword: _over_ or _halt_.
 
@@ -173,8 +197,8 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-#module.role := "driver";
-#module.name := "main"
+#role := "driver";
+#name := "main"
 
 -- declare input parameters
 input *params ∈ [String];
@@ -200,7 +224,7 @@ over; --end of driver
 Do not try to understand this example. It is just a worm-up! 
 
 **Notes:** 
-* This program is a #module.role = "driver" having file-name "main.bee";
+* This program is a #role = "driver" having file-name "main.bee";
 * Input parameter _*params_ is an array of strings;
 * Any Bee module is ending with mandatory keyword: _"over"_; 
 * Early driver termination can be trigger using: halt or exit;
@@ -254,18 +278,16 @@ One application has a global context where variables and constants are allocated
 * Global context helps to store and identify global data and public members;
 * When a module is loaded, all public members are defined in the global context;
 
-## Local context
+## Name space
 
-Local context is a private memory space available in a _rule_ or _trial_ block.
+A module can establish one or more name-spaces where you can define module members and statements.
 
 **example**
 ```
-#module.role := "driver";
-
-** global context
+** module name-space
 make i := 1 ∈ Z; 
 trial
-  ** local context
+  ** local name-space
   make i := 2 ∈ Z;
   print i;  -- expected: 2
 done;
@@ -277,30 +299,16 @@ over.
 * [lv.bee](../demo/lv.bee)
 * [gv.bee](../demo/gv.bee)  
 
-## System variables
+A module member can be found using dot notation, also known as _scoping_ operator:
 
-* System variable names start with symbol "#" and are declared usually at beginning of module; 
-* Several predefined system variables are available in _global context_ with no declaration;
-
+**syntax:**
 ```
-#error     -- contains last exception/error created by "fail"
-#precision -- contains default precision: Q = 0.001
-#timer     -- default stop time in seconds for infinite loop
-#recursion -- level of recursive calls
-#debug     -- turn debug on or off
+scope_name.member_name
 ```
-
-**note** 
-* System variables are application states;
-* System variable do not require scope qualifier;
 
 ## Public members
 
 In Bee all members that begin with dot "." are public members.
-
-* A public member from a library can be access with dot qualifier;
-* A public member from one Ordinal number can be access with dot qualifier;
-* We can use _with_ keyword to suppress dot qualifier;
 
 ```
 --public constant
@@ -318,9 +326,13 @@ rule .m(x, y ∈ N, r @ N);
 return;
 ```
 
+**note:** 
+* private members are visible in current module and do not require _scoping_ notation;
+* public members are visible from external modules using _scoping_ notation;
+
 ## Comments
 
-Bee enable redundant notations for comments:
+Comments can be used to document the code or the configuration files.
 
 **End of line**
 
@@ -388,7 +400,7 @@ In next example we are using various comments into a demo program.
 | At the beginning of program we can have  several comments    | 
 | to explain how the program works. This notation is preferred.|
 ---------------------------------------------------------------+
-#module.role := "driver"
+#role := "driver"
 
 ## This is a title in program
    ** This is a sub-title in program
@@ -415,17 +427,16 @@ When a program is executed the driver is located and executed first. If a progra
 
 #### Aspect Execution
 
-A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver can report results or a provide feedback.
+A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver can report results or feedback.
 
 **properties**
 
 * An aspect can be executed once or multiple times; 
-* One aspect of a problem is executed using keyword _play_;
+* An aspect is executed using keyword _play_;
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, not in parallel;
 * An aspect can not be used in expressions except unpacking;
-* An aspect can be terminated early using:"exit" or "fail";
-* Using "halt" in aspect cause the program to stop immediately.
+* An aspect can be terminated early using:"exit" or "halt" or "fail";
 
 **pattern**
 
@@ -443,7 +454,8 @@ play aspect_name(parameter_list) +> (result,...)
 #### Parameters
 
 ```
-#aspect "mod"
+#name := "mod";
+#role := "aspect";
 
 input  i ∈ Z;  --define parameter "i"
 output v ∈ N;  --define result "v"
@@ -458,7 +470,7 @@ over.
 ```
 
 ```
-#module.role := "driver";
+#role := "driver";
 
 -- define variable result
 make result ∈ N;
@@ -480,7 +492,8 @@ output v,z ∈ N; --define two results "v" and "z"
 ```
 
 **note:** 
-* only one input statement is used for one aspect;
-* only one output statement is used for one aspect;
+* both input/output statements are optional;
+* one aspect can have only one input and one output statement;
+
 
 **Read next:** [Syntax Overview](overview.md)

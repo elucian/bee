@@ -1,7 +1,7 @@
 +---------------------------------
   High order rules & rule objects
 ----------------------------------+
-#module.name :=  "ho" ;
+#name :=  "ho" ;
 
 ** create a rule prototype
  

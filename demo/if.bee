@@ -1,7 +1,7 @@
 +-------------------------------
    "if" and "else" decisions
 -------------------------------+
-#module.name :=  "if";
+#name :=  "if";
 
 make x ∈ N;
 read (x ,"define a number:");
