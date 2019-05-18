@@ -54,7 +54,7 @@ alter  b := name1; --b value := 1
 
 ## Tuple
 
-A tuple is  a literal, that looks like a complex expression: 
+A tuple is an enumeration of elements enclosed in parenthesis and separated by comma: 
 
 **examples**
 ```
@@ -70,8 +70,8 @@ Definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
 * You can not define a variable of type tuple;
 * Tuples are source code literals with a static structure;
 * Values in a tuple can have different data types;
-* You can address elements of tuple only after unpacking;
 * Elements of tuple are ordered, but can not be addressed by index;
+* You can use elements from a tuple using unpacking operator;
 
 **unpacking**
 
@@ -103,7 +103,7 @@ print s; --97 > 65 > a
 * If tuple has less elements, last variables are set to zero;
 
 **multiple results**
-A rule can have multiple results in form of a tuple:
+A rule can have multiple results defined using a tuple:
 
 ```
 -- rule with multiple results
@@ -132,9 +132,14 @@ print (n,m); -- 1, 1
 
 ## List
 
-A list is a dynamic collection of chain elements connected by references.
+A list is a dynamic collection of elements connected by two references:
+
+* previous
+* next
 
 **list type**
+
+You can define a _list type_ using parenthesis: ()
 
 ```
 type type_name <: (element_type); -- list type
@@ -145,35 +150,34 @@ You can use one of three forms of declarations:
 
 ```
 make name ∈  (element_type); -- explicit declaration
-make name := (value,...);    -- implicit declaration
-make name := (value,) ∈ (element_type); -- full declaration
+make name := (constant,...); -- implicit declaration
+make name := (constant,...) ∈ (element_type); -- full declaration
 ```
 
 **properties**
-* a list can be initially empty = (),
+* a list can be initially empty: (),
 * all elements in a list have the same type,
 * elements in a list are ordered by index,
-* elements in a list are references,
-* list elements can be found using index but slow,
-* finding first element in a list is fast: list_name[!],
-* finding last element in a list is fast: list_name[?],
-* you can add a new element at the end very fast,
+* list elements can be found using index but this is slow,
+* finding first element in a list is fast: list_name.first,
+* finding last element in a list is fast: list_name.last,
+* you can add a new element in a list very fast,
 * you can remove elements from beginning or end of list.
 
 **notes:** 
-* A list can be used as stack or queue;
-* A list literal is a tuple;
-* List capacity is optional;
+* A list is usually used as stack or queue;
+* A list literal is a tuple of constant values;
+* A list has unlimited capacity;
 
 **example**
 
 ```
-make list := (0, 1, 2, 3, 4, 5)
+make list := (0, 1, 2, 3, 4, 5);
 
 -- list traversal
-make x ∈ Z
+make x ∈ Z;
 scan list :> x do
-  write x
+  write x;
   write _ if x ≡ list[?]; -- Note: "_" = " "
 next;
 print; -- 0 1 2 3 4 5
@@ -334,7 +338,7 @@ print nec; --expect [0,0,0,0,0,0,0,0,0,0]
 
 ## Slice
 
-A slice is a view of references from a range of array elements.
+A slice is a view of references from an array.
 
 **Syntax:**
 
