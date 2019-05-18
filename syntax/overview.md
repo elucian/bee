@@ -165,7 +165,7 @@ print n ≡ r; -- False (different locations)
 
 ```
 
-**make vs copy**
+**share vs copy**
 
 A reference can share its location with other reference.
 
