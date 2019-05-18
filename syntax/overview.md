@@ -175,14 +175,15 @@ make a := 2 ∈ Z;
 -- transfer value by share
 make b := a ∈ Z;
 
-print a ≡ b; -- 1: same location
 print a = b; -- 1: same value
+print a ≡ b; -- 1: same location
 
 -- transfer value by copy
 make c :: a ∈ Z; -- copy value from a
 
-print a ≡ b; -- 1: same location
 print a = b; -- 1: same value
+print a ≡ b; -- 0: different location
+
 ```
 
 ## Constant Literals
