@@ -92,7 +92,6 @@ Directives are controlling the application compilation. These directives have a 
 |$trace    | Off / On     | Control if #trace variable is populated with information
 |$date     | DMY / MDY    | Control date format: DD/MM/YYYY or MM/DD/YYYY
 |$time     | T24 / T12    | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
-|$path     | "/","\\"     | Define path separator for concatenation operator (.)
 |$platform | "Windows"    | Alternative: "Linux", "Mac" is the target platform
 
 **note**

@@ -692,9 +692,9 @@ symbol| description
 ------|--------------------------------------------------------------------------
   `+` | Trim first string, (remove last spaces) and concatenate with second string.
   `&` | Concatenate two strings as they are no trim is performed!
-  `/` | Trim, de-duplicate "/" and concatenate two strings using "/" separator
-  `\\`| Trim, de-duplicate "\\" and concatenate two strings using "\\" separator 
-
+  `/` | URL concatenation: trim, and use single separator: "/"
+  `.` | Path concatenation: trim, and depending on $platform use separator: "/" or "\\"
+  
 **examples**
 ```
 make u, c, s ∈ S;  --default length is 128 octets = 1024 bit
@@ -707,9 +707,10 @@ alter c := 'This is ' & 'fixed size string';
 alter s := 40 & 5;  --'405'
 
 -- URL/path concatenation
-make test_file := $pro/'src'/'test.bee';
+-- Let's say $pro = "c:\work\project\"
+make test_file := $pro.'src'.'test.bee';
 
--- when $pro = c:\work\project\
+-- when and $platform = "Windows"
 print test_file; --c:\work\project\src\test.bee
 ```
 

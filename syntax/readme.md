@@ -1,8 +1,6 @@
 ## Syntax Index
 
-Bee is a disruptive computer language for high performance applications.
-
-Design goals: [Wiki Bee](https://github.com/sage-code/bee/wiki)
+General description: [Wiki Bee](https://github.com/sage-code/bee/wiki)
 
 ## Overalls
 
@@ -14,7 +12,7 @@ These are Bee core ingredients:
 
 ## User manual
 
-Read next pages in order to learn Bee syntax:
+Read next pages in order to learn Bee:
 
 1. [Program Structure](structure.md)
 1. [Syntax Overview](overview.md)
@@ -25,14 +23,14 @@ Read next pages in order to learn Bee syntax:
 
 ## Experimental
 
-For new features and demo examples:
+New features and demo examples:
 
 1. [Demo code](../demo/readme.md)
-1. [Draft features](../draft/readme.md)
+1. [New features](../draft/readme.md)
 
 ## Tools
 
-For syntax highlighter you can use Notepad++ (UDL):
+For syntax highlight you can use Notepad++ (UDL):
  
 * [bee-lang.xml](../tools/bee-lang.xml)
 * [md-wiki.xml](../tools/md-wiki.xml)
