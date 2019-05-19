@@ -206,5 +206,5 @@ apply db.exec(procedure_name <+ record)
 For debugging SQL Bee enable introspection. 
 
 * Before execution database related statements are converted into SQL strings; 
-* We can visualize these strings by using: #echo:on to log query statements; 
-* We can use $query system object to print out last sql. 
+* We can visualize these strings by using: $trace = On to log query statements; 
+* We can use #query system variable to print out last SQL statement. 

@@ -310,7 +310,7 @@ done;
 
 **example:**
 ```
-#precision := 0.1
+$precision := 0.1;
 
 -- integer range
 print [0..5]; --0,1,2,3,4,5

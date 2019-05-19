@@ -5,9 +5,9 @@ since `q` may be equal to 1, every binary integer is also a rational number.
 
 **Note:** Q numbers are approximated numbers.
 
-* Default precision for Q numbers is 0.001 (micro)
-* Default precision can be regulated with directive: #precision:x 
-* Operator "≈" is using the default precision if ± is not used
+* Default precision for Q numbers is $precision := 0.001 (micro);
+* Default precision can be set in _driver_: $precision:x;
+* Operator "≈" is using the precision if the operator "±" is not used;
 
 Other precision constants:
 
@@ -121,7 +121,7 @@ In next example b = 0.33(3), delta = (b - a) = 0.083
 
 ```
 ** override default precision
-#precision:0.01
+$precision := 0.01;
 
 make a := 0.25;  --real
 make b := 1/3;   --rational
