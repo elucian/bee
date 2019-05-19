@@ -13,9 +13,9 @@ Each literal has a "default" type that is automatic assigned for specific notati
 
 ```
 -- character expressions
-make c := `a`;     --type = Unicode 
-make s := 'a';     --type = String 
-make b := "Text";  --type = Text
+make c := `a`;     --type = A
+make s := 'a';     --type = S
+make b := "Text";  --type = X
 
 -- numeric expressions
 make i := 0;    --type := Z
@@ -106,7 +106,7 @@ print bar(c:1);  --print 1 because (a,b := 0)
 
 ## Multiply
 
-Multiply operator: "*" will create a string string:
+Multiply operator: "*" will create a long string:
 
 ```
 -- create string of 10 spaces

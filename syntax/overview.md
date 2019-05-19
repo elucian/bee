@@ -118,8 +118,8 @@ Reference types are represented with one single upper-case character.
 
 | Name        |Bee |Bytes|Description
 |-------------|----|-----|------------------------------------------------------------
-| Alpha       | A  | 1   |Alpha-numeric code point 8 bit, max: U+FF
-| Binary      | B  | 4   |Unsigned 32 bit, max: U+FFFF or U-FFFFFFFF
+| Alpha       | A  | 1   |Alpha-numeric code point 8 bit, max: 0xFF
+| Binary      | B  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF
 | Rational    | Q  | 8   |Fraction of two binary numbers like: 1/2 (precision = 0.001)
 | Natural     | N  | 8   |Unsigned large positive number     [0..+]
 | Integer     | Z  | 8   |Signed large discrete number       [-..+]
@@ -197,7 +197,7 @@ Bee has support for numeric constants. These can be used in expressions to repre
 |0b10101010 | binary integer : (0b) & (0,1)
 |U+FF       | A code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |U+FFFF     | B code point: (U+,U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0xFFFF     | Hexadecimal integer:(Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0xFFFFFFFF | Hexadecimal: (Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
 |1E10       | real number: 1×10¹⁰  :=   10000000000  
 |1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  

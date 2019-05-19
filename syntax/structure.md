@@ -66,41 +66,65 @@ Bee can use a runt-time configuration file:
 ```
 
 ### System Constants
- System constants are using "$" prefix. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ module.
+ System constants are using "$" prefix. These constants are global and immutable. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ module.
 
 | Constant | Environment| Description                |
 |----------|------------|----------------------------|
-|$bee_home | bee_home   | Level home folder          |
-|$bee_lib  | bee_lib    | Level library home         |
-|$bee_path | bee_path   | Level library path         |
+|$bee_home | BEE_HOME   | Bee home folder            |
+|$bee_lib  | BEE_LIB    | Bee library home           |
+|$bee_path | BEE_PATH   | Bee library path           |
 |$pro_home | N/A        | Program home folder        |
 |$pro_lib  | N/A        | Program library home       |
 |$pro_mod  | N/A        | Program modules home       |
 |$pro_log  | N/A        | Reporting folder           |
 
-**note:** 
-* Bee constant values on/off can be used also in configuration files
-* Bee constant values true/false can be used in configuration files
-* Bee constant values yes/no can be used in configuration files
+### System Directives
 
+Directives are controlling the application compilation. These directives have a pre-defined constant value. You can setup these values in compiler configuration file. Once compilation is done you can not change these options.
+
+| Constant | Default value | Description
+|----------|---------------|----------------------------------------------------------------
+|$precision| 0.001        | Control numeric precision
+|$recursion| 10000        | Control how deep a recursion before give up
+|$timer    | 10           | Control time in seconds before a loop give up
+|$debug    | Off / On     | Control if debug information is included
+|$echo     | Off / On     | Control if statement is printed to console in case of error
+|$trace    | Off / On     | Control if #trace variable is populated with information
+|$date     | DMY / MDY    | Control date format: DD/MM/YYYY or MM/DD/YYYY
+|$time     | T24 / T12    | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
+|$path     | "/","\\"     | Define path separator for concatenation operator (.)
+|$platform | "Windows"    | Alternative: "Linux", "Mac" is the target platform
+
+**note**
+* You can overwrite system directives in driver but not in _aspect_ or _component_ modules;
+* Precision is controlling both: rational numbers and display precision for floating numbers;
 
 ### System Variables
-At the beginning of each module or component you can define system variables using prefix "#". Some system variables have predefined names. You can create new system variables specific to you application.
 
+System variables are defined in standard library. These variables are global and read only:
+
+**examples**
 ```
-#name := "name";
-#role := "driver";
-#description := "module description"
-#precision   := 0.001
-#recursion   := 20
-#timer       := 10
-#debug       := on
-#echo        := on
+#error  -- contains last error message
+#stack  -- contains debug information about current call stack
+#trace  -- contains reporting information about executed statements
+#level  -- contains how deep is the current call stack
+#count  -- contains last query count: updated/inserted/deleted records
+#query  -- contains last native query statement
 ```
+
+**notes:** 
+* System variables are global and may be specific to a module;
+* User can create new system variables specific to application;
+* Prefix "#" is used to avoid scope qualifier and improve code readability;
 
 ### Modules
 
-One _module_ has several system variables:
+A module is a source file with extension *.bee. We split an application in multiple modules. Once an application is compiled, all modules are merged into a monolithic application. Bee do not use dynamic loaded modules: (.dll)
+
+**attributes**
+
+One _module_ is identified by several _attributes_. These are _system variables_, used by the compiler:
 
 * #role: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
 * #name: the driver name it is usually the same as the file name;
@@ -117,7 +141,7 @@ One _module_ has several system variables:
 ### Drivers
 There is one single _driver file_ for one application. This file has #role = "driver". A _driver_ has the role to lead the application main functionality. When _driver_ is over the application stop and give control back to operating system. 
 
-A _driver_ can define read configuratin file, define system constants, system variables, application menus, database connections and such. A driver can be terminated early using keywords: {_halt_, _fail_} or normal using last statement: _over_ followed by a dot.
+A _driver_ can read configuration file, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_. Normally a driver file is ending with keyword: _over_ followed by a dot.
 
 ### Aspects
 An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters. Aspect result can be captured after execution using operator "+>". Not all _aspects_ have a result. 
@@ -429,7 +453,7 @@ When a program is executed the driver is located and executed first. If a progra
 
 #### Aspect Execution
 
-A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of different aspects the driver can interact with the user to ask for input. After playing one or more aspects the driver can report results or feedback.
+A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of every aspect the driver can interact with the user to ask for input. After playing one or more aspects the driver can print the results to the console.
 
 **properties**
 
@@ -459,8 +483,8 @@ play aspect_name(parameter_list) +> (result,...)
 #name := "mod";
 #role := "aspect";
 
-input  i ∈ Z;  --define parameter "i"
-output v ∈ N;  --define result "v"
+input  i ∈ Z;  -- input parameter "i"
+output v ∈ N;  -- output parameter "v"
 
 when (i < 0) do
   alter v := -i;
@@ -487,15 +511,15 @@ print result;  --expect: 3
 over.
 ```
 
-One aspect can have multiple parameters and multiple results:
+One aspect can have multiple input and output parameters:
 ```
-input a,b ∈ Z, c ∈ R; --define parameters "a,b,c"
-output v,z ∈ N; --define two results "v" and "z"
+input a,b ∈ Z, c ∈ R; --input parameters
+output v,z ∈ N; -- output parameters
 ```
 
 **note:** 
 * both input/output statements are optional;
-* one aspect can have only one input and one output statement;
+* one aspect can have single input and single output statement;
 
 
 **Read next:** [Syntax Overview](overview.md)

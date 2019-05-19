@@ -716,7 +716,7 @@ print test_file; --c:\work\project\src\test.bee
 ### Template
 
 * We can include numbers into a string using template operator "<+"
-* Inside template we use "{n}" notation to find a value using the member index
+* Inside template we use "\{n}" notation to find a value using the member index
 * Template must be included in double quotes " " 
 * If a placeholder index is not found then it is preserved as is
 
@@ -731,31 +731,49 @@ make x := 30; --Code ASCII 0
 make y := 41; --Code ASCII A
 
 --template writing
-print ("{0} > {1} > {2}" <+ (x,y)); --print "30 > 41 > {2}"
+print ("\{0} > \{1} > \{2}" <+ (x,y)); --print "30 > 41 > {2}"
   
 ```
 
 **Escaping**
 
-Format/template stings can use uppercase escape sequence:
+Format/template stings can use escape sequences:
 
-* \\B = binary representation 
-* \\H = hexadecimal representation
-* \\U = U+ Unicode representation
-* \\S = double quoted string
-* \\s = single quoted string
 ```
-print ("This: \h{1} is hexadecimal code for \"*\"" <+ 42)
-print ("This: \u{1} is Unicode representation for \"*\"" <+ `*`)
+\s  : single quoted string
+\q  : double quoted string
+\n  : number  
+\a  : ASCII symbol 
+\u  : Unicode symbol
+\h  : hexadecimal
+\b  : binary
+\t  : time format
+\d  : date DMY format
+\() : [numeric format](#numeric-format)
+\{} : Member name/ Key value: placeholder
+\[] : Array or List member placeholder
 ```
 
-Expected output:
+**examples**
 ```
-This: 2A is hexadecimal representation for "*"
-This: U+002A is Unicode representation for "*"
+print "Numbers: \n and \n" <+ (10, 11);
+print "Alpha: \n and \n" <+ ('a', 'b');
+print "Strings: \s and \s" <+ ('odd','even');
+print "Quoted:  \q and \q" <+ ('odd','even');
+print "Unicode: \u and \u" <+ (U+2260,U+2261);
+```
+**Expected output:**
+```
+Numbers: 10 and 11
+Alpha: a and b <+ ('a', 'b');
+Strings:'odd' and 'even'
+Quoted: "odd" and "even"
+Unicode: ≠ and ≡
 ```
 
-**Note:** More complex string formating require explicit conversion using format() built-in.
+**Notes**: 
+* Injector "<+" is polymorph and overloaded operator. 
+* For template you can use: { tuple, list, table, array }
 
 ### String Generator
 
