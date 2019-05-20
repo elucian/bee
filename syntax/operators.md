@@ -129,18 +129,19 @@ Bee is using constants:  True = 1 and  False = 0
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
-  ↔   | Equivalent | if and only if
   ¬   | NOT        | unary operator
   ∧   | AND        | shortcut operator
   ∨   | OR         | shortcut operator
-  
+  ⊕   | XOR        | exclusive OR
+  ↓   | NOR        | p ↓ q = ¬ (p ∨ q)
+  ↑   | NAND       | p ↑ q = ¬ (p ∧ q)
 
- p  | q  |¬ p |p ~ q |p ↔ q |p ∧ q | p ∨ q
-----|----|----|------|------|------|--------
- 1  | 1  | 0  | 0    | 1    |1     | 1     
- 1  | 0  | 0  | 1    | 0    |0     | 1     
- 0  | 1  | 1  | 1    | 0    |0     | 1     
- 0  | 0  | 1  | 0    | 1    |0     | 0      
+ p  | q  |¬ p |p ⊕ q |p ∧ q | p ∨ q
+----|----|----|------|------|--------
+ 1  | 1  | 0  | 0    |1     | 1     
+ 1  | 0  | 0  | 1    |0     | 1     
+ 0  | 1  | 1  | 1    |0     | 1     
+ 0  | 0  | 1  | 0    |0     | 0      
 
 
 **Bitwise operators**

@@ -462,21 +462,20 @@ Bee uses several familiar logic operators:
 *  ¬ (not) 
 *  ∧ (and) 
 *  ∨ (or)  
-*  ~ (xor)  
-*  ↔ (if and only if)  
+*  ⊕ (xor)  
  
-Precedence: { ¬, ∧, ∨, ~ }
+Precedence: { ¬, ∧, ∨, ⊕ }
 
 **comparison**
 Comparison operators will create a logical response: False = 0 or True = 1.
 
-* comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥, ↔)
+* comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥)
 * belonging  ( ∈, ⊃, ⊂ )
 
 **example**
 ```
 make x ∈ Z;
-when (x = 4 ↔ x - 4 = 0) do
+when (x = 4 ∧ x - 4 = 0) do
   print "True";
 else
   print "False";  
@@ -508,8 +507,8 @@ print   x; --> 0
 print ¬ x; --> 1
 
 --complex expressions
-print  (x ↔ y); --> 0
-print ¬(x ↔ y); --> 1
+print  (x = y); --> 0
+print ¬(x = y); --> 1
 print  (x < y); --> 1
 print  (x > y); --> 0
 print  (x ∧ y); --> 0
