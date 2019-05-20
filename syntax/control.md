@@ -85,7 +85,7 @@ done;
 **nested**
 
 ```
-make a := 0
+make a := 0;
 -- first decision
 when a ≤ 0 do 
   print 'a ≤ 0';
@@ -103,7 +103,7 @@ done; -- a = 0
 **ladder**
 
 ```
-make a := 0
+make a := 0;
 when a < 0 do
   print 'a < 0';
 else if a > 10 do
@@ -169,7 +169,7 @@ repeat;
 In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
-make a := 10 ∈ Z --; global
+make a := 10 ∈ Z;
 cycle:
   alter a -= 1;
   ** conditional repetition
@@ -210,8 +210,8 @@ repeat; --outer
 **example**
 
 ```
-make x   := 9; local 
-make a,r := 0; locals
+make x   := 9; 
+make a,r := 0; 
 cycle:
   alter r := x % 2;
   alter a := (0: r = 0, 1);
@@ -248,7 +248,7 @@ repeat;
 **example**
 
 ```
-make a := 10; --global
+make a := 10;
 while a > 0 do
   alter a -= 1;
   -- conditional repetition
@@ -299,7 +299,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ```
-make var ∈ N;  --local
+make var ∈ N;
 scan [min..max] :> var do
   ** block statements
   skip if (condition);
@@ -315,7 +315,7 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-make i ∈ Z;  global
+make i ∈ Z;
 scan [0..10] :> i do
   -- force next iteration
   when i % 2 = 0 do
@@ -326,7 +326,7 @@ scan [0..10] :> i do
     write ',' if (i < 10);
   done;
 next;
-print i; still available
+print i; -- still available
 ```
 > 1,3,5,7,9
 

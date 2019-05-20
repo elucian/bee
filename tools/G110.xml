@@ -270,16 +270,6 @@
           <text delay="0" playback="unicode" hasdelay="false">ɣ</text>
         </textblock>
       </macro>
-      <macro name="Φ" color="4278246655" hidden="false" guid="{420996F9-F135-4556-9793-F211B087938A}">
-        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
-          <text delay="0" playback="unicode" hasdelay="false">Φ</text>
-        </textblock>
-      </macro>
-      <macro name="Λ" color="4278246655" hidden="false" guid="{E36F5E06-27CC-4B16-9756-93A9E5738BCC}">
-        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
-          <text delay="0" playback="unicode" hasdelay="false">Λ</text>
-        </textblock>
-      </macro>
       <macro name="ω" color="4278246655" hidden="false" guid="{E5378D12-F6F1-48FB-83BC-0AC03196362A}">
         <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
           <text delay="0" playback="unicode" hasdelay="false">ω</text>
@@ -298,6 +288,16 @@
       <macro name="⊕" color="4278246655" hidden="false" guid="{082CCA35-69D0-4E5E-A79D-F827CD6BD7F5}">
         <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
           <text delay="0" playback="unicode" hasdelay="false">⊕</text>
+        </textblock>
+      </macro>
+      <macro name="∀" color="4278246655" hidden="false" guid="{E36F5E06-27CC-4B16-9756-93A9E5738BCC}">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text delay="0" playback="unicode" hasdelay="false">∀</text>
+        </textblock>
+      </macro>
+      <macro name="∃" color="4278246655" hidden="false" guid="{420996F9-F135-4556-9793-F211B087938A}">
+        <textblock xmlns="http://www.logitech.com/Cassandra/2010.2/Macros/TextBlock">
+          <text delay="0" playback="unicode" hasdelay="false">∃</text>
         </textblock>
       </macro>
     </macros>

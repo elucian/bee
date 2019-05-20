@@ -122,6 +122,8 @@ symbol | `=>`       |meaning
   \+   | Array      |Concatenation between two arrays
   \+=  | collection |Append element to collection 
   \-=  | collection |Remove element from collection 
+  ∀    | element    |Enumerate elements from collection
+  ∃    | Logic      |Exist element in collection  
                                           
 ## Logic Operators 
 
