@@ -690,10 +690,10 @@ Below operators will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
-  `+` | Trim first string, (remove last spaces) and concatenate with second string.
-  `&` | Concatenate two strings as they are no trim is performed!
-  `/` | URL concatenation: trim, and use single separator: "/"
-  `.` | Path concatenation: trim, and depending on $platform use separator: "/" or "\\"
+  `&` | Concatenate two strings as they are no trim is performed
+  `+` | Trim first string and concatenate with second string
+  `/` | URL/Path concatenation: trim and use single separator: "/"
+  `\` | Path concatenation: trim and use single separator: "\\"
   
 **examples**
 ```
@@ -707,11 +707,16 @@ alter c := 'This is ' & 'fixed size string';
 alter s := 40 & 5;  --'405'
 
 -- URL/path concatenation
--- Let's say $pro = "c:\work\project\"
-make test_file := $pro.'src'.'test.bee';
+make test_file := $pro\'src'\'test.bee';
 
 -- when and $platform = "Windows"
-print test_file; --c:\work\project\src\test.bee
+-- Let's say $pro = "c:\work\project\"
+print test_file; --> c:\work\project\src\test.bee
+
+-- when and $platform = "Linux"
+-- Let's say $pro = "/work/project/"
+print test_file; --> /work/project/src/test.bee
+
 ```
 
 ### Template

@@ -125,7 +125,7 @@ symbol | `=>`       |meaning
                                           
 ## Logic Operators 
 
-Bee is using constants:  True = 1 and  False = 0
+Bee is using constants:  True = 1 and False = 0
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
