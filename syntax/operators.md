@@ -25,8 +25,8 @@ symbol  | description
 
 symbol| description
 ------|----------------------------------------------------------------
- \#   | Compiler directives prefix \| Template placeholder
-  $   | Global variables prefix \| System environment constants
+ \#   | System variables \| Global variables
+  $   | System constants \| Environment variables
   @   | Define input/output parameter 
   :   | Pair up key-value in a collection or rule call
   ;   | End of statement \| Statement separator
