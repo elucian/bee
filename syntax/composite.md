@@ -320,8 +320,8 @@ We can define an empty array and initialize elements later.
 
 ```
 -- array without members
-make vec ∈ [U](); 
-make nec ∈ [N](); 
+make vec ∈ [U]; 
+make nec ∈ [N]; 
 
 -- arrays are empty
 print vec = []; --True
@@ -756,8 +756,8 @@ Format/template stings can use escape sequences:
 \t  : time format
 \d  : date DMY format
 \() : [numeric format](#numeric-format)
-\{} : Member name/ Key value: placeholder
-\[] : Array or List member placeholder
+\{} : Attribute by name/ Value by key
+\[] : Array/Matrix element by index \| List elements: [!] or [?] 
 ```
 
 **examples**
