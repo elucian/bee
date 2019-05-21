@@ -922,8 +922,8 @@ fail if test.b ≠ 1; -- verify attribute b
 ```
 
 **See also:** 
-* [me.bee](me.bee); --numeral with rules
-* [gc.bee](gc.bee); --generator class
+* [me.bee](me.bee); -- numeral with rules
+* [gc.bee](gc.bee); -- number generator
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;

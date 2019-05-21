@@ -100,9 +100,9 @@ Directives are controlling the application compilation. These directives have a 
 
 ### System Variables
 
-System variables are defined in standard library. These variables are global and read only:
+System variables are defined usually at the beginning of the module. 
 
-**examples**
+**predefined**
 ```
 #error  -- contains last error message
 #stack  -- contains debug information about current call stack

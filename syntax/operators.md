@@ -114,7 +114,7 @@ symbol | meaning
 ## Collection operators
 
 symbol | `=>`       |meaning
--------|------------|-------------------------------------------------
+-------|------------|----------------------------------------------------------
   ∩    | Set        |Intersection between two collections
   ∪    | Set        |Union between two collections
   ⊂    | Logic      |set is included in superset: "⊂"
@@ -122,8 +122,8 @@ symbol | `=>`       |meaning
   \+   | Array      |Concatenation between two arrays
   \+=  | collection |Append element to collection 
   \-=  | collection |Remove element from collection 
-  ∀    | element    |Enumerate elements from collection
-  ∃    | Logic      |Exist element in collection  
+  ∀    | element    |Enumerate all elements from a collection
+  ∃    | Logic      |Check if exist one element in a collection
                                           
 ## Logic Operators 
 

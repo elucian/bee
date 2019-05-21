@@ -24,7 +24,7 @@ Unverified Bee demo source files:
 1. [op.bee](op.bee) - Output parameters
 1. [rp.bee](ro.bee) - Rule as parameter
 1. [ho.bee](ho.bee) - Rule object demo
-1. [gc.bee](gc.bee) - Generator class demo
+1. [gc.bee](gc.bee) - Generator demo
 1. [bs.bee](bs.bee) - Bubble sort algorithm
 
 ## Tools

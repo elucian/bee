@@ -12,7 +12,7 @@ return;
 
 **note:** 
 * Type can be any known type or sub-type;
-* Type is first class value and is of type: "Type";
+* Type is first class value of type: "Type";
 
 ## Anonymous Rule
 
