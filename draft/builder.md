@@ -1,3 +1,9 @@
+# Builders
+
+* [set builders](#set-builders)
+* [hash builders](#hash-builders)
+* [logic qualifiers](#logic-qualifiers)
+
 ## Set Builders
 
 A set builder is a declarative structure used to produce a sub-set from a set.
@@ -35,7 +41,7 @@ print test1; -- {1,2,3}
 print test2; -- {1,4,9}
 ```
 
-## Hash Map
+## Hash Builder
 
 A set builder can create also a hash map with two methods:
 
@@ -54,11 +60,13 @@ make map_name := { (x : y) | (x, y) ∈ (DS × DS) ∧ condition(x,y)}
 
 ## Logic Qualifiers
 
-In logic, quantification specifies the specimen in domain that satisfy a condition. The two most common quantifiers are: "for all" and "there exists". 
+Logic quantification verify a domain to satisfy a condition. The two most common quantifiers are: "all" and "exists". 
 
-Universal quantifier "all" is ∀, a rotated letter A, and for the existential quantifier "exists" is ∃, a rotated letter E. 
+**symbols:**
+* Universal quantifier "all" is ∀, a rotated letter A 
+* Existential quantifier "exists" is ∃, a rotated letter E 
 
-Qualifiers can be used as logical expressions in statements: { when, if }.
+Qualifiers can be used as logical expressions in statements: { when, if, while etc. }.
 
 **example:**
 ```
