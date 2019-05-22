@@ -715,7 +715,7 @@ A rule that can be changed during runtime is called _dynamic rule_.
 Attributes of a rule are state variables. That are variables starting with dot prefix.
 
 * Dynamic rules look exactly like static rules, except they have states;
-* Rule attributes are public and can be accessed using dot qualifier;
+* Rule attributes are public and can be accessed using dot scope qualifier;
 * Rule attributes are static: initialized one single time;
 
 **pattern**

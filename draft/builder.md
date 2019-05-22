@@ -1,22 +1,25 @@
 ## Set Builders
 
-A set builder is a declarative structure used to create a sub-set from a set of elements.
+A set builder is a declarative structure used to produce a sub-set from a set.
 
 **syntax**
 ```
 -- simple
-make set_name := { element ∀ element ∈ source};
+make set_name := { x | x ∈ source};
 
 -- more complex
-make set_name := { func(element) ∀ element ∈ source ∧ (filter) };
+make set_name := { map(x) | x ∈ source ∧ condition(x)};
+
+-- two arguments
+make set_name := { map(x,y) | (x,y) ∈ (DS × DS) ∧ condition(x) ∧ condition(y) };
 ```
 
 **legend**
 
-* func = rule(element) or expression
-* key  = new key in hash map pair
-* source = collection or range
-* filter = logic expression
+* map       ::= rule or expression
+* source    ::= set, list, range
+* condition ::= rule or logic expression
+* DS        ::= any discrete domain or set of elements
 
 **example**
 ```
@@ -24,8 +27,8 @@ make source := [1,2,1,2,3]
 make test1, test2 ∈ {Z}
 
 -- copy source elements
-alter test1 := { x  ∀ x ∈ source}
-alter test2 := { x² ∀ x ∈ source}
+alter test1 := { x  | x ∈ source}
+alter test2 := { x² | x ∈ source}
 
 -- expected result
 print test1; -- {1,2,3}
@@ -34,21 +37,28 @@ print test2; -- {1,4,9}
 
 ## Hash Map
 
-A set builder can create also a hash map:
+A set builder can create also a hash map with two methods:
 
 **syntax**
 
 ```
-make map_name := { (key:func(key)) ∀ key ∈ source ∧ (filter)}
+make map_name := { (k:map(k)) | (k ∈ source) ∧ condition(k)}
+make map_name := { (x : y) | (x, y) ∈ (DS × DS) ∧ condition(x,y)}
 ```
 
-* key ::= a value member from source
-* source ::= a collection or range of values
-* filter ::= a conditional expression
+* map(k)    ::= rule or expression
+* DS        ::= domain source: A,Z,N ...
+* key       ::= a value member from source
+* source    ::= a collection or range of values
+* condition ::= a logical expression (filter)
 
-## Exist
+## Logic Qualifiers
 
-Using operator ∃ we can verify elements in one collection and stop at first match.
+In logic, quantification specifies the specimen in domain that satisfy a condition. The two most common quantifiers are: "for all" and "there exists". 
+
+Universal quantifier "all" is ∀, a rotated letter A, and for the existential quantifier "exists" is ∃, a rotated letter E. 
+
+Qualifiers can be used as logical expressions in statements: { when, if }.
 
 **example:**
 ```
@@ -57,15 +67,20 @@ make Here := {0b10011,0b10001,0b11101};
 make verify ∈ L; -- logical flag
 
 ** verify if any mask element has second bit from the end
-alter verify := ∃ (x ∈ Here) ∧ (x ⊕ 0b10 = x);
+alter verify := ∃(x ∈ Here) ∧ (x ⊕ 0b10 = x);
+
+** verify if all elements in Here have first bit from the end
+alter verify := ∀(x ∈ Here) ∧ (x ⊕ 0b01 = x);
 ```
 
 **syntax:**
 ```
-∃ (var ∈ collection) ∧ (condition);
+∃ (x ∈ DS) ∧ condition(x);
+∀ (x ∈ DS) ∧ condition(x);
 ```
 
+**See also:** 
 
-
-
+* [Set Builder Notation](https://en.wikipedia.org/wiki/Set-builder_notation)
+* [Qualifier Notation](https://en.wikipedia.org/wiki/Quantifier_(logic))
 

@@ -38,7 +38,7 @@ Next statements are used to declare or create a module member.
 | output   | Declare output parameters
 | define   | Declare a constant 
 | load     | Load library or aspect
-| alias    | Suppress qualifier for external elements from a library or module
+| alias    | Suppress scope qualifier for external elements from a library or module
 | type     | Declare data super-type or sub-type
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or rule prototype 
@@ -79,7 +79,7 @@ Control statements are also known as decision statements.
 | final    | Associated with trial to finalize the trial block
 | do       | Begin a statement region for when, quest and trial blocks
 | done     | Finalize when, quest and trial control blocks
-| with     | Start qualifier suppression block
+| with     | Start scope qualifier suppression block
 | quest    | Create a multi-block selection statement
 | match    | Associated to quest, create one branch
 | none     | Associated to quest, create alternative branch

@@ -280,7 +280,7 @@ qualifier ::= folder_name.file_name
 
 **Alias**
 
-You can create an alias for a qualifier or for specific members:
+You can create an alias for a scope qualifier or for specific members:
 
 ```
 alias qualifier := folder_name.file_name

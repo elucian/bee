@@ -28,7 +28,7 @@ done;
 
 ## with
 
-Define a qualifier suppression block:
+Define a scope qualifier suppression block:
 
 ```
 with qualifier do
@@ -38,7 +38,7 @@ with qualifier do
 done;
 ```
 
-Using alias for qualifier:
+Using alias for scope qualifier:
 
 ```
 with (short: long.qualifier) do
