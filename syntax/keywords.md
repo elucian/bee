@@ -70,7 +70,7 @@ Control statements are also known as decision statements.
 | cycle    | Start unconditional repetitive block
 | while    | Start conditional repetitive block
 | repeat   | End repetitive block: cycle, while
-| scan     | Start iteration loop for range of numbers
+| scan     | Start iteration loop for range or collection
 | next     | Continue counting until the last number in range
 | trial    | Protect a block of code that may have exceptions
 | case     | One trial block can resolve multiple cases

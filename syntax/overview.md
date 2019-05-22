@@ -16,6 +16,7 @@ I have used a simple design notation based on examples and notes:
 * [Composite types](#composite-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
+* [Domain](#domain-subtype)
 * [Logical expression](#logical-expression)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
@@ -304,9 +305,11 @@ done;
 **Notes:**
 
 * Anonymous range expression [n..m] is of type Z;
-* Use [n.!m] will exclude upper limit from range;
-* Use [n!!m] will exclude both limits from range;
-* Use (n..m) to create Real continuous sub-type;
+* Anonymous range expression (n..m) is of type R;
+* Use n.!m to exclude upper limit from range;
+* Use n!.m to exclude lower limit from range;
+* Use n!!m to exclude both limits from range;
+
 
 **example:**
 ```
@@ -320,6 +323,31 @@ print [0.!5]; --0,1,2,3,4
 print (0..1); --0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
 print (0.!1); --0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 ```
+
+## Domain subtype
+
+A domain is a using a special notation for data ranges containing more then one segment.
+
+**example:**
+```
+-- continuous type
+type DS <: R(-10..-1, 1..10); -- two segments 
+
+-- discrete type
+type CS <: Z[-1,1, 20..30];   -- enumeration + one segments
+```
+
+**syntax:**
+```
+(segment, segment ...) -- continuous domain notation
+[segment, segment ...] -- discrete domain notation
+```
+
+* segment ::= x,... -- x is a value
+* segment ::= n..m  -- n,m are min, max values
+* segment ::= n!.m  -- exclude n, include m
+* segment ::= n.!m  -- include n, explude m
+* segment ::= n!!m  -- exclude both n, m
 
 ## Constant declaration
 

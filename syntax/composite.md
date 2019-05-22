@@ -139,7 +139,7 @@ A list is a dynamic collection of elements connected by two references:
 
 **list type**
 
-You can define a _list type_ using parenthesis: ()
+You can define a _list type_ using empty list: ()
 
 ```
 type type_name <: (element_type); -- list type
@@ -221,11 +221,11 @@ alter a -= a[!]; --a = (2,3,4)
 
 ## Array
 
-Bee define Arrays using notation []().
+Bee define Arrays using notation [](c), where c is the capacity.
 
 **syntax**
 ```
-make array_name ∈ [type]();      -- undefined capacity
+make array_name ∈ [type];        -- undefined capacity
 make array_name ∈ [type](c);     -- capacity c
 make array_name ∈ [type](n,m);   -- capacity c = n·m
 ```
@@ -268,15 +268,15 @@ over.
 
 **custom index**
 
-Arrays can have optional index range: (n..m). 
+Arrays can have optional custom index range: [n..m]. 
 
 **syntax**
 ```
 -- define vector with elements starting from n to m
-make array_name := [member_type](n..m);
+make array_name := [member_type][n..m];
 
-print array_name[n]; --print first element
-print array_name[m]; --print last element
+print array_name[!]; --print first element
+print array_name[?]; --print last element
 ```
 
 Array capacity is calculated automatic with formula: `c = m-n+1`
@@ -287,8 +287,9 @@ Initial value for elements can be set during declaration:
 
 ```
 -- you can use 2 optional notations 
-make zum := 1 ∈ [Z](1..10); -- explicit initialization
-make zet := [1*10](1..10);  -- using type inference
+make zum  := [1](10) ∈ [Z];     -- explicit initialization using range
+make zet  := [1..10];           -- explicit initialization using one value
+make test := [1..10,100..1000]; -- explicit initialization using domain notation
 
 -- modify one element by index
 alter zum[1]  := 1; 
@@ -343,7 +344,7 @@ A slice is a view of references from an array.
 **Syntax:**
 
 ```
--- declare vector with capacity (n)
+-- declare vector with capacity c
 make array_name ∈ [element_type](c);
 
 -- slice creation using ":=" and ".."
