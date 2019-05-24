@@ -14,7 +14,7 @@ I have used a simple design notation based on examples and notes:
 * [Constant literals](#constant-literals)
 * [Reference types](#reference-types)
 * [Composite types](#composite-types)
-* [Collection types])(#collection-types)
+* [Collection types](#collection-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
 * [Domain](#domain-subtype)
@@ -275,10 +275,10 @@ Range notation is used to create a subtype.
 
 ```
 -- discrete range
-type Range_Name <: basic_type[min..max:rate]
+type Range_Name <: Discrete_Type[min..max:rate]
 
 -- continuous range
-type Range_Name <: basic_type(min..max:rate)
+type Range_Name <: Continuous_Type(min..max:rate)
 ```
 
 **Examples:**
@@ -286,7 +286,7 @@ type Range_Name <: basic_type(min..max:rate)
 -- sub-type declarations
 type Positive  <: R(0..);
 type Negative  <: R(..-1);
-type Digit     <: B[0..9];
+type Digit     <: W[0..9];
 type Alpha     <: A[`A`..`z`];
 type Latin     <: B[U+0041..U+FB02];
 
@@ -300,27 +300,30 @@ done;
 
 **Notes:**
 
-* Anonymous range expression [n..m] is of type Z;
-* Anonymous range expression (n..m) is of type R;
+* Range expression: [n..m] is of type Z;
+* Range expression: (n..m) is of type Q;
 * Use n.!m to exclude upper limit from range;
 * Use n!.m to exclude lower limit from range;
 * Use n!!m to exclude both limits from range;
 
 **example:**
 ```
+-- rational range is controlled by:
 #range.rate  := 0.1;   -- default rate for continuous range
 #range.limit := 10000; -- how many generated before give up
 
--- integer range (default rate is 1)
+-- continuous default rate is 1
 print [0..5]; --0,1,2,3,4,5
 print [0.!5]; --0,1,2,3,4
 
--- integer with rate
+-- integer with rate 2
 print [0..10:2]; --0,2,4,6,8,10
 print [1..10:2]; --1,3,5,7,9
 
--- continuous range
+-- continuous range with default rate = 0.1
 print (0..0.5);     -- 0,0.1,0.2,0.3,0.4,0.5
+
+-- continuous range with rate 0.25
 print (0!!1:0.25);  -- 0.25,0.5,0.75
 ```
 
