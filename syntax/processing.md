@@ -496,7 +496,7 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-method format(Number: n, String: f) => String;
+rule format(Number: n, String: f) => (result @ S);
 ```
 
 Where "f" is a pattern: '(ap:m.d)'

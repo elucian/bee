@@ -79,8 +79,8 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-rule .open(name ∈ S, mode ∈ A) => (f @ F);
-rule .close(f ∈ F);
+rule .open(name ∈ S, mode ∈ A) => (file @ F);
+rule .close(file @ F);
 ...
 
 ```

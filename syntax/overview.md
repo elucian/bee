@@ -17,7 +17,7 @@ I have used a simple design notation based on examples and notes:
 * [Collection types](#collection-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
-* [Domain](#domain-subtype)
+* [Domain subtypes](#domain-subtypes)
 * [Logical expression](#logical-expression)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
@@ -25,7 +25,7 @@ I have used a simple design notation based on examples and notes:
 * [Dynamic rules](#dynamic-rules)
 * [Generic rules](#generic-rules)
 * [Expression rules](#expression-rules)
-* [Rule mapping](#rule-mapping)
+* [External rules](#external-rules)
 
 ## Expressions
 Expressions are created using identifiers, operators, rules and constant literals. 
@@ -327,17 +327,17 @@ print (0..0.5);     -- 0,0.1,0.2,0.3,0.4,0.5
 print (0!!1:0.25);  -- 0.25,0.5,0.75
 ```
 
-## Domain subtype
+## Domain subtypes
 
 A domain is using a special notation for data ranges containing more then one segment.
 
 **example:**
 ```
 -- rational domain (default rate = 0.1)
-type Seg <: (-10..-1, 1..10); -- two segments 
+type QDomain <: (-10..-1, 1..10); -- two segments 
 
 -- discrete domain
-type Dom <: [-9..1,1..9]; -- two segments
+type ZDomain <: [-9..1,1..9]; -- two segments
 ```
 
 **syntax:**
@@ -409,7 +409,7 @@ print b;          -- expected 12
 
 **Examples:**
 ```
--- declare a constant that can not change its value
+-- declare a constant
 define pi := 3.14 ∈ R;
 
 -- declare multiple variables
@@ -719,6 +719,8 @@ return;
 **Note:**
 * Result name is explicit declared;
 * Rule results are explicit references;
+* Rule results are enclosed in paranthesis;
+* Rule results are declared with @ (output);
 
 **Example:** 
 
@@ -853,21 +855,26 @@ print  z;  --print 3
 **properties**
 
 Expression rules...
-* have a single result;
-* the result is a reference;
 * are binding external states;
 * do not have internal states;
 * do not have side-effects;
 * do not depend on external states;
+
+**result**
+
+* expression can have one single result;
+* expression result is declared with ∈ not @;
+* expression result can be primitive type;
+* expression result can be native type;
 
 **notes:**
 
 * Expression rules are similar to mathematical functions;
 * Expression rules can not be interrupted from execution;
 * Expression rules can be created by other rules;
-* Expression rules can be created at runtime;
+* Expression rules can be associated with explicit references;
 
-## Rule mapping
+## External rules
 
 In Bee you can use external rules from Assembly or C.
 Usually these rules are implemented in a library component.

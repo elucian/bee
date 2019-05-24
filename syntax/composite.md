@@ -434,7 +434,7 @@ We declare an array using prefix "*" for variable parameter name.
 
 ```
 --parameter *bar is an array
-rule foo(*bar ∈ [Z]) => (x ∈ Z):
+rule foo(*bar ∈ [Z]) => (x @ Z):
   make c := bar.count();
   -- precondition
   when (c = 0) do
