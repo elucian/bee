@@ -4,7 +4,7 @@
 #name :=  "up";
 
 ** rule with two results
-rule test(x, y ∈ Z) => (a,b ∈ Z):
+rule test(x, y ∈ Z) => (a,b @ Z):
   alter a := x + 1;
   alter b := y + 1;
 return;
@@ -14,7 +14,7 @@ print (n, m); -- will print 2, 3
 
 ** rule with structured result
 type Rec <: {x ∈ Z, y ∈ R};
-rule (x ∈ Z, y ∈ R) => (r ∈ Rec):
+rule (x ∈ Z, y ∈ R) => (r @ Rec):
   alter r.x := x;
   alter r.y := y;
 return;

@@ -16,7 +16,7 @@ rule convert(x ∈ Number) => (y @ S):
 return;
 
 -- a wrapper rule for convert
-rule equal(x ∈ Number, s ∈ S) => (r ∈ L):
+rule equal(x ∈ Number, s ∈ S) => (r @ L):
   alter r := (s = convert(x));
 return;
     

@@ -4,7 +4,7 @@
 #name :=  "fi";
 
 -- declare Fibonacci rule
-rule fib(n ∈ N) => (y ∈ N):
+rule fib(n ∈ N) => (y @ N):
   when (n = 1 ∨ n = 0) do
     alter y := 1;
   else
