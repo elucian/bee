@@ -263,7 +263,7 @@ process
   given
     Symbol: element;
     Integer: x := 1;
-  scan my_list +> element do
+  scan my_list :> element do
     write element;
     when element = 'd' do
       stop -- early termination;

@@ -25,7 +25,7 @@ print e = d; -- 1 same value
 print e ≡ d; -- 0 different reference
 
 -- boxing/ unboxing
-make i := 10 ∈ z8; -- native type
+make i := 10 ∈ i8; -- native type
 make c := 0  ∈ Z;  -- reference
 trial:
   alter c := i; -- auto boxing, makes c = 10 
@@ -36,7 +36,7 @@ other
 done;
 
 -- explicit unboxing
-alter i := d -> z8;
+alter i := d -> i8;
 
 -- verify identity
 print i = c; -- 1 same value

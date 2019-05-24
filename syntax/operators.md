@@ -71,8 +71,8 @@ symbol| description
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
  :=   | Assign value  \| Transfer by copy
- :\>  | Create visitor from collection (usually in scan) 
- \+\> | Result collector \| Used for _apply_ and _play_ statements
+ :\>  | Create visitor (usually in scan) 
+ \+\> | Output collector \| Used for _apply_ and _play_ statements
 
 ## Arithmetic modifiers
 

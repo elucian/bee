@@ -11,7 +11,10 @@ I have used a simple design notation based on examples and notes:
 
 * [Expressions](#expressions)
 * [Primitive types](#primitive-types)
+* [Constant literals](#constant-literals)
+* [Reference types](#reference-types)
 * [Composite types](#composite-types)
+* [Collection types])(#collection-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
 * [Domain](#domain-subtype)
@@ -80,42 +83,48 @@ Bee use 3 kind of data types:
 
 ## Primitive Types
 
-Primitive data types are mapped to native types.
+Primitive data types are using one single capital letter.
 
 | Name     | Bee|Native| Sign      |Bytes|Description
 |----------|----|------|-----------|-----|------------------------------------------------------------
-| Logic    | L  |u1    | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
-| Alpha    | A  |u1    | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
-| Binary   | B  |u2    | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
-| Word     | W  |u4    | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
-| Rational | Q  |f4    | unsigned  | 4   |Small fraction of two binary numbers like: 1/2 (precision = 0.001)
-| Natural  | N  |u8    | unsigned  | 8   |Unsigned large positive integer [0..+]
-| Integer  | Z  |z8    | signed    | 8   |Signed large integer [-..+]
-| Positive | P  |f8    | unsigned  | 8   |Single precision float  (0..+)
-| Real     | R  |f8    | signed    | 8   |Double precision float  (-..+)
+| Logic    | L  | u1   | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
+| Alpha    | A  | u1   | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
+| Word     | W  | u2   | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
+| Binary   | B  | u4   | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
+| Rational | Q  | f4   | signed    | 4   |Small fraction of two binary numbers like: 1/2
+| Natural  | N  | u8   | unsigned  | 8   |Unsigned large positive integer [0..+]
+| Integer  | Z  | i8   | signed    | 8   |Signed large integer [-..+]
+| Positive | P  | f8   | unsigned  | 8   |Double precision float  (0..+)
+| Real     | R  | f8   | signed    | 8   |Double precision float  (-..+)
 
+**notes:**
+
+* Each primitive type is mapped to one native type,
+* Type inference will create a primitive type.
 
 ## Constant Literals
 
-These are symbolic default representations for native data types.
+These are symbolic representations for primitive data types:
 
-|   Literal | Description
-|-----------|-----------------------------------------------------------
-|False      | logic 0
-|True       | logic 1
-|0          | integer zero
-|0.0        | real zero 
-|1234567890 | integer (0,1,2,3,4,5,6,7,8,9)
-|0b10101010 | binary  (0b) & (0,1)
-|U+FFFF     | code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|U-FFFFFFFF | code point: (U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0xFFFFFFFF | hexadecimal:  (Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
-|1E10       | real number: 1×10¹⁰  :=   10000000000  
-|1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
-|1/2        | rational number: 1/2 = 0.5 
-|9r+9i      | complex number r = real part, i = imaginary part (no spaces)
-|9r-9i      | complex number r = real part, i = imaginary part (no spaces)
+|Literal    | Bee | Description
+|-----------|-----|-----------------------------------------------------------
+|False      |  L  | logic 0
+|True       |  L  | logic 1
+|0          |  Z  | zero integer
+|1          |  Z  | one  integer 
+|1234567890 |  Z  | integer (0,1,2,3,4,5,6,7,8,9)
+|0b10101010 |  B  | binary  (0b) & (0,1)
+|U+FFFF     |  W  | code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U-FFFFFFFF |  B  | code point: (U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0xFFFFFFFF |  N  | hexadecimal:  (Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0.0        |  R  | real zero 
+|0.05       |  R  | real number: (.,0,1,2,3,4,5,6,7,8,9) 
+|1E10       |  R  | real number: 1×10¹⁰  :=   10000000000  
+|1e10       |  R  | real number: 1×10⁻¹⁰ := 0.0000000001  
+|1/2        |  Q  | rational number: 1/2 = 0.5 
+|9r+9j      |  C  | complex number r = real part, j = imaginary part (no spaces)
+|9r-9j      |  C  | complex number r = real part, j = imaginary part (no spaces)
+
 
 **pattern**
 ```
@@ -129,21 +138,31 @@ make n := U+2200 ∈ A;  -- Symbol: ∀
 ```
 
 **Note:** 
-* "U" is reserved letter, therefore compiler will find "U+" combination unique;
+* U is reserved letter, therefore compiler will find "U+" and "U-" unique;
 * After U+ compiler is expecting 4 hexadecimal symbols;
-* After U- compiler is expecting 6 or 8 hexadecimal symbols;
+* After U- compiler is expecting 8 hexadecimal symbols;
 
-## References
+## Reference Types
 
-Bee do not use pointers but references. Most data types are references to objects except native types.
+Most data types are references to objects except native types that are concrete values.
+
+**identifier...**
+
+* native type name start with lowercase letter follow by a number representing length in bytes;
+* reference type name start with one capital letter or a prefix and second is a capital letter.
+
+```
+Type = i8 -- native type
+Type = mL -- reference
+```
 
 **boxing**
 
 Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. 
 
 ```
-make k ∈ Z;    -- reference type
-make n := 10;  -- native type (z8)
+make k ∈ Z;    -- reference integer
+make n ∈ i8;   -- native integer
 
 alter k := n;  -- auto-boxing
 
@@ -152,8 +171,8 @@ print n = k; -- True (same value)
 print n ≡ k; -- False (different location)
 
 -- consequence
-alter n += 2;  -- i = 12 (modified)
-print k;       -- k = 10 (unmodified)
+alter n := 2;  -- i = 2 (modified)
+print k;       -- k = 0 (unmodified)
 
 ```
 
@@ -163,9 +182,9 @@ Unboxing is the process of converting a reference to a native type. This will un
 
 ```
 make r := 10 ∈ Z; -- reference to integer
-make n := 0;      -- native type (z8)
+make n := 0;      -- native type (i8)
 
-alter n := r -> z8; -- explicit unboxing
+alter n := r -> i8; -- explicit unboxing
 
 -- verify value identity
 print n = r; -- True (same value)
@@ -195,11 +214,9 @@ make b := a; -- create new reference (b ∈ Z)
 
 print a = b; --> 1: same value
 print a ≡ b; --> 0: different location
-
-
 ```
 
-## Reference types
+## Composite types
 
 Composite types are using English full name and start with uppercase.
 
@@ -258,10 +275,10 @@ Range notation is used to create a subtype.
 
 ```
 -- discrete range
-type Range_Name <: basic_type[min..max]
+type Range_Name <: basic_type[min..max:rate]
 
 -- continuous range
-type Range_Name <: basic_type(min..max)
+type Range_Name <: basic_type(min..max:rate)
 ```
 
 **Examples:**
@@ -289,31 +306,35 @@ done;
 * Use n!.m to exclude lower limit from range;
 * Use n!!m to exclude both limits from range;
 
-
 **example:**
 ```
-$precision := 0.1;
+#range.rate  := 0.1;   -- default rate for continuous range
+#range.limit := 10000; -- how many generated before give up
 
--- integer range
+-- integer range (default rate is 1)
 print [0..5]; --0,1,2,3,4,5
 print [0.!5]; --0,1,2,3,4
 
--- rational range
-print (0..1); --0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
-print (0.!1); --0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
+-- integer with rate
+print [0..10:2]; --0,2,4,6,8,10
+print [1..10:2]; --1,3,5,7,9
+
+-- continuous range
+print (0..0.5);     -- 0,0.1,0.2,0.3,0.4,0.5
+print (0!!1:0.25);  -- 0.25,0.5,0.75
 ```
 
 ## Domain subtype
 
-A domain is a using a special notation for data ranges containing more then one segment.
+A domain is using a special notation for data ranges containing more then one segment.
 
 **example:**
 ```
--- continuous type
-type DS <: R(-10..-1, 1..10); -- two segments 
+-- rational domain (default rate = 0.1)
+type Seg <: (-10..-1, 1..10); -- two segments 
 
--- discrete type
-type CS <: Z[-1,1, 20..30];   -- enumeration + one segments
+-- discrete domain
+type Dom <: [-9..1,1..9]; -- two segments
 ```
 
 **syntax:**
@@ -322,10 +343,10 @@ type CS <: Z[-1,1, 20..30];   -- enumeration + one segments
 [segment, segment ...] -- discrete domain notation
 ```
 
-* segment ::= x,... -- x is a value
-* segment ::= n..m  -- n,m are min, max values
+* segment ::= x,... -- enumeration segment
+* segment ::= n..m  -- range segment 
 * segment ::= n!.m  -- exclude n, include m
-* segment ::= n.!m  -- include n, explude m
+* segment ::= n.!m  -- include n, exclude m
 * segment ::= n!!m  -- exclude both n, m
 
 ## Constant declaration
