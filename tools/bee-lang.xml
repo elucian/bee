@@ -29,7 +29,7 @@
             <Keywords name="Keywords3">exit fail pass over halt stop skip solve retry abort resume yield rest wait</Keywords>
             <Keywords name="Keywords4">play start apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;plot draw show hide erase scrub</Keywords>
             <Keywords name="Keywords5">exist open close remove files folders change new where save undo clean&#x000D;&#x000A;append to update in delete from</Keywords>
-            <Keywords name="Keywords6">A B C L N Q P R U Z S X D T E V Y W G H F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;u1 u2 u4 u8 z8 f4 f8&#x000D;&#x000A;mC mL mN mP mA mO&#x000D;&#x000A;Null True False On Off &#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords6">A B C L N Q P R U Z S X D T E V Y W G H F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;u1 u2 u4 u8 z8 f4 f8&#x000D;&#x000A;mC mL mN mP mA mO&#x000D;&#x000A;gC gL gH gT&#x000D;&#x000A;Null True False On Off &#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$ # A B C D E F G H I J K L M N O P R Q S T U V X Y Z W</Keywords>
             <Keywords name="Keywords8">&#x03C0; &#x22A5; &#x2220; &#x22A1; &#x21BA; &#x2299; &#x2197; &#x25CB; &#x25F7; &#x25A1; &#x25C1; &#x25C7; &#x2302; &#x25EA; &#x238A;&#x000D;&#x000A;&#x25A0; &#x25A4; &#x25A5; &#x25A6; &#x25A7; &#x25A8; &#x25A9; &#x000D;&#x000A;&#x0394; &#x039B; &#x03A6; </Keywords>
             <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12``` 13 14``` 15&apos; 16\ 17&apos; 18-- 19 20&#x000D;&#x000A; 21|* 22 23*|</Keywords>
@@ -52,8 +52,8 @@
             <WordsStyle name="FOLDER IN CODE2" fgColor="DF4800" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="FOLDER IN COMMENT" fgColor="808000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="DELIMITERS1" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117691007" />
-            <WordsStyle name="DELIMITERS2" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117494383" />
-            <WordsStyle name="DELIMITERS3" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="50430591" />
+            <WordsStyle name="DELIMITERS2" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690991" />
+            <WordsStyle name="DELIMITERS3" fgColor="80FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="50561663" />
             <WordsStyle name="DELIMITERS4" fgColor="FFFF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="DELIMITERS5" fgColor="00FF80" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117702639" />
             <WordsStyle name="DELIMITERS6" fgColor="FFFF00" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />

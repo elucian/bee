@@ -8,7 +8,7 @@ type Number <: {.zero, .one, .two};
 make test ∈ Number;
 alter test := zero; -- instance of Number
 -- make a rule for define Number
-rule convert(x @ Number) => (y @ S):
+rule convert(x ∈ Number) => (y @ S):
   alter y := ('zero'  if x = zero,
               'one'   if x = one,
               'two'   if x = two,
@@ -16,8 +16,8 @@ rule convert(x @ Number) => (y @ S):
 return;
 
 -- a wrapper rule for convert
-rule equal(x @ Number, s @ S) => (r ∈ L):
-  alter r := s = x.convert();
+rule equal(x ∈ Number, s ∈ S) => (r ∈ L):
+  alter r := (s = convert(x));
 return;
     
 -- calling test rules 

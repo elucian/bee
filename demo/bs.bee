@@ -7,7 +7,7 @@
 rule sort(this @ [Z]):
   make n := length(this)-1;
   make i := 0 ∈ N;
-  make temp @ Z;
+  make temp ∈ Z;
   make swap := True ∈ L;
   while swap do
     alter i := 0;
@@ -16,9 +16,9 @@ rule sort(this @ [Z]):
       -- this pair is out of order ?
       when (this[i] < this[i+1]) do
         -- swap pair and set swap flag = true
-        alter temp     @ this[i];
-        alter this[i]  @ this[i+1];
-        alter this[i+1]@ temp;
+        alter temp     : this[i];
+        alter this[i]  : this[i+1];
+        alter this[i+1]: temp;
         alter swap := True;
       done;
       alter i += 1;

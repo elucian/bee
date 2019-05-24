@@ -24,7 +24,7 @@ clone test  := generator{4,12};
 
 -- test cloned rule: count()
 trial:
-  make set @ {Z};
+  make set ∈ {Z};
   -- this loop is infinite
   cycle:
     alter set += count()

@@ -4,10 +4,10 @@
 #name :=  "pc";
 
 make  c  := 100 ∈ N   ; -- channel capacity
-make  ch := () @ (@N) ; -- define empty channel
+make  ch := () ∈ (N)  ; -- define empty channel
 
 -- ch is the communication channel
-rule producer(ch @ (@N)):
+rule producer(ch @ (N)):
   make item := 0 ∈ N;
   while length(ch) < c do
     alter item  := random(10);
@@ -17,7 +17,7 @@ rule producer(ch @ (@N)):
 return;
 
 --  ch is the communication channel
-rule consumer(ch @ (@N)):
+rule consumer(ch @ (N)):
   make item ∈ N;
   while (len(ch) > 0) do
     alter item := ch[?];

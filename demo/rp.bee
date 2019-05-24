@@ -4,7 +4,7 @@
 #name :=  "rp";
 
 -- declare rule with rule "cmp" as parameter
-rule compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r ∈ L):
+rule compare(a,b ∈ Z, cmp @ (Z,Z)) => (r ∈ L):
   alter r := cmp(a,b);
 return;
 

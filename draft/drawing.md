@@ -29,17 +29,16 @@ Each graphic element is a composite data type.
   ⌂    | Shape    | {o ∈ ⊡, s ∈ [⊡]}
   ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
 
-Type   | Signature                 | Description
--------|---------------------------|-------------------------------------------------
-P      | R[0..+]                   | Positive number representing distance or length
-V      | {o ∈ ⊡, d ∈ P}            | 2D vectorial space
-H      | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }    | Any shape, with origin and rotation
-Y      | {c ∈ N, v ∈ [L], m ∈ [H]} | 2D Layer with c = color, m = set of shapes
-G      | {o ∈ ⊡, w,h ∈ Z, m ∈ [Y]} | Graphic canvas (with points and shapes)
+Type   | Signature                    | Description
+-------|------------------------------|-------------------------------------------------
+gC     | {o ∈ ⊡, w,h ∈ Z, m ∈ [gL]}   | Graphic  canvas (with points and shapes)
+gL     | {c ∈ N, v ∈ L, m ∈ [gH]}   | Graphic  layer with c = color, m = set of shapes
+gH     | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }       | Graphhic shape, with origin and rotation
+gT     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic  Text with rotation
 
 **legend**
 ```
-w = with
+w = width
 h = height
 s = shape
 m = members

@@ -5,7 +5,7 @@
 
 make n ∈ Z; -- Integer on 64 bit
 make l ∈ L; -- Logical value False := 0
-make h @ S; -- Default 255 char string
+make h ∈ S; -- Default 255 char string
 -----------------------------------------
 -- printing initial makes
 -----------------------------------------

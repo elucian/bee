@@ -4,7 +4,6 @@
 #name :=  "op";
 -- rule with input/output parameters
 -- operator "@"  define input/output reference 
--- operator "@" pass named argument by reference
 rule pro(a,b @ N):
   alter a += 1; -- alter parameter a
   alter b += 2; -- alter parameter b 

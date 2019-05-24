@@ -26,16 +26,16 @@ print e ≡ d; -- 0 different reference
 
 -- boxing/ unboxing
 make i := 10 ∈ z8; -- native type
-make c := 0  ∈ Z;
+make c := 0  ∈ Z;  -- reference
 trial:
-  alter c := i; -- success boxing, makes c = 10 
-  alter i := c; -- fail unboxing
+  alter c := i; -- auto boxing, makes c = 10 
+  alter i := c; -- not possible (fail)
 other
-  -- unboxing error
-  print "unboxing fail:".#error.message;
+  -- implicit unboxing error
+  print "unboxing error:".#error.message;
 done;
 
--- right unboxing is explicit
+-- explicit unboxing
 alter i := d -> z8;
 
 -- verify identity

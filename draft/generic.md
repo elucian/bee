@@ -27,7 +27,7 @@ This can be used to create an argument for a _signature_
 
 **signature**
 ```
-rule foo( id @ rule(type,type, ...));
+rule foo( id @ (Type,Type, ...));
 ...
 ```
 
@@ -43,7 +43,7 @@ apply foo((param ,param ...) => (expression)):
 
 ```
 -- this sort is generic 
-rule bubble{XT ∈ Type}(array ∈ [XT], gt @ rule(XT,XT)):
+rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT)):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
   make temp ∈ XT;
@@ -69,7 +69,7 @@ return;
 **Notes:**
 
 * Rule "sort" receive type Type using markup <X> 
-* Rule reference "gt" is received as argument.
+* Rule reference "gt" is received as input/output argument.
 
 **sort usage**
 
@@ -77,8 +77,11 @@ return;
 -- define object type to be sorted
 type Person  <: { name ∈ S, age ∈ N };
 
+-- define order function for type Person
+rule order( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
+
 -- define sort rule for Person, as a clone of bubble
-clone sort := bubble{XT:Person};
+clone sort := bubble{Person}(gt:order);
 
 -- define clients and suppliers
 make clients   ∈ [Person](100);

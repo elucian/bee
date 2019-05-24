@@ -5,13 +5,13 @@
 
 -- define recursive type Person
 type Person <: {
-      name @ S, 
+      name ∈ S, 
       age  ∈ N,  
-      children @ (@Person) -- list of persons
+      children ∈ (Person) -- list of persons
      };
 
 -- create two objects of type Person
-make r1,r2 @ Person;
+make r1,r2 ∈ Person;
 
 -- person with no children          
 alter r1 := {name:'Mica', age:21};

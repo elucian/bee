@@ -34,7 +34,7 @@ return;
 print plus(1); -- will print 2
 
 -- input/output arguments, y is optional 
-rule inc(x @ Z, y:0 @ Z):
+rule inc(x @ Z, y: 0 @ Z):
   alter x += 1;
   alter y += 1;
 return;

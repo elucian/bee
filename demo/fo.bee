@@ -11,7 +11,7 @@ make file := io.open('foo.txt','+w');
 apply file.print("Hello World!");
 
 -- read the entire content from file
-make  content := file.read() @ U;
+make  content := file.read() ∈ W;
 apply file.close;
 -- display the entrie content to console
 write content;
