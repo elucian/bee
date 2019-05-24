@@ -343,10 +343,10 @@ define .pi := 3.14;
 make .v ∈ N;
 
 --public rule
-rule .f(x ∈ N) => (x + 1) ∈ N;
+rule .f(x ∈ N) ∈ N => (x + 1);
 
 --public rule
-rule .m(x, y ∈ N, r @ N);
+rule .m(x, y ∈ N) => (r @ N);
   alter r := x + y;
 return;
 ```
@@ -483,7 +483,7 @@ play aspect_name(parameter_list) +> (result,...)
 #role := "aspect";
 
 input  i ∈ Z;  -- input parameter "i"
-output v ∈ N;  -- output parameter "v"
+output v @ N;  -- output parameter "v"
 
 when (i < 0) do
   alter v := -i;
@@ -512,13 +512,15 @@ over.
 
 One aspect can have multiple input and output parameters:
 ```
-input a,b ∈ Z, c ∈ R; --input parameters
-output v,z ∈ N; -- output parameters
+input a,b ∈ Z, c ∈ R; -- input parameters
+output v,z @ N;       -- output parameters
 ```
 
 **note:** 
 * both input/output statements are optional;
-* one aspect can have single input and single output statement;
+* one aspect can have single input and single output statements;
+* output parameters use "@" at all times and can not be native variables;
+* input parameters can use "∈" for value parameter and "@" for reference parameter;
 
 
 **Read next:** [Syntax Overview](overview.md)

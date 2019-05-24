@@ -100,13 +100,16 @@ A number on 32 bit with precision = 0.0005:
 
 ## Default Q number
 
-**Q53.10** 
+**Q14.17** 
 
-Default Q number has precision 2⁻¹⁰ ≈ 0.001 and occupy 64 bit.
+Default Q number has precision 10⁻⁵ = 2⁻¹⁷ ≈ 0.00001 and occupy 32 bit.
 
-* Min:-9007199254740992
-* Max:+9007199254740991
-* Res: 0.0009765625
+* Min:-16384
+* Max:+16383
+* Res: 0.0000076
+
+smallest fraction: 1/10000
+largest fraction:  32766/2
 
 ## Approximate comparison
 
@@ -121,18 +124,22 @@ In next example b = 0.33(3), delta = (b - a) = 0.083
 
 ```
 ** override default precision
-$precision := 0.01;
+#precision := 0.01;
 
-make a := 0.25;  --real
-make b := 1/3;   --rational
+make a := 0.25;  -- real
+make b := 1/3;   -- rational
 
 ** using specified precision 0.01 < 0.083
-print (a ≈ b);  --false
+print (a ≈ b);  -- false
 
-print (a ≈ b ± 0.1);  --true
-print (a ≈ c ± 0.5);  --true
-print (b ≈ c ± 0.5);  --true
+print (a ≈ b ± 0.1);  -- true
+print (a ≈ c ± 0.5);  -- true
+print (b ≈ c ± 0.5);  -- true
 ```
 
-**Note:** Bee is an efficient language.
+**Notes:** 
+* Rational numbers are for 2D GIS maps,
+* Rational numbers improve computation efficiency.
+
+
 

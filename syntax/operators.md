@@ -27,7 +27,8 @@ symbol| description
 ------|----------------------------------------------------------------
  \#   | System variables \| Global variables
   $   | System constants \| Environment variables
-  @   | Define input/output parameter 
+  @   | Define method result /| input/output parameters
+  ∈   | Define variable/constant/result/input only parameter
   :   | Pair up key-value in a collection or rule call
   ;   | End of statement \| Statement separator
   .   | Decimals for real numbers \| String concatenation
@@ -69,8 +70,7 @@ symbol| description
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
- :=   | Assign value  \| Transfer by sharing reference
- ::   | Clone value   \| Transfer by copy value/attributes
+ :=   | Assign value  \| Transfer by copy
  :\>  | Create visitor from collection (usually in scan) 
  \+\> | Result collector \| Used for _apply_ and _play_ statements
 
@@ -94,7 +94,7 @@ Relation operators are used to compare expressions.
 
 symbol | meaning
 -------|--------------------------------------------------------------------
-  ∈    | element belong to collection
+  ∈    | check if element belong to collection
   ≡    | same memory address, same reference: (shallow comparison)
   =    | equality of two values, collections or objects (deep comparison)
   ≠    | divergence of two values, collections or objects (deep comparison)

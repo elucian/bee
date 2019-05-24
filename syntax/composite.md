@@ -107,7 +107,7 @@ A rule can have multiple results defined using a tuple:
 
 ```
 -- rule with multiple results
-rule test(x,y ∈ Z) => (r, c ∈ Z):
+rule test(x,y ∈ Z) => (r, c @ Z):
   alter r += x+1;
   alter c += y+1;
 return;
@@ -287,9 +287,9 @@ Initial value for elements can be set during declaration:
 
 ```
 -- you can use 2 optional notations 
-make zum  := [1](10) ∈ [Z];     -- explicit initialization using range
-make zet  := [1..10];           -- explicit initialization using one value
-make test := [1..10,100..1000]; -- explicit initialization using domain notation
+make zum  := 1 ∈ [Z](10);       -- explicit initialization using single value
+make zet  := [100..1000];       -- explicit initialization using range
+make test := [1..10,100..1000]; -- explicit initialization using domain
 
 -- modify one element by index
 alter zum[1]  := 1; 
@@ -615,8 +615,8 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str ∈ S(25);  --string with capacity   25x8 = 200 bit
-make a   ∈ [U](25);  --array of 25 characters 25x8 = 200 bit
+make str ∈ S(25);    --string with capacity   25x8 = 200 bit
+make a   ∈ [B](25);  --array of 25 characters 25x8 = 200 bit
 
 alter str := 'Short string'; 
 alter a   := split(str);

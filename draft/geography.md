@@ -8,35 +8,53 @@ Bee language has limited support for measurement units. Inside strings you must 
 
 Calculations often represent angles by small letters of the Greek alphabet, and that way latitude will be represented by λ (lambda, Greek L), and longitude by φ (phi, Greek F). Here is how they are defined. 
 
+## Precision
+
+Earth coordinates can be represented using default Q numbers on 32 bit.
+
+2	0.01	1.1132 km
+3	0.001	111.32 m
+4	0.0001	11.132 m
+5	0.00001	1.1132 m (default precision)
+
 ## Data Types
 
-* Δ = Distance
+* Δ = Distance (meters)
 * Λ = Longitude
 * Φ = Latitude
 
 ```
-type Δ <: R[0..+];       
-type Λ <: R[-180..+180];
-type Φ <: R[-90..+90];
+type Δ <: N[0..+100,000,000]; -- twice equatorial
+type Λ <: Q[-180..+180]; -- longitude angle (degree)
+type Φ <: Q[-90..+90]; -- latitude angle (degree)
 ```
 
-Other data types are starting with G prefix and one uppercase letter.
+Other map data types are starting with "m" prefix and one uppercase letter.
 
-* GL = Geographic Link
-* GN = Geographic Node
-* GM = Geographic Map
+* mP  = Map Point
+* mL  = Map Link
+* mN  = Map Node
+* mA  = Map Area
+* mC  = Map Canvas
 
 ```
-  -- geographic node
-  type GN <: {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ};             
+  -- map coordinates: λ = Latitude, φ = Longitude 
+  type mC <: {λ ∈ Λ, φ ∈ Φ}
+  
+  -- network node: λ = Latitude, φ = Longitude, ε = Elevation
+  type mN <: {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ};             
  
-  -- geographic link
-  type GL <: {snode, enode ∈ GN, shape ∈ [GN]};
+  -- network link
+  type mL <: {start_node ∈ mN, end_node ∈ mN, shape ∈ [mC]};
+  
   -- point of interest
-  type PI <: {(id ∈ N: label ∈ S, lnode ∈ GN)};
- 
-  -- geographic map
-  type GM <: {origin ∈ GN, rotation ∈ ∠, scale ∈ Δ, pint ∈ [GN], links ∈ [GL]};
+  type mP <: {id ∈ N, point ∈ mC, label ∈ S};
+
+  -- map area 
+  type mA <: {origin ∈ mN, shape ∈ [mC], label ∈ S};
+  
+  -- map object
+  type mO <: {origin ∈ mC, scale ∈ Q, points ∈ [mP], nodes ∈ [mN], links ∈ [mL]};
 ```
 
 **legend**
@@ -44,9 +62,6 @@ Other data types are starting with G prefix and one uppercase letter.
 * λ = latitude
 * φ = longitude
 * ε = elevation
-* pint  = point of interest
-* snode = start node
-* enode = end node
 
 ## Space objects
 
@@ -61,8 +76,17 @@ Satellite| Artificial celestial body bound to a planet or moon by gravity
 Craft    | Space-craft capable to travel in space, not bounded to a planet
 
 
-## Enumerations
+## Planets
 
 Type   | Definition
 -------|---------------------------------------------------------------------------
-♇      | Enumeration of planets
+☀      | Sun
+☿      | Mercury
+♀      | Venus
+♁      | Earth
+♂      | Marth
+♃      | Jupiter
+♄      | Saturn
+♅      | Uraus      
+♆      | Neptun
+♇      | Pluto

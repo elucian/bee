@@ -4,7 +4,7 @@ A generic rule is using one or more type parameters.
 
 **pattern**
 ```
-rule name{Type,...}(param ∈ Type) => (result ∈ Type):
+rule name{Type,...}(param ∈ Type) => (result @ Type):
    make var ∈ Type;
    alter result := expression(param);
 return;
@@ -27,7 +27,7 @@ This can be used to create an argument for a _signature_
 
 **signature**
 ```
-rule foo( id @ (type,type, ...) ∈ type );
+rule foo( id @ rule(type,type, ...));
 ...
 ```
 
@@ -43,7 +43,7 @@ apply foo((param ,param ...) => (expression)):
 
 ```
 -- this sort is generic 
-rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT) ∈ L):
+rule bubble{XT ∈ Type}(array ∈ [XT], gt @ rule(XT,XT)):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
   make temp ∈ XT;
@@ -55,9 +55,9 @@ rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT) ∈ L):
        -- this pair is out of order ?
       when gt(array[i], array[i+1]) do
          -- swap pair and set swap flag = true
-        alter temp := array[i];
-        alter array[i] := array[i+1];
-        alter array[i+1] := temp;
+        alter temp : array[i];
+        alter array[i] : array[i+1];
+        alter array[i+1] : temp;
         alter swap := True;
       done;
       alter i += 1;

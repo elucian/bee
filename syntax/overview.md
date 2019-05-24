@@ -11,8 +11,6 @@ I have used a simple design notation based on examples and notes:
 
 * [Expressions](#expressions)
 * [Primitive types](#primitive-types)
-* [Reference types](#reference-types)
-* [Constant literals](#constant-literals)
 * [Composite types](#composite-types)
 * [Type declaration](#type-declaration)
 * [Range subtypes](#range-subtypes)
@@ -33,8 +31,8 @@ Expressions are created using identifiers, operators, rules and constant literal
 * can be enumerated using comma separator ","
 * can be combined to create more complex expressions;
 * have type that is calculated using type inference;
-* can be assigned to variables using "value" or "modify" statements;
-* can be printed to console using "print" or "write" actions;
+* have a result that can be assigned to variables;
+* have a result that can be printed to console;
 
 **Examples**
 ```
@@ -76,129 +74,42 @@ alter x := x ÷ 0; -- error: division by 0
 
 Bee use 3 kind of data types:
 
-1. Primitive data types;
-2. Reference data types;
+1. Native data types;
+2. Primitive data types;
 3. Composite data types;
-
 
 ## Primitive Types
 
-Primitive types are mapped to operating system native types:
+Primitive data types are mapped to native types.
 
-| Name    |Bee|Bytes|Description
-|---------|---|-----|------------------------------------------------------------
-| char    |c8 | 8   | ASCII character \`_\`
-| byte    |u8 | 8   | Unsigned byte: 0..255
-| short   |z16| 16  | Signed small integer -32767..32766
-| int     |z32| 32  | Signet integer
-| long    |z64| 64  | Signed large integer
-| float   |f32| 32  | Single precision number on 32 bit
-| double  |f64| 64  | Double precision number on 64 bit
+| Name     | Bee|Native| Sign      |Bytes|Description
+|----------|----|------|-----------|-----|------------------------------------------------------------
+| Logic    | L  |u1    | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
+| Alpha    | A  |u1    | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
+| Binary   | B  |u2    | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
+| Word     | W  |u4    | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
+| Rational | Q  |f4    | unsigned  | 4   |Small fraction of two binary numbers like: 1/2 (precision = 0.001)
+| Natural  | N  |u8    | unsigned  | 8   |Unsigned large positive integer [0..+]
+| Integer  | Z  |z8    | signed    | 8   |Signed large integer [-..+]
+| Positive | P  |f8    | unsigned  | 8   |Single precision float  (0..+)
+| Real     | R  |f8    | signed    | 8   |Double precision float  (-..+)
 
-
-**Note:**
-* Floating point numbers are signed;
-* Integers are signed if start with "z";
-* Unsigned integers are starting with  "u";
-* Primitive types are usually allocated on the stack;
-
-## Reference Types
-
-A reference is a special variable containing type information and a memory location.
-
-
-**Reference attributes**
-
-1. variable name
-1. memory address
-1. data type
-1. capacity (bytes)
-1. limits  (min/max)
-
-Reference types are represented with one single upper-case character.
-
-| Name        |Bee |Bytes|Description
-|-------------|----|-----|------------------------------------------------------------
-| Alpha       | A  | 1   |Alpha-numeric code point 8 bit, max: 0xFF
-| Binary      | B  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF
-| Rational    | Q  | 8   |Fraction of two binary numbers like: 1/2 (precision = 0.001)
-| Natural     | N  | 8   |Unsigned large positive number     [0..+]
-| Integer     | Z  | 8   |Signed large discrete number       [-..+]
-| Positive    | P  | 8   |Double precision positive numbers: (0..+)
-| Real        | R  | 8   |Double precision number            (-..+)
-| Complex     | C  |16   |Complex number: pairs like (r+i)
-| Logic       | L  | 1   |Numeric enumeration of two values: False:0, True:1 
-
-**boxing**
-
-Boxing is the process of converting a primitive type to reference type. This will wrap the value and stores it on the heap. Unboxing extracts the value from the reference. Boxing is implicit while unboxing is explicit. 
-
-```
-make k ∈ Z; -- reference to integer
-make n := 10 ∈ z64;  -- primitive type
-
--- boxing a primitive
-alter k := i;  -- auto-boxing
-alter n += 2;  -- i = 12 (modified)
-print k;       -- k = 10 (unmodified)
-
--- reference identity
-print n ≡ k; -- False (different location)
-print n = k; -- True (same value)
-```
-
-**unboxing**
-
-Unboxing must be explicit. It may fail at runtime if the data type do not match.
-
-```
-make r := 10 ∈ Z; -- reference to integer
-make n ∈ z64;     -- primitive type
-
--- explicit unboxing
-alter r := n -> z64; --  n = 10 
-alter n += 2;  -- n = 12 (modified)
-print r;       -- r = 10 (unmodified)
-
--- reference identity is transient
-print n = r; -- True (same value)
-print n ≡ r; -- False (different locations)
-
-```
-
-**share vs copy**
-
-A reference can share its location with other reference.
-
-```
-make a := 2 ∈ Z;
-
--- transfer value by share
-make b := a ∈ Z;
-
-print a = b; -- 1: same value
-print a ≡ b; -- 1: same location
-
--- transfer value by copy
-make c :: a ∈ Z; -- copy value from a
-
-print a = b; -- 1: same value
-print a ≡ b; -- 0: different location
-
-```
 
 ## Constant Literals
 
-Bee has support for numeric constants. These can be used in expressions to represent numbers.
+These are symbolic default representations for native data types.
 
 |   Literal | Description
 |-----------|-----------------------------------------------------------
+|False      | logic 0
+|True       | logic 1
 |0          | integer zero
-|1234567890 | integer number : (0,1,2,3,4,5,6,7,8,9)
-|0b10101010 | binary integer : (0b) & (0,1)
-|U+FF       | A code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|U+FFFF     | B code point: (U+,U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0xFFFFFFFF | Hexadecimal: (Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0.0        | real zero 
+|1234567890 | integer (0,1,2,3,4,5,6,7,8,9)
+|0b10101010 | binary  (0b) & (0,1)
+|U+FFFF     | code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U-FFFFFFFF | code point: (U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0xFFFFFFFF | hexadecimal:  (Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |0.05       | real number: (.,0,1,2,3,4,5,6,7,8,9) 
 |1E10       | real number: 1×10¹⁰  :=   10000000000  
 |1e10       | real number: 1×10⁻¹⁰ := 0.0000000001  
@@ -208,12 +119,13 @@ Bee has support for numeric constants. These can be used in expressions to repre
 
 **pattern**
 ```
-make name := constant ∈ Type
+make name := constant ∈ Type; -- full declaration
+make name := constant;  -- partial declaration
 ```
 
 **example**
 ```
-make n := U+2200 ∈ B;  -- Symbol: ∀
+make n := U+2200 ∈ A;  -- Symbol: ∀
 ```
 
 **Note:** 
@@ -221,23 +133,90 @@ make n := U+2200 ∈ B;  -- Symbol: ∀
 * After U+ compiler is expecting 4 hexadecimal symbols;
 * After U- compiler is expecting 6 or 8 hexadecimal symbols;
 
+## References
 
-## Composite types
+Bee do not use pointers but references. Most data types are references to objects except native types.
+
+**boxing**
+
+Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. 
+
+```
+make k ∈ Z;    -- reference type
+make n := 10;  -- native type (z8)
+
+alter k := n;  -- auto-boxing
+
+-- reference identity
+print n = k; -- True (same value)
+print n ≡ k; -- False (different location)
+
+-- consequence
+alter n += 2;  -- i = 12 (modified)
+print k;       -- k = 10 (unmodified)
+
+```
+
+**unboxing**
+
+Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. 
+
+```
+make r := 10 ∈ Z; -- reference to integer
+make n := 0;      -- native type (z8)
+
+alter n := r -> z8; -- explicit unboxing
+
+-- verify value identity
+print n = r; -- True (same value)
+print n ≡ r; -- False (different location)
+
+-- consequence
+alter n += 2;  -- n = 12 (modified)
+print r;       -- r = 10 (unmodified)
+```
+
+**share vs copy**
+
+A reference can share its location with other reference using operator ":".
+
+```
+-- create a reference
+make a := 1 ∈ Z;
+
+-- transfer value by share
+make  c : a; -- clone a reference (c ∈ Z)
+
+print c = a; -- 1: same value
+print c ≡ a; -- 1: same location
+
+-- transfer value by copy
+make b := a; -- create new reference (b ∈ Z)  
+
+print a = b; --> 1: same value
+print a ≡ b; --> 0: different location
+
+
+```
+
+## Reference types
 
 Composite types are using English full name and start with uppercase.
 
 | Name    | Bee | Description
 |---------|-----|----------------------------------------------------------------
+| Complex | C   | Complex number, pair of 2 double numbers (r+i)
 | String  | S   | Short string encoded as UTF8 (Array)
 | Text    | X   | Large blob text encoded as UTF8 (Rope or Radix Tree) 
 | Date    | D   | DD/MM/YYYY 
 | Time    | T   | hh:mm,ms
 | Error   | E   | Exception object: {code, message, line}
+| File    | F   | File handler
 
 **Notes:**
 * Composite variables are references;
-* Composite variables have usually variable size;
-* Composite variables are usually allocated on the heap;
+* Composite variables have variable size;
+* Composite variables are  allocated on the heap;
 
 ## Collection types
 
@@ -367,16 +346,17 @@ Variables are defined using keyword _make_ plus one of the operators:
 
 operator | purpose
 ---------|------------------------------------------------------------------
- ∈       | declare variable type \| member type \| parameter type
- :       | pair-up \| parameter:value \| key:value
- :=      | initialize variable using a constant/expression or constructor
+ ∈       | declare native variable
+ :       | share \| pair-up  \| shallow copy
+ :=      | create new \| reset value \| deep copy
 
 ```
--- default variable declarations with type
+-- primitive variable declarations with type
 make var_name ∈  type_name;
 make var_name := constant ∈ type_name;
 
 -- partial declaration using type inference
+make var_name := constant; 
 make var_name := expression; 
 ```
 
@@ -394,32 +374,35 @@ One can modify variables using _alter_ statement.
 ```
 make a := 10, b := 0 ∈ Z;
 
-alter b := a + 1; -- modify b 10->11 
-print b;          -- expected 11
+alter b := a + 1; -- modify b using assign
+alter b += 1;     -- modify b using modifier
+print b;          -- expected 12
 ```
 
 **notes:** 
 * Multiple variables can be modified all at once when separated by comma;
-* The alter statement can use only operator ":=" or a specific modifier;
+* The alter statement can use operator { := } or a modifier { += -= ÷= ·= ^= %= }
 
 **Examples:**
 ```
 -- declare a constant that can not change its value
 define pi := 3.14 ∈ R;
 
--- declare multiple variables using modify
+-- declare multiple variables
 make a   ∈ Z;  -- Integer 
 make x,y ∈ R;  -- Double
 make q,p ∈ L;  -- Logic
 
---using modifier expressions
+--using modifiers
 alter a := 10;  -- modify value of a := 10
 alter a += 1;   -- increment value of a := 11
 alter a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-alter q, p <+ (True, False);  -- modify value of q and p
-alter x, y := 10.5; -- modify value of x and y
+alter x, y := 10.5;
+
+-- modify two variables using two constants
+alter q, p <+ (True, False);  
 ```
 
 ## Type conversion
@@ -450,13 +433,13 @@ print x; -- expect 20.0
 Bee define A as single UTF-8 code point with representation: U+HH
 
 ```
-make a, b ∈ A;  -- ASCII 
-make x, y ∈ u8; -- Unsigned
+make a, b ∈ A; -- ASCII 
+make x, y ∈ B; -- Binary integer
 
-alter a := '0';     -- representation of 0
-alter x := a -> u8; -- convert to 30
-alter y := 30;      -- UTF code for '0'
-alter b := y -> A;  -- convert to '0'
+alter a := '0';     -- ASCII symbol '0'
+alter x := a -> B;  -- convert to binary 30
+alter y := 30;      -- decimal code for '0'
+alter b := y -> A;  -- convert to ASCII symbol '0'
 ```
 
 ## Type checking
@@ -594,7 +577,9 @@ print "a is 0" if (a = 0);
 print "a >  0" if (a ≥ 0);
 ```
 
-**Notes:** Keyword "if" and "else" are not related.
+**Notes:** 
+* Keyword "if" and "else" are not related
+* Conditions are enclosed in ()
 
 ## Pattern Matching
 
@@ -606,13 +591,17 @@ These expressions are separated by coma and enclosed in ().
 ```
 make var_name ∈ type;
 
+-- single condition matching
+alter var_name := (xp ? cnd1, dx);
+
+
 -- multiple matching with default value
-alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
+alter var_name := (xp1 ? cnd1, xp2 ? cnd2,... dx);
 
 -- alternative code alignment
 alter var_name := (
-   xp1 if cnd1,
-   xp2 if cnd2,
+   xp1 ? cnd1,
+   xp2 ? cnd2,
    dx);
 ```
 
@@ -630,7 +619,7 @@ dx   := default expression (optional condition).
 make x := '0';
 read (x,"x:>");
 
-make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
+make kind := ("digit" ? x ∈ ['0'..'9'], "letter" ? x ∈ ['a'..'z'] | "unknown");
 print ("x is " & kind); --expect: "x is digit"
 over.
 ```
@@ -663,9 +652,9 @@ Parameters are special variables defined in rule signature.
 * A rule can have input/output parameters;
 * Parameters with initial value are optional;
 * Optional parameters must be enumerated last in parameter list;
-* Optional parameters are initialized with pair-up operator ":" not ":=";
-* Parameters defined with "∈" require value arguments;
-* Parameters defined with "@" require reference variable as argument;
+* Optional parameters are initialized with pair-up operator ":";
+* Parameters defined with "∈" transfer value "by copy";
+* Parameters defined with "@" transfer value "by share";
 
 Static rules can have side-effects:
 
@@ -695,7 +684,7 @@ A static rules can have one or multiple results:
 
 **pattern**
 ```
-rule name(param ∈ type,...) => (result ∈ type,...):
+rule name(param ∈ type,...) => (result @ type,...):
    make local_variable;
    ...   
    alter result := expression;
@@ -703,11 +692,15 @@ rule name(param ∈ type,...) => (result ∈ type,...):
 return;
 ```
 
+**Note:**
+* Result name is explicit declared;
+* Rule results are explicit references;
+
 **Example:** 
 
 ```
 -- rule with two results "s" and "d"
-rule com(x,y ∈ Z) => (s, d ∈ Z):
+rule com(x,y ∈ Z) => (s, d @ Z):
   alter s := x + y; 
   alter d := y - x;
 return;
@@ -773,7 +766,7 @@ A generic rule is a rule prototype that can be cloned.
 **pattern**
 ```
 -- define a rule prototype 
-rule prototype_name{attributes}(parameters) => (result ∈ Type):
+rule prototype_name{attributes}(parameters) => (result @ Type):
   -- compute the result
   alter result := expression(parameters);
 return;
@@ -791,7 +784,7 @@ clone new_name:= prototype_name{arguments};
 **example**
 ```
 -- this is a generic rule
-rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
+rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
   make r := (s + i);
 return;
 
@@ -815,7 +808,7 @@ print dec(0); --> -1
 
 ## Expression rules
 
-Expression rules are based on a single expression. 
+These rules have on single expression to compute a result. 
 
 **syntax**
 ```
@@ -837,18 +830,18 @@ print  z;  --print 3
 
 Expression rules...
 * have a single result;
+* the result is a reference;
 * are binding external states;
-* can be created at runtime;
-* can be overwritten or recreated;
-* can not be interrupted from execution;
-* can not have internal states;
+* do not have internal states;
 * do not have side-effects;
 * do not depend on external states;
 
 **notes:**
 
 * Expression rules are similar to mathematical functions;
+* Expression rules can not be interrupted from execution;
 * Expression rules can be created by other rules;
+* Expression rules can be created at runtime;
 
 ## Rule mapping
 
@@ -864,8 +857,8 @@ This is myLib.bee file:
 load $bee/lib/cpp/myLib.bee; --load cpp library
 
 -- define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x ∈ Z);
-  alter x := myLib.fib(n -> Z);
+rule fib(n ∈ Z) => (x @ Z);
+  alter x := myLib.fib(n);
 return;
 
 ```

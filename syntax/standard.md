@@ -7,30 +7,6 @@ Standard library contains:
 * [Mathematics](#mathematics)
 * [System library](#system-library)
 
-## Type system
-
-Following types are included in standard library:
-
-**Basic types**
-
-| Name        |Bee| Description
-|-------------|---|-------------------------------------------------------------
-| Logical     |L  | Logical number {0,1}  (2 bytes)
-| Unicode     |U  | UTF32 code point      (4 bytes)
-| Binary      |B  | Positive short number (4 bytes)
-| Natural     |N  | Positive large number (8 bytes)
-| Integer     |Z  | Positive or negative number 
-| Real        |R  | Real number (double precision)
-| Rational    |Q  | Rational number precision control by #resolution:0.001
-
-**Composite types**
-
-| Name        | Description
-|-------------|------------------------------------------------------------
-| String      | Unlimited capacity string
-| Date        | "YYYYDDMM" -> YDM, "DD/MM/YYYY" -> DMY, "MM/DD/YYYY" -> YDM
-| Time        | "hh:mm,9999ms" -> T12 "hh:mm__, 9999ms" __={am/pm} + {T12, T24}
-
 ## Built-in rules
  
 **Introspection**
@@ -103,8 +79,8 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-type .open(name ∈ S, mode ∈ A) => (f ∈ F)
-type .close(f ∈ F)
+rule .open(name ∈ S, mode ∈ A) => (f @ F);
+rule .close(f ∈ F);
 ...
 
 ```

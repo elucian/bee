@@ -7,7 +7,7 @@ make d, e ∈ Z;    -- reference to natural number
 make s := 10 ∈ Z; -- define integer reference
 
 -- assign "by share" 
-alter d := s; -- explicit transfer address for "s"
+alter d : s;  -- explicit transfer address for "s"
 alter d += 1; -- alter underline value of d that is s  
 print s; -- s = 11  (modified)
 print d; -- d = 11  (modified) 
@@ -17,27 +17,29 @@ print d = s; -- 1 same value
 print d ≡ s; -- 1 same reference
 
 -- assign "by copy"
-alter e :: d; 
+alter e := d; 
 print e; -- 11
 
 -- verify identity
 print e = d; -- 1 same value
 print e ≡ d; -- 0 different reference
 
--- wrong unboxing
-make i ∈ z64; -- native type
+-- boxing/ unboxing
+make i := 10 ∈ z8; -- native type
+make c := 0  ∈ Z;
 trial:
-  alter i := d;
+  alter c := i; -- success boxing, makes c = 10 
+  alter i := c; -- fail unboxing
 other
   -- unboxing error
   print "unboxing fail:".#error.message;
 done;
 
--- right unboxing
-alter i := d -> z64;
+-- right unboxing is explicit
+alter i := d -> z8;
 
 -- verify identity
-print i = d; -- 1 same value
+print i = c; -- 1 same value
 print i ≡ d; -- 0 different locations
 
 over.
