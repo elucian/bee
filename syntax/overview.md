@@ -543,7 +543,7 @@ print ¬ x; --> 1
 
 --complex expressions
 print  (x = y); --> 0
-print ¬(x = y); --> 1
+print  (x ≠ y); --> 1
 print  (x < y); --> 1
 print  (x > y); --> 0
 print  (x ∧ y); --> 0
@@ -553,7 +553,7 @@ print  (x ∨ y); --> 1
 **Notes:** 
 * Operators { ¬    } is unary operator;
 * Operators { ∧, ∨ } are also bitwise operators;
-* Operators { ¬, ~ } are also bitwise operators;
+* Operators { ¬, ⊕ } are also bitwise operators;
 * Operators { ←, → } are bitwise operators;
 
 **coercion**
@@ -576,13 +576,13 @@ alter y := b -> L; --> 1
 
 ## Conditionals
 
-A conditional is a logic condition used to control statement execution.
+A conditional is a logic expression used to control statement execution.
 
 ```
 statement if (condition)
 ```
 
-The statement is executed only if the condition evaluate true = True. 
+The statement is executed only if the expression evaluate to True. 
 
 **notes:**
 1. Conditional expression must be enclosed in ();
