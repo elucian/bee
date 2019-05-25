@@ -22,8 +22,8 @@ make i := 0;    --type := Z
 make j := 0.5;  --type := R
 
 -- define synonyms for logic constants
-define false := False; -- type L = 0
-define true  := True;  -- type L = 1
+make false :: False; -- type L = 0
+make true  :: True;  -- type L = 1
 
 -- multiple variables
 make x,y,z := 5;  --type := Z

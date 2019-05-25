@@ -4,11 +4,12 @@
 #name :=  "ti";
 
 -- constant type inference
-define a := 10;     -- Z (integer on 64bit)
-define x := 0.5;    -- R (double precision)
-define y := 1/2;    -- Q (rational number)
-define f := False;  -- L (logic)
-define t := True;   -- L (logic)
+make a :: 10;     -- Z (integer on 64bit)
+make x :: 0.5;    -- R (double precision)
+make y :: 1/2;    -- Q (rational number)
+make f :: False;  -- L (logic)
+make t :: True;   -- L (logic)
+
 -- variable type inference
 make v := (1,2,3)    ; -- List of Z
 make s := 'string'   ; -- String capacity 256
@@ -34,7 +35,7 @@ return;
 print plus(1); -- will print 2
 
 -- input/output arguments, y is optional 
-rule inc(x @ Z, y: 0 @ Z):
+rule inc(x @ Z, y:0 @ Z):
   alter x += 1;
   alter y += 1;
 return;

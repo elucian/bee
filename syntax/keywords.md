@@ -1,10 +1,10 @@
 ## Bee Keywords
 
-Bee uses 54 reserved keywords so far: 
+Bee uses 53 reserved keywords so far: 
 
 ```
 04: if, is, to, in
-10: define, make, rule, clone, input, output, load, alias, type, return;
+09: make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, quest, cycle, while, scan, trial
 11: else, case, error, other, final, match, none, repeat, next, do, done

@@ -23,25 +23,23 @@ Array elements have very fast direct access by index.
 
 **example**
 ```
-method test_array():
+rule test_array():
   ** array  with capacity of 10 elements
-  Array[Integer](10): my_array;
-process  
-  given
-    Integer: m := my_array.capacity();
-    Integer: i := 1;
+  make my_array ∈ [Z](10);
+  make m := my_array.capacity();
+  make i := 1 ∈ u4;
   ** scan array and modify element by element    
   while i < m do
-    my_array[i] := i;     
-    i += 1;
+    alter my_array[i] := i;     
+    alter i += 1;
   repeat;
   ** array  elements using escape template \[]
   print ("This is the first element: \[1]" <+ my_array); 
-  print ("This is the last element: \[-1]"  <+ my_array);
+  print ("This is the last element: \[-1]" <+ my_array);
   
   ** range of array elements are comma separated [1,2,3]
-  print ("These are the first two: \[1..2]"  <+ my_array);
-  print ("These are the lat two: \[-2..-1]"  <+ my_array);
+  print ("These are the first two: \[1..2]"        <+ my_array);
+  print ("These are the lat two: \[-2..-1]"        <+ my_array);
   print ("These are all except lat two: \[1..-3]"  <+ my_array);
 return;
 ```
@@ -65,10 +63,10 @@ A slice is a small portion from an Array created with range operator "[..]"
 
 **syntax**
 ```
-   Slice: slice_name := collection[n..m]
+   make slice_name: array[n..m];
 ```
 
-Where (n,m) are 2 optional numbers: n ≥ 1, m <= number of elements. 
+Where (n,m) are 2 optional numbers: n ≥ 0, m <= number of elements. 
 
 **notes**
 
@@ -78,21 +76,20 @@ Where (n,m) are 2 optional numbers: n ≥ 1, m <= number of elements.
 
 **Example:**
 ```
-method main:
-  Array{Integer}: a := [0,1,2,3,4,5,6,7,8,9];
-  Slice{Integer}: b := a[1..4];
-process
+make a:= [0,1,2,3,4,5,6,7,8,9];
+make b: a[1..4];
+do
   print a[1..-1];  -- will print [0,1,2,3,4,5,6,7,8,9]
   print a[-3..-1]; -- will print [7,8,9]
   print a[1..1];   -- will print [0]
   print a[1..4];   -- will print [1,2,3,4]
  
   ** modify slice b
-  b[*] += 2;
+  alter b[*] += 2;
   
   ** first 4 elements of (a) are modified
   print(a);  -- will print: [2,3,4,5,4,5,6,7,8,9]
-return;
+done;
 ```
 
 ## Set builders
@@ -100,8 +97,7 @@ return;
 You can define elements of a subset from a set using the following construction:
 
 ```
-given
-  Set: sub_set := { var if var in set_name & filter_expression}
+make sub_set := { var | var ∈ set_name ∧ filter_expression(var)}
 ```
 
 You can use _var_ to create the _filter_expression_.
@@ -112,7 +108,8 @@ You can use _var_ to create the _filter_expression_.
 New set defined from a range:
 
 ```
-  new_set := { x if x in [-10..10] };
+make  new_set := { x | x ∈ [0..5:1] };  -- [0,1,2,3,4,5]
+make  new_set := { x | x ∈ [0.!10:2] }; -- [0,2,4,6,8]
 ```
 
 ## Collection Casting
@@ -122,13 +119,11 @@ Collection members can be copy into the new collection using a comprehension not
 
 **Example:**
 ```
-given
-   List: source  := [0,1,2,2,2,2];
-   Set : new_set := {};
+make list  := [0,1,2,2,2,2];
 do
-   ** eliminate duplicates using set comprehension
-   mew_set := { x if x in my_list };
-   print my_set; -- {0,1,2} 
+  -- eliminate duplicates
+  make set := { x | x ∈ list };
+  print set; -- {0,1,2} 
 done;
 ```
 
@@ -137,12 +132,10 @@ Build notation can use expressions to filter out elements during comprehension o
 
 **Example:**
 ```
-given
-   List: my_list := [0,1,2,3,4,5];
-   Set:  my_set  := {};
+make list := [0,1,2,3,4,5];
 do
-   my_set := { x if x in my_list and (x % 2 = 0) };
-   print my_set; -- {0,2,4} 
+  make set := { x | x ∈ list ∧ (x % 2 = 0) };
+  print set; -- {0,2,4} 
 done;
 ```
 
@@ -151,13 +144,11 @@ The elements in one set or list can be transformed by a function or expression t
 
 **Example:**
 ```
-given
-   Set:   source := {0,1,2,3,4,5};
-   Table: target := {};
+make source := {0,1,2,3,4,5};
 do
-   -- create Table pairs (key, value) for Table map
-   -- { 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
-   target := {(x:x^2) if x in source };
+  -- create Table pairs (key, value) for Table map   
+  make target := {(x:x^2) | x ∈ source };
+  print target;  -- { 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
 done;
 ```
 
@@ -173,38 +164,30 @@ List concatenation is ready using operator “+”. This operator represent unio
 Therefore List union act very similar to append, except we add multiple elements. 
 
 ```
-method main:
-  List[Symbol]: a := ('a','b','c');
-  List[Symbol]: b := ('1','2','3');
-  List[Symbol]: c := ();
-process
+rule main:
+  make a := ('a','b','c');
+  make b := ('1','2','3');
+  make c := ();
+
   c := a + b;
   print c; -- ['a','b','c','1','2','3'];
 return;
 ```
 
-### Join() built-in
+### Join built-in
 The join function receive a list and convert elements into a string separated be specified character.
 
 ```
-given
-  String: str;
-do
-  str := join([1,2,3],",");
-  print (str) -- "1,2,3";
-done; 
+  make str := join([1,2,3],',');
+  print (str) -- '1,2,3';
 ```
 
 ### Split built-in
 The join function receive a list and convert elements into a string separated be specified character.
 
 ```
-given
-  List[Integer]: lst;
-do
-  lst := split("1,2,3",",");
-  print lst; -- (1,2,3)
-done;
+make lst := split("1,2,3",",");
+print lst; -- (1,2,3)
 ```
 
 ### List as queue
@@ -243,9 +226,8 @@ A special _while loop_ that is executed for each element belonging to a collecti
 
 **pattern**
 ```
-given
-  Class_Name: element := collection.first()
-while element is not null do
+element := collection.first();
+while ¬(element is Null) do
   ** statements
   ...
   element := collection.next(element);
@@ -257,23 +239,17 @@ The "element" is local to iteration and is used as control variable.
 **example**
 
 ```
-method main:
-  List[Symbol]: my_list := ['a','b','c','d','e']; 
-process  
-  given
-    Symbol: element;
-    Integer: x := 1;
-  scan my_list :> element do
-    write element;
-    when element = 'd' do
-      stop -- early termination;
-    else
-      write(',');
-    done;
-  next;
-return;
+my_list := ['a','b','c','d','e']; 
+scan my_list :> element do
+  write element;
+  when element = 'd' do
+    stop; -- early termination;
+  else
+    write(',');
+  done;
+next;
 ```
-> c,d
+> a,b,c,d
 
 ## Scanning items
 
@@ -291,21 +267,14 @@ Collections have common methods that enable traversal using _scan_.
 * this       - reference to current element
 
 ### Set Iteration
-Table and Set are similar. We can visit all elements using _scan_:
+Hash and Set are similar. We can visit all elements using _scan_:
 
 **Example:**
 ```
-method main:
-  Table: my_map := {("a":1),("b":2),("c":3)};
-process  
-  ** print pairs (key:value)
-  given
-    String: key;
-    Integer: value;
-  scan my_map :> (key:value) do
-    print('("' + key + '",' + value +')');
-  repeat;
-return;
+my_map := {("a":1),("b":2),("c":3)};
+scan my_map :> (key:value) do
+  print('("' + key + '",' + value +')');
+repeat;
 ```
 
 Will print:
@@ -315,18 +284,17 @@ Will print:
 ("c",3)
 ```
 
-## Table collections
+## Hash collections
 
-Tables are sorted in memory by _key_ for faster search. It is more difficult to search by value because is not unique and not sorted. To search by value one must create a loop and verify every element. This is called full scan and is very slow so you should never use this method.
+Hash tables are sorted in memory by _key_ for faster search. It is more difficult to search by value because is not unique and not sorted. To search by value one must create a loop and verify every element. This is called full scan and is very slow so you should never use this method.
 
 
 **example:**
 ```
 ** check if a key is present in a hash collection
-given
-  Table:  my_map := {(1:'a'),(2:'b'),(3:'c')};
-  Integer: my_key := 3;
-when (my_key in my_map) do
+make my_map := {(1:'a'),(2:'b'),(3:'c')};
+make my_key := 3;
+when (my_key ∈ my_map) do
   print('True'); -- expected
 else
   print('False');
@@ -335,17 +303,12 @@ done;
 
 **example**
 ```
-** create new elements in the hash collection
-method main:
-process
-  given
-    Table(String, String): animals := {};
-  do
-    animals['Bear'] := 'dog';
-    animals['Kiwi'] := 'bird';
-    print(animals);
-  done;
-return;
+make animals ∈ {S,S};
+do
+  animals['Bear'] := 'dog';
+  animals['Kiwi'] := 'bird';
+  print(animals);
+done;
 ```
 
 Output:
@@ -360,17 +323,16 @@ Output:
 
 ### Example
 ```  
-method main:
-  Table: animals := {}; -- partial declaration
-process
-  ** establish element types S:U
+make animals := {}; -- partial declaration
+do
+  -- establish element types (S:X)
   animals['Rover'] := "dog";
 
-  ** use direct assignment to create 2 more element
+  -- use direct assignment to create 2 more element
   animals['Bear'] := "dog";
   animals['Kiwi'] := "bird";
   print(animals);
-return;
+done;
 ```
 output:
 ```
@@ -388,8 +350,7 @@ Strings can be concatenated using:
 **Example:**
 ```
 ** this is example of string concatenation
-given
-  String: str := ""; 
+make str := ""; 
 do
   ** set string value using different operators
   str := "this " & " string";  -- "this  string"
@@ -401,11 +362,10 @@ done;
 Two strings can be concatenated using concatenation operator "/" or "\\". This operator is used to concatenate "path" strings or URL locations. Notice "\\" is also escape character used for string templates.
 
 ```
-given
-  String: s := "";
+make s := "";
 do  
-  s := 'te/' / '/st'; -- "te/st" Linux
-  s := 'te/' \ '/st'; -- "te\st" Windows
+  alter s := 'te/' / '/st'; -- "te/st"
+  alter s := 'te/' \ '/st'; -- "te\\st"
 done;
 ```
 
@@ -461,15 +421,12 @@ A large template can be stored into a file, loaded from file and format().
 4. Use injector operator: "<+" to replace template row by row;
 5. Alternative use _format()_ build-in to replace placeholders in all text;
 
-**Using Table**
+**Using Hash**
 ```
-method main:
-  Text:  template := "Hey look at this \{key1} it \{key2}";
-  Table: map      := {("key1":"test"),("key2":"works!")};
-process  
-  ** using format function
-  print template.format(map);
-return;
+make template := "Hey look at this \{key1} it \{key2}";
+make map      := {("key1":"test"),("key2":"works!")};
+
+print template.format(map);
 ```
 
 Expect output:
@@ -477,14 +434,11 @@ Expect output:
 Hey look at this test it works!
 ```
 
-**Using Lists**
+**Using Set**
 ```
-method main:
-  String: template := "Hey look at this #[0] it #[1]";
-  List: my_list    := ["test","works!"];
-process  
-  print (template <+ my_set);
-return;
+make template := "Hey look at this #[0] it #[1]";
+make my_set  := {"test","works!"};
+print (template <+ my_set);
 ```
 
 Expect Output:
@@ -522,9 +476,9 @@ Where "f" is a pattern: '(ap:m.d)'
 
 * Text:    format (Text: str, Table: map);
 * Text:    replace(Text: str, String: target, String: arrow );
-*  Integer: find   (Text: str, String: patern);
-*  Integer: count  (Text: str, String: patern);
-*  Integer: length (Text: str);
+* Integer: find   (Text: str, String: patern);
+* Integer: count  (Text: str, String: patern);
+* Integer: length (Text: str);
 
 **Reading a Text**
 

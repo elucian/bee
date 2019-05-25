@@ -1,5 +1,5 @@
 +-----------------------------------------
-      native declaration demo
+      variable declaration demo
 -----------------------------------------+
 #name :=  "dc";
 
@@ -7,7 +7,7 @@ make n ∈ Z; -- Integer on 64 bit
 make l ∈ L; -- Logical value False := 0
 make h ∈ S; -- Default 255 char string
 -----------------------------------------
--- printing initial makes
+-- printing initial values
 -----------------------------------------
 print n; -- 0
 print h; -- ''
@@ -20,6 +20,7 @@ make x := 10, y := 20 ∈ N
 make a := [N](10);  -- array of 10 natural numbers
 make b := [U](10);  -- array of 10 NUL symbols
 make m := [N](3,3); -- matrix of 3x3 natural numbers
+
 print a; -- [0,0,0,0,0,0,0,0,0,0]
 print b; -- ['','','','','','','','','','']
 print m; -- [[0,0,0], [0,0,0], [0,0,0]]

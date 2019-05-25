@@ -337,7 +337,7 @@ In Bee all members that begin with dot "." are public members.
 
 ```
 --public constant
-define .pi := 3.14;
+make .pi :: 3.14;
 
 --public variable
 make .v ∈ N;

@@ -347,8 +347,8 @@ A slice is a view of references from an array.
 -- declare vector with capacity c
 make array_name ∈ [element_type](c);
 
--- slice creation using ":=" and ".."
-make slice_name := array_name[n..m];
+-- slice creation using ":" and ".."
+make slice_name: array_name[n..m];
 ```
 
 **Note:** 
@@ -362,8 +362,8 @@ make   a := [0](5);
 print  a;  --[0,0,0,0,0]
 
 -- making two slices
-make c := a[0..2]; --[0,0,0]
-make e := a[3..4]; --[0,0]
+make c: a[0..2]; --[0,0,0]
+make e: a[3..4]; --[0,0]
 
 --modify slice elements
 alter c[*] := 1;

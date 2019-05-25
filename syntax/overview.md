@@ -85,17 +85,18 @@ Bee use 3 kind of data types:
 
 Primitive data types are using one single capital letter.
 
-| Name     | Bee|Native| Sign      |Bytes|Description
+| Name     |Ref |Native| Sign      |Bytes|Description
 |----------|----|------|-----------|-----|------------------------------------------------------------
 | Logic    | L  | u1   | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
 | Alpha    | A  | u1   | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
 | Word     | W  | u2   | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
-| Binary   | B  | u4   | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
-| Rational | Q  | f4   | signed    | 4   |Small fraction of two binary numbers like: 1/2
+| Unsigned | U  | u4   | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
+| Rational | Q  | u4   | unsigned  | 4   |Fraction like 1/2, fix point representation: Q14.17 
 | Natural  | N  | u8   | unsigned  | 8   |Unsigned large positive integer [0..+]
-| Integer  | Z  | i8   | signed    | 8   |Signed large integer [-..+]
-| Positive | P  | f8   | unsigned  | 8   |Double precision float  (0..+)
-| Real     | R  | f8   | signed    | 8   |Double precision float  (-..+)
+| Binary   | B  | i4   | signed    | 4   |Signed binary integer 32 bit  [-..+]
+| Integer  | Z  | i8   | signed    | 8   |Signed large  integer 64 bit  [-..+]
+| Positive | P  | f8   | unsigned  | 8   |Double precision float (0..+)
+| Real     | R  | f8   | signed    | 8   |Double precision float (-..+)
 
 **notes:**
 
@@ -106,7 +107,7 @@ Primitive data types are using one single capital letter.
 
 These are symbolic representations for primitive data types:
 
-|Literal    | Bee | Description
+|Literal    | Ref | Description
 |-----------|-----|-----------------------------------------------------------
 |False      |  L  | logic 0
 |True       |  L  | logic 1
@@ -121,7 +122,7 @@ These are symbolic representations for primitive data types:
 |0.05       |  R  | real number: (.,0,1,2,3,4,5,6,7,8,9) 
 |1E10       |  R  | real number: 1×10¹⁰  :=   10000000000  
 |1e10       |  R  | real number: 1×10⁻¹⁰ := 0.0000000001  
-|1/2        |  Q  | rational number: 1/2 = 0.5 
+|1/2        |  Q  | rational number: 1/2 = 0.5 (fixed precision) 
 |9r+9j      |  C  | complex number r = real part, j = imaginary part (no spaces)
 |9r-9j      |  C  | complex number r = real part, j = imaginary part (no spaces)
 
@@ -138,33 +139,39 @@ make n := U+2200 ∈ A;  -- Symbol: ∀
 ```
 
 **Note:** 
-* U is reserved letter, therefore compiler will find "U+" and "U-" unique;
+* U is reserved letter that signify: Unsigned \| Unicode;
+* Compiler will find "U+" and "U-" unique;
 * After U+ compiler is expecting 4 hexadecimal symbols;
 * After U- compiler is expecting 8 hexadecimal symbols;
 
 ## Reference Types
 
-Most data types are references to objects except native types that are concrete values.
+Most data types are references except native types that are values.
 
-**identifier...**
+**identifiers...**
 
-* native type name start with lowercase letter follow by a number representing length in bytes;
-* reference type name start with one capital letter or a prefix and second is a capital letter.
+* native type_name start with lowercase letter follow by a number representing length in bytes;
+* primitive reference type_name consist of a single capital letter or Unicode symbol
+* composite reference type_name can start with small letter but second is capital letter.
 
+**examples:**
 ```
-Type = i8 -- native type
-Type = mL -- reference
+i4 -- native type: binary integer
+Z  -- primitive type: long integer
+R  -- primitive type: double float
+mL -- reference type: map Link
+gC -- reference type: graphic canvas
 ```
-
 **boxing**
 
-Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. 
+Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. Auto-boxing is possible if the types are compatible. Otherwise you must perform explicit boxing.
 
 ```
 make k ∈ Z;    -- reference integer
 make n ∈ i8;   -- native integer
 
-alter k := n;  -- auto-boxing
+alter k := n;      -- auto-boxing
+alter k := n -> Z; -- explicit boxing
 
 -- reference identity
 print n = k; -- True (same value)
@@ -178,11 +185,11 @@ print k;       -- k = 0 (unmodified)
 
 **unboxing**
 
-Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. 
+Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
 
 ```
-make r := 10 ∈ Z; -- reference to integer
-make n := 0;      -- native type (i8)
+make r := 10 ∈ Z;  -- reference to integer
+make n := 0  ∈ i4; -- native type (i4)
 
 alter n := r -> i8; -- explicit unboxing
 
@@ -357,7 +364,8 @@ type ZDomain <: [-9..1,1..9]; -- two segments
 Constants are protected memory locations representing a non-mutable value.
 
 ```
-define constant_name := constant_literal
+make constant_name :: constant_literal;
+make constant_name :: constant_literal ∈ type_name;
 ```
 
 **Notes:** 
@@ -410,7 +418,7 @@ print b;          -- expected 12
 **Examples:**
 ```
 -- declare a constant
-define pi := 3.14 ∈ R;
+make pi :: 3.14 ∈ R;
 
 -- declare multiple variables
 make a   ∈ Z;  -- Integer 
@@ -909,10 +917,10 @@ To understand more about interacting with other languages check this article abo
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
 
 **See also:**
-* [pm.bee](../demo/pm.bee); --expression rule
-* [fn.bee](../demo/fn.bee); --pattern matching rule
-* [fi.bee](../demo/fi.bee); --recursive rule
-* [rp.bee](../demo/rp.bee); --rule as parameter
+* pattern matching: [pm.bee](../demo/pm.bee) 
+* expression rule:  [fn.bee](../demo/fn.bee) 
+* recursive rule:   [fi.bee](../demo/fi.bee) 
+* rule as parameter:[rp.bee](../demo/rp.bee) 
 
 **See also:**
 * [ho.bee](../demo/ho.bee); --High order rule

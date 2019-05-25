@@ -66,6 +66,7 @@ symbol| description
  \**  | Start for a subtitle comment
  \--  | Start for single line comment
  ..   | Define range [n..m] \| Define slice from Array
+ ::   | Define a constant 
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
@@ -73,7 +74,7 @@ symbol| description
  :=   | Assign value  \| Transfer by copy
  :\>  | Create visitor (usually in scan) 
  \+\> | Output collector \| Used for _apply_ and _play_ statements
-
+ 
 ## Arithmetic modifiers
 
 Each modifier is created with pattern "x=" where x is a single symbol:

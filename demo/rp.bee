@@ -21,4 +21,3 @@ alter test := compare(1, 2, (a,b) => (a ≥ b));
 print test; -- expect 1
 
 over.
-
