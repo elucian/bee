@@ -448,18 +448,18 @@ done;
 
 ## Strings
 
-Bee has one Unicode symbol {U}, and 2 kind of strings: {S,X}
+Bee has one A type = ASCII char, and 2 kind of strings: {S,X}
 
-* U:       Is UTF32 encoded alphanumeric code point or symbol; 
+* A:       Is equivalent to char, ocupy a single bit;
 * String:  Is UTF8 array with a limited capacity: 1024 bit;
 * Text:    Is UTF8 encoded text with unrestricted capacity;
 
 **Note:** 
 Literals for strings are enclosed in 3 kind of quotes:
 
-* U:   like: \`?\` 
+* A:      like: \`?\` 
 * String: like: '?'
-* Text: like: "?"
+* Text:   like: "?"
 
 **Alternative literals**
 * Using wrong quotes can trigger implicit type coercion
@@ -472,8 +472,8 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str ∈ S(25);    --string with capacity   25x8 = 200 bit
-make a   ∈ [B](25);  --array of 25 characters 25x8 = 200 bit
+make str ∈ S(25);    --string with capacity minim  25x4 = 100 bytes
+make a   ∈ [B](25);  --array of binary code points 25x4 = 100 bytes
 
 alter str := 'Short string'; 
 alter a   := split(str);
@@ -575,95 +575,6 @@ print test_file; --> c:\work\project\src\test.bee
 -- Let's say $pro = "/work/project/"
 print test_file; --> /work/project/src/test.bee
 
-```
-
-### Template
-
-* We can include numbers into a string using template operator "<+"
-* Inside template we use "\{n}" notation to find a value using the member index
-* Template must be included in double quotes " " 
-* If a placeholder index is not found then it is preserved as is
-
-```
-make var_name := template <+ (variable);
-make var_name := template <+ (var1,var2,...);
-```
-
-**Examples:**
-```
-make x := 30; --Code ASCII 0
-make y := 41; --Code ASCII A
-
---template writing
-print ("\{0} > \{1} > \{2}" <+ (x,y)); --print "30 > 41 > {2}"
-  
-```
-
-**Escaping**
-
-Format/template stings can use escape sequences:
-
-```
-\s  : single quoted string
-\q  : double quoted string
-\n  : number  
-\a  : ASCII symbol 
-\u  : Unicode symbol
-\h  : hexadecimal
-\b  : binary
-\t  : time format
-\d  : date DMY format
-\() : [numeric format](#numeric-format)
-\{} : Attribute by name/ Value by key
-\[] : Array/Matrix element by index \| List elements: [!] or [?] 
-```
-
-**examples**
-```
-print "Numbers: \n and \n" <+ (10, 11);
-print "Alpha: \n and \n" <+ ('a', 'b');
-print "Strings: \s and \s" <+ ('odd','even');
-print "Quoted:  \q and \q" <+ ('odd','even');
-print "Unicode: \u and \u" <+ (U+2260,U+2261);
-```
-**Expected output:**
-```
-Numbers: 10 and 11
-Alpha: a and b <+ ('a', 'b');
-Strings:'odd' and 'even'
-Quoted: "odd" and "even"
-Unicode: ≠ and ≡
-```
-
-**Notes**: 
-* Injector "<+" is polymorph and overloaded operator. 
-* For template you can use: { tuple, list, table, array }
-
-### String Generator
-
-It is common to create strings automatically.
-
-**Operator:**  "*"
-
-```
-make str := constant * n ∈ S(n);
-```
-
-**Example:**
-```
-make sep := '-' * 19;
-
-print ('+' & sep);
-print ('|   this is a test   |');
-print (sep & '+');
-```
-
-**Output:**
-
-```
-+--------------------
-|  this is a test   |
---------------------+
 ```
 
 ## Object

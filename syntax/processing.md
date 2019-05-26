@@ -10,6 +10,7 @@ By using collections and control structures one can load, modify and store data.
 *[List operations](#List-operations)
 *[Collection Iteration](#Collection-Iteration)
 *[Scanning items](#Scanning-items)
+*[String Generator](#String-Generator)
 *[Text template](#Text-template)
 
 ## Array Operators
@@ -443,32 +444,81 @@ do
 done;
 ```
 
-## Text concatenation
+## String Generator
 
-String: and text can be concatenated using the string concatenation operators: {+, &}. 
+It is common to create strings automatically.
 
-## Text template
-We use hash "\{}" to create a placeholder into a Text. We use "<+" operator to replace the placeholder with values. If placeholder is not found the compiler raise an error. If the string is a variable this verification is not possible at compile time so maybe you get a run-time error.
+**Operator:**  "*"
 
 ```
-\s  : single string placeholder   
-\q  : quoted string
-\n  : single natural/integer number  
-\u  : single Unicode placeholder
-\t  : time 12 format
-\t12: time 12 format 
-\t24: time 24 format
+make str := constant * n ∈ S(n);
+```
+
+**Example:**
+```
+make sep := '-' * 19;
+
+print ('+' & sep);
+print ('|   this is a test   |');
+print (sep & '+');
+```
+
+**Output:**
+
+```
++--------------------
+|  this is a test   |
+--------------------+
+```
+
+### Text Template
+
+We use hash "\{}" to create a placeholder into a Text. We use "<+" operator to replace the placeholder with values. If placeholder is not found the compiler raise an error. If the string is a variable this verification is not possible at compile time so maybe you get a run-time error.
+
+
+* We can include numbers into a string using template operator "<+"
+* Inside template we use "\{n}" notation to find a value using the member index
+* Template must be included in double quotes " " 
+* If a placeholder index is not found then it is preserved as is
+
+```
+make var_name := template <+ (variable);
+make var_name := template <+ (var1,var2,...);
+```
+
+**Examples:**
+```
+make x := 30; --Code ASCII 0
+make y := 41; --Code ASCII A
+
+--template writing
+print ("\{0} > \{1} > \{2}" <+ (x,y)); --print "30 > 41 > {2}"
+  
+```
+
+**Escaping**
+
+Format/template stings can use escape sequences:
+
+```
+\s  : single quoted string
+\q  : double quoted string
+\n  : number  
+\a  : ASCII symbol 
+\u  : Unicode symbol
+\h  : hexadecimal
+\b  : binary
+\t  : time format
 \d  : date DMY format
-\dmy: date format DD/MM/YYYY
-\mdy: date format MM/DD/YYYY
 \() : [numeric format](#numeric-format)
-\[] : List member access by index
-\{} : Object attribute / Value by Key in Hash table
+\{} : Attribute by name/ Value by key
+\[] : Array/Matrix element by index \| List elements: [!] or [?] 
 ```
 
 **examples**
 ```
 print "Numbers: \n and \n" <+ (10, 11);
+print "Alpha: \n and \n" <+ ('a', 'b');
 print "Strings: \s and \s" <+ ('odd','even');
 print "Quoted:  \q and \q" <+ ('odd','even');
 print "Unicode: \u and \u" <+ (U+2260,U+2261);
@@ -476,14 +526,15 @@ print "Unicode: \u and \u" <+ (U+2260,U+2261);
 **Expected output:**
 ```
 Numbers: 10 and 11
-Strings: odd and even
+Alpha: a and b <+ ('a', 'b');
+Strings:'odd' and 'even'
 Quoted: "odd" and "even"
 Unicode: ≠ and ≡
 ```
 
 **Notes**: 
 * Injector "<+" is polymorph and overloaded operator. 
-* For template data source you can use: { tuple, list, set, hash}
+* For template you can use: { tuple, list, table, array }
 
 ## Large template
 
@@ -542,8 +593,8 @@ Where "f" is a pattern: '(ap:m.d)'
 ```
 ### Format examples:
 ```
- '(>_:10)'  ** right align string fill with spaces to 10 characters
- '(>0:10.2)' ** right align fill with 0 up to 10 digits and use 2 decimals
+ '(>_:10)'   -- right align string fill with spaces to 10 characters
+ '(>0:10.2)' -- right align fill with 0 up to 10 digits and use 2 decimals
 ```
 
 ### Text functions
