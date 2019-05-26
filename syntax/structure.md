@@ -230,7 +230,7 @@ input *params ∈ [String];
 
 -- check existence of parameters
 make c := params.count;
-halt -1 if (c = 0);
+halt if (c = 0);
 
 -- print comma separated parameters
 make i:= 0 ∈ Z;
@@ -313,10 +313,12 @@ A module can establish one or more name-spaces where you can define module membe
 make i := 1 ∈ Z; 
 trial
   ** local name-space
-  make i := 2 ∈ Z;
-  print i;  -- expected: 2
+  make v := i;     -- v is local reference to nonlocal: i 
+  make i := 2 ∈ Z; -- create i local 
+  print i;  -- expected: 2 (local)
+  print v;  -- expected: 1 (nonlocal)
 done;
-print i;  -- expected: 1  
+print i;  -- expected: 1  (unmodified)
 
 over.
 ```

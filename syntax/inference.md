@@ -9,7 +9,7 @@ Type inference is a logical deduction of type from constant literals.
 * [Multiply](#Multiply)
 
 ## Default
-Each literal has a "default" type that is automatic assigned for specific notation.
+Each literal has associated a default type.
 
 ```
 -- character expressions
@@ -131,4 +131,4 @@ make b := (a & ' ') * 4;
 print b; 
 ```
 
-**Read next:** [standard.md](standard.md)
+**Read next:** [Data Processing](processing.md)

@@ -132,4 +132,4 @@ make $over_capacity :: {104,"value over capacity"}     ∈ Error;
 make $out_of_domain :: {105,"subscript out of domain"} ∈ Error;
 ```
 
-**Read next:** [Structure](structure.md)
+**Read next:** [Project Structure](structure.md)

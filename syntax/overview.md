@@ -174,8 +174,8 @@ alter k := n;      -- auto-boxing
 alter k := n -> Z; -- explicit boxing
 
 -- reference identity
-print n = k; -- True (same value)
-print n ≡ k; -- False (different location)
+print n = k; -- 1 (same value)
+print n ≡ k; -- 0 (different location)
 
 -- consequence
 alter n := 2;  -- i = 2 (modified)
@@ -194,8 +194,8 @@ make n := 0  ∈ i4; -- native type (i4)
 alter n := r -> i8; -- explicit unboxing
 
 -- verify value identity
-print n = r; -- True (same value)
-print n ≡ r; -- False (different location)
+print n = r; -- 1 (same value)
+print n ≡ r; -- 0 (different location)
 
 -- consequence
 alter n += 2;  -- n = 12 (modified)
@@ -208,16 +208,16 @@ A reference can share its location with other reference using operator ":".
 
 ```
 -- create a reference
-make a := 1 ∈ Z;
+make  a := 1 ∈ Z;
 
 -- transfer value by share
-make  c : a; -- clone a reference (c ∈ Z)
+make  c := a; -- same reference
 
 print c = a; -- 1: same value
 print c ≡ a; -- 1: same location
 
 -- transfer value by copy
-make b := a; -- create new reference (b ∈ Z)  
+make  b :+ a ; -- new reference
 
 print a = b; --> 1: same value
 print a ≡ b; --> 0: different location
@@ -406,7 +406,7 @@ One can modify variables using _alter_ statement.
 ```
 make a := 10, b := 0 ∈ Z;
 
-alter b := a + 1; -- modify b using assign
+alter b := a + 1; -- modify b underline value
 alter b += 1;     -- modify b using modifier
 print b;          -- expected 12
 ```
@@ -517,8 +517,12 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 
 **example**
 ```
-make x ∈ Z;
-when (x = 4 ∧ x - 4 = 0) do
+make x := 4 ∈ Z;
+
+print x = 4 ; -- 1 (equal)
+print x ≡ 4 ; -- 0 (not identical)
+
+when (x = 4) ∧ (x - 4 = 0) do
   print "True";
 else
   print "False";  
@@ -670,7 +674,7 @@ return;
 ```
 
 **notes:**
-A static rule block ...
+A static rule ...
 * is finalized with: _return_ keyword;
 * can be executed using: _apply_ keyword;
 * can be terminated early using: _exit_ keyword;
@@ -775,19 +779,19 @@ Attributes of a rule are state variables. That are variables starting with dot p
 
 **pattern**
 ```
-rule name(param ∈ type,...):
+rule rule_name(param ∈ type,...):
   -- define x,y,z states
    make .x, .y, .z := 0 ∈ Z;  
    ...
 return;
 
 -- modify rule states
-alter rule.x = 1;
-alter rule.y = 2;
-alter rule.z = 3;
+alter rule_name.x = 1;
+alter rule_name.y = 2;
+alter rule_name.z = 3;
 
 -- read rule states
-print rule.x, rule.y, rule.z;  --1 2 3
+print (rule_name.x, rule_name.y, rule_name.z);  -- 1 2 3
 ```
 
 **See also:**
@@ -819,7 +823,7 @@ clone new_name:= prototype_name{arguments};
 ```
 -- this is a generic rule
 rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
-  make r := (s + i);
+  alter r := (s + i);
 return;
 
 -- instantiate two clones:
@@ -842,7 +846,7 @@ print dec(0); --> -1
 
 ## Expression rules
 
-These rules have on single expression to compute a result. 
+These kind of rules have on single expression to compute a result. 
 
 **syntax**
 ```
@@ -879,8 +883,10 @@ Expression rules...
 
 * Expression rules are similar to mathematical functions;
 * Expression rules can not be interrupted from execution;
-* Expression rules can be created by other rules;
-* Expression rules can be associated with explicit references;
+* Expression rules can be called from expressions;
+* Expression rules can be recursive (call themselves);
+* Expression rules can be be created from static rules;
+* Expression rules can be used as parameters for other rules;
 
 ## External rules
 
@@ -917,12 +923,10 @@ To understand more about interacting with other languages check this article abo
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
 
 **See also:**
-* pattern matching: [pm.bee](../demo/pm.bee) 
-* expression rule:  [fn.bee](../demo/fn.bee) 
-* recursive rule:   [fi.bee](../demo/fi.bee) 
-* rule as parameter:[rp.bee](../demo/rp.bee) 
-
-**See also:**
-* [ho.bee](../demo/ho.bee); --High order rule
+* [pm.bee](../demo/pm.bee): pattern matching rules 
+* [fn.bee](../demo/fn.bee): expression rules  
+* [fi.bee](../demo/fi.bee): recursive rules
+* [rp.bee](../demo/rp.bee): rule as a parameter
+* [ho.bee](../demo/ho.bee); higher order rules
 
 **Read Next:** [Control Flow](control.md)

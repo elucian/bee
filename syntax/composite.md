@@ -10,11 +10,10 @@ Composite types are complex data structures.
 * [array](#array)
 * [set](#set)
 * [hash map](#hash-map)
-* [slice](#slice)
-* [varargs](#varargs)
 * [strings](#strings)
 * [object](#object)
 * [method](#method)
+* [varargs](#varargs)
 * [exception](#exception)
 
 ## Usability
@@ -145,7 +144,7 @@ You can define a _list type_ using empty list: ()
 type type_name <: (element_type); -- list type
 ```
 
-**variable**
+**declaration**
 You can use one of three forms of declarations:
 
 ```
@@ -155,19 +154,10 @@ make name := (constant,...) ∈ (element_type); -- full declaration
 ```
 
 **properties**
-* a list can be initially empty: (),
+* a list has unlimited capacity,
+* a list can be initially empty (),
 * all elements in a list have the same type,
-* elements in a list are ordered by index,
-* list elements can be found using index but this is slow,
-* finding first element in a list is fast: list_name.first,
-* finding last element in a list is fast: list_name.last,
-* you can add a new element in a list very fast,
-* you can remove elements from beginning or end of list.
-
-**notes:** 
-* A list is usually used as stack or queue;
-* A list literal is a tuple of constant values;
-* A list has unlimited capacity;
+* elements in a list are ordered,
 
 **example**
 
@@ -178,61 +168,26 @@ make list := (0, 1, 2, 3, 4, 5);
 make x ∈ Z;
 scan list :> x do
   write x;
-  write _ if x ≡ list[?]; -- Note: "_" = " "
+  write _ if (x ≠ list[?]);
 next;
 print; -- 0 1 2 3 4 5
 ```
 
-## Stack
-
-A stack is a LIFO list of elements: LIFO = (last in first out)
-
-```
-make a := (1, 2, 3); --list
-make last ∈ N;
-
--- append to stack with operator "+="
-alter a += 4; -- (1,2,3,4)
-
--- read last element using "-="
-alter last := a[?]; --last = 4
-
--- remove last element using -=
-alter a -= a[?]; -- a = (1,2,3)
-```
-
-## Queue
-
-A queue is a FIFO collection of elements: (first in first out)
-
-```
-make q := (1,2,3); list
-make first : N;
-
--- enqueue new element into list "+=" 
-alter q += 4; -- (1,2,3,4)
-
--- read first element using ":="
-alter first := a[!]; --first = 1
-
--- dequeue first element using "-="
-alter a -= a[!]; --a = (2,3,4)
-```
-
 ## Array
 
-Bee define Arrays using notation [](c), where c is the capacity.
+Bee define Arrays using notation [Type](c), where c is the capacity.
 
 **syntax**
 ```
-make array_name ∈ [type];        -- undefined capacity
-make array_name ∈ [type](c);     -- capacity c
-make array_name ∈ [type](n,m);   -- capacity c = n·m
+make array_name ∈ [Type];        -- undefined capacity
+make array_name ∈ [Type](c);     -- capacity c
+make array_name ∈ [Type](n,m);   -- capacity c = n·m
 ```
 
-**Note:** 
-* Default array index start from 0 to c-1 where c is capacity;
-* Array index can start from a different, specified value;
+**Notes:** 
+
+* Array index start from 0 to c-1 where c is capacity;
+* Array capacity is immutable after array initialization;
 
 **example**
 
@@ -337,48 +292,6 @@ alter nec := 0 * 10;
 print nec; --expect [0,0,0,0,0,0,0,0,0,0]
 ```
 
-## Slice
-
-A slice is a view of references from an array.
-
-**Syntax:**
-
-```
--- declare vector with capacity c
-make array_name ∈ [element_type](c);
-
--- slice creation using ":" and ".."
-make slice_name: array_name[n..m];
-```
-
-**Note:** 
-* Slices are arrays of references to original elements;
-* Slices can be anonymous or can be named;
-
-**example**
-```
--- original array
-make   a := [0](5); 
-print  a;  --[0,0,0,0,0]
-
--- making two slices
-make c: a[0..2]; --[0,0,0]
-make e: a[3..4]; --[0,0]
-
---modify slice elements
-alter c[*] := 1;
-alter e[*] := 2;
-
---original array is modified
-print a; -- expect [1,1,1,2,2]
-
---modify last 2 elements using anonymous slicing
-alter a[3..?] := [2,3];
-
---                     ↓ ↓
-print a; --expect [1,1,1,2,3]
-```
-
 ## Matrix
 
 A matrix is an array with 2 or more dimensions.
@@ -425,62 +338,6 @@ output:
 ⎢ 5  6  7  8 ⎥
 ⎢ 9 10 11 12 ⎥
 ⎣13 14 15 16 ⎦
-```
-
-## Varargs
-
-One rule or rule can receive variable number of arguments.   
-We declare an array using prefix "*" for variable parameter name.
-
-```
---parameter *bar is an array
-rule foo(*bar ∈ [Z]) => (x @ Z):
-  make c := bar.count();
-  -- precondition
-  when (c = 0) do
-    alter x := 0;
-    exit;
-  done;
-  alter i := 0; 
-  -- sum all parameters  
-  while (i < c) do
-    alter x += bar[i];
-    alter i += 1;
-  repeat;
-return;
-
---we can call foo with variable number of arguments
-print foo();       -- 0
-print foo(1);      -- 1
-print foo(1,2);    -- 3
-print foo(1,2,3);  -- 6
-
-```
-
-**first & last**
-
-* First element in array: array_name[!]
-* Last element in array: array_name[?]
-
-### Array processing
-
-```
-make a1 := [1, 2, 3]; 
-make a2 := [2, 3, 4]; 
-make a3, a4, a5 := [];
-
--- addition between two Arrays "+" 
-alter a3 := a1 + a2; --[1,2,3,2,3,4]
-
--- difference between two Arrays "-"
-alter a4 := l1 - l2; -- [1]
-alter a5 := l2 - l1; -- [4]
-
--- intersection between two Arrays "&" 
-alter a3 := a1 & a2; -- [2,3]
-
--- union between two Arrays "|" 
-alter a3 := a1 | a2; -- [1,2,3,4]
 ```
 
 **Array traversal**
@@ -893,6 +750,8 @@ type Node <: {
 };
 ```
 
+
+
 ## Method
 
 An object can have associated rules that are called _methods_:
@@ -932,6 +791,41 @@ fail if test.b ≠ 1; -- verify attribute b
 * Rules can be private or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
+
+## Varargs
+
+One rule or rule can receive variable number of arguments.   
+We declare an array using prefix "*" for variable parameter name.
+
+```
+--parameter *bar is an array
+rule foo(*bar ∈ [Z]) => (x @ Z):
+  make c := bar.count();
+  -- precondition
+  when (c = 0) do
+    alter x := 0;
+    exit;
+  done;
+  alter i := 0; 
+  -- sum all parameters  
+  while (i < c) do
+    alter x += bar[i];
+    alter i += 1;
+  repeat;
+return;
+
+--we can call foo with variable number of arguments
+print foo();       -- 0
+print foo(1);      -- 1
+print foo(1,2);    -- 3
+print foo(1,2,3);  -- 6
+
+```
+
+**first & last**
+
+* First element in array: array_name[!]
+* Last element in array: array_name[?]
 
 ## Exception
 An exception is a recoverable error. It can be declared by the user or by the system:
@@ -973,7 +867,6 @@ exception: 'test'
 * Error code <  200 are system reserved error codes;
 * Error code ≤ -1   are unrecoverable errors created with _halt_;
 * Keyword _halt_ will liberate the resources and terminate the program;
-
 
 **unrecoverable**
 

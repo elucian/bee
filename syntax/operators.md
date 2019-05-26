@@ -66,13 +66,14 @@ symbol| description
  \**  | Start for a subtitle comment
  \--  | Start for single line comment
  ..   | Define range [n..m] \| Define slice from Array
- ::   | Define a constant 
+ ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
  \<:  | Define subset \| User composite type
- :=   | Assign value  \| Transfer by copy
- :\>  | Create visitor (usually in scan) 
+ :=   | Assign by value \| Reset reference
+ :+   | Assign by copy  \| Keep reference
+ :\>  | Define visitor variables for scan statement 
  \+\> | Output collector \| Used for _apply_ and _play_ statements
  
 ## Arithmetic modifiers
@@ -96,20 +97,22 @@ Relation operators are used to compare expressions.
 symbol | meaning
 -------|--------------------------------------------------------------------
   ∈    | check if element belong to collection
-  ≡    | same memory address, same reference: (shallow comparison)
-  =    | equality of two values, collections or objects (deep comparison)
-  ≠    | divergence of two values, collections or objects (deep comparison)
-  ≈    | approximative equal, used with `±` like: (x ≈ 4 ± 0.25)
+  =    | same value \| equivalent objects (deep comparison)
+  ≠    | divergent values \| divergent objects (deep comparison)
+  ≡    | same reference (shallow comparison)
+  ≈    | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
  \>    | value is greater than 
  \<    | value is less than
   ≥    | greater than or equal to
   ≤    | less than or equal to
 
 
-**patterns:** 
+**missing:** 
+
+Operator "≢" is not used. Instead you can use expression:
+
 ```
- ¬(x ≡ y);   --divergence of two references, (not the same address)
- ¬(x = y);   --divergence of two values, objects or collections
+  ¬(x ≡ y); --divergence of two objects
 ```
 
 ## Collection operators

@@ -19,6 +19,7 @@ Read next pages in order to learn Bee:
 1. [Control FLow](control.md)
 1. [Composite Types](composite.md)
 1. [Type Inference](inference.md)
+1. [Data Processing](processing.md)
 1. [Standard Library](standard.md)
 
 ## Experimental

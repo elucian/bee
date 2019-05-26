@@ -2,7 +2,7 @@
 
 By using collections and control structures one can load, modify and store data.
 
-*[Working with arrays](#Working-with-arrays)
+*[Array Operators](#Array-Operators)
 *[Matrix Operations](#Matrix-Operations)
 *[Arrays Slicing](#Arrays-Slicing)
 *[Collection Casting](#Collection-Casting)
@@ -12,23 +12,45 @@ By using collections and control structures one can load, modify and store data.
 *[Scanning items](#Scanning-items)
 *[Text template](#Text-template)
 
-## Working with arrays
+## Array Operators
 
-Array elements have very fast direct access by index.
+* Array elements have very fast direct access by index;
+* Array index is a binary integer starting from zero;
+* Maximum number of elements: 2³² = 4,294,967,296;
 
-**note**
-* index start from one
-* negative index is counting from the end toward the beginning
-* range of elements is established using notation: [n..m]
+```
+make a1 := [1, 2, 3];  -- Initialized array
+make a2 := [2, 3, 4];  -- Initialized array
+
+-- addition between two Arrays "+" 
+make a3 := a1 + a2; --[1,2,3,2,3,4]
+
+-- difference between two Arrays "-"
+make a4 := l1 - l2; -- [1]
+make a5 := l2 - l1; -- [4]
+
+-- intersection between two Arrays "&" 
+make a6 := a1 & a2; -- [2,3]
+
+-- union between two Arrays "|" 
+make a7 := a1 | a2; -- [1,2,3,4]
+```
+
+**working with arrays **
+
+* Array capacity is establish on array creation;
+* Arrays can be initialized later (deferred initialization);
+* Changing array capacity is impossible after array creation;
+* Negative index is counting from the end toward the beginning;
 
 **example**
 ```
 rule test_array():
-  ** array  with capacity of 10 elements
+  -- array  with capacity of 10 elements
   make my_array ∈ [Z](10);
   make m := my_array.capacity();
-  make i := 1 ∈ u4;
-  ** scan array and modify element by element    
+  make i := 0 ∈ u4;
+  -- traverse array and modify elements
   while i < m do
     alter my_array[i] := i;     
     alter i += 1;
@@ -51,61 +73,94 @@ This is the last element: 10
 ```
 
 **capacity**
-An array can changing capacity. This can be ready using built-in method _extend_. The relocation will update any eventual references to the same array so the modification is consistent. The old memory location is free.
+An array can not change its capacity after initialization. However you can create a new array from the old array and reset the reference. However this operation will not update any slice you may have to previous reference.
 
 ```
-  array_name.extend(c)
+  -- extend array with 10 more elements
+  alter array := array & ([0 * 10]); -- new zero elements
+  alter array := array & ([1 ..10]); -- new consecutive elements
 ```
 
-##  Arrays Slicing
+## Array slicing
 
-A slice is a small portion from an Array created with range operator "[..]" 
+A slice is a small view from a larger array.
 
-**syntax**
+**Syntax:**
+
 ```
-   make slice_name: array[n..m];
+-- declare array with capacity c
+make array_name ∈ [element_type](c);
+
+-- unnamed slice can be used in expressions
+print array_name[n..m]; 
+
+-- create named slice from array
+make slice_name := array_name[n..m]; 
 ```
 
-Where (n,m) are 2 optional numbers: n ≥ 0, m <= number of elements. 
+Where: n,m are 2 optional numbers, n ≥ 0, m <= capacity-1. 
 
-**notes**
 
-* Slice is "zero cost" view. It does not allocate new memory. 
-* Slice is a collection references to original elements. 
-* If we modify elements of slice you actually modify the original.  
+**example:**
 
-**Example:**
+Anonymous slicing notation can be used to extract or modify specific elements from an array; 
+
 ```
 make a:= [0,1,2,3,4,5,6,7,8,9];
-make b: a[1..4];
 do
   print a[1..-1];  -- will print [0,1,2,3,4,5,6,7,8,9]
   print a[-3..-1]; -- will print [7,8,9]
   print a[1..1];   -- will print [0]
   print a[1..4];   -- will print [1,2,3,4]
  
-  ** modify slice b
-  alter b[*] += 2;
+  -- modify first 4 elements
+  alter a[0..3] += 2; 
   
-  ** first 4 elements of (a) are modified
-  print(a);  -- will print: [2,3,4,5,4,5,6,7,8,9]
+  -- first 4 elements of (a) are modified
+  print a;  --> [2,3,4,5,4,5,6,7,8,9]
 done;
 ```
 
-## Set builders
+**example**
+
+Slicing notation can be used to create a view to original array.
+
+```
+-- original array
+make   a := [0 * 5]; 
+print  a; --[0,0,0,0,0]
+
+-- making two slices
+make c := a[0..2]; --[0,0,0]
+make e := a[3..4]; --[0,0]
+
+--modify slice elements
+alter c[*] := 1;
+alter e[*] := 2;
+
+--original array is modified
+print a; -- expect [1,1,1,2,2]
+
+--modify last 2 elements using anonymous slicing
+alter a[3..?] := [2,3];
+
+--                     ↓ ↓
+print a; --expect [1,1,1,2,3]
+```
+
+## Set Builders
 
 You can define elements of a subset from a set using the following construction:
 
 ```
-make sub_set := { var | var ∈ set_name ∧ filter_expression(var)}
+make sub_set := { var | var ∈ set_name ∧ condition(var)}
 ```
 
-You can use _var_ to create the _filter_expression_.
-
+You can use _var_ to create the _condition_.
 
 **example:**
 
-New set defined from a range:
+New set defined from a range or domain:
 
 ```
 make  new_set := { x | x ∈ [0..5:1] };  -- [0,1,2,3,4,5]
@@ -119,10 +174,10 @@ Collection members can be copy into the new collection using a comprehension not
 
 **Example:**
 ```
-make list  := [0,1,2,2,2,2];
+make source  := [0,1,2,2,2,2];
 do
   -- eliminate duplicates
-  make set := { x | x ∈ list };
+  make set := { x | x ∈ source };
   print set; -- {0,1,2} 
 done;
 ```
@@ -132,9 +187,9 @@ Build notation can use expressions to filter out elements during comprehension o
 
 **Example:**
 ```
-make list := [0,1,2,3,4,5];
+make source := [0,1,2,3,4,5];
 do
-  make set := { x | x ∈ list ∧ (x % 2 = 0) };
+  make set := { x | x ∈ source ∧ (x % 2 = 0) };
   print set; -- {0,2,4} 
 done;
 ```
@@ -152,26 +207,24 @@ do
 done;
 ```
 
-## List operations
-We can add elements to a list or remove elements from the list using next operations: 
+## List Operations
+We can add elements to a list or remove elements from the list very fast: 
 
-* .insert()
-* .append()
-* .delete()
+* operator += append one element to end of list
+* operator -= delete one element by reference
+
 
 ### List Concatenation
 List concatenation is ready using operator “+”. This operator represent union. 
 Therefore List union act very similar to append, except we add multiple elements. 
 
 ```
-rule main:
   make a := ('a','b','c');
   make b := ('1','2','3');
   make c := ();
 
-  c := a + b;
-  print c; -- ['a','b','c','1','2','3'];
-return;
+  alter c := a + b;
+  print c; --> ('a','b','c','1','2','3');
 ```
 
 ### Join built-in
@@ -190,21 +243,42 @@ make lst := split("1,2,3",",");
 print lst; -- (1,2,3)
 ```
 
-### List as queue
-
-Two operations are possible
-
-* enqueue()  append to the end of the List
-* dequeue()  extract first element from the List
-
 ### List as stack
 
-Two operations are possible
+A stack is a LIFO list of elements: LIFO = (last in first out)
 
-* push() - can append element in top of the stack
-* pop()  - can extract the last element of the stack 
+```
+make a := (1, 2, 3); --list
+make last ∈ N;
 
-**Note:** There is no protection about using a List as stack or queue. 
+-- append to stack with operator "+="
+alter a += 4; -- (1,2,3,4)
+
+-- read last element using "-="
+alter last := a[?]; --last = 4
+
+-- remove last element using -=
+alter a -= a[?]; -- a = (1,2,3)
+```
+
+### List as queue
+
+A queue is a FIFO collection of elements: (first in first out)
+
+```
+make q := (1,2,3); list
+make first : N;
+
+-- enqueue new element into list "+=" 
+alter q += 4; -- (1,2,3,4)
+
+-- read first element using ":="
+alter first := a[!]; --first = 1
+
+-- dequeue first element using "-="
+alter a -= a[!]; --a = (2,3,4)
+```
+
 
 ### Other built-ins
 
@@ -487,4 +561,4 @@ Text is iterable by "word". The word separator is one space. So we can read a te
 **Note:**
 The text also support escape sequences like a normal string. However in a text literal we do not have to escape the single quote symbols: "'". However we have to escape the double quotes like: "This is \"quoted\" text". This is very rare since quoted text should use symbols: "« »" like "«quoted»"
 
-**Read next:** [Databases](databases.md)
+**Read next:** [Standard Library](standard.md)

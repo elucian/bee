@@ -28,20 +28,21 @@ return;
 print add(1,1); -- will print 2
 
 -- argument x is mandatory, y is optional
-rule plus(x ∈ Z, y:1) => (z @ Z):
+rule plus(x ∈ Z, y:1 ∈ Z) => (z @ Z):
   alter z := (x + y);
 return;
 
-print plus(1); -- will print 2
+print plus(0);   -- will print 1
+print plus(1,2); -- will print 3
 
--- input/output arguments, y is optional 
-rule inc(x @ Z, y:0 @ Z):
+-- input/output arguments
+rule inc(x, y @ Z):
   alter x += 1;
   alter y += 1;
 return;
 
-make i,k := 0;  -- references
-apply inc(i);   -- i = 1 
-apply inc(i,k); -- i = 2 and k = 1
+make i,k ∈ Z;   -- references
+apply inc(i,k); -- i = 1 and k = 1
+print (i,k);    -- expect: 1 1
 
 over.

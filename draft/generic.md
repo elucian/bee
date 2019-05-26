@@ -55,9 +55,9 @@ rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT)):
        -- this pair is out of order ?
       when gt(array[i], array[i+1]) do
          -- swap pair and set swap flag = true
-        alter temp : array[i];
-        alter array[i] : array[i+1];
-        alter array[i+1] : temp;
+        alter temp := array[i];
+        alter array[i] := array[i+1];
+        alter array[i+1] := temp;
         alter swap := True;
       done;
       alter i += 1;
