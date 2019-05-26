@@ -2,16 +2,16 @@
 
 By using collections and control structures one can load, modify and store data.
 
-*[Array Operators](#Array-Operators)
-*[Matrix Operations](#Matrix-Operations)
-*[Arrays Slicing](#Arrays-Slicing)
-*[Collection Casting](#Collection-Casting)
-*[Set builders](#Set-builders)
-*[List operations](#List-operations)
-*[Collection Iteration](#Collection-Iteration)
-*[Scanning items](#Scanning-items)
-*[String Generator](#String-Generator)
-*[Text template](#Text-template)
+* [Array Operators](#Array-Operators)
+* [Matrix Operations](#Matrix-Operations)
+* [Arrays Slicing](#Arrays-Slicing)
+* [Collection Casting](#Collection-Casting)
+* [Set builders](#Set-builders)
+* [List operations](#List-operations)
+* [Collection Iteration](#Collection-Iteration)
+* [Scanning items](#Scanning-items)
+* [String Generator](#String-Generator)
+* [Text template](#Text-template)
 
 ## Array Operators
 
@@ -475,6 +475,7 @@ print (sep & '+');
 
 We use hash "\{}" to create a placeholder into a Text. We use "<+" operator to replace the placeholder with values. If placeholder is not found the compiler raise an error. If the string is a variable this verification is not possible at compile time so maybe you get a run-time error.
 
+**Notes:**
 
 * We can include numbers into a string using template operator "<+"
 * Inside template we use "\{n}" notation to find a value using the member index
