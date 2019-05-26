@@ -2,9 +2,9 @@
 
 By using collections and control structures one can load, modify and store data.
 
-* [Array Operators](#Array-Operators)
+* [Array Operations](#Array-Operations)
 * [Array Slicing](#Array-Slicing)
-* [Collection Casting](#Collection-Casting)
+* [Matrix Operations](#Matrix-Operations)
 * [Set builders](#Set-builders)
 * [List operations](#List-operations)
 * [Collection Iteration](#Collection-Iteration)
@@ -12,7 +12,7 @@ By using collections and control structures one can load, modify and store data.
 * [String Generator](#String-Generator)
 * [Text template](#Text-template)
 
-## Array Operators
+## Array Operations
 
 * Array elements have very fast direct access by index;
 * Array index is a binary integer starting from zero;
@@ -147,6 +147,76 @@ alter a[3..?] := [2,3];
 --                     ↓ ↓
 print a; --expect [1,1,1,2,3]
 ```
+## Matrix Operations
+
+Modify all elements of the matrix is possible using [*] and assign operator “ := ”
+
+```
+** a matrix having 2 rows and 2 columns
+** initialize all elements with 100
+given
+  Matrix[Integer](2,2): M;
+do
+  M[*] := 100;
+  print (M);
+done;
+```
+[[100,100],[100,100]]
+
+A matrix can be initialized using literals or constructor.
+A matrix can support scalar operations like Array
+
+```
+given
+  Matrix[Integer](2,2):M;
+do
+  M[*] := 100;
+  ** modify all elements
+  M[*] += 10;
+  print(M); -- [[110,110],[110,110]]
+
+  ** modify an entire row 
+  M[1,*] := 0;
+  M[1,*] := 1;
+  print(M); -- [[0,0],[1,1]]
+  
+  ** modify an entire column
+  M[*,1] += 1;
+  M[*,2] += 2;
+  print(M); -- [[1,2],[2,3]]
+done;
+```
+
+**Memory impedance**
+
+Matrices are multidimensional while computer memory is linear. This is an impedance mismatch that require mapping. Some computer languages organize matrices row by row and some others organize memory column by column. The difference between the orders lies in which elements of an array are contiguous in memory.
+
+Row-major and column-major order
+
+Transposition Passing a memory matrix from one computer language into another can require a transposition that can be a performance bottleneck. EVE uses row-major order therefore passing matrix arguments is the most efficient with Rust and C++ languages.
+
+Matrix Traversal When you traverse elements use rows first, than you change the column. A processor will use the internal cache more efficient in this way. If the matrix is large this can be a significant performance issue.
+
+Example: In this example we traverse all the rows then all the column, this is the most efficient way to traverse a matrix.
+
+method main()
+  Matrix[String(2)](3,3): M 
+process  
+  M := [ 
+         ['a0','b0','c0'],
+         ['a1','b1','c1'],
+         ['a2','b2','c2']
+       ];     
+  given
+    Integer: row, col := 1;
+  while col <= 3 do     ** traverse columns
+    while row <= 3 do   ** traverse row first
+      print M[row,col];
+      row += 1;
+    repeat;
+    col += 1;
+  repeat;
+return;
 
 ## Set Builders
 
