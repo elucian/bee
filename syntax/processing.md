@@ -154,8 +154,7 @@ Modify all elements of the matrix is possible using [*] and assign operator “ 
 ```
 ** a matrix having 2 rows and 2 columns
 ** initialize all elements with 100
-given
-  Matrix[Integer](2,2): M;
+make M: [Z](2,2);
 do
   M[*] := 100;
   print (M);
@@ -167,8 +166,7 @@ A matrix can be initialized using literals or constructor.
 A matrix can support scalar operations like Array
 
 ```
-given
-  Matrix[Integer](2,2):M;
+make M ∈ [Z](2,2);
 do
   M[*] := 100;
   ** modify all elements
@@ -199,24 +197,21 @@ Matrix Traversal When you traverse elements use rows first, than you change the 
 
 Example: In this example we traverse all the rows then all the column, this is the most efficient way to traverse a matrix.
 
-method main()
-  Matrix[String(2)](3,3): M 
-process  
-  M := [ 
-         ['a0','b0','c0'],
-         ['a1','b1','c1'],
-         ['a2','b2','c2']
-       ];     
-  given
-    Integer: row, col := 1;
-  while col <= 3 do     ** traverse columns
-    while row <= 3 do   ** traverse row first
-      print M[row,col];
-      row += 1;
-    repeat;
-    col += 1;
+```
+make M := [ 
+       ['a0','b0','c0'],
+       ['a1','b1','c1'],
+       ['a2','b2','c2']
+      ];     
+make row, col := 1;
+while col <= 3 do     -- traverse columns
+  while row <= 3 do   -- traverse row first
+    print M[row,col];
+    alter row += 1;
   repeat;
-return;
+  alter col += 1;
+repeat;
+```
 
 ## Set Builders
 
@@ -370,7 +365,7 @@ A special _while loop_ that is executed for each element belonging to a collecti
 
 **pattern**
 ```
-element := collection.first();
+make element := collection.first();
 while ¬(element is Null) do
   ** statements
   ...
@@ -383,7 +378,7 @@ The "element" is local to iteration and is used as control variable.
 **example**
 
 ```
-my_list := ['a','b','c','d','e']; 
+make my_list := ['a','b','c','d','e']; 
 scan my_list :> element do
   write element;
   when element = 'd' do
