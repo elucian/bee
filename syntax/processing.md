@@ -3,8 +3,7 @@
 By using collections and control structures one can load, modify and store data.
 
 * [Array Operators](#Array-Operators)
-* [Matrix Operations](#Matrix-Operations)
-* [Arrays Slicing](#Arrays-Slicing)
+* [Array Slicing](#Array-Slicing)
 * [Collection Casting](#Collection-Casting)
 * [Set builders](#Set-builders)
 * [List operations](#List-operations)
@@ -168,7 +167,7 @@ make  new_set := { x | x ∈ [0..5:1] };  -- [0,1,2,3,4,5]
 make  new_set := { x | x ∈ [0.!10:2] }; -- [0,2,4,6,8]
 ```
 
-## Collection Casting
+### Collection Casting
 
 It is common for one collection to be created based on elements from another collection. 
 Collection members can be copy into the new collection using a comprehension notation: 
@@ -183,7 +182,7 @@ do
 done;
 ```
 
-## Collection Filtering
+### Collection Filtering
 Build notation can use expressions to filter out elements during comprehension operation.
 
 **Example:**
@@ -195,7 +194,7 @@ do
 done;
 ```
 
-## Collection Mapping
+### Collection Mapping
 The elements in one set or list can be transformed by a function or expression to create a new collection.
 
 **Example:**
