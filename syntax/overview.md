@@ -204,7 +204,8 @@ print r;       -- r = 10 (unmodified)
 
 **share vs copy**
 
-A reference can share its location with other reference using operator ":".
+* A reference is shared using operator ":=".
+* An object is cloned using operator   ":+".
 
 ```
 -- create a reference

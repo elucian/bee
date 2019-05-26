@@ -2,6 +2,7 @@
   Demo Fibonacci rule
 ---------------------------+
 #name :=  "fi";
+#role :=  "driver";
 
 -- declare Fibonacci rule
 rule fib(n ∈ N) => (y @ N):
