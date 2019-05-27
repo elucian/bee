@@ -84,9 +84,9 @@ Control statements are also known as decision statements.
 | match    | Associated to quest, create one branch
 | none     | Associated to quest, create alternative branch
 
-## Interruption keywords
+## Transfer keywords
 
-These keywords are jumps or termination statements.
+These keywords transfer control or make an interruption of current thread. 
 
 | Keyword  | Purpose
 |----------|----------------------------------------------------------------

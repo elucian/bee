@@ -14,9 +14,46 @@ By using collections and control structures one can load, modify and store data.
 
 ## Array Operations
 
+* Negative index is counting from the end toward the beginning;
 * Array elements have very fast direct access by index;
 * Array index is a binary integer starting from zero;
 * Maximum number of elements: 2³² = 4,294,967,296;
+* Array capacity is establish on array creation;
+* Array capacity initialization can be deferred;
+* Array capacity can be modified with data movement;
+
+**example**
+
+```
+make test ∈ [R](10); -- vector of 10 real numbers
+make m := length(test)-1;
+
+-- array index start from 0
+print test[0]; --first element
+print test[m]; --last element
+
+-- alternative notation
+print test[!]; --first element
+print test[?]; --last element
+
+-- array traversal 
+make x := 0;
+while (x < m) do
+  alter test[i] := x;
+  alter x += 1;
+repeat;
+
+-- print all elements of array
+print test;
+over.
+```
+
+**Output:**
+```
+[0,1,2,3,4,5,6,7,8,9]
+```
+
+**operations**
 
 ```
 make a1 := [1, 2, 3];  -- Initialized array
@@ -35,13 +72,6 @@ make a6 := a1 & a2; -- [2,3]
 -- union between two Arrays "|" 
 make a7 := a1 | a2; -- [1,2,3,4]
 ```
-
-**working with arrays **
-
-* Array capacity is establish on array creation;
-* Arrays can be initialized later (deferred initialization);
-* Changing array capacity is impossible after array creation;
-* Negative index is counting from the end toward the beginning;
 
 **example**
 ```
@@ -72,13 +102,25 @@ This is the first element: 1
 This is the last element: 10   
 ```
 
-**capacity**
-An array can not change its capacity after initialization. However you can create a new array from the old array and reset the reference. However this operation will not update any slice you may have to previous reference.
+**resize**
+Array capacity can be modified using union operator "∪". This will reset the array reference. That means it will not update any slice or other references you may have to this array. 
 
 ```
+  -- creation of 10 elements
+  make array := [0 * 10]; 
+  make refer := array;
+  
+  print array ≡ refer; --> 0 = True (same array)
+  
   -- extend array with 10 more elements
-  alter array := array & ([0 * 10]); -- new zero elements
-  alter array := array & ([1 ..10]); -- new consecutive elements
+  alter array    := array ∪ [0 * 10]; -- 10 new elements
+  alter array[*] := 1; -- modify all 
+  
+  -- print new array and reference
+  print array; --> [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  print refer; --> [0,0,0,0,0,0,0,0,0,0]  
+  
+  print array ≡ refer; --> 0 = False (different arrays)
 ```
 
 ## Array slicing
@@ -185,6 +227,19 @@ do
 done;
 ```
 
+**resize matrix**
+
+```
+  -- creation of matrix with 10 × 10 elements
+  make matrix := [0 * 10, 0 * 10];  
+
+  -- increase matrix number of rows
+  alter matrix := matrix & [0 * 5]; -- 5 new rows
+
+  -- increase matrix number of columns
+  alter matrix := matrix & [,0 * 5]; -- 5 new columns  
+```
+
 **Memory impedance**
 
 Matrices are multidimensional while computer memory is linear. This is an impedance mismatch that require mapping. Some computer languages organize matrices row by row and some others organize memory column by column. The difference between the orders lies in which elements of an array are contiguous in memory.
@@ -203,14 +258,20 @@ make M := [
        ['a1','b1','c1'],
        ['a2','b2','c2']
       ];     
-make row, col := 1;
-while col <= 3 do     -- traverse columns
-  while row <= 3 do   -- traverse row first
+** traverse matrix      
+make row, col := 0;
+while col < 3 do     -- traverse columns
+  while row < 3 do   -- traverse row first
     print M[row,col];
     alter row += 1;
   repeat;
   alter col += 1;
 repeat;
+
+** traversal with scan
+scan M :> e do
+  print e; -- element
+next;
 ```
 
 ## Set Builders

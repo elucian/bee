@@ -189,52 +189,22 @@ make array_name ∈ [Type](n,m);   -- capacity c = n·m
 * Array index start from 0 to c-1 where c is capacity;
 * Array capacity is immutable after array initialization;
 
+
 **example**
 
 ```
-make test ∈ [R](10); -- vector of 10 real numbers
-make m := length(test)-1;
-
--- default array index start from 0
-print test[0]; --first element
-print test[m]; --last element
-
--- array traversal 
-make x := 0;
-while (x < m) do
-  alter test[i] := x;
-  alter x += 1;
+make array := [`a`, `b`, `c`];
+make c ∈ A;
+scan array :> c do
+  write c;
+  write ',';
 repeat;
-
--- print all elements of array
-print test;
-over.
-```
-
-**Output:**
-```
-[0,1,2,3,4,5,6,7,8,9]
 ```
 
 **Notes:**
 
 * Array can be initially empty [] with default capacity = 0, 
 * Arrays with defined capacity are automatically initialized.
-
-**custom index**
-
-Arrays can have optional custom index range: [n..m]. 
-
-**syntax**
-```
--- define vector with elements starting from n to m
-make array_name := [member_type][n..m];
-
-print array_name[!]; --print first element
-print array_name[?]; --print last element
-```
-
-Array capacity is calculated automatic with formula: `c = m-n+1`
 
 **initialize elements**
 
@@ -340,16 +310,6 @@ output:
 ⎣13 14 15 16 ⎦
 ```
 
-**Array traversal**
-
-```
-make array := ['a', 'b', 'c'];
-make c ∈ A;
-scan array :> c do
-  write c;
-  write ',';
-repeat;
-```
 
 ## Set
 
@@ -660,8 +620,6 @@ type Node <: {
   next  ∈ Node  -- reference to next node
 };
 ```
-
-
 
 ## Method
 
