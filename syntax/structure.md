@@ -84,15 +84,15 @@ Directives are controlling the application compilation. These directives have a 
 
 | Constant | Default value | Description
 |----------|---------------|----------------------------------------------------------------
-|$precision| 0.001        | Control numeric precision
-|$recursion| 10000        | Control how deep a recursion before give up
-|$timer    | 10           | Control time in seconds before a loop give up
-|$debug    | Off / On     | Control if debug information is included
-|$echo     | Off / On     | Control if statement is printed to console in case of error
-|$trace    | Off / On     | Control if #trace variable is populated with information
-|$date     | DMY / MDY    | Control date format: DD/MM/YYYY or MM/DD/YYYY
-|$time     | T24 / T12    | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
-|$platform | "Windows"    | Alternative: "Linux", "Mac" is the target platform
+|$precision| 0.001         | Control numeric precision
+|$recursion| 10000         | Control how deep a recursion before give up
+|$timer    | 10            | Control time in seconds before a loop give up
+|$debug    | Off / On      | Control if debug information is included
+|$echo     | Off / On      | Control if statement is printed to console in case of error
+|$trace    | Off / On      | Control if #trace variable is populated with information
+|$date     | DMY / MDY     | Control date format: DD/MM/YYYY or MM/DD/YYYY
+|$time     | T24 / T12     | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
+|$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
 
 **note**
 * You can overwrite system directives in driver but not in _aspect_ or _component_ modules;
