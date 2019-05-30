@@ -727,6 +727,14 @@ rule name(param ∈ type,...) => (result @ type,...):
    alter result := expression;
    ...
 return;
+
+make out ∈ type;
+
+-- call using apply
+apply name(argument,...) +> (out, ...);
+
+-- call using alter
+alter (out, ...) <+ name(argument,...);
 ```
 
 **Note:**
@@ -734,6 +742,10 @@ return;
 * Rule results are explicit references;
 * Rule results are enclosed in paranthesis;
 * Rule results are declared with @ (output);
+
+**Restriction**
+* Static rule can not be called with make;
+* Static rule can not be called from expressions except unpacking expressions;
 
 **Example:** 
 
@@ -795,6 +807,12 @@ alter rule_name.z = 3;
 print (rule_name.x, rule_name.y, rule_name.z);  -- 1 2 3
 ```
 
+**Notes:**
+* Like static rule, a dynamic rule can be call with _apply_ or _alter_;
+* Attributes of dynamic rules can be used in expressions;
+* A dynamic rule can not be executed from an expression;
+* A dynamic rule that return a result can be used with unpacking operators: "+>" and "<+";
+
 **See also:**
 * [bs.bee](../demo/bs.bee);   --Bubble Sort
 
@@ -814,7 +832,7 @@ return;
 clone new_name:= prototype_name{arguments};
 ```
 
-**notes:**
+**Notes:**
 * A rule prototype can not be used until is cloned;
 * A rule prototype can be dynamic or static;
 * A rule clone is binding external states into local context;
@@ -844,6 +862,7 @@ print dec(1); -->  0
 print dec(2); -->  1
 print dec(0); --> -1
 ```
+
 
 ## Expression rules
 

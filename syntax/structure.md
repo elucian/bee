@@ -459,10 +459,10 @@ A large program can have multiple _aspects_. The driver control the execution of
 **properties**
 
 * An aspect can be executed once or multiple times; 
-* An aspect is executed using keyword _play_;
+* An aspect is executed using keyword _play_ or _alter_;
 * An aspect can receive parameters and can produce results;
-* An aspect is always executed synchronously, not in parallel;
-* An aspect can not be used in expressions except unpacking;
+* An aspect is always executed synchronously, never in parallel;
+* An aspect can not be used in expressions except unpacking with "+>" or "<+" ;
 * An aspect can be terminated early using:"exit" or "halt" or "fail";
 
 **pattern**
@@ -475,10 +475,19 @@ load $pro.src.file_name.bee;
 play aspect_name(parameter_list);
 
 -- result can be captured using "+>" or any other modifier:
-play aspect_name(parameter_list) +> (result,...)
+play aspect_name(parameter_list) +> (result,...);
+
+-- one aspect can be call using alter statement
+alter  (result,...) <+ aspect_name(parameter_list);
 ```
 
+**Restriction:**
+* you can not call one aspect using _make_ statement;
+* you can not call one aspect from one expression;
+
 #### Parameters
+
+One aspect can have input/output parameters:
 
 ```
 #name := "mod";
@@ -512,7 +521,8 @@ print result;  --expect: 3
 over.
 ```
 
-One aspect can have multiple input and output parameters:
+Multiple input and output parameters:
+
 ```
 input a,b ∈ Z, c ∈ R; -- input parameters
 output v,z @ N;       -- output parameters
