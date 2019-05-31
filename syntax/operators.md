@@ -74,7 +74,7 @@ symbol| description
  :=   | Assign by value \| Reset reference
  :+   | Assign by copy  \| Keep reference
  :\>  | Define visitor variables for scan statement 
- \+\> | Output collector \| Used for _apply_ and _play_ statements
+ \+\> | Output collector: used with _apply_ or _play_
  
 ## Arithmetic modifiers
 

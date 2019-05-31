@@ -57,7 +57,7 @@ Next statements represents actions. Also called Imperative statements.
 | print    | Output expression result to console 
 | alter    | Mutate variable value using an expression
 | scrap    | Remove one element from a collection
-| play     | Launch one aspect in execution to resolve a large problem
+| play     | Launch one aspect in execution
 
 ## Control statements
 

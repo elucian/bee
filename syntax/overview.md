@@ -674,12 +674,24 @@ rule name(param ∈ type,...):
 return;
 ```
 
-**notes:**
+**Notes:**
 A static rule ...
 * is finalized with: _return_ keyword;
-* can be executed using: _apply_ keyword;
+* can be executed using: _apply_ or _alter_ keywords;
 * can be terminated early using: _exit_ keyword;
 * can raise and error using: _fail_ keyword;
+
+**Restrictions:**
+* A static rule can not be called from make statement;
+* A static rule can not be called from an expression;
+* A static rule can not be nested inside another rule;
+* A static rule can not execute an aspect;
+
+**Comments:**
+* Since rule result is a reference, this reference must be allocated by _make_ before we can call the rule,
+* Since a rule can have side-effects or can return multiple results is not safe to be used in expressions,
+* We believe that flat is better than nested. So rules can not be nested in context of another rule,
+* Since rules can be executed in parallel, you could use this trick to call an aspect in parallel and this is not safe.
 
 ### Parameters
 
@@ -737,15 +749,17 @@ apply name(argument,...) +> (out, ...);
 alter (out, ...) <+ name(argument,...);
 ```
 
-**Note:**
-* Result name is explicit declared;
-* Rule results are explicit references;
-* Rule results are enclosed in paranthesis;
-* Rule results are declared with @ (output);
+**Properties:**
+* A rule have a local context where we define local variables;
+* A rule can be overwritten using different parameters;
+* A rule can have one or multiple results;
 
-**Restriction**
-* Static rule can not be called with make;
-* Static rule can not be called from expressions except unpacking expressions;
+
+**Note:**
+* Results are explicit declared references,
+* Results are enclosed in paranthesis,
+* Results are declared with @ (output),
+* Results are captured using unpacking: <+ or +>
 
 **Example:** 
 
@@ -772,11 +786,6 @@ print b; --1
 print c; --1 
 
 ```
-
-**static rules:**
-* have a local context where we define local variables;
-* can be overwritten using different parameters;
-* can have one or multiple results;
 
 ## Dynamic rules
 
@@ -837,6 +846,7 @@ clone new_name:= prototype_name{arguments};
 * A rule prototype can be dynamic or static;
 * A rule clone is binding external states into local context;
 * A rule clone is sharing state attributes with the prototype;
+* A rule clone can be created in local context of another rule;
 
 **example**
 ```
@@ -884,7 +894,7 @@ make z := xp(1,1) + 1;
 print  z;  --print 3
 ```
 
-**properties**
+**properties:**
 
 Expression rules...
 * are binding external states;
@@ -892,7 +902,7 @@ Expression rules...
 * do not have side-effects;
 * do not depend on external states;
 
-**result**
+**result:**
 
 * expression can have one single result;
 * expression result is declared with ∈ not @;
@@ -904,7 +914,6 @@ Expression rules...
 * Expression rules are similar to mathematical functions;
 * Expression rules can not be interrupted from execution;
 * Expression rules can be called from expressions;
-* Expression rules can be recursive (call themselves);
 * Expression rules can be be created from static rules;
 * Expression rules can be used as parameters for other rules;
 

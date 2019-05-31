@@ -136,6 +136,9 @@ One _module_ is identified by several _attributes_. These are _system variables_
 * One _driver_ can _play_ multiple _aspects_;
 * One _aspect_ can also load _components_;
 * One _aspect_ can also _play_ other aspects;
+* One _component_ can load other components;
+* One _component_ can not _play_ an aspect;
+
 
 ### Drivers
 There is one single _driver file_ for one application. This file has #role = "driver". A _driver_ has the role to lead the application main functionality. When _driver_ is over the application stop and give control back to operating system. 
@@ -143,23 +146,23 @@ There is one single _driver file_ for one application. This file has #role = "dr
 A _driver_ can read configuration file, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_. Normally a driver file is ending with keyword: _over_ followed by a dot.
 
 ### Aspects
-An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters. Aspect result can be captured after execution using operator "+>". Not all _aspects_ have a result. 
+An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters. Aspect result can be captured after execution using operator "+>". Not all _aspects_ have a results though. 
 
 **execution**
-Aspects can not be executed in parallel but only sequential. We consider that various _aspects_ can depend on each other to be executed in order like a process. If one aspect fail the application should analyze the #error and continue or terminate the execution.
+Aspects can not be executed in parallel but only sequential. We consider that various _aspects_ can depend on each other to be executed in order like a process. If one aspect fail the application should analyze the #error and continue or terminate the execution. To execute one aspect you use keyword: _play_ or _alter_;
 
 **notes:**
 * One aspect can accept parameters;
 * One aspect can produce results; 
-* One aspect must have rogue statements;
+* Usually aspect have rogue statements;
 * Usually aspect members are private;
-* To execute one aspect you use keyword: _play_;
 
 ### Components
-Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. A component contains public members but does not have rogue statements. One module can _load_ from a library one or more components. A component usually do not have rogue statements and is not executable using _play_ statement;
+Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. A component contains public members. One module can _load_ from a library one or more components. A component usually do not have rogue statements therefore you can not _play_ a component.
 
 **notes:**
 * A component must have public members;
+* A component does not have rogue statements;
 * A component does not have parameters;
 * A component does not produce results;
 
@@ -196,11 +199,12 @@ Each statement start with one imperative keyword:
 * One expression in a statement can extend on multiple lines;
 * Multiple statements on a single line are separated with ";"
 * You can have a comment at end of line using "--" 
-* A statement may continue after the end of line comment;
+* A statement may continue after line comment;
 
 ### Code block
 Statements can be contained in blocks of code.
 
+* do    -- anonymous simple context block
 * with  -- create a scope qualifier suppression block/ mapping block
 * when  -- create multi-path conditional selector
 * quest -- create a multi-path value selector
@@ -213,7 +217,7 @@ Statements can be contained in blocks of code.
 
 * Each block is finalized with a different keyword:
 * Closing keyword can be one of: { done, repeat, next };
-* Statements and nested blocks are using indentation at 2 spaces;
+* Statements in nested blocks are using indentation at 2 spaces;
 
 ### Rogue statement
 
@@ -483,7 +487,9 @@ alter  (result,...) <+ aspect_name(parameter_list);
 
 **Restriction:**
 * you can not call one aspect using _make_ statement;
-* you can not call one aspect from one expression;
+* you can not call one aspect from expressions;
+* one aspect can not be run in parallel with another aspect;
+* one aspect can not _play_ from inside a rule;
 
 #### Parameters
 
