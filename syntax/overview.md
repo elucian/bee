@@ -629,16 +629,16 @@ These expressions are separated by coma and enclosed in ().
 make var_name ∈ type;
 
 -- single condition matching
-alter var_name := (xp ? cnd1, dx);
+alter var_name := (xp if cnd1, dx);
 
 
 -- multiple matching with default value
-alter var_name := (xp1 ? cnd1, xp2 ? cnd2,... dx);
+alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
 
 -- alternative code alignment
 alter var_name := (
-   xp1 ? cnd1,
-   xp2 ? cnd2,
+   xp1 if cnd1,
+   xp2 if cnd2,
    dx);
 ```
 
@@ -656,7 +656,7 @@ dx   := default expression (optional condition).
 make x := '0';
 read (x,"x:>");
 
-make kind := ("digit" ? x ∈ ['0'..'9'], "letter" ? x ∈ ['a'..'z'] | "unknown");
+make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'] | "unknown");
 print ("x is " & kind); --expect: "x is digit"
 over.
 ```
