@@ -11,9 +11,9 @@
             <Keywords name="Numbers, extras1">A B C D E F</Keywords>
             <Keywords name="Numbers, extras2"></Keywords>
             <Keywords name="Numbers, suffix1"></Keywords>
-            <Keywords name="Numbers, suffix2">r j </Keywords>
+            <Keywords name="Numbers, suffix2">r j</Keywords>
             <Keywords name="Numbers, range"></Keywords>
-            <Keywords name="Operators1">. , ~ + - : ; / % = &lt; &gt; ! ? | &amp; ^ @</Keywords>
+            <Keywords name="Operators1">. , ~ + - * : ; / \ % = &lt; &gt; ! ? | &amp; ^ @</Keywords>
             <Keywords name="Operators2">_ &#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; &#x2200; &#x2203; &#x2295; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x2190; &#x2192; &#x2191; &#x2193; if is</Keywords>
             <Keywords name="Folders in code1, open"></Keywords>
             <Keywords name="Folders in code1, middle"></Keywords>
@@ -29,9 +29,9 @@
             <Keywords name="Keywords3">exit fail pass over halt stop skip solve retry abort resume yield rest wait</Keywords>
             <Keywords name="Keywords4">play start apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;plot draw show hide erase scrub</Keywords>
             <Keywords name="Keywords5">exist open close remove files folders change new where save undo clean&#x000D;&#x000A;append to update in delete from</Keywords>
-            <Keywords name="Keywords6">A B C L N Q P R U I Z S X D T E V Y W G H F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;u1 u2 u4 u8 i4 i8 f4 f8&#x000D;&#x000A;mC mL mN mP mA mO&#x000D;&#x000A;gC gL gH gT&#x000D;&#x000A;Null True False On Off &#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords6">A B C L N Q P R U I Z S X D T E V Y W G H F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;mC mL mN mP mA mO&#x000D;&#x000A;gC gL gH gT&#x000D;&#x000A;Null True False On Off &#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$ # A B C D E F G H I J K L M N O P R Q S T U V X Y Z W</Keywords>
-            <Keywords name="Keywords8">&#x03C0; &#x22A5; &#x2220; &#x22A1; &#x21BA; &#x2299; &#x2197; &#x25CB; &#x25F7; &#x25A1; &#x25C1; &#x25C7; &#x2302; &#x25EA; &#x238A;&#x000D;&#x000A;&#x25A0; &#x25A4; &#x25A5; &#x25A6; &#x25A7; &#x25A8; &#x25A9; &#x000D;&#x000A;&#x0394; &#x039B; &#x03A6; </Keywords>
+            <Keywords name="Keywords8">&#x03C0; &#x22A5; &#x2220; &#x22A1; &#x21BA; &#x2299; &#x2197; &#x25CB; &#x25F7; &#x25A1; &#x25C1; &#x25C7; &#x2302; &#x25EA; &#x238A;&#x000D;&#x000A;&#x25A0; &#x25A4; &#x25A5; &#x25A6; &#x25A7; &#x25A8; &#x25A9; &#x000D;&#x000A;&#x0394; &#x039B; &#x03A6;</Keywords>
             <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12``` 13 14``` 15&apos; 16\ 17&apos; 18-- 19 20&#x000D;&#x000A; 21|* 22 23*|</Keywords>
         </KeywordLists>
         <Styles>

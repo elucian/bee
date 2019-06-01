@@ -87,16 +87,16 @@ Primitive data types are using one single capital letter.
 
 | Name     |Ref |Native| Sign      |Bytes|Description
 |----------|----|------|-----------|-----|------------------------------------------------------------
-| Logic    | L  | u1   | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
-| Alpha    | A  | u1   | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
-| Word     | W  | u2   | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
-| Unsigned | U  | u4   | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
-| Rational | Q  | u4   | unsigned  | 4   |Fraction like 1/2, fix point representation: Q14.17 
-| Natural  | N  | u8   | unsigned  | 8   |Unsigned large positive integer [0..+]
-| Binary   | B  | i4   | signed    | 4   |Signed binary integer 32 bit  [-..+]
-| Integer  | Z  | i8   | signed    | 8   |Signed large  integer 64 bit  [-..+]
-| Positive | P  | f8   | unsigned  | 8   |Double precision float (0..+)
-| Real     | R  | f8   | signed    | 8   |Double precision float (-..+)
+| Logic    | L  | u8   | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
+| Alpha    | A  | u8   | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
+| Word     | W  | u16  | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
+| Unsigned | U  | u32  | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
+| Rational | Q  | u32  | unsigned  | 4   |Fraction like 1/2, fix point representation: Q14.17 
+| Natural  | N  | u64  | unsigned  | 8   |Unsigned large positive integer [0..+]
+| Binary   | B  | i32  | signed    | 4   |Signed binary integer 32 bit  [-..+]
+| Integer  | Z  | i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
+| Positive | P  | f32  | unsigned  | 8   |Double precision float (0..+)
+| Real     | R  | f64  | signed    | 8   |Double precision float (-..+)
 
 **notes:**
 
@@ -156,7 +156,7 @@ Most data types are references except native types that are values.
 
 **examples:**
 ```
-i4 -- native type: binary integer
+i32 -- native type: binary integer
 Z  -- primitive type: long integer
 R  -- primitive type: double float
 mL -- reference type: map Link
@@ -168,7 +168,7 @@ Boxing is the process of converting a native type to reference type. This will w
 
 ```
 make k ∈ Z;    -- reference integer
-make n ∈ i8;   -- native integer
+make n ∈ i64;   -- native integer
 
 alter k := n;      -- auto-boxing
 alter k := n -> Z; -- explicit boxing
@@ -188,10 +188,10 @@ print k;       -- k = 0 (unmodified)
 Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
 
 ```
-make r := 10 ∈ Z;  -- reference to integer
-make n := 0  ∈ i4; -- native type (i4)
+make r := 10 ∈ Z;   -- reference to integer
+make n := 0  ∈ i32; -- native type
 
-alter n := r -> i8; -- explicit unboxing
+alter n := r -> i64; -- explicit unboxing
 
 -- verify value identity
 print n = r; -- 1 (same value)
