@@ -19,15 +19,15 @@ If your suggestion accepted, we will implement it into the compiler.
 
 So far we have following features pending approval:
 
-1. [Generic](generic.md) - generic rules
-1. [Dynamic](dynamic.md) - dynamic programming
-1. [Concurrent](concurrent.md) - concurrent programming
-1. [Builder](builder.md) - set/collection builder
-1. [Rational](rational.md) - fixed point arithmetics
-1. [Recursion](recursion.md) - tail recursion
-1. [Drawing](drawing.md) - vector graphics
-1. [Geography](geography.md) - earth maps and GIS
-1. [Databases](databases.md) - database layer
+1. [Generic](generic.md) - Generic rule demo 
+1. [Dynamic](dynamic.md) - Dynamic programming
+1. [Concurrent](concurrent.md) - Concurrent programming
+1. [Builder](builder.md) - Collection builder
+1. [Rational](rational.md) - Fixed point arithmetics
+1. [Recursion](recursion.md) - Tail recursion
+1. [Drawing](drawing.md) - Vector graphics
+1. [Geography](geography.md) - Earth maps and GIS
+1. [Databases](databases.md) - Database layers
 
 
 **Read next:** [index](../syntax/readme.md)

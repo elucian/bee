@@ -12,7 +12,7 @@ These are Bee core ingredients:
 
 ## User manual
 
-Read next pages in order to learn Bee:
+Read next pages in order to learn about Bee:
 
 1. [Program Structure](structure.md)
 1. [Syntax Overview](overview.md)
@@ -24,10 +24,10 @@ Read next pages in order to learn Bee:
 
 ## Experimental
 
-New features and demo examples:
+Next there are some more raw ideas:
 
 1. [Demo code](../demo/readme.md)
-1. [New features](../draft/readme.md)
+1. [Draft features](../draft/readme.md)
 
 ## Tools
 

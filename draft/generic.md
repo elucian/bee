@@ -1,52 +1,53 @@
 ## Generic Rules
 
-A generic rule is using one or more type parameters. 
+A generic rule is using one or more "type" parameters. 
 
 **pattern**
 ```
-rule name{Type,...}(param ∈ Type) => (result @ Type):
-   make var ∈ Type;
+rule name{Name ∈ Type,...}(param ∈ Name) => (result @ Name):
    alter result := expression(param);
 return;
 ```
 
 **note:** 
 * Type can be any known type or sub-type;
-* Type is first class value of type: "Type";
+* Name is "first class" value of type: _Type_;
 
 ## Anonymous Rule
 
-Next design uses one _anonymous_ rule:
+Anonymous rule is an expression declaration that can be used as parameter or as a result for another rule:
 
 **anonymous rule**
 ```
- (param, param,...) => (expression)
+  (param ∈ type_name, ,...) => (expression)
 ```
 
-This can be used to create an argument for a _signature_
+This can be used to create an argument for parameters of type "Rule" declared with "@" like:
 
 **signature**
 ```
-rule foo( id @ (Type,Type, ...));
+rule foo( id @ (type,type, ...) ∈ type);
 ...
 ```
 
-Using rule for argument using name: "id"
+Call rule "foo" with anonymous rule as argument by name:
 
 ```
---argument ↓  parameters  ↓ ... expression ↓
-apply foo((param ,param ...) => (expression)):
+apply foo(id: (param ,param ...) => (expression));
 ```
 
 
-**bubble sort**
+## Bubble sort
+
+In this example, _bubble_ is a generic rule:
+
 
 ```
 -- this sort is generic 
-rule bubble{XT ∈ Type}(array ∈ [XT], gt @ (XT,XT)):
+rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
-  make temp ∈ XT;
+  make temp ∈ TT;
   make i ∈ N;
   while swap do
     alter i := 0;
@@ -68,8 +69,8 @@ return;
 
 **Notes:**
 
-* Rule "sort" receive type Type using markup <X> 
-* Rule reference "gt" is received as input/output argument.
+* Rule "sort" receive TT (Target Type) 
+* Rule reference "gt" is forced reference argument.
 
 **sort usage**
 
@@ -77,10 +78,10 @@ return;
 -- define object type to be sorted
 type Person  <: { name ∈ S, age ∈ N };
 
--- define order function for type Person
+-- define order as expression rule for type Person
 rule order( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
 
--- define sort rule for Person, as a clone of bubble
+-- define sort rule for Person, as a clone from _bubble_
 clone sort := bubble{Person}(gt:order);
 
 -- define clients and suppliers
