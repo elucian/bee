@@ -91,7 +91,7 @@ Native types are defined using one small letter followed by a number.
 | u16  | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF
 | u32  | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF
 | u64  | unsigned  | 8   |Unsigned large positive integer [0..+]
-| i8   | signed    | 1   |Signed half   integer 8  bit  [-128, 127]    
+| i8   | signed    | 1   |Signed half   integer 8  bit  [-128..127]    
 | i16  | signed    | 2   |Signed short  integer 16 bit  [-32768..+32767]
 | i32  | signed    | 4   |Signed binary integer 32 bit  [-..+]
 | i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
@@ -164,9 +164,10 @@ Most data types are references except native types that are values.
 
 **identifiers...**
 
-* native type_name start with lowercase letter follow by a number representing length in bytes;
-* primitive reference type_name consist of a single capital letter or Unicode symbol
-* composite reference type_name can start with small letter but second is capital letter.
+* native type name start with lowercase letter follow by a number representing bit length;
+* primitive reference type name consist of a single capital letter;
+* composite reference type name can start with a small letter but second must be capital letter;
+* some composite type names can be Unicode. for geometric types we have used Unicode shapes.
 
 **examples:**
 ```
@@ -174,8 +175,11 @@ u8  -- native type: byte
 i32 -- native type: binary integer
 Z   -- primitive type: long integer
 R   -- primitive type: double float
-mL  -- reference type: map Link
-gC  -- reference type: graphic canvas
+mL  -- composite type: map Link
+gC  -- composite type: graphic canvas
+⊡   -- geometric type: point   
+○   -- geometric type: circle  
+□   -- geometric type: square  
 ```
 **boxing**
 
@@ -260,7 +264,7 @@ Composite types are using English full name and start with uppercase.
 
 ## Collection types
 
-Bee define a collection using a special notation based on brackets.
+Bee define a collection literal using a special notation based on brackets.
 
 | sym| Collection type
 |----|------------------------------------------------------------------
