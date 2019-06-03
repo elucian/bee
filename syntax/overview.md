@@ -167,7 +167,6 @@ Most data types are references except native types that are values.
 * native type name start with lowercase letter follow by a number representing bit length;
 * primitive reference type name consist of a single capital letter;
 * composite reference type name can start with a small letter but second must be capital letter;
-* some composite type names can be Unicode. for geometric types we have used Unicode shapes.
 
 **examples:**
 ```
@@ -177,9 +176,6 @@ Z   -- primitive type: long integer
 R   -- primitive type: double float
 mL  -- composite type: map Link
 gC  -- composite type: graphic canvas
-⊡   -- geometric type: point   
-○   -- geometric type: circle  
-□   -- geometric type: square  
 ```
 **boxing**
 
@@ -404,7 +400,7 @@ operator | purpose
  ∈       | declare native variable
  :       | share \| pair-up  \| shallow copy
  :=      | create new \| reset value \| deep copy
- ::      | immutable variable ::= constant 
+ ::      | immutable variable = constant 
  
 ```
 -- primitive variable declarations with type
