@@ -91,6 +91,8 @@ Native types are defined using one small letter followed by a number.
 | Word     | u16  | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF
 | Short    | u32  | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF
 | Long     | u64  | unsigned  | 8   |Unsigned large positive integer [0..+]
+| Half     | i8     signed    | 1   |Signed half   integer 8  bit  [-128, 127]    
+| Signed   | i16  | signed    | 2   |Signed short  integer 16 bit  [-32768..+32767]
 | Binary   | i32  | signed    | 4   |Signed binary integer 32 bit  [-..+]
 | Integer  | i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
 | Float    | f32  | signed    | 4   |Double precision float (0..+)

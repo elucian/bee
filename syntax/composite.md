@@ -164,7 +164,7 @@ You can define a _list type_ using empty list: ()
 type type_name := (element_type) <: List; -- list type
 ```
 
-**declaration**
+**variable declaration**
 You can use one of three forms of declarations:
 
 ```
@@ -182,10 +182,14 @@ make name := (constant,...) ∈ (element_type); -- full declaration
 **example**
 
 ```
-make list := (0, 1, 2, 3, 4, 5);
+-- define a list type of unsigned short integers
+type Lou  := ( u16 ) <: List;
+
+-- define a list variable of defined type Lou
+make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 
 -- list traversal
-make x ∈ Z;
+make x ∈ u16;
 scan list :> x do
   write x;
   write _ if (x ≠ list[?]);
@@ -199,9 +203,16 @@ Bee define Arrays using notation [Type](c), where c is the capacity.
 
 **syntax**
 ```
-make array_name ∈ [Type]      <: Array;  -- undefined capacity
-make array_name ∈ [Type](c)   <: Array;  -- capacity c
-make array_name ∈ [Type](n,m) <: Array;  -- capacity c = n·m
+-- diverse array variables
+make array_name ∈ [element_type]     ;  -- undefined capacity
+make array_name ∈ [element_type](c)  ;  -- capacity c
+make array_name ∈ [element_type](n,m);  -- capacity c = n·m
+
+-- define new kind of array
+type Array_Type := [element_type](c) <: Array; 
+
+-- use previous  defined type
+make array_name ∈ Array_Type;  
 ```
 
 **Notes:** 
@@ -213,7 +224,7 @@ make array_name ∈ [Type](n,m) <: Array;  -- capacity c = n·m
 **example**
 
 ```
-make array := [`a`, `b`, `c`] <: Array;
+make array := [`a`, `b`, `c`];
 make c ∈ A;
 scan array :> c do
   write c;
@@ -231,10 +242,10 @@ repeat;
 Initial value for elements can be set during declaration:
 
 ```
--- you can use 2 optional notations 
-make zum  := 1 ∈ [Z](10)       <: Array; -- explicit initialization using single value
-make zet  := [100..1000]       <: Array; -- explicit initialization using range
-make test := [1..10,100..1000] <: Array; -- explicit initialization using domain
+-- you can use 4 optional initialization notations 
+make zum  := 0       ∈ [Z](10) ; -- explicit initialization using single value
+make zet  := 1..10   ∈ [Z] ; -- explicit initialization using range
+make test := 0..10:2 ∈ [Z] ; -- explicit initialization using rate
 
 -- modify one element by index
 alter zum[1]  := 1; 
@@ -265,7 +276,7 @@ print zum; -- expect [1,1,1,1,1,1,1,1,1,1];
 We can define an empty array and initialize elements later.
 
 ```
--- array without members (partial type inference)
+-- array without capacity (partial type inference)
 make vec ∈ [U]; 
 make nec ∈ [N]; 
 
@@ -337,11 +348,14 @@ output:
 A set is a sorted collection of unique values.
 
 ```
---define a set
+-- user define a set
+type NS := {N} <: Set; -- Natural set
+make uds ∈ NS; 
 
-make s  := {}      ∈ {N} <: Set; -- empty set
-make s1 := {1,2,3} ∈ {N} <: Set; -- 3 elements
-make s2 := {2,3,4} ∈ {N} <: Set; -- 3 elements  
+-- define a variable set 
+make s  := {};  -- unbinded empty set
+make s1 := {1,2,3} ∈ {N}; -- 3 elements
+make s2 := {2,3,4} ∈ {N}; -- 3 elements  
 
 
 -- specific operations
@@ -375,17 +389,17 @@ A hash map is a set of (key:value) pairs sorted by key.
 
 **syntax**
 ```
--- define a map type
+-- define a hash map type
 type type_name := {(key_type : value_type)} <: Hash;
 
--- declare a new empty map
-make new_map := {} ∈ type_name <: Hash;
+-- declare a new empty hash map
+make new_map := {} ∈ type_name;
 ```
 
 **example**
 ```
 -- initial value of map
-alter map := {('a':"first"), ('b':"second")};
+make map := {('a':"first"), ('b':"second")};
 
 -- create new element
 alter map['c'] := "third";
@@ -452,9 +466,13 @@ Literals for strings are enclosed in 3 kind of quotes:
 Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 code points.
 
 ```
+-- define String sub-type
+type Str128 := S(128) <: String; 
+make s := 'this is a test' ∈ Str128;
+
 -- two compatible representation of strings
-make str ∈  S(25)  <: String; --string with capacity minim  25x4 = 100 bytes
-make a   ∈ [B](25) <: Array;  --array of binary code points 25x4 = 100 bytes
+make str ∈  S(25);  --string with capacity minim  25x4 = 100 bytes
+make a   ∈ [B](25); --array of binary code points 25x4 = 100 bytes
 
 alter str := 'Short string'; 
 alter a   := split(str);
@@ -639,7 +657,7 @@ type Node <: {
   data  ∈ Z,    -- integer data
   prior ∈ Node, -- reference to previous node
   next  ∈ Node  -- reference to next node
-};
+} <: Object;
 ```
 
 ## Method
