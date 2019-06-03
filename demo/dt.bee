@@ -5,7 +5,7 @@
 #description := "demo data types"
 
 -- this type is public (uses dot prefix)
-type .Data <: {key:U, value:N};
+type .Data := {key:U, value:N} <: Hash;
 
 -- make variable using defubed alias
 make  x ∈ Data;
@@ -14,7 +14,7 @@ alter x := {key:'a', make:10};
 |  public enumeration type with public elements     |
 |  elements starting with "." do not need qualifier |
 ----------------------------------------------------+ 
-type Number <: { 
+type Number := { 
    .zero, 
    .one, 
    .two, 
@@ -25,7 +25,7 @@ type Number <: {
    .seven, 
    .eight, 
    .nine 
-};
+} <: Ordinal;
 +--------------------------------------------------- 
 | Note: first element has assigned a value := 0,   | 
 | all other elements have previous value  + 1      |

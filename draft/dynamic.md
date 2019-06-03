@@ -31,7 +31,7 @@ rule lt(x, y ∈ Z) ∈ L => (x < y);
 rule eq(x, y ∈ Z) ∈ L => (x = y);
 
 -- define a dictionary of rules
-type Dic <: {(String(2) : CMP)};
+type Dic := {(String(2) : CMP)} <: Hash;
  
 -- define a hash map of expressions
 make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic;

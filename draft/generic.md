@@ -76,7 +76,7 @@ return;
 
 ```
 -- define object type to be sorted
-type Person  <: { name ∈ S, age ∈ N };
+type Person := { name ∈ S, age ∈ N } <: Object;
 
 -- define order as expression rule for type Person
 rule order( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);

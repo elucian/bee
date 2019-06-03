@@ -70,7 +70,7 @@ symbol| description
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
  \<+  | Unpack a list \| Format template injector
- \<:  | Define subset \| User composite type
+ \<:  | Define subset from set \| Specify super-type for a new type
  :=   | Assign by value \| Reset reference
  :+   | Assign by copy  \| Keep reference
  :\>  | Define visitor variables for scan statement 

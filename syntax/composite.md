@@ -24,13 +24,29 @@ Bee uses composite types to declare ...
 * declare composite constants
 * declare new data types
 
+## Pattern
+
+A new type is defined from a super-type using symbol "<:"
+
+```
+type new_type := descriptor <: super_type
+```
+
+new_type   ::= identifier name usually start with capital letter
+descriptor ::= depending on super-type
+super_type ::= primitive type or composite type 
+
+**Note:**
+* The type descriptor is usually enclosed in  parenthesis: (), [] or {}
+* The super_type is optional. It can be inferred from type descriptor
+
 ## Ordinal
 
-Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1 by default. Associated values can start with a different number. Only first value can be specified using pair up operator ":".
+Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1. Associated values can start with a different integer number. Values can be specified using pair up operator ":". All values must be unsigned integer (i ≤ 0) in consecutive ascending order.
 
 **pattern**
 ```
-type type_name <: { name1:0, name2, name3};
+type type_name := { name1:0, name2, name3} <: Ordinal;
 
 make a, b, c ∈ type_name;
 
@@ -39,40 +55,44 @@ alter b := type_name.name2; --b=3
 alter c := type_name.name3; --c=4
 ```
 
-**Note:** When element name start with "." no need to use qualifiers for individual values
+**Note:** When element name start with "." no need to use qualifiers for the individual values
 
 ```
 -- using public elements in enumeration
-type type_names <: { .name0, .name1 };
+type type_names := { .name0, .name1 } <: Ordinal;
 
 make a, b ∈ type_name;
 
-alter  a := name0; --a value := 0
-alter  b := name1; --b value := 1
+alter  a := name0; --> a = 0
+alter  b := name1; --> b = 1
 ```
 
 ## Tuple
 
-A tuple is an enumeration of elements enclosed in parenthesis and separated by comma: 
+A tuple is an enumeration literal of elements enclosed in parenthesis and separated by comma: 
 
 **examples**
 ```
-(a, b ∈ Z, c @ B) --parameters
-('a','b','c')     --strings
-(1,2,3)           --numbers
-(1,'2','x')       --mixed types
+(a, b ∈ Z, c @ B) -- parameters
+('a','b','c')     -- strings
+(1,2,3)           -- numbers
+(1,'2','x')       -- mixed types
 ```
 
-Definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
+**Notes:**
 
-**notes**
-* You can not define a variable of type tuple;
+Tuples in Bee are equivalent to complex expressions.    
+This is very different from definition in Python and other languages.
+
 * Tuples are source code literals with a static structure;
 * Values in a tuple can have different data types;
 * Elements of tuple are ordered, but can not be addressed by index;
+* You can not define a variable of type tuple;
 * You can use elements from a tuple using unpacking operator;
 
-**unpacking**
+**See also:** definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
+
+**Unpacking:**
 
 A tuple can be _unpacked_ into multiple variables using operator "<+";
 
@@ -82,10 +102,10 @@ A tuple can be _unpacked_ into multiple variables using operator "<+";
 --receiver variables
 make x, y ∈ Z;
 make z ∈ S;
-make a := 40;
+make a := '40';
 
 --unpacking: modify all 3 variables
-alter x, y, z <+ (97, 65, 'a');
+alter x, y, z <+ (97, 65, a);
 
 print x; -- 97
 print y; -- 65
@@ -93,8 +113,8 @@ print z; -- a
 
 -- tuple unpacking using a template
 make s := "\{0} > \{1} > \{2}" <+ (x, y, z); 
-print ('a = ' + a); -- a = 40
-print s; --97 > 65 > a
+
+print s; -- 97 > 65 > 40
 ```
 
 **Unpacking Notes:**
@@ -141,7 +161,7 @@ A list is a dynamic collection of elements connected by two references:
 You can define a _list type_ using empty list: ()
 
 ```
-type type_name <: (element_type); -- list type
+type type_name := (element_type) <: List; -- list type
 ```
 
 **declaration**
@@ -179,9 +199,9 @@ Bee define Arrays using notation [Type](c), where c is the capacity.
 
 **syntax**
 ```
-make array_name ∈ [Type];        -- undefined capacity
-make array_name ∈ [Type](c);     -- capacity c
-make array_name ∈ [Type](n,m);   -- capacity c = n·m
+make array_name ∈ [Type]      <: Array;  -- undefined capacity
+make array_name ∈ [Type](c)   <: Array;  -- capacity c
+make array_name ∈ [Type](n,m) <: Array;  -- capacity c = n·m
 ```
 
 **Notes:** 
@@ -193,7 +213,7 @@ make array_name ∈ [Type](n,m);   -- capacity c = n·m
 **example**
 
 ```
-make array := [`a`, `b`, `c`];
+make array := [`a`, `b`, `c`] <: Array;
 make c ∈ A;
 scan array :> c do
   write c;
@@ -212,9 +232,9 @@ Initial value for elements can be set during declaration:
 
 ```
 -- you can use 2 optional notations 
-make zum  := 1 ∈ [Z](10);       -- explicit initialization using single value
-make zet  := [100..1000];       -- explicit initialization using range
-make test := [1..10,100..1000]; -- explicit initialization using domain
+make zum  := 1 ∈ [Z](10)       <: Array; -- explicit initialization using single value
+make zet  := [100..1000]       <: Array; -- explicit initialization using range
+make test := [1..10,100..1000] <: Array; -- explicit initialization using domain
 
 -- modify one element by index
 alter zum[1]  := 1; 
@@ -245,7 +265,7 @@ print zum; -- expect [1,1,1,1,1,1,1,1,1,1];
 We can define an empty array and initialize elements later.
 
 ```
--- array without members
+-- array without members (partial type inference)
 make vec ∈ [U]; 
 make nec ∈ [N]; 
 
@@ -268,7 +288,7 @@ A matrix is an array with 2 or more dimensions.
 
 **Example:** 
 ```
-make mat ∈ [R](4,4);  --define matrix
+make mat ∈ [R](4,4) <: Matrix;  --define matrix
 
 -- modify matrix using ":=" operator
 alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
@@ -297,6 +317,7 @@ over.
 Printing the entire matrix will use multiple rows to represent a matrix approximation.
 
 ```
+-- define matrix using type inference
 make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
 print m;
 over.
@@ -318,9 +339,9 @@ A set is a sorted collection of unique values.
 ```
 --define a set
 
-make s  := {}      ∈ {N}; -- empty set
-make s1 := {1,2,3} ∈ {N}; -- 3 elements
-make s2 := {2,3,4} ∈ {N}; -- 3 elements  
+make s  := {}      ∈ {N} <: Set; -- empty set
+make s1 := {1,2,3} ∈ {N} <: Set; -- 3 elements
+make s2 := {2,3,4} ∈ {N} <: Set; -- 3 elements  
 
 
 -- specific operations
@@ -355,10 +376,10 @@ A hash map is a set of (key:value) pairs sorted by key.
 **syntax**
 ```
 -- define a map type
-type type_name <: {(key_type : value_type)};
+type type_name := {(key_type : value_type)} <: Hash;
 
 -- declare a new empty map
-make new_map := {} ∈ type_name;
+make new_map := {} ∈ type_name <: Hash;
 ```
 
 **example**
@@ -394,7 +415,7 @@ print map;      --expected: {'b'="second", 'c'="third"}
 We can check if an element is included in a collection using "∈".
 
 ```
-type  Tmap <: {(A:U)};
+type  Tmap := {(A:U)} <: Hash;
 
 make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
@@ -432,8 +453,8 @@ Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit
 
 ```
 -- two compatible representation of strings
-make str ∈ S(25);    --string with capacity minim  25x4 = 100 bytes
-make a   ∈ [B](25);  --array of binary code points 25x4 = 100 bytes
+make str ∈  S(25)  <: String; --string with capacity minim  25x4 = 100 bytes
+make a   ∈ [B](25) <: Array;  --array of binary code points 25x4 = 100 bytes
 
 alter str := 'Short string'; 
 alter a   := split(str);
@@ -544,7 +565,7 @@ Object types are data structures with elements enclosed in curly brackets { , , 
 **Pattern:**
 ```
 -- declare a category of objects
-type  type_name <: {attribute ∈ type_name, ...};
+type  type_name := {attribute ∈ type_name, ...} <: Object;
 
 -- create an object instance using default constructor
 make item_name := {
@@ -578,7 +599,7 @@ Type size is a constant that can be calculated using size(T).
 
 **Example:**
 ```
-type  Person <: {name ∈ S, age ∈ N};
+type  Person := {name ∈ S, age ∈ N} <: Object;
 
 -- array of 10 persons
 make catalog ∈ [Person](10);
@@ -604,10 +625,10 @@ We can limit how deep a structure become using a directive. "#recursive:100"
 
 ```
 ** example of single recursive node
-type Node <: { 
+type Node := { 
   data ∈ Z,       -- integer data
   previous ∈ Node -- reference to previous node
-};
+} <: Object;
 ```
 
 This kind of structure can be used to create a data chain.
@@ -628,7 +649,7 @@ An object can have associated rules that are called _methods_:
 **pattern**
 ```
 -- define Foo as object with 2 public attributes:
-type Foo <: {a, b ∈ N};
+type Foo := {a, b ∈ N} <: Object;
   
 -- constructor method for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo):
@@ -702,7 +723,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 **definition**
 ```
 -- global exception type
-type Error <: {code ∈ Z, message ∈ S, line ∈ Z};
+type Error := {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
 
 -- global system error
 make #error ∈ Error;

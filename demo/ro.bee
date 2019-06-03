@@ -4,11 +4,11 @@
 #name :=  "ro";
 
 -- define recursive type Person
-type Person <: {
+type Person := {
       name ∈ S, 
       age  ∈ N,  
       children ∈ (Person) -- list of persons
-     };
+     } <: Object;
 
 -- create two objects of type Person
 make r1,r2 ∈ Person;

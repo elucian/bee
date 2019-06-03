@@ -99,7 +99,7 @@ c
 You can modify table data using current_record fields. First you modify values for some of the fields, then you call commit or rollback(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
 
 ```
-type: Record_Type <: {record_fields}
+type: Record_Type := {record_fields} <: Object;
 do
   make current_record ∈ Record_Type
   make index ∈ Z

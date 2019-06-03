@@ -4,7 +4,7 @@
 #name :=  "me";
 
 -- enumeration with public members
-type Number <: {.zero, .one, .two};
+type Number := {.zero, .one, .two} <: Ordinal;
 make test ∈ Number;
 alter test := zero; -- instance of Number
 -- make a rule for define Number

@@ -24,9 +24,9 @@ Earth coordinates can be represented using default Q numbers on 32 bit.
 * Φ = Latitude
 
 ```
-type Δ <: N[0..+100,000,000]; -- twice equatorial
-type Λ <: Q[-180..+180]; -- longitude angle (degree)
-type Φ <: Q[-90..+90]; -- latitude angle (degree)
+type Δ := (0..+100000000) <: Q; -- twice equatorial
+type Λ := (-180..+180)    <: Q; -- longitude angle (degree)
+type Φ := (-90..+90)      <: Q; -- latitude angle (degree)
 ```
 
 Other map data types are starting with "m" prefix and one uppercase letter.
@@ -39,22 +39,22 @@ Other map data types are starting with "m" prefix and one uppercase letter.
 
 ```
   -- map coordinates: λ = Latitude, φ = Longitude 
-  type mC <: {λ ∈ Λ, φ ∈ Φ}
+  type mC := {λ ∈ Λ, φ ∈ Φ} <: Object;
   
   -- network node: λ = Latitude, φ = Longitude, ε = Elevation
-  type mN <: {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ};             
+  type mN := {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ} <: Object;;             
  
   -- network link
-  type mL <: {start_node ∈ mN, end_node ∈ mN, shape ∈ [mC]};
+  type mL := {start_node ∈ mN, end_node ∈ mN, shape ∈ [mC]} <: Object;;
   
   -- point of interest
-  type mP <: {id ∈ N, point ∈ mC, label ∈ S};
+  type mP := {id ∈ N, point ∈ mC, label ∈ S} <: Object;;
 
   -- map area 
-  type mA <: {origin ∈ mN, shape ∈ [mC], label ∈ S};
+  type mA := {origin ∈ mN, shape ∈ [mC], label ∈ S} <: Object;;
   
   -- map object
-  type mO <: {origin ∈ mC, scale ∈ Q, points ∈ [mP], nodes ∈ [mN], links ∈ [mL]};
+  type mO := {origin ∈ mC, scale ∈ Q, points ∈ [mP], nodes ∈ [mN], links ∈ [mL]} <: Object;;
 ```
 
 **legend**

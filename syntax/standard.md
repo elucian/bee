@@ -120,7 +120,7 @@ Bee has pre-define exceptions in range [0..200]:
 
 ```
 -- global exception type
-type Error <: {code ∈ Z, message ∈ S};
+type Error := {code ∈ Z, message ∈ S} <: Object;
 ```
 
 ```

@@ -4,15 +4,16 @@
 #name :=  "gc";
 
 -- first make a class
-type GenI <: {min ,max ,ci:min ∈ Z};
--- reset object
-rule reset(me ∈ GenI, p_min , p_max ∈ Z):
+type GenI := {min ,max , ci ∈ Z} <: Object;
+
+-- reset generator
+rule reset(me @ GenI, p_min , p_max ∈ Z):
   alter me.min := p_min;
   alter me.max := p_max;
-  alter me.ci:= p_min;
+  alter me.ci  := p_min;
 return;
 -- get next index
-rule next(me ∈ GenI) => (i @ Z):
+rule next(me @ GenI) => (i @ Z):
   alter i  := me.ci;
   alter me.ci += 1;
 return;

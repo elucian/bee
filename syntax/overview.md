@@ -2,10 +2,10 @@
 
 I have used a simple design notation based on examples and notes:
 
-* I have used notes to explain the semantics;
-* I have used suggestive descriptor names;
+* I have used suggestive descriptors;
 * I have used "::=" to explain a descriptor;
 * I have used "..." for repetitive sequences;
+* I have used notes to explain the semantics;
 
 **bookmarks**
 
@@ -81,51 +81,63 @@ Bee use 3 kind of data types:
 2. Primitive data types;
 3. Composite data types;
 
+## Native Types
+
+Native types are defined using one small letter followed by a number.
+
+| Name     |Type  | Sign      |Bytes|Description
+|----------|------|-----------|-----|------------------------------------------------------------
+| Byte     | u8   | unsigned  | 1   |Unsigned 8  bit, max: 0xFF 
+| Word     | u16  | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF
+| Short    | u32  | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF
+| Long     | u64  | unsigned  | 8   |Unsigned large positive integer [0..+]
+| Binary   | i32  | signed    | 4   |Signed binary integer 32 bit  [-..+]
+| Integer  | i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
+| Float    | f32  | signed    | 4   |Double precision float (0..+)
+| Double   | f64  | signed    | 8   |Double precision float (-..+)
+
 ## Primitive Types
 
-Primitive data types are using one single capital letter.
+Primitive data types are defined using one capital letter. 
 
-| Name     |Ref |Native| Sign      |Bytes|Description
-|----------|----|------|-----------|-----|------------------------------------------------------------
-| Logic    | L  | u8   | unsigned  | 1   |Numeric enumeration of two values: False:0, True:1 
-| Alpha    | A  | u8   | unsigned  | 1   |Alpha-numeric code point 8 bit, max: 0xFF 
-| Word     | W  | u16  | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF \| U+FFFF
-| Unsigned | U  | u32  | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF \| U-FFFFFFFF
-| Rational | Q  | u32  | unsigned  | 4   |Fraction like 1/2, fix point representation: Q14.17 
-| Natural  | N  | u64  | unsigned  | 8   |Unsigned large positive integer [0..+]
-| Binary   | B  | i32  | signed    | 4   |Signed binary integer 32 bit  [-..+]
-| Integer  | Z  | i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
-| Positive | P  | f32  | unsigned  | 8   |Double precision float (0..+)
-| Real     | R  | f64  | signed    | 8   |Double precision float (-..+)
+| Name     |Ref |Native| Description
+|----------|----|------|-------------------------------------------------------------
+| Logic    | L  | u8   | Numeric enumeration of two values: False:0, True:1 
+| Alpha    | A  | u8   | Alpha-numeric code point 8 bit, max: U+FF 
+| Word     | W  | u16  | Unicode code point on 16 bit, max: U+FFFF (UTF16)
+| Unicode  | U  | u32  | Unicode code point on 32 bit, max: U-FFFFFFFF (UTF32)
+| Rational | Q  | u32  | Fraction like 1/2 or fix point representation: Q14.17 
+| Natural  | N  | u64  | Unsigned large positive integer [0..+]
+| Binary   | B  | i32  | Signed binary integer 32 bit  [-..+]
+| Integer  | Z  | i64  | Signed large  integer 64 bit  [-..+]
+| Positive | P  | f32  | Double precision float (0..+)
+| Real     | R  | f64  | Double precision float (-..+)
 
 **notes:**
 
-* Each primitive type is mapped to one native type,
-* Type inference will create a primitive type.
+* Primitive data types are references to native types,
+* Type inference will create primitive data types,
 
 ## Constant Literals
 
 These are symbolic representations for primitive data types:
 
-|Literal    | Ref | Description
-|-----------|-----|-----------------------------------------------------------
-|False      |  L  | logic 0
-|True       |  L  | logic 1
-|0          |  Z  | zero integer
-|1          |  Z  | one  integer 
-|1234567890 |  Z  | integer (0,1,2,3,4,5,6,7,8,9)
-|0b10101010 |  B  | binary  (0b) & (0,1)
-|U+FFFF     |  W  | code point: (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|U-FFFFFFFF |  B  | code point: (U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0xFFFFFFFF |  N  | hexadecimal:  (Ox) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0.0        |  R  | real zero 
-|0.05       |  R  | real number: (.,0,1,2,3,4,5,6,7,8,9) 
-|1E10       |  R  | real number: 1×10¹⁰  :=   10000000000  
-|1e10       |  R  | real number: 1×10⁻¹⁰ := 0.0000000001  
-|1/2        |  Q  | rational number: 1/2 = 0.5 (fixed precision) 
-|9r+9j      |  C  | complex number r = real part, j = imaginary part (no spaces)
-|9r-9j      |  C  | complex number r = real part, j = imaginary part (no spaces)
-
+|Example    | Type  | Literal characters
+|-----------|-------|-----------------------------------------------------------
+|False      |  L    | (0,1)
+|True       |  L    | (1,0)
+|123        |  Z    | (0,1,2,3,4,5,6,7,8,9)
+|0b10101010 |  B    | (0b) & (0,1)
+|U+FF       |  A    | (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U+FFFF     |  W    | (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U-FFFFFFFF |  U    | (U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0xFFFFFFFF |  N    | (0x) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|0.05       |  R    | (.)  & (0,1,2,3,4,5,6,7,8,9) 
+|1/2        |  Q    | (/)  & (0,1,2,3,4,5,6,7,8,9)
+|1E10       |  R    | (1E) & (0,1,2,3,4,5,6,7,8,9) 
+|1e10       |  R    | (1e) & (0,1,2,3,4,5,6,7,8,9) 
+|9r+9j      |  C    | (r+j)& (0,1,2,3,4,5,6,7,8,9)
+|9r-9j      |  C    | (r-j)& (0,1,2,3,4,5,6,7,8,9)
 
 **pattern**
 ```
@@ -156,11 +168,12 @@ Most data types are references except native types that are values.
 
 **examples:**
 ```
+u8  -- native type: byte
 i32 -- native type: binary integer
-Z  -- primitive type: long integer
-R  -- primitive type: double float
-mL -- reference type: map Link
-gC -- reference type: graphic canvas
+Z   -- primitive type: long integer
+R   -- primitive type: double float
+mL  -- reference type: map Link
+gC  -- reference type: graphic canvas
 ```
 **boxing**
 
@@ -168,7 +181,7 @@ Boxing is the process of converting a native type to reference type. This will w
 
 ```
 make k ∈ Z;    -- reference integer
-make n ∈ i64;   -- native integer
+make n ∈ i64;  -- native integer
 
 alter k := n;      -- auto-boxing
 alter k := n -> Z; -- explicit boxing
@@ -263,7 +276,7 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
 --declare new type
-type Type_Identifier <: type_descriptor
+type Type_Identifier := type_descriptor <: super_type
 
 --declare new references
 make var_name,var_name ... ∈ Type_Identifier
@@ -283,20 +296,20 @@ Range notation is used to create a subtype.
 
 ```
 -- discrete range
-type Range_Name <: Discrete_Type[min..max:rate]
+type Range_Name = [min..max:rate] <: Discrete_Type;
 
 -- continuous range
-type Range_Name <: Continuous_Type(min..max:rate)
+type Range_Name = (min..max:rate) <: Continuous_Type;
 ```
 
 **Examples:**
 ```
 -- sub-type declarations
-type Positive  <: R(0..);
-type Negative  <: R(..-1);
-type Digit     <: W[0..9];
-type Alpha     <: A[`A`..`z`];
-type Latin     <: B[U+0041..U+FB02];
+type Positive  := (0..+) <: Q;
+type Negative  := (-.!0) <: Q;
+type Digit     := [0..9] <: Z;
+type Alpha     := [`A`..`z`] <: A;
+type Latin     := [U+0041..U+FB02] <: U;
 
 --Check variable belong to sub-type
 when (`x` ∈ Alpha) do
@@ -313,12 +326,14 @@ done;
 * Use n.!m to exclude upper limit from range;
 * Use n!.m to exclude lower limit from range;
 * Use n!!m to exclude both limits from range;
+* Use - for unlimited negative
+* Use + for unlimited positive 
 
 **example:**
 ```
--- rational range is controlled by:
-#range.rate  := 0.1;   -- default rate for continuous range
-#range.limit := 10000; -- how many generated before give up
+-- continuous range is controlled by:
+#range.rate  := 0.01; -- default rate for continuous range
+#range.count := 1000; -- how many generated before give up
 
 -- continuous default rate is 1
 print [0..5]; --0,1,2,3,4,5
@@ -328,8 +343,8 @@ print [0.!5]; --0,1,2,3,4
 print [0..10:2]; --0,2,4,6,8,10
 print [1..10:2]; --1,3,5,7,9
 
--- continuous range with default rate = 0.1
-print (0..0.5);     -- 0,0.1,0.2,0.3,0.4,0.5
+-- continuous range with rate = 0.1
+print (0..0.5:01);  -- 0,0.1,0.2,0.3,0.4,0.5
 
 -- continuous range with rate 0.25
 print (0!!1:0.25);  -- 0.25,0.5,0.75
@@ -341,11 +356,12 @@ A domain is using a special notation for data ranges containing more then one se
 
 **example:**
 ```
--- rational domain (default rate = 0.1)
-type QDomain <: (-10..-1, 1..10); -- two segments 
-
 -- discrete domain
-type ZDomain <: [-9..1,1..9]; -- two segments
+type DDom := [-9..1,1..9] <: Z; -- two segments of type integer
+
+-- rational domain (default rate = 0.1)
+type RDom := (-10..-1:0.1, 1..10:0.1) <: Q; -- two segments of type rational
+
 ```
 
 **syntax:**
@@ -382,7 +398,8 @@ operator | purpose
  ∈       | declare native variable
  :       | share \| pair-up  \| shallow copy
  :=      | create new \| reset value \| deep copy
-
+ ::      | immutable variable ::= constant 
+ 
 ```
 -- primitive variable declarations with type
 make var_name ∈  type_name;
@@ -492,7 +509,7 @@ alter a := 10.5;  --FAIL: a is of type: Integer
 Logic type is an enumeration of two public symbols: False and True
 
 ```
-type .L <: {.False:0, .True:1};
+type .L := {.False:0, .True:1} <: Ordinal;
 
 ** printing logical values
 print True;   --> 1
