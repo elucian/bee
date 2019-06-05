@@ -1,9 +1,9 @@
 ## Bee Keywords
 
-Bee uses 53 reserved keywords so far: 
+Bee uses 54 reserved keywords so far: 
 
 ```
-03: if, is, in
+04: if, is, in, as
 09: make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, check, cycle, while, scan, trial
@@ -24,6 +24,7 @@ Bee uses 53 reserved keywords so far:
 | if          | used as conditional with any simple statement
 | is          | used in conjunction with check
 | in          | used in conjunction with check
+| as          | explicit casting operator
 
 **Note:** (1m = 10⁻³, 1μ =10⁻⁶)
 

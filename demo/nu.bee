@@ -38,7 +38,7 @@ other
 done;
 
 -- explicit unboxing
-alter i := d -> i32;
+alter i := d as i32;
 
 -- verify identity
 print i ≡ d; -- 0 different locations

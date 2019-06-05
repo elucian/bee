@@ -16,9 +16,9 @@ make s := 'string'   ; -- String capacity 256
 make c := 'c'        ; -- Single character
 
 -- explicit conversion + inference
-make t := '23:45'      -> T24; -- Time
-make t := '1:45am'     -> T12; -- Time
-make d := '10/10/2010' -> DMY; -- Date
+make t := '23:45'      as T24; -- Time
+make t := '1:45am'     as T12; -- Time
+make d := '10/10/2010' as DMY; -- Date
 
 -- optional parameters inference
 rule add(x,y:0) => (z @ Z):

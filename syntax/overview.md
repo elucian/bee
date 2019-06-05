@@ -185,7 +185,7 @@ make k ∈ Z;    -- reference integer
 make n ∈ i64;  -- native integer
 
 alter k := n;      -- auto-boxing
-alter k := n -> Z; -- explicit boxing
+alter k := n as Z; -- explicit boxing
 
 -- reference identity
 print n = k; -- 1 (same value)
@@ -205,7 +205,7 @@ Unboxing is the process of converting a reference to a native type. This will un
 make r := 10 ∈ Z;   -- reference to integer
 make n := 0  ∈ i32; -- native type
 
-alter n := r -> i64; -- explicit unboxing
+alter n := r as i64; -- explicit unboxing
 
 -- verify value identity
 print n = r; -- 1 (same value)
@@ -444,7 +444,7 @@ alter (q, p) ? (True, False);
  
 When data type mismatch you must perform explicit conversion.
 
-* Explicit conversion is using a _pipeline operator_: "->";
+* Explicit conversion is using a keyword for operator: "as"
 * This is unsafe operation. A range check is recommended before conversion;
 * Data precision may suffer. Some decimals may be lost;
 * If data do not fit in the new type, the overflow exception is raised.
@@ -455,11 +455,11 @@ make a := 0, b := 20 ∈ Z;
 make v := 10.5, x := 0.0 ∈ R;
 
 --explicit conversion
-alter a := v -> N;
+alter a := v as N;
 print a; --truncated to 10 
 
 --explicit conversion
-alter x := b -> R;
+alter x := b as R;
 print x; -- expect 20.0
 ```
 
@@ -472,9 +472,9 @@ make a, b ∈ A; -- ASCII
 make x, y ∈ B; -- Binary integer
 
 alter a := '0';     -- ASCII symbol '0'
-alter x := a -> B;  -- convert to binary 30
+alter x := a as B;  -- convert to binary 30
 alter y := 30;      -- decimal code for '0'
-alter b := y -> A;  -- convert to ASCII symbol '0'
+alter b := y as A;  -- convert to ASCII symbol '0'
 ```
 
 ## Type checking
@@ -487,6 +487,15 @@ make b := 0.0;  --real variable
 
 alter b := 10;    --FAIL: b is of type: Real
 alter a := 10.5;  --FAIL: a is of type: Integer
+```
+
+You can use operator "is" to verify data type
+
+```
+make a := 0 ∈ Z;
+
+--> expected: Integer
+fail "Unexpected error: a is not Integer" if ¬ (a is Z);
 ```
 
 ## Logic type
@@ -578,8 +587,8 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a -> L; --> 0
-alter y := b -> L; --> 1
+alter x := a as L; --> 0
+alter y := b as L; --> 1
 ```
 
 **Notes:** 
