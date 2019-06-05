@@ -29,6 +29,10 @@ symbol| description
   $   | System constants \| Environment variables
   @   | Define method result /| input/output parameters
   ∈   | Define variable/constant/result/input only parameter
+  ?   | Replace operator for string templates
+  !   | Exclude lower or upper limit in domain notation
+  +   | Maximum upper limit for a domain \| Unicode notation U+ 
+  -   | Minimum lower limit in a domain  \| Unicode notation U- 
   :   | Pair up key-value in a collection or rule call
   ;   | End of statement \| Statement separator
   .   | Decimals for real numbers \| String concatenation
@@ -69,11 +73,10 @@ symbol| description
  ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
- \<+  | String template injector
  \<:  | Define subset from set \| Specify super-type for a new type
  :=   | Assign by value \| Reset reference
  :+   | Assign by copy  \| Keep reference
- \+\> | Output collector: used with _apply_ or _play_
+ \+\> | Collector: capture result. Associated with: _play_ and _apply_ 
  
 ## Arithmetic modifiers
 

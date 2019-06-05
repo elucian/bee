@@ -437,7 +437,7 @@ alter a -= 1;   -- decrement value of a := 10
 alter (x, y) := 10.5;
 
 -- modify two variables using two constants
-alter (q, p) <+ (True, False);  
+alter (q, p) ? (True, False);  
 ```
 
 ## Type conversion

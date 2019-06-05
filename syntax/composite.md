@@ -410,9 +410,9 @@ Bee has one A type = ASCII char, and 2 kind of strings: {S,X}
 **Note:** 
 Literals for strings are enclosed in 3 kind of quotes:
 
-* A:      like: \`?\` 
-* String: like: '?'
-* Text:   like: "?"
+* A:      like: \`_\` 
+* String: like: '_'
+* Text:   like: "_"
 
 **Alternative literals**
 * Using wrong quotes can trigger implicit type coercion
@@ -468,29 +468,6 @@ output:
 this represents 
 new line in string
 ```
-
-### Control codes
-
-For each escape character Bee also define a constant CODE.
-
-**escape characters**
-
-DEC|HEX|CODE|ESCAPE|NAME
----|---|----|------|---------
-0  |00 |NUL |\0    |Null
-8  |08 |BS  |\b    |Backspace
-9  |09 |HT  |\y    |Horizontal Tab
-10 |0A |LF  |\n    |Line Feed
-11 |0B |VT  |\v    |Vertical Tab
-12 |0C |FF  |\f    |Form Feed
-13 |0D |CR  |\r    |Carriage Return
-27 |1B |ESC |\e    |Escape
-
-**additional escape**
-
-* "\\\\"    escape backslash with backslash 
-* "\\\""	double quote escape is necessary in double quoted strings
-* "\\\'"	single quote escape is necessary in single quoted strings
 
 **Note:** 
 
@@ -706,13 +683,13 @@ make my_error  := {200,"my first exception"} ∈ Error;
 fail my_error;
 ```
 
-Template operator <+ can be used to customize the error message:
+Replace operator ? can be used to customize the error message:
 
 **example**
 ```
 make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
-fail my_error <+ 'test';
+fail my_error ? 'test';
 ```
 
 -- expected

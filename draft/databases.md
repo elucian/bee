@@ -234,8 +234,8 @@ Sometimes we need to bypass the ORM and execute native SQL:
 
 ```
 -- apply a query to database
-apply db.query(query_template <+ array)
-apply db.query(query_template <+ record)
+apply db.query(query_template ? array)
+apply db.query(query_template ? record)
 
 -- apply a query that return; a result
 apply db.query(query_string) +> record

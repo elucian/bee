@@ -10,7 +10,7 @@ By using collections and control structures one can load, modify and store data.
 * [Collection Iteration](#Collection-Iteration)
 * [Scanning items](#Scanning-items)
 * [String Generator](#String-Generator)
-* [Text template](#Text-template)
+* [String Templates](#String-templates)
 
 ## Array Operations
 
@@ -86,13 +86,13 @@ rule test_array():
     alter i += 1;
   repeat;
   ** array  elements using escape template \[]
-  print ("This is the first element: \[1]" <+ my_array); 
-  print ("This is the last element: \[-1]" <+ my_array);
+  print ("This is the first element: \[1]" ? my_array); 
+  print ("This is the last element: \[-1]" ? my_array);
   
   ** range of array elements are comma separated [1,2,3]
-  print ("These are the first two: \[1..2]"        <+ my_array);
-  print ("These are the lat two: \[-2..-1]"        <+ my_array);
-  print ("These are all except lat two: \[1..-3]"  <+ my_array);
+  print ("These are the first two: \[1..2]"        ? my_array);
+  print ("These are the lat two: \[-2..-1]"        ? my_array);
+  print ("These are all except lat two: \[1..-3]"  ? my_array);
 return;
 ```
 
@@ -619,23 +619,46 @@ print (sep & '+');
 --------------------+
 ```
 
-### Text Template
+### Control codes
 
-We use hash "\{}" to create a placeholder into a Text. We use "<+" operator to replace the placeholder with values. If placeholder is not found the compiler raise an error. If the string is a variable this verification is not possible at compile time so maybe you get a run-time error.
+You can include old fashion control codes in strings using ESCAPE notation.
+
+**ESCAPE**
+
+DEC|HEXA |ESCAPE|NAME
+---|-----|------|------------------
+0  |0x00 |\NUL  |Null
+8  |0x08 |\BS   |Backspace
+9  |0x09 |\HT   |Horizontal Tab
+10 |0x0A |\LF   |Line Feed
+11 |0x0B |\VT   |Vertical Tab
+12 |0x0C |\FF   |Form Feed
+13 |0x0D |\CR   |Carriage Return
+27 |0x1B |\ESC  |Escape
+
+**Note:**
+
+The ESCAPE code is also a constant in Bee that can be used with string template:'\x'
+
+
+### String Templates
+
+We use hash "\{}" to create a placeholder into a String or Text. You can use operator "?" to find & replace the placeholder with a value from a data source. If placeholder is not found the result will contain the placeholder unmodified.
 
 **Notes:**
 
-* We can include numbers into a string using template operator "<+"
-* Inside template we use "\{n}" notation to find a value using the member index
-* Template must be included in double quotes " " 
-* If a placeholder index is not found then it is preserved as is
+* We can include values into a string using template operator "?"
+* Inside template we use "\{#}" notation to find a value using the member index
+* Template must be included in double quotes " " not single quotes
+* If a placeholder index is not found then it is preserved unmodified
 
+**example:**
 ```
 make template := "\{1} \{2}...";
 make var1 := 123; 
 make var2 := 456;
 ...
-print template <+ (var1,var2,...);
+print template ? (var1,var2,...); --> 123 456
 ```
 
 **Examples:**
@@ -646,23 +669,32 @@ make y := 41; --Code ASCII A
 
 **template writing
 
-print "\{0} > \{1}"   <+ (x,y); -- "30 > 41 > {2}" 
-print "\a{0} > \a{1}" <+ (x,y); -- "0 > A"  
+print "\{0} > \{1}"   ? (x,y); -- "30 > 41 > {2}" 
+print "\a{0} > \a{1}" ? (x,y); -- "0 > A"  
 
 ```
+**Special Escapes**
 
-**Escaping**
+These escape notations are used in rare occasions .
+
+```
+\'  = symbol '
+\"  = symbol "
+\\  = symbol \
+```
+
+**Escape Placeholders**
 
 Format/template stings can use escape sequences:
 
 ```
-\'  : symbol '
-\"  : symbol "
-\s  : single quoted string
-\q  : double quoted string
+\x  : control code for ESCAPE constants
+\s  : single quoted string for string, symbol or number
+\q  : double quoted string for string, symbol or number
 \a  : ASCII symbol for number
 \u  : Unicode symbol for number
-\+  : Code point representation (U+HHHH) for symbol
+\+  : UTF16 code point representation (U+HHHH) for symbol
+\-  : UTF32 code point representation (U-HHHHHHHH) for symbol
 \n  : decimal number  
 \b  : binary number
 \h  : hexadecimal number
@@ -676,11 +708,11 @@ Format/template stings can use escape sequences:
 
 **examples**
 ```
-print "Numbers: \n and \n" <+ (10, 11);
-print "Alpha:   \a and \a" <+ (30, 41);
-print "Strings: \s and \s" <+ ('odd','even');
-print "Quoted:  \q and \q" <+ ('odd','even');
-print "Unicode: \u and \u" <+ (U+2260,U+2261);
+print "Numbers: \n and \n" ? (10, 11);
+print "Alpha:   \a and \a" ? (30, 41);
+print "Strings: \s and \s" ? ('odd','even');
+print "Quoted:  \q and \q" ? ('odd','even');
+print "Unicode: \u and \u" ? (U+2260,U+2261);
 ```
 **Expected output:**
 ```
@@ -692,7 +724,7 @@ Unicode: ≠ and ≡
 ```
 
 **Notes**: 
-* Template operator "<+" is polymorph and overloaded, 
+* Template operator "?" is polymorph and overloaded, 
 * For template source you can use: { tuple, list, set, hash, array, matrix }.
 
 ## Large template
@@ -702,7 +734,7 @@ A large template can be stored into a file, loaded from file and format().
 1. Create a map collection of elements;
 2. Create the template text;
 3. Use _scan_ to visit all elements;
-4. Use injector operator: "<+" to replace template row by row;
+4. Use injector operator: "?" to replace template row by row;
 5. Alternative use _format()_ build-in to replace placeholders in all text;
 
 **Using Hash**
@@ -712,7 +744,7 @@ make template2 := "Hey look at this \s{key1} it \q{key2}!";
 make map       := {("key1":"test"),("key2":"works")};
 
 print template.format(map);
-print template <+ map;
+print template ? map;
 ```
 
 Expect output:
@@ -725,7 +757,7 @@ Hey look at this 'test' it "works"!
 ```
 make  template := "Hey look at this \{0} it \{1}";
 make  my_set   := {"test","works!"};
-print template <+ my_set;
+print template ? my_set; 
 ```
 
 Expect Output:
@@ -737,15 +769,21 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(Number: n, String: f) => (result @ S);
+rule format(Number: number, String: pattern) => (result @ S);
 ```
 
-Where "f" is a pattern: '(ap:m.d)'
+Where pattern cab gave two forms: 
+* '(ap:m.d)' -- ###,###,###.###
+* '(ap:m,d)' -- ###.###.###,###
+* '(ap:m;d)' -- *.### or *,### 
 
-* a is alignment one of {<,>,^}, 
-* p is the padding character: {'_','.',' ',0...}
-* m is the length 
-* d is number of decimals 
+**Note:** Last pattern is depending on regional settings: $decimal:'.'/','
+
+
+* a is alignment one of { < > ^ }, 
+* p is the padding character: { _ - + = * . }
+* m is the length of result
+* d is number of decimals after "."
 
 ### Alignment symbol "a" can be one of:
 ```

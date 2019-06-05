@@ -221,7 +221,7 @@ make a,r := 0;
 cycle
   alter r := x % 2;
   alter a := (0 if r = 0, 1);
-  write "{1}:{2}" <+ (x,a);
+  write "{1}:{2}" ? (x,a);
   alter x -= 1;
   write ',';
   stop if (x < 5);
@@ -293,7 +293,7 @@ make a,r := 0; -- two local variable
 while x < 5 do
   alter r := x % 2;
   alter a := 0 if r = 0, 1 if r = 0, 2;
-  write "{1}:{2}" <+ (x,a);
+  write "{1}:{2}" ? (x,a);
   write ',' if (x < 5);
   alter x -= 1;
 repeat;
