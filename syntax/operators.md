@@ -29,7 +29,7 @@ symbol| description
   $   | System constants \| Environment variables
   @   | Define method result /| input/output parameters
   ∈   | Define variable/constant/result/input only parameter
-  ?   | Replace operator for string templates
+  ?   | Template modifier. Associated with string templates
   !   | Exclude lower or upper limit in domain notation
   +   | Maximum upper limit for a domain \| Unicode notation U+ 
   -   | Minimum lower limit in a domain  \| Unicode notation U- 
