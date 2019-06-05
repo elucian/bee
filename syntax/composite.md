@@ -282,33 +282,24 @@ So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 ```
 -- elements in matrix can be accessed using while
 make i := 0;
+make mat := [1,2,3] × [1,2,3]; 
+ 
 make x := length(mat);
   
 while (i < x) do
   write (mat[x], ',');
   i += 1;
 repeat;
-
-over.
-```
-
-Printing the entire matrix will use multiple rows to represent a matrix approximation.
-
-```
--- define matrix using type inference
-make m := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]];
-print m;
+print; --> 
 over.
 ```
 
 output:
 ```
-⎡ 1  2  3  4 ⎤
-⎢ 5  6  7  8 ⎥
-⎢ 9 10 11 12 ⎥
-⎣13 14 15 16 ⎦
+⎡ 1  2  3 ⎤
+⎢ 2  4  6 ⎥
+⎣ 3  6  9 ⎦
 ```
-
 
 ## Set
 

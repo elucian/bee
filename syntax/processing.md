@@ -276,22 +276,46 @@ next;
 
 ## Set Builders
 
-You can define elements of a subset from a set using the following construction:
+You can define elements of a set or hash map using the following construction:
 
 ```
-make sub_set := { var | var ∈ set_name ∧ condition(var)}
+make new_set  := { var | var ∈ domain ∧ condition(var)};
+make hash_map := {(key:map(key)) | key domain ∧ condition(key)};
 ```
-
-You can use _var_ to create the _condition_.
 
 **example:**
 
-New set defined from a range or domain:
+New set defined from a domain of integers:
 
 ```
-make  new_set := { x | x ∈ [0..5:1] };  -- [0,1,2,3,4,5]
-make  new_set := { x | x ∈ [0.!10:2] }; -- [0,2,4,6,8]
+make  new_set := { x | x ∈ (0..5)    }; -- {0,1,2,3,4,5}
+make  new_set := { x | x ∈ (0.!10:2) }; -- {0,2,4,6,8}
 ```
+
+New map defined from a domain 
+```
+make  new_map := { (x:x²) | x ∈ (0.!10) ∧ (x % 2 = 0) }; 
+print new_map; --> {(0:0),(2:4),(4:16),(6:36),(8:64)}
+```
+
+Cartesian map from two domains
+
+```
+make  new_map := { (x:y) | (x,y) ∈ (0..1) × (0..1)}; 
+print new_map --> {(0:0),(0:1),(1:0),(1:1)}
+```
+
+## Array Builder
+Similar to a set builder you can initialize an array or matrix:
+
+```
+make array  := [ x | x ∈ (0..8:2)]; --> [0,2,4,6,8]
+make matrix := [ x | x ∈ (0..8:2)] × [1,1] ; --> [[0,2,4,6,8][0,2,4,6,8]] 
+```
+
+**Note:** 
+* array initialization can be done more easy using replicator (*);
+* matrix initialization can be done more easy Cartesian multiplication (×):
 
 ### Collection Casting
 
@@ -470,7 +494,7 @@ Hash and Set are similar. We can visit all elements using _scan_:
 
 **Example:**
 ```
-my_map := {("a":1),("b":2),("c":3)};
+make my_map := {("a":1),("b":2),("c":3)};
 scan (key:value) ∈ my_map do
   print('("' + key + '",' + value +')');
 repeat;

@@ -16,8 +16,8 @@ make set_name := { x | x ∈ source};
 -- more complex
 make set_name := { map(x) | x ∈ source ∧ condition(x)};
 
--- two arguments
-make set_name := { map(x,y) | (x,y) ∈ (DS × DS) ∧ condition(x) ∧ condition(y) };
+-- two arguments from (Cartesian Product)
+make set_name := { map(x,y) | (x,y) ∈ DS × DS};
 ```
 
 **legend**
@@ -25,7 +25,7 @@ make set_name := { map(x,y) | (x,y) ∈ (DS × DS) ∧ condition(x) ∧ conditio
 * map       ::= rule or expression
 * source    ::= set, list, range
 * condition ::= rule or logic expression
-* DS        ::= any discrete domain or set of elements
+* DS        ::= data source: domain or list
 
 **example**
 ```
