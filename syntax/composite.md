@@ -683,7 +683,7 @@ make my_error  := {200,"my first exception"} ∈ Error;
 fail my_error;
 ```
 
-Replace operator "?" can be used to customize the error message:
+Template modifier "?" can be used to customize the error message:
 
 **example**
 ```

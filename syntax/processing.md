@@ -643,11 +643,11 @@ The ESCAPE code is also a constant in Bee that can be used with string template:
 
 ### String Templates
 
-We use hash "\{}" to create a placeholder into a String or Text. You can use operator "?" to find & replace the placeholder with a value from a data source. If placeholder is not found the result will contain the placeholder unmodified.
+We use hash "\{}" to create a placeholder into a String or Text. You can use operator "?" to replace the placeholders with values from a data source. If placeholder is not found the result will contain the placeholder unmodified.
 
 **Notes:**
 
-* We can include values into a string using find and replace operator "?"
+* We can include values into a string using template modifier: "?"
 * Inside template we use "\{#}" notation to find a value using the member index
 * Template must be included in double quotes " " not single quotes
 * If a placeholder index is not found then it is preserved unmodified
@@ -724,7 +724,7 @@ Unicode: ≠ and ≡
 ```
 
 **Notes**: 
-* Replace operator "?" is polymorph and overloaded, 
+* Template modifier: "?" is polymorph and overloaded, 
 * For template source you can use: { tuple, list, set, hash, array, matrix }.
 
 ## Large template
@@ -732,10 +732,10 @@ Unicode: ≠ and ≡
 A large template can be stored into a file, loaded from file and format().
 
 1. Create a map collection of elements;
-2. Create the template text;
-3. Use _scan_ to visit all elements;
-4. Use injector operator: "?" to replace template row by row;
-5. Alternative use _format()_ build-in to replace placeholders in all text;
+2. Create the template text and store it in external file;
+3. Use _scan_ to visit the file row by row;
+4. Use template modifier: "?" to replace placeholders row by row;
+5. Alternative use _format()_ build-in rule to replace all placeholders;
 
 **Using Hash**
 ```
