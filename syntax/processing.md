@@ -647,7 +647,7 @@ We use hash "\{}" to create a placeholder into a String or Text. You can use ope
 
 **Notes:**
 
-* We can include values into a string using template operator "?"
+* We can include values into a string using find and replace operator "?"
 * Inside template we use "\{#}" notation to find a value using the member index
 * Template must be included in double quotes " " not single quotes
 * If a placeholder index is not found then it is preserved unmodified
@@ -724,7 +724,7 @@ Unicode: ≠ and ≡
 ```
 
 **Notes**: 
-* Template operator "?" is polymorph and overloaded, 
+* Replace operator "?" is polymorph and overloaded, 
 * For template source you can use: { tuple, list, set, hash, array, matrix }.
 
 ## Large template

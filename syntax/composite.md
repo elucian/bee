@@ -683,7 +683,7 @@ make my_error  := {200,"my first exception"} ∈ Error;
 fail my_error;
 ```
 
-Replace operator ? can be used to customize the error message:
+Replace operator "?" can be used to customize the error message:
 
 **example**
 ```
@@ -699,7 +699,7 @@ exception: 'test'
 * Keyword _fail_ can raise only recoverable errors with code > 200;
 * Keyword _fail_ can not terminate a _driver_ only _halt_ or _exit_ can;
 * All recoverable errors must be analyzed by the program using trial block;
-* Error code <  200 are system reserved error codes;
+* Error code ≤  200 are system reserved error codes;
 * Error code ≤ -1   are unrecoverable errors created with _halt_;
 * Keyword _halt_ will liberate the resources and terminate the program;
 
