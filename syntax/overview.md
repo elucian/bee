@@ -16,7 +16,6 @@ I have used a simple design notation based on examples and notes:
 * [Composite types](#composite-types)
 * [Collection types](#collection-types)
 * [Type declaration](#type-declaration)
-* [Range subtypes](#range-subtypes)
 * [Domain subtypes](#domain-subtypes)
 * [Logical expression](#logical-expression)
 * [Conditionals](#conditionals)
@@ -290,28 +289,24 @@ make var_name,var_name ... ∈ Type_Identifier
 * User defined types start with uppercase letter;
 * Public user types start with dot prefix;
 
-## Range subtypes
+## Domain subtypes
 
-Range notation is used to create a subtype.
+Domain notation is used to create a subtype from a primitive type.
 
 **syntax**
 
 ```
--- discrete range
-type Range_Name = [min..max:rate] <: Discrete_Type;
-
--- continuous range
-type Range_Name = (min..max:rate) <: Continuous_Type;
+type Domain_Name = (min..max:rate) <: Primitive_Type;
 ```
 
 **Examples:**
 ```
 -- sub-type declarations
-type Positive  := (0..+) <: Q;
-type Negative  := (-.!0) <: Q;
-type Digit     := [0..9] <: Z;
-type Alpha     := [`A`..`z`] <: A;
-type Latin     := [U+0041..U+FB02] <: U;
+type Positive  := (0..+:0.01) <: Q; 
+type Negative  := (-..0:0.01) <: Q; 
+type Digit     := (0..9) <: Z;      
+type Alpha     := (`A`..`z`) <: A;  
+type Latin     := (U+0041..U+FB02) <: U;
 
 --Check variable belong to sub-type
 when (`x` ∈ Alpha) do
@@ -323,60 +318,48 @@ done;
 
 **Notes:**
 
-* Range expression: [n..m] is of type Z;
-* Range expression: (n..m) is of type Q;
-* Use n.!m to exclude upper limit from range;
-* Use n!.m to exclude lower limit from range;
-* Use n!!m to exclude both limits from range;
-* Use - for unlimited negative
-* Use + for unlimited positive 
+* Use n.!m to exclude upper limit from range,
+* Use n!.m to exclude lower limit from range,
+* Use n!!m to exclude both limits from range,
+* Use symbol - for unlimited negative number,
+* Use symbil + for unlimited positive number.
 
 **example:**
 ```
--- continuous range is controlled by:
-#range.rate  := 0.01; -- default rate for continuous range
-#range.count := 1000; -- how many generated before give up
-
 -- continuous default rate is 1
-print [0..5]; --0,1,2,3,4,5
-print [0.!5]; --0,1,2,3,4
-
--- integer with rate 2
-print [0..10:2]; --0,2,4,6,8,10
-print [1..10:2]; --1,3,5,7,9
-
--- continuous range with rate = 0.1
-print (0..0.5:01);  -- 0,0.1,0.2,0.3,0.4,0.5
-
--- continuous range with rate 0.25
-print (0!!1:0.25);  -- 0.25,0.5,0.75
-```
-
-## Domain subtypes
-
-A domain is using a special notation for data ranges containing more then one segment.
-
-**example:**
-```
--- discrete domain
-type DDom := [-9..1,1..9] <: Z; -- two segments of type integer
-
--- rational domain (default rate = 0.1)
-type RDom := (-10..-1:0.1, 1..10:0.1) <: Q; -- two segments of type rational
+print (0..5); --0,1,2,3,4,5
+print (0.!5); --0,1,2,3,4
 
 ```
+
+## Domain segments
+
+A domain can use a special notation for multiple numeric intervals called segments.
 
 **syntax:**
 ```
 (segment, segment ...) -- continuous domain notation
-[segment, segment ...] -- discrete domain notation
 ```
 
-* segment ::= x,... -- enumeration segment
-* segment ::= n..m  -- range segment 
-* segment ::= n!.m  -- exclude n, include m
-* segment ::= n.!m  -- include n, exclude m
-* segment ::= n!!m  -- exclude both n, m
+* segment ::= n..m:ratio  -- include n, include m if (m % ratio) = 0
+* segment ::= n!.m:ratio  -- exclude n, include m if (m % ratio) = 0
+* segment ::= n.!m:ratio  -- include n, exclude m 
+* segment ::= n!!m:ratio  -- exclude both n and m
+
+**example:**
+```
+-- integer domain with two segments
+type ZDom := (-9..1,1..9) <: Z; 
+
+-- integer domain with two segments and ratio
+type ZDom := (0..8:2,1..9:2) <: Z; 
+
+-- real domain with two rations: 0.01 and 0.1
+type RDom := (0.!10:0.01,10..100:0.1) <: R; 
+
+-- two rational segments with same ratio: 0.01
+type QDom := (-10..-1:0.01, 1..10:0.01) <: Q; 
+```
 
 ## Constant declaration
 
@@ -451,10 +434,10 @@ alter a += 1;   -- increment value of a := 11
 alter a -= 1;   -- decrement value of a := 10
 
 -- modify two variables using one constant
-alter x, y := 10.5;
+alter (x, y) := 10.5;
 
 -- modify two variables using two constants
-alter q, p <+ (True, False);  
+alter (q, p) <+ (True, False);  
 ```
 
 ## Type conversion
@@ -686,17 +669,21 @@ An static rule is a named block of code that can resolve one specific task.
 
 **pattern**
 ```
+-- define a static rule
 rule name(param ∈ type,...):
     -- executable statements
    exit if (condition);
    ...
 return;
+
+-- call a static rule
+apply name(argument); 
 ```
 
 **Notes:**
 A static rule ...
 * is finalized with: _return_ keyword;
-* can be executed using: _apply_ or _alter_ keywords;
+* can be executed using: _apply_ keyword;
 * can be terminated early using: _exit_ keyword;
 * can raise and error using: _fail_ keyword;
 
@@ -704,7 +691,7 @@ A static rule ...
 * A static rule can not be called from make statement;
 * A static rule can not be called from an expression;
 * A static rule can not be nested inside another rule;
-* A static rule can not execute an aspect;
+* A static rule can not _play_ an aspect;
 
 **Comments:**
 * Since rule result is a reference, this reference must be allocated by _make_ before we can call the rule,
@@ -739,7 +726,7 @@ apply foo("Bee");
 over.
 ```
 
-Expected output:
+**Expected output:**
 
 ```
 hello: Bee. I am Foo. Nice to meet you!
@@ -761,11 +748,8 @@ return;
 
 make out ∈ type;
 
--- call using apply
+-- call rule using apply and capture results
 apply name(argument,...) +> (out, ...);
-
--- call using alter
-alter (out, ...) <+ name(argument,...);
 ```
 
 **Properties:**
@@ -775,10 +759,10 @@ alter (out, ...) <+ name(argument,...);
 
 
 **Note:**
-* Results are explicit declared references,
-* Results are enclosed in paranthesis,
-* Results are declared with @ (output),
-* Results are captured using unpacking: <+ or +>
+* Results are references,
+* Results are enclosed in parenthesis,
+* Results are declared with sumbol "@",
+* Results are captured into tuple using collector: +>
 
 **Example:** 
 
@@ -786,24 +770,14 @@ alter (out, ...) <+ name(argument,...);
 -- rule with two results "s" and "d"
 rule com(x,y ∈ Z) => (s, d @ Z):
   alter s := x + y; 
-  alter d := y - x;
+  alter d := x - y;
 return;
 
--- unpack result to "b","c" using "<+"  
-make b,c <+ com(2,1);
-print b;  --3 
-print c;  --1 
-
--- alternative rule call:
-alter b,c <+ com(4,5);
-print b;  --9 
-print c;  --1 
-
--- alternative rule call:
-apply com(0,1) +> b, c;
-print b; --1 
-print c; --1 
-
+-- capture result into 
+make  b, c ∈ Z;
+apply com(3,2) +> (b,c);
+print b;  --> 5 
+print c;  --> 1 
 ```
 
 ## Dynamic rules
@@ -821,7 +795,7 @@ Attributes of a rule are state variables. That are variables starting with dot p
 **pattern**
 ```
 rule rule_name(param ∈ type,...):
-  -- define x,y,z states
+   ** define x,y,z states
    make .x, .y, .z := 0 ∈ Z;  
    ...
 return;
@@ -836,10 +810,10 @@ print (rule_name.x, rule_name.y, rule_name.z);  -- 1 2 3
 ```
 
 **Notes:**
-* Like static rule, a dynamic rule can be call with _apply_ or _alter_;
+* Like static rule, a dynamic rule can be call using _apply_;
 * Attributes of dynamic rules can be used in expressions;
-* A dynamic rule can not be executed from an expression;
-* A dynamic rule that return a result can be used with unpacking operators: "+>" and "<+";
+* Dynamic rules can not be used in expressions;
+* Result from a dynamic rule can be captured using collector: "+>";
 
 **See also:**
 * [bs.bee](../demo/bs.bee);   --Bubble Sort
@@ -947,7 +921,7 @@ This is myLib.bee file:
 #role := "component";
 #name := "myLib";
 
-load $bee/lib/cpp/myLib.bee; --load cpp library
+load $bee.lib.cpp.myLib; --load cpp library
 
 -- define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x @ Z);
@@ -961,8 +935,8 @@ This is the driver file.
 #role := "driver";
 
 -- load library
-load $bee/lib/myLib.bee;
-alias myLib := bee.lib.myLib
+load myLib := $bee.lib.myLib;
+
 --use external rule
 print myLib.fib(5);
 ```

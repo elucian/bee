@@ -3,13 +3,13 @@
 Bee uses 53 reserved keywords so far: 
 
 ```
-04: if, is, to, in
+03: if, is, in
 09: make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
-07: when, with, quest, cycle, while, scan, trial
-11: else, case, error, other, final, match, none, repeat, next, do, done
+07: when, with, check, cycle, while, scan, trial
+11: do, done, none, else, case, error, other, final, repeat, next 
 11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
-04: append, update, delete, from
+04: append, update, delete, from, into
 ```
 
 **notes:** 
@@ -20,11 +20,10 @@ Bee uses 53 reserved keywords so far:
 ### Semantic keywords
 
 | Keyword     | Purpose
-|-------------|--------------------------------------------------------
-| if          | conditional suffix operator
-| is          | introspection operator (is of type)
-| to          | used in conjunction with append
-| in          | used in conjunction with update 
+|-------------|--------------------------------------------------------------
+| if          | used as conditional with any simple statement
+| is          | used in conjunction with check
+| in          | used in conjunction with check
 
 **Note:** (1m = 10⁻³, 1μ =10⁻⁶)
 
@@ -77,12 +76,11 @@ Control statements are also known as decision statements.
 | error    | Associated with trial to patch one errors
 | other    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
-| do       | Begin a statement region for when, quest and trial blocks
-| done     | Finalize when, quest and trial control blocks
 | with     | Start scope qualifier suppression block
-| quest    | Create a multi-block selection statement
-| match    | Associated to quest, create one branch
-| none     | Associated to quest, create alternative branch
+| check    | Create a multi-block selection statement
+| none     | Associated to check, create alternative branch
+| do       | Begin a statement region in a block statement
+| done     | Finalize when, check and trial control statements
 
 ## Transfer keywords
 
@@ -110,5 +108,6 @@ These keywords transfer control or make an interruption of current thread.
 | update   | alter a record in a table
 | delete   | remove a record from a table
 | from     | associated with delete statement
+| into     | associated with append and update
 
 **Read next:** [Syntax Overview](overview.md)

@@ -8,10 +8,8 @@ make  ch := () ∈ (N)  ; -- define empty channel
 
 -- ch is the communication channel
 rule producer(ch @ (N)):
-  make item := 0 ∈ N;
   while length(ch) < c do
-    alter item  := random(10);
-    alter ch    += item;
+    alter ch += random(10); -- Add
     yield consumer;
   repeat;
 return;
@@ -20,8 +18,7 @@ return;
 rule consumer(ch @ (N)):
   make item ∈ N;
   while (len(ch) > 0) do
-    alter item := ch[?];
-    alter ch   -= ch[?]; -- FIFO
+    alter ch -= ch.head;   -- FIFO
     wait  30;
     yield producer;
   repeat;

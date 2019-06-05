@@ -1,4 +1,4 @@
-# Program structure
+## Program structure
 
 Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension *.bee or *.cfg and it represents a module or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
 
@@ -207,7 +207,7 @@ Statements can be contained in blocks of code.
 * do    -- anonymous simple context block
 * with  -- create a scope qualifier suppression block/ mapping block
 * when  -- create multi-path conditional selector
-* quest -- create a multi-path value selector
+* check -- create a multi-path value selector
 * cycle -- create unconditional repetitive block of code
 * while -- create conditional repetitive block of code
 * scan  -- create visitor block for all elements in a collection
@@ -232,7 +232,7 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 -- declare input parameters
 input *params ∈ [String];
 
--- check existence of parameters
+-- read the number of parameters
 make c := params.count;
 halt if (c = 0);
 
@@ -265,11 +265,11 @@ Libraries and modules can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib/folder_name/*.bee;
-load $bee_lib/folder_name/(x,y,z);
+load $bee_lib.folder_name:(*.bee);
+load $bee_lib.folder_name:(x,y,z);
 ```
 
-* using: /*.bee  all files with extension _bee_ are found on disk and parsed;
+* using: (*.bee) all files with extension _bee_ are found on disk and parsed;
 * using: (x,y,z) only x,y,z files are found on disk and parsed;
 
 **Qualifier**
@@ -466,8 +466,8 @@ A large program can have multiple _aspects_. The driver control the execution of
 * An aspect is executed using keyword _play_ or _alter_;
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, never in parallel;
-* An aspect can not be used in expressions except unpacking with "+>" or "<+" ;
-* An aspect can be terminated early using:"exit" or "halt" or "fail";
+* An aspect can not be called from an expression;
+* An aspect can be terminated early using:"exit", "halt" or "fail";
 
 **pattern**
 
@@ -480,13 +480,10 @@ play aspect_name(parameter_list);
 
 -- result can be captured using "+>" or any other modifier:
 play aspect_name(parameter_list) +> (result,...);
-
--- one aspect can be call using alter statement
-alter  (result,...) <+ aspect_name(parameter_list);
 ```
 
 **Restriction:**
-* you can not call one aspect using _make_ statement;
+* you can not call one aspect using _make_;
 * you can not call one aspect from expressions;
 * one aspect can not be run in parallel with another aspect;
 * one aspect can not _play_ from inside a rule;
@@ -518,7 +515,7 @@ over.
 make result ∈ N;
 
 -- define aspect "mod"
-load $pro/mod.bee;
+load $pro.mod.bee;
 
 -- execute aspect "mod"
 play  mod(-3) +> result;

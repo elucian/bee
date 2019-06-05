@@ -4,13 +4,13 @@ Bee has 7 control flow statements:
 
 Name             | Description
 -----------------|----------------------------------
-[do](#do)        | start anonymous local context
-[with](#with)    | qualifier suppression
-[when](#when)    | decision statement
-[quest](#quest)  | multi-path selector
-[cycle](#cycle)  | unconditional loop
-[while](#while)  | conditional loop
-[scan](#scan)    | for visitor pattern
+[do](#do)        | local context
+[with](#with)    | qualifier suppression block
+[when](#when)    | conditional block statement
+[check](#check)  | multi-path selection block
+[cycle](#cycle)  | unconditional repetitive  block
+[while](#while)  | conditional repetitive block
+[scan](#scan)    | visit elements in collection
 [trial](#trial)  | trial work-flow
 
 ## do
@@ -28,10 +28,10 @@ done;
 
 ## with
 
-Define a scope qualifier suppression block:
+Define a _scope qualifier_ suppression block:
 
 ```
-with qualifier do
+with (qualifier) do
   -- instead of qualifier.member()
   apply member();
   ...
@@ -41,14 +41,14 @@ done;
 Using alias for scope qualifier:
 
 ```
-with (short: long.qualifier) do
+with (scope: long.qualifier) do
   -- instead of long_qualifier.member()
-  apply short.member();
+  apply scope.member();
   ...
 done;
 ```
 
-Using 2 qualifiers for mapping assignment:
+Using 2 qualifiers for mapping using assignment:
 
 ```
 with (target: target_qualifier, source: source_qualifier) do
@@ -117,31 +117,34 @@ else
 done; 
 ```
 
-## Quest
+## Check
 
-The quest is a multi-path value based selector. 
+The _check_ is a multi-path value based selector. 
 
 **syntax:**
 
 ```
-quest expression: 
-  match constant1 do
+check expression:   
+  is (value)      do
     ** first path
-  match constant2 do
+    ... 
+  in (min..max)   do
     ** second path
-  match constant3 do
+    ... 
+  in (value, ...) do
     ** third path
+    ...
 none
   ** default path
+  ...
 done;
 ```
 
 **Notes:** 
-* in other language this statement is called _switch_,
-* this statement is mapping to a _"jump table"_,
-* you can not use same constant two or more times,
-* there is not break statement, we break after first match, 
-* default path _none_ is executed only when there is no match.
+* it is similar to _switch_ from other languages.
+* it is mapping to a _"jump table"_ like switch,
+* there is not _break_ statement like in switch, 
+* default path _none_ is executed when there is no match.
 
 ## Cycle
 
@@ -150,7 +153,7 @@ Create unconditional repetitive block.
 **pattern**
 
 ```
-cycle:
+cycle
   ...
   skip if condition;
   ...
@@ -170,7 +173,7 @@ In this example "a" is a local variable visible in cycle and after cycle;
 
 ```
 make a := 10 ∈ Z;
-cycle:
+cycle
   alter a -= 1;
   ** conditional repetition
   skip if (a % 2 = 0);
@@ -189,22 +192,25 @@ repeat;
 
 **nested**
 
-Nested cycles can be labeled and can be used for interruption.
+Nested cycles are very rare but possible:
 
 **pattern:** 
 
 ```
-** label 2 nested cycles 
-cycle outer:
-  ** outer cycle
-  cycle inner:
-    ** skip both cycles
-    skip outer if (condition);
+cycle -- outer cycle
+  ...
+  skip if (condition); -- skip inner cycle
+  ...
+  cycle -- inner cycle
+    ...
+    skip if (condition); -- repeat inner cycle
     ...    
-    ** stop both cycles
-    stop outer if (condition);
-  repeat; --inner
-repeat; --outer
+    stop if (condition); -- stop inner cycle
+  repeat;
+  ...
+  stop if (condition); -- stop outer cycle  
+  ...
+repeat;
 ```
 
 **example**
@@ -212,9 +218,9 @@ repeat; --outer
 ```
 make x   := 9; 
 make a,r := 0; 
-cycle:
+cycle
   alter r := x % 2;
-  alter a := (0: r = 0, 1);
+  alter a := (0 if r = 0, 1);
   write "{1}:{2}" <+ (x,a);
   alter x -= 1;
   write ',';
@@ -237,6 +243,7 @@ while condition do
   ...
 else
   -- alternate path
+  ...
 repeat;
 ```
 
@@ -271,7 +278,7 @@ One while block statement can be nested:
 while condition do
   ** inner loop
   while condition do
-     -- statements
+     ** statements
      ...
   repeat;  
   ...  
@@ -281,8 +288,8 @@ repeat;
 **example**
 
 ```
-make x   := 9; local
-make a,r := 0; locals
+make x   := 9; -- local variable
+make a,r := 0; -- two local variable
 while x < 5 do
   alter r := x % 2;
   alter a := 0 if r = 0, 1 if r = 0, 2;
@@ -299,8 +306,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 
 **Pattern:**
 ```
-make var ∈ N;
-scan [min..max] :> var do
+scan var ∈ [min..max] do
   ** block statements
   skip if (condition);
   ...
@@ -315,13 +321,13 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-make i ∈ Z;
-scan [0..10] :> i do
-  -- force next iteration
+make i ∈ Z; -- local variable
+scan i ∈ [0..10] do
+  ** force next iteration
   when i % 2 = 0 do
     skip;
   else
-    -- write only odd numbers
+    ** write only odd numbers
     write i;
     write ',' if (i < 10);
   done;
@@ -349,7 +355,7 @@ The "trial" statement execute a sequential process that can fail for some reason
 
 **pattern**
 ```
-trial:
+trial
   -- private context
   ...  
   -- multiple use cases
@@ -377,8 +383,10 @@ error code:
 ...  
 other
    -- covering all other errors 
+   ...
 final
    -- finalization
+   ...
 done;
 ```
 
@@ -386,15 +394,18 @@ done;
 * Trial block has an optional local scope
 * Local variables will disappear after done;
 
-**Interruptions**
+**Transfer**
+
+Next statements are directly associated with trial block:
 
 | word  | description
-|-------|---------------------------------------------------
-| retry | execute previous solved case or specified case
-| solve | solve one forward case in same trial and skip some
-| abort | silent early trial termination
-| pass  | scrub #error record and end trial block
-| resume| continue next; case after one case fail
+|-------|------------------------------------------------------------
+| solve | execute specified case forward to current case
+| retry | execute specified case previous to current case
+| fail  | interrupt execution and transfer control to error handlers
+| resume| used from error handlers to continue with next case 
+| abort | terminate execution and transfer control to next statement
+| pass  | terminate execution and cleanup #error record
 
 **error**
 

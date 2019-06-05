@@ -33,8 +33,8 @@ print test[0]; --first element
 print test[m]; --last element
 
 -- alternative notation
-print test[!]; --first element
-print test[?]; --last element
+print test[0]; --first element
+print test[-1]; --last element
 
 -- array traversal 
 make x := 0;
@@ -125,7 +125,7 @@ Array capacity can be modified using union operator "∪". This will reset the a
 
 ## Array slicing
 
-A slice is a small view from a larger array.
+A slice is a small view from a larger array, created with notation [n..m].
 
 **Syntax:**
 
@@ -184,7 +184,7 @@ alter e[*] := 2;
 print a; -- expect [1,1,1,2,2]
 
 --modify last 2 elements using anonymous slicing
-alter a[3..?] := [2,3];
+alter a[3..-1] := [2,3];
 
 --                     ↓ ↓
 print a; --expect [1,1,1,2,3]
@@ -269,7 +269,7 @@ while col < 3 do     -- traverse columns
 repeat;
 
 ** traversal with scan
-scan M :> e do
+scan e ∈ M do
   print e; -- element
 next;
 ```
@@ -381,10 +381,10 @@ make last ∈ N;
 alter a += 4; -- (1,2,3,4)
 
 -- read last element using "-="
-alter last := a[?]; --last = 4
+alter last := a.tail; --last = 4
 
 -- remove last element using -=
-alter a -= a[?]; -- a = (1,2,3)
+alter a -= last; -- a = (1,2,3)
 ```
 
 ### List as queue
@@ -392,19 +392,18 @@ alter a -= a[?]; -- a = (1,2,3)
 A queue is a FIFO collection of elements: (first in first out)
 
 ```
-make q := (1,2,3); list
-make first : N;
+make q := (1,2,3); 
+make first: N;
 
 -- enqueue new element into list "+=" 
 alter q += 4; -- (1,2,3,4)
 
 -- read first element using ":="
-alter first := a[!]; --first = 1
+alter first := a.head; --first = 1
 
 -- dequeue first element using "-="
-alter a -= a[!]; --a = (2,3,4)
+alter a -= first; --a = (2,3,4)
 ```
-
 
 ### Other built-ins
 
@@ -440,7 +439,7 @@ The "element" is local to iteration and is used as control variable.
 
 ```
 make my_list := ['a','b','c','d','e']; 
-scan my_list :> element do
+scan element ∈ my_list do
   write element;
   when element = 'd' do
     stop; -- early termination;
@@ -472,7 +471,7 @@ Hash and Set are similar. We can visit all elements using _scan_:
 **Example:**
 ```
 my_map := {("a":1),("b":2),("c":3)};
-scan my_map :> (key:value) do
+scan (key:value) ∈ my_map do
   print('("' + key + '",' + value +')');
 repeat;
 ```
@@ -608,18 +607,24 @@ We use hash "\{}" to create a placeholder into a Text. We use "<+" operator to r
 * If a placeholder index is not found then it is preserved as is
 
 ```
-make var_name := template <+ (variable);
-make var_name := template <+ (var1,var2,...);
+make template := "\{1} \{2}...";
+make var1 := 123; 
+make var2 := 456;
+...
+print template <+ (var1,var2,...);
 ```
 
 **Examples:**
 ```
+** define two A codes
 make x := 30; --Code ASCII 0
 make y := 41; --Code ASCII A
 
---template writing
-print ("\{0} > \{1} > \{2}" <+ (x,y)); --print "30 > 41 > {2}"
-  
+**template writing
+
+print "\{0} > \{1}"   <+ (x,y); -- "30 > 41 > {2}" 
+print "\a{0} > \a{1}" <+ (x,y); -- "0 > A"  
+
 ```
 
 **Escaping**
@@ -627,24 +632,28 @@ print ("\{0} > \{1} > \{2}" <+ (x,y)); --print "30 > 41 > {2}"
 Format/template stings can use escape sequences:
 
 ```
+\'  : symbol '
+\"  : symbol "
 \s  : single quoted string
 \q  : double quoted string
-\n  : number  
-\a  : ASCII symbol 
-\u  : Unicode symbol
-\h  : hexadecimal
-\b  : binary
-\t  : time format
-\d  : date DMY format
+\a  : ASCII symbol for number
+\u  : Unicode symbol for number
+\+  : Code point representation (U+HHHH) for symbol
+\n  : decimal number  
+\b  : binary number
+\h  : hexadecimal number
+\t  : time format defined by #time
+\d  : date format defined by #date
 \() : [numeric format](#numeric-format)
-\{} : Attribute by name/ Value by key
-\[] : Array/Matrix element by index \| List elements: [!] or [?] 
+\{} : Value: by name \| by index \| by key
+\[] : Array/Matrix element by index 
+\[] : Set/Hash value search by key
 ```
 
 **examples**
 ```
 print "Numbers: \n and \n" <+ (10, 11);
-print "Alpha: \n and \n" <+ ('a', 'b');
+print "Alpha:   \a and \a" <+ (30, 41);
 print "Strings: \s and \s" <+ ('odd','even');
 print "Quoted:  \q and \q" <+ ('odd','even');
 print "Unicode: \u and \u" <+ (U+2260,U+2261);
@@ -652,15 +661,15 @@ print "Unicode: \u and \u" <+ (U+2260,U+2261);
 **Expected output:**
 ```
 Numbers: 10 and 11
-Alpha: a and b <+ ('a', 'b');
-Strings:'odd' and 'even'
-Quoted: "odd" and "even"
+Alpha:   0 and A
+Strings: 'odd' and 'even'
+Quoted:  "odd" and "even"
 Unicode: ≠ and ≡
 ```
 
 **Notes**: 
-* Injector "<+" is polymorph and overloaded operator. 
-* For template you can use: { tuple, list, table, array }
+* Template operator "<+" is polymorph and overloaded, 
+* For template source you can use: { tuple, list, set, hash, array, matrix }.
 
 ## Large template
 
@@ -674,22 +683,25 @@ A large template can be stored into a file, loaded from file and format().
 
 **Using Hash**
 ```
-make template := "Hey look at this \{key1} it \{key2}";
-make map      := {("key1":"test"),("key2":"works!")};
+make template1 := "Hey look at this \{key1} it \{key2}!";
+make template2 := "Hey look at this \s{key1} it \q{key2}!";
+make map       := {("key1":"test"),("key2":"works")};
 
 print template.format(map);
+print template <+ map;
 ```
 
 Expect output:
 ```
 Hey look at this test it works!
+Hey look at this 'test' it "works"!
 ```
 
 **Using Set**
 ```
-make template := "Hey look at this #[0] it #[1]";
-make my_set  := {"test","works!"};
-print (template <+ my_set);
+make  template := "Hey look at this \{0} it \{1}";
+make  my_set   := {"test","works!"};
+print template <+ my_set;
 ```
 
 Expect Output:
@@ -719,8 +731,8 @@ Where "f" is a pattern: '(ap:m.d)'
 ```
 ### Format examples:
 ```
- '(>_:10)'   -- right align string fill with spaces to 10 characters
- '(>0:10.2)' -- right align fill with 0 up to 10 digits and use 2 decimals
+ '\(>_:10)'   -- right align string fill with spaces to 10 characters
+ '\(>0:10.2)' -- right align fill with 0 up to 10 digits and use 2 decimals
 ```
 
 ### Text functions
@@ -733,9 +745,9 @@ Where "f" is a pattern: '(ap:m.d)'
 
 **Reading a Text**
 
-Text is iterable by "word". The word separator is one space. So we can read a text string word by word not line by line. We can use "for" iteration to check every word in the text. One word can not start/end with space. 
+Text is iterable by "row". The row separator CR or CRLF. So we can read a text line by line. You can use _scan_ iteration to check every line of text. Each row is a string. You can also parse a row word by word using a nested _scan_.
 
 **Note:**
-The text also support escape sequences like a normal string. However in a text literal we do not have to escape the single quote symbols: "'". However we have to escape the double quotes like: "This is \"quoted\" text". This is very rare since quoted text should use symbols: "« »" like "«quoted»"
+The text also support escape sequences like a normal string. However in a text literal we do not have to escape the single quote symbols: "'". We have to escape the double quotes like: "This is \"quoted\" text". This is very rare since quoted text should use symbols: "« »" like "«quoted»".
 
 **Read next:** [Standard Library](standard.md)

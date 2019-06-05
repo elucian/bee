@@ -69,11 +69,10 @@ symbol| description
  ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
  -\>  | rule pipeline \| Explicit conversion 
- \<+  | Unpack a list \| Format template injector
+ \<+  | String template injector
  \<:  | Define subset from set \| Specify super-type for a new type
  :=   | Assign by value \| Reset reference
  :+   | Assign by copy  \| Keep reference
- :\>  | Define visitor variables for scan statement 
  \+\> | Output collector: used with _apply_ or _play_
  
 ## Arithmetic modifiers

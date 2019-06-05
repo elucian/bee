@@ -69,57 +69,28 @@ alter  b := name1; --> b = 1
 
 ## Tuple
 
-A tuple is an enumeration literal of elements enclosed in parenthesis and separated by comma: 
+A tuple is enumeration of elements enclosed in parenthesis and separated by comma: 
 
 **examples**
 ```
 (a, b ∈ Z, c @ B) -- parameters
-('a','b','c')     -- strings
-(1,2,3)           -- numbers
-(1,'2','x')       -- mixed types
+(result @ X)      -- single result
+(r1,r2 @ Z)       -- multiple results
+('a','b','c')     -- list of strings
+(1,2,3)           -- list of integers
+(1,`2`,'x')       -- list of various literals
 ```
 
 **Notes:**
 
-Tuples in Bee are equivalent to complex expressions.    
-This is very different from definition in Python and other languages.
+Bee tuples are very different from Python and other languages.
 
 * Tuples are source code literals with a static structure;
 * Values in a tuple can have different data types;
 * Elements of tuple are ordered, but can not be addressed by index;
 * You can not define a variable of type tuple;
-* You can use elements from a tuple using unpacking operator;
 
 **See also:** definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
-
-**Unpacking:**
-
-A tuple can be _unpacked_ into multiple variables using operator "<+";
-
-**Example:**
-
-```
---receiver variables
-make x, y ∈ Z;
-make z ∈ S;
-make a := '40';
-
---unpacking: modify all 3 variables
-alter x, y, z <+ (97, 65, a);
-
-print x; -- 97
-print y; -- 65
-print z; -- a
-
--- tuple unpacking using a template
-make s := "\{0} > \{1} > \{2}" <+ (x, y, z); 
-
-print s; -- 97 > 65 > 40
-```
-
-**Unpacking Notes:**
-* If tuple has more elements, the rest of values are ignored;
-* If tuple has less elements, last variables are set to zero;
 
 **multiple results**
 A rule can have multiple results defined using a tuple:
@@ -133,35 +104,32 @@ return;
 
 make n, m ∈ Z;
 
--- unpacking the results
-alter n, m <+ test(1,2);
+-- collecting the results
+apply test(1,2) +> (n, m);
 
 print n; -- 2
 print m; -- 3
 
 -- ignore one result using "_"
-alter n, _ <+ test(3,0);
+apply test(3,0) +> (n, _);
 print n; --4
-
--- using apply to capture results
-apply test(0,0) +> n, m
-print (n,m); -- 1, 1
-
 ```
 
 ## List
 
 A list is a dynamic collection of elements connected by two references:
 
-* previous
+* prior
 * next
+
+A list has two very important elements: _head_ and _tail_.
 
 **list type**
 
 You can define a _list type_ using empty list: ()
 
 ```
-type type_name := (element_type) <: List; -- list type
+type type_name := (element_type) <: List; 
 ```
 
 **variable declaration**
@@ -178,21 +146,21 @@ make name := (constant,...) ∈ (element_type); -- full declaration
 * a list can be initially empty (),
 * all elements in a list have the same type,
 * elements in a list are ordered,
+* accessing elements in a list by index is slow.
 
 **example**
 
 ```
 -- define a list type of unsigned short integers
-type Lou  := ( u16 ) <: List;
+type Lou  := (u16) <: List;
 
 -- define a list variable of defined type Lou
 make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 
 -- list traversal
-make x ∈ u16;
-scan list :> x do
+scan x ∈ list do
   write x;
-  write _ if (x ≠ list[?]);
+  write _ if (x ≠ list.head);
 next;
 print; -- 0 1 2 3 4 5
 ```
@@ -225,8 +193,7 @@ make array_name ∈ Array_Type;
 
 ```
 make array := [`a`, `b`, `c`];
-make c ∈ A;
-scan array :> c do
+scan c ∈ array do
   write c;
   write ',';
 repeat;
@@ -593,14 +560,6 @@ make item_name := {
 
 -- modify one object attribute
 alter object_name.attribute := new_value;
-
--- declare receivers
-make var1 ∈ type_1;
-make var2 ∈ type_2;
-...
-
--- unpacking object attributes
-make var1,var2... <+ object_name;
 ```
 
 **Object structure can be ...**
@@ -732,8 +691,8 @@ print foo(1,2,3);  -- 6
 
 **first & last**
 
-* First element in array: array_name[!]
-* Last element in array: array_name[?]
+* First element in array: array_name[0]
+* Last element in array: array_name[-1]
 
 ## Exception
 An exception is a recoverable error. It can be declared by the user or by the system:
@@ -756,7 +715,7 @@ make my_error  := {200,"my first exception"} ∈ Error;
 fail my_error;
 ```
 
-An error has template features. Operator <+ can be used:
+Template operator <+ can be used to customize the error message:
 
 **example**
 ```
@@ -770,7 +729,7 @@ exception: 'test'
 
 **Notes:**
 * Keyword _fail_ can raise only recoverable errors with code > 200;
-* Keyword _fail_ can not terminate the main program only _halt_ or _exit_;
+* Keyword _fail_ can not terminate a _driver_ only _halt_ or _exit_ can;
 * All recoverable errors must be analyzed by the program using trial block;
 * Error code <  200 are system reserved error codes;
 * Error code ≤ -1   are unrecoverable errors created with _halt_;

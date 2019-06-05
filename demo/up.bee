@@ -1,5 +1,5 @@
 +-------------------------------------
-   rule unpacking demonstration 
+   rule collector demonstration 
 -------------------------------------+
 #name :=  "up";
 
@@ -8,17 +8,22 @@ rule test(x, y ∈ Z) => (a,b @ Z):
   alter a := x + 1;
   alter b := y + 1;
 return;
--- unpacking and make new variables
-make n,m <+ test(1,2);
+
+** unpacking and modify two variables
+make n,m ∈ Z;
+apply test(1,2) +> (n,m);
 print (n, m); -- will print 2, 3
 
 ** rule with structured result
 type Rec {x ∈ Z, y ∈ R} <: Object;
-rule (x ∈ Z, y ∈ R) => (r @ Rec):
+rule demo(x ∈ Z, y ∈ R) => (r @ Rec):
   alter r.x := x;
   alter r.y := y;
 return;
-print demo(4,5.5); -- will print { x: 4, y: 5.5 }
 
-over.
- 
+** test rule using alter instead of apply
+make  r ∈ Rec;
+apply demo(1, 0.5) +> r;
+print r ; --> {x:1, y:0.5}
+
+over. 

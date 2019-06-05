@@ -56,9 +56,9 @@ A database library must provide basic functionality:
 | connect()    | Connect the database
 | disconnect() | Disconnect from database
 | query()      | Direct SQL execution
-| exec()       | Execute a stored procedure
-| commit()     | Save all updates
-| rollback()   | Rollback all updates
+| execute()    | Execute a stored procedure
+| commit()     | Save all pending modifications
+| abort()      | Rollback all pending modifications
 
 **target database**
 
@@ -77,56 +77,58 @@ A table usually has records but sometimes has objects or nested tables. Bee stra
 ## Tables
 Tables are database objects. We can read a table in memory record by record. For this we need to define one compatible object type for each table. A compatible object uses same name for all attributes and has compatible data types to match a table structure.
 
+## Record
+Records are dynamic object created from database structure. A record has methods and functions. Before handling a record you must create the record using scan, or make. A record has _status_ property that can be used in conditionals:
+
+**table status**
+```
+type status := {.unknown:0 .verified, .updated, .deleted } <: Ordinal;
+```
+
+
 **Scanning tables**
 You can scan one table like a collection:
 
 **pattern**
 ```
-local
-  -- declare current record
-  make  current_record ∈ {record_field ∈ data_type, ...}  
-  scan db.table_name :> current_record do
-    -- establish qualifier suppressor 
-    with current_record do
-      ** use current_record fields
-      ... 
-    done;
-  repeat;
-c
+scan record ∈ db.table_name  do
+  -- establish qualifier suppressor 
+  with record do
+    ** use current_record fields
+    print record.status; -- expect: 1 = .verified
+    ... 
+  done;
+repeat;
 ```
 
 **Mutating data**
-You can modify table data using current_record fields. First you modify values for some of the fields, then you call commit or rollback(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
+You can modify table data using current _record_. First you modify record attributes, then you call commit or abort(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
 
 ```
-type: Record_Type := {record_fields} <: Object;
-do
-  make current_record ∈ Record_Type
-  make index ∈ Z
-  scan db.table_name :> current_record do
-    ** update current table
-    update (rowid:current_record.rowid)
-      alter field_name := new_value
-       ...
-    in db.table_name;
-    alter index += 1
-    ** commit batch of 10
-    when (index = 10) do
-      apply db.commit()
-      alter index := 0
-    done;;
-  next;;
-  ** commit all pending updates
-  apply db.commit() if (index > 0)
-done;;
+make index ∈ Z; -- counter
+scan record ∈ db.table_name do
+  ** update current table
+  with record do
+    alter field_name := new_value;
+     ...
+  done;
+  alter index += 1
+  ** commit batch of 100
+  when (index = 100) do
+    apply db.commit;
+    alter index := 0
+  done;
+next;
+** commit all pending updates
+apply db.commit if (index > 0);
 ```
 
 ## Transactions
-Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When modifications are done; you can commit changes. If any table reference or constraint fail verification transaction is rolled back automatically and signal back an error.
+Data model can work with transactions. A transaction start automatically when you make first modification. Modifications must be consistent. When all modifications are done you can commit changes. If transaction fail all the modifications are reset. You can not commit a second time.
 
 **data manipulation**
 
-Any of the following opperations will start automatically a transaction:
+Any of the following operations will start automatically a transaction:
 
 * [Append](#Append)
 * [Update](#Update)
@@ -134,36 +136,47 @@ Any of the following opperations will start automatically a transaction:
 
 ### Append
 
-Bee can add new data records into one table using _append_ statement.
+Bee can add new data records into one table using table _append()_ rule.
 
 ```
--- using block statement
-append
-  field_name := value
+-- capture empty record
+make record := table_name.append;
+with record do
+  alter field_name := value;
   ...
-to table_name
+done;
+apply db.commit;
+
+-- using temporary record
+with table_name.append do
+  alter field_name := value;
+  ...
+done;
+apply db.commit;
 ```
 
 ### Update
 
-Bee can do single or multiple row updates.
+Bee can do single or multiple row updates in one transaction.
 
 **Syntax:**
 
 ```
 -- use search fields and values
-update (search_field:value, search_field:value ...)
-   alter field_name := value
-   alter ...
-in table_name
+make record := table_name[search_field:value, search_field:value ...];
+with record do
+  alter field_name := value;
+  ...
+done;
+apply db.commit;
+
+-- use anonymous record 
+with table_name[search_field:value, search_field:value ...] do
+  alter field_name := value;
+  ...
+done;
+apply db.commit;
 ```
-
-
-**note:** 
-* The best candidates for search_field is ROWID;
-* The update_record must match some table fields;
-* The order of the fields in update_record is not significant;
-* Search record must match all fields otherwise will fail;
 
 ### Delete
 
@@ -172,9 +185,47 @@ This statement will remove one or more records from a table.
 **Syntax**
 
 ```
--- Using search fields
-delete (search_field:value,...) 
-  from table_name
+-- Find one single record and delete
+make  record := table_name[search_field:value,...];
+apply record.delete;
+
+-- check status
+fail if record.status ≠ deleted;
+
+apply db.commit;
+
+-- check status
+fail if record.status ≠ verified;
+
+-- Using search fields to delete multiple records
+apply table_name[search_field:value,...].delete;
+apply db.commit;
+
+-- Remove all records from a table in bulk
+apply table_name[*].delete;
+apply db.commit;
+
+-- delete current record using scan
+scan record ∈ table_name do
+  record.delete if (condition);
+done;
+db.commit;
+```
+
+**Note:** 
+* After delete the record still exist with _status_ = _deleted_;
+* After commit the record becomes Null and can no linger be accessed;
+
+## Pending buffer
+The records that are modified are stored into a buffer. This buffer is empty when commit or abort.
+
+```
+** display status of all pending records
+scan record ∈ table_name.pending do
+  print (record.status);
+done;
+** display how many records are pending
+print table_name.pending.count
 ```
 
 ## Direct SQL
@@ -197,8 +248,11 @@ apply db.query(query_string) +> array_of_records
 Some databases have support for stored procedures:
 
 ```
-apply db.exec(procedure_name <+ array) 
-apply db.exec(procedure_name <+ record) 
+** prepare a record object using a table structure
+make record ∈ table_name;
+
+** stored procedure with input arguments and result
+apply db.execute procedure_name(arguments) +> record; 
 ```
 
 ## Introspection
