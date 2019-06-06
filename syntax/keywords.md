@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee uses 54 reserved keywords so far: 
+Bee uses 50 reserved keywords so far: 
 
 ```
 04: if, is, in, as
@@ -9,7 +9,6 @@ Bee uses 54 reserved keywords so far:
 07: when, with, check, cycle, while, scan, trial
 11: do, done, none, else, case, error, other, final, repeat, next 
 11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
-04: append, update, delete, from, into
 ```
 
 **notes:** 
@@ -101,14 +100,5 @@ These keywords transfer control or make an interruption of current thread.
 | halt     | Create unrecoverable error and stop program
 | over     | End driver, library or module file. Dot suffix is mandatory.
 
-## Database operations
-
-| Keyword  | Purpose
-|----------|----------------------------------------------------------------
-| append   | create a record to a table 
-| update   | alter a record in a table
-| delete   | remove a record from a table
-| from     | associated with delete statement
-| into     | associated with append and update
 
 **Read next:** [Syntax Overview](overview.md)
