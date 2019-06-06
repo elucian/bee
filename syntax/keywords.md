@@ -1,13 +1,13 @@
 ## Bee Keywords
 
-Bee uses 50 reserved keywords so far: 
+Bee uses 48 reserved keywords so far: 
 
 ```
 04: if, is, in, as
 09: make, rule, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, check, cycle, while, scan, trial
-11: do, done, none, else, case, error, other, final, repeat, next 
+10: do, done, none, else, case, error, other, final, repeat, next 
 11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
 ```
 
@@ -91,14 +91,13 @@ These keywords transfer control or make an interruption of current thread.
 | stop     | Interrupt a while loop and continue past repeat; keyword
 | skip     | Skip the rest of while block and continue from the beginning
 | exit     | Force silent termination of a rule, aspect, program or driver
-| fail     | Interrupt a rule or block with recoverable error
-| pass     | Null statement. It does absolutely nothing
+| fail     | Create error message if a condition is true else pass
+| pass     | Clear error message if a condition is true else fail
 | abort    | Force silent early interruption of trial block
 | retry    | Execute a previous case into a trial block
 | solve    | Solve one forward case into a trial block
 | resume   | Used in trial block to continue next case after failure
 | halt     | Create unrecoverable error and stop program
 | over     | End driver, library or module file. Dot suffix is mandatory.
-
 
 **Read next:** [Syntax Overview](overview.md)

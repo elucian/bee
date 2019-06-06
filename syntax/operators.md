@@ -119,16 +119,17 @@ Operator "≢" is not used. Instead you can use expression:
 
 ## Collection operators
 
-symbol | `=>`       |meaning
+symbol | `->`       |meaning
 -------|------------|----------------------------------------------------------
   ∩    | Set        |Intersection between two collections
   ∪    | Set        |Union between two collections
-  ⊂    | Logic      |set is included in superset: "⊂"
-  ⊃    | Logic      |set contain subset: "⊃"  
+  ⊂    | Logic      |Set is included in superset: "⊂"
+  ⊃    | Logic      |Set contain subset: "⊃"  
+  ⊖    | Set        |Set symmetric difference  
   \+   | Array      |Concatenation between two arrays
-  \+=  | collection |Append element to collection 
-  \-=  | collection |Remove element from collection 
-  ∀    | element    |Enumerate all elements from a collection
+  \+=  | Collection |Append element to collection 
+  \-=  | Collection |Remove element from collection 
+  ∀    | Element    |Enumerate all elements from a collection
   ∃    | Logic      |Check if exist one element in a collection
                                           
 ## Logic Operators 
@@ -158,15 +159,15 @@ Bitwise operators are overloaded for numbers.
 
 symbol| meaning       | notes
 ------|---------------|-------------------------------
- ←    | bit SHIFTL    | shift bits to left  
- →    | bit SHIFTR    | shift bits to right  
+ «    | bit SHIFTL    | shift bits to left  
+ »    | bit SHIFTR    | shift bits to right  
 
 
 **See also:** [Bit Manipulation](https://en.wikipedia.org/wiki/Bit_manipulation) 
 
 Arity = 1
 
- a    | ¬ a | a ← 1 | a → 2  
+ a    | ¬ a | a « 1 | a » 2  
 ------|-----|-------|--------
  0000 |1111 | 0000  | 0000   
  1111 |0000 | 1110  | 0011   

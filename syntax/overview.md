@@ -578,7 +578,7 @@ print  (x ∨ y); --> 1
 * Operators { ¬    } is unary operator;
 * Operators { ∧, ∨ } are also bitwise operators;
 * Operators { ¬, ⊕ } are also bitwise operators;
-* Operators { ←, → } are bitwise operators;
+* Operators { «, » } are bitwise operators;
 
 **coercion**
 Any numeric expression ca be converted to logic using coercion operation `-> L`

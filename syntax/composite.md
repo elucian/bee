@@ -311,16 +311,19 @@ type NS := {N} <: Set; -- Natural set
 make uds ∈ NS; 
 
 -- define a variable set 
-make s  := {};  -- unbinded empty set
 make s1 := {1,2,3} ∈ {N}; -- 3 elements
 make s2 := {2,3,4} ∈ {N}; -- 3 elements  
 
 
 -- specific operations
-alter s := s1 ∪ s2; -- {1,2,3,4}  :union
-alter s := s1 ∩ s2; -- {2,3}      :intersection
-alter s := s1 - s2; -- {1}        :difference 1
-alter s := s2 - s1; -- {4}        :difference 2
+make u  := s1 ∪ s2; -- {1,2,3,4,5}  :union
+make i  := s1 ∩ s2; -- {2,3}      :intersection
+make d1 := s1 - s2; -- {1}        :difference 1
+make d2 := s2 - s1; -- {4}        :difference 2
+make d  := s2 ⊖ s1; -- {1,4}      :symmetric difference
+
+-- verify expectation
+pass if d = d1 ∪ d2; -- equivalent (else fail)
 
 -- belonging check
 print s1 ⊂ s;   --True
@@ -674,41 +677,52 @@ type Error := {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
 make #error ∈ Error;
 ```
 
-You can define exceptions with code > 200:
+You can define exceptions with code > 200 and raise exceptions with two statements:
 
-**example**
+* fail
+* pass
+
+**pattern:**
 ```
-make my_error  := {200,"my first exception"} ∈ Error;
+make my_error := {200,"message"} ∈ Error;
 
-fail my_error;
+fail my_error if condition;
+pass my_error if condition;
 ```
 
 Template modifier "?" can be used to customize the error message:
 
 **example**
 ```
+input flag ∈ L;
 make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
-fail my_error ? 'test';
+fail my_error ? 'test' if flag;
+pass my_error ? 'test' if flag;
 ```
 
--- expected
+-- expected output
+```
 exception: 'test'
+```
 
 **Notes:**
-* Keyword _fail_ can raise only recoverable errors with code > 200;
+* Keyword _fail_ will modify system variable #error to create a message;
+* Keyword _fail_ can raise only recoverable errors with code ≥ 200;
 * Keyword _fail_ can not terminate a _driver_ only _halt_ or _exit_ can;
-* All recoverable errors must be analyzed by the program using trial block;
-* Error code ≤  200 are system reserved error codes;
-* Error code ≤ -1   are unrecoverable errors created with _halt_;
 * Keyword _halt_ will liberate the resources and terminate the program;
+* Keyword _pass_ is opposite of _fail_ and is clearing the #error message;
+* Error code <  200 are system reserved error codes;
+* Error code ≤ -1   are unrecoverable errors created with _halt_;
+* Recoverable errors must be analyzed by the program using a trial block;
 
-**unrecoverable**
+**unrecoverable:**
 
 Next we create unrecoverable exception:
 
 ```
 halt -1; --end program and exit code = -1
+halt -2; --end program and exit code = -2
 ```
 
 **Read next:** [Type Inference](inference.md) 

@@ -76,9 +76,11 @@ Dual selector based on single logical expression:
 **pattern**
 ```
 when condition do
-  -- first pass-way
+  -- true branch
+  ...
 else
-  -- second pass-way
+  -- false branch
+  ...
 done;
 ```
 
@@ -103,7 +105,8 @@ done; -- a = 0
 **ladder**
 
 ```
-make a := 0;
+input a ∈ Z;
+
 when a < 0 do
   print 'a < 0';
 else if a > 10 do
@@ -124,16 +127,16 @@ The _check_ is a multi-path value based selector.
 **syntax:**
 
 ```
-check expression:   
-  is (value)      do
-    ** first path
-    ... 
-  in (min..max)   do
-    ** second path
+check (expression):   
+  is value do
+    ** first path: using single value
     ... 
   in (value, ...) do
-    ** third path
+    ** second path: using a list
     ...
+  in (min..max:rate) do
+    ** third path: using domain
+    ...     
 none
   ** default path
   ...
