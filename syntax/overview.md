@@ -20,10 +20,10 @@ I have used a simple design notation based on examples and notes:
 * [Logical expression](#logical-expression)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
+* [Lambda expressions](#lambda-expressions)
 * [Static rules](#static-rules)
 * [Dynamic rules](#dynamic-rules)
 * [Generic rules](#generic-rules)
-* [Expression rules](#expression-rules)
 * [External rules](#external-rules)
 
 ## Expressions
@@ -672,6 +672,58 @@ print ("x is " & kind); --expect: "x is digit"
 over.
 ```
 
+## Lambda expressions
+
+A lambda expressions is like a mathematical function:
+
+**syntax**
+
+```
+-- simple declaration of Lambda expression using type inference
+make name := (param ∈ Type,...) ∈ Type => (expression);
+```
+
+```
+-- you can define a lambda signature first
+type SigName := (Type,...) ∈ Type <: Lambda;
+
+-- then you can use the signature to create expression
+make name := SigName(param ∈ Type,...) ∈ Type => (expression);
+```
+
+**Example:** 
+
+```
+-- define "exp" as Lambda expression
+make exp := (x,y ∈ Z) ∈ Z => (x + y);
+
+-- "exp" type is created using type inference
+print type(exp); -- Lambda
+
+-- use the lambda expression
+make z := 1 + 2 · exp(1,1) ;
+print  z;  -- print 5
+```
+
+**properties:**
+
+Functions...
+* are similar to mathematical functions;
+* are binding external states in context;
+* can have one single result;
+* can not be interrupted from execution;
+* can be used in expressions;
+* can be be created from rules;
+* can be used as parameter in rules;
+* do not have internal states;
+* do not have side-effects;
+* do not depend on external states;
+
+**result:**
+* result is declared with ∈ not @;
+* result can be primitive type;
+* result can be native type;
+
 ## Static rules
 
 An static rule is a named block of code that can resolve one specific task. 
@@ -741,10 +793,9 @@ over.
 hello: Bee. I am Foo. Nice to meet you!
 ```
 
-
 ### Rule result
 
-A static rules can have one or multiple results:
+A rule can have one or multiple results:
 
 **pattern**
 ```
@@ -765,7 +816,6 @@ apply name(argument,...) +> (out, ...);
 * A rule have a local context where we define local variables;
 * A rule can be overwritten using different parameters;
 * A rule can have one or multiple results;
-
 
 **Note:**
 * Results are references,
@@ -791,13 +841,13 @@ print c;  --> 1
 
 ## Dynamic rules
 
-A rule that can be changed during runtime is called _dynamic rule_. 
+A rule that have attributes is called _dynamic rule_. 
 
 **attributes**
 
 Attributes of a rule are state variables. That are variables starting with dot prefix.
 
-* Dynamic rules look exactly like static rules, except they have states;
+* Dynamic rules look exactly like static rules, except they have attributes;
 * Rule attributes are public and can be accessed using dot scope qualifier;
 * Rule attributes are static: initialized one single time;
 
@@ -876,49 +926,6 @@ print dec(0); --> -1
 ```
 
 
-## Expression rules
-
-These kind of rules have on single expression to compute a result. 
-
-**syntax**
-```
-rule name(param ∈ Type,...) ∈ Type => (expression);
-```
-
-**Example:** 
-
-```
--- define "exp" a rule
-rule xp(x,y ∈ Z) ∈ Z => (x + y);
-
--- using the rule in other expressions
-make z := xp(1,1) + 1;
-print  z;  --print 3
-```
-
-**properties:**
-
-Expression rules...
-* are binding external states;
-* do not have internal states;
-* do not have side-effects;
-* do not depend on external states;
-
-**result:**
-
-* expression can have one single result;
-* expression result is declared with ∈ not @;
-* expression result can be primitive type;
-* expression result can be native type;
-
-**notes:**
-
-* Expression rules are similar to mathematical functions;
-* Expression rules can not be interrupted from execution;
-* Expression rules can be called from expressions;
-* Expression rules can be be created from static rules;
-* Expression rules can be used as parameters for other rules;
-
 ## External rules
 
 In Bee you can use external rules from Assembly or C.
@@ -933,7 +940,7 @@ This is myLib.bee file:
 load $bee.lib.cpp.myLib; --load cpp library
 
 -- define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x @ Z);
+rule fib(n ∈ Z) => (x @ Z));
   alter x := myLib.fib(n);
 return;
 
@@ -953,11 +960,11 @@ print myLib.fib(5);
 To understand more about interacting with other languages check this article about ABI:
 [Application Binary Interface](https://en.wikipedia.org/wiki/Application_binary_interface)
 
-**See also:**
+**Demo:**
+* [fn.bee](../demo/fn.bee): lambda as expression  
+* [rp.bee](../demo/rp.bee): lambda as parameter
 * [pm.bee](../demo/pm.bee): pattern matching rules 
-* [fn.bee](../demo/fn.bee): expression rules  
 * [fi.bee](../demo/fi.bee): recursive rules
-* [rp.bee](../demo/rp.bee): rule as a parameter
 * [ho.bee](../demo/ho.bee); higher order rules
 
 **Read Next:** [Control Flow](control.md)

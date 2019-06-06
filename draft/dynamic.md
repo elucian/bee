@@ -18,17 +18,18 @@ return;
 over.
 ```
 
-## Expression signature
+## Lambda Expression
 
-Expression signature is a type declaration;
+Lambda expression signature is a type declaration;
 
 ```
-type CMP(Z,Z) ∈ L;
+-- declare a rule signature
+type CMP := (Z,Z) ∈ L <: Lambda;
 
--- instantiate 3 expression rules like "CMP"
-rule gt(x, y ∈ Z) ∈ L => (x > y);
-rule lt(x, y ∈ Z) ∈ L => (x < y);
-rule eq(x, y ∈ Z) ∈ L => (x = y);
+-- instantiate 3 Lambda expressions like "CMP"
+make gt := (x, y ∈ Z) ∈ L => (x > y) like CMP;
+make lt := (x, y ∈ Z) ∈ L => (x < y) like CMP;
+make eq := (x, y ∈ Z) ∈ L => (x = y) like CMP;
 
 -- define a dictionary of rules
 type Dic := {(String(2) : CMP)} <: Hash;

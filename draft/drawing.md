@@ -32,7 +32,7 @@ Each graphic element is a composite data type.
 Type   | Signature                    | Description
 -------|------------------------------|-------------------------------------------------
 gC     | {o ∈ ⊡, w,h ∈ Z, m ∈ [gL]}   | Graphic  canvas (with points and shapes)
-gL     | {c ∈ N, v ∈ L, m ∈ [gH]}   | Graphic  layer with c = color, m = set of shapes
+gL     | {c ∈ N, v ∈ L, m ∈ [gH]}     | Graphic  layer with c = color, m = set of shapes
 gH     | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }       | Graphhic shape, with origin and rotation
 gT     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic  Text with rotation
 
@@ -50,10 +50,8 @@ v = visible
 
 Keyword  | Description
 ---------|-----------------------------------
-draw     | draw anything that is not a dot
-plot     | place a dot
+draw     | put something on a layer
 show     | show canvas
 hide     | hide canvas
-wait     | wait a number of seconds
 erase    | remove a drawing shape
 scrub    | remove all drawings from a layer

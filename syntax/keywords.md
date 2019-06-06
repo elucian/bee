@@ -1,14 +1,14 @@
 ## Bee Keywords
 
-Bee uses 48 reserved keywords so far: 
+Bee uses 50 reserved keywords so far: 
 
 ```
 04: if, is, in, as
-09: make, rule, clone, input, output, load, alias, type, return;
+10: make, rule, like, clone, input, output, load, alias, type, return;
 07: read, write, print, alter, scrap, apply, play 
 07: when, with, check, cycle, while, scan, trial
 10: do, done, none, else, case, error, other, final, repeat, next 
-11: exit, fail, pass, stop, halt, skip, over, abort, retry, solve, resume
+11: wait, exit, fail, pass, retry, solve, skip, stop, halt, abort, over, resume
 ```
 
 **notes:** 
@@ -40,8 +40,8 @@ Next statements are used to declare or create a module member.
 | alias    | Suppress scope qualifier for external elements from a library or module
 | type     | Declare data super-type or sub-type
 | make     | Create a new variable or multiple variables
-| rule     | Create a new rule or rule prototype 
-| clone    | Create a new rule from an rule prototype
+| rule     | Create a new rule or _prototype_
+| clone    | Create a new rule from a _prototype_
 | return   | End rule declaration and return; control to caller
 
 ### Execution statements
@@ -99,5 +99,6 @@ These keywords transfer control or make an interruption of current thread.
 | resume   | Used in trial block to continue next case after failure
 | halt     | Create unrecoverable error and stop program
 | over     | End driver, library or module file. Dot suffix is mandatory.
+| wait     | Suspend execution for a number of seconds
 
 **Read next:** [Syntax Overview](overview.md)

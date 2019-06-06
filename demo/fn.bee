@@ -3,14 +3,15 @@
 -----------------------------------+
 #name :=  "fn";
 
-** simple rule
-rule add(a, b ∈ Z) ∈ Z => (a + b);
-** call rule
+** lambda expression
+make add := (a, b ∈ Z) ∈ Z => (a + b);
+
+** use lambda expression with print
 print add(1, 2);    -- print 3
 print add(-10, 10); -- print 0
 
-** recursive rule
-rule  fac(n ∈ N) ∈ N => (1 ? n = 0, fac(n-1));
-print fac(3) ; -- expect 6
+** recursive lambda expression
+rule fac(n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
+pass if fac(3) = 6;
  
 over.

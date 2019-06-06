@@ -188,7 +188,6 @@ make array_name ∈ Array_Type;
 * Array index start from 0 to c-1 where c is capacity;
 * Array capacity is immutable after array initialization;
 
-
 **example**
 
 ```
@@ -632,8 +631,7 @@ fail if test.b ≠ 1; -- verify attribute b
 
 ## Varargs
 
-One rule or rule can receive variable number of arguments.   
-We declare an array using prefix "*" for variable parameter name.
+Is a last parameter in a parameter list, declared with prefix "*" that can receive numerous arguments.
 
 ```
 --parameter *bar is an array

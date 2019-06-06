@@ -13,34 +13,36 @@ return;
 * Type can be any known type or sub-type;
 * Name is "first class" value of type: _Type_;
 
-## Anonymous Rule
+## Anonymous Expression
 
-Anonymous rule is an expression declaration that can be used as parameter or as a result for another rule:
+Anonymous expression is like lambda expression except it does not have a name assigned to it:
 
-**anonymous rule**
+**anonymous expression**
 ```
-  (param ∈ type_name, ,...) => (expression)
+(param ∈ type_name, ,...) => (expression)
 ```
 
 This can be used to create an argument for parameters of type "Rule" declared with "@" like:
 
 **signature**
 ```
-rule foo( id @ (type,type, ...) ∈ type);
-...
+rule foo( exp @ (type,type, ...) ∈ type);
+   ... 
+   -- you can use the  exp
+   make r := exp(param,...);
+   print r;
+return;
 ```
 
 Call rule "foo" with anonymous rule as argument by name:
 
 ```
-apply foo(id: (param ,param ...) => (expression));
+apply foo((param ,param ...) => (expression));
 ```
-
 
 ## Bubble sort
 
 In this example, _bubble_ is a generic rule:
-
 
 ```
 -- this sort is generic 
@@ -52,7 +54,7 @@ rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
   while swap do
     alter i := 0;
     alter swap := False;
-    while (i < n) do
+    while (i < n-1) do
        -- this pair is out of order ?
       when gt(array[i], array[i+1]) do
          -- swap pair and set swap flag = true
@@ -78,8 +80,8 @@ return;
 -- define object type to be sorted
 type Person := { name ∈ S, age ∈ N } <: Object;
 
--- define order as expression rule for type Person
-rule order( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
+-- define order as lambda expression for type Person
+make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
 
 -- define sort rule for Person, as a clone from _bubble_
 clone sort := bubble{Person}(gt:order);
