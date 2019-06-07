@@ -21,9 +21,10 @@ I have used a simple design notation based on examples and notes:
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
 * [Lambda expressions](#lambda-expressions)
-* [Static rules](#static-rules)
-* [Dynamic rules](#dynamic-rules)
-* [Generic rules](#generic-rules)
+* [Rule as function](#Rule-as-function)
+* [Rule as routine](#Rule-as-routine)
+* [Rule as method](#Rule-as-method)
+* [Rule as generic](#Rule-as-generic)
 * [External rules](#external-rules)
 
 ## Expressions
@@ -674,7 +675,7 @@ over.
 
 ## Lambda expressions
 
-A lambda expressions is like a mathematical function:
+A lambda expressions is a named expression with specified result type:
 
 **syntax**
 
@@ -707,84 +708,68 @@ print  z;  -- print 5
 
 **properties:**
 
-Functions...
+Lambda Expressions...
 * are similar to mathematical functions;
 * are binding external states in context;
+* can be used in other expressions;
+* can be used as parameter in rules;
+* can be created from a rule as a result;
+* can be assigned to a variable of type: Lambda
+
+**restrictions:
 * can have one single result;
 * can not be interrupted from execution;
-* can be used in expressions;
-* can be be created from rules;
-* can be used as parameter in rules;
+* can not call any rule that is downgraded;
 * do not have internal states;
 * do not have side-effects;
 * do not depend on external states;
 
 **result:**
-* result is declared with ∈ not @;
-* result can be primitive type;
-* result can be native type;
+* result can be primitive or native type but not a collection;
+* result can be temporary and can be used in other expressions;
 
-## Static rules
 
-An static rule is a named block of code that can resolve one specific task. 
+## Rules
 
-**pattern**
-```
--- define a static rule
-rule name(param ∈ type,...):
-    -- executable statements
-   exit if (condition);
-   ...
-return;
-
--- call a static rule
-apply name(argument); 
-```
+Rules are named blocks of code, representing a program fragment that can be executed multiple times on demand.
 
 **Notes:**
-A static rule ...
-* is finalized with: _return_ keyword;
-* can be executed using: _apply_ keyword;
-* can be terminated early using: _exit_ keyword;
-* can raise and error using: _fail_ keyword;
+* A rule is declared with keyword _rule_;
+* A rule can have resolve a task;
+* A rule can have input and input/output parameters;
+* A rule can have optional one or multiple results;
+* A rule can have local variables;
+* A rule can have public attributes;
+
+**Usability:**
+A rule can be used for different purpose depending on a particular syntax pattern:
+
+* Rule as function
+* Rule as routine
+* Rule as method
+* Rule as generic
 
 **Restrictions:**
-* A static rule can not be called from make statement;
-* A static rule can not be called from an expression;
-* A static rule can not be nested inside another rule;
-* A static rule can not _play_ an aspect;
-
-**Comments:**
-* Since rule result is a reference, this reference must be allocated by _make_ before we can call the rule,
-* Since a rule can have side-effects or can return multiple results is not safe to be used in expressions,
-* We believe that flat is better than nested. So rules can not be nested in context of another rule,
-* Since rules can be executed in parallel, you could use this trick to call an aspect in parallel and this is not safe.
+* Rules are static: can not be created at runtime;
+* Rules are primary: you can not create nested rules;
+* Rules are not references: you can not pass around a rule;
+* Rules can be call from other rule but not from lambda expressions;
 
 ### Parameters
 
 Parameters are special variables defined in rule signature.
 
-**Notes:**   
-* A rule can have input/output parameters;
-* Parameters with initial value are optional;
-* Optional parameters must be enumerated last in parameter list;
-* Optional parameters are initialized with pair-up operator ":";
-* Parameters defined with "∈" transfer value "by copy";
-* Parameters defined with "@" transfer value "by share";
-
-Static rules can have side-effects:
-
 **example**
 ```
--- a rule with side-effects and no parameter
-rule foo(name ∈ S):
-  print "hello:" & name & ". I am Foo. Nice to meet you!";
+-- a rule with one parameter
+rule foo(name ∈ S, message @ S):
+  alter message:= "hello:" & name & ". I am Foo. Nice to meet you!";
 return;
 
 -- using apply + rule name will execute the rule  
-apply foo("Bee");
-
-over.
+make str ∈ S;
+apply foo("Bee", str);
+print str; 
 ```
 
 **Expected output:**
@@ -793,38 +778,19 @@ over.
 hello: Bee. I am Foo. Nice to meet you!
 ```
 
-### Rule result
+**Notes:**   
+* Parameters are enumerated in a tuple;
+* A rule can have input/output parameters;
+* Input parameters can be optional, output parameters are mandatory;
+* Optional parameters are initialized with pair-up operator ":";
+* Input parameters are defined with "∈" and transfer value: _by copy_;
+* Oputput parameters are defined with "@" and transfer value: _by share_;
 
-A rule can have one or multiple results:
+### Results are references
 
-**pattern**
-```
-rule name(param ∈ type,...) => (result @ type,...):
-   make local_variable;
-   ...   
-   alter result := expression;
-   ...
-return;
-
-make out ∈ type;
-
--- call rule using apply and capture results
-apply name(argument,...) +> (out, ...);
-```
-
-**Properties:**
-* A rule have a local context where we define local variables;
-* A rule can be overwritten using different parameters;
-* A rule can have one or multiple results;
-
-**Note:**
-* Results are references,
-* Results are enclosed in parenthesis,
-* Results are declared with sumbol "@",
-* Results are captured into tuple using collector: +>
+A rule can have multiple results. For capturing multiple results we use capture operator: "+"
 
 **Example:** 
-
 ```
 -- rule with two results "s" and "d"
 rule com(x,y ∈ Z) => (s, d @ Z):
@@ -832,24 +798,80 @@ rule com(x,y ∈ Z) => (s, d @ Z):
   alter d := x - y;
 return;
 
--- capture result into 
-make  b, c ∈ Z;
-apply com(3,2) +> (b,c);
+-- capture result into new variables b, c
+make  b, c := com(3,2);
+
 print b;  --> 5 
 print c;  --> 1 
 ```
 
-## Dynamic rules
+**Notes:**   
+* Multiple results are defined with names exactly like parameters;
+* You can captured results into multiple variables using _make_ or _alter_;
 
-A rule that have attributes is called _dynamic rule_. 
+## Rule as function
+
+When a rule has this role it can be called: _function_;
+
+**pattern**
+```
+-- define a functional rule
+rule name(param ∈ type,...) => (result @ type,...):
+    -- executable statements
+   exit if (condition);
+   
+   -- computing the result
+   alter result := expression;
+   ...
+return;
+
+-- direct call and print the results
+print rule_name(argument,...);
+
+-- capture rule result and make new variable
+make  r,q... := rule_name(argument,...);
+
+-- capture result using explicit variables:
+make  n,m... ∈ type;
+alter n,m... := rule_name(argument,...)
+
+-- call using _apply_ and capture "+>"
+apply rule_name(argument,...) +> (n,m...)
+
+```
+
+**Restrictions:**
+A function is pure if:
+
+* do not have multiple results but one;
+* do not have public attributes;
+* do not perform unsafe data conversions;
+* do not raise any unhandled errors;
+* do not have side-effects;
+* do not call a downgraded function;
+
+**Notes:**
+* If a rule break one of these restrictions it is _downgraded_ by the compiler;
+* Downgraded rules can be used in assignments and print but not in expressions;
+* A downgraded rule can be called also _dirty rule_ that is not _pure_;
+
+**See also:**
+* [bs.bee](../demo/bs.bee);   --> Bubble Sort
+
+## Rule as routine
+
+A rule that have no results can is called _routine_: 
+
+**properties:**
+
+* A routine can have attributes;
+* A routine can have side-effects;
+* A routine can modify module variables;
+* A routine can call any other routine;
 
 **attributes**
 
-Attributes of a rule are state variables. That are variables starting with dot prefix.
-
-* Dynamic rules look exactly like static rules, except they have attributes;
-* Rule attributes are public and can be accessed using dot scope qualifier;
-* Rule attributes are static: initialized one single time;
+Attributes of a routine are local variables starting with dot prefix.
 
 **pattern**
 ```
@@ -866,39 +888,68 @@ alter rule_name.z = 3;
 
 -- read rule states
 print (rule_name.x, rule_name.y, rule_name.z);  -- 1 2 3
+
+-- execute a rule that has no results:
+apply rule_name(param:argument, ...);
 ```
 
 **Notes:**
-* Like static rule, a dynamic rule can be call using _apply_;
-* Attributes of dynamic rules can be used in expressions;
-* Dynamic rules can not be used in expressions;
-* Result from a dynamic rule can be captured using collector: "+>";
+* Rule attributes are public and can be accessed using scope qualifier;
+* Rule attributes represent _states_ and can be initialized one single time;
 
-**See also:**
-* [bs.bee](../demo/bs.bee);   --Bubble Sort
+## Rule as method
 
-## Generic rules
+A rule that is binded to an object type is called: _method_ 
 
-A generic rule is a rule prototype that can be cloned.
+**properties:**
+
+* A method can have results;
+* A method can have side-effects;
+* A method can create an object;
+
+**pattern**
+```
+type ObjType: {attribute:type, ...} <: Object;
+
+rule method_name(me: @ObjType, param ∈ type,...) => (result @ type):
+   ** define x,y,z states
+   result := expression;
+   ...
+return;
+
+-- create an object instance
+make obj := {attribute:value, ...} ∈ ObjectYpe;
+
+-- execute a method and ignore the result
+apply obj.method_name(argument, ...) +> _ ;
+```
+
+See also: [Composite:Object](composite#object)
+
+## Rule as generic
+
+A _generic rule_ is a _prototype_ that can be cloned to create _dynamic rules_.
 
 **pattern**
 ```
 -- define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
   -- compute the result
-  alter result := expression(parameters);
+  alter result := expression(arguments);
 return;
 
 -- making a rule clone from prototype
-clone new_name:= prototype_name{arguments};
+clone new_rule:= prototype_name{arguments};
+
+-- using the clone as a normal rule
+make r := new_rule(arguments)
 ```
 
 **Notes:**
-* A rule prototype can not be used until is cloned;
-* A rule prototype can be dynamic or static;
-* A rule clone is binding external states into local context;
-* A rule clone is sharing state attributes with the prototype;
-* A rule clone can be created in local context of another rule;
+* A rule clone have same _parameters_ same _results_ and same functionality as the prototype;
+* A rule clone has _own attributes_: defined in curly brackets {attributes}; 
+* A rule clone has _shared attributes_: defined with dot operator in the prototype;
+* A rule clone can be created in local context of another rule or in module context;
 
 **example**
 ```
@@ -911,24 +962,22 @@ return;
 clone inc := shift{s: +1}; --increment 
 clone dec := shift{s: -1}; --decrement 
 
--- verify rule properties
+-- verify clone properties
 print inc.s; -->  1
 print dec.s; --> -1
 
--- use first clone "inc"
+-- use first clone: inc()
 print inc(1); --> 2
 print inc(4); --> 5
 
--- use second clone "dec"
+-- use second clone: dec()
 print dec(1); -->  0
 print dec(2); -->  1
-print dec(0); --> -1
 ```
-
 
 ## External rules
 
-In Bee you can use external rules from Assembly or C.
+In Bee you can use external rules from C language.
 Usually these rules are implemented in a library component.
 
 **Example:**
@@ -943,7 +992,6 @@ load $bee.lib.cpp.myLib; --load cpp library
 rule fib(n ∈ Z) => (x @ Z));
   alter x := myLib.fib(n);
 return;
-
 ```
 
 This is the driver file.
@@ -953,7 +1001,7 @@ This is the driver file.
 -- load library
 load myLib := $bee.lib.myLib;
 
---use external rule
+--use external rules
 print myLib.fib(5);
 ```
 
@@ -965,6 +1013,6 @@ To understand more about interacting with other languages check this article abo
 * [rp.bee](../demo/rp.bee): lambda as parameter
 * [pm.bee](../demo/pm.bee): pattern matching rules 
 * [fi.bee](../demo/fi.bee): recursive rules
-* [ho.bee](../demo/ho.bee); higher order rules
+* [ho.bee](../demo/ho.bee): higher order rules
 
 **Read Next:** [Control Flow](control.md)

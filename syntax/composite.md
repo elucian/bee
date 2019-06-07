@@ -105,14 +105,14 @@ return;
 make n, m ∈ Z;
 
 -- collecting the results
-apply test(1,2) +> (n, m);
+alter n, m := test(1,2);
 
 print n; -- 2
 print m; -- 3
 
 -- ignore one result using "_"
-apply test(3,0) +> (n, _);
-print n; --4
+alter  n, _ := test(3,0);
+print  n; --4
 ```
 
 ## List
@@ -613,7 +613,7 @@ return;
 make test := foo(1,1);
 
 -- run bar() method using object test as dot qualifier
-apply test.bar();
+apply test.bar;
 fail if test.a ≠ 1; -- verify attribute a
 fail if test.b ≠ 1; -- verify attribute b
 ```

@@ -146,14 +146,14 @@ There is one single _driver file_ for one application. This file has #role = "dr
 A _driver_ can read configuration file, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_. Normally a driver file is ending with keyword: _over_ followed by a dot.
 
 ### Aspects
-An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can _play_ multiple aspects with parameters. Aspect result can be captured after execution using operator "+>". Not all _aspects_ have a results though. 
+An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can load the aspect and use its public members. Also an aspect can be executed multiple times. 
 
 **execution**
-Aspects can not be executed in parallel but only sequential. We consider that various _aspects_ can depend on each other to be executed in order like a process. If one aspect fail the application should analyze the #error and continue or terminate the execution. To execute one aspect you use keyword: _play_ or _alter_;
+Aspects should be executed in a trial block. If one aspect fail the application should analyze the #error and resume or abort the trial block. To execute one aspect you use keyword: _play_. Aspect output can be captured using operator "+>". 
 
 **notes:**
-* One aspect can accept parameters;
-* One aspect can produce results; 
+* One aspect can accept input data;
+* One aspect can produce output data; 
 * Usually aspect have rogue statements;
 * Usually aspect members are private;
 
@@ -188,9 +188,8 @@ Each statement start with one imperative keyword:
 * alter    -- change/modify variable value or assign new value
 * read     -- accept input from console into a variable
 * write    -- output to console result of an expressions
-* play     -- play one aspect of a program synchronously
-* apply    -- execute one rule in synchronous mode
-* start    -- execute one rule in asynchronous mode
+* play     -- execute one aspect that has no output
+* apply    -- execute one rule that has no results
 
 **notes:**
 
@@ -467,7 +466,7 @@ A large program can have multiple _aspects_. The driver control the execution of
 * An aspect can receive parameters and can produce results;
 * An aspect is always executed synchronously, never in parallel;
 * An aspect can not be called from an expression;
-* An aspect can be terminated early using:"exit", "halt" or "fail";
+* An aspect can be terminated early using:"exit", "halt", "pass" or "fail";
 
 **pattern**
 
@@ -478,7 +477,7 @@ load $pro.src.file_name.bee;
 -- play when aspect do not have any result:
 play aspect_name(parameter_list);
 
--- result can be captured using "+>" or any other modifier:
+-- result can be captured using "+>":
 play aspect_name(parameter_list) +> (result,...);
 ```
 
@@ -492,6 +491,7 @@ play aspect_name(parameter_list) +> (result,...);
 
 One aspect can have input/output parameters:
 
+**Aspect example:**
 ```
 #name := "mod";
 #role := "aspect";
@@ -508,6 +508,7 @@ done;
 over.
 ```
 
+**Using aspect:**
 ```
 #role := "driver";
 
@@ -536,6 +537,5 @@ output v,z @ N;       -- output parameters
 * one aspect can have single input and single output statements;
 * output parameters use "@" at all times and can not be native variables;
 * input parameters can use "∈" for value parameter and "@" for reference parameter;
-
 
 **Read next:** [Syntax Overview](overview.md)
