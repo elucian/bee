@@ -1,18 +1,22 @@
 +----------------------------------
-    Demonstrate while statement
+ Demo for two repetitive statements
 -----------------------------------+
-#name :=  "cy";
+#role := "driver";
+#name := "cy";
 
-**  declare array of 10 Words
+** declare array of 10 integers
 make a ∈ [Z](10);
-**  use while 
-make i ∈ Z;
-while (i < 10) do
+
+**  use cycle repetitive statement
+make i := 0 ∈ Z;
+cycle
   alter a[i] := i;
+  exit if (i = 9);
   alter i += 1;
 repeat;
-**  while shortcut
-make x := 10
+
+**  use while repetitive statement
+make x := 10;
 while (x ≥ 0) do
   when (x % 2 = 0) do
     alter x -= 1;
@@ -22,4 +26,4 @@ while (x ≥ 0) do
   alter x -= 1;
 repeat;
 
-over.
+over. ** end of driver
