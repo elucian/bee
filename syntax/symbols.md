@@ -24,8 +24,6 @@ My keyboard settings is saved in file G110.xml
 -----------------------
 ```
 
-
-
 **groups:**
  
 ```
@@ -106,7 +104,9 @@ We recommend a fixed size font and UTF-8 encoding for Bee source code.
 ## Console
 Windows console can support Unicode fonts. You must add a new entry in registry:
 ```
-1. run:> regedit
+Click on Windows start button:
+
+1. search:> regedit.exe and run it
 2. locate: HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\
            Windows NT\CurrentVersion\Console\TrueTypeFont
 3. add text entry:000 and modify to: "DejaVu Sans Mono"

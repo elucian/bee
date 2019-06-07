@@ -67,16 +67,16 @@ symbol| description
  \+-  | Start for multiple line comments
  \-+  | End for multiple line comments  
  \##  | Start for a title comment    
- \**  | Start for a subtitle comment
- \--  | Start for single line comment
+ \### | Start for a sub-title comment     
+ \**  | Start for line comment
+ \--  | Start for end of line comment
  ..   | Define range [n..m] \| Define slice from Array
  ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
- -\>  | rule pipeline \| Explicit conversion 
  \<:  | Define subset from set \| Specify super-type for a new type
  :=   | Assign by value \| Reset reference
  :+   | Assign by copy  \| Keep reference
- \+\> | Collector: capture result. Associated with: _play_ and _apply_ 
+ \+\> | Collector: capture result. Associated with: _play_ and _apply_
  
 ## Arithmetic modifiers
 

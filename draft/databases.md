@@ -233,14 +233,18 @@ print table_name.pending.count
 Sometimes we need to bypass the ORM and execute native SQL:
 
 ```
--- apply a query to database
+-- apply a modification query to database
 apply db.query(query_template ? array)
 apply db.query(query_template ? record)
 
--- apply a query that return; a result
-apply db.query(query_string) +> record
-apply db.query(query_string) +> array_of_records
-
+-- apply a query that return; a buffer
+type  TRecord := {
+      field_name ∈ Type,      
+      ...
+      };
+-- execute query string and return a list of records
+make  buffer ∈ (TRecord); 
+apply db.query(query_string) +> buffer; 
 ```
 
 ## Stored procedure
@@ -248,17 +252,20 @@ apply db.query(query_string) +> array_of_records
 Some databases have support for stored procedures:
 
 ```
-** prepare a record object using a table structure
-make record ∈ table_name;
-
-** stored procedure with input arguments and result
-apply db.execute procedure_name(arguments) +> record; 
+** prepare a record object 
+type  TRecord := {
+      field_name ∈ Type,      
+      ...
+      };
+** execute stored procedure
+make  buffer ∈ (TRecord); 
+apply db.execute procedure_name(arguments) +> buffer; 
 ```
 
 ## Introspection
 
-For debugging SQL Bee enable introspection. 
+For debugging the SQL, Bee enable introspection. 
 
-* Before execution database related statements are converted into SQL strings; 
+* Before execution, database related statements are converted into SQL strings; 
 * We can visualize these strings by using: $trace = On to log query statements; 
 * We can use #query system variable to print out last SQL statement. 

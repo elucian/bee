@@ -23,10 +23,10 @@ clone count := generator{0,9};
 clone test  := generator{4,12};
 
 -- test cloned rule: count()
-trial:
+trial
   make set ∈ {Z};
   -- this loop is infinite
-  cycle:
+  cycle
     alter set += count()
     write set.index-- progressive grow
     write ','

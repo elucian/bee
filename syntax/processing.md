@@ -769,7 +769,10 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(Number: number, String: pattern) => (result @ S);
+rule format(Number: number, String: pattern) => (result @ S):
+  ...
+return;
+  
 ```
 
 Where pattern cab gave two forms: 

@@ -50,13 +50,14 @@ Next statements represents actions. Also called Imperative statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
+| play     | Launch one aspect in execution
 | apply    | Apply one rule that have no result
 | read     | Accept user input from console 
 | write    | Add something to console buffer but no new line 
 | print    | Output expression result to console 
 | alter    | Mutate variable value using an expression
 | scrap    | Remove one element from a collection
-| play     | Launch one aspect in execution
+
 
 ## Control statements
 

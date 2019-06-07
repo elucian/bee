@@ -33,7 +33,7 @@ Define a _scope qualifier_ suppression block:
 ```
 with (qualifier) do
   -- instead of qualifier.member()
-  apply member();
+  apply member;
   ...
 done;
 ```
@@ -43,7 +43,7 @@ Using alias for scope qualifier:
 ```
 with (scope: long.qualifier) do
   -- instead of long_qualifier.member()
-  apply scope.member();
+  apply scope.member;
   ...
 done;
 ```

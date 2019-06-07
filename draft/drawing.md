@@ -51,7 +51,8 @@ v = visible
 Keyword  | Description
 ---------|-----------------------------------
 draw     | put something on a layer
+wipe     | remove drown shapes
 show     | show canvas
 hide     | hide canvas
-erase    | remove a drawing shape
-scrub    | remove all drawings from a layer
+
+

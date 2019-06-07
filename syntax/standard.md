@@ -7,7 +7,7 @@ Standard library contains:
 * [Mathematics](#mathematics)
 * [System library](#system-library)
 
-## Built-in rules
+## Data rules
  
 **Introspection**
 
@@ -15,6 +15,11 @@ Standard library contains:
 |----------|------------------------------------------ 
 | type     | type name
 | size     | type size 
+
+## Composite rules
+
+| rule     | Purpose
+|----------|------------------------------------------ 
 | length   | type length 
 | capacity | type capacity
 | min      | type minim limit
@@ -43,6 +48,8 @@ Standard library contains:
 | random   | Create random numbers
  
 ## Mathematics
+
+Library math will implement rules:
 
 | rule     | Purpose
 |----------|------------------------------------------ 
