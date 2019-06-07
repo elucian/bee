@@ -123,19 +123,19 @@ Rules without rules in syste.io
 | change  | Change current working folder
 
 ## Exception
-Bee has pre-define exceptions in range [0..200]:
+Bee has pre-define exception codes in range (1..200):
 
 ```** global exception type
 type Error := {code ∈ Z, message ∈ S} <: Object;
 ```
 
 ```
+** exception objects
 make $zero_div      :: {100,"division by zero"}        ∈ Error;
 make $null_ref      :: {101,"null reference usage"}    ∈ Error;
 make $val_overflow  :: {102,"value overflow"}          ∈ Error;
-make $out_of_range  :: {103,"value out of range"}      ∈ Error;
-make $over_capacity :: {104,"value over capacity"}     ∈ Error;
-make $out_of_domain :: {105,"subscript out of domain"} ∈ Error;
+make $out_of_range  :: {103,"index out of range"}      ∈ Error;
+make $out_of_range  :: {104,"data type mismatch"}      ∈ Error;
 ```
 
 **Read next:** [Project Structure](structure.md)
