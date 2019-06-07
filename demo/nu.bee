@@ -3,45 +3,45 @@
 ----------------------------------------------+
 #name :=  "nu";
 
-make s := 10 ∈ Z; -- define integer reference
-make d, e ∈ Z;    -- reference to natural number
+make s := 10 ∈ Z; **  define integer reference
+make d, e ∈ Z;    **  reference to natural number
 
--- assign "by share" 
+**  assign "by share" 
 alter d := s; 
 alter d += 1; 
-print s; -- s = 11  (modified)
-print d; -- d = 11  (modified) 
+print s; **  s = 11  (modified)
+print d; **  d = 11  (modified) 
 
--- verify identity
-print d ≡ s;  -- 1 same reference
-print d = s;  -- 1 same value
+**  verify identity
+print d ≡ s;  **  1 same reference
+print d = s;  **  1 same value
 
--- assign "by copy"
-alter e :+ d; -- copy value of d
+**  assign "by copy"
+alter e :+ d; **  copy value of d
 alter e += 1;
-print e; -- 12 (modified)
-print d; -- 11 (unmodified)
+print e; **  12 (modified)
+print d; **  11 (unmodified)
 
--- verify identity
-print e ≡ d; -- 0 different reference
-print e = d; -- 1 same value
+**  verify identity
+print e ≡ d; **  0 different reference
+print e = d; **  1 same value
 
--- boxing/ unboxing
-make i := 10 ∈ i32; -- native type
-make c := 0  ∈ Z;  -- reference
+**  boxing/ unboxing
+make i := 10 ∈ i32; **  native type
+make c := 0  ∈ Z;  **  reference
 trial:
-  alter c := i; -- auto boxing, makes c = 10 
-  alter i := c; -- not possible (fail)
+  alter c := i; **  auto boxing, makes c = 10 
+  alter i := c; **  not possible (fail)
 other
-  -- implicit unboxing error
+  **  implicit unboxing error
   print "unboxing error:".#error.message;
 done;
 
--- explicit unboxing
+**  explicit unboxing
 alter i := d as i32;
 
--- verify identity
-print i ≡ d; -- 0 different locations
-print i = c; -- 1 same value
+**  verify identity
+print i ≡ d; **  0 different locations
+print i = c; **  1 same value
 
 over.

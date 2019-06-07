@@ -3,34 +3,34 @@
 -----------------------------------+
 #name :=  "pc";
 
-make  c  := 100 ∈ N   ; -- channel capacity
-make  ch := () ∈ (N)  ; -- define empty channel
+make  c  := 100 ∈ N   ; **  channel capacity
+make  ch := () ∈ (N)  ; **  define empty channel
 
--- ch is the communication channel
+**  ch is the communication channel
 rule producer(ch @ (N)):
   while length(ch) < c do
-    alter ch += random(10); -- Add
+    alter ch += random(10); **  Add
     yield consumer;
   repeat;
 return;
 
---  ch is the communication channel
+**   ch is the communication channel
 rule consumer(ch @ (N)):
   make item ∈ N;
   while (len(ch) > 0) do
-    alter ch -= ch.head;   -- FIFO
+    alter ch -= ch.head;   **  FIFO
     wait  30;
     yield producer;
   repeat;
 return;
 
--- main thread is the controller
+**  main thread is the controller
 make i := 0;
 make x := 0;
 while (x < 100) do
-  -- produce on 1 thread
+  **  produce on 1 thread
   start producer(q);
-  -- consume on 7 threads  
+  **  consume on 7 threads  
   while (i < 7) do
      start consumer(ch);
      alter i += 1;

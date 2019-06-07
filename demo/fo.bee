@@ -3,18 +3,18 @@
 --------------------------------+
 #name :=  "fo";
 
--- initialize the system library 
+**  initialize the system library 
 load io   := $bee.system.io:(*);
 load con  := $bee.system.console:(*);
 
 make file := io.open('foo.txt','+w');
--- write into the file using put
+**  write into the file using put
 apply file.print("Hello World!");
 
--- read the entire content from file
+**  read the entire content from file
 make  content := file.read() ∈ W;
 apply file.close;
--- display the entire content to console
+**  display the entire content to console
 write content;
 print;
  

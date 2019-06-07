@@ -3,46 +3,46 @@
 -----------------------------------+
 #name :=  "ti";
 
--- constant type inference
-make a :: 10;     -- Z (integer on 64bit)
-make x :: 0.5;    -- R (double precision)
-make y :: 1/2;    -- Q (rational number)
-make f :: False;  -- L (logic)
-make t :: True;   -- L (logic)
+**  constant type inference
+make a :: 10;     **  Z (integer on 64bit)
+make x :: 0.5;    **  R (double precision)
+make y :: 1/2;    **  Q (rational number)
+make f :: False;  **  L (logic)
+make t :: True;   **  L (logic)
 
--- variable type inference
-make v := (1,2,3)    ; -- List of Z
-make s := 'string'   ; -- String capacity 256
-make c := 'c'        ; -- Single character
+**  variable type inference
+make v := (1,2,3)    ; **  List of Z
+make s := 'string'   ; **  String capacity 256
+make c := 'c'        ; **  Single character
 
--- explicit conversion + inference
-make t := '23:45'      as T24; -- Time
-make t := '1:45am'     as T12; -- Time
-make d := '10/10/2010' as DMY; -- Date
+**  explicit conversion + inference
+make t := '23:45'      as T24; **  Time
+make t := '1:45am'     as T12; **  Time
+make d := '10/10/2010' as DMY; **  Date
 
--- optional parameters inference
+**  optional parameters inference
 rule add(x,y:0) => (z @ Z):
   alter z := x + y;
 return;
 
-print add(1,1); -- will print 2
+print add(1,1); **  will print 2
 
--- argument x is mandatory, y is optional
+**  argument x is mandatory, y is optional
 rule plus(x ∈ Z, y:1 ∈ Z) => (z @ Z):
   alter z := (x + y);
 return;
 
-print plus(0);   -- will print 1
-print plus(1,2); -- will print 3
+print plus(0);   **  will print 1
+print plus(1,2); **  will print 3
 
--- input/output arguments
+**  input/output arguments
 rule inc(x, y @ Z):
   alter x += 1;
   alter y += 1;
 return;
 
-make i,k ∈ Z;   -- references
-apply inc(i,k); -- i = 1 and k = 1
-print (i,k);    -- expect: 1 1
+make i,k ∈ Z;   **  references
+apply inc(i,k); **  i = 1 and k = 1
+print (i,k);    **  expect: 1 1
 
 over.

@@ -70,7 +70,7 @@ Interaction with operating system require load from library.
 \bee 
   |
   |-- system
-  |     | -- io.bee
+  |     | ** io.bee
   |
   |-- db
   ...
@@ -125,8 +125,7 @@ Rules without rules in syste.io
 ## Exception
 Bee has pre-define exceptions in range [0..200]:
 
-```
--- global exception type
+```** global exception type
 type Error := {code ∈ Z, message ∈ S} <: Object;
 ```
 

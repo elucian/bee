@@ -66,11 +66,9 @@ symbol| description
 ------|------------------------------------------------------------------
  \+-  | Start for multiple line comments
  \-+  | End for multiple line comments  
- \##  | Start for a title comment    
- \### | Start for a sub-title comment     
- \**  | Start for line comment
- \--  | Start for end of line comment
- ..   | Define range [n..m] \| Define slice from Array
+ \##  | Title/sub-title comment line    
+ \**  | Line comment \| end of line comment
+ ..   | Define domain (n..m) \| Array slice [n..m]
  ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
  \<:  | Define subset from set \| Specify super-type for a new type
@@ -114,7 +112,7 @@ symbol | meaning
 Operator "≢" is not used. Instead you can use expression:
 
 ```
-  ¬(x ≡ y); --divergence of two objects
+  ¬(x ≡ y); ** divergence of two objects
 ```
 
 ## Collection operators

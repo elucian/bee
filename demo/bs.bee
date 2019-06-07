@@ -3,7 +3,7 @@
 -----------------------+
 #name :=  "bs";
 
--- bubble sort
+**  bubble sort
 rule sort(this @ [Z]):
   make n := length(this)-1;
   make i := 0 ∈ N;
@@ -13,9 +13,9 @@ rule sort(this @ [Z]):
     alter i := 0;
     alter swap := False;
     while (i ≤ n) do
-      -- this pair is out of order ?
+      **  this pair is out of order ?
       when (this[i] < this[i+1]) do
-        -- swap pair and set swap flag = true
+        **  swap pair and set swap flag = true
         alter temp     := this[i];
         alter this[i]  := this[i+1];
         alter this[i+1]:= temp;
@@ -25,13 +25,13 @@ rule sort(this @ [Z]):
     repeat;
   repeat;
 return;
--- define test & result fixture
+**  define test & result fixture
 make test   := [1,4,1,5,9,2,6,5,3,5];
 make result := [1,1,2,3,4,5,5,5,6,9];
--- test sort rule
+**  test sort rule
 apply sort(test);
 print test;
--- check result
+**  check result
 fail if (test ≠ result);
 
 over.

@@ -24,9 +24,9 @@ Earth coordinates can be represented using default Q numbers on 32 bit.
 * Φ = Latitude
 
 ```
-type Δ := (0..+100000000) <: Q; -- twice equatorial
-type Λ := (-180..+180)    <: Q; -- longitude angle (degree)
-type Φ := (-90..+90)      <: Q; -- latitude angle (degree)
+type Δ := (0..+100000000) <: Q; ** twice equatorial
+type Λ := (-180..+180)    <: Q; ** longitude angle (degree)
+type Φ := (-90..+90)      <: Q; ** latitude angle (degree)
 ```
 
 Other map data types are starting with "m" prefix and one uppercase letter.
@@ -38,22 +38,22 @@ Other map data types are starting with "m" prefix and one uppercase letter.
 * mC  = Map Canvas
 
 ```
-  -- map coordinates: λ = Latitude, φ = Longitude 
+  ** map coordinates: λ = Latitude, φ = Longitude 
   type mC := {λ ∈ Λ, φ ∈ Φ} <: Object;
   
-  -- network node: λ = Latitude, φ = Longitude, ε = Elevation
+  ** network node: λ = Latitude, φ = Longitude, ε = Elevation
   type mN := {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ} <: Object;;             
  
-  -- network link
+  ** network link
   type mL := {start_node ∈ mN, end_node ∈ mN, shape ∈ [mC]} <: Object;;
   
-  -- point of interest
+  ** point of interest
   type mP := {id ∈ N, point ∈ mC, label ∈ S} <: Object;;
 
-  -- map area 
+  ** map area 
   type mA := {origin ∈ mN, shape ∈ [mC], label ∈ S} <: Object;;
   
-  -- map object
+  ** map object
   type mO := {origin ∈ mC, scale ∈ Q, points ∈ [mP], nodes ∈ [mN], links ∈ [mL]} <: Object;;
 ```
 

@@ -104,12 +104,12 @@ System variables are defined usually at the beginning of the module.
 
 **predefined**
 ```
-#error  -- contains last error message
-#stack  -- contains debug information about current call stack
-#trace  -- contains reporting information about executed statements
-#level  -- contains how deep is the current call stack
-#count  -- contains last query count: updated/inserted/deleted records
-#query  -- contains last native query statement
+#error  ** contains last error message
+#stack  ** contains debug information about current call stack
+#trace  ** contains reporting information about executed statements
+#level  ** contains how deep is the current call stack
+#count  ** contains last query count: updated/inserted/deleted records
+#query  ** contains last native query statement
 ```
 
 **notes:** 
@@ -170,14 +170,14 @@ Components are reusable modules organized in libraries. A library in a sub-folde
 
 Bee is using 7 kind of declarations:
 
-* load     -- import : a library in global scope
-* alias    -- declare: alternative name for library or aspect
-* define   -- declare: constant
-* input    -- declare: aspect parameters
-* output   -- declare: aspect results
-* type     -- declare: data types
-* make     -- declare: variable
-* rule     -- declare: named code block
+* load     ** import : a library in global scope
+* alias    ** declare: alternative name for library or aspect
+* define   ** declare: constant
+* input    ** declare: aspect parameters
+* output   ** declare: aspect results
+* type     ** declare: data types
+* make     ** declare: variable
+* rule     ** declare: named code block
 
 ## Statement
 
@@ -185,11 +185,11 @@ Each statement start with one imperative keyword:
 
 **Examples:**
 
-* alter    -- change/modify variable value or assign new value
-* read     -- accept input from console into a variable
-* write    -- output to console result of an expressions
-* play     -- execute one aspect that has no output
-* apply    -- execute one rule that has no results
+* alter    ** change/modify variable value or assign new value
+* read     ** accept input from console into a variable
+* write    ** output to console result of an expressions
+* play     ** execute one aspect that has no output
+* apply    ** execute one rule that has no results
 
 **notes:**
 
@@ -203,14 +203,14 @@ Each statement start with one imperative keyword:
 ### Code block
 Statements can be contained in blocks of code.
 
-* do    -- anonymous simple context block
-* with  -- create a scope qualifier suppression block/ mapping block
-* when  -- create multi-path conditional selector
-* check -- create a multi-path value selector
-* cycle -- create unconditional repetitive block of code
-* while -- create conditional repetitive block of code
-* scan  -- create visitor block for all elements in a collection
-* trial -- create trial/error block of code to handle exceptions
+* do    ** anonymous simple context block
+* with  ** create a scope qualifier suppression block/ mapping block
+* when  ** create multi-path conditional selector
+* check ** create a multi-path value selector
+* cycle ** create unconditional repetitive block of code
+* while ** create conditional repetitive block of code
+* scan  ** create visitor block for all elements in a collection
+* trial ** create trial/error block of code to handle exceptions
 
 **notes:**
 
@@ -227,26 +227,22 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 ```
 #role := "driver";
 #name := "main"
-
--- declare input parameters
+** declare input parameters
 input *params ∈ [String];
-
--- read the number of parameters
+** read the number of parameters
 make c := params.count;
 halt if (c = 0);
-
--- print comma separated parameters
+** print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
   write params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
-
--- print the buffer to console
+** print the buffer to console
 print;
   
-over; --end of driver
+over; ** end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -293,10 +289,10 @@ alias element   := qualifier.member_name
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(*); --load cpp library
-load $runtime.asm_lib:(*); --load asm library
-load $runtime.bee_lib:(*); --load core library
-load $program.pro_lib:(*); --load project library
+load $runtime.cpp_lib:(*); ** load cpp library
+load $runtime.asm_lib:(*); ** load asm library
+load $runtime.bee_lib:(*); ** load core library
+load $program.pro_lib:(*); ** load project library
 ```
 
 ## Global context
@@ -316,12 +312,12 @@ A module can establish one or more name-spaces where you can define module membe
 make i := 1 ∈ Z; 
 trial
   ** local name-space
-  make v := i;     -- v is local reference to nonlocal: i 
-  make i := 2 ∈ Z; -- create i local 
-  print i;  -- expected: 2 (local)
-  print v;  -- expected: 1 (nonlocal)
+  make v := i;     ** v is local reference to nonlocal: i 
+  make i := 2 ∈ Z; ** create i local 
+  print i;  ** expected: 2 (local)
+  print v;  ** expected: 1 (nonlocal)
 done;
-print i;  -- expected: 1  (unmodified)
+print i;  ** expected: 1  (unmodified)
 
 over.
 ```
@@ -375,11 +371,10 @@ For each line of code you can use optional "--" follow by a short comment before
 
 For single line comments we use a pair of two symbols: 
 
-{ "--", "**", "##" } 
+{ "**", "##" } 
 
 * You can use \#\# in your program as title comments starting at beginning of a line;
 * You can use \*\* in your program as sub-title comments or line separator;
-* You can use \-\- as end of line comment or indented single line comment.
 
 **Notes:** These are chosen for following reasons:
 
@@ -417,8 +412,8 @@ You can comment out a block of code using notation: "|*......*|"
 If a program is very large you can use separators to create large sections of code.
 
 ```
+####
 ****
-----
 ```
 
 **Example:**
@@ -432,18 +427,18 @@ In next example we are using various comments into a demo program.
 ---------------------------------------------------------------+
 #role := "driver"
 
-## This is a title in program
-   ** This is a sub-title in program
+## This is a title in program  (zero indentation for titles)
+   ## This is a sub-title in program (two space indentation)
    
-over; -- end of program
+over; ** end of program: in-line comment
+
 ****************************************************************
 ** Alternative boxed comment for ancient matrix printers      **
 ****************************************************************
 ```
 
 **note:** 
-Any test after the end of program is considered a comment and
-is ignored by the compiler. After last "." nothing else is parsed.
+Any test after the end of program is considered a comment and is ignored by the compiler. After last "." nothing else is parsed.
 
 ## Execution
 
@@ -470,14 +465,11 @@ A large program can have multiple _aspects_. The driver control the execution of
 
 **pattern**
 
-```
--- declare an alias for an aspect file
+```** declare an alias for an aspect file
 load $pro.src.file_name.bee;
-
--- play when aspect do not have any result:
+** play when aspect do not have any result:
 play aspect_name(parameter_list);
-
--- result can be captured using "+>":
+** result can be captured using "+>":
 play aspect_name(parameter_list) +> (result,...);
 ```
 
@@ -496,8 +488,8 @@ One aspect can have input/output parameters:
 #name := "mod";
 #role := "aspect";
 
-input  i ∈ Z;  -- input parameter "i"
-output v @ N;  -- output parameter "v"
+input  i ∈ Z;  ** input parameter "i"
+output v @ N;  ** output parameter "v"
 
 when (i < 0) do
   alter v := -i;
@@ -511,16 +503,13 @@ over.
 **Using aspect:**
 ```
 #role := "driver";
-
--- define variable result
+** define variable result
 make result ∈ N;
-
--- define aspect "mod"
+** define aspect "mod"
 load $pro.mod.bee;
-
--- execute aspect "mod"
+** execute aspect "mod"
 play  mod(-3) +> result;
-print result;  --expect: 3
+print result;  ** expect: 3
 
 over.
 ```
@@ -528,8 +517,8 @@ over.
 Multiple input and output parameters:
 
 ```
-input a,b ∈ Z, c ∈ R; -- input parameters
-output v,z @ N;       -- output parameters
+input a,b ∈ Z, c ∈ R; ** input parameters
+output v,z @ N;       ** output parameters
 ```
 
 **note:** 

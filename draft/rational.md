@@ -22,12 +22,12 @@ It can be used with type inference to create Q numbers:
 
 **Example:**
 ```
-make x := 0    ∈ Q; --0     
-make a := 1/2  ∈ Q; --0.5   
-make b := 1/4  ∈ Q; --0.25  
-make c := 1/8  ∈ Q; --0.125 
-make d := 1/8  ∈ Q; --0.062
-make e := 1/8  ∈ Q; --0.031
+make x := 0    ∈ Q; ** 0     
+make a := 1/2  ∈ Q; ** 0.5   
+make b := 1/4  ∈ Q; ** 0.25  
+make c := 1/8  ∈ Q; ** 0.125 
+make d := 1/8  ∈ Q; ** 0.062
+make e := 1/8  ∈ Q; ** 0.031
 ```
 
 **Note:** 
@@ -126,15 +126,15 @@ In next example b = 0.33(3), delta = (b - a) = 0.083
 ** override default precision
 #precision := 0.01;
 
-make a := 0.25;  -- real
-make b := 1/3;   -- rational
+make a := 0.25;  ** real
+make b := 1/3;   ** rational
 
 ** using specified precision 0.01 < 0.083
-print (a ≈ b);  -- false
+print (a ≈ b);  ** false
 
-print (a ≈ b ± 0.1);  -- true
-print (a ≈ c ± 0.5);  -- true
-print (b ≈ c ± 0.5);  -- true
+print (a ≈ b ± 0.1);  ** true
+print (a ≈ c ± 0.5);  ** true
+print (b ≈ c ± 0.5);  ** true
 ```
 
 **Notes:** 

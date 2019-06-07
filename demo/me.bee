@@ -3,11 +3,11 @@
 ----------------------------------------+
 #name :=  "me";
 
--- enumeration with public members
+**  enumeration with public members
 type Number := {.zero, .one, .two} <: Ordinal;
 make test ∈ Number;
-alter test := zero; -- instance of Number
--- make a rule for define Number
+alter test := zero; **  instance of Number
+**  make a rule for define Number
 rule convert(x ∈ Number) => (y @ S):
   alter y := ('zero'  if x = zero,
               'one'   if x = one,
@@ -15,13 +15,13 @@ rule convert(x ∈ Number) => (y @ S):
               'none');
 return;
 
--- a wrapper rule for convert
+**  a wrapper rule for convert
 rule equal(x ∈ Number, s ∈ S) => (r @ L):
   alter r := (s = convert(x));
 return;
     
--- calling test rules 
-print test.convert;       -- will print "zero"
-print test.equal('zero'); -- will print 1
+**  calling test rules 
+print test.convert;       **  will print "zero"
+print test.equal('zero'); **  will print 1
 
 over.

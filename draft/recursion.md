@@ -8,8 +8,7 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 
 
 **Example1** 
-```
--- this rule is not optimized:
+```** this rule is not optimized:
 rule fact(n ∈ N) => (r @ N):
   when (n = 0) do
     alter r := 1;

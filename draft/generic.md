@@ -28,7 +28,7 @@ This can be used to create an argument for parameters of type "Rule" declared wi
 ```
 rule foo( exp @ (type,type, ...) ∈ type);
    ... 
-   -- you can use the  exp
+   ** you can use the  exp
    make r := exp(param,...);
    print r;
 return;
@@ -44,8 +44,7 @@ apply foo((param ,param ...) => (expression));
 
 In this example, _bubble_ is a generic rule:
 
-```
--- this sort is generic 
+```** this sort is generic 
 rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
@@ -55,9 +54,9 @@ rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
     alter i := 0;
     alter swap := False;
     while (i < n-1) do
-       -- this pair is out of order ?
+       ** this pair is out of order ?
       when gt(array[i], array[i+1]) do
-         -- swap pair and set swap flag = true
+         ** swap pair and set swap flag = true
         alter temp := array[i];
         alter array[i] := array[i+1];
         alter array[i+1] := temp;
@@ -76,24 +75,18 @@ return;
 
 **sort usage**
 
-```
--- define object type to be sorted
+```** define object type to be sorted
 type Person := { name ∈ S, age ∈ N } <: Object;
-
--- define order as lambda expression for type Person
+** define order as lambda expression for type Person
 make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
-
--- define sort rule for Person, as a clone from _bubble_
+** define sort rule for Person, as a clone from _bubble_
 clone sort := bubble{Person}(gt:order);
-
--- define clients and suppliers
+** define clients and suppliers
 make clients   ∈ [Person](100);
 make suppliers ∈ [Person](10);
-
--- populate clients and suppliers somehow
+** populate clients and suppliers somehow
 ...
-
--- use new order action to sort clients and suppliers
+** use new order action to sort clients and suppliers
 apply sort(clients);
 apply sort(suppliers);
 ```

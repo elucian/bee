@@ -3,15 +3,15 @@
 -----------------------------------+
 #name :=  "cy";
 
--- declare array of 10 Words
+**  declare array of 10 Words
 make a ∈ [Z](10);
--- use while 
+**  use while 
 make i ∈ Z;
 while (i < 10) do
   alter a[i] := i;
   alter i += 1;
 repeat;
--- while shortcut
+**  while shortcut
 make x := 10
 while (x ≥ 0) do
   when (x % 2 = 0) do
