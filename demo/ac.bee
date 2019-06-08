@@ -5,14 +5,14 @@
 
 **  suspend for 2.5 sec
 rule test():
-  wait 2.5 
+  wait 2.5; 
 return; ** test
 
 **  start 4 threads
-make i := 0 ; **  control variable
-while (i ≤ 4)
-  start test
-  alter i += 1
+make i := 0 ;
+while (i ≤ 4) do
+  start test;
+  alter i += 1;
 repeat;
 rest; ** synchronize
 

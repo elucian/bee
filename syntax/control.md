@@ -104,7 +104,7 @@ done; ** a = 0
 **ladder**
 
 ```
-input a ∈ Z;
+read a ∈ Z;
 
 when a < 0 do
   print 'a < 0';

@@ -137,7 +137,7 @@ One _module_ is identified by several _attributes_. These are _system variables_
 * One _aspect_ can also load _components_;
 * One _aspect_ can also _play_ other aspects;
 * One _component_ can load other components;
-* One _component_ can not _play_ an aspect;
+* One _component_ can not load an aspect;
 
 
 ### Drivers
@@ -146,25 +146,21 @@ There is one single _driver file_ for one application. This file has #role = "dr
 A _driver_ can read configuration file, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_. Normally a driver file is ending with keyword: _over_ followed by a dot.
 
 ### Aspects
-An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can load the aspect and use its public members. Also an aspect can be executed multiple times. 
+An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can load an aspect only once, then it can use any of its public members on demand. 
 
-**execution**
-Aspects should be executed in a trial block. If one aspect fail the application should analyze the #error and resume or abort the trial block. To execute one aspect you use keyword: _play_. Aspect output can be captured using operator "+>". 
 
 **notes:**
-* One aspect can accept input data;
-* One aspect can produce output data; 
-* Usually aspect have rogue statements;
-* Usually aspect members are private;
+* At least one aspect member must be public;
+* An aspect do not have rogue statements;
+* If aspect has rogue statements these are executed only once, when the aspect is loaded first time;
+* Aspect variables have one single value shared in application context.
 
 ### Components
-Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. A component contains public members. One module can _load_ from a library one or more components. A component usually do not have rogue statements therefore you can not _play_ a component.
+Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. One module can _load_ from a library one or more components. From each component we can use one or more public members using scope qualifier.
 
 **notes:**
 * A component must have public members;
 * A component does not have rogue statements;
-* A component does not have parameters;
-* A component does not produce results;
 
 ## Declaration
 
@@ -172,9 +168,6 @@ Bee is using 7 kind of declarations:
 
 * load     ** import : a library in global scope
 * alias    ** declare: alternative name for library or aspect
-* define   ** declare: constant
-* input    ** declare: aspect parameters
-* output   ** declare: aspect results
 * type     ** declare: data types
 * make     ** declare: variable
 * rule     ** declare: named code block
@@ -188,8 +181,7 @@ Each statement start with one imperative keyword:
 * alter    ** change/modify variable value or assign new value
 * read     ** accept input from console into a variable
 * write    ** output to console result of an expressions
-* play     ** execute one aspect that has no output
-* apply    ** execute one rule that has no results
+* apply    ** execute one rule in synchronous mode
 
 **notes:**
 
@@ -227,15 +219,13 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 ```
 #role := "driver";
 #name := "main"
-** declare input parameters
-input *params ∈ [String];
 ** read the number of parameters
-make c := params.count;
+make c := #params.count;
 halt if (c = 0);
 ** print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
-  write params[i];
+  write #params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
@@ -260,30 +250,31 @@ Libraries and modules can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib.folder_name:(*.bee);
+load $bee_lib.folder_name:(*);
 load $bee_lib.folder_name:(x,y,z);
 ```
 
-* using: (*.bee) all files with extension _bee_ are found on disk and parsed;
-* using: (x,y,z) only x,y,z files are found on disk and parsed;
+* using:(*) all public members are borrowed in local scope;
+* using:(x,y,z) only some public members are borrowed in local scope;
 
 **Qualifier**
-Bee use _"dot notation"_ to locate external members. After import the file name becomes scope qualifier for this notation.
+Bee use _"dot notation"_ to locate external members. After load the file name becomes scope qualifier for this notation. It is possible to change the qualifier name using `:=` like in example below:
 
 ```
-qualifier.member_name
+load  qualifier := $bee_lib.folder_name;
+apply qualifier.member_name;
 ```
 
-qualifier ::= file_name
-qualifier ::= folder_name.file_name
+**Note:**
+
+When a module is loaded with qualifier, you can not borrow its members. All public members must use the specified qualifier or you can use "with" block to suppress the qualifier for a region of code.
 
 **Alias**
 
-You can create an alias for a scope qualifier or for specific members:
+You can create an alias for a for specific members:
 
 ```
-alias qualifier := folder_name.file_name
-alias element   := qualifier.member_name
+alias new_name := qualifier.member_name;
 ```
 
 **Examples:**
@@ -291,20 +282,20 @@ alias element   := qualifier.member_name
 ```
 load $runtime.cpp_lib:(*); ** load cpp library
 load $runtime.asm_lib:(*); ** load asm library
-load $runtime.bee_lib:(*); ** load core library
+load $runtime.bee_lib:(*); ** load bee core library
 load $program.pro_lib:(*); ** load project library
 ```
 
 ## Global context
 
-One application has a global context where variables and constants are allocated. Each application file can contribute with new elements that can be created in this context.
+One application has a global context where variables and constants are allocated. Each application file can contribute with new elements that can be created in this context. The global context can be also called _application context_ or _session context_;
 
-* Global context helps to store and identify global data and public members;
-* When a module is loaded, all public members are defined in the global context;
+* Global context helps to store and identify _public identifiers_ from all loaded modules;
+* When a module is loaded, all public members are defined in the _global context_;
 
 ## Name space
 
-A module can establish one or more name-spaces where you can define module members and statements.
+A module can establish one or more local name-spaces where you can define module members and statements.
 
 **example**
 ```
@@ -325,12 +316,6 @@ over.
 * [lv.bee](../demo/lv.bee)
 * [gv.bee](../demo/gv.bee)  
 
-A module member can be found using dot notation, also known as _scoping_ operator:
-
-**syntax:**
-```
-scope_name.member_name
-```
 
 ## Public members
 
@@ -355,6 +340,7 @@ return;
 **note:** 
 * private members are visible in current module and do not require _scoping_ notation;
 * public members are visible from external modules using _scoping_ notation;
+
 
 ## Comments
 
@@ -452,79 +438,69 @@ When a program is executed the driver is located and executed first. If a progra
 
 #### Aspect Execution
 
-A large program can have multiple _aspects_. The driver control the execution of aspects in specified order top down. Before execution of every aspect the driver can interact with the user to ask for input. After playing one or more aspects the driver can print the results to the console.
+One aspect is executed when is loaded first time. Therefore rogue statements from an aspect can be used for _aspect initialization_. You can not run an aspect initialization a second time during the lifespan of a session.
+
+After loading the driver can control the execution of different aspect rules in specified order. Before each rule the driver can interact with the user to ask for input. After executing the driver can print feedback, reuse the results as arguments for next call or store the results for later use.
 
 **properties**
 
-* An aspect can be executed once or multiple times; 
-* An aspect is executed using keyword _play_ or _alter_;
-* An aspect can receive parameters and can produce results;
-* An aspect is always executed synchronously, never in parallel;
-* An aspect can not be called from an expression;
-* An aspect can be terminated early using:"exit", "halt", "pass" or "fail";
+* Appect can be loaded one single time;
+* Aspect rules can be executed once or multiple times; 
+* Public and private states from an aspect are persistent;
 
 **pattern**
 
-```** declare an alias for an aspect file
-load $pro.src.file_name.bee;
-** play when aspect do not have any result:
-play aspect_name(parameter_list);
-** result can be captured using "+>":
-play aspect_name(parameter_list) +> (result,...);
+```** initialize an aspect
+load qualifier := $pro.src.aspect_name;
+** results can be captured using "+>":
+apply qualifier.rule_name(arguments) +> (results);
+
+** give alias to aspect rule
+alias new_name := qualifier.rule_name;
+
+** apply aspect using its alias:
+apply new_name(arguments) +> (results);
 ```
 
 **Restriction:**
-* you can not call one aspect using _make_;
-* you can not call one aspect from expressions;
-* one aspect can not be run in parallel with another aspect;
-* one aspect can not _play_ from inside a rule;
+* one aspect can not be loaded from inside a rule;
+* the same aspect can not be loaded twice with different qualifiers;
+* one aspect can have same name as a library file but must use a different qualifier;
 
-#### Parameters
+**Example:**
 
-One aspect can have input/output parameters:
-
-**Aspect example:**
 ```
 #name := "mod";
 #role := "aspect";
 
-input  i ∈ Z;  ** input parameter "i"
-output v @ N;  ** output parameter "v"
-
-when (i < 0) do
-  alter v := -i;
-else
-  alter v := i;
-done;  
+** next rule is public
+rule .main(i ∈ Z) => (v @ N):
+** input parameter "i"
+** output parameter "v"
+  when (i < 0) do
+    alter v := -i;
+  else
+    alter v := i;
+  done;  
+return;
 
 over.
 ```
 
 **Using aspect:**
+
 ```
 #role := "driver";
-** define variable result
-make result ∈ N;
 ** define aspect "mod"
-load $pro.mod.bee;
-** execute aspect "mod"
-play  mod(-3) +> result;
+load mod := $pro.mod;
+
+** define variable result
+make result ∈ N;
+** execute main procedure from aspect "mod"
+apply mod.main(-3) +> result;
 print result;  ** expect: 3
 
 over.
 ```
-
-Multiple input and output parameters:
-
-```
-input a,b ∈ Z, c ∈ R; ** input parameters
-output v,z @ N;       ** output parameters
-```
-
-**note:** 
-* both input/output statements are optional;
-* one aspect can have single input and single output statements;
-* output parameters use "@" at all times and can not be native variables;
-* input parameters can use "∈" for value parameter and "@" for reference parameter;
 
 **Read next:** [Syntax Overview](overview.md)

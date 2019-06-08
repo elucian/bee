@@ -697,10 +697,10 @@ Rules are named blocks of code, representing a program fragment that can be exec
 
 **Notes:**
 * A rule is declared with keyword _rule_;
-* A rule can have resolve a task;
-* A rule can have input and input/output parameters;
+* A rule can resolve a single task;
+* A rule can have input and output parameters;
 * A rule can have optional one or multiple results;
-* A rule can have local variables;
+* A rule can have local variables and constants;
 * A rule can have public attributes;
 
 **Usability:**
@@ -715,14 +715,14 @@ A rule can be used for different purpose depending on a particular syntax patter
 * Rules are static: can not be created at runtime;
 * Rules are primary: you can not create nested rules;
 * Rules are not references: you can not pass around a rule;
-* Rules can be call from other rule but not from lambda expressions;
+* Rules can be call from other rules but not from lambda expressions;
 
 ### Parameters
 
 Parameters are special variables defined in rule signature.
 
 **example**
-```** a rule with one parameter
+```** a rule with two parameter
 rule foo(name ∈ S, message @ S):
   alter message:= "hello:" & name & ". I am Foo. Nice to meet you!";
 return;
@@ -740,15 +740,14 @@ hello: Bee. I am Foo. Nice to meet you!
 
 **Notes:**   
 * Parameters are enumerated in a tuple;
-* A rule can have input/output parameters;
 * Input parameters can be optional, output parameters are mandatory;
 * Optional parameters are initialized with pair-up operator ":";
 * Input parameters are defined with "∈" and transfer value: _by copy_;
 * Oputput parameters are defined with "@" and transfer value: _by share_;
 
-### Results are references
+### Results
 
-A rule can have multiple results. For capturing multiple results we use capture operator: "+"
+A rule can have multiple results. For capturing multiple results we use capture operator: "+>"
 
 **Example:** 
 ```** rule with two results "s" and "d"
@@ -757,23 +756,25 @@ rule com(x,y ∈ Z) => (s, d @ Z):
   alter d := x - y;
 return;
 ** capture result into new variables b, c
-make  b, c := com(3,2);
+make b, c ∈ Z;
+apply com(3,2) +> (b, c);
 
 print b;  ** 5 
 print c;  ** 1 
 ```
 
 **Notes:**   
-* Multiple results are defined with names exactly like parameters;
-* You can captured results into multiple variables using _make_ or _alter_;
+* A rule with multiple results can not be used in expressions;
+* Multiple results are defined with names, exactly like parameters;
+* You can captured results into multiple variables using _apply_;
 
-## Rule as function
+### Rule as function
 
-When a rule has this role it can be called: _function_;
+A rule with a single result can be called: _function_;
 
 **pattern**
 ```** define a functional rule
-rule name(param ∈ type,...) => (result @ type,...):
+rule name(param ∈ type,...) => (result @ type):
     ** executable statements
    exit if (condition);
    
@@ -781,15 +782,15 @@ rule name(param ∈ type,...) => (result @ type,...):
    alter result := expression;
    ...
 return;
-** direct call and print the results
+** direct call and print the result
 print rule_name(argument,...);
-** capture rule result and make new variable
-make  r,q... := rule_name(argument,...);
-** capture result using explicit variables:
-make  n,m... ∈ type;
-alter n,m... := rule_name(argument,...)
-** call using _apply_ and capture "+>"
-apply rule_name(argument,...) +> (n,m...)
+** capture rule result and make a new variable
+make  r := rule_name(argument,...);
+** capture result using explicit variable:
+make  n ∈ type;
+alter n := rule_name(argument,...)
+** call using _apply_ and capture a single variable using "+>"
+apply rule_name(argument,...) +> n
 
 ```
 
@@ -855,7 +856,6 @@ A rule that is binded to an object type is called: _method_
 
 * A method can have results;
 * A method can have side-effects;
-* A method can create an object;
 
 **pattern**
 ```
@@ -892,8 +892,8 @@ make r := new_rule(arguments)
 
 **Notes:**
 * A rule clone have same _parameters_ same _results_ and same functionality as the prototype;
-* A rule clone has _own attributes_: defined in curly brackets {attributes}; 
-* A rule clone has _shared attributes_: defined with dot operator in the prototype;
+* A rule clone has its  _own attributes_: defined using curly brackets {attributes}; 
+* A rule clone has some _shared attributes_: defined in the prototype with dot prefix;
 * A rule clone can be created in local context of another rule or in module context;
 
 **example**
@@ -918,7 +918,7 @@ print dec(2); **  1
 ## External rules
 
 In Bee you can use external rules from C language.
-Usually these rules are implemented in a library component.
+These rules are usually loaded in a component.
 
 **Example:**
 This is myLib.bee file: 
@@ -926,7 +926,7 @@ This is myLib.bee file:
 #role := "component";
 #name := "myLib";
 
-load $bee.lib.cpp.myLib; ** load cpp library
+load myLib := $bee.lib.cpp.myLib; ** load cpp library
 ** define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x @ Z));
   alter x := myLib.fib(n);
@@ -939,7 +939,7 @@ This is the driver file.
 ** load library
 load myLib := $bee.lib.myLib;
 
---use external rules
+** use external rule
 print myLib.fib(5);
 ```
 

@@ -1,6 +1,6 @@
-+----------------------------------
- Demo for two repetitive statements
------------------------------------+
++--------------------------------
+| Demo for repetitive statement |
++-------------------------------+
 #role := "driver";
 #name := "cy";
 
@@ -13,17 +13,6 @@ cycle
   alter a[i] := i;
   exit if (i = 9);
   alter i += 1;
-repeat;
-
-**  use while repetitive statement
-make x := 10;
-while (x ≥ 0) do
-  when (x % 2 = 0) do
-    alter x -= 1;
-  else
-    print x;
-  done;
-  alter x -= 1;
 repeat;
 
 over. ** end of driver

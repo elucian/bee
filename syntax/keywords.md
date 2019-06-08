@@ -1,11 +1,11 @@
 ## Bee Keywords
 
-Bee uses 50 reserved keywords so far: 
+Bee uses 47 reserved keywords so far: 
 
 ```
 04: if, is, in, as
-10: make, rule, like, clone, input, output, load, alias, type, return;
-07: read, write, print, alter, scrap, apply, play 
+08: make, rule, like, clone, load, alias, type, return;
+06: read, write, print, alter, scrap, apply
 07: when, with, check, cycle, while, scan, trial
 10: do, done, none, else, case, error, other, final, repeat, next 
 11: wait, exit, fail, pass, retry, solve, skip, stop, halt, abort, over, resume
@@ -33,9 +33,6 @@ Next statements are used to declare or create a module member.
 
 | Keyword  | Purpose
 |----------|-------------------------------------------------------------------
-| input    | Declare input parameters
-| output   | Declare output parameters
-| define   | Declare a constant 
 | load     | Load library or aspect
 | alias    | Suppress scope qualifier for external elements from a library or module
 | type     | Declare data super-type or sub-type
@@ -50,7 +47,6 @@ Next statements represents actions. Also called Imperative statements.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
-| play     | Launch one aspect in execution
 | apply    | Apply one rule that have no result
 | read     | Accept user input from console 
 | write    | Add something to console buffer but no new line 

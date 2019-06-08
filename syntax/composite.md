@@ -633,7 +633,7 @@ Template modifier "?" can be used to customize the error message:
 
 **example**
 ```
-input flag ∈ L;
+read flag ∈ L;
 make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
 fail my_error ? 'test' if flag;
