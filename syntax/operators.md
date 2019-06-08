@@ -7,7 +7,7 @@ Read about supported symbols here: [symbols](symbols.md)
 
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
-|`\|*...*\|`| Block comments \| Nested comments **| 
+| `+-...-+` | Block comments \| Boxed comments
 | `(_,_,_)` | Expression \| Tuple literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
@@ -25,8 +25,8 @@ symbol  | description
 
 symbol| description
 ------|----------------------------------------------------------------
-  *   | End of line comment
-  #   | Single line comment
+ \*   | End of line comment
+ \#   | Single line comment
   $   | System constant  \| Environment variables
   &   | System variable  \| Global variable
   @   | Define method result /| input/output parameters
@@ -65,8 +65,6 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------------------
- \+-  | Start for multiple line comments
- \-+  | End for multiple line comments  
  ..   | Define domain (n..m) \| Array slice [n..m]
  ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
@@ -135,12 +133,12 @@ Bee is using constants:  True = 1 and False = 0
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
-  ¬   | NOT        | unary operator
-  ∧   | AND        | shortcut operator
-  ∨   | OR         | shortcut operator
-  ⊕   | XOR        | exclusive OR
-  ↓   | NOR        | p ↓ q = ¬ (p ∨ q)
-  ↑   | NAND       | p ↑ q = ¬ (p ∧ q)
+  `¬` | NOT        | unary operator
+  `∧` | AND        | shortcut operator
+  `∨` | OR         | shortcut operator
+  `⊕` | XOR        | exclusive OR
+  `↓` | NOR        | p ↓ q = ¬ (p ∨ q)
+  `↑` | NAND       | p ↑ q = ¬ (p ∧ q)
 
  p  | q  |¬ p |p ⊕ q |p ∧ q | p ∨ q
 ----|----|----|------|------|--------
