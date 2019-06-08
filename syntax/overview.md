@@ -210,7 +210,7 @@ print r;       * r = 10 (unmodified)
 **share vs copy**
 
 * A reference is shared using operator ":=".
-* An object is cloned using operator   ":+".
+* An object is copied using operator   ":+".
 
 ```# create a reference
 make  a := 1 ∈ Z;
@@ -362,10 +362,11 @@ Variables are defined using keyword _make_ plus one of the operators:
 
 operator | purpose
 ---------|------------------------------------------------------------------
- ∈       | declare native variable
- :       | share \| pair-up  \| shallow copy
- :=      | create new \| reset value \| deep copy
- ::      | immutable variable = constant 
+ ∈       | declare variable/element type 
+ ::      | initialize constant
+ :       | initialize element value
+ :=      | initialize variable \| assign by share 
+ :+      | initialize variable \| assign by copy
  
 ```# primitive variable declarations with type
 make var_name ∈  type_name;
@@ -743,7 +744,7 @@ hello: Bee. I am Foo. Nice to meet you!
 * Input parameters can be optional, output parameters are mandatory;
 * Optional parameters are initialized with pair-up operator ":";
 * Input parameters are defined with "∈" and transfer value: _by copy_;
-* Oputput parameters are defined with "@" and transfer value: _by share_;
+* Output parameters are defined with "@" and transfer value: _by share_;
 
 ### Results
 
@@ -805,6 +806,7 @@ A function is pure if:
 * do not call a downgraded function;
 
 **Notes:**
+* Usually a pure function is also deterministic;
 * If a rule break one of these restrictions it is _downgraded_ by the compiler;
 * Downgraded rules can be used in assignments and print but not in expressions;
 * A downgraded rule can be called also _dirty rule_ that is not _pure_;
@@ -814,7 +816,7 @@ A function is pure if:
 
 ## Rule as routine
 
-A rule that have no results can is called _routine_: 
+A rule that have no results is called _routine_: 
 
 **properties:**
 
@@ -881,6 +883,9 @@ A _generic rule_ is a _prototype_ that can be cloned to create _dynamic rules_.
 **pattern**
 ```# define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
+  * a prototype can have attributes
+  make .x, .y, .z := 0 ∈ Z;  
+  ...
   * compute the result
   alter result := expression(arguments);
 return;
