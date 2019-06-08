@@ -52,8 +52,8 @@ symbol| description
  `-`  | Change sign, replace "y = -x" with "y = -1·x"
  `^`  | Power symbol used with fractions or expressions   
  `·`  | Multiplication
- `÷`  | Division 
- `×`  | Array and matrix multiplication
+ `÷`  | Real division 
+ `×`  | Array multiplication
  `%`  | Modulo operator
  `+`  | Numeric addition \| List append
  `-`  | Numeric subtraction \| Collection difference 
@@ -73,14 +73,14 @@ symbol| description
  `:+` | Assign by copy  \| Keep reference
  `+>` | Collector: capture result. Associated with: _play_ and _apply_
  
-## Arithmetic modifiers
+## Modifiers
 
 Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
 ------|------------------------------------------------------------------
- `+=` | increment value
- `-=` | decrement value
+ `+=` | increment value \| append element
+ `-=` | decrement value \| remove element
  `·=` | multiplication modifier 
  `÷=` | real division modifier
  `/=` | rational division modifier
@@ -116,16 +116,14 @@ Operator: not "≡" do not exist in Bee. You can use expression:
 
 symbol | result     |meaning
 -------|------------|----------------------------------------------------------
-  ∩    | Set        |Intersection between two collections
-  ∪    | Set        |Union between two collections
-  ⊂    | Logic      |Set is included in superset: "⊂"
-  ⊃    | Logic      |Set contain subset: "⊃"  
-  ⊖    | Set        |Set symmetric difference  
-  \+   | Array      |Concatenation between two arrays
-  \+=  | Collection |Append element to collection 
-  \-=  | Collection |Remove element from collection 
-  ∀    | Element    |Enumerate all elements from a collection
-  ∃    | Logic      |Check if exist one element in a collection
+ `∩`   | Set        |Intersection between two collections
+ `∪`   | Set        |Union between two collections
+ `⊂`   | Logic      |Set is included in superset: "⊂"
+ `⊃`   | Logic      |Set contain subset: "⊃"  
+ `⊖`   | Set        |Set symmetric difference  
+ `+`   | Array      |Concatenation between two arrays
+ `∀`   | Element    |Enumerate all elements from a collection
+ `∃`   | Logic      |Check if exist one element in a collection
                                           
 ## Logic Operators 
 
@@ -154,8 +152,8 @@ Bitwise operators are overloaded for numbers.
 
 symbol| meaning       | notes
 ------|---------------|-------------------------------
- «    | bit SHIFTL    | shift bits to left  
- »    | bit SHIFTR    | shift bits to right  
+ `«`  | bit SHIFTL    | shift bits to left  
+ `»`  | bit SHIFTR    | shift bits to right  
 
 
 **See also:** [Bit Manipulation](https://en.wikipedia.org/wiki/Bit_manipulation) 
