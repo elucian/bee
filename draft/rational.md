@@ -87,8 +87,8 @@ Next I have predefined some numbers for orientation.
 A very large number with high precision on 64 bit:
 
 **Q50.12# 
-* Min:-1125899906842624
-* Max:+1125899906842623
+* Min: -1125899906842624
+* Max: +1125899906842623
 * Res: 0.000244140625
 
 A number on 32 bit with precision = 0.0005:
@@ -104,8 +104,8 @@ A number on 32 bit with precision = 0.0005:
 
 Default Q number has precision 10⁻⁵ = 2⁻¹⁷ ≈ 0.00001 and occupy 32 bit.
 
-* Min:-16384
-* Max:+16383
+* Min: -16384
+* Max: +16383
 * Res: 0.0000076
 
 smallest fraction: 1/10000
