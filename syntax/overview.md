@@ -775,12 +775,11 @@ A rule with a single result can be called: _function_;
 
 **pattern**
 ```# define a functional rule
-rule name(param ∈ type,...) => (result @ type):
-    * executable statements
-   exit if (condition);
-   
-   * computing the result
-   alter result := expression;
+rule name(param ∈ type,...) => (result @ type):    
+   ...
+   exit if (condition); * early transfer
+   ...
+   alter result := expression; * computing the result
    ...
 return;
 # direct call and print the result
@@ -831,9 +830,8 @@ Attributes of a routine are local variables starting with dot prefix.
 
 **pattern**
 ```
-rule rule_name(param ∈ type,...):
-   * define x,y,z states
-   make .x, .y, .z := 0 ∈ Z;  
+rule rule_name(param ∈ type,...):   
+   make .x, .y, .z := 0 ∈ Z; 
    ...
 return;
 # modify rule states
@@ -864,9 +862,8 @@ A rule that is binded to an object type is called: _method_
 type ObjType: {attribute:type, ...} <: Object;
 
 rule method_name(me: @ObjType, param ∈ type,...) => (result @ type):
-   * define x,y,z states
-   result := expression;
    ...
+   result := expression;
 return;
 # create an object instance
 make obj := {attribute:value, ...} ∈ ObjectYpe;
@@ -883,10 +880,12 @@ A _generic rule_ is a _prototype_ that can be cloned to create _dynamic rules_.
 **pattern**
 ```# define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
-  * a prototype can have attributes
+  ...
+  # a prototype can have attributes
   make .x, .y, .z := 0 ∈ Z;  
   ...
-  * compute the result
+  
+  # compute the result
   alter result := expression(arguments);
 return;
 # making a rule clone from prototype
