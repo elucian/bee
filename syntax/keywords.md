@@ -34,11 +34,11 @@ Next statements are used to declare new elements in a component.
 
 | Keyword  | Purpose
 |----------|-------------------------------------------------------------------
-| driver   | Declare the application lead component
-| aspect   | Declare one application component
-| module   | Declare one reusable component
-| load     | Load module or aspect in a component
-| alias    | Suppress scope qualifier for elements of loaded components
+| driver   | Define lead component
+| aspect   | Define aspect component
+| module   | Define reusable component
+| load     | Load module or aspect
+| alias    | Suppress scope qualifier for members from components
 | type     | Declare data super-type or sub-type in a component
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or _prototype_

@@ -50,20 +50,20 @@ type type_name := { name1:0, name2, name3} <: Ordinal;
 
 make a, b, c ∈ type_name;
 
-alter a := type_name.name1; ** a=2
-alter b := type_name.name2; ** b=3
-alter c := type_name.name3; ** c=4
+alter a := type_name.name1; * a=2
+alter b := type_name.name2; * b=3
+alter c := type_name.name3; * c=4
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for the individual values
 
-```** using public elements in enumeration
+```# using public elements in enumeration
 type type_names := { .name0, .name1 } <: Ordinal;
 
 make a, b ∈ type_name;
 
-alter  a := name0; ** a = 0
-alter  b := name1; ** b = 1
+alter  a := name0; * a = 0
+alter  b := name1; * b = 1
 ```
 
 ## Tuple
@@ -72,12 +72,12 @@ A tuple is enumeration of elements enclosed in parenthesis and separated by comm
 
 **examples**
 ```
-(a, b ∈ Z, c @ B) ** parameters
-(result @ X)      ** single result
-(r1,r2 @ Z)       ** multiple results
-('a','b','c')     ** list of strings
-(1,2,3)           ** list of integers
-(1,`2`,'x')       ** list of various literals
+(a, b ∈ Z, c @ B) * parameters
+(result @ X)      * single result
+(r1,r2 @ Z)       * multiple results
+('a','b','c')     * list of strings
+(1,2,3)           * list of integers
+(1,`2`,'x')       * list of various literals
 ```
 
 **Notes:**
@@ -94,21 +94,21 @@ Bee tuples are very different from Python and other languages.
 **multiple results**
 A rule can have multiple results defined using a tuple:
 
-```** rule with multiple results
+```# rule with multiple results
 rule test(x,y ∈ Z) => (r, c @ Z):
   alter r += x+1;
   alter c += y+1;
 return;
 
 make n, m ∈ Z;
-** collecting the results
+# collecting the results
 alter n, m := test(1,2);
 
-print n; ** 2
-print m; ** 3
-** ignore one result using "_"
+print n; * 2
+print m; * 3
+# ignore one result using "_"
 alter  n, _ := test(3,0);
-print  n; ** 4
+print  n; * 4
 ```
 
 ## List
@@ -132,9 +132,9 @@ type type_name := (element_type) <: List;
 You can use one of three forms of declarations:
 
 ```
-make name ∈  (element_type); ** explicit declaration
-make name := (constant,...); ** implicit declaration
-make name := (constant,...) ∈ (element_type); ** full declaration
+make name ∈  (element_type); * explicit declaration
+make name := (constant,...); * implicit declaration
+make name := (constant,...) ∈ (element_type); * full declaration
 ```
 
 **properties**
@@ -146,16 +146,16 @@ make name := (constant,...) ∈ (element_type); ** full declaration
 
 **example**
 
-```** define a list type of unsigned short integers
+```# define a list type of unsigned short integers
 type Lou  := (u16) <: List;
-** define a list variable of defined type Lou
+# define a list variable of defined type Lou
 make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
-** list traversal
+# list traversal
 scan x ∈ list do
   write x;
   write _ if (x ≠ list.head);
 next;
-print; ** 0 1 2 3 4 5
+print; * 0 1 2 3 4 5
 ```
 
 ## Array
@@ -163,13 +163,13 @@ print; ** 0 1 2 3 4 5
 Bee define Arrays using notation [Type](c), where c is the capacity.
 
 **syntax**
-```** diverse array variables
-make array_name ∈ [element_type]     ;  ** undefined capacity
-make array_name ∈ [element_type](c)  ;  ** capacity c
-make array_name ∈ [element_type](n,m);  ** capacity c = n·m
-** define new kind of array
+```# diverse array variables
+make array_name ∈ [element_type]     ;  * undefined capacity
+make array_name ∈ [element_type](c)  ;  * capacity c
+make array_name ∈ [element_type](n,m);  * capacity c = n·m
+# define new kind of array
 type Array_Type := [element_type](c) <: Array; 
-** use previous  defined type
+# use previous  defined type
 make array_name ∈ Array_Type;  
 ```
 
@@ -197,45 +197,45 @@ repeat;
 
 Initial value for elements can be set during declaration:
 
-```** you can use 4 optional initialization notations 
-make zum  := 0       ∈ [Z](10) ; ** explicit initialization using single value
-make zet  := 1..10   ∈ [Z] ; ** explicit initialization using range
-make test := 0..10:2 ∈ [Z] ; ** explicit initialization using rate
-** modify one element by index
+```# you can use 4 optional initialization notations 
+make zum  := 0       ∈ [Z](10) ; * explicit initialization using single value
+make zet  := 1..10   ∈ [Z] ; * explicit initialization using range
+make test := 0..10:2 ∈ [Z] ; * explicit initialization using rate
+# modify one element by index
 alter zum[1]  := 1; 
 alter zum[10] := 10; 
-print zum; ** expect [1,2,2,2,2,2,2,2,2,10]
-** modify all elements
-alter zum[*] += 1; 
-print zum; ** expect [2,3,3,3,3,3,3,3,3,11]
-** reset all elements
-alter zum[*] := 0; ** [0,0,0,0,0,0,0,0,0,0]
-** modify multiple elements using an Array literal
-alter zum[*] := [1,2,3];
-print zum; ** expect [1,2,3,1,2,3,1,2,3,1]
-** reset zum reference (replace zum)
+print zum; * expect [1,2,2,2,2,2,2,2,2,10]
+# modify all elements
+alter zum[..] += 1; 
+print zum; * expect [2,3,3,3,3,3,3,3,3,11]
+# reset all elements
+alter zum[..] := 0; * [0,0,0,0,0,0,0,0,0,0]
+# modify multiple elements using an Array literal
+alter zum[..] := [1,2,3];
+print zum; * expect [1,2,3,1,2,3,1,2,3,1]
+# reset zum reference (replace zum)
 alter zum := [1,2,3];
-print zum; ** expect [1,2,3];
-** transfer a reference 
+print zum; * expect [1,2,3];
+# transfer a reference 
 alter zum := zet;
-print zum; ** expect [1,1,1,1,1,1,1,1,1,1];
+print zum; * expect [1,1,1,1,1,1,1,1,1,1];
 ```
 
 **differed initialization**
 We can define an empty array and initialize elements later.
 
-```** array without capacity (partial type inference)
+```# array without capacity (partial type inference)
 make vec ∈ [U]; 
 make nec ∈ [N]; 
-** arrays are empty
-print vec = []; ** True
-print nec = []; ** True
-** array capacity becomes: 10
+# arrays are empty
+print vec = []; * True
+print nec = []; * True
+# array capacity becomes: 10
 alter vec := `x` * 10;
-print vec; ** expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
-** array capacity becomes: 10
+print vec; * expect [`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`,`x`]
+# array capacity becomes: 10
 alter nec := 0 * 10;
-print nec; ** expect [0,0,0,0,0,0,0,0,0,0]
+print nec; * expect [0,0,0,0,0,0,0,0,0,0]
 ```
 
 ## Matrix
@@ -244,11 +244,11 @@ A matrix is an array with 2 or more dimensions.
 
 **Example:** 
 ```
-make mat ∈ [R](4,4) <: Matrix;  ** define matrix
-** modify matrix using ":=" operator
+make mat ∈ [R](4,4) <: Matrix;  * define matrix
+# modify matrix using ":=" operator
 alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-print mat[0,0]; ** first element
-print mat[3,3]; ** last element
+print mat[0,0]; * first element
+print mat[3,3]; * last element
 
 ```
 
@@ -256,7 +256,7 @@ print mat[3,3]; ** last element
 
 So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
-```** elements in matrix can be accessed using while
+```# elements in matrix can be accessed using while
 make i := 0;
 make mat := [1,2,3] × [1,2,3]; 
  
@@ -266,7 +266,7 @@ while (i < x) do
   write (mat[x], ',');
   i += 1;
 repeat;
-print; ** 
+print; * 
 over.
 ```
 
@@ -281,29 +281,29 @@ output:
 
 A set is a sorted collection of unique values.
 
-```** user define a set
-type NS := {N} <: Set; ** Natural set
+```# user define a set
+type NS := {N} <: Set; * Natural set
 make uds ∈ NS; 
-** define a variable set 
-make s1 := {1,2,3} ∈ {N}; ** 3 elements
-make s2 := {2,3,4} ∈ {N}; ** 3 elements  
+# define a variable set 
+make s1 := {1,2,3} ∈ {N}; * 3 elements
+make s2 := {2,3,4} ∈ {N}; * 3 elements  
 
-** specific operations
-make u  := s1 ∪ s2; ** {1,2,3,4,5}  :union
-make i  := s1 ∩ s2; ** {2,3}      :intersection
-make d1 := s1 - s2; ** {1}        :difference 1
-make d2 := s2 - s1; ** {4}        :difference 2
-make d  := s2 ⊖ s1; ** {1,4}      :symmetric difference
-** verify expectation
-pass if d = d1 ∪ d2; ** equivalent (else fail)
-** belonging check
-print s1 ⊂ s;   ** True
-print s  ⊃ s2;  ** True
-** declare a new set
+# specific operations
+make u  := s1 ∪ s2; * {1,2,3,4,5}  :union
+make i  := s1 ∩ s2; * {2,3}      :intersection
+make d1 := s1 - s2; * {1}        :difference 1
+make d2 := s2 - s1; * {4}        :difference 2
+make d  := s2 ⊖ s1; * {1,4}      :symmetric difference
+# verify expectation
+pass if d = d1 ∪ d2; * equivalent (else fail)
+# belonging check
+print s1 ⊂ s;   * True
+print s  ⊃ s2;  * True
+# declare a new set
 make a := {1,2,3} ∈ {N};
-** using operator +/- to mutate set a
-alter a := a + 4; {1,2,3,4};  ** append 4
-alter a := a - 3; {1,2,4};    ** remove 3 (not 3)
+# using operator +/- to mutate set a
+alter a := a + 4; {1,2,3,4};  * append 4
+alter a := a - 3; {1,2,4};    * remove 3 (not 3)
 
 ```
 
@@ -318,26 +318,26 @@ alter a := a - 3; {1,2,4};    ** remove 3 (not 3)
 A hash map is a set of (key:value) pairs sorted by key.
 
 **syntax**
-```** define a hash map type
+```# define a hash map type
 type type_name := {(key_type : value_type)} <: Hash;
-** declare a new empty hash map
+# declare a new empty hash map
 make new_map := {} ∈ type_name;
 ```
 
 **example**
-```** initial value of map
+```# initial value of map
 make map := {('a':"first"), ('b':"second")};
-** create new element
+# create new element
 alter map['c'] := "third";
-** modification of non existent element will fail
-alter map['e'] := "forth"; ** ERROR
-** finding elements by key
-print map['a']; ** first
-print map['b']; ** second
-print map['c']; ** third
-** remove an element by key
-scrap map['a']; ** remove "first" element
-print map;      ** expected: {'b'="second", 'c'="third"}
+# modification of non existent element will fail
+alter map['e'] := "forth"; * ERROR
+# finding elements by key
+print map['a']; * first
+print map['b']; * second
+print map['c']; * third
+# remove an element by key
+scrap map['a']; * remove "first" element
+print map;      * expected: {'b'="second", 'c'="third"}
 
 ```
 
@@ -368,7 +368,7 @@ done;
 
 Bee has one A type = ASCII char, and 2 kind of strings: {S,X}
 
-* A:       Is equivalent to char, ocupy a single bit;
+* A:       Is equivalent to char, occupy a single bit;
 * String:  Is UTF8 array with a limited capacity: 1024 bit;
 * Text:    Is UTF8 encoded text with unrestricted capacity;
 
@@ -388,12 +388,12 @@ Literals for strings are enclosed in 3 kind of quotes:
 
 Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 code points.
 
-```** define String sub-type
+```# define String sub-type
 type Str128 := S(128) <: String; 
 make s := 'this is a test' ∈ Str128;
-** two compatible representation of strings
-make str ∈  S(25);  ** string with capacity minim  25x4 = 100 bytes
-make a   ∈ [B](25); ** array of binary code points 25x4 = 100 bytes
+# two compatible representation of strings
+make str ∈  S(25);  * string with capacity minim  25x4 = 100 bytes
+make a   ∈ [B](25); * array of binary code points 25x4 = 100 bytes
 
 alter str := 'Short string'; 
 alter a   := split(str);
@@ -404,9 +404,9 @@ Conversion of a string into number is done; using _parse_ rule:
 
 ```
 make x,y ∈ R;
-** rule parse return; a Real number
-alter x := parse('123.5',2,',.'); ** convert to real 123.5
-alter y := parse('10,000.3333',2,',.'); ** convert to real 10000.33
+# rule parse return; a Real number
+alter x := parse('123.5',2,',.'); * convert to real 123.5
+alter y := parse('10,000.3333',2,',.'); * convert to real 10000.33
 ```
 
 **Notes:** 
@@ -444,25 +444,25 @@ Below operators will concatenate two strings.
 
 symbol| description
 ------|--------------------------------------------------------------------------
-  `&` | Concatenate two strings as they are no trim is performed
-  `+` | Trim first string and concatenate with second string
+  `+` | Concatenate two strings as they are no trim is performed  
+  `.` | Concatenate path using using '/' or '\\' depending on OS type
   `/` | URL/Path concatenation: trim and use single separator: "/"
   `\` | Path concatenation: trim and use single separator: "\\"
   
 **examples**
 ```
-make u, c, s ∈ S;  ** default length is 128 octets = 1024 bit
-** string concatenation
-alter u := 'This is'  & ' a short string.';
-alter c := 'This is ' & 'fixed size string'; 
-** automatic conversion to string
-alter s := 40 & 5;  ** '405'
-** URL/path concatenation
-make test_file := $pro\'src'\'test.bee';
-** when and $platform = "Windows"** Let's say $pro = "c:\work\project\"
-print test_file; ** c:\work\project\src\test.bee
-** when and $platform = "Linux"** Let's say $pro = "/work/project/"
-print test_file; ** /work/project/src/test.bee
+make u, c, s ∈ S;  * default length is 128 octets = 1024 bit
+# string concatenation
+alter u := 'This is'  + ' a short string.';
+alter c := 'This is ' + 'fixed size string'; 
+# automatic conversion to string
+alter s := '40' + 5;  * '405'
+# URL/path concatenation
+make test_file := $pro.'src'.'test.bee';
+# when $platform = "Windows"# Let's say $pro = "c:\work\project\"
+print test_file; * c:\work\project\src\test.bee
+# when $platform = "Linux"# Let's say $pro = "/work/project/"
+print test_file; * /work/project/src/test.bee
 
 ```
 
@@ -471,14 +471,14 @@ print test_file; ** /work/project/src/test.bee
 Object types are data structures with elements enclosed in curly brackets { , , ,} and separated by comma. 
 
 **Pattern:**
-```** declare a category of objects
+```# declare a category of objects
 type  type_name := {attribute ∈ type_name, ...} <: Object;
-** create an object instance using default constructor
+# create an object instance using default constructor
 make item_name := {
        attribute : constant,
        ...
        } ∈ type_name;
-** modify one object attribute
+# modify one object attribute
 alter object_name.attribute := new_value;
 ```
 
@@ -488,52 +488,52 @@ alter object_name.attribute := new_value;
 * Recursive
 * Hierarchical
 
-**type size**
+**type size:**
 
-Type size is a constant that can be calculated using size(T).
+Type size is a constant that can be calculated using: size(type).
 
 ### Flat object
 
 **Example:**
 ```
 type  Person := {name ∈ S, age ∈ N} <: Object;
-** array of 10 persons
+# array of 10 persons
 make catalog ∈ [Person](10);
-  ** initialize value using literals
+  # initialize value using literals
 make catalog[0] := {name:"Cleopatra", age:15};
 make catalog[1] := {name:"Martin", age:17};
 
---using one element with dot operators
-print caralog[0].name; ** will print Cleopatra
-print caralog[1].name; ** will print Martin
+# using one element with dot operators
+print caralog[0].name; * will print Cleopatra
+print caralog[1].name; * will print Martin
 
---member type can be check using _type()_ built in
-print type(Person.name); ** will print U
-print type(Person.age); ** will print W
+# member type can be check using _type()_ built in
+print type(Person.name); * will print U
+print type(Person.age); * will print W
 
---print size of structure
+# print size of structure
 print size(Person);
 ```
 
 ### Recursive
-We can limit how deep a structure become using a directive. "#recursive:100"
+We can limit how deep a call stack become using a directive. "$level:100"
 
 ```
-** example of single recursive node
+# example of single recursive node
 type Node := { 
-  data ∈ Z,       ** integer data
-  previous ∈ Node ** reference to previous node
+  data ∈ Z,       * integer data
+  previous ∈ Node * reference to previous node
 } <: Object;
 ```
 
 This kind of structure can be used to create a data chain.
 
 ```
-** example of double recursive node
+# example of double recursive node
 type Node <: {
-  data  ∈ Z,    ** integer data
-  prior ∈ Node, ** reference to previous node
-  next  ∈ Node  ** reference to next node
+  data  ∈ Z,    * integer data
+  prior ∈ Node, * reference to previous node
+  next  ∈ Node  * reference to next node
 } <: Object;
 ```
 
@@ -542,28 +542,28 @@ type Node <: {
 An object can have associated rules that are called _methods_:
 
 **pattern**
-```** define Foo as object with 2 public attributes:
+```# define Foo as object with 2 public attributes:
 type Foo := {a, b ∈ N} <: Object;
-  ** constructor method for Foo
+  # constructor method for Foo
 rule foo(p1,p2 ∈ N) => (me @ Foo):
   make me := {a:p1, b:p2};
 return;
-** define a method for Foo
+# define a method for Foo
 rule bar(me @ Foo):
-  print "a =" & me.a;
-  print "b =" & me.b;
+  print "a =" + me.a;
+  print "b =" + me.b;
 return;
-** call constructor
+# call constructor
 make test := foo(1,1);
-** run bar() method using object test as dot qualifier
+# run bar() method using object test as dot qualifier
 apply test.bar;
-fail if test.a ≠ 1; ** verify attribute a
-fail if test.b ≠ 1; ** verify attribute b
+fail if test.a ≠ 1; * verify attribute a
+fail if test.b ≠ 1; * verify attribute b
 ```
 
 **See also:** 
-* [me.bee](me.bee); ** numeral with rules
-* [gc.bee](gc.bee); ** number generator
+* [me.bee](me.bee); * numeral with rules
+* [gc.bee](gc.bee); * number generator
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
@@ -574,30 +574,29 @@ fail if test.b ≠ 1; ** verify attribute b
 
 ## Varargs
 
-Is a last parameter in a parameter list, declared with prefix "*" that can receive numerous arguments.
+Is a last parameter in a parameter list, declared with _empty array_ prefix: []
 
 ```
---parameter *bar is an array
-rule foo(*bar ∈ [Z]) => (x @ Z):
+rule foo([]bar ∈ [Z]) => (x @ Z):
   make c := bar.count();
-  ** precondition
+  # precondition
   when (c = 0) do
     alter x := 0;
     exit;
   done;
   alter i := 0; 
-  ** sum all parameters  
+  # sum all parameters  
   while (i < c) do
     alter x += bar[i];
     alter i += 1;
   repeat;
 return;
 
---we can call foo with variable number of arguments
-print foo();       ** 0
-print foo(1);      ** 1
-print foo(1,2);    ** 3
-print foo(1,2,3);  ** 6
+# we can call foo with variable number of arguments
+print foo();       * 0
+print foo(1);      * 1
+print foo(1,2);    * 3
+print foo(1,2,3);  * 6
 
 ```
 
@@ -610,9 +609,9 @@ print foo(1,2,3);  ** 6
 An exception is a recoverable error. It can be declared by the user or by the system:
 
 **definition**
-```** global exception type
+```# global exception type
 type Error := {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
-** global system error
+# global system error
 make #error ∈ Error;
 ```
 
@@ -639,7 +638,7 @@ make my_error  := {201,"exception: \s{1}"} ∈ Error;
 fail my_error ? 'test' if flag;
 pass my_error ? 'test' if flag;
 ```
-** expected output
+# expected output
 ```
 exception: 'test'
 ```
@@ -659,8 +658,8 @@ exception: 'test'
 Next we create unrecoverable exception:
 
 ```
-halt -1; ** end program and exit code = -1
-halt -2; ** end program and exit code = -2
+halt -1; * end program and exit code = -1
+halt -2; * end program and exit code = -2
 ```
 
 **Read next:** [Type Inference](inference.md) 

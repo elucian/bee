@@ -19,9 +19,9 @@ Define anonymous local context;
 
 ```
 do
-  ** declarations
+  * declarations
   make var ∈ type_name;
-  ** statements
+  * statements
   ...
 done;
 ```
@@ -32,7 +32,7 @@ Define a _scope qualifier_ suppression block:
 
 ```
 with (qualifier) do
-  ** instead of qualifier.member()
+  * instead of qualifier.member()
   apply member;
   ...
 done;
@@ -42,7 +42,7 @@ Using alias for scope qualifier:
 
 ```
 with (scope: long.qualifier) do
-  ** instead of long_qualifier.member()
+  * instead of long_qualifier.member()
   apply scope.member;
   ...
 done;
@@ -52,7 +52,7 @@ Using 2 qualifiers for mapping using assignment:
 
 ```
 with (target: target_qualifier, source: source_qualifier) do
-  ** copy value from source to target
+  * copy value from source to target
   alter target.member := source.member;
   ...
 done;
@@ -66,7 +66,7 @@ The _when_ keyword is a multi-conditional selector.
 **syntax**
 ```
 when condition do
-  ** statements
+  * statements
   ...
 done;
 ```
@@ -76,10 +76,10 @@ Dual selector based on single logical expression:
 **pattern**
 ```
 when condition do
-  ** true branch
+  * true branch
   ...
 else
-  ** false branch
+  * false branch
   ...
 done;
 ```
@@ -87,16 +87,16 @@ done;
 **nested**
 
 ```
-make a := 0;** first decision
+make a := 0;# first decision
 when a ≤ 0 do 
   print 'a ≤ 0';
-  ** second decision
+  * second decision
   when a = 0 do 
     print 'a = 0';
   else
     print "a < 0"; 
-  done; ** a ≤ 0
-done; ** a = 0
+  done; * a ≤ 0
+done; * a = 0
 ```
 
 **note:** I have used comments ";" after "done;"
@@ -128,16 +128,16 @@ The _check_ is a multi-path value based selector.
 ```
 check (expression):   
   is value do
-    ** first path: using single value
+    * first path: using single value
     ... 
   in (value, ...) do
-    ** second path: using a list
+    * second path: using a list
     ...
   in (min..max:rate) do
-    ** third path: using domain
+    * third path: using domain
     ...     
 none
-  ** default path
+  * default path
   ...
 done;
 ```
@@ -177,10 +177,10 @@ In this example "a" is a local variable visible in cycle and after cycle;
 make a := 10 ∈ Z;
 cycle
   alter a -= 1;
-  ** conditional repetition
+  * conditional repetition
   skip if (a % 2 = 0);
   write a;  
-  ** conditional termination
+  * conditional termination
   write ',';
   stop if (a < 0);
 repeat;
@@ -199,18 +199,18 @@ Nested cycles are very rare but possible:
 **pattern:** 
 
 ```
-cycle ** outer cycle
+cycle * outer cycle
   ...
-  skip if (condition); ** skip inner cycle
+  skip if (condition); * skip inner cycle
   ...
-  cycle ** inner cycle
+  cycle * inner cycle
     ...
-    skip if (condition); ** repeat inner cycle
+    skip if (condition); * repeat inner cycle
     ...    
-    stop if (condition); ** stop inner cycle
+    stop if (condition); * stop inner cycle
   repeat;
   ...
-  stop if (condition); ** stop outer cycle  
+  stop if (condition); * stop outer cycle  
   ...
 repeat;
 ```
@@ -228,7 +228,7 @@ cycle
   write ',';
   stop if (x < 5);
 repeat;
-print;  ** expect 9:1, 8:0, 7:1, 6:0, 5:1,
+print;  * expect 9:1, 8:0, 7:1, 6:0, 5:1,
 ```
 
 ## While
@@ -237,14 +237,14 @@ Conditional repetitive block:
 
 ```
 while condition do
-  ** repetitive block
+  * repetitive block
   ...
-  skip if (condition); ** continue
+  skip if (condition); * continue
   ...
-  stop if (condition); ** break
+  stop if (condition); * break
   ...
 else
-  ** alternate path
+  * alternate path
   ...
 repeat;
 ```
@@ -260,7 +260,7 @@ repeat;
 make a := 10;
 while a > 0 do
   alter a -= 1;
-  ** conditional repetition
+  * conditional repetition
   when a % 2 ≠ 0 do
     write a;  
     write ',';
@@ -276,11 +276,11 @@ One while block statement can be nested:
 **pattern:** 
 
 ```
-** outer loop   
+# outer loop   
 while condition do
-  ** inner loop
+  * inner loop
   while condition do
-     ** statements
+     * statements
      ...
   repeat;  
   ...  
@@ -290,8 +290,8 @@ repeat;
 **example**
 
 ```
-make x   := 9; ** local variable
-make a,r := 0; ** two local variable
+make x   := 9; * local variable
+make a,r := 0; * two local variable
 while x < 5 do
   alter r := x % 2;
   alter a := 0 if r = 0, 1 if r = 0, 2;
@@ -299,7 +299,7 @@ while x < 5 do
   write ',' if (x < 5);
   alter x -= 1;
 repeat;
-print; ** 9:1, 8:0, 7:1, 6:0, 5:1
+print; * 9:1, 8:0, 7:1, 6:0, 5:1
 ```
 
 ## Scan 
@@ -309,7 +309,7 @@ This is used to traverse a _range_ or a _subset_ from a discrete _type_.
 **Pattern:**
 ```
 scan var ∈ [min..max] do
-  ** block statements
+  * block statements
   skip if (condition);
   ...
   stop if (condition);
@@ -323,18 +323,18 @@ next;
 
 Example of forward skip in counting iteration:
 ```
-make i ∈ Z; ** local variable
+make i ∈ Z; * local variable
 scan i ∈ [0..10] do
-  ** force next iteration
+  * force next iteration
   when i % 2 = 0 do
     skip;
   else
-    ** write only odd numbers
+    * write only odd numbers
     write i;
     write ',' if (i < 10);
   done;
 next;
-print i; ** still available
+print i; * still available
 ```
 > 1,3,5,7,9
 
@@ -358,9 +358,9 @@ The "trial" statement execute a sequential process that can fail for some reason
 **pattern**
 ```
 trial
-  ** private context
+  * private context
   ...  
-  ** multiple use cases
+  * multiple use cases
   case name_0 do
     fail code if (condition);
     ...    
@@ -379,15 +379,15 @@ trial
   case name_5 do
     ...
 error code:
-   ** patch statement
+   * patch statement
 error code:
-   ** patch statement  
+   * patch statement  
 ...  
 other
-   ** covering all other errors 
+   * covering all other errors 
    ...
 final
-   ** finalization
+   * finalization
    ...
 done;
 ```

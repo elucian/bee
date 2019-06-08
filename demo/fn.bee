@@ -1,16 +1,16 @@
 +-----------------------------------
   declare and use an expression rule
 -----------------------------------+
-#name :=  "fn";
+driver fn:
 
-** lambda expression
+# lambda expression
 make add := (a, b ∈ Z) ∈ Z => (a + b);
 
-** use lambda expression with print
-print add(1, 2);    **  print 3
-print add(-10, 10); **  print 0
+# use lambda expression with print
+print add(1, 2);    * print 3
+print add(-10, 10); * print 0
 
-** recursive lambda expression
+# recursive lambda expression
 rule fac(n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
 pass if fac(3) = 6;
  

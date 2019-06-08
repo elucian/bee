@@ -22,11 +22,11 @@ yield   | interrupting current thread and give priority to other thread
 
 Asynchronous call can be done using a control loop:
 
-```** suspend for 2.5 sec
+```# suspend for 2.5 sec
 rule test():
   wait 2.5;
 return;
-** start control loop
+# start control loop
 make i := 0; 
 while i ≤ 4 do
   start test;
@@ -35,7 +35,7 @@ repeat;
 rest;
 ```
 
-**file:** [ac.md](demo/ac.md); **  asynchronous call
+**file:** [ac.md](demo/ac.md); *  asynchronous call
 
 ## Resumable Coroutines 
 
@@ -49,26 +49,26 @@ Coroutines are two methods that wait for each other to execute in turn.
 ```
 #driver
 
-make n ∈ N; ** control variable
-** first coroutine
+make n ∈ N; * control variable
+# first coroutine
 rule foo(x ∈ N):
   alter x := x + 1;
   wait 5;
   yield bar if x < 10;
 return;
-** second coroutine
+# second coroutine
 rule bar(x ∈ N):
   alter x = x + 1;
   wait 10;
   yield foo if x < 10;
 return;
-** call foo and bar asynchronously
+# call foo and bar asynchronously
 start foo(n);
 start bar(n);
-** wait for both foo and bar to finish
+# wait for both foo and bar to finish
 rest;
 
 over.
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee);   ** producer consumer example
+**See also:** [pc.wee](../demo/pc.wee);   * producer consumer example

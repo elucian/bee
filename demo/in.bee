@@ -1,7 +1,7 @@
 +--------------------------
    Bee input value demo
 --------------------------+
-#name :=  "in";
+driver in:
 
 make a ∈ N;
 print "to stop enter 0";

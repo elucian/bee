@@ -22,7 +22,7 @@ Bee has basic interaction with relational databases.
 A model is a complex data structure mapping Bee data types to database. Bee can read and update a database using an internal data model. This kind of applications are called _data-centric_. A model is connecting to a databases using API function library.
 
 ```
-load $bee_lib.db.oracle:(*)
+load $bee_lib.db.oracle:(.)
 ```
 
 ## Connections
@@ -30,14 +30,14 @@ load $bee_lib.db.oracle:(*)
 One application can connect to multiple databases simultaneously. A specific kind of application called _pipeline_ can pull data from multiple sources to update one target database. 
 
 **pattern**
-```** create a database instance
+```# create a database instance
 make db ∈ Oracle.DB
-** create a wrapper for database connection
+# create a wrapper for database connection
 rule connect(user, password, dbname ∈ S):
-  ** prepare credentials
+  * prepare credentials
   make credential ∈ S;
   alter credential := user + '/' + password + '@'+ dbname;
-  ** connect to database
+  * connect to database
   apply db.connect(credential);
 return;
 ```
@@ -90,10 +90,10 @@ You can scan one table like a collection:
 **pattern**
 ```
 scan record ∈ db.table_name  do
-  ** establish qualifier suppressor 
+  * establish qualifier suppressor 
   with record do
-    ** use current_record fields
-    print record.status; ** expect: 1 = .verified
+    * use current_record fields
+    print record.status; * expect: 1 = .verified
     ... 
   done;
 repeat;
@@ -103,21 +103,21 @@ repeat;
 You can modify table data using current _record_. First you modify record attributes, then you call commit or abort(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
 
 ```
-make index ∈ Z; ** counter
+make index ∈ Z; * counter
 scan record ∈ db.table_name do
-  ** update current table
+  * update current table
   with record do
     alter field_name := new_value;
      ...
   done;
   alter index += 1
-  ** commit batch of 100
+  * commit batch of 100
   when (index = 100) do
     apply db.commit;
     alter index := 0
   done;
 next;
-** commit all pending updates
+# commit all pending updates
 apply db.commit if (index > 0);
 ```
 
@@ -136,14 +136,14 @@ Any of the following operations will start automatically a transaction:
 
 Bee can add new data records into one table using table _append()_ rule.
 
-```** capture empty record
+```# capture empty record
 make record := table_name.append;
 with record do
   alter field_name := value;
   ...
 done;
 apply db.commit;
-** using temporary record
+# using temporary record
 with table_name.append do
   alter field_name := value;
   ...
@@ -157,14 +157,14 @@ Bee can do single or multiple row updates in one transaction.
 
 **Syntax:**
 
-```** use search fields and values
+```# use search fields and values
 make record := table_name[search_field:value, search_field:value ...];
 with record do
   alter field_name := value;
   ...
 done;
 apply db.commit;
-** use anonymous record 
+# use anonymous record 
 with table_name[search_field:value, search_field:value ...] do
   alter field_name := value;
   ...
@@ -178,22 +178,22 @@ This statement will remove one or more records from a table.
 
 **Syntax**
 
-```** Find one single record and delete
+```# Find one single record and delete
 make  record := table_name[search_field:value,...];
 apply record.delete;
-** check status
+# check status
 fail if record.status ≠ deleted;
 
 apply db.commit;
-** check status
+# check status
 fail if record.status ≠ verified;
-** Using search fields to delete multiple records
+# Using search fields to delete multiple records
 apply table_name[search_field:value,...].delete;
 apply db.commit;
-** Remove all records from a table in bulk
-apply table_name[*].delete;
+# Remove all records from a table in bulk
+apply table_name[..].delete;
 apply db.commit;
-** delete current record using scan
+# delete current record using scan
 scan record ∈ table_name do
   record.delete if (condition);
 done;
@@ -208,11 +208,11 @@ db.commit;
 The records that are modified are stored into a buffer. This buffer is empty when commit or abort.
 
 ```
-** display status of all pending records
+# display status of all pending records
 scan record ∈ table_name.pending do
   print (record.status);
 done;
-** display how many records are pending
+# display how many records are pending
 print table_name.pending.count
 ```
 
@@ -220,14 +220,14 @@ print table_name.pending.count
 
 Sometimes we need to bypass the ORM and execute native SQL:
 
-```** apply a modification query to database
+```# apply a modification query to database
 apply db.query(query_template ? array)
 apply db.query(query_template ? record)
-** apply a query that return; a buffer
+# apply a query that return; a buffer
 type  TRecord := {
       field_name ∈ Type,      
       ...
-      };** execute query string and return a list of records
+      };# execute query string and return a list of records
 make  buffer ∈ (TRecord); 
 apply db.query(query_string) +> buffer; 
 ```
@@ -237,12 +237,12 @@ apply db.query(query_string) +> buffer;
 Some databases have support for stored procedures:
 
 ```
-** prepare a record object 
+# prepare a record object 
 type  TRecord := {
       field_name ∈ Type,      
       ...
       };
-** execute stored procedure
+# execute stored procedure
 make  buffer ∈ (TRecord); 
 apply db.execute procedure_name(arguments) +> buffer; 
 ```

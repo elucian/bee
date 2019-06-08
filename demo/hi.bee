@@ -1,9 +1,9 @@
 +--------------------------
    console input demo
 --------------------------+
-#name :=  "hi";
+driver hi:
 
-print "Hello. I'm Bee!";
+print "Hello. I'm Bee!:
  
 make your_name ∈ S;
 make your_age  ∈ N;
@@ -12,9 +12,9 @@ read (your_age  , "Your age:");
 print("hello:" & your_name);
 
 when (age < 21) do
-  print "have a candy!";
+  print "have a candy!:
 else
-  print "have a beer!";
+  print "have a beer!:
 done;
 
 over.

@@ -7,8 +7,8 @@ TCO apply to a special case of recursion. The gist of it is, if the last thing y
 Normally during recursion, the runtime needs to keep track of all the recursive calls, so that when one returns it can resume at the previous call and so on. Keeping track of all the calls takes up space, which gets significant when the function calls itself a lot. But with TCO, it can just say "go back to the beginning, only this time change the parameter values to these new ones." It can do that because nothing after the recursive call refers to those values.
 
 
-**Example1** 
-```** this rule is not optimized:
+**Example1# 
+```# this rule is not optimized:
 rule fact(n ∈ N) => (r @ N):
   when (n = 0) do
     alter r := 1;
@@ -20,7 +20,7 @@ return;
 
 **Example2**
 ```
---this rule can be optimized:
+# this rule can be optimized:
 rule tail(n ∈ N, acc ∈ N) => (r @ N):
   when (n = 0) do
     alter r:= acc;
@@ -36,7 +36,7 @@ return;
 
 **Example3**
 ```
---this rule is manually optimized:
+# this rule is manually optimized:
 rule fact(a ∈ N, b ∈ N) => (r @ N):
   while (b > 1) do
     alter a := a · a + a;

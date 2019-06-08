@@ -1,29 +1,29 @@
 +-------------------------------------
    rule collector demonstration 
 -------------------------------------+
-#name :=  "up";
+driver up:
 
-** rule with two results
+# rule with two results
 rule test(x, y ∈ Z) => (a,b @ Z):
   alter a := x + 1;
   alter b := y + 1;
 return;
 
-** unpacking and modify two variables
+# unpacking and modify two variables
 make n,m ∈ Z;
 apply test(1,2) +> (n,m);
-print (n, m); **  will print 2, 3
+print (n, m); * will print 2, 3
 
-** rule with structured result
+# rule with structured result
 type Rec {x ∈ Z, y ∈ R} <: Object;
 rule demo(x ∈ Z, y ∈ R) => (r @ Rec):
   alter r.x := x;
   alter r.y := y;
 return;
 
-** test rule using alter instead of apply
+# test rule using alter instead of apply
 make  r ∈ Rec;
 apply demo(1, 0.5) +> r;
-print r ; ** > {x:1, y:0.5}
+print r ; * > {x:1, y:0.5}
 
 over. 

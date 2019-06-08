@@ -1,13 +1,12 @@
 +--------------------------------
 | Demo for repetitive statement |
 +-------------------------------+
-#role := "driver";
-#name := "cy";
+driver cy:
 
-** declare array of 10 integers
+# declare array of 10 integers
 make a ∈ [Z](10);
 
-**  use cycle repetitive statement
+# use cycle repetitive statement
 make i := 0 ∈ Z;
 cycle
   alter a[i] := i;
@@ -15,4 +14,4 @@ cycle
   alter i += 1;
 repeat;
 
-over. ** end of driver
+over. * end of driver

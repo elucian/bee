@@ -25,8 +25,10 @@ symbol  | description
 
 symbol| description
 ------|----------------------------------------------------------------
- \#   | System variables \| Global variables
-  $   | System constants \| Environment variables
+  *   | End of line comment
+  #   | Single line comment
+  $   | System constant  \| Environment variables
+  &   | System variable  \| Global variable
   @   | Define method result /| input/output parameters
   ∈   | Define variable/constant/result/input only parameter
   ?   | Template modifier. Associated with string templates
@@ -38,7 +40,6 @@ symbol| description
   .   | Decimals for real numbers \| String concatenation
   .   | Membership dot notation \| Prefix for public member/attribute
   \_  | Anonymous variable \| Has constant value one space (_ = ' ')
-  \*  | Replicate value \| [*] Multiple elements  \|Variable arguments  
   \\  | Escape character (\\n := New Line) \| maybe regular expressions
 
 ## Numeric operators  
@@ -66,8 +67,6 @@ symbol| description
 ------|------------------------------------------------------------------
  \+-  | Start for multiple line comments
  \-+  | End for multiple line comments  
- \##  | Title/sub-title comment line    
- \**  | Line comment \| end of line comment
  ..   | Define domain (n..m) \| Array slice [n..m]
  ::   | Define a constant (used with make)
  =\>  | Define: rule expression \| rule result
@@ -112,7 +111,7 @@ symbol | meaning
 Operator "≢" is not used. Instead you can use expression:
 
 ```
-  ¬(x ≡ y); ** divergence of two objects
+  ¬(x ≡ y); * divergence of two objects
 ```
 
 ## Collection operators

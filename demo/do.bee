@@ -1,12 +1,12 @@
 +-----------------------------------------
        repetitive statement demo
 -----------------------------------------+
-#name :=  "do";
+driver do:
 
-make a :=  [Z](10)  ; **  array of 10 Words
-make n :=  a.count(); **  index of last element
+make a :=  [Z](10)  ; * array of 10 Words
+make n :=  a.count(); * index of last element
 
-**  array traversal
+# array traversal
 make i ∈ Z;
 while (i < n) do
    print ('r[{0}] := {1}' <+ (i, a[i]));

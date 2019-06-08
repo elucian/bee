@@ -1,6 +1,6 @@
 ## Program structure
 
-Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension *.bee or *.cfg and it represents a component or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
+Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension .bee or .cfg and it represents a component or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
 
 **bookmarks**
 
@@ -49,7 +49,7 @@ $pro_home
 ### Configuration
 One application can load system constants from a configuration file. These are stored as "$name:value" pairs. Some system constants can be derived from environment variables using concatenation operators "&","+", "/" or "\\". 
 
-A configuration file have extension *.cfg. It can be used by the compiler or by the application. One application can run with different configuration files. Application documentation must contain description of configuration constants.
+A configuration file have extension .cfg. It can be used by the compiler or by the application. One application can run with different configuration files. Application documentation must contain description of configuration constants.
 
 Sometimes a _file template_ is provided to for copy and modify. Template file may contain comments using Bee syntax that you will learn later. Bee application will automatically parse configuration file to read values for: _system constants_.
 
@@ -104,12 +104,12 @@ System variables are defined usually at the beginning of the component.
 
 **predefined**
 ```
-#error  ** contains last error message
-#stack  ** contains debug information about current call stack
-#trace  ** contains reporting information about executed statements
-#level  ** contains how deep is the current call stack
-#count  ** contains last query count: updated/inserted/deleted records
-#query  ** contains last native query statement
+#error  * contains last error message
+#stack  * contains debug information about current call stack
+#trace  * contains reporting information about executed statements
+#level  * contains how deep is the current call stack
+#count  * contains last query count: updated/inserted/deleted records
+#query  * contains last native query statement
 ```
 
 **notes:** 
@@ -119,7 +119,7 @@ System variables are defined usually at the beginning of the component.
 
 ### Components
 
-A component is a source file with extension *.bee. You can organize an application using components. When compiled, all components are merged into a single monolithic application. Bee do not use dynamic loaded components: (.dll). 
+A component is a source file with extension .bee. You can organize an application using components. When compiled, all components are merged into a single monolithic application. Bee do not use dynamic loaded components: (.dll). 
 
 **Name:**
 
@@ -164,11 +164,11 @@ A module is a reusable component stored in a library. This in a sub-folder of _"
 
 Bee is using 7 kind of declarations:
 
-* load     ** import : a library in global scope
-* alias    ** declare: alternative name for library or aspect
-* type     ** declare: data types
-* make     ** declare: variable
-* rule     ** declare: named code block
+* load     * import : a library in global scope
+* alias    * declare: alternative name for library or aspect
+* type     * declare: data types
+* make     * declare: variable
+* rule     * declare: named code block
 
 ## Statement
 
@@ -176,10 +176,10 @@ Each statement start with one imperative keyword:
 
 **Examples:**
 
-* alter    ** change/modify variable value or assign new value
-* read     ** accept input from console into a variable
-* write    ** output to console result of an expressions
-* apply    ** execute one rule in synchronous mode
+* alter    * change/modify variable value or assign new value
+* read     * accept input from console into a variable
+* write    * output to console result of an expressions
+* apply    * execute one rule in synchronous mode
 
 **notes:**
 
@@ -193,14 +193,14 @@ Each statement start with one imperative keyword:
 ### Code block
 Statements can be contained in blocks of code.
 
-* do    ** anonymous simple context block
-* with  ** create a scope qualifier suppression block/ mapping block
-* when  ** create multi-path conditional selector
-* check ** create a multi-path value selector
-* cycle ** create unconditional repetitive block of code
-* while ** create conditional repetitive block of code
-* scan  ** create visitor block for all elements in a collection
-* trial ** create trial/error block of code to handle exceptions
+* do    :anonymous simple context block
+* with  :create a scope qualifier suppression block/ mapping block
+* when  :create multi-path conditional selector
+* check :create a multi-path value selector
+* cycle :create unconditional repetitive block of code
+* while :create conditional repetitive block of code
+* scan  :create visitor block for all elements in a collection
+* trial :create trial/error block of code to handle exceptions
 
 **notes:**
 
@@ -215,21 +215,21 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-#driver "main"
-** read the number of parameters
+driver main
+# read the number of parameters
 make c := $params.count;
 halt if (c = 0);
-** print comma separated parameters
+# print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
   write $params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
-** print the buffer to console
+# print the buffer to console
 print;
   
-over; ** end of driver
+over; * end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -247,11 +247,11 @@ Libraries and components can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib.folder_name:(*);
+load $bee_lib.folder_name:(.);
 load $bee_lib.folder_name:(x,y,z);
 ```
 
-* using:(*) all public members are borrowed in local scope;
+* using:(.) all public members are borrowed in local scope;
 * using:(x,y,z) only some public members are borrowed in local scope;
 
 **Qualifier**
@@ -277,10 +277,10 @@ alias new_name := qualifier.member_name;
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(*); ** load cpp library
-load $runtime.asm_lib:(*); ** load asm library
-load $runtime.bee_lib:(*); ** load bee core library
-load $program.pro_lib:(*); ** load project library
+load $runtime.cpp_lib:(.); * load cpp library
+load $runtime.asm_lib:(.); * load asm library
+load $runtime.bee_lib:(.); * load bee core library
+load $program.pro_lib:(.); * load project library
 ```
 
 ## Global context
@@ -296,16 +296,16 @@ A component can establish one or more local name-spaces where you can define com
 
 **example**
 ```
-** component name-space
+# component name-space
 make i := 1 ∈ Z; 
 trial
-  ** local name-space
-  make v := i;     ** v is local reference to nonlocal: i 
-  make i := 2 ∈ Z; ** create i local 
-  print i;  ** expected: 2 (local)
-  print v;  ** expected: 1 (nonlocal)
+  * local name-space
+  make v := i;     * v is local reference to nonlocal: i 
+  make i := 2 ∈ Z; * create i local 
+  print i;  * expected: 2 (local)
+  print v;  * expected: 1 (nonlocal)
 done;
-print i;  ** expected: 1  (unmodified)
+print i;  * expected: 1  (unmodified)
 
 over.
 ```
@@ -319,16 +319,16 @@ over.
 In Bee all members that begin with dot "." are public members.
 
 ```
---public constant
+# public constant
 make .pi :: 3.14;
 
---public variable
+# public variable
 make .v ∈ N;
 
---public rule
+# public rule
 rule .f(x ∈ N) ∈ N => (x + 1);
 
---public rule
+# public rule
 rule .m(x, y ∈ N) => (r @ N);
   alter r := x + y;
 return;
@@ -345,9 +345,9 @@ Comments can be used to document the code or the configuration files.
 
 **End of line**
 
-For each line of code you can use optional "--" follow by a short comment before end of line.
+For each line of code you can use optional comment "*".
  
-* you can use "--" in the middle of an expression before end of statement ";" symbol;
+* you can use "*" in the middle of an expression before end of statement ";" symbol;
 * you can have multiple statements separated by ";" in a single line but only one comment;
 
 **Single line**
@@ -367,38 +367,6 @@ For single line comments we use a pair of two symbols:
 4. In wiki pages apostrophe can not use "'" instead use Unicode symbol: `ʼ`
 
 
-**Boxed comments**
-
-For boxed comments we use two symbols "+- ... -+".
-
-```
-+----------------------------------
-| Boxed comment:                  |
-|  - Do not support nesting       |
-|  - Upper left + corner missing  |
-+---------------------------------+
-```
-
-**Outline comment**
-
-You can comment out a block of code using notation: "|*......*|"
-
-```
-|***************************|
-|* print "commented out"   *|
-|* old style block comment *|
-|***************************|
-```
-
-**Possible separators:**
-
-If a program is very large you can use separators to create large sections of code.
-
-```
-####
-****
-```
-
 **Example:**
 
 In next example we are using various comments into a demo program.
@@ -407,17 +375,14 @@ In next example we are using various comments into a demo program.
 +---------------------------------------------------------------
 | At the beginning of program we can have  several comments    | 
 | to explain how the program works. This notation is preferred.|
----------------------------------------------------------------+
-#role := "driver"
++--------------------------------------------------------------+
+driver main:
 
-## This is a title in program  (zero indentation for titles)
-   ## This is a sub-title in program (two space indentation)
+# This is a title in program  (zero indentation for titles)
+
+## This is a sub-title in program (two space indentation)
    
-over; ** end of program: in-line comment
-
-****************************************************************
-** Alternative boxed comment for ancient matrix printers      **
-****************************************************************
+over. * end of line comment
 ```
 
 **note:** 
@@ -440,15 +405,15 @@ The driver or aspect can load in memory numerous modules. After loading, all pub
 
 **pattern**
 
-```** initialize an aspect
+```# initialize an aspect
 load qualifier := $pro.src.aspect_name;
-** results can be captured using "+>":
+# results can be captured using "+>":
 apply qualifier.rule_name(arguments) +> (results);
 
-** give alias to aspect rule
+# give alias to aspect rule
 alias new_name := qualifier.rule_name;
 
-** apply aspect using its alias:
+# apply aspect using its alias:
 apply new_name(arguments) +> (results);
 ```
 
@@ -470,10 +435,10 @@ apply new_name(arguments) +> (results);
 ```
 aspect mod:
 
-** next rule is public
+# next rule is public
 rule .main(i ∈ Z) => (v @ N):
-** input parameter "i"
-** output parameter "v"
+# input parameter "i"
+# output parameter "v"
   when (i < 0) do
     alter v := -i;
   else
@@ -488,14 +453,14 @@ over.
 
 ```
 driver main:
-** define aspect "mod"
+# define aspect "mod"
 load mod := $pro.mod;
 
-** define variable result
+# define variable result
 make result ∈ N;
-** execute main procedure from aspect "mod"
+# execute main procedure from aspect "mod"
 apply mod.main(-3) +> result;
-print result;  ** expect: 3
+print result;  * expect: 3
 
 over.
 ```

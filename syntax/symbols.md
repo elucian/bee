@@ -13,26 +13,29 @@ My keyboard settings is saved in file G110.xml
 ```  
       M1    M2   M3
 -----------------------
-  G1 | ∈ ≡  ≈ ±  ∀ ∃
-  G2 | ≤ ≥  ⊖ /  Σ Π
+  G1 | ∈ ≡  ≈ ±  Δ Σ
+  G2 | ≤ ≥  ∃ ∀  Б /
 -----------------------
   G3 | ÷ ≠  ⊃ ⊂  λ φ
-  G4 | · ×  ∩ ∪  π α
+  G4 | · ×  ∩ ∪  α π
 -----------------------
-  G5 | ¬ ⊕  ↑ ↓  Δ Б
-  G6 | ∧ ∨  « »  ◇ ◪ 
+  G5 | ¬ ↑  ⊖ ⊕  ◇ ◪ 
+  G6 | ∧ ∨  « »  ^ ↗
 -----------------------
 ```
 
 **groups:**
  
 ```
-α = α β ɣ ε δ μ ω
-Δ = Δ Γ Λ Φ Ψ Ω 
-Б = Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я  
-/ = ⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹⁄₀₁₂₃₄₅₆₇₈₉ 
-◇ = ⊥ ǁ ∠ ⊡ ⊙ ↗ ↺ ○ ◷ □ ◁ ◇ ⌂ 
+/ = ⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹/₀₁₂₃₄₅₆₇₈₉ 
+^ = ⁺⁻ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏᶩᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻ 
+◇ = ⊥ ǁ ∠ ⊡ ⊙ ↺ ○ ◷ □ ◁ ◇ ⌂ 
 ◪ = ◪ ⎊ ■ ▤ ▥ ▦ ▧ ▨ ▩ 
+↗ = ↗↙ ↖↘ →← ↑↓ ↔↕ ↦↤ ↰↱ ↲↳ ↺↻ ⇄⇵ ⇉⇇ ⇊⇈ ↶↷
+Δ = Δ Γ Λ Φ Ψ Ω
+Σ = Σ Π
+Б = Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я 
+α = α β ɣ ε δ μ ω
 ```
 **unused**
 
@@ -46,20 +49,10 @@ Optional Unicode symbols can be used to enhance the readability of programs.
 
 **Superscript**
 
-Superscript is considered exponent. Alternative to `^` power symbol.
+Caoutak superscript is not supported:
 
 ``` 
-S ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹ 
-A ⁺ ⁻ ⁱ ʲ ᵏ ⁿ ᵒ ᵖ ʳ ˢ ˣ ʸ ᶻ 
-A ᵃ ᵇ ᶜ ᵈ ᵉ ᶠ ᵍ ʰ ⁱ ʲ ᵏ ᶩ ᵐ ⁿ ᵒ ᵖ ʳ ˢ ᵗ ᵘ ᵛ ʷ ˣ ʸ ᶻ 
 B ᴬ ᴮ ᴰ ᴱ ᴳ ᴴ ᴵ ᴶ ᴷ ᴸ ᴹ ᴺ ᴼ ᴾ ᴿ ᵀ ᵁ ᵂ 
-```
-
-**Note:** Limited superscript expressions:
-```
-x ⁻¹ 
-xⁿ⁻¹
-xⁿ⁺¹
 ```
 
 **Subscript**
@@ -73,10 +66,24 @@ X ₐ ₑ ₕ ᵢ ⱼ ₖ ₗ ₘ ₙ ₒ ₚ ᵣ ₛ ₜ ᵤ ᵥ ₓ
 
 **Fraction sign**
 
-Fraction sign ⁄ represent rational numbers:
+Fraction sign "⁄" is not supported. Bee is using "/" for fractions:
 
 ```
-¹⁄₂ ¹⁄₃ ¹⁄₄ ¹⁄₅ ¹⁄₆ ¹⁄₇ ¹⁄₈ ¹⁄₉ ¹⁄₁₀ ¹⁄₁₀₀ 
+¹/₂ ¹/₃ ¹/₄ ¹/₅ ¹/₆ ¹/₇ ¹/₈ ¹/₉ ¹/₁₀ ¹/₁₀₀ 
+```
+
+*Note:** Direct fractional exponent is not supported except with using caret: "^"
+
+```
+x^(¹/₂)
+```
+
+**Note:** Limited superscript expressions:
+
+```
+x ⁻¹ 
+xⁿ⁻¹
+xⁿ⁺¹
 ```
 
 ## Greek Letters

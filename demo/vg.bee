@@ -1,49 +1,50 @@
-+-------------------------------------
++------------------------------------
       vector graphics prospect
 ------------------------------------+
-#name := "vg";
-#kind := "driver";
+driver vg:
 
-**  define two points and two vectors
-make p1, p2 ∈ gP; **  graphic point
-make v1, v2 ∈ gV; **  graphic vector
+# define two points and two vectors
+make p1, p2 ∈ gP; * graphic point
+make v1, v2 ∈ gV; * graphic vector
 
-**  setup the points
-alter p1 := {x:0,  y:0}  ; **  origin
-alter p2 := {x:10, y:10} ; **  a point
+# setup the points
+alter p1 := {x:0,  y:0}  ; 
+alter p2 := {x:10, y:10} ; 
 
-**  setup the vectors
-alter v1 := {o:p1, p:p2} ; **  a vector
-alter v2 := {o:p2, p:p1} ; **  apposite vector to v1
+# setup the vectors
+alter v1 := {o:p1, p:p2} ; 
+alter v2 := {o:p2, p:p1} ; 
 
-**  define one 2D graphic layer
-make c @ gC(0,0); **  graphic canvas
+# define one 2D graphic layer
+make c @ gC(0,0);
 
-**  check canvas properties
+# check canvas properties
 alter c.size  := 400;
 alter c.color := $color.white;
 alter c.pen   := $color.black;
 draw  c;
 
-plot p1, p2;
-plot v1;
+draw p1, p2;
+draw v1;
 
-show c;  **  activate canvas
-wait 30; **  wait 30 seconds
+show c;  * activate canvas
+wait 30; * wait 30 seconds
 
 +-----------------------------------
   hide canvas from view
 -----------------------------------+
 hide c;
 
-**  define two circles
-**  circles in p1, p2 radius 5
+# define two circles
+# circles in p1, p2 radius 5
 make c1 := {o:p1,r:5} ∈ gC;
 make c2 := {o:p2,r:5} ∈ gC;
 
 draw c;
-plot c1, c2;
-show c; **  activate canvas
+draw c1, c2;
+
+# activate canvas
+show c; 
 wait 30;
 
 over.

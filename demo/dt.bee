@@ -1,13 +1,13 @@
 +----------------------------------------------------
 |              defined data types                   |
 ----------------------------------------------------+
-#name :=  "dt";
+driver dt:
 #description := "demo data types"
 
-**  this type is public (uses dot prefix)
+# this type is public (uses dot prefix)
 type .Data := {key:U, value:N} <: Hash;
 
-**  make variable using defubed alias
+# make variable using defubed alias
 make  x ∈ Data;
 alter x := {key:'a', make:10};
 +----------------------------------------------------
@@ -30,13 +30,13 @@ type Number := {
 | Note: first element has assigned a value := 0,   | 
 | all other elements have previous value  + 1      |
 ---------------------------------------------------+
-**  example of use
+# example of use
 make a := 0;
-**  example of use
+# example of use
 when (a = zero) do
-  print "zero";
+  print "zero:
 else
-  print "life is misery";
+  print "life is misery:
 done;
 
 over.

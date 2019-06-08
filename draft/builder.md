@@ -9,11 +9,11 @@
 A set builder is a declarative structure used to produce a sub-set from a set.
 
 **syntax**
-```** simple
+```# simple
 make set_name := { x | x ∈ source};
-** more complex
+## more complex
 make set_name := { map(x) | x ∈ source ∧ condition(x)};
-** two arguments from (Cartesian Product)
+# two arguments from (Cartesian Product)
 make set_name := { map(x,y) | (x,y) ∈ DS × DS};
 ```
 
@@ -28,12 +28,12 @@ make set_name := { map(x,y) | (x,y) ∈ DS × DS};
 ```
 make source := [1,2,1,2,3]
 make test1, test2 ∈ {Z}
-** copy source elements
+# copy source elements
 alter test1 := { x  | x ∈ source}
 alter test2 := { x² | x ∈ source}
-** expected result
-print test1; ** {1,2,3}
-print test2; ** {1,4,9}
+# expected result
+print test1; * {1,2,3}
+print test2; * {1,4,9}
 ```
 
 ## Hash Builder
@@ -65,14 +65,14 @@ Qualifiers can be used as logical expressions in statements: { when, if, while e
 
 **example:**
 ```
-** create a set of bit-masks
+# create a set of bit-masks
 make here := {0b10011,0b10001,0b11101};
-make verify ∈ L; ** logical flag
+make verify ∈ L; * logical flag
 
-** verify if any mask element has second bit from the end
+# verify if any mask element has second bit from the end
 alter verify := ∃(x ∈ here) ∧ (x ⊕ 0b10 = x);
 
-** verify if all elements in Here have first bit from the end
+# verify if all elements in Here have first bit from the end
 alter verify := ∀(x ∈ here) ∧ (x ⊕ 0b01 = x);
 ```
 

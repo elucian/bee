@@ -1,10 +1,10 @@
 +---------------------------
   Demo Fibonacci rule
 ---------------------------+
-#name :=  "fi";
-#role :=  "driver";
+driver fi:
+#role :=  "driver:
 
-**  declare Fibonacci rule
+# declare Fibonacci rule
 rule fib(n ∈ N) => (y @ N):
   when (n = 1 ∨ n = 0) do
     alter y := 1;
@@ -12,9 +12,9 @@ rule fib(n ∈ N) => (y @ N):
     alter y := fib(n - 1) + fib(n - 2);
   done;
 return;
-**  call define fib 
+# call define fib 
 make r := fib(5);
-**  print the result
+# print the result
 print r;
 
 over.
