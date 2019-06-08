@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee uses 47 reserved keywords so far: 
+Bee uses 50 reserved keywords so far: 
 
 ```
 04: if, is, in, as
