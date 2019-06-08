@@ -25,22 +25,22 @@ symbol  | description
 
 symbol| description
 ------|----------------------------------------------------------------
- \*   | End of line comment
- \#   | Single line comment
-  $   | System constant  \| Environment variables
-  &   | System variable  \| Global variable
-  @   | Define method result /| input/output parameters
-  ∈   | Define variable/constant/result/input only parameter
-  ?   | Template modifier. Associated with string templates
-  !   | Exclude lower or upper limit in domain notation
- \+   | Maximum upper limit for a domain \| Unicode notation U+ 
- \-   | Minimum lower limit in a domain  \| Unicode notation U- 
-  :   | Pair up key-value in a collection or rule call
-  ;   | End of statement \| Statement separator
-  .   | Decimals for real numbers \| String concatenation
-  .   | Membership dot notation \| Prefix for public member/attribute
-  \_  | Anonymous variable \| Has constant value one space (_ = ' ')
-  \\  | Escape character (\\n := New Line) \| maybe regular expressions
+ `*`  | End of line comment
+ `#`  | Single line comment
+ `$`  | System constant  \| Environment variables
+ `&`  | System variable  \| Global variable
+ `@`  | Define method result /| input/output parameters
+ `∈`  | Define variable/constant/result/input only parameter
+ `?`  | Template modifier. Associated with string templates
+ `!`  | Exclude lower or upper limit in domain notation
+ `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
+ `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
+ `:`  | Pair up key-value in a collection or rule call
+ `;`  | End of statement \| Statement separator
+ `.`  | Decimals for real numbers \| String concatenation
+ `.`  | Membership dot notation \| Prefix for public member/attribute
+ `_`  | Anonymous variable \| Has constant value one space (_ = ' ')
+ `\\` | Escape character (\\n := New Line) \| maybe regular expressions
 
 ## Numeric operators  
 
@@ -48,16 +48,16 @@ Listed in the order of precedence top down.
 
 symbol| description
 ------|------------------------------------------------------------------
- /    | Rational number division (higher precedence)
-\-    | Change sign, replace "y = -x" with "y = -1·x"
- ^    | Power symbol used with fractions or expressions   
- ·    | Multiplication
- ÷    | Division 
- ×    | Array and matrix multiplication
- %    | Modulo operator
-\+    | Numeric addition \| List append
-\-    | Numeric subtraction \| Collection difference 
- ±    | Numeric tolerance (use with ≈)
+ `/`  | Rational number division (higher precedence)
+ `-`  | Change sign, replace "y = -x" with "y = -1·x"
+ `^`  | Power symbol used with fractions or expressions   
+ `·`  | Multiplication
+ `÷`  | Division 
+ `×`  | Array and matrix multiplication
+ `%`  | Modulo operator
+ `+`  | Numeric addition \| List append
+ `-`  | Numeric subtraction \| Collection difference 
+ `±`  | Numeric tolerance (use with ≈)
 
 ## Double Symbols
 
@@ -65,13 +65,13 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------------------
- ..   | Define domain (n..m) \| Array slice [n..m]
- ::   | Define a constant (used with make)
- =\>  | Define: rule expression \| rule result
- \<:  | Define subset from set \| Specify super-type for a new type
- :=   | Assign by value \| Reset reference
- :+   | Assign by copy  \| Keep reference
- \+\> | Collector: capture result. Associated with: _play_ and _apply_
+ `..` | Define domain (n..m) \| Array slice [n..m]
+ `::` | Define a constant (used with make)
+ `=>` | Define: rule expression \| rule result
+ `<:` | Define subset from set \| Specify super-type for a new type
+ `:=` | Assign by value \| Reset reference
+ `:+` | Assign by copy  \| Keep reference
+ `+>` | Collector: capture result. Associated with: _play_ and _apply_
  
 ## Arithmetic modifiers
 
@@ -79,13 +79,13 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
 ------|------------------------------------------------------------------
- +=   | increment value
- -=   | decrement value
- ·=   | multiplication modifier 
- ÷=   | real division modifier
- /=   | rational division modifier
- ^=   | power  modifier
- %=   | modulo modifier
+ `+=` | increment value
+ `-=` | decrement value
+ `·=` | multiplication modifier 
+ `÷=` | real division modifier
+ `/=` | rational division modifier
+ `^=` | power  modifier
+ `%=` | modulo modifier
 
 ## Relation Operators
 
@@ -93,28 +93,28 @@ Relation operators are used to compare expressions.
 
 symbol | meaning
 -------|--------------------------------------------------------------------
-  ∈    | check if element belong to collection
-  =    | same value \| equivalent objects (deep comparison)
-  ≠    | divergent values \| divergent objects (deep comparison)
-  ≡    | same reference (shallow comparison)
-  ≈    | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
- \>    | value is greater than 
- \<    | value is less than
-  ≥    | greater than or equal to
-  ≤    | less than or equal to
+ `∈`   | check if element belong to collection
+ `=`   | same value \| equivalent objects (deep comparison)
+ `≠`   | divergent values \| divergent objects (deep comparison)
+ `≡`   | same reference (shallow comparison)
+ `≈`   | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
+ `>`   | value is greater than 
+ `<`   | value is less than
+ `≥`   | greater than or equal to
+ `≤`   | less than or equal to
 
 
 **missing:** 
 
-Operator "≢" is not used. Instead you can use expression:
+Operator: not "≡" do not exist in Bee. You can use expression:
 
 ```
-  ¬(x ≡ y); * divergence of two objects
+  ¬(x ≡ y); * not the same
 ```
 
 ## Collection operators
 
-symbol | `->`       |meaning
+symbol | result     |meaning
 -------|------------|----------------------------------------------------------
   ∩    | Set        |Intersection between two collections
   ∪    | Set        |Union between two collections
