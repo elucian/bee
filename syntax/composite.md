@@ -567,7 +567,7 @@ fail if test.b ≠ 1; ** verify attribute b
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
-* Rules can be overwritten in other modules;
+* Rules can be overwritten in other components;
 * Rules can be private or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.

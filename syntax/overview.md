@@ -820,7 +820,7 @@ A rule that have no results can is called _routine_:
 
 * A routine can have attributes;
 * A routine can have side-effects;
-* A routine can modify module variables;
+* A routine can modify component variables;
 * A routine can call any other routine;
 
 **attributes**
@@ -894,7 +894,7 @@ make r := new_rule(arguments)
 * A rule clone have same _parameters_ same _results_ and same functionality as the prototype;
 * A rule clone has its  _own attributes_: defined using curly brackets {attributes}; 
 * A rule clone has some _shared attributes_: defined in the prototype with dot prefix;
-* A rule clone can be created in local context of another rule or in module context;
+* A rule clone can be created in local context of another rule or in component context;
 
 **example**
 ```** this is a generic rule
@@ -918,13 +918,12 @@ print dec(2); **  1
 ## External rules
 
 In Bee you can use external rules from C language.
-These rules are usually loaded in a component.
+These rules are usually wrapped in modules.
 
 **Example:**
 This is myLib.bee file: 
 ```
-#role := "component";
-#name := "myLib";
+module  myLib;
 
 load myLib := $bee.lib.cpp.myLib; ** load cpp library
 ** define a wrapper for external "fib"

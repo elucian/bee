@@ -4,6 +4,7 @@ Bee uses 47 reserved keywords so far:
 
 ```
 04: if, is, in, as
+03: driver, aspect, module
 08: make, rule, like, clone, load, alias, type, return;
 06: read, write, print, alter, scrap, apply
 07: when, with, check, cycle, while, scan, trial
@@ -29,13 +30,16 @@ Bee uses 47 reserved keywords so far:
 
 ### Definition statements
 
-Next statements are used to declare or create a module member.
+Next statements are used to declare new elements in a component.
 
 | Keyword  | Purpose
 |----------|-------------------------------------------------------------------
-| load     | Load library or aspect
-| alias    | Suppress scope qualifier for external elements from a library or module
-| type     | Declare data super-type or sub-type
+| driver   | Declare the application lead component
+| aspect   | Declare one application component
+| module   | Declare one reusable component
+| load     | Load module or aspect in a component
+| alias    | Suppress scope qualifier for elements of loaded components
+| type     | Declare data super-type or sub-type in a component
 | make     | Create a new variable or multiple variables
 | rule     | Create a new rule or _prototype_
 | clone    | Create a new rule from a _prototype_
@@ -43,7 +47,7 @@ Next statements are used to declare or create a module member.
 
 ### Execution statements
 
-Next statements represents actions. Also called Imperative statements.
+Next keywords are simple statements. These represents actions called _imperative statements_.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------
@@ -53,7 +57,6 @@ Next statements represents actions. Also called Imperative statements.
 | print    | Output expression result to console 
 | alter    | Mutate variable value using an expression
 | scrap    | Remove one element from a collection
-
 
 ## Control statements
 
@@ -95,7 +98,7 @@ These keywords transfer control or make an interruption of current thread.
 | solve    | Solve one forward case into a trial block
 | resume   | Used in trial block to continue next case after failure
 | halt     | Create unrecoverable error and stop program
-| over     | End driver, library or module file. Dot suffix is mandatory.
+| over     | End driver, library or component file. Dot suffix is mandatory.
 | wait     | Suspend execution for a number of seconds
 
 **Read next:** [Syntax Overview](overview.md)

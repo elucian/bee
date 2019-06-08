@@ -1,6 +1,6 @@
 ## Program structure
 
-Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension *.bee or *.cfg and it represents a module or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
+Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension *.bee or *.cfg and it represents a component or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
 
 **bookmarks**
 
@@ -66,7 +66,7 @@ Bee can use a runt-time configuration file:
 ```
 
 ### System Constants
- System constants are using "$" prefix. These constants are global and immutable. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ module.
+ System constants are using "$" prefix. These constants are global and immutable. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ component.
 
 | Constant | Environment| Description                |
 |----------|------------|----------------------------|
@@ -75,7 +75,7 @@ Bee can use a runt-time configuration file:
 |$bee_path | BEE_PATH   | Bee library path           |
 |$pro_home | N/A        | Program home folder        |
 |$pro_lib  | N/A        | Program library home       |
-|$pro_mod  | N/A        | Program modules home       |
+|$pro_mod  | N/A        | Program components home       |
 |$pro_log  | N/A        | Reporting folder           |
 
 ### System Directives
@@ -95,12 +95,12 @@ Directives are controlling the application compilation. These directives have a 
 |$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
 
 **note**
-* You can overwrite system directives in driver but not in _aspect_ or _component_ modules;
+* You can overwrite system directives in driver but not in _aspect_ or _component_ components;
 * Precision is controlling both: rational numbers and display precision for floating numbers;
 
 ### System Variables
 
-System variables are defined usually at the beginning of the module. 
+System variables are defined usually at the beginning of the component. 
 
 **predefined**
 ```
@@ -113,54 +113,52 @@ System variables are defined usually at the beginning of the module.
 ```
 
 **notes:** 
-* System variables are global and may be specific to a module;
+* System variables are global and may be specific to a component;
 * User can create new system variables specific to application;
 * Prefix "#" is used to avoid scope qualifier and improve code readability;
 
-### Modules
+### Components
 
-A module is a source file with extension *.bee. We split an application in multiple modules. Once an application is compiled, all modules are merged into a monolithic application. Bee do not use dynamic loaded modules: (.dll)
+A component is a source file with extension *.bee. You can organize an application using components. When compiled, all components are merged into a single monolithic application. Bee do not use dynamic loaded components: (.dll). 
 
-**attributes**
+**Name:**
 
-One _module_ is identified by several _attributes_. These are _system variables_, used by the compiler:
+One _component_ is identified by a _name_ created with one different keyword depending on component role:
 
-* #role: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
-* #name: the driver name it is usually the same as the file name;
-* #description: a short description of the module;
+* #driver: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
+* #aspect: the driver name it is usually the same as the file name;
+* #module: a short description of the component;
 
 **Notes**
-* Default role for a _module_ is _driver_;
 * One application can have one single _driver_;
-* One _driver_ can load one or more _components_;
-* One _driver_ can _play_ multiple _aspects_;
-* One _aspect_ can also load _components_;
-* One _aspect_ can also _play_ other aspects;
-* One _component_ can load other components;
-* One _component_ can not load an aspect;
-
+* One _driver_ can load multiple _aspects_ and _modules_;
+* One _aspect_ can also load _aspects_ and _modules_;
+* One _module_ can also load modules but not _aspects_;
+* One component file is ending with keyword _over_;
 
 ### Drivers
-There is one single _driver file_ for one application. This file has #role = "driver". A _driver_ has the role to lead the application main functionality. When _driver_ is over the application stop and give control back to operating system. 
+There is one single _driver_ component for one application. It has the role to lead the application main thread. When _driver_ execution is over the application give control back to the operating system. 
 
-A _driver_ can read configuration file, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_. Normally a driver file is ending with keyword: _over_ followed by a dot.
+**usability:**
+
+A _driver_ can read configuration files, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_.
 
 ### Aspects
-An application architect can separate system concerns in multiple _aspects_. One aspect is a module located in _"src"_ folder. A driver can load an aspect only once, then it can use any of its public members on demand. 
+An application architect can separate system concerns in multiple _aspects_. One aspect is a component located in _"src"_ folder. A driver can load an aspect only once, then it can use any of its public members on demand. 
 
 
-**notes:**
-* At least one aspect member must be public;
-* An aspect do not have rogue statements;
+**Usability:**
+* At least one aspect element must be public;
+* Usually an aspect do not have rogue statements;
 * If aspect has rogue statements these are executed only once, when the aspect is loaded first time;
-* Aspect variables have one single value shared in application context.
+* Aspect variables have one single value shared in application global context.
 
-### Components
-Components are reusable modules organized in libraries. A library in a sub-folder stored in _"lib"_ folder. One module can _load_ from a library one or more components. From each component we can use one or more public members using scope qualifier.
+### Modules
+A module is a reusable component stored in a library. This in a sub-folder of _"lib"_. One driver or aspect can _load_ from a library one or more modules. From each module we can use one or more public members with scope qualifier.
 
 **notes:**
-* A component must have public members;
-* A component does not have rogue statements;
+* Modules must have public members;
+* Modules does not have rogue statements;
 
 ## Declaration
 
@@ -189,8 +187,8 @@ Each statement start with one imperative keyword:
 * One statement is usually described in a single line;
 * One expression in a statement can extend on multiple lines;
 * Multiple statements on a single line are separated with ";"
-* You can have a comment at end of line using "--" 
-* A statement may continue after line comment;
+* You can create _line comment_ using "*" 
+* A statement may continue after _line comment_ on the next line;
 
 ### Code block
 Statements can be contained in blocks of code.
@@ -217,15 +215,14 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-#role := "driver";
-#name := "main"
+#driver "main"
 ** read the number of parameters
-make c := #params.count;
+make c := $params.count;
 halt if (c = 0);
 ** print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
-  write #params[i];
+  write $params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
@@ -238,14 +235,14 @@ over; ** end of driver
 Do not try to understand this example. It is just a worm-up! 
 
 **Notes:** 
-* This program is a #role = "driver" having file-name "main.bee";
+* This program is a driver :=  having file-name "main.bee";
 * Input parameter _*params_ is an array of strings;
-* Any Bee module is ending with mandatory keyword: _"over"_; 
+* Any Bee component is ending with mandatory keyword: _"over"_; 
 * Early driver termination can be trigger using: halt or exit;
 
 ## External code
 
-Libraries and modules can be imported like this:
+Libraries and components can be imported like this:
 
 **Imports:**
 
@@ -267,7 +264,7 @@ apply qualifier.member_name;
 
 **Note:**
 
-When a module is loaded with qualifier, you can not borrow its members. All public members must use the specified qualifier or you can use "with" block to suppress the qualifier for a region of code.
+When a component is loaded with qualifier, you can not borrow its members. All public members must use the specified qualifier or you can use "with" block to suppress the qualifier for a region of code.
 
 **Alias**
 
@@ -290,16 +287,16 @@ load $program.pro_lib:(*); ** load project library
 
 One application has a global context where variables and constants are allocated. Each application file can contribute with new elements that can be created in this context. The global context can be also called _application context_ or _session context_;
 
-* Global context helps to store and identify _public identifiers_ from all loaded modules;
-* When a module is loaded, all public members are defined in the _global context_;
+* Global context helps to store and identify _public identifiers_ from all loaded components;
+* When a component is loaded, all public members are defined in the _global context_;
 
 ## Name space
 
-A module can establish one or more local name-spaces where you can define module members and statements.
+A component can establish one or more local name-spaces where you can define component members and statements.
 
 **example**
 ```
-** module name-space
+** component name-space
 make i := 1 ∈ Z; 
 trial
   ** local name-space
@@ -338,8 +335,8 @@ return;
 ```
 
 **note:** 
-* private members are visible in current module and do not require _scoping_ notation;
-* public members are visible from external modules using _scoping_ notation;
+* private members are visible in current component and do not require _scoping_ notation;
+* public members are visible from external components using _scoping_ notation;
 
 
 ## Comments
@@ -428,25 +425,18 @@ Any test after the end of program is considered a comment and is ignored by the 
 
 ## Execution
 
-#### Program Execution
+**driver**
 
-When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled into an executable file. 
+When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled. The driver is the program main entry point. It is executed only once. 
 
-* A driver is the program main entry point. It is executed only once;
-* A component do not contain rogue statements and do not have parameters;
-* An aspect can contain rogue statements that are executed using _play_;
+**aspect**
 
-#### Aspect Execution
+One aspect is executed when is loaded first time from driver or from another aspect. Rogue statements from an aspect can be used for _aspect initialization_. You can not run an aspect a second time during the lifespan of a session.
 
-One aspect is executed when is loaded first time. Therefore rogue statements from an aspect can be used for _aspect initialization_. You can not run an aspect initialization a second time during the lifespan of a session.
+**modules**
 
-After loading the driver can control the execution of different aspect rules in specified order. Before each rule the driver can interact with the user to ask for input. After executing the driver can print feedback, reuse the results as arguments for next call or store the results for later use.
+The driver or aspect can load in memory numerous modules. After loading, all public elements can be executed on demand. Before execution the driver can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
 
-**properties**
-
-* Appect can be loaded one single time;
-* Aspect rules can be executed once or multiple times; 
-* Public and private states from an aspect are persistent;
 
 **pattern**
 
@@ -462,16 +452,23 @@ alias new_name := qualifier.rule_name;
 apply new_name(arguments) +> (results);
 ```
 
+**Notes:**
+* An application can have a single driver;
+* Appect can be loaded from a driver or another aspect;
+* Public and private states from an aspect are persistent;
+* Aspect can be initialized only once;
+* Aspect elements can be used multiple times; 
+
+
 **Restriction:**
-* one aspect can not be loaded from inside a rule;
-* the same aspect can not be loaded twice with different qualifiers;
-* one aspect can have same name as a library file but must use a different qualifier;
+* one component can not be loaded from inside a rule;
+* the same component can not be loaded twice with different qualifiers;
+* one component can have same file name with another but must use a different qualifier;
 
 **Example:**
 
 ```
-#name := "mod";
-#role := "aspect";
+aspect mod:
 
 ** next rule is public
 rule .main(i ∈ Z) => (v @ N):
@@ -490,7 +487,7 @@ over.
 **Using aspect:**
 
 ```
-#role := "driver";
+driver main:
 ** define aspect "mod"
 load mod := $pro.mod;
 
