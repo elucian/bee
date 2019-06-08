@@ -67,21 +67,21 @@ make a7 := a1 ∪ a2; * [1,2,3,4]
 
 **example**
 ```
-rule test_array():
-  * array  with capacity of 10 elements
+rule test_array:
+  ## array  with capacity of 10 elements
   make my_array ∈ [Z](10);
   make m := my_array.capacity();
   make i := 0 ∈ u4;
-  * traverse array and modify elements
+  ## traverse array and modify elements
   while i < m do
     alter my_array[i] := i;     
     alter i += 1;
   repeat;
-  * array  elements using escape template \[]
+  ## array  elements using escape template \[]
   print ("This is the first element: \[1]" ? my_array); 
   print ("This is the last element: \[-1]" ? my_array);
   
-  * range of array elements are comma separated [1,2,3]
+  ## range of array elements are comma separated [1,2,3]
   print ("These are the first two: \[1..2]"        ? my_array);
   print ("These are the lat two: \[-2..-1]"        ? my_array);
   print ("These are all except lat two: \[1..-3]"  ? my_array);
@@ -105,7 +105,7 @@ make refer := array;
 print array ≡ refer; * 0 = True (same array)
 
 # extend array with 10 more elements
-alter array    := array + [0](10); * 10 new elements
+alter array    += [0](10); * 10 new elements
 alter array[∀] := 1; * modify all 
 
 # print new array and reference
@@ -190,7 +190,7 @@ done;
 [[100,100],[100,100]]
 
 A matrix can be initialized using literals or constructor.
-A matrix can support scalar operations like Array
+A matrix can support scalar operations like Array 
 
 ```
 make M ∈ [Z](2,2);
@@ -213,17 +213,35 @@ do
 done;
 ```
 
-**resize matrix**
+**addition**
+Two matrices can be added to each other if they have the same dimensions.
 
 ```
 # creation of matrix with 10 × 10 elements
-  make matrix := [10,10] ;  
+make M  := [1](10,10) + [2](10,10);
 
-# increase matrix number of rows
-  alter matrix ×= [1,1,1,1]; * 5 new rows
+# verify the result is a matrix of same dimensions  
+pass if M = [3](10,10);
+```
 
-# increase matrix number of columns
-  alter matrix += [,5]; * 5 new columns  
+**resize matrix**
+To resize a matrix you can use _direct sum_ matrix modifier "+=" 
+
+```
+# creation of matrix with 10 × 10 elements
+  make matrix  := [0](10,10) ;  
+
+# increase matrix: number of columns
+  alter matrix += [0](0,5); * 5 new columns  
+
+# increase matrix: number of rows
+  alter matrix += [0](5,0); * 5 new rows  
+  
+# increase matrix: rows and columns
+  alter matrix += [0](2,2); * 2 new row and 2 new column  
+
+# verify effect of all operations  
+  pass if matrix = [0](17,17); 
 ```
 
 **Memory impedance**
@@ -239,7 +257,8 @@ Matrix Traversal When you traverse elements use rows first, than you change the 
 Example: In this example we traverse all the rows then all the column, this is the most efficient way to traverse a matrix.
 
 ```
-make M := [ 
+make M := 
+      [ 
        ['a0','b0','c0'],
        ['a1','b1','c1'],
        ['a2','b2','c2']
@@ -524,10 +543,10 @@ Output:
 ```  
 make animals := {}; * partial declaration
 do
-  * establish element types (S:X)
+  ## establish element types (S:X)
   animals['Rover'] := "dog";
 
-  * use direct assignment to create 2 more element
+  ## use direct assignment to create 2 more element
   animals['Bear'] := "dog";
   animals['Kiwi'] := "bird";
   print(animals);
@@ -551,7 +570,7 @@ Strings can be concatenated using:
 # this is example of string concatenation
 make str := ""; 
 do
-# set string value using different operators
+  ## set string value using different operators
   str := "this " & " string";  * "this  string"
   str := "this " + " string";  * "this string"
 done;
@@ -572,15 +591,15 @@ done;
 
 It is common to create strings automatically.
 
-**Operator:**  "*"
+**Operator:**  "×"
 
 ```
-make str := constant * n ∈ S(n);
+make str := constant × n ∈ S(n);
 ```
 
 **Example:**
 ```
-make sep := '-' * 19;
+make sep := '-' × 19;
 
 print ('+' + sep);
 print ('|   this is a test   |');
@@ -779,8 +798,8 @@ Where pattern cab gave two forms:
 
 * Text:    format (Text: str, Table: map);
 * Text:    replace(Text: str, String: target, String: arrow );
-* Integer: find   (Text: str, String: patern);
-* Integer: count  (Text: str, String: patern);
+* Integer: find   (Text: str, String: pattern);
+* Integer: count  (Text: str, String: pattern);
 * Integer: length (Text: str);
 
 **Reading a Text:**
