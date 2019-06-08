@@ -33,8 +33,8 @@ symbol| description
   ∈   | Define variable/constant/result/input only parameter
   ?   | Template modifier. Associated with string templates
   !   | Exclude lower or upper limit in domain notation
-  +   | Maximum upper limit for a domain \| Unicode notation U+ 
-  -   | Minimum lower limit in a domain  \| Unicode notation U- 
+ \+   | Maximum upper limit for a domain \| Unicode notation U+ 
+ \-   | Minimum lower limit in a domain  \| Unicode notation U- 
   :   | Pair up key-value in a collection or rule call
   ;   | End of statement \| Statement separator
   .   | Decimals for real numbers \| String concatenation
