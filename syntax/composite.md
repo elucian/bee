@@ -516,7 +516,7 @@ print size(Person);
 ```
 
 ### Recursive
-We can limit how deep a call stack become using a directive. "$level:100"
+We can limit how deep a call stack become using a directive. "$recursion:1000"
 
 ```
 # example of single recursive node
@@ -612,7 +612,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 ```# global exception type
 type Error := {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
 # global system error
-make #error ∈ Error;
+make &error ∈ Error;
 ```
 
 You can define exceptions with code > 200 and raise exceptions with two statements:
@@ -644,11 +644,11 @@ exception: 'test'
 ```
 
 **Notes:**
-* Keyword _fail_ will modify system variable #error to create a message;
+* Keyword _fail_ will modify system variable &error to create a message;
 * Keyword _fail_ can raise only recoverable errors with code ≥ 200;
 * Keyword _fail_ can not terminate a _driver_ only _halt_ or _exit_ can;
 * Keyword _halt_ will liberate the resources and terminate the program;
-* Keyword _pass_ is opposite of _fail_ and is clearing the #error message;
+* Keyword _pass_ is opposite of _fail_ and is clearing the &error message;
 * Error code <  200 are system reserved error codes;
 * Error code ≤ -1   are unrecoverable errors created with _halt_;
 * Recoverable errors must be analyzed by the program using a trial block;

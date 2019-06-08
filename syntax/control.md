@@ -251,7 +251,7 @@ repeat;
 
 **Notes:** 
 * If condition is true all the time we can end-up in infinite loop;
-* Infinite while can be interrupted by timer directive: {#timer:10s};
+* Infinite while can be interrupted by timer variable: {$timer:10s};
 * When timer expire, the loop will terminate. By default timer is 0s;
 
 **example**
@@ -407,7 +407,7 @@ Next statements are directly associated with trial block:
 | fail  | interrupt execution and transfer control to error handlers
 | resume| used from error handlers to continue with next case 
 | abort | terminate execution and transfer control to next statement
-| pass  | terminate execution and cleanup #error record
+| pass  | terminate execution and cleanup &error record
 
 **error**
 

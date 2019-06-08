@@ -78,9 +78,9 @@ Bee can use a runt-time configuration file:
 |$pro_mod  | N/A        | Program components home       |
 |$pro_log  | N/A        | Reporting folder           |
 
-### System Directives
+### System directives
 
-Directives are controlling the application compilation. These directives have a pre-defined constant value. You can setup these values in compiler configuration file. Once compilation is done you can not change these options.
+Directives are controlling the application compilation. These directives have a pre-defined values. You can setup these values in compiler configuration file. Once compilation is done you can not change these options.
 
 | Constant | Default value | Description
 |----------|---------------|----------------------------------------------------------------
@@ -95,7 +95,7 @@ Directives are controlling the application compilation. These directives have a 
 |$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
 
 **note**
-* You can overwrite system directives in driver but not in _aspect_ or _component_ components;
+* You can overwrite system directives in driver but not in _aspect_ or _method_ components;
 * Precision is controlling both: rational numbers and display precision for floating numbers;
 
 ### System Variables
@@ -104,18 +104,18 @@ System variables are defined usually at the beginning of the component.
 
 **predefined**
 ```
-#error  * contains last error message
-#stack  * contains debug information about current call stack
-#trace  * contains reporting information about executed statements
-#level  * contains how deep is the current call stack
-#count  * contains last query count: updated/inserted/deleted records
-#query  * contains last native query statement
+&error  * contains last error message
+&stack  * contains debug information about current call stack
+&trace  * contains reporting information about executed statements
+&level  * contains how deep is the current call stack
+&count  * contains last query count: updated/inserted/deleted records
+&query  * contains last native query statement
 ```
 
 **notes:** 
 * System variables are global and may be specific to a component;
 * User can create new system variables specific to application;
-* Prefix "#" is used to avoid scope qualifier and improve code readability;
+* Prefix "&" is used to avoid scope qualifier and improve code readability;
 
 ### Components
 
@@ -299,7 +299,7 @@ A component can establish one or more local name-spaces where you can define com
 # component name-space
 make i := 1 ∈ Z; 
 trial
-  * local name-space
+  ## local name-space
   make v := i;     * v is local reference to nonlocal: i 
   make i := 2 ∈ Z; * create i local 
   print i;  * expected: 2 (local)
@@ -352,19 +352,18 @@ For each line of code you can use optional comment "*".
 
 **Single line**
 
-For single line comments we use a pair of two symbols: 
+For single line comments we use a pair symbols: 
 
-{ "**", "##" } 
+{ "*", "#" } 
 
-* You can use \#\# in your program as title comments starting at beginning of a line;
-* You can use \*\* in your program as sub-title comments or line separator;
+* \# is used as title or subtitle
+* \* in used as end of line comment
 
 **Notes:** These are chosen for following reasons:
 
-1. In Wiki "**" is for making titles bold. So Bee is Wiki friendly.
-2. In Wiki "##" represents title 2. Iʼm using Wiki notation to print Bee documentation.
+1. In Wiki "*" is for making bullets and bold text. So Bee is Wiki friendly.
+2. In Wiki "#" represents a title. For subtitle you can use two "##".
 3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
-4. In wiki pages apostrophe can not use "'" instead use Unicode symbol: `ʼ`
 
 
 **Example:**
@@ -386,7 +385,7 @@ over. * end of line comment
 ```
 
 **note:** 
-Any test after the end of program is considered a comment and is ignored by the compiler. After last "." nothing else is parsed.
+Any test after the end of program is considered a comment and is ignored by the compiler. After last "." nothing else is parsed. So you can use free text.
 
 ## Execution
 
@@ -419,7 +418,7 @@ apply new_name(arguments) +> (results);
 
 **Notes:**
 * An application can have a single driver;
-* Appect can be loaded from a driver or another aspect;
+* Aspect can be loaded from a driver or another aspect;
 * Public and private states from an aspect are persistent;
 * Aspect can be initialized only once;
 * Aspect elements can be used multiple times; 
@@ -437,8 +436,6 @@ aspect mod:
 
 # next rule is public
 rule .main(i ∈ Z) => (v @ N):
-# input parameter "i"
-# output parameter "v"
   when (i < 0) do
     alter v := -i;
   else

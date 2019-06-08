@@ -95,7 +95,7 @@ This is the last element: 10
 ```
 
 **resize**
-Array capacity can be modified using union operator "∪". This will reset the array reference. That means it will not update any slice or other references you may have to this array. 
+Array capacity can be modified using union operator "+". This will reset the array reference. That means it will not update any slice or other references you may have to this array. 
 
 ```
 # define new array and reference
@@ -105,7 +105,7 @@ make refer := array;
 print array ≡ refer; * 0 = True (same array)
 
 # extend array with 10 more elements
-alter array    := array ∪ [0](10); * 10 new elements
+alter array    := array + [0](10); * 10 new elements
 alter array[∀] := 1; * modify all 
 
 # print new array and reference
@@ -164,8 +164,8 @@ make c := a[0..2]; * [0,0,0]
 make e := a[3..4]; * [0,0]
 
 # modify slice elements
-alter c[..] := 1;
-alter e[..] := 2;
+alter c[∀] := 1;
+alter e[∀] := 2;
 
 # original array is modified
 print a; * [1,1,1,2,2]
@@ -183,7 +183,7 @@ Modify all elements of the matrix is possible using [∀] and assign operator �
 # initialize all elements with 100
 make M: [Z](2,2);
 do
-  M[..] := 100;
+  M[∀] := 100;
   print (M);
 done;
 ```
