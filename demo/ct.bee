@@ -1,14 +1,15 @@
 +----------------------------------
-        composite types
+   demo for composite types
 ----------------------------------+
 driver ct:
 
 # enumeration is a type 
-type Enum := {fst:1, snd, trd};
+type Enum := {.fst:1, .snd, .trd} <: Ordinal;
 # print enumeration members
-print (Enum.fst);  ** 1
-print (Enum.snd);  ** 2
-print (Enum.trd);  ** 3
+print fst;  ** 1
+print snd;  ** 2
+print trd;  ** 3
+
 # define hash map variable
 make s ∈ {(U:N)};
 # assign (key:value) pairs
@@ -21,6 +22,7 @@ alter s :=
 print s["first"];  ** 1
 print s["second"]; ** 2
 print s["third"];  ** 3
+
 # array with capacity
 make v1 := [Z](10);  ** vector of 10 integer elements
 make v2 := [R](2,3); ** matrix of 2 rows and 3 columns
@@ -34,21 +36,23 @@ make := (U);   ** a list of characters
 make := (R);   ** a list of real numbers
 make := ((U)); ** a list of lists of symbols
 make := ([U](10)); ** a list of array with 10 symbols
+
 # Array and Matrix literals
 make l2 := [1,2,3];        ** array of 3 elements
 make m2 := [[1,1],[2,2]];  ** matrix of 2x2
 # Demo for "set" operations
 make s1 := {Z}; ** empty set of strings
+
 # Initialized set of 3 elements
 make s2 := {1, 2, 3};
-# append one element into a set
+# Append one element into a set
 alter s1 := s1 + 0; ** {0}
 alter s1 := s1 + 1; ** {0,1}
 alter s1 := s1 + 2; ** {0,1,2}
-# remove one element from set
+# Remove one element from set
 alter s1 := s1 - 1; ** {0,2}
 alter s1 := s1 - 2; ** {0}
-# set literals using type inference
+# Set literals using type inference
 make s3 := {'a','b','c'}; ** set of 3 symbols
 make s4 := {'a','b','d'}; ** set of 3 symbols
 # union between 2 sets (a, b) are nod duplicated

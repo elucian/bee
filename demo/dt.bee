@@ -2,7 +2,6 @@
 |              defined data types                   |
 ----------------------------------------------------+
 driver dt:
-#description := "demo data types"
 
 # this type is public (uses dot prefix)
 type .Data := {key:U, value:N} <: Hash;
