@@ -32,6 +32,6 @@ repeat;
 # test reset rule
 apply foo.reset();
 
-fail if (foo.ci ≠ 10); * expect: 10
+fail if (foo.ci ≠ 10); ** expect: 10
 
 over.

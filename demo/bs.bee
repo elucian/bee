@@ -13,9 +13,9 @@ rule sort(this @ [Z]):
     alter i := 0;
     alter swap := False;
     while (i ≤ n) do
-      * this pair is out of order ?
+      ** this pair is out of order ?
       when (this[i] < this[i+1]) do
-        * swap pair and set swap flag = true
+        ** swap pair and set swap flag = true
         alter temp     := this[i];
         alter this[i]  := this[i+1];
         alter this[i+1]:= temp;

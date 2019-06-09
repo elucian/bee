@@ -1,13 +1,13 @@
-***********************************
-# Recursive object demo       **
-#*********************************
+*******************************
+** recursive objects demo    **
+*******************************
 driver ro:
 
 # define recursive type Person
 type Person := {
       name ∈ S, 
       age  ∈ N,  
-      children ∈ (Person) * list of persons
+      children ∈ (Person) ** list of persons
      } <: Object;
 
 # create two objects of type Person
@@ -28,8 +28,8 @@ alter r2 := {name:'Barbu', age:25,
 make r_name, r_age, r_children <+ r2;
 
 # using introspection
-print type(r_name); * S
-print type(r_age); * N
-print type(r_children); * (@Person)
+print type(r_name); ** S
+print type(r_age);  ** N
+print type(r_children); ** (@Person)
            
 over.

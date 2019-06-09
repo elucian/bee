@@ -36,7 +36,7 @@ repeat;
 rest;
 ```
 
-**file:** [ac.md](demo/ac.md); *  asynchronous call
+**file:** [ac.md](demo/ac.md); **  asynchronous call
 
 ## Resumable Coroutines 
 
@@ -50,7 +50,7 @@ Coroutines are two methods that wait for each other to execute in turn.
 ```
 #driver
 
-make n ∈ N; * control variable
+make n ∈ N; ** control variable
 # first coroutine
 rule foo(x ∈ N):
   alter x := x + 1;
@@ -72,4 +72,4 @@ rest;
 over.
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee);   * producer consumer example
+**See also:** [pc.wee](../demo/pc.wee)

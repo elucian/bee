@@ -14,10 +14,10 @@ make test ∈ L;
 
 # delegate using rule "lt"
 alter test := compare(1,2,cmp:lt);
-print test; * expect 1
+print test; ** expect 1
 
 # delegate using anonymous rule
 alter test := compare(1, 2, (a, b) => (a ≥ b));
-print test; * expect 1
+print test; ** expect 1
 
 over.

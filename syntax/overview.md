@@ -54,10 +54,10 @@ write 0;
 write (1,2);
 write (3,4);
 # after write use print to write a new line
-print; * 01234
+print; ** 01234
 # Calculation that fail will generate an error
 alter x := 5 ∈ R;
-alter x := x ÷ 0; * error: division by 0
+alter x := x ÷ 0; ** error: division by 0
 ```
 
 **Notes:** 
@@ -137,13 +137,13 @@ These are symbolic representations for primitive data types:
 
 **pattern**
 ```
-make name := constant ∈ Type; * full declaration
-make name := constant;  * partial declaration
+make name := constant ∈ Type; ** full declaration
+make name := constant;  ** partial declaration
 ```
 
 **example**
 ```
-make n := U+2200 ∈ A;  * Symbol: ∀
+make n := U+2200 ∈ A;  ** Symbol: ∀
 ```
 
 **Note:** 
@@ -164,29 +164,29 @@ Most data types are references except native types that are values.
 
 **examples:**
 ```
-u8  * native type: byte
-i32 * native type: binary integer
-Z   * primitive type: long integer
-R   * primitive type: double float
-mL  * composite type: map Link
-gC  * composite type: graphic canvas
+u8  ** native type: byte
+i32 ** native type: binary integer
+Z   ** primitive type: long integer
+R   ** primitive type: double float
+mL  ** composite type: map Link
+gC  ** composite type: graphic canvas
 ```
 **boxing**
 
 Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. Auto-boxing is possible if the types are compatible. Otherwise you must perform explicit boxing.
 
 ```
-make k ∈ Z;    * reference integer
-make n ∈ i64;  * native integer
+make k ∈ Z;    ** reference integer
+make n ∈ i64;  ** native integer
 
-alter k := n;      * auto-boxing
-alter k := n as Z; * explicit boxing
+alter k := n;      ** auto-boxing
+alter k := n as Z; ** explicit boxing
 # reference identity
-print n = k; * 1 (same value)
-print n ≡ k; * 0 (different location)
+print n = k; ** 1 (same value)
+print n ≡ k; ** 0 (different location)
 # consequence
-alter n := 2;  * i = 2 (modified)
-print k;       * k = 0 (unmodified)
+alter n := 2;  ** i = 2 (modified)
+print k;       ** k = 0 (unmodified)
 
 ```
 
@@ -195,16 +195,16 @@ print k;       * k = 0 (unmodified)
 Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
 
 ```
-make r := 10 ∈ Z;   * reference to integer
-make n := 0  ∈ i32; * native type
+make r := 10 ∈ Z;   ** reference to integer
+make n := 0  ∈ i32; ** native type
 
-alter n := r as i64; * explicit unboxing
+alter n := r as i64; ** explicit unboxing
 # verify value identity
-print n = r; * 1 (same value)
-print n ≡ r; * 0 (different location)
+print n = r; ** 1 (same value)
+print n ≡ r; ** 0 (different location)
 # consequence
-alter n += 2;  * n = 12 (modified)
-print r;       * r = 10 (unmodified)
+alter n += 2;  ** n = 12 (modified)
+print r;       ** r = 10 (unmodified)
 ```
 
 **share vs copy**
@@ -215,15 +215,15 @@ print r;       * r = 10 (unmodified)
 ```# create a reference
 make  a := 1 ∈ Z;
 # transfer value by share
-make  c := a; * same reference
+make  c := a; ** same reference
 
-print c = a; * 1: same value
-print c ≡ a; * 1: same location
+print c = a; ** 1: same value
+print c ≡ a; ** 1: same location
 # transfer value by copy
-make  b :+ a ; * new reference
+make  b :+ a ; ** new reference
 
-print a = b; * 1: same value
-print a ≡ b; * 0: different location
+print a = b; ** 1: same value
+print a ≡ b; ** 0: different location
 ```
 
 ## Composite types
@@ -313,8 +313,8 @@ done;
 
 **example:**
 ```# continuous default rate is 1
-print (0..5); * 0,1,2,3,4,5
-print (0.!5); * 0,1,2,3,4
+print (0..5); ** 0,1,2,3,4,5
+print (0.!5); ** 0,1,2,3,4
 
 ```
 
@@ -324,13 +324,13 @@ A domain can use a special notation for multiple numeric intervals called segmen
 
 **syntax:**
 ```
-(segment, segment ...) * continuous domain notation
+(segment, segment ...) ** continuous domain notation
 ```
 
-* segment ::= n..m:ratio  * include n, include m if (m % ratio) = 0
-* segment ::= n!.m:ratio  * exclude n, include m if (m % ratio) = 0
-* segment ::= n.!m:ratio  * include n, exclude m 
-* segment ::= n!!m:ratio  * exclude both n and m
+* segment ::= n..m:ratio  ** include n, include m if (m % ratio) = 0
+* segment ::= n!.m:ratio  ** exclude n, include m if (m % ratio) = 0
+* segment ::= n.!m:ratio  ** include n, exclude m 
+* segment ::= n!!m:ratio  ** exclude both n and m
 
 **example:**
 ```# integer domain with two segments
@@ -390,9 +390,9 @@ One can modify variables using _alter_ statement.
 ```
 make a := 10, b := 0 ∈ Z;
 
-alter b := a + 1; * modify b underline value
-alter b += 1;     * modify b using modifier
-print b;          * expected 12
+alter b := a + 1; ** modify b underline value
+alter b += 1;     ** modify b using modifier
+print b;          ** expected 12
 ```
 
 **Notes:** 
@@ -403,14 +403,14 @@ print b;          * expected 12
 ```# declare a constant
 make pi :: 3.14 ∈ R;
 # declare multiple variables
-make a   ∈ Z;  * Integer 
-make x,y ∈ R;  * Double
-make q,p ∈ L;  * Logic
+make a   ∈ Z;  ** Integer 
+make x,y ∈ R;  ** Double
+make q,p ∈ L;  ** Logic
 
 # using modifiers
-alter a := 10;  * modify value of a := 10
-alter a += 1;   * increment value of a := 11
-alter a -= 1;   * decrement value of a := 10
+alter a := 10;  ** modify value of a := 10
+alter a += 1;   ** increment value of a := 11
+alter a -= 1;   ** decrement value of a := 10
 # modify two variables using one constant
 alter (x, y) := 10.5;
 # modify two variables using two constants
@@ -433,11 +433,11 @@ make v := 10.5, x := 0.0 ∈ R;
 
 # explicit conversion
 alter a := v as N;
-print a; * truncated to 10 
+print a; ** truncated to 10 
 
 # explicit conversion
 alter x := b as R;
-print x; * expect 20.0
+print x; ** expect 20.0
 ```
 
 ## Alphanumeric type
@@ -445,13 +445,13 @@ print x; * expect 20.0
 Bee define A as single UTF-8 code point with representation: U+HH
 
 ```
-make a, b ∈ A; * ASCII 
-make x, y ∈ B; * Binary integer
+make a, b ∈ A; ** ASCII 
+make x, y ∈ B; ** Binary integer
 
-alter a := '0';     * ASCII symbol '0'
-alter x := a as B;  * convert to binary 30
-alter y := 30;      * decimal code for '0'
-alter b := y as A;  * convert to ASCII symbol '0'
+alter a := '0';     ** ASCII symbol '0'
+alter x := a as B;  ** convert to binary 30
+alter y := 30;      ** decimal code for '0'
+alter b := y as A;  ** convert to ASCII symbol '0'
 ```
 
 ## Type checking
@@ -459,11 +459,11 @@ alter b := y as A;  * convert to ASCII symbol '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0;    * integer variable 
-make b := 0.0;  * real variable 
+make a := 0;    ** integer variable 
+make b := 0.0;  ** real variable 
 
-alter b := 10;    * FAIL: b is of type: Real
-alter a := 10.5;  * FAIL: a is of type: Integer
+alter b := 10;    ** FAIL: b is of type: Real
+alter a := 10.5;  ** FAIL: a is of type: Integer
 ```
 
 You can use operator "is" to verify data type
@@ -482,8 +482,8 @@ Logic type is an enumeration of two public symbols: False and True
 type .L := {.False:0, .True:1} <: Ordinal;
 
 # printing logical values
-print True;   * 1
-print False;  * 0
+print True;   ** 1
+print False;  ** 0
 ```
 
 ## Logic operations
@@ -507,8 +507,8 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 ```
 make x := 4 ∈ Z;
 
-print x = 4 ; * 1 (equal)
-print x ≡ 4 ; * 0 (not identical)
+print x = 4 ; ** 1 (equal)
+print x ≡ 4 ; ** 0 (not identical)
 
 when (x = 4) ∧ (x - 4 = 0) do
   print "True";
@@ -520,8 +520,8 @@ done;
 
 **design**
 ```# logic values are numeric
-print False - True;  * -1 
-print True  + True;  * +2
+print False - True;  ** -1 
+print True  + True;  ** +2
 ```
 
 **Precedence:** 
@@ -533,20 +533,20 @@ Logic operators have greater precedence than comparison.
 Logical expression have value { False, True }
 
 ```
-make x := False; * Type = L
-make y := True;  * Type = L
+make x := False; ** Type = L
+make y := True;  ** Type = L
 
 # simple expressions
-print   x; * 0
-print ¬ x; * 1
+print   x; ** 0
+print ¬ x; ** 1
 
 # complex expressions
-print  (x = y); * 0
-print  (x ≠ y); * 1
-print  (x < y); * 1
-print  (x > y); * 0
-print  (x ∧ y); * 0
-print  (x ∨ y); * 1
+print  (x = y); ** 0
+print  (x ≠ y); ** 1
+print  (x < y); ** 1
+print  (x > y); ** 0
+print  (x ∧ y); ** 0
+print  (x ∨ y); ** 1
 
 ```
 **Notes:** 
@@ -562,8 +562,8 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a as L; * 0
-alter y := b as L; * 1
+alter x := a as L; ** 0
+alter y := b as L; ** 1
 ```
 
 **Notes:** 
@@ -638,7 +638,7 @@ make x := '0';
 read (x,"x:>");
 
 make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'] | "unknown");
-print ("x is " + kind); * expect: "x is digit"
+print ("x is " + kind); ** expect: "x is digit"
 over.
 ```
 
@@ -663,10 +663,10 @@ make name := SigName(param ∈ Type,...) ∈ Type => (expression);
 ```# define "exp" as Lambda expression
 make exp := (x,y ∈ Z) ∈ Z => (x + y);
 # "exp" type is created using type inference
-print type(exp); * Lambda
+print type(exp); ** Lambda
 # use the lambda expression
 make z := 1 + 2 · exp(1,1) ;
-print  z;  * print 5
+print  z;  ** print 5
 ```
 
 **properties:**
@@ -760,8 +760,8 @@ return;
 make b, c ∈ Z;
 apply com(3,2) +> (b, c);
 
-print b;  * 5 
-print c;  * 1 
+print b;  ** 5 
+print c;  ** 1 
 ```
 
 **Notes:**   
@@ -777,9 +777,9 @@ A rule with a single result can be called: _function_;
 ```# define a functional rule
 rule name(param ∈ type,...) => (result @ type):    
    ...
-   exit if (condition); * early transfer
+   exit if (condition); ** early transfer
    ...
-   alter result := expression; * computing the result
+   alter result := expression; ** computing the result
    ...
 return;
 # direct call and print the result
@@ -811,7 +811,7 @@ A function is pure if:
 * A downgraded rule can be called also _dirty rule_ that is not _pure_;
 
 **See also:**
-* [bs.bee](../demo/bs.bee);   * Bubble Sort
+* [bs.bee](../demo/bs.bee);   ** Bubble Sort
 
 ## Rule as routine
 
@@ -839,7 +839,7 @@ alter rule_name.x = 1;
 alter rule_name.y = 2;
 alter rule_name.z = 3;
 # read rule states
-print (rule_name.x, rule_name.y, rule_name.z);  * 1 2 3
+print (rule_name.x, rule_name.y, rule_name.z);  ** 1 2 3
 # execute a rule that has no results:
 apply rule_name(param:argument, ...);
 ```
@@ -906,17 +906,17 @@ rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
   alter r := (s + i);
 return;
 # instantiate two clones:
-clone inc := shift{s: +1}; * increment 
-clone dec := shift{s: -1}; * decrement 
+clone inc := shift{s: +1}; ** increment 
+clone dec := shift{s: -1}; ** decrement 
 # verify clone properties
-print inc.s; *  1
-print dec.s; * -1
+print inc.s; **  1
+print dec.s; ** -1
 # use first clone: inc()
-print inc(1); * 2
-print inc(4); * 5
+print inc(1); ** 2
+print inc(4); ** 5
 # use second clone: dec()
-print dec(1); *  0
-print dec(2); *  1
+print dec(1); **  0
+print dec(2); **  1
 ```
 
 ## External rules
@@ -929,7 +929,7 @@ This is myLib.bee file:
 ```
 module  myLib;
 
-load myLib := $bee.lib.cpp.myLib; * load cpp library
+load myLib := $bee.lib.cpp.myLib; ** load cpp library
 # define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x @ Z));
   alter x := myLib.fib(n);

@@ -3,13 +3,13 @@
 -----------------------------------+
 driver pc:
 
-make  c  := 1000 ∈ N   ; * channel capacity
-make  ch := () ∈ (N)   ; * define empty channel
+make  c  := 1000 ∈ N;    ** channel capacity
+make  ch := () ∈ (N);    ** define empty channel
 
 # ch is the communication channel
 rule producer(ch @ (N)):
   while length(ch) < c do
-    alter ch += random(10); * Add
+    alter ch += random(10); ** Add
     yield consumer;
   repeat;
 return;
@@ -18,7 +18,7 @@ return;
 rule consumer(ch @ (N)):
   make item ∈ N;
   while (len(ch) > 0) do
-    alter ch -= ch.head;   * FIFO
+    alter ch -= ch.head;   ** FIFO
     wait  20;
     yield producer;
   repeat;

@@ -34,10 +34,10 @@ One application can connect to multiple databases simultaneously. A specific kin
 make db ∈ Oracle.DB
 # create a wrapper for database connection
 rule connect(user, password, dbname ∈ S):
-  * prepare credentials
+  ## prepare credentials
   make credential ∈ S;
   alter credential := user + '/' + password + '@'+ dbname;
-  * connect to database
+  ## connect to database
   apply db.connect(credential);
 return;
 ```
@@ -90,10 +90,10 @@ You can scan one table like a collection:
 **pattern**
 ```
 scan record ∈ db.table_name  do
-  * establish qualifier suppressor 
+  ## establish qualifier suppressor 
   with record do
-    * use current_record fields
-    print record.status; * expect: 1 = .verified
+    ## use current_record fields
+    print record.status; ** expect: 1 = .verified
     ... 
   done;
 repeat;
@@ -103,15 +103,15 @@ repeat;
 You can modify table data using current _record_. First you modify record attributes, then you call commit or abort(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
 
 ```
-make index ∈ Z; * counter
+make index ∈ Z; ** counter
 scan record ∈ db.table_name do
-  * update current table
+  ## update current table
   with record do
     alter field_name := new_value;
      ...
   done;
   alter index += 1
-  * commit batch of 100
+  ## commit batch of 100
   when (index = 100) do
     apply db.commit;
     alter index := 0

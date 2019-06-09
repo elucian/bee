@@ -17,16 +17,16 @@ Read about supported symbols here: [symbols](symbols.md)
 
 symbol  | description
 --------|-----------------------------------------------------
- \`z\`  | Back quote (grave accent) single symbol
- 'x'    | Limited capacity string literal 
- "y"    | Variable capacity string literal
+ \`z\`  | Single ASCII symbol 
+ 'x'    | Fixed capacity Unicode string literal 
+ "y"    | Variable capacity Unicode string literal
 
 ## Single Symbols
 
 symbol| description
 ------|----------------------------------------------------------------
- `*`  | End of line comment
- `#`  | Single line comment
+ `*`  | String replication
+ `#`  | Single line comments \| Digit placeholder: (format template)
  `$`  | System constant  \| Environment variables
  `&`  | System variable  \| Global variable
  `@`  | Define method result /| input/output parameters
@@ -65,6 +65,8 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------------------
+ `##` | Indented (subtitle) comments
+ `**` | End of line comments
  `..` | Define domain (n..m) \| Array slice [n..m]
  `::` | Define a constant (used with make)
  `=>` | Define: rule expression \| rule result
@@ -109,7 +111,7 @@ symbol | meaning
 Operator: not "≡" do not exist in Bee. You can use expression:
 
 ```
-  ¬(x ≡ y); * not the same
+  ¬(x ≡ y); ** not the same
 ```
 
 ## Collection operators

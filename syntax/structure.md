@@ -104,12 +104,12 @@ System variables are defined usually at the beginning of the component.
 
 **predefined**
 ```
-&error  * contains last error message
-&stack  * contains debug information about current call stack
-&trace  * contains reporting information about executed statements
-&level  * contains how deep is the current call stack
-&count  * contains last query count: updated/inserted/deleted records
-&query  * contains last native query statement
+&error  ** contains last error message
+&stack  ** contains debug information about current call stack
+&trace  ** contains reporting information about executed statements
+&level  ** contains how deep is the current call stack
+&count  ** contains last query count: updated/inserted/deleted records
+&query  ** contains last native query statement
 ```
 
 **notes:** 
@@ -164,11 +164,11 @@ A module is a reusable component stored in a library. This in a sub-folder of _"
 
 Bee is using 7 kind of declarations:
 
-* load     * import : a library in global scope
-* alias    * declare: alternative name for library or aspect
-* type     * declare: data types
-* make     * declare: variable
-* rule     * declare: named code block
+* load     ** import : a library in global scope
+* alias    ** declare: alternative name for library or aspect
+* type     ** declare: data types
+* make     ** declare: variable
+* rule     ** declare: named code block
 
 ## Statement
 
@@ -176,10 +176,10 @@ Each statement start with one imperative keyword:
 
 **Examples:**
 
-* alter    * change/modify variable value or assign new value
-* read     * accept input from console into a variable
-* write    * output to console result of an expressions
-* apply    * execute one rule in synchronous mode
+* alter    ** change/modify variable value or assign new value
+* read     ** accept input from console into a variable
+* write    ** output to console result of an expressions
+* apply    ** execute one rule in synchronous mode
 
 **notes:**
 
@@ -229,7 +229,7 @@ repeat;
 # print the buffer to console
 print;
   
-over; * end of driver
+over; ** end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -277,10 +277,10 @@ alias new_name := qualifier.member_name;
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(.); * load cpp library
-load $runtime.asm_lib:(.); * load asm library
-load $runtime.bee_lib:(.); * load bee core library
-load $program.pro_lib:(.); * load project library
+load $runtime.cpp_lib:(.); ** load cpp library
+load $runtime.asm_lib:(.); ** load asm library
+load $runtime.bee_lib:(.); ** load bee core library
+load $program.pro_lib:(.); ** load project library
 ```
 
 ## Global context
@@ -300,12 +300,12 @@ A component can establish one or more local name-spaces where you can define com
 make i := 1 ∈ Z; 
 trial
   ## local name-space
-  make v := i;     * v is local reference to nonlocal: i 
-  make i := 2 ∈ Z; * create i local 
-  print i;  * expected: 2 (local)
-  print v;  * expected: 1 (nonlocal)
+  make v := i;     ** v is local reference to nonlocal: i 
+  make i := 2 ∈ Z; ** create i local 
+  print i;  ** expected: 2 (local)
+  print v;  ** expected: 1 (nonlocal)
 done;
-print i;  * expected: 1  (unmodified)
+print i;  ** expected: 1  (unmodified)
 
 over.
 ```
@@ -345,43 +345,47 @@ Comments can be used to document the code or the configuration files.
 
 **End of line**
 
-For each line of code you can use optional comment "*".
+For each line of code you can use optional comments: "**".
  
-* you can use "*" in the middle of an expression before end of statement ";" symbol;
-* you can have multiple statements separated by ";" in a single line but only one comment;
+* you can use "**" in the middle of an expression, before the end of statement;
+* you can have multiple statements separated by ";" in a line but only one comment;
 
 **Single line**
 
-For single line comments we use a pair symbols: 
+For single line comments we use one or two symbols: 
 
-{ "*", "#" } 
+{ "#", "##", "**" } 
 
-* \# is used as title or subtitle
-* \* in used as end of line comment
+* `# ` is used as title comment
+* `##` is used as indented subtitle comment
+* `**` is used as end of line comment
 
-**Notes:** These are chosen for following reasons:
+**Notes:** 
+Bee syntax is Wiki friendly: you can open it using Bee syntax color in Notepad++
 
-1. In Wiki "*" is for making bullets and bold text. So Bee is Wiki friendly.
-2. In Wiki "#" represents a title. For subtitle you can use two "##".
-3. A Wiki page can be open and looks good using Bee syntax color in Notepad++
-
+1. In Wiki "#" represents a title. For subtitles you can use two "##".
+2. In Wiki "**" is making bold text, that is kind of title. 
 
 **Example:**
 
 In next example we are using various comments into a demo program.
 
 ```
-+---------------------------------------------------------------
-| At the beginning of program we can have  several comments    | 
-| to explain how the program works. This notation is preferred.|
-+--------------------------------------------------------------+
++------------------------------------------------------------------
+| At the beginning of program we can have  several comments,      | 
+| to explain how the program works. This notation is preferred.   |
++-----------------------------------------------------------------+
 driver main:
 
 # This is a title in program  (zero indentation for titles)
+...
+  ## This is a sub-title in program (two space indentation)
+  ... 
+over. ** end of line comment
 
-## This is a sub-title in program (two space indentation)
-   
-over. * end of line comment
+*******************************************************************
+** This is the old style boxed comment, used for matrix printers **
+*******************************************************************
 ```
 
 **note:** 
@@ -457,7 +461,7 @@ load mod := $pro.mod;
 make result ∈ N;
 # execute main procedure from aspect "mod"
 apply mod.main(-3) +> result;
-print result;  * expect: 3
+print result;  ** expect: 3
 
 over.
 ```
