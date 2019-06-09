@@ -213,7 +213,7 @@ do
 done;
 ```
 
-**addition**
+**matrix addition**
 Two matrices can be added to each other if they have the same dimensions.
 
 ```
@@ -222,26 +222,6 @@ make M  := [1](10,10) + [2](10,10);
 
 # verify the result is a matrix of same dimensions  
 pass if M = [3](10,10);
-```
-
-**resize matrix**
-To resize a matrix you can use _direct sum_ matrix modifier "+=" 
-
-```
-# creation of matrix with 10 × 10 elements
-  make matrix  := [0](10,10) ;  
-
-# increase matrix: number of columns
-  alter matrix += [0](0,5); * 5 new columns  
-
-# increase matrix: number of rows
-  alter matrix += [0](5,0); * 5 new rows  
-  
-# increase matrix: rows and columns
-  alter matrix += [0](2,2); * 2 new row and 2 new column  
-
-# verify effect of all operations  
-  pass if matrix = [0](17,17); 
 ```
 
 **Memory impedance**
@@ -303,25 +283,16 @@ make  new_map := { (x:x²) | x ∈ (0.!10) ∧ (x % 2 = 0) };
 print new_map; * {(0:0),(2:4),(4:16),(6:36),(8:64)}
 ```
 
-Cartesian map from two domains
-
-```
-make  new_map := { (x:y) | (x,y) ∈ (0..1) × (0..1)}; 
-print new_map * {(0:0),(0:1),(1:0),(1:1)}
-```
-
 ## Array Builder
 Similar to a set builder you can initialize an array or matrix:
 
 ```
-make array  := [ x | x ∈ (0..8:2)]; * [0,2,4,6,8]
-make matrix := [ x | x ∈ (0..8:2)] × [1,1] ; * [[0,2,4,6,8][0,2,4,6,8]] 
+make array  := [ x | x ∈ (1..10:2) ]; * [1,3,5,7,9]
 ```
-
 ### Collection Casting
 
 It is common for one collection to be created based on elements from another collection. 
-Collection members can be copy into the new collection using a comprehension notation: 
+Collection members can be copy into the new collection using collection builder: 
 
 **Example:**
 ```
@@ -334,7 +305,7 @@ done;
 ```
 
 ### Collection Filtering
-Build notation can use expressions to filter out elements during comprehension operation.
+Build notation can use expressions to filter out elements during build.
 
 **Example:**
 ```

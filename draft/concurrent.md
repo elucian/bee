@@ -31,6 +31,7 @@ make i := 0;
 while i ≤ 4 do
   start test;
   alter i += 1;
+  wait 1;
 repeat;
 rest;
 ```

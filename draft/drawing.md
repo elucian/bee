@@ -8,6 +8,7 @@ We define new data types and keywords to make dynamic 2D technical drawings:
 --------|-------------------------------------------
  π      | 3.14
  ⊥      | π/2
+ ǁ      | 2·π
  
 ## Data types
 
