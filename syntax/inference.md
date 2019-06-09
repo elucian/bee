@@ -88,25 +88,25 @@ print bar(b:1);  ** print 1 because (a,b := 0)
 print bar(c:1);  ** print 1 because (a,b := 0) 
 ```
 
-## Multiply
+## Replication
 
-Multiply operator: "*" will create a long string:
+Replication operator: "*" will concatenate a string with itself multiple times:
 
 ```# create string of 10 spaces
-make s := ' ' * 10;
-# equivalent of previous declaration
 make s := ' ' ∈ S(10);
+# equivalent with previous
+make s := ' ' * 10;
 ```
 
-
-```# create a string of 10 digits
+**Examples:**
+```# create a string of 8 digits
 make a := '00000000';
 # equivalent of previous declaration
 make a := '0' * 8;
 # used in expression will generate string
 make b := (a + ' ') * 4;
-# expect: 00000000 00000000 00000000 00000000
-print b; 
+
+print b; ** 00000000 00000000 00000000 00000000
 ```
 
 **Read next:** [Data Processing](processing.md)
