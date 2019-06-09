@@ -71,8 +71,6 @@ symbol| description
  `::` | Define a constant (used with make)
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
- `:=` | Assign by value \| Reset reference
- `:+` | Assign by copy  \| Keep reference
  `+>` | Collector: capture result. Associated with: _play_ and _apply_
  
 ## Modifiers
@@ -80,14 +78,16 @@ symbol| description
 Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
-------|------------------------------------------------------------------
- `+=` | increment value \| append element
- `-=` | decrement value \| remove element
- `·=` | multiplication modifier 
- `÷=` | real division modifier
- `/=` | rational division modifier
- `^=` | power  modifier
- `%=` | modulo modifier
+------|--------------------------------------------------------------------
+ `:=` | Binding value \| Boxing native value \| Borrow existing reference 
+ `:+` | Copy value \| Deep copy object \| Create new reference 
+ `+=` | Increment value \| append element
+ `-=` | Decrement value \| remove element
+ `·=` | Multiplication modifier 
+ `÷=` | Real division modifier
+ `/=` | Rational division modifier
+ `^=` | Power  modifier
+ `%=` | Modulo modifier
 
 ## Relation Operators
 
