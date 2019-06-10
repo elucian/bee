@@ -7,7 +7,6 @@ Unverified Bee demo source files:
 1. [ct.bee](ct.bee) - Composite types
 1. [if.bee](if.bee) - Decision statements
 1. [do.bee](do.bee) - Repetitive statements
-1. [cy.bee](cy.bee) - Cycle repetitive statement
 1. [in.bee](in.bee) - Input multiple values
 1. [cs.bee](cs.bee) - Control structures
 1. [fn.bee](fn.bee) - Rule declaration

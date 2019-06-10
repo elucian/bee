@@ -80,15 +80,15 @@ type Person := { name ∈ S, age ∈ N } <: Object;
 # define order as lambda expression for type Person
 make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
 # define sort rule for Person, as a clone from _bubble_
-clone sort := bubble{Person}(gt:order);
+clone sort := bubble{Person};
 # define clients and suppliers
 make clients   ∈ [Person](100);
 make suppliers ∈ [Person](10);
 # populate clients and suppliers somehow
 ...
 # use new order action to sort clients and suppliers
-apply sort(clients);
-apply sort(suppliers);
+apply sort(clients, gt:order);
+apply sort(suppliers, gt:order);
 ```
 
 **Read next:** [overview](../syntax/overview.md)

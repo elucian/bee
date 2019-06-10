@@ -1,15 +1,15 @@
 ## Bee Keywords
 
-Bee uses 50 reserved keywords so far: 
+Bee core has 46 reserved keywords so far: 
 
 ```
-04: if, is, in, as
+03: if, is, as
 03: driver, aspect, module
-08: make, rule, like, clone, load, alias, type, return;
-06: read, write, print, alter, scrap, apply
-07: when, with, check, cycle, while, scan, trial
-10: do, done, none, else, case, error, other, final, repeat, next 
-11: wait, exit, fail, pass, retry, solve, skip, stop, halt, abort, over, resume
+08: make, rule, like, clone, load, alias, type, return
+07: read, write, print, alter, scrap, apply, start
+05: for, when, case, while, trial
+08: do, else, error, cover, final, repeat, next, done 
+12: wait, exit, fail, pass, raise, skip, stop, halt, abort, rest, yield, over.
 ```
 
 **notes:** 
@@ -19,14 +19,12 @@ Bee uses 50 reserved keywords so far:
 
 ### Semantic keywords
 
-| Keyword     | Purpose
-|-------------|--------------------------------------------------------------
-| if          | used as conditional with any simple statement
-| is          | used in conjunction with check
-| in          | used in conjunction with check
-| as          | explicit casting operator
+| Keyword  | Purpose
+|----------|--------------------------------------------------------------
+| if       | conditional for simple statements
+| is       | query element or variable data type
+| as       | explicit data type casting operator
 
-**Note:** (1m = 10⁻³, 1μ =10⁻⁶)
 
 ### Definition statements
 
@@ -41,9 +39,9 @@ Next statements are used to declare new elements in a component.
 | alias    | Suppress scope qualifier for members from components
 | type     | Declare data super-type or sub-type in a component
 | make     | Create a new variable or multiple variables
-| rule     | Create a new rule or _prototype_
-| clone    | Create a new rule from a _prototype_
-| return   | End rule declaration and return; control to caller
+| rule     | Create a new _rule_ or _prototype_
+| clone    | Create a new _instance_ from a _prototype_
+| return   | End rule declaration and transfer control to caller
 
 ### Execution statements
 
@@ -52,6 +50,7 @@ Next keywords are simple statements. These represents actions called _imperative
 | Keyword  | Purpose
 |----------|--------------------------------------------------
 | apply    | Apply one rule that have no result
+| start    | Start one rule in asynchronous mode
 | read     | Accept user input from console 
 | write    | Add something to console buffer but no new line 
 | print    | Output expression result to console 
@@ -66,39 +65,36 @@ Control statements are also known as decision statements.
 |----------|------------------------------------------------------------
 | when     | Execute statement block only if condition true
 | else     | Alternative path for when statement
-| cycle    | Start unconditional repetitive block
+| case     | Conditional search multi-path selector
 | while    | Start conditional repetitive block
-| repeat   | End repetitive block: cycle, while
-| scan     | Start iteration loop for range or collection
-| next     | Continue counting until the last number in range
+| repeat   | End repetitive block while
+| for      | Start iteration loop for domain or collection
+| next     | Continue iteration with last element in domain or collection
 | trial    | Protect a block of code that may have exceptions
-| case     | One trial block can resolve multiple cases
 | error    | Associated with trial to patch one errors
-| other    | Associated with trial to patch other errors
+| cover    | Associated with trial to patch other errors
 | final    | Associated with trial to finalize the trial block
-| with     | Start scope qualifier suppression block
-| check    | Create a multi-block selection statement
-| none     | Associated to check, create alternative branch
 | do       | Begin a statement region in a block statement
 | done     | Finalize when, check and trial control statements
+
 
 ## Transfer keywords
 
 These keywords transfer control or make an interruption of current thread. 
 
 | Keyword  | Purpose
-|----------|----------------------------------------------------------------
+|----------|--------------------------------------------------------------------
 | stop     | Interrupt a while loop and continue past repeat; keyword
 | skip     | Skip the rest of while block and continue from the beginning
 | exit     | Force silent termination of a rule, aspect, program or driver
 | fail     | Create error message if a condition is true else pass
 | pass     | Clear error message if a condition is true else fail
 | abort    | Force silent early interruption of trial block
-| retry    | Execute a previous case into a trial block
-| solve    | Solve one forward case into a trial block
-| resume   | Used in trial block to continue next case after failure
+| raise    | Used in exception handler to propagate an error out of trial block
 | halt     | Create unrecoverable error and stop program
 | over     | End driver, library or component file. Dot suffix is mandatory.
 | wait     | Suspend execution for a number of seconds
+| rest     | Suspend execution of main thread and wait for all coroutines to finish
+| yield    | Suspend one coroutine and give control to another routine
 
 **Read next:** [Syntax Overview](overview.md)

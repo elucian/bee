@@ -43,6 +43,8 @@ My keyboard settings is saved in file G110.xml
 ∘ ∙ ∅ ∞ ↻ ∟ ⊞ ⊠ ⊗ ⊕ ♀ ♂ ☺ ↱ ⎋ 
 ```
 
+**note:** (1m = 10⁻³, 1μ =10⁻⁶)
+
 ## Other symbols
 
 Optional Unicode symbols can be used to enhance the readability of programs.
@@ -66,7 +68,7 @@ X ₐ ₑ ₕ ᵢ ⱼ ₖ ₗ ₘ ₙ ₒ ₚ ᵣ ₛ ₜ ᵤ ᵥ ₓ
 
 **Fraction sign**
 
-Fraction sign "⁄" is not supported. Bee is using "/" for fractions:
+Fraction sign "⁄" is not supported. Bee is using regular slash "/" for fractions:
 
 ```
 ¹/₂ ¹/₃ ¹/₄ ¹/₅ ¹/₆ ¹/₇ ¹/₈ ¹/₉ ¹/₁₀ ¹/₁₀₀ 

@@ -7,8 +7,7 @@ By using collections and control structures one can load, modify and store data.
 * [Matrix Operations](#Matrix-Operations)
 * [Set builders](#Set-builders)
 * [List operations](#List-operations)
-* [Collection Iteration](#Collection-Iteration)
-* [Scanning items](#Scanning-items)
+* [Collection iteration](#Collection-iteration)
 * [String Generator](#String-Generator)
 * [String Templates](#String-templates)
 
@@ -253,8 +252,8 @@ while col < 3 do     ** traverse columns
   alter col += 1;
 repeat;
 
-# traversal with scan
-scan e ∈ M do
+# traversal with for
+for e ∈ M do
   print e; ** element
 next;
 ```
@@ -409,61 +408,26 @@ A list has properties that can be used in logical expressions:
 * List.empty()  ** True or False
 * List.full()   ** True or False
 
+
 ## Collection Iteration
 
-A special _while loop_ that is executed for each element belonging to a collection.
-
-**pattern**
-```
-make element := collection.first();
-while ¬(element is Null) do
-  ## statements
-  ...
-  element := collection.next(element);
-repeat;
-```
-
-The "element" is local to iteration and is used as control variable.
-
-**example**
-
-```
-make my_list := ['a','b','c','d','e']; 
-scan element ∈ my_list do
-  write element;
-  when element = 'd' do
-    stop; ** early termination;
-  else
-    write(',');
-  done;
-next;
-```
-> a,b,c,d
-
-## Scanning items
-
-Collections have common methods that enable traversal using _scan_. 
-
-{List, Table, Set} 
+Collections have common methods that enable traversal using _for_ statement. 
 
 **built-in:**
 
+Available for: {List, Table, Set} but not Array or Slice
+
 * count      - retrieve the number of elements 
-* capacity   - retrieve the maximum capacity
-* next       - position next element 
+* fetch      - position next element 
 * first      - position to first element
 * last       - position to last element
-* this       - reference to current element
-
-### Set Iteration
-Hash and Set are similar. We can visit all elements using _scan_:
 
 **Example:**
 ```
 make my_map := {("a":1),("b":2),("c":3)};
-scan (key:value) ∈ my_map do
+for key,value ∈ my_map do
   print('("' + key + '",' + value +')');
-repeat;
+next;
 ```
 
 Will print:
@@ -475,7 +439,7 @@ Will print:
 
 ## Hash collections
 
-Hash tables are sorted in memory by _key_ for faster search. It is more difficult to search by value because is not unique and not sorted. To search by value one must create a loop and verify every element. This is called full scan and is very slow so you should never use this method.
+Hash tables are sorted in memory by _key_ for faster search. It is more difficult to search by value because is not unique and not sorted. To search by value one must create a loop and verify every element. This method is very slow so you should never use it.
 
 
 **example:**
@@ -494,8 +458,8 @@ done;
 ```
 make animals ∈ {S,S};
 do
-  animals['Bear'] := 'dog';
-  animals['Kiwi'] := 'bird';
+  alter animals['Bear'] := 'dog';
+  alter animals['Kiwi'] := 'bird';
   print(animals);
 done;
 ```
@@ -515,11 +479,11 @@ Output:
 make animals := {}; ** partial declaration
 do
   ## establish element types (S:X)
-  animals['Rover'] := "dog";
+  alter animals['Rover'] := "dog";
 
   ## use direct assignment to create 2 more element
-  animals['Bear'] := "dog";
-  animals['Kiwi'] := "bird";
+  alter animals['Bear'] := "dog";
+  alter animals['Kiwi'] := "bird";
   print(animals);
 done;
 ```
@@ -542,8 +506,8 @@ Strings can be concatenated using:
 make str := ""; 
 do
   ## set string value using different operators
-  str := "this " & " string";  ** "this  string"
-  str := "this " + " string";  ** "this string"
+  alter str := "this " & " string";  ** "this  string"
+  alter str := "this " + " string";  ** "this string"
 done;
 ```
 
@@ -698,7 +662,7 @@ A large template can be stored into a file, loaded from file and format().
 
 1. Create a map collection of elements;
 2. Create the template text and store it in external file;
-3. Use _scan_ to visit the file row by row;
+3. Use _for_ to visit the file row by row;
 4. Use template modifier: "?" to replace placeholders row by row;
 5. Alternative use _format()_ build-in rule to replace all placeholders;
 
@@ -775,7 +739,7 @@ Where pattern cab gave two forms:
 
 **Reading a Text:**
 
-Text is iterable by "row". The row separator CR or CRLF. So we can read a text line by line. You can use _scan_ iteration to check every line of text. Each row is a string. You can also parse a row word by word using a nested _scan_.
+Text is iterable by "row". The row separator CR or CRLF. So we can read a text line by line. You can use _for_ iteration to check every line of text. Each row is a string. You can also parse a row word by word using a nested _for_.
 
 **Note:**
 The text also support escape sequences like a normal string. However in a text literal we do not have to escape the single quote symbols: "'". We have to escape the double quotes like: "This is \"quoted\" text". This is very rare since quoted text should use symbols: "« »" like "«quoted»".

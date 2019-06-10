@@ -193,14 +193,11 @@ Each statement start with one imperative keyword:
 ### Code block
 Statements can be contained in blocks of code.
 
-* do    :anonymous simple context block
-* with  :create a scope qualifier suppression block/ mapping block
-* when  :create multi-path conditional selector
-* check :create a multi-path value selector
-* cycle :create unconditional repetitive block of code
-* while :create conditional repetitive block of code
-* scan  :create visitor block for all elements in a collection
-* trial :create trial/error block of code to handle exceptions
+* when  :create two ways decision statement
+* case  :create multi path conditional selector
+* while :create conditional repetitive block
+* for   :create iterator for all elements in a domain or collection
+* trial :create a block of code that may fail, to handle exceptions
 
 **notes:**
 

@@ -19,27 +19,32 @@ Bee has basic interaction with relational databases.
 
 ## Models
 
-A model is a complex data structure mapping Bee data types to database. Bee can read and update a database using an internal data model. This kind of applications are called _data-centric_. A model is connecting to a databases using API function library.
+A model is a complex data structure mapping Bee data types to database. Bee can read and update a database using an internal data model. This kind of applications are called _data-centric_. A model is connecting to one or multiple  databases using API library.
+
+**loading**
+
+A model must load database library using this statement:
 
 ```
-load $bee_lib.db.oracle:(.)
+load $bee_lib.db.core:(.);
+load Oracle := $bee_lib.db.oracle;
 ```
 
-## Connections
+## Connection
 
 One application can connect to multiple databases simultaneously. A specific kind of application called _pipeline_ can pull data from multiple sources to update one target database. 
 
 **pattern**
-```# create a database instance
-make db ∈ Oracle.DB
-# create a wrapper for database connection
-rule connect(user, password, dbname ∈ S):
+```# create a wrapper for database connection
+rule connect(name, password, database ∈ S) => (db @ Oracle.Database):
   ## prepare credentials
-  make credential ∈ S;
-  alter credential := user + '/' + password + '@'+ dbname;
+  make credential := user + '/' + password + '@'+ dbname;
   ## connect to database
   apply db.connect(credential);
 return;
+
+# create database connection
+make db := connect(user:'test',password:'password',database:'bee_demo');
 ```
 
 **Note:**
@@ -47,7 +52,7 @@ Usually a database has a security protocol based on user-name and password. Thes
 
 ## Databases
 
-A database library must provide basic functionality:
+A _Database_ module must provide a basic functionality:
 
 | operation    | Description
 |--------------|------------------------------
@@ -56,7 +61,7 @@ A database library must provide basic functionality:
 | query()      | Direct SQL execution
 | execute()    | Execute a stored procedure
 | commit()     | Save all pending modifications
-| abort()      | Rollback all pending modifications
+| rollback()   | Rollback all pending modifications
 
 **target database**
 
@@ -67,58 +72,91 @@ Bee should provide drivers for main-stream databases:
 * [MySQL](https://www.mysql.com/)
 
 **Structure**
-One database provide a structure for tables. An application can read table structure and map it to memory model. Then you can perform operations on data tables: {search, update, delete}. 
+One database provide a structure for tables. An application can read table structure and map it to internal memory model. Then you can perform operations on data model: {search, append, update, delete}. 
 
 **Mapping**
-A table usually has records but sometimes has objects or nested tables. Bee strategy is to map a records to objects. We can read one record into one object. For multiple records we can use a hash map or list of objects. Mapping is explicit. 
+A database table has records. Bee strategy is to define one _memory table_ as a collection of objects for each _database table_. The _memory table_ is mapped to _database table_. Mapping is _one to one_. Field names are case sensitive.
 
 ## Tables
-Tables are database objects. We can read a table in memory record by record. For this we need to define one compatible object type for each table. A compatible object uses same name for all attributes and has compatible data types to match a table structure.
+Internal _memory tables_ are mixed collections of objects having same name as _database tables_. We can read a database table record by record on demand. A _memory table_ can load one or multiple _records_ in memory. 
 
-## Record
-Records are dynamic object created from database structure. A record has methods and functions. Before handling a record you must create the record using scan, or make. A record has _status_ property that can be used in conditionals:
+## Records
+Records are _object instances_ created from table structure in memory. A record has a _status_ property that can be used in conditionals. One record is the current record. Several records are cached in memory for a table. 
 
-**table status**
+**record type
 ```
-type status := {.unknown:0 .verified, .updated, .deleted } <: Ordinal;
+# This type is defined in core database library
+type Record := {rowid ∈ S(32), status ∈ Status} <: Object;
+```
+**record status**
+```
+# This type is defined in core database library
+type Status := {.unknown:0 .verified, .updated, .deleted } <: Ordinal;
 ```
 
+**table structure**
+For table structure we must define a _record type_ then use generic _Table_ to declare table structure:
 
-**Scanning tables**
-You can scan one table like a collection:
+**Note:**
+* For Record_Name is good to use singular names starting with uppercase letter like: "Person"
+* For table_name is  gppd tp ise plural lowecase names like: "persons"
+
+```
+type Record_Name := {field_name ∈ Type, ...}  <: Record;              ** entity record
+make table_name  := db.open('table_name','w') ∈  Table{Record_Name};  ** table mapping
+```
+
+**table methods**
+```
+# first record
+make  bookmark ∈ Table_Record;
+apply table_name.first;
+alter bookmark := table_name.record ; ** bookmark current record 
+
+# fetch next record
+apply table_name.fetch;
+
+# last record
+apply table_name.last;
+
+# previous record
+apply table_name.back;
+
+# synchronize current record
+apply table_name.seek(bookmark);
+
+# find a specific record
+apply table_name.find(field_name:value,...);
+
+# get filed values
+print table_name.field_name; ** data from current record
+pass if bookmark.field_name = table_name.field_name; ** same data 
+```
+
+**Table traversal**
+You can read one table record by record:
 
 **pattern**
 ```
-scan record ∈ db.table_name  do
-  ## establish qualifier suppressor 
-  with record do
-    ## use current_record fields
-    print record.status; ** expect: 1 = .verified
-    ... 
-  done;
-repeat;
+....
+# table must be open to be scanned
+for record ∈ table_name do
+  ## use current_record fields
+  print record.status; ** expect: 1 = .verified
+  ... 
+next;
 ```
 
 **Mutating data**
 You can modify table data using current _record_. First you modify record attributes, then you call commit or abort(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
 
 ```
-make index ∈ Z; ** counter
-scan record ∈ db.table_name do
-  ## update current table
-  with record do
-    alter field_name := new_value;
-     ...
-  done;
-  alter index += 1
-  ## commit batch of 100
-  when (index = 100) do
-    apply db.commit;
-    alter index := 0
-  done;
+for record ∈ table_name do
+  ## update current record
+  alter table_name.field_name := new_value;
+  ...
 next;
-# commit all pending updates
-apply db.commit if (index > 0);
+apply db.commit;
 ```
 
 ## Transactions
@@ -134,20 +172,15 @@ Any of the following operations will start automatically a transaction:
 
 ### Append
 
-Bee can add new data records into one table using table _append()_ rule.
+Bee can add new data records into one table using _append()_ rule.
 
-```# capture empty record
-make record := table_name.append;
-with record do
-  alter field_name := value;
-  ...
-done;
-apply db.commit;
-# using temporary record
-with table_name.append do
-  alter field_name := value;
-  ...
-done;
+```# create empty record
+apply table_name.append;
+
+# modify record attributes
+alter table_name.field_name := value;
+...
+
 apply db.commit;
 ```
 
@@ -158,19 +191,12 @@ Bee can do single or multiple row updates in one transaction.
 **Syntax:**
 
 ```# use search fields and values
-make record := table_name[search_field:value, search_field:value ...];
-with record do
-  alter field_name := value;
+apply table_name.find(search_field:value, search_field:value ...);
+
+# prepare record
+alter table_name.field_name := value;
   ...
-done;
-apply db.commit;
-# use anonymous record 
-with table_name[search_field:value, search_field:value ...] do
-  alter field_name := value;
-  ...
-done;
-apply db.commit;
-```
+apply db.commit;```
 
 ### Delete
 
@@ -179,57 +205,41 @@ This statement will remove one or more records from a table.
 **Syntax**
 
 ```# Find one single record and delete
-make  record := table_name[search_field:value,...];
-apply record.delete;
+make  table_name.find(search_field:value,...);
+apply table_name.delete;
 # check status
-fail if record.status ≠ deleted;
-
+pass if table_name.status = deleted;
 apply db.commit;
-# check status
-fail if record.status ≠ verified;
 # Using search fields to delete multiple records
-apply table_name[search_field:value,...].delete;
+apply table_name.delete(search_field:value,...);
 apply db.commit;
 # Remove all records from a table in bulk
-apply table_name[..].delete;
+apply table_name.scrub;
 apply db.commit;
-# delete current record using scan
-scan record ∈ table_name do
+# delete current record using _for_
+for record ∈ table_name do
   record.delete if (condition);
 done;
-db.commit;
+apply db.commit;
 ```
 
 **Note:** 
 * After delete the record still exist with _status_ = _deleted_;
-* After commit the record becomes Null and can no linger be accessed;
-
-## Pending buffer
-The records that are modified are stored into a buffer. This buffer is empty when commit or abort.
-
-```
-# display status of all pending records
-scan record ∈ table_name.pending do
-  print (record.status);
-done;
-# display how many records are pending
-print table_name.pending.count
-```
+* After closing the table all references to records become Null;
 
 ## Direct SQL
 
 Sometimes we need to bypass the ORM and execute native SQL:
 
 ```# apply a modification query to database
-apply db.query(query_template ? array)
-apply db.query(query_template ? record)
+apply db.query(query_template ? source)
 # apply a query that return; a buffer
 type  TRecord := {
       field_name ∈ Type,      
       ...
       };# execute query string and return a list of records
 make  buffer ∈ (TRecord); 
-apply db.query(query_string) +> buffer; 
+apply db.query(query_template ? source) +> buffer; 
 ```
 
 ## Stored procedure
@@ -237,13 +247,15 @@ apply db.query(query_string) +> buffer;
 Some databases have support for stored procedures:
 
 ```
-# prepare a record object 
-type  TRecord := {
+# prepare an object (not updatable)
+type  Result_Record := {
       field_name ∈ Type,      
       ...
-      };
+      } <: Object;
+# prepare a list of records      
+make  buffer ∈ (Result_Record); 
+
 # execute stored procedure
-make  buffer ∈ (TRecord); 
 apply db.execute procedure_name(arguments) +> buffer; 
 ```
 

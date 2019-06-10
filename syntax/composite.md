@@ -151,7 +151,7 @@ type Lou  := (u16) <: List;
 # define a list variable of defined type Lou
 make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 # list traversal
-scan x ∈ list do
+for x ∈ list do
   write x;
   write _ if (x ≠ list.head);
 next;
@@ -182,7 +182,7 @@ make array_name ∈ Array_Type;
 
 ```
 make array := [`a`, `b`, `c`];
-scan c ∈ array do
+for c ∈ array do
   write c;
   write ',';
 repeat;
@@ -266,7 +266,7 @@ while (i < x) do
   write (mat[x], ',');
   i += 1;
 repeat;
-print; ** 
+print;
 over.
 ```
 
@@ -451,9 +451,9 @@ symbol| description
   `\` | Path concatenation: trim and use single separator: "\\"
   
 **examples**
-```
-make m := "-" * 10 ∈ S; ** ----------
+make m := "-" * 10 ∈ S; ** m = "----------"
 make u, c, s ∈ S;  ** default length is 128 octets = 1024 bit
+```
 # string concatenation
 alter u := 'This is'  + ' a short string.';
 alter c := 'This is ' + 'fixed size string'; 
@@ -474,12 +474,12 @@ Object types are data structures with elements enclosed in curly brackets { , , 
 
 **Pattern:**
 ```# declare a category of objects
-type  type_name := {attribute ∈ type_name, ...} <: Object;
+type  Type_name := {attribute ∈ type_name, ...} <: Object;
 # create an object instance using default constructor
 make item_name := {
        attribute : constant,
        ...
-       } ∈ type_name;
+       } ∈ Type_name;
 # modify one object attribute
 alter object_name.attribute := new_value;
 ```
@@ -617,10 +617,11 @@ type Error := {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
 make &error ∈ Error;
 ```
 
-You can define exceptions with code > 200 and raise exceptions with two statements:
+You can define exceptions with code > 200 and raise exceptions with 3 statements:
 
-* fail
-* pass
+* fail  ** raise error if condition is True
+* pass  ** raise error if condition is False
+* raise ** raise last error again from handler block
 
 **pattern:**
 ```
@@ -634,7 +635,9 @@ Template modifier "?" can be used to customize the error message:
 
 **example**
 ```
-read flag ∈ L;
+make  flag ∈ L;
+read (flag, 'enter flag (0/1):');
+
 make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
 fail my_error ? 'test' if flag;

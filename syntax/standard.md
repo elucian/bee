@@ -86,41 +86,56 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-rule .open(name ∈ S, mode ∈ A) => (file @ F);
-rule .close(file @ F);
+rule .open(name ∈ S, mode ∈ A) => (file @ File);
+rule .close(file @ File);
+rule .list(folder @ Folder) ∈ (S);
+rule .exist(name ∈ S) ∈ L;
+rule ,remove(name ∈ S); 
+rule ,rename(name, new_name ∈ S); 
 ...
 
 ```
-**remember:** public rules start with "."
+**remember:** public rules start with dot: "."
 
 **Examples:**
 
 * File Open:[fo.bee](../demo/fo.bee)
-* File Scan:[fs.bee](../demo/sc.bee) 
 
 **File IO**
 
-Rules with result in system.io
+System IO rules
 
 | rule    | Purpose
 |---------|------------------------------------------ 
-| exist   | Check if file exist on disk
-| open    | Open a file for read or print
-| files   | Read a list of files from directory
-| folders | Read tree of directory in memory
-| where   | Current working folder name 
-| change  | Change current working folder
+| open    | Open a file
+| close   | Close a file
+| exist   | Check if file or folder exist on disk
+| list    | Read a list of files and folders from directory
+| tree    | Read tree of directory in memory
+| remove  | Remove a file / directory
+| rename  | Make a new directory
 
-Rules without rules in syste.io
 
-| rule    | Purpose
-|---------|------------------------------------------ 
-| save    | Save file modifications to disk
-| undo    | Restore file modification before save
-| close   | Close a file after using it
-| new     | Make a new directory
-| remove  | Remove a file / directory / with files
-| change  | Change current working folder
+Two data types must be available: File, Folder
+
+**File methods**
+
+clean  ** erase all data in the file
+save   ** save file buffer to disk 
+change ** modify file attributes
+
+**Folder methods**
+
+select ** select this folder as working folder
+purge  ** remove all files from folder
+change ** modify folder attributes
+
+**Making files/folders**
+
+```
+make file_name   := File.open('name','w');
+make folder_name := Folder.open('name');
+```
 
 ## Exception
 Bee has pre-define exception codes in range (1..200):
