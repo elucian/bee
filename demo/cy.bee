@@ -6,11 +6,10 @@ driver cy:
 # declare array of 10 integers
 make a ∈ [Z](10);
 
-# use cycle repetitive statement
-make i := 0 ∈ Z;
-cycle
+# use repetitive statement while
+make  i:= 0 ∈ Z;
+while i = 9 do
   alter a[i] := i; ** assign index
-  exit if (i = 9); ** early transfer
   alter i += 1;    ** increment
 repeat;
 

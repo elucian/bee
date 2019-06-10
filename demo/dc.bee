@@ -1,6 +1,6 @@
 +-----------------------------------------
-      variable declaration demo
------------------------------------------+
+|      variable declaration demo         |
++----------------------------------------+
 driver dc:
 
 make n ∈ Z; ** Integer on 64 bit
@@ -25,7 +25,7 @@ print b; ** ['','','','','','','','','','']
 print m; ** [[0,0,0], [0,0,0], [0,0,0]]
 
 # use all member initialization [*]
-alter b[*] := 's'; ** assign 's' for all elements
+alter b[*] := 's'; ** assign 's' for all elements 
 alter a[*] :=  5;  ** scalar modification, make all = 5
 alter m[*] :=  1;  ** scalar matrix modification
 # use index to find member
