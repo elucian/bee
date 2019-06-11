@@ -1,5 +1,5 @@
 <NotepadPlus>
-    <UserLang name="Bee BEE" ext="bee" udlVersion="2.1">
+    <UserLang name="Bee BEE" ext="bee md" udlVersion="2.1">
         <Settings>
             <Global caseIgnored="no" allowFoldOfComments="no" foldCompact="no" forcePureLC="2" decimalSeparator="0" />
             <Prefix Keywords1="no" Keywords2="no" Keywords3="no" Keywords4="no" Keywords5="no" Keywords6="no" Keywords7="yes" Keywords8="no" />
@@ -25,14 +25,14 @@
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close"></Keywords>
             <Keywords name="Keywords1">driver aspect module load alias type make rule clone return like</Keywords>
-            <Keywords name="Keywords2">when else while repeat trial case error final for scan next do done patch cover &#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords2">when else case while repeat for next trial error final patch do done&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords3">exit fail pass raise over halt stop skip abort yield rest wait redo</Keywords>
             <Keywords name="Keywords4">play start apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;draw wipe show hide</Keywords>
             <Keywords name="Keywords5">Null True False On Off</Keywords>
             <Keywords name="Keywords6">A B C L N Q P R U I Z S X D T E V Y W G H F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;mC mL mN mP mA mO&#x000D;&#x000A;gC gL gH gT&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords7">$ &amp; &#x000D;&#x000A;A B C D E F G H I J K L M N &#x000D;&#x000A;O P R Q S T U V X Y Z W</Keywords>
             <Keywords name="Keywords8">&#x03B1; &#x03B2; &#x0263; &#x03B5; &#x03B4; &#x03BC; &#x03C9; &#x03BB; &#x03C6; &#x03C0;&#x000D;&#x000A;&#x0394; &#x0393; &#x039B; &#x03A6; &#x03A8; &#x03A9; &#x000D;&#x000A;&#x0411; &#x0413; &#x0414; &#x0416; &#x0418; &#x041B; &#x0424; &#x0426; &#x0427; &#x0428; &#x0429; &#x042D; &#x042F; &#x000D;&#x000A;</Keywords>
-            <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12``` 13 14``` 15&apos; 16\ 17&apos; 18** 19 20&#x000D;&#x000A; 21` 22 23`</Keywords>
+            <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12``` 13 14``` 15&apos; 16\ 17&apos; 18** 19 20((EOL)) 21` 22 23`</Keywords>
         </KeywordLists>
         <Styles>
             <WordsStyle name="DEFAULT" fgColor="B5FFFF" bgColor="363636" fontName="DejaVu Sans Mono" fontStyle="1" fontSize="16" nesting="0" />

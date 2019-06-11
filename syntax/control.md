@@ -38,9 +38,9 @@ done;
 **nested**
 
 ```
-make a ∈ (0..9);
-write 'a = '
-read  a# first decision
+make a ∈ Z;
+write 'a = ';
+read  a;# first decision
 when a ≤ 0 do 
   print 'a ≤ 0';
   ## second decision
@@ -54,19 +54,17 @@ done; ** a = 0
 
 ## Case
 
-Multipath conditional selector:
+Multipath conditional selector example:
 
 ```
-case a < 0  do
+make a ∈ Z;
+read (a, 'Enter a number between 0 and 9:');
+case a < 0 do
   print 'a < 0';
-case a > 10 do
-  print 'a > 100';
-case a > 10 do
-  print 'a > 2';
-case a > 1  do
-  print 'a > 1';
+case a > 9 do
+  print 'a > 9';
 else
-  print "a ≥ 0";
+  print ("ok: a =" + a);
 done; 
 ```
 
@@ -97,10 +95,11 @@ repeat;
 
 **example:**
 
+Two nested blocks: observe "done" and "repeat" are making code readable.
+
 ```
-make a := 0;
-write 'a ='
-read a;
+# two nested blocks
+make a := 10;
 while a > 0 do
   alter a -= 1;
   when a % 2 ≠ 0 do
@@ -154,10 +153,29 @@ for i ∈ (0..10) do
   else
     write i; ** odd numbers
   done;
-  write ',' if (i < 10);        
+  write ',' if (i < 9);        
 next;
 ```
 > 1,3,5,7,9
+
+**Ratio:**
+Using domain ratio the example above can be simplified:
+
+```
++-------------------------------------
+| "for" statement can use a "domain" |
+| domain notation: (min..max:ratio)  |
++------------------------------------+
+driver domain_test:
+
+#    min ↓  ↓max  ↓ = ratio
+for i ∈ (1..9:    2) do
+  write i; ** odd numbers
+  write ',' if (i < 9);        
+next;
+
+over.
+```
 
 ## Trial
 
@@ -186,7 +204,7 @@ error value do
 error code do
   ## handler2
   ...    
-cover
+patch
   ## all other errors
   ...
   raise; ** propagate
@@ -221,5 +239,15 @@ Get _ready_ region executed before done, regardless of error status. It contains
 
 * close a file or connection to databases 
 * close locked resources and free memory
+
+**Example:**
+
+```
+trial
+  make x := 1/0;
+patch
+  print &error.message;
+done;
+```
 
 **Read Next:** [Composite Types](composite.md)
