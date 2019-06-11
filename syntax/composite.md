@@ -518,7 +518,7 @@ print size(Person);
 ```
 
 ### Recursive
-We can limit how deep a call stack become using a directive. "$recursion:1000"
+We can limit how deep a call stack become using a directive. $recursion:1000
 
 ```
 # example of single recursive node
@@ -546,14 +546,14 @@ An object can have associated rules that are called _methods_:
 **pattern:**
 ```# define Foo as object with 2 public attributes:
 type Foo := {a, b ∈ N} <: Object;
-  # constructor method for Foo
-rule foo(p1,p2 ∈ N) => (me @ Foo):
-  make me := {a:p1, b:p2};
+  # constructor has the same name as the type
+rule foo(p1,p2 ∈ N) => (self @ Foo):
+  make self := {a:p1, b:p2};
 return;
 # define a method for Foo
-rule bar(me @ Foo):
-  print "a =" + me.a;
-  print "b =" + me.b;
+rule bar(self @ Foo):
+  print "a =" + self.a;
+  print "b =" + self.b;
 return;
 # call constructor
 make test := foo(1,1);
