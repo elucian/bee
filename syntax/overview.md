@@ -756,7 +756,7 @@ hello: Bee. I am Foo. Nice to meet you!
 
 ### Results
 
-A rule can have multiple results. For capturing multiple results we use capture operator: "+>"
+A rule can have multiple results. For binding results to variables we are using operator: "+>"
 
 **Example:** 
 ```# rule with two results "s" and "d"
@@ -773,13 +773,14 @@ print c;  ** 1
 ```
 
 **Notes:**   
+* Operator "+>" is named "capture operator" not "binding operator";
 * A rule with multiple results can not be used in expressions;
 * Multiple results are defined with names, exactly like parameters;
 * You can captured results into multiple variables using _apply_;
 
 ### Rule as function
 
-A rule with a single result can be called: _function_;
+A rule with a single result can be used as a _function_;
 
 **pattern:**
 ```# define a functional rule
@@ -823,7 +824,7 @@ A function is pure if:
 
 ## Rule as routine
 
-A rule that have no results is called _routine_: 
+A rule that have no results can be called _routine_: 
 
 **properties:**
 
@@ -858,18 +859,20 @@ apply rule_name(param:argument, ...);
 
 ## Rule as method
 
-A rule that is binded to an object type is called: _method_ 
+A rule binding first parameter to input/output is called: _method_ 
 
 **properties:**
 
 * A method can have results;
 * A method can have side-effects;
+* A methods is defined in same component as the data type;
+* A method can be overwritten in another component;
 
 **pattern:**
 ```
 type ObjType: {attribute:type, ...} <: Object;
 
-rule method_name(me: @ObjType, param ∈ type,...) => (result @ type):
+rule method_name(bind: @ ObjType, param ∈ type,...) => (result @ type):
    ...
    result := expression;
 return;
