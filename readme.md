@@ -4,7 +4,7 @@
 </a>
 </p>
 
-<p align="center"><i>"Bee is a technical programming language for arithmetic computations and 2D scientific drownings."<i/></p>
+<p align="center"><i>A technical computer language for arithmetics and geometry.<i/></p>
 
 <p align="center"> <a href=syntax/readme.md>Bee Syntax</a></p>
 
