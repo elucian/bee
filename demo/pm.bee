@@ -5,10 +5,10 @@ driver pm:
 
 # pattern matching expression
 rule pm(p1,p2 ∈ N) ∈ N =>
-  (0 if (p1 = 0 )
-  ,1 if (p2 = 0 ) 
-  ,2 if (p1 = p2) 
-  ,3 if (p1 > p2)
+  (0 if p1 = 0 
+  ,1 if p2 = 0  
+  ,2 if p1 = p2 
+  ,3 if p1 > p2
   ,4 if True );
 # execute pm expression
 print pm(0,2); ** 0

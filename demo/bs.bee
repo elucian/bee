@@ -32,6 +32,6 @@ make result := [1,1,2,3,4,5,5,5,6,9];
 apply sort(test);
 print test;
 # check result
-fail if (test ≠ result);
+fail if test ≠ result;
 
 over.
