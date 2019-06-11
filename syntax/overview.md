@@ -1,11 +1,11 @@
 ## Syntax Overview
 
-I have used a simple design notation based on examples and notes:
+We have used a _simple design_ for notation based on examples and notes:
 
-* I have used suggestive descriptors;
-* I have used "::=" to explain a descriptor;
-* I have used "..." for repetitive sequences;
-* I have used notes to explain the semantics;
+* We use suggestive descriptors;
+* We use "::=" to explain a descriptor;
+* We use "..." for repetitive sequences;
+* We use notes to explain the semantics;
 
 **bookmarks**
 
@@ -135,13 +135,13 @@ These are symbolic representations for primitive data types:
 |9r+9j      |  C    | (r+j)& (0,1,2,3,4,5,6,7,8,9)
 |9r-9j      |  C    | (r-j)& (0,1,2,3,4,5,6,7,8,9)
 
-**pattern**
+**pattern:**
 ```
 make name := constant ∈ Type; ** full declaration
 make name := constant;  ** partial declaration
 ```
 
-**example**
+**example:**
 ```
 make n := U+2200 ∈ A;  ** Symbol: ∀
 ```
@@ -214,31 +214,32 @@ print r;       ** r = 10 (unmodified)
 
 ```# create a reference
 make  a := 1 ∈ Z;
-# transfer value by share
-make  c := a; ** same reference
+# transfer reference value
+make  c := a; ** share a reference
 
 print c = a; ** 1: same value
-print c ≡ a; ** 1: same location
+print c ≡ a; ** 1: same reference
 # transfer value by copy
 make  b :+ a ; ** new reference
 
 print a = b; ** 1: same value
-print a ≡ b; ** 0: different location
+print a ≡ b; ** 0: different reference
 ```
 
 ## Composite types
 
-Composite types are using English full name and start with uppercase.
+Predefined composite types are defined using a single capital letter: 
 
-| Name    | Bee | Description
-|---------|-----|----------------------------------------------------------------
-| Complex | C   | Complex number, pair of 2 double numbers (r+i)
-| String  | S   | Short string encoded as UTF8 (Array)
-| Text    | X   | Large blob text encoded as UTF8 (Rope or Radix Tree) 
-| Date    | D   | DD/MM/YYYY 
-| Time    | T   | hh:mm,ms
-| Error   | E   | Exception object: {code, message, line}
-| File    | F   | File handler
+
+| Name    | Symbol | Description
+|---------|--------|----------------------------------------------------------------
+| Complex | C      | Complex number, pair of 2 double numbers (r+i)
+| String  | S      | Short string encoded as UTF8 (Array)
+| Text    | X      | Large blob text encoded as UTF8 (Rope or Radix Tree) 
+| Date    | D      | DD/MM/YYYY 
+| Time    | T      | hh:mm,ms
+| Error   | E      | Exception object: {code, message, line}
+| File    | F      | File handler
 
 **Notes:**
 * Composite variables are references;
@@ -257,7 +258,7 @@ Bee define a collection literal using a special notation based on brackets.
 
 **Notes:** 
 * All collections are references; 
-* Collection members can be references or native types;
+* Collection elements can be references or native types;
 
 ## Type declaration
 
@@ -276,10 +277,17 @@ make var_name,var_name ... ∈ Type_Identifier
 * User defined types are reference types;
 * User defined types start with uppercase letter;
 * Public user types start with dot prefix;
+* Super-type can be referenced by single letter or by full name;
+
+**Example:**
+```
+type Digit := (0..9) <: W;    ** superset default notation
+type Digit := (0..9) <: Word; ** superset equivalent full name 
+```
 
 ## Domain subtypes
 
-Domain notation is used to create a subtype from a primitive type.
+Domain notation is used to create a subset from a superset.
 
 **syntax**
 
@@ -386,7 +394,7 @@ make var_name, var_name ... := expression ∈ Type;
 
 One can modify variables using _alter_ statement.
 
-**example**
+**example:**
 ```
 make a := 10, b := 0 ∈ Z;
 
@@ -503,7 +511,7 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 * comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥)
 * belonging  ( ∈, ⊃, ⊂ )
 
-**example**
+**example:**
 ```
 make x := 4 ∈ Z;
 
@@ -632,7 +640,7 @@ cnd1 := condition for <xp1>
 dx   := default expression (optional condition).
 ```
 
-**example**
+**example:**
 ```
 make x := '0';
 read (x,"x:>");
@@ -679,7 +687,7 @@ Lambda Expressions...
 * can be created from a rule as a result;
 * can be assigned to a variable of type: Lambda
 
-**restrictions:
+**restrictions:**
 * can have one single result;
 * can not be interrupted from execution;
 * can not call any rule that is downgraded;
@@ -722,7 +730,7 @@ A rule can be used for different purpose depending on a particular syntax patter
 
 Parameters are special variables defined in rule signature.
 
-**example**
+**Example:**
 ```# a rule with two parameter
 rule foo(name ∈ S, message @ S):
   alter message:= "hello:" + name + ". I am Foo. Nice to meet you!";
@@ -773,7 +781,7 @@ print c;  ** 1
 
 A rule with a single result can be called: _function_;
 
-**pattern**
+**pattern:**
 ```# define a functional rule
 rule name(param ∈ type,...) => (result @ type):    
    ...
@@ -824,11 +832,11 @@ A rule that have no results is called _routine_:
 * A routine can modify component variables;
 * A routine can call any other routine;
 
-**attributes**
+**attributes:**
 
 Attributes of a routine are local variables starting with dot prefix.
 
-**pattern**
+**pattern:**
 ```
 rule rule_name(param ∈ type,...):   
    make .x, .y, .z := 0 ∈ Z; 
@@ -857,7 +865,7 @@ A rule that is binded to an object type is called: _method_
 * A method can have results;
 * A method can have side-effects;
 
-**pattern**
+**pattern:**
 ```
 type ObjType: {attribute:type, ...} <: Object;
 
@@ -877,7 +885,7 @@ See also: [Composite:Object](composite#object)
 
 A _generic rule_ is a _prototype_ that can be cloned to create _dynamic rules_.
 
-**pattern**
+**pattern:**
 ```# define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
   ...
@@ -900,7 +908,7 @@ make r := new_rule(arguments)
 * A rule clone has some _shared attributes_: defined in the prototype with dot prefix;
 * A rule clone can be created in local context of another rule or in component context;
 
-**example**
+**example:**
 ```# this is a generic rule
 rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
   alter r := (s + i);

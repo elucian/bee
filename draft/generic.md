@@ -2,7 +2,7 @@
 
 A generic rule is using one or more "type" parameters. 
 
-**pattern**
+**pattern:**
 ```
 rule name{Name ∈ Type,...}(param ∈ Name) => (result @ Name):
    alter result := expression(param);

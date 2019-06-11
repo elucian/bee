@@ -34,7 +34,7 @@ load Oracle := $bee_lib.db.oracle;
 
 One application can connect to multiple databases simultaneously. A specific kind of application called _pipeline_ can pull data from multiple sources to update one target database. 
 
-**pattern**
+**pattern:**
 ```# create a wrapper for database connection
 rule connect(name, password, database ∈ S) => (db @ Oracle.Database):
   ## prepare credentials
@@ -136,7 +136,7 @@ pass if bookmark.field_name = table_name.field_name; ** same data
 **Table traversal**
 You can read one table record by record:
 
-**pattern**
+**pattern:**
 ```
 ....
 # table must be open to be scanned

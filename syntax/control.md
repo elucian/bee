@@ -24,7 +24,7 @@ done;
 
 Dual selector based on single logical expression:
 
-**pattern**
+**pattern:**
 ```
 when condition do
   ## true branch
@@ -95,7 +95,7 @@ repeat;
 * Infinite while can be interrupted by timer variable: {&timer := 60};
 * When timer expire, the loop will terminate. By default timer is 60s;
 
-**example**
+**example:**
 
 ```
 make a := 0;
@@ -171,7 +171,7 @@ The "trial" statement execute several statements that can fail or pass.
 | patch | catch other errors not found by error regions
 | done  | finalize a trial block
 
-**pattern**
+**pattern:**
 ```
 # a complex trial  with patch
 trial

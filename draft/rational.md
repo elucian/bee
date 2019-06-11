@@ -51,7 +51,7 @@ Is defined using _"fixed point arithmetic"_ declared using Q notation:
 * range is [-(2ᵐ)... (2ᵐ-2⁻ⁿ)]
 
 
-**For example**
+**For example:**
 A number format "Q5.2" can store in range(-32.00 to 31.75) on 8 bits.  
 
 * with precision of 2⁻² = 1/4 = 0.25
@@ -118,7 +118,7 @@ Rational numbers and other numbers can be compared using "≈" instead of "=".
 * Operator "≈" can be used to compare two numbers using default precision;
 * Operator "≈" can be used with "±" to overwrite default precision;
 
-**example**
+**example:**
 
 In next example b = 0.33(3), delta = (b - a) = 0.083 
 

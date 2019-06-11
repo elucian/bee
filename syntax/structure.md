@@ -129,7 +129,7 @@ One _component_ is identified by a _name_ created with one different keyword dep
 * #aspect: the driver name it is usually the same as the file name;
 * #module: a short description of the component;
 
-**Notes**
+**notes:**
 * One application can have one single _driver_;
 * One _driver_ can load multiple _aspects_ and _modules_;
 * One _aspect_ can also load _aspects_ and _modules_;
@@ -291,7 +291,7 @@ One application has a global context where variables and constants are allocated
 
 A component can establish one or more local name-spaces where you can define component members and statements.
 
-**example**
+**example:**
 ```
 # component name-space
 make i := 1 ∈ Z; 
@@ -403,7 +403,7 @@ One aspect is executed when is loaded first time from driver or from another asp
 The driver or aspect can load in memory numerous modules. After loading, all public elements can be executed on demand. Before execution the driver can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
 
 
-**pattern**
+**pattern:**
 
 ```# initialize an aspect
 load qualifier := $pro.src.aspect_name;
