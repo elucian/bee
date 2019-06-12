@@ -259,8 +259,9 @@ pass if condition; ** can create "unexpected error"
 **Note:** 
 The standard module will define standard _error objects_ as constants:
 
-* 200 = $standard_error   with message: "standard error";
-* 201 = $unexpected_error with message: "unexpected error";
+* 1   = $standard_error   with message: "standard error";
+* 2   = $unexpected_error with message: "unexpected error";
+* 200 = $user_error       with message: "user defined error";
 
 **See also:** [Standard:Exception](standard@exception);
 
@@ -291,11 +292,13 @@ done;
 
 **Custom exception:**
 ```
-make my_error :: {200, 'my error'} ∈ E;
+# you can use code > 200 to create your errors
+make my_error :: {201, 'my error'} ∈ E;
 trial
   fail my_error;
-error 200 do
-  print "error code:" + &error.code; 
+error 201 do
+  print &error.message;
+  print &error.line;
   raise; ** propagate the error
 done;  
 ```

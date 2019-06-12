@@ -151,11 +151,12 @@ make $null_reference:: {101,"null reference usage"}    ∈ Error;
 make $value_overflow:: {102,"value overflow"}          ∈ Error;
 make $out_of_range  :: {103,"value out of range"}      ∈ Error;
 make $type_mismatch :: {104,"data type mismatch"}      ∈ Error;
+make $user_error    :: {200,"user defined error"}      ∈ Error;
 ...
 
 # Standard error
-make $standard_error  :: {200,"standard error"}    ∈ Error;
-make $unexpected_error:: {201,"unexpected error"}  ∈ Error;
+make $standard_error  :: {1,"standard error"}    ∈ Error;
+make $unexpected_error:: {2,"unexpected error"}  ∈ Error;
 ```
 
 **Read next:** [Project Structure](structure.md)
