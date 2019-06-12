@@ -21,9 +21,8 @@ rule demo(x ∈ Z, y ∈ R) => (r @ Rec):
   alter r.y := y;
 return;
 
-# test rule using alter instead of apply
-make  r ∈ Rec;
-apply demo(1, 0.5) +> r;
+# test rule using make instead of apply
+make  r := demo(1, 0.5);
 print r;  ** > {x:1, y:0.5}
 
 over. 

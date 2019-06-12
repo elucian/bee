@@ -5,19 +5,19 @@ driver bs:
 
 # bubble sort for integers
 rule sort(this @ [Z]):
-  ## local variables
+  ** local variables
   make n := length(this)-1;
   make i := 0 ∈ N; 
   make temp ∈ Z; 
   make swap := True ∈ L;
-  ## repetitive block: while
+  ** repetitive block: while
   while swap do
     alter i := 0;
     alter swap := False; ** reset flag
     while (i ≤ n) do
-      ## this pair is out of order ?
+      ** this pair is out of order ?
       when this[i] < this[i+1] do
-        ## swap a elements
+        ** swap elements
         alter temp     := this[i];
         alter this[i]  := this[i+1];
         alter this[i+1]:= temp;

@@ -25,7 +25,7 @@ clone test  := generator{4,12};
 # test cloned rule: count()
 trial
   make set ∈ {Z}; 
-  ## this loop is infinite
+  ** this loop is infinite
   while True do
     alter set += count();
     write set.index; 
@@ -33,7 +33,7 @@ trial
   repeat; 
   print; **  0,1,2,3,4,5,6,7,8,9,  
 cover
-  ## count(): failed
+  ** count(): failed
   print set; **  {0,1,2,3,4,5,6,7,8,9}  
 done;
 +--------------------------------------------------

@@ -24,10 +24,10 @@ rule consumer(ch @ (N)):
   repeat;
 return;
 
-## produce on 1 thread
+** produce on 1 thread
 start producer(q);
 
-## consume on 2 threads  
+** consume on 2 threads  
 while (i < 2) do
    start consumer(ch);
    alter i += 1;
