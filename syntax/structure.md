@@ -75,7 +75,7 @@ Bee can use a runt-time configuration file:
 |$bee_path | BEE_PATH   | Bee library path           |
 |$pro_home | N/A        | Program home folder        |
 |$pro_lib  | N/A        | Program library home       |
-|$pro_mod  | N/A        | Program components home       |
+|$pro_mod  | N/A        | Program components home    |
 |$pro_log  | N/A        | Reporting folder           |
 
 ### System directives
@@ -212,7 +212,7 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-driver main
+driver main:
 # read the number of parameters
 make c := $params.count;
 halt if (c = 0);
@@ -340,27 +340,26 @@ return;
 
 Comments can be used to document the code or the configuration files.
 
-**End of line**
-
-For each line of code you can use optional comments: "**".
- 
-* you can use "**" in the middle of an expression, before the end of statement;
-* you can have multiple statements separated by ";" in a line but only one comment;
-
 **Single line**
 
 For single line comments we use one or two symbols: 
 
-{ "#", "##", "**" } 
+{ "#", "**" } 
 
 * `# ` is used as title comment
-* `##` is used as indented subtitle comment
 * `**` is used as end of line comment
+
+**End of line**
+
+After code line, before (EOL) you can use optional comments: "**",
+ 
+* you can use "**" in the middle of an expression, before the ";",
+* you can have multiple statements separated by ";" in a line but only one comment;
 
 **Notes:** 
 Bee syntax is Wiki friendly: you can open it using Bee syntax color in Notepad++
 
-1. In Wiki "#" represents a title. For subtitles you can use two "##".
+1. In Wiki "#" represents a title. For subtitles you can use two: "##".
 2. In Wiki "**" is making bold text, that is kind of title. 
 
 **Example:**
@@ -374,12 +373,10 @@ In next example we are using various comments into a demo program.
 +-----------------------------------------------------------------+
 driver main:
 
-# This is a title in program  (zero indentation for titles)
-...
-  ** This is a sub-title in program (two space indentation)
+# This is a single line comment
+pass; ** this is end of line comment  
   ... 
-over. ** end of line comment
-
+over. 
 *******************************************************************
 ** This is the old style boxed comment, used for matrix printers **
 *******************************************************************
@@ -390,17 +387,17 @@ Any test after the end of program is considered a comment and is ignored by the 
 
 ## Execution
 
-**driver**
+**driver:**
 
 When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled. The driver is the program main entry point. It is executed only once. 
 
-**aspect**
+**aspect:**
 
 One aspect is executed when is loaded first time from driver or from another aspect. Rogue statements from an aspect can be used for _aspect initialization_. You can not run an aspect a second time during the lifespan of a session.
 
-**modules**
+**modules:**
 
-The driver or aspect can load in memory numerous modules. After loading, all public elements can be executed on demand. Before execution the driver can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
+The driver or aspect can load numerous modules. After loading, all public elements can be executed on demand. Before execution the driver can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
 
 
 **pattern:**
