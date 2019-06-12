@@ -628,7 +628,7 @@ You can define exceptions with code > 200 and raise exceptions with 3 statements
 make my_error := {200,"message"} ∈ Error;
 
 fail my_error if condition;
-pass my_error if condition;
+pass if condition;
 ```
 
 Template modifier "?" can be used to customize the error message:
@@ -641,7 +641,6 @@ read (flag, 'enter flag (0/1):');
 make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
 fail my_error ? 'test' if flag;
-pass my_error ? 'test' if flag;
 ```
 # expected output
 ```
