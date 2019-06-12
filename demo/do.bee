@@ -3,6 +3,8 @@
 -----------------------------------------+
 driver do:
 
+load $pro_lib.console.(.);
+
 make a :=  [Z](10);   ** array of 10 Words
 make n :=  a.count(); ** index of last element
 

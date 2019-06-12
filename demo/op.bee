@@ -2,6 +2,8 @@
        Input/Output parameters
 ------------------------------------+
 driver op:
+load $pro_lib.console.(.);
+
 # rule with input/output parameters
 # operator "@"  define input/output reference 
 rule pro(a,b @ N):

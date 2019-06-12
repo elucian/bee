@@ -3,8 +3,9 @@
 ----------------------------------+
 driver ho:
 
+load $pro_lib.console.(.);
+
 # create a rule prototype
- 
 # this rule can be used or cloned 
 rule generator{min, max ∈ Z}() => (r @ Z):
   make .index := min ∈ Z;

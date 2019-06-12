@@ -2,11 +2,13 @@
    Bee input value demo
 --------------------------+
 driver in:
+load $pro_lib.console.(.);
 
 make a ∈ N;
 print "to stop enter 0";
 while (a ≠ 0) do
-  read (a, "enter a number:", "####.##");
+  print ("enter a number:");
+  read  a;
   print ("you have enter: " + a);
 repeat;
 

@@ -3,6 +3,8 @@
 -----------------------------------+
 driver fn:
 
+load $pro_lib.console.(.);
+
 # lambda expression
 make add := (a, b ∈ Z) ∈ Z => (a + b);
 

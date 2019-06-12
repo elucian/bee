@@ -3,6 +3,8 @@
 --------------------------------+
 driver fo:
 
+load $pro_lib.console.(.);
+
 # initialize the system library 
 load io   := $bee.system.io:(*);
 load con  := $bee.system.console:(*);

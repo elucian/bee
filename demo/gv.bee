@@ -4,6 +4,8 @@
 ------------------------------+
 driver gv:
 
+load $pro_lib.console.(.);
+
 # declare a global variable $xS
 make x := 1;
 # use global variable x in rule "add"

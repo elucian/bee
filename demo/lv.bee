@@ -2,6 +2,7 @@
    demo for local variable site-effect
 -------------------------------------------+
 driver lv:
+load $pro_lib.console.(.);
 
 # global variable
 make x := 1;

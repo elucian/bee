@@ -3,6 +3,8 @@
 +-------------------------------+
 driver cs:
 
+load $pro_lib.console.(.);
+
 # declare two natural numbers
 make a := 10, b := 5 ∈ N;
 # simple decision 

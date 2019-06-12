@@ -3,13 +3,17 @@
 --------------------------+
 driver hi:
 
-print "Hello. I'm Bee!";
+load $pro_lib.console.(.);
+
+print ("Hello. I'm Bee!");
  
-make your_name ∈ S;
-make your_age  ∈ N;
-read (your_name , "Your name?:");
-read (your_age  , "Your age:");
-print("hello:" & your_name);
+print ("Your name?:"); 
+read your_name ∈ S;
+
+print ("hello:" + your_name);
+print ("Your age:"); 
+read your_age ∈ N, 
+
 
 when age < 21 do
   print "have a candy!";

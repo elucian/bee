@@ -2,6 +2,7 @@
       type inference demo
 -----------------------------------+
 driver ti:
+load $pro_lib.console.(.);
 
 # constant type inference
 make a :: 10;     ** Z (integer on 64bit)

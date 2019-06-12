@@ -2,10 +2,12 @@
    "if" and "else" decisions
 -------------------------------+
 driver if:
+load $pro_lib.console.(.);
 
-make x ∈ N;
-read (x ,"define a number:");
+print ("define a number:");
+read x ∈ N; 
 # only if conditional
+
 print "x = 0" if x = 0;
 # single branch
 when x = 1 do

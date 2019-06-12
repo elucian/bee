@@ -2,6 +2,7 @@
    rule collector demonstration 
 -------------------------------------+
 driver up:
+load $pro_lib.console.(.);
 
 # rule with two results
 rule test(x, y ∈ Z) => (a,b @ Z):
@@ -23,6 +24,6 @@ return;
 
 # test rule using make instead of apply
 make  r := demo(1, 0.5);
-print r;  ** > {x:1, y:0.5}
+print r;  ** {x:1, y:0.5}
 
 over. 

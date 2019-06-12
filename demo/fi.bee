@@ -2,7 +2,8 @@
   Demo Fibonacci rule
 ---------------------------+
 driver fi:
-#role :=  "driver:
+
+load $pro_lib.console.(.);
 
 # declare Fibonacci rule
 rule fib(n ∈ N) => (y @ N):
