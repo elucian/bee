@@ -26,7 +26,7 @@ symbol  | description
 symbol| description
 ------|----------------------------------------------------------------
  `*`  | String replication
- `#`  | Single line comments \| Digit placeholder: (format template)
+ `#`  | Single line comments \| Digit placeholder: format template
  `$`  | System constant  \| Environment variables
  `&`  | System variable  \| Global variable
  `@`  | Define method result /| input/output parameters
@@ -37,8 +37,9 @@ symbol| description
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
  `:`  | Pair up key-value in a collection or rule call
  `;`  | End of statement \| Statement separator
- `.`  | Decimals for real numbers \| String concatenation
+ `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
+ `|`  | Declarative collection builder: {set, list, hash, array}
  `_`  | Anonymous variable \| Has constant value one space (_ = ' ')
  `\\` | Escape character (\\n := New Line) \| maybe regular expressions
 
@@ -53,9 +54,9 @@ symbol| description
  `^`  | Power symbol used with fractions or expressions   
  `·`  | Multiplication
  `÷`  | Real division 
- `×`  | Array multiplication
+ `×`  | Array multiplication \| Matrix multiplication
  `%`  | Modulo operator
- `+`  | Numeric addition \| List append
+ `+`  | Numeric addition \| List append \| Mattrix addition
  `-`  | Numeric subtraction \| Collection difference 
  `±`  | Numeric tolerance (use with ≈)
 
@@ -65,13 +66,14 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------------------
- `##` | Indented (subtitle) comments
+ `##` | Subtitle single line comments
  `**` | End of line comments
  `..` | Define domain (n..m) \| Array slice [n..m]
  `::` | Define a constant (used with make)
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
- `+>` | Collector: capture result. Associated with: _play_ and _apply_
+ `+>` | Collector: capture result. Associated with _apply_
+ `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
  
 ## Modifiers
 
@@ -123,6 +125,8 @@ symbol | result     |meaning
  `⊂`   | Logic      |Set is included in superset: "⊂"
  `⊃`   | Logic      |Set contain subset: "⊃"  
  `⊖`   | Set        |Set symmetric difference  
+ `+`   | String     |Concatenation between two strings
+ `+`   | List       |Concatenation between two lists
  `+`   | Array      |Concatenation between two arrays
  `∀`   | Element    |Enumerate all elements from a collection
  `∃`   | Logic      |Check if exist one element in a collection

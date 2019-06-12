@@ -21,7 +21,7 @@ By using collections and control structures one can load, modify and store data.
 * Array capacity initialization can be deferred;
 * Array capacity can be modified with data movement;
 
-**example**
+**example:**
 
 ```
 make test ∈ [R](10); ** vector of 10 real numbers
@@ -64,7 +64,7 @@ make a6 := a1 ∩ a2; ** [2,3]
 make a7 := a1 ∪ a2; ** [1,2,3,4]
 ```
 
-**example**
+**example:**
 ```
 rule test_array:
   ## array  with capacity of 10 elements
@@ -151,7 +151,7 @@ do
 done;
 ```
 
-**example**
+**example:**
 
 Slicing notation can be used to create a view to original array.
 
@@ -454,7 +454,7 @@ else
 done;
 ```
 
-**example**
+**example:**
 ```
 make animals ∈ {S,S};
 do

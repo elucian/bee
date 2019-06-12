@@ -10,32 +10,14 @@ We define new data types and keywords to make dynamic 2D technical drawings:
  ⊥      | π/2
  ǁ      | 2·π
  
-## Data types
+## Graphic types
 
-Each graphic element is a composite data type.
-
- Type  | Name     | Description
--------|----------|---------------------------------
-  ∠    | Angle    | [0..2·π] 
-  ⊡    | Cartesian| {x, y ∈ R}
-  ⊙    | Polar    | {r ∈ P, α ∈ ∠ }  
-  ↗    | Vector   | {o, p ∈ ⊡}  
-  ↺    | Relative | {o ∈ ⊡, r ∈ P, α ∈ ∠ }    
-  ○    | Circle   | {o ∈ ⊡, r ∈ P}  
-  ◷    | Arc      | {o ∈ ⊡, r ∈ P, α,β ∈ ∠ }
-  □    | Square   | {o ∈ ⊡, b ∈ P}
-  ◁    | Triangle | {o ∈ ⊡, b ∈ P, α,β,ɣ ∈ ∠}
-  ◇    | Diamond  | {o ∈ ⊡, α,β ∈ ∠} 
-  ⎊    | Regular  | {o ∈ ⊡, r, n ∈ P}
-  ⌂    | Shape    | {o ∈ ⊡, s ∈ [⊡]}
-  ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
-
-Type   | Signature                    | Description
--------|------------------------------|-------------------------------------------------
-gC     | {o ∈ ⊡, w,h ∈ Z, m ∈ [gL]}   | Graphic  canvas (with points and shapes)
-gL     | {c ∈ N, v ∈ L, m ∈ [gH]}     | Graphic  layer with c = color, m = set of shapes
-gH     | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }       | Graphhic shape, with origin and rotation
-gT     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic  Text with rotation
+Type   | Name    | Signature                    | Description
+-------|---------|------------------------------|-------------------------------------------------
+  V    | Canvas  | {o ∈ ⊡, w,h ∈ Z, m ∈ [Y]}    | Canvas (with points and shapes)
+  Y    | Layer   | {c ∈ B, v ∈ L,   m ∈ [H]}    | Layer with c = color, m = set of shapes
+  H    | Shape   | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }       | Shape, with origin and rotation
+  G    | Tag     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic label with rotation
 
 **legend**
 ```
@@ -46,6 +28,30 @@ m = members
 d = distance
 v = visible 
 ```
+
+## Drawing Elements
+
+Each graphic element is a composite data type.
+
+ Type  | Name     | Description
+-------|----------|---------------------------------
+  ∠    | Angle    | [0..2·π] 
+  ⊡    | Cartesian| {x, y ∈ Q}
+  ⊙    | Polar    | {r ∈ P, α ∈ ∠ }  
+  ↗    | Vector   | {o, p ∈ ⊡}  
+  ↺    | Relative | {o ∈ ⊡, r ∈ P, α ∈ ∠ }    
+  ○    | Circle   | {o ∈ ⊡, r ∈ P}  
+  ◷    | Arc      | {o ∈ ⊡, r ∈ P, α,β ∈ ∠ }
+  □    | Square   | {o ∈ ⊡, b ∈ P}
+  ◁    | Triangle | {o ∈ ⊡, b ∈ P, α,β,ɣ ∈ ∠}
+  ◇    | Diamond  | {o ∈ ⊡, α,β ∈ ∠} 
+  ⎊    | Regular  | {o ∈ ⊡, r, n ∈ P}
+  ⌂    | Polygon  | {o ∈ ⊡, c ∈ [⊡]}
+  ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
+  
+**Note:**
+* We use default rational numbers Q = Rational for grid precision
+* We use P = positive numbers for dimensions and distances
 
 ## Drawing keywords
 

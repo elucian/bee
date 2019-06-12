@@ -44,7 +44,7 @@ super_type ::= primitive type or composite type
 
 Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1. Associated values can start with a different integer number. Values can be specified using pair up operator ":". All values must be unsigned integer (i ≤ 0) in consecutive ascending order.
 
-**pattern**
+**pattern:**
 ```
 type type_name := { name1:0, name2, name3} <: Ordinal;
 
@@ -144,7 +144,7 @@ make name := (constant,...) ∈ (element_type); ** full declaration
 * elements in a list are ordered,
 * accessing elements in a list by index is slow.
 
-**example**
+**example:**
 
 ```# define a list type of unsigned short integers
 type Lou  := (u16) <: List;
@@ -178,7 +178,7 @@ make array_name ∈ Array_Type;
 * Array index start from 0 to c-1 where c is capacity;
 * Array capacity is immutable after array initialization;
 
-**example**
+**example:**
 
 ```
 make array := [`a`, `b`, `c`];
@@ -324,7 +324,7 @@ type type_name := {(key_type : value_type)} <: Hash;
 make new_map := {} ∈ type_name;
 ```
 
-**example**
+**example:**
 ```# initial value of map
 make map := {('a':"first"), ('b':"second")};
 # create new element
@@ -420,7 +420,7 @@ alter y := parse('10,000.3333',2,',.'); ** convert to real 10000.33
 Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape \\ symbol in double quoted strings. This will be internally replaced by a code point. Print command will render the encoded string and will represent it to output device.
 
 
-**example**
+**example:**
 ```
 print("this represents \n new line in string");
 ```
@@ -518,7 +518,7 @@ print size(Person);
 ```
 
 ### Recursive
-We can limit how deep a call stack become using a directive. "$recursion:1000"
+We can limit how deep a call stack become using a directive. $recursion:1000
 
 ```
 # example of single recursive node
@@ -543,17 +543,17 @@ type Node <: {
 
 An object can have associated rules that are called _methods_:
 
-**pattern**
+**pattern:**
 ```# define Foo as object with 2 public attributes:
 type Foo := {a, b ∈ N} <: Object;
-  # constructor method for Foo
-rule foo(p1,p2 ∈ N) => (me @ Foo):
-  make me := {a:p1, b:p2};
+  # constructor has the same name as the type
+rule foo(p1,p2 ∈ N) => (self @ Foo):
+  make self := {a:p1, b:p2};
 return;
 # define a method for Foo
-rule bar(me @ Foo):
-  print "a =" + me.a;
-  print "b =" + me.b;
+rule bar(self @ Foo):
+  print "a =" + self.a;
+  print "b =" + self.b;
 return;
 # call constructor
 make test := foo(1,1);
@@ -628,12 +628,12 @@ You can define exceptions with code > 200 and raise exceptions with 3 statements
 make my_error := {200,"message"} ∈ Error;
 
 fail my_error if condition;
-pass my_error if condition;
+pass if condition;
 ```
 
 Template modifier "?" can be used to customize the error message:
 
-**example**
+**example:**
 ```
 make  flag ∈ L;
 read (flag, 'enter flag (0/1):');
@@ -641,7 +641,6 @@ read (flag, 'enter flag (0/1):');
 make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
 fail my_error ? 'test' if flag;
-pass my_error ? 'test' if flag;
 ```
 # expected output
 ```

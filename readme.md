@@ -4,6 +4,8 @@
 </a>
 </p>
 
+<p align="center"><i>A technical computer language for arithmetics and geometry.<i/></p>
+
 <p align="center"> <a href=syntax/readme.md>Bee Syntax</a></p>
 
 <p align="center">

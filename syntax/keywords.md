@@ -8,8 +8,8 @@ Bee core has 46 reserved keywords so far:
 08: make, rule, like, clone, load, alias, type, return
 07: read, write, print, alter, scrap, apply, start
 05: for, when, case, while, trial
-08: do, else, error, cover, final, repeat, next, done 
-12: wait, exit, fail, pass, raise, skip, stop, halt, abort, rest, yield, over.
+08: do, else, error, patch, final, repeat, next, done 
+12: exit, fail, pass, raise, skip, stop, halt, abort, wait, rest, yield, over.
 ```
 
 **notes:** 
@@ -71,8 +71,8 @@ Control statements are also known as decision statements.
 | for      | Start iteration loop for domain or collection
 | next     | Continue iteration with last element in domain or collection
 | trial    | Protect a block of code that may have exceptions
-| error    | Associated with trial to patch one errors
-| cover    | Associated with trial to patch other errors
+| error    | Associated with trial to catch one error
+| patch    | Associated with trial to patch any other errors
 | final    | Associated with trial to finalize the trial block
 | do       | Begin a statement region in a block statement
 | done     | Finalize when, check and trial control statements

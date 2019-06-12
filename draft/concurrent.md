@@ -18,7 +18,7 @@ rest    | temporary suspend main thread and wait for all threads to synchronize
 wait    | suspend a thread for specific number of seconds, milliseconds
 yield   | interrupting current thread and give priority to other thread
 
-**example**
+**example:**
 
 Asynchronous call can be done using a control loop:
 
@@ -45,7 +45,7 @@ Coroutines are two methods that wait for each other to execute in turn.
 * coroutines can be executed on multiple threads
 * coroutines can be used in producer/consumer paradigm
 
-**design pattern**
+**design pattern:**
 
 ```
 #driver

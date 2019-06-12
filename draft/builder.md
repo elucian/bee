@@ -24,7 +24,7 @@ make set_name := { map(x,y) | (x,y) ∈ DS × DS};
 * condition ::= rule or logic expression
 * DS        ::= data source: domain or list
 
-**example**
+**example:**
 ```
 make source := [1,2,1,2,3]
 make test1, test2 ∈ {Z}

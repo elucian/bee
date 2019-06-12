@@ -137,20 +137,26 @@ make file_name   := File.open('name','w');
 make folder_name := Folder.open('name');
 ```
 
-## Exception
-Bee has pre-define exception codes in range (1..200):
+## Errors
+Bee has pre-define Error objects with codes in range (1..200):
 
-```# global exception type
+```# global type
 type Error := {code ∈ Z, message ∈ S} <: Object;
 ```
 
 ```
 # exception objects
-make $zero_div      :: {100,"division by zero"}        ∈ Error;
-make $null_ref      :: {101,"null reference usage"}    ∈ Error;
-make $val_overflow  :: {102,"value overflow"}          ∈ Error;
-make $out_of_range  :: {103,"index out of range"}      ∈ Error;
-make $out_of_range  :: {104,"data type mismatch"}      ∈ Error;
+make $zero_division :: {100,"division by zero"}        ∈ Error;
+make $null_reference:: {101,"null reference usage"}    ∈ Error;
+make $value_overflow:: {102,"value overflow"}          ∈ Error;
+make $out_of_range  :: {103,"value out of range"}      ∈ Error;
+make $type_mismatch :: {104,"data type mismatch"}      ∈ Error;
+make $user_error    :: {200,"user defined error"}      ∈ Error;
+...
+
+# Standard error
+make $standard_error  :: {1,"standard error"}    ∈ Error;
+make $unexpected_error:: {2,"unexpected error"}  ∈ Error;
 ```
 
 **Read next:** [Project Structure](structure.md)

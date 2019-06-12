@@ -31,30 +31,41 @@ type Φ := (-90..+90)      <: Q; ** latitude angle (degree)
 
 Other map data types are starting with "m" prefix and one uppercase letter.
 
-* mP  = Map Point
-* mL  = Map Link
-* mN  = Map Node
-* mA  = Map Area
-* mC  = Map Canvas
+* •  = Node: { Shape Point   } 
+* ↯  = Link: { Street, Trail }
+* ⇄  = Lane
+* ⌘  = Complex Intersection
+* ◉  = Intersection
+* ◈  = Place of Intrest
+* ▣  = Area  of Intrest
+* §  = Line: { Elevation, Border, Railway, River}
+* ■  = Area (Maybe water)
+* ♁  = Map
+* ⁉  = Condition
 
 ```
-# map coordinates: λ = Latitude, φ = Longitude 
-  type mC := {λ ∈ Λ, φ ∈ Φ} <: Object;
+# map simple node: λ = Latitude, φ = Longitude, i = index
+  type • := {i ∈ N, λ ∈ Λ, φ ∈ Φ} <: Object;
   
 # network node: λ = Latitude, φ = Longitude, ε = Elevation
-  type mN := {λ ∈ Λ, φ ∈ Φ, ε ∈ Δ} <: Object;;             
+  type ◉ := {id ∈ N, λ ∈ Λ, φ ∈ Φ, ε ∈ Δ} <: Object;             
  
 # network link
-  type mL := {start_node ∈ mN, end_node ∈ mN, shape ∈ [mC]} <: Object;;
+  type ↯ := {id ∈ N, start_node ∈ ◉, end_node ∈ ◉, shape ∈ [•]} <: Object;
   
-# point of interest
-  type mP := {id ∈ N, point ∈ mC, label ∈ S} <: Object;;
+# place of interest
+  type ◈ := {id ∈ N, point ∈ •, label ∈ S} <: Object;
 
-# map area 
-  type mA := {origin ∈ mN, shape ∈ [mC], label ∈ S} <: Object;;
+# area 
+  type ■ := {id ∈ N, origin ∈ •, shape ∈ [•], category ∈ S} <: Object;
+
+# area of interest
+  type ▣ := {id ∈ N, point ∈ •, shape ∈ [•], label ∈ S} <: Object;
   
-# map object
-  type mO := {origin ∈ mC, scale ∈ Q, points ∈ [mP], nodes ∈ [mN], links ∈ [mL]} <: Object;;
+# map area
+  type ♁ := {origin ∈ •, extent ∈ •, scale ∈ Q 
+             nodes ∈ [◉], links ∈ [↯], 
+             area ∈ [■], pint ∈ [◈], aint ∈  [▣] } <: Object;
 ```
 
 **legend**
