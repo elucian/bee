@@ -8,20 +8,20 @@ read (x ,"define a number:");
 # only if conditional
 print "x = 0" if x = 0;
 # single branch
-when (x = 1) do
+when x = 1 do
   print "x = 1";
 done;
 # two branches
-when (x ≠ 5) do
+when x ≠ 5 do
   print "x ≠ 5";
 else
   print "x = 5";
 done;
 # nested branches
 alter x := 1;
-when (x ≥ 1) do
+when x ≥ 1 do
   print "x ≥ 1":
-  when (x = 1) do
+  when x = 1 do
     print "x = 1";
   else
     print "x > 1";
@@ -33,10 +33,10 @@ done;
 # x ≥ 1
 # x = 1
 # nested when
-when (x < 1) do
+when x < 1 do
   print "x < 1";
 else
-  when (x > 1)
+  when x > 1 do
     print "x > 1";
   else
     print "x = 1";
