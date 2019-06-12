@@ -1,6 +1,6 @@
-+------------------------
-  Rule as parameter
-------------------------+
++--------------------------------------
+|  Lambda expression as a parameter   |
++-------------------------------------+
 driver rp:
 
 # declare rule with rule "cmp" as parameter
@@ -12,11 +12,11 @@ return;
 make lt := (a,b ∈ Z) ∈ L => (a < b);
 make test ∈ L;
 
-# delegate using rule "lt"
+# delegate rule compare to execute expression: lt
 alter test := compare(1,2,cmp:lt);
 print test; ** expect 1
 
-# delegate using anonymous rule
+# delegate rule compare to execute an anonymous lambda expression
 alter test := compare(1, 2, (a, b) => (a ≥ b));
 print test; ** expect 1
 

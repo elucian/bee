@@ -14,10 +14,10 @@ We define new data types and keywords to make dynamic 2D technical drawings:
 
 Type   | Name    | Signature                    | Description
 -------|---------|------------------------------|-------------------------------------------------
-  V    | Canva   | {o ∈ ⊡, w,h ∈ Z, m ∈ [Y]}    | Canvas (with points and shapes)
+  V    | Canvas  | {o ∈ ⊡, w,h ∈ Z, m ∈ [Y]}    | Canvas (with points and shapes)
   Y    | Layer   | {c ∈ B, v ∈ L,   m ∈ [H]}    | Layer with c = color, m = set of shapes
   H    | Shape   | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }       | Shape, with origin and rotation
-  ⊥    | Tag     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic label with rotation
+  G    | Tag     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic label with rotation
 
 **legend**
 ```
@@ -46,7 +46,7 @@ Each graphic element is a composite data type.
   ◁    | Triangle | {o ∈ ⊡, b ∈ P, α,β,ɣ ∈ ∠}
   ◇    | Diamond  | {o ∈ ⊡, α,β ∈ ∠} 
   ⎊    | Regular  | {o ∈ ⊡, r, n ∈ P}
-  ⌂    | Poligon  | {o ∈ ⊡, c ∈ [⊡]}
+  ⌂    | Polygon  | {o ∈ ⊡, c ∈ [⊡]}
   ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
   
 **Note:**

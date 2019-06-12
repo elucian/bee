@@ -15,14 +15,14 @@ return;
 
 ## Anonymous Expression
 
-Anonymous expression is like lambda expression except it does not have a name assigned to it:
+Anonymous expression is like lambda expression except it does not have a name:
 
 **anonymous expression**
 ```
 (param ∈ type_name, ,...) => (expression)
 ```
 
-This can be used to create an argument for parameters of type "Rule" declared with "@" like:
+This notation can be used to create an arguments of type expression, declared with "@" like:
 
 **signature**
 ```
