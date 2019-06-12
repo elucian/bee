@@ -296,7 +296,7 @@ A component can establish one or more local name-spaces where you can define com
 # component name-space
 make i := 1 ∈ Z; 
 trial
-  ## local name-space
+  ** local name-space
   make v := i;     ** v is local reference to nonlocal: i 
   make i := 2 ∈ Z; ** create i local 
   print i;  ** expected: 2 (local)
@@ -376,7 +376,7 @@ driver main:
 
 # This is a title in program  (zero indentation for titles)
 ...
-  ## This is a sub-title in program (two space indentation)
+  ** This is a sub-title in program (two space indentation)
   ... 
 over. ** end of line comment
 

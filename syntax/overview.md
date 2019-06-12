@@ -160,16 +160,18 @@ Most data types are references except native types that are values.
 
 * native type name start with lowercase letter follow by a number representing bit length;
 * primitive reference type name consist of a single capital letter;
-* composite reference type name can start with a small letter but second must be capital letter;
+* composite reference type name can start with a capital letter or Unicode symbol;
 
 **examples:**
 ```
-u8  ** native type: byte
-i32 ** native type: binary integer
-Z   ** primitive type: long integer
-R   ** primitive type: double float
-mL  ** composite type: map Link
-gC  ** composite type: graphic canvas
+u8   ** native type: byte
+i32  ** native type: binary integer
+Z    ** primitive type: long integer
+R    ** primitive type: double float
+Q5.2    ** primitive type: precision 0.25 
+Object  ** composite type: root class for objects
+File    ** composite type: text file
+
 ```
 **boxing**
 
@@ -892,11 +894,11 @@ A _generic rule_ is a _prototype_ that can be cloned to create _dynamic rules_.
 ```# define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
   ...
-  # a prototype can have attributes
+  ** a prototype can have attributes
   make .x, .y, .z := 0 ∈ Z;  
   ...
   
-  # compute the result
+  ** compute the result
   alter result := expression(arguments);
 return;
 # making a rule clone from prototype

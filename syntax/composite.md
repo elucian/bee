@@ -581,13 +581,13 @@ Is a last parameter in a parameter list, declared with _empty array_ prefix: []
 ```
 rule foo([]bar ∈ [Z]) => (x @ Z):
   make c := bar.count();
-  # precondition
+  ** precondition
   when (c = 0) do
     alter x := 0;
     exit;
   done;
   alter i := 0; 
-  # sum all parameters  
+  ** sum all parameters  
   while (i < c) do
     alter x += bar[i];
     alter i += 1;

@@ -28,7 +28,7 @@ This notation can be used to create an arguments of type expression, declared wi
 ```
 rule foo( exp @ (type,type, ...) ∈ type);
    ... 
-   ## you can use the  exp
+   ** you can use the  exp
    make r := exp(param,...);
    print r;
 return;
@@ -54,9 +54,9 @@ rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
     alter i := 0;
     alter swap := False;
     while (i < n-1) do
-      ## this pair is out of order ?
+      ** this pair is out of order ?
       when gt(array[i], array[i+1]) do
-        ## swap pair and set swap flag = true
+        ** swap pair and set swap flag = true
         alter temp := array[i];
         alter array[i] := array[i+1];
         alter array[i+1] := temp;

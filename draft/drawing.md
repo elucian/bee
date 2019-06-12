@@ -2,13 +2,37 @@
 
 We define new data types and keywords to make dynamic 2D technical drawings:
 
-## Constants
+## Degree
 
- symbol | value
+Bee support radians using (π) prefix. Instead of (2 · π) you can write ( 2π )
+
+
+With Comb Dot: ° 
+  30°_30′_30″ 
+
+ symbol | same value in degree
 --------|-------------------------------------------
- π      | 3.14
- ⊥      | π/2
- ǁ      | 2·π
+ 0      | 0°0′0″ 
+ π/4    | 45°
+ π/2    | 90°
+ π      | 180° 
+ 2π     | 360°
+
+**Minutes and Seconds:**
+
+Bee is using Unicode symbols prime (′) for minutes and (″) for seconds of arc:
+
+```
+make α := 180°   ∈ ∠;
+make β := 0°0′0″ ∈ ∠;
+
+pass if α ≈ π ; ** α ≠ π
+```
+
+**Notes**
+* Relation operators can convert the measurement units;
+* Operator ± should work with degree, minutes and seconds;
+
  
 ## Graphic types
 
@@ -35,7 +59,7 @@ Each graphic element is a composite data type.
 
  Type  | Name     | Description
 -------|----------|---------------------------------
-  ∠    | Angle    | [0..2·π] 
+  ∠    | Angle    | (0 .. 2π) or (0°..360°)
   ⊡    | Cartesian| {x, y ∈ Q}
   ⊙    | Polar    | {r ∈ P, α ∈ ∠ }  
   ↗    | Vector   | {o, p ∈ ⊡}  
@@ -47,17 +71,17 @@ Each graphic element is a composite data type.
   ◇    | Diamond  | {o ∈ ⊡, α,β ∈ ∠} 
   ⎊    | Regular  | {o ∈ ⊡, r, n ∈ P}
   ⌂    | Polygon  | {o ∈ ⊡, c ∈ [⊡]}
-  ◪    | Fill     | { ■, ▤, ▥, ▦, ▧, ▨, ▩ } 
+  ◪    | Fill     | { ▤, ▥, ▦, ▧, ▨, ▩ } 
   
 **Note:**
-* We use default rational numbers Q = Rational for grid precision
-* We use P = positive numbers for dimensions and distances
+* We use default rational numbers Q
+* We use P = positive numbers for distance
 
 ## Drawing keywords
 
 Keyword  | Description
 ---------|-----------------------------------
-draw     | put something on a layer
+draw     | put shape on layer
 wipe     | remove drown shapes
 show     | show canvas
 hide     | hide canvas

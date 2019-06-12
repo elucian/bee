@@ -17,7 +17,7 @@ The _when_ keyword is a multi-conditional selector.
 **syntax**
 ```
 when condition do
-  ## statements
+  ** statements
   ...
 done;
 ```
@@ -27,10 +27,10 @@ Dual selector based on single logical expression:
 **pattern:**
 ```
 when condition do
-  ## true branch
+  ** true branch
   ...
 else
-  ## false branch
+  ** false branch
   ...
 done;
 ```
@@ -43,7 +43,7 @@ write 'a = ';
 read  a;# first decision
 when a ≤ 0 do 
   print 'a ≤ 0';
-  ## second decision
+  ** second decision
   when a = 0 do 
     print 'a = 0';
   else
@@ -76,14 +76,14 @@ Conditional repetitive block:
 
 ```
 while condition do
-  ## repetitive block
+  ** repetitive block
   ...
   skip if (condition); ** continue
   ...
   stop if (condition); ** break
   ...
 else
-  ## alternate path
+  ** alternate path
   ...
 repeat;
 ```
@@ -118,9 +118,9 @@ While statement can be nested:
 
 ```
 while condition do
-  ## outer loop
+  ** outer loop
   while condition do
-    ## inner loop
+    ** inner loop
     ...
   repeat;  
   ...  
@@ -194,23 +194,23 @@ The "trial" statement execute several statements that can fail or pass.
 ```
 # a complex trial  with patch
 trial
-  ## declare local variables
+  ** declare local variables
   ...
   abort if (condition);
   ...
   fail if (condition);
 error code do 
-  ## handler1
+  ** handler1
   ...
 error code do
-  ## handler2
+  ** handler2
   ...    
 patch
-  ## all other errors
+  ** all other errors
   ...
   raise; ** propagate
 final
-  ## finalization statement    
+  ** finalization statement    
   ...
 done;
 ```

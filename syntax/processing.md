@@ -67,20 +67,20 @@ make a7 := a1 ∪ a2; ** [1,2,3,4]
 **example:**
 ```
 rule test_array:
-  ## array  with capacity of 10 elements
+  ** array  with capacity of 10 elements
   make my_array ∈ [Z](10);
   make m := my_array.capacity();
   make i := 0 ∈ u4;
-  ## traverse array and modify elements
+  ** traverse array and modify elements
   while i < m do
     alter my_array[i] := i;     
     alter i += 1;
   repeat;
-  ## array  elements using escape template \[]
+  ** array  elements using escape template \[]
   print ("This is the first element: \[1]" ? my_array); 
   print ("This is the last element: \[-1]" ? my_array);
   
-  ## range of array elements are comma separated [1,2,3]
+  ** range of array elements are comma separated [1,2,3]
   print ("These are the first two: \[1..2]"        ? my_array);
   print ("These are the lat two: \[-2..-1]"        ? my_array);
   print ("These are all except lat two: \[1..-3]"  ? my_array);
@@ -297,7 +297,7 @@ Collection members can be copy into the new collection using collection builder:
 ```
 make source  := [0,1,2,2,2,2];
 do
-  ## eliminate duplicates
+  ** eliminate duplicates
   make set := { x | x ∈ source };
   print set; ** {0,1,2} 
 done;
@@ -322,7 +322,7 @@ The elements in one set or list can be transformed by a function or expression t
 ```
 make source := {0,1,2,3,4,5};
 do
-  # create Table pairs (key, value) for Table map   
+  ** create Table pairs (key, value) for Table map   
   make target := {(x:x^2) | x ∈ source };
   print target;  ** { 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
 done;
@@ -478,10 +478,10 @@ Output:
 ```  
 make animals := {}; ** partial declaration
 do
-  ## establish element types (S:X)
+  ** establish element types (S:X)
   alter animals['Rover'] := "dog";
 
-  ## use direct assignment to create 2 more element
+  ** use direct assignment to create 2 more element
   alter animals['Bear'] := "dog";
   alter animals['Kiwi'] := "bird";
   print(animals);
@@ -505,7 +505,7 @@ Strings can be concatenated using:
 # this is example of string concatenation
 make str := ""; 
 do
-  ## set string value using different operators
+  ** set string value using different operators
   alter str := "this " & " string";  ** "this  string"
   alter str := "this " + " string";  ** "this string"
 done;

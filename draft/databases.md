@@ -37,9 +37,9 @@ One application can connect to multiple databases simultaneously. A specific kin
 **pattern:**
 ```# create a wrapper for database connection
 rule connect(name, password, database ∈ S) => (db @ Oracle.Database):
-  ## prepare credentials
+  ** prepare credentials
   make credential := user + '/' + password + '@'+ dbname;
-  ## connect to database
+  ** connect to database
   apply db.connect(credential);
 return;
 
@@ -141,7 +141,7 @@ You can read one table record by record:
 ....
 # table must be open to be scanned
 for record ∈ table_name do
-  ## use current_record fields
+  ** use current_record fields
   print record.status; ** expect: 1 = .verified
   ... 
 next;
@@ -152,7 +152,7 @@ You can modify table data using current _record_. First you modify record attrib
 
 ```
 for record ∈ table_name do
-  ## update current record
+  ** update current record
   alter table_name.field_name := new_value;
   ...
 next;
