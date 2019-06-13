@@ -1,18 +1,19 @@
 ## Control Flow
 
-Bee has 5 control flow statements:
+Bee has 7 control flow statements:
 
 Name             | Description
 -----------------|----------------------------------
 [when](#when)    | conditional block statement
 [case](#case)    | conditional path selector
+[do](#do)        | unconditional block
 [for](#for)      | collection iterator
 [while](#while)  | conditional repetitive block
 [trial](#trial)  | serial list of small tasks
 
 ## when
 
-The _when_ keyword is a multi-conditional selector.
+Is a conditional selector defined by _when_ keyword.
 
 **syntax**
 ```
@@ -22,7 +23,7 @@ when condition do
 done;
 ```
 
-Dual selector based on single logical expression:
+This selector can create two logical pas-ways using a single logical expression:
 
 **pattern:**
 ```
@@ -36,6 +37,8 @@ done;
 ```
 
 **nested**
+
+By nesting multiple _when_ blocks you can create a multi-path selector:
 
 ```
 make a ∈ Z;
@@ -54,8 +57,22 @@ done; ** a = 0
 
 ## Case
 
-Multipath conditional selector example:
+This multi-path conditional selector start with _case_ and is ending with _done_:
 
+**pattern:**
+
+```
+case condition do
+  ** first path
+case condition do
+  ** second path
+...  
+else
+  ** final path
+done; 
+```
+
+**example:**
 ```
 make a ∈ Z;
 read (a, 'Enter a number between 0 and 9:');
@@ -68,9 +85,31 @@ else
 done; 
 ```
 
+## Do
+
+Unconditional block: it starts with "do" and is ending with "done".
+
+```
+# Unconditional simple block 
+do 
+  ** statements
+  ...
+done;
+```
+
+Repetitive block: it starts with "do" and is ending with "repeat".
+
+```
+# Unconditional repetitive block
+do
+  ** statements
+  ...
+repeat;
+```
+
 ## While
 
-Conditional repetitive block:
+Conditional repetitive block start with "while" and is ending with "repeat":
 
 **Pattern:**
 
@@ -81,9 +120,6 @@ while condition do
   skip if (condition); ** continue
   ...
   stop if (condition); ** break
-  ...
-else
-  ** alternate path
   ...
 repeat;
 ```
@@ -129,7 +165,7 @@ repeat;
 
 ## For each
 
-This is used to traverse a _domain_ or a _collection_:
+Start with "for" and ends with "next". It is used to traverse a _domain_ or _collection_:
 
 **Pattern:**
 ```
@@ -179,7 +215,12 @@ over.
 
 ## Trial
 
-The "trial" statement execute several statements that can fail or pass.
+This statement start with "trial" keyword and ends with "done".
+
+**Notes:**
+* Trial and error is a fundamental method of problem solving,
+* It consist of repeated attempts until a solution is found, 
+* Trial can be terminated early by a timer or by specific errors.
 
 **Keywords:**
 
@@ -188,7 +229,6 @@ The "trial" statement execute several statements that can fail or pass.
 | trial | start a series of task
 | patch | catch other errors not found by error regions
 | done  | finalize a trial block
-
 
 **pattern:**
 ```
@@ -226,11 +266,12 @@ done;
 Next statements are directly associated with trial block:
 
 | word  | description
-|-------|------------------------------------------------------------
+|-------|------------------------------------------------------------------------------
 | fail  | transfer execution to error handlers when a condition is satisfied
 | pass  | transfer execution to error handler unless a condition is satisfied
-| raise | propagate last error outside of patch region
-| abort | early control transfer to get ready for interruption
+| raise | propagate last error outside of patch region and transfer control to parent
+| abort | give up and transfer execution to parent
+| retry | repeat the trial to find a solution
 
 
 **Errors**
@@ -290,12 +331,13 @@ patch
 done;
 ```
 
-**Custom exception:**
+**Custom errors:**
+
 ```
-# you can use code > 200 to create your errors
+# define a custom exception
 make my_error :: {201, 'my error'} ∈ E;
 trial
-  fail my_error;
+  fail my_error; ** issue custom error
 error 201 do
   print &error.message;
   print &error.line;
@@ -303,5 +345,20 @@ error 201 do
 done;  
 ```
 
+**Repeating trial:**
+
+```
+# define a control variable
+make count ∈ (1..10);
+trial
+  fail;
+error $out_of_range do
+  abort; ** give up
+patch
+  alter count += 1;
+  print count;  
+  retry; ** repeat
+done;  
+```
 
 **Read Next:** [Composite Types](composite.md)

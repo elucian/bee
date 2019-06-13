@@ -1,6 +1,6 @@
 ## Bee Keywords
 
-Bee core has 46 reserved keywords so far: 
+Bee core has 47 reserved keywords so far: 
 
 ```
 03: if, is, as
@@ -9,7 +9,7 @@ Bee core has 46 reserved keywords so far:
 07: read, write, print, alter, scrap, apply, start
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
-12: exit, fail, pass, raise, skip, stop, halt, abort, wait, rest, yield, over.
+13: exit, skip, stop, halt, fail, pass, raise, abort, retry, wait, rest, yield, over.
 ```
 
 **notes:** 
@@ -84,17 +84,18 @@ These keywords transfer control or make an interruption of current thread.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------------------------
+| exit     | Force silent termination of a rule, aspect, program or driver
 | stop     | Interrupt a while loop and continue past repeat; keyword
 | skip     | Skip the rest of while block and continue from the beginning
-| exit     | Force silent termination of a rule, aspect, program or driver
 | fail     | Create error message if a condition is true else pass
 | pass     | Clear error message if a condition is true else fail
-| abort    | Force silent early interruption of trial block
 | raise    | Used in exception handler to propagate an error out of trial block
-| halt     | Create unrecoverable error and stop program
-| over     | End driver, library or component file. Dot suffix is mandatory.
+| abort    | Force silent early interruption of trial block
+| retry    | Repeat a trial statement from the beginning
 | wait     | Suspend execution for a number of seconds
 | rest     | Suspend execution of main thread and wait for all coroutines to finish
 | yield    | Suspend one coroutine and give control to another routine
+| halt     | Create unrecoverable error and stop program
+| over     | End driver, library or component file. Dot suffix is mandatory.
 
 **Read next:** [Syntax Overview](overview.md)
