@@ -9,7 +9,8 @@ Bee core has 47 reserved keywords so far:
 07: read, write, print, alter, scrap, apply, start
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
-13: exit, skip, stop, halt, fail, pass, raise, abort, retry, wait, rest, yield, over.
+05: fail, pass, raise, abort, retry
+08: exit, skip, stop, halt, wait, rest, yield, over.
 ```
 
 **notes:** 
