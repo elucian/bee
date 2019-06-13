@@ -316,7 +316,7 @@ This region is executed after trial, regardless of error status. Even if there i
 
 It can contain:
 
-* close a files 
+* close files
 * close connection to databases 
 * close locked resources
 
@@ -351,11 +351,10 @@ done;
 # define a control variable
 make count ∈ (1..10);
 trial
-  fail;
+  alter count += 1;
 error $out_of_range do
   abort; ** give up
 patch
-  alter count += 1;
   retry; ** repeat
 done;  
 ```
