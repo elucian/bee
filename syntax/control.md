@@ -356,7 +356,6 @@ error $out_of_range do
   abort; ** give up
 patch
   alter count += 1;
-  print count;  
   retry; ** repeat
 done;  
 ```

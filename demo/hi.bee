@@ -6,13 +6,16 @@ driver hi:
 load $pro_lib.console.(.);
 
 print ("Hello. I'm Bee!");
- 
-print ("Your name?:"); 
-read your_name ∈ S;
 
-print ("hello:" + your_name);
-print ("Your age:"); 
-read your_age ∈ N, 
+make your_name ∈ S, 
+make your_age  ∈ (1..200);
+ 
+write ("Your name?:"); 
+read your_name;
+
+print "hello:" + your_name;
+write "Your age:"; 
+read your_age; 
 
 
 when age < 21 do

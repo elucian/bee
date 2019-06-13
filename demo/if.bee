@@ -4,8 +4,8 @@
 driver if:
 load $pro_lib.console.(.);
 
-print ("define a number:");
-read x ∈ N; 
+write "define a number:";
+make x ∈ N; read x; 
 # only if conditional
 
 print "x = 0" if x = 0;
