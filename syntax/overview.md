@@ -42,7 +42,7 @@ Expressions are created using identifiers, operators, rules and constant literal
 print 10; 
 print "this is a test";
 
-# complex expressions can use ()  
+# complex expressions can use ()
 print (10 + 10 + 15);  
 print (10 > 5 | 2 < 3);
 # enumeration of multiple expressions# print: separate multiple values with one space
@@ -50,9 +50,9 @@ print (1,',',2,',',3);
 print (10, 11, 12);
 
 # to avoid new line and spaces use "write"
-write 0;
-write (1,2);
-write (3,4);
+write 0;     ** no need for parenthesis 
+write (1,2); ** writing a list
+write (3,4); ** writing 
 # after write use print to write a new line
 print; ** 01234
 # Calculation that fail will generate an error

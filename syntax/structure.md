@@ -102,14 +102,18 @@ Directives are controlling the application compilation. These directives have a 
 
 System variables are defined usually at the beginning of the component. 
 
-**predefined**
+**introspection:**
+
+Some system variables are available for debugging:
+
 ```
-&error  ** contains last error message
+&timer  ** contains duration information about last executed statement
 &stack  ** contains debug information about current call stack
 &trace  ** contains reporting information about executed statements
 &level  ** contains how deep is the current call stack
 &count  ** contains last query count: updated/inserted/deleted records
 &query  ** contains last native query statement
+&error  ** contains last error message
 ```
 
 **notes:** 
@@ -125,9 +129,9 @@ A component is a source file with extension .bee. You can organize an applicatio
 
 One _component_ is identified by a _name_ created with one different keyword depending on component role:
 
-* #driver: can have 3 exclusive values:{ _driver_, _aspect_, _component_};
-* #aspect: the driver name it is usually the same as the file name;
-* #module: a short description of the component;
+* #driver: define the leading component name for an application;
+* #aspect: define a component that belong to an application;
+* #module: define a component that can be reused by many applications;
 
 **notes:**
 * One application can have one single _driver_;
