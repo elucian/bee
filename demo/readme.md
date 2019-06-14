@@ -6,7 +6,6 @@ Unverified Bee demo source files:
 1. [dc.bee](dc.bee) - Native declarations
 1. [ct.bee](ct.bee) - Composite types
 1. [if.bee](if.bee) - Decision statements
-1. [do.bee](do.bee) - Repetitive statements
 1. [in.bee](in.bee) - Input multiple values
 1. [cs.bee](cs.bee) - Control structures
 1. [fn.bee](fn.bee) - Rule declaration
@@ -26,6 +25,7 @@ Unverified Bee demo source files:
 1. [ho.bee](ho.bee) - Rule object demo /high order object
 1. [gc.bee](gc.bee) - Generator demo /rule clones
 1. [bs.bee](bs.bee) - Bubble sort algorithm
+1. [do.bee](do.bee) - Sort demo with do and for
 1. [ac.bee](ac.bee) --Asynchronous call using _start_
 
 ## Tools

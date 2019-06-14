@@ -355,7 +355,7 @@ type QDom := (-10..-1:0.01, 1..10:0.01) <: Q;
 
 ## Constant declaration
 
-Constants are protected memory locations representing a non-mutable value.
+Constants are identifiers representing a non-mutable value.
 
 ```
 make constant_name :: constant_literal;
@@ -363,8 +363,11 @@ make constant_name :: constant_literal ∈ type_name;
 ```
 
 **Notes:** 
-* You can use only native types or basic types for constants;
-* Constant identifier is not restricted to a particular convention;
+
+* Constant initial value is assigned using operator "::",
+* System constants have prefix "$" and are public all the time,
+* Other constants can be public if they are using prefix ".",
+* Local constants are also possible and encouraged if necessary.
 
 ## Variable declarations
 
@@ -373,7 +376,6 @@ Variables are defined using keyword _make_ plus one of the operators:
 operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable/element type 
- ::      | initialize constant
  :       | initialize element value
  :=      | initialize variable \| assign by share 
  :+      | initialize variable \| assign by copy

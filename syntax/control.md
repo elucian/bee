@@ -75,7 +75,8 @@ done;
 **example:**
 ```
 make a ∈ Z;
-read (a, 'Enter a number between 0 and 9:');
+write  'Enter a number between 0 and 9:'
+read    a;
 case a < 0 do
   print 'a < 0';
 case a > 9 do
