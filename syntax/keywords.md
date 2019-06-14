@@ -6,7 +6,7 @@ Bee core has 46 reserved keywords so far:
 03: if, is, as
 03: driver, aspect, module
 07: make, rule, like, load, alias, type, return
-07: read, write, print, alter, scrap, apply, start
+07: read, write, print, alter, scrap, apply, begin
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
 05: fail, pass, raise, abort, retry
@@ -48,12 +48,12 @@ Next statements are used to declare new elements in a component.
 Next keywords are simple statements. These represents actions called _imperative statements_.
 
 | Keyword  | Purpose
-|----------|--------------------------------------------------
-| apply    | Apply one rule that have no result
-| start    | Start one rule in asynchronous mode
-| read     | Accept user input from console 
+|----------|-------------------------------------------------------------
+| apply    | Apply one routine in synchronous mode and expect no results
+| begin    | Comence execution for a routine in asynchronous mode
+| read     | Flush the console buffer and accept user input from console 
 | write    | Add something to console buffer but no new line 
-| print    | Output expression result to console 
+| print    | Output expression result, variable or constant to console 
 | alter    | Mutate variable value using an expression
 | scrap    | Remove one element from a collection
 

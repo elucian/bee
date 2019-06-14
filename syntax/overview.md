@@ -883,7 +883,7 @@ return;
 # create an object instance
 make obj := {attribute:value, ...} ∈ ObjectYpe;
 # execute a method and ignore the result
-apply obj.method_name(argument, ...) +> _ ;
+apply obj.method_name(argument, ...);
 ```
 
 See also: [Composite:Object](composite#object)

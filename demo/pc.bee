@@ -25,11 +25,11 @@ rule consumer(ch @ (N)):
 return;
 
 ** produce on 1 thread
-start producer(q);
+begin producer(q);
 
 ** consume on 2 threads  
 while (i < 2) do
-   start consumer(ch);
+   begin consumer(ch);
    alter i += 1;
 repeat;
 rest;

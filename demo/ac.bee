@@ -1,5 +1,5 @@
 +------------------------------------
-|  asynchronous call using "start"  |
+|  asynchronous call using "begin"  |
 +-----------------------------------+
 driver ac:
 
@@ -11,7 +11,7 @@ return; ** test
 # start 4 threads
 make i := 0; 
 while (i ≤ 4) do
-  start test;
+  begin test();
   alter i += 1;
 repeat;
 rest; ** synchronize

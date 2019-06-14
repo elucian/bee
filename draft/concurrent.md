@@ -13,7 +13,7 @@ One or more methods can be run in parallel if the call is asynchronous.
 
 keyword | description
 --------|----------------------------------------------------------------------
-start   | call a rule asynchronously and create new thread
+begin   | call a rule asynchronously and create new thread
 rest    | temporary suspend main thread and wait for all threads to synchronize
 wait    | suspend a thread for specific number of seconds, milliseconds
 yield   | interrupting current thread and give priority to other thread
@@ -29,7 +29,7 @@ return;
 # start control loop
 make i := 0; 
 while i ≤ 4 do
-  start test;
+  begin test();
   alter i += 1;
   wait 1;
 repeat;
@@ -64,8 +64,8 @@ rule bar(x ∈ N):
   yield foo if x < 10;
 return;
 # call foo and bar asynchronously
-start foo(n);
-start bar(n);
+begin foo(n);
+begin bar(n);
 # wait for both foo and bar to finish
 rest;
 
