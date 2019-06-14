@@ -1,0 +1,24 @@
++--------------------------
+   input/output demo
+--------------------------+
+driver io:
+load $pro_lib.console.(.);
+
+print ("Hello. I'm Bee!");
+make your_name ∈ S, 
+make your_age  ∈ (1..200);
+ 
+write ("Your name?:"); 
+read your_name;
+
+print "hello:" + your_name;
+write "Your age:"; 
+read your_age; 
+
+when age < 21 do
+  print "have a candy!";
+else
+  print "have a beer!";
+done;
+
+over.
