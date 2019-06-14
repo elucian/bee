@@ -408,14 +408,14 @@ The driver or aspect can load numerous modules. After loading, all public elemen
 
 ```# initialize an aspect
 load qualifier := $pro.src.aspect_name;
-# results can be captured using "+>":
-apply qualifier.rule_name(arguments) +> (results);
+# results can be captured using alter
+alter result := qualifier.rule_name(arguments);
 
 # give alias to aspect rule
 alias new_name := qualifier.rule_name;
 
 # apply aspect using its alias:
-apply new_name(arguments) +> (results);
+alter result := new_name(arguments);
 ```
 
 **Notes:**
@@ -458,7 +458,7 @@ load mod := $pro.mod;
 # define variable result
 make result ∈ N;
 # execute main procedure from aspect "mod"
-apply mod.main(-3) +> result;
+alter result := mod.main(-3);
 print result;  ** expect: 3
 
 over.

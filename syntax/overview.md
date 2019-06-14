@@ -760,7 +760,7 @@ hello: Bee. I am Foo. Nice to meet you!
 
 ### Results
 
-A rule can have multiple results. For binding results to variables we are using operator: "+>"
+A rule can have multiple results. For binding results to variables we are using operator: ":="
 
 **Example:** 
 ```# rule with two results "s" and "d"
@@ -769,18 +769,17 @@ rule com(x,y ∈ Z) => (s, d @ Z):
   alter d := x - y;
 return;
 # capture result into new variables b, c
-make b, c ∈ Z;
-apply com(3,2) +> (b, c);
+make b, c := com(3,2) ∈ Z;
 
 print b;  ** 5 
 print c;  ** 1 
 ```
 
 **Notes:**   
-* Operator "+>" is named "capture operator" not "binding operator";
 * A rule with multiple results can not be used in expressions;
 * Multiple results are defined with names, exactly like parameters;
-* You can captured results into multiple variables using _apply_;
+* You can capture results into multiple variables separated by comma;
+* You can ignore one result using anonymous variable "_"
 
 ### Rule as function
 
@@ -797,13 +796,11 @@ rule name(param ∈ type,...) => (result @ type):
 return;
 # direct call and print the result
 print rule_name(argument,...);
-# capture rule result and make a new variable
+# capture rule result and make a new variable:
 make  r := rule_name(argument,...);
-# capture result using explicit variable:
+# capture result using existing variable:
 make  n ∈ type;
 alter n := rule_name(argument,...)
-# call using _apply_ and capture a single variable using "+>"
-apply rule_name(argument,...) +> n
 
 ```
 

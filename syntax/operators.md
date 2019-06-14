@@ -72,7 +72,6 @@ symbol| description
  `::` | Define a constant (used with make)
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
- `+>` | Collector: capture result. Associated with _apply_
  `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
  
 ## Modifiers

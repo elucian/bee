@@ -239,7 +239,7 @@ type  TRecord := {
       ...
       };# execute query string and return a list of records
 make  buffer ∈ (TRecord); 
-apply db.query(query_template ? source) +> buffer; 
+alter buffer := db.query(query_template ? source); 
 ```
 
 ## Stored procedure
@@ -256,7 +256,7 @@ type  Result_Record := {
 make  buffer ∈ (Result_Record); 
 
 # execute stored procedure
-apply db.execute procedure_name(arguments) +> buffer; 
+alter buffer := db.execute procedure_name(arguments); 
 ```
 
 ## Introspection
