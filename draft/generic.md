@@ -80,7 +80,7 @@ type Person := { name ∈ S, age ∈ N } <: Object;
 # define order as lambda expression for type Person
 make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
 # define sort rule for Person, as a clone from _bubble_
-clone sort := bubble{Person};
+make sort := bubble{Person};
 # define clients and suppliers
 make clients   ∈ [Person](100);
 make suppliers ∈ [Person](10);

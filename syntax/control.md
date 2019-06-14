@@ -1,44 +1,53 @@
 ## Control Flow
 
-Bee has 7 control flow statements:
+A control flow statement is an unnamed block of code. 
+
+**Statements:**
+
+Bee has 5 control flow statements.
 
 Name             | Description
 -----------------|----------------------------------
 [when](#when)    | conditional block statement
 [case](#case)    | conditional path selector
-[do](#do)        | unconditional block
 [for](#for)      | collection iterator
 [while](#while)  | conditional repetitive block
 [trial](#trial)  | serial list of small tasks
 
+**Restriction:**
+
+* You can not use _"make"_ inside any control flow statements,
+* You can not use a conditional _"if"_ for a control flow statement.
+
+
 ## when
 
-Is a conditional selector defined by _when_ keyword.
+This statement also called _branch_. It starts with _when_ and is ending with _done_:
 
 **syntax**
 ```
 when condition do
-  ** statements
+  ** branch
   ...
 done;
 ```
 
-This selector can create two logical pas-ways using a single logical expression:
+This selector is called _fork_. It create two logical pas-ways using a condition:
 
 **pattern:**
 ```
 when condition do
-  ** true branch
+  ** primary branch
   ...
 else
-  ** false branch
+  ** secondary branch
   ...
 done;
 ```
 
-**nested**
+**ladder:**
 
-By nesting multiple _when_ blocks you can create a multi-path selector:
+By nesting multiple _when_ blocks you can create a multi-path selector known as _ladder_:
 
 ```
 make a ∈ Z;
@@ -52,15 +61,15 @@ when a ≤ 0 do
   else
     print "a < 0"; 
   done; ** a ≤ 0
+  ** continue
 done; ** a = 0
 ```
 
 ## Case
 
-This multi-path conditional selector start with _case_ and is ending with _done_:
+This selector start with _case_ and is ending with _done_. 
 
 **pattern:**
-
 ```
 case condition do
   ** first path
@@ -71,6 +80,9 @@ else
   ** final path
 done; 
 ```
+**Note:** 
+* _case_ is a multi-path selector
+* _case_ is also known as _conditional search_
 
 **example:**
 ```
@@ -78,39 +90,18 @@ make a ∈ Z;
 write  'Enter a number between 0 and 9:'
 read    a;
 case a < 0 do
-  print 'a < 0';
+  print 'wrong: a < 0';
 case a > 9 do
-  print 'a > 9';
+  print 'wrong: a > 9';
 else
   print ("ok: a =" + a);
 done; 
 ```
 
-## Do
-
-Unconditional block: it starts with "do" and is ending with "done".
-
-```
-# Unconditional simple block 
-do 
-  ** statements
-  ...
-done;
-```
-
-Repetitive block: it starts with "do" and is ending with "repeat".
-
-```
-# Unconditional repetitive block
-do
-  ** statements
-  ...
-repeat;
-```
 
 ## While
 
-Conditional repetitive block start with "while" and is ending with "repeat":
+This block start with _"while"_ and is ending with _"repeat"_:
 
 **Pattern:**
 
@@ -128,7 +119,7 @@ repeat;
 **Notes:** 
 * If condition is true all the time we can end-up in infinite loop;
 * Infinite while can be interrupted by timer variable: {&timer := 60};
-* When timer expire, the loop will terminate. By default timer is 60s;
+* When timer expire, the loop will terminate. By default &timer is 60s;
 
 **example:**
 
@@ -143,8 +134,10 @@ while a > 0 do
     write a;  
     write ',';
   done;
+else
+  ** when a < 0  
+  print (`last a =` + a);
 repeat;
-print a; ** still available
 ```
 
 **Nested loop**
@@ -235,30 +228,32 @@ This statement start with "trial" keyword and ends with "done".
 ```
 # a complex trial  with patch
 trial
-  ** declare local variables
   ...
-  abort if (condition);
+  abort if condition;
   ...
-  fail if (condition);
+  fail if condition;
 error code do 
   ** handler1
   ...
+  retry;
 error code do
   ** handler2
-  ...    
+  ...  
+  abort;  
 patch
   ** all other errors
   ...
-  raise; ** propagate
-final
-  ** finalization statement    
+  retry if condition; ** repeat
   ...
+  raise if condition; ** propagate
+final
+  ** finalization statement   
+  print "final error:" + &error.code if &error.code > 0;
 done;
 ```
 
-**note:**
-* Trial block has an optional local scope
-* Trial local variables will disappear after done;
+**Note:**
+
 * System variable &error is clear after trial is done;
 * It is possible to have nested trial blocks;
 
@@ -270,10 +265,9 @@ Next statements are directly associated with trial block:
 |-------|------------------------------------------------------------------------------
 | fail  | transfer execution to error handlers when a condition is satisfied
 | pass  | transfer execution to error handler unless a condition is satisfied
-| raise | propagate last error outside of patch region and transfer control to parent
-| abort | give up and transfer execution to parent
-| retry | repeat the trial to find a solution
-
+| raise | propagate last error outside of trial block and transfer execution to parent
+| abort | give up, clear the error and transfer execution to the parent
+| retry | clear the error and repeat the trial to find a solution
 
 **Errors**
 
@@ -321,43 +315,74 @@ It can contain:
 * close connection to databases 
 * close locked resources
 
-
 **Example:**
 
 ```
+make  x ∈ Q;
+make  y ∈ Q;
 trial
-  make x := 1/0;
-patch
-  print &error.message;
+  alter x := 1/0;
+final
+  print &error.message if &error.code ≠ 0;
+  print 'x = ' + x;
 done;
 ```
 
 **Custom errors:**
 
 ```
-# define a custom exception
+# define a custom error
 make my_error :: {201, 'my error'} ∈ E;
 trial
   fail my_error; ** issue custom error
 error 201 do
   print &error.message;
   print &error.line;
+  ** will fall through
+patch  
   raise; ** propagate the error
 done;  
 ```
 
+**Notes:** 
+* Only abort or raise can handle an error;
+* In this case the error 201 is not handled;
+* The patch will be executed for all errors including 201;
+
 **Repeating trial:**
 
+By using _retry_ you can repeat a trial block
+
 ```
-# define a control variable
-make count ∈ (1..10);
+make count ∈ (0..3); 
+make a ∈ (0..9);
+** try maximum 3 times
 trial
   alter count += 1;
+  write "enter a number between 0 and 9";
+  read a;
 error $out_of_range do
-  abort; ** give up
-patch
-  retry; ** repeat
+  when count < 3 do
+    retry; ** try again
+  else       
+    abort; ** give up 
+  done;    
+final
+  when  a ∈ (0..9);
+    write "incorrect";
+  else
+    write "correct";
+  done;  
+  print;
 done;  
 ```
+
+**Note:** 
+* When you _retry_ or _abort_ the error code is erased,
+* When you use _raise_ the error is propagated,
+* You can use _retry_ only in error handlers or patch,
+* You can not use _"retry"_ in _final_ region,
+* You can not use _"retry"_ inside the default region;
+
 
 **Read Next:** [Composite Types](composite.md)

@@ -890,30 +890,32 @@ See also: [Composite:Object](composite#object)
 
 ## Rule as generic
 
-A _generic rule_ is a _prototype_ that can be cloned to create _dynamic rules_.
+A _generic rule_ is a _prototype_ that can be _cloned_ to create _dynamic rules_.
 
 **pattern:**
 ```# define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
   ...
   ** a prototype can have attributes
+  ** these attributes are shared between all clones
   make .x, .y, .z := 0 ∈ Z;  
   ...
   
   ** compute the result
   alter result := expression(arguments);
 return;
-# making a rule clone from prototype
-clone new_rule:= prototype_name{arguments};
-# using the clone as a normal rule
-make r := new_rule(arguments)
+# making a clone from prototype
+make new_rule := prototype_name{arguments};
+fail if ¬ (new_rule is Rule); 
+# using the clone
+make r := new_rule(arguments);
 ```
 
 **Notes:**
-* A rule clone have same _parameters_ same _results_ and same functionality as the prototype;
-* A rule clone has its  _own attributes_: defined using curly brackets {attributes}; 
-* A rule clone has some _shared attributes_: defined in the prototype with dot prefix;
-* A rule clone can be created in local context of another rule or in component context;
+* A clone have same _parameters_ same _results_ and same functionality as the prototype;
+* A clone has its  _own attributes_: defined using curly brackets {attributes}; 
+* A clone has some _shared attributes_: defined in the prototype with dot prefix;
+* A clone can be created in _local context_ of another rule or in _component context_;
 
 **example:**
 ```# this is a generic rule
@@ -921,8 +923,8 @@ rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
   alter r := (s + i);
 return;
 # instantiate two clones:
-clone inc := shift{s: +1}; ** increment 
-clone dec := shift{s: -1}; ** decrement 
+make inc(i ∈ Z) := shift{s: +1} => (r @ Z); ** increment 
+make dec(i ∈ Z) := shift{s: -1} => (r @ Z); ** decrement 
 # verify clone properties
 print inc.s; **  1
 print dec.s; ** -1

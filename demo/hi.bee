@@ -1,6 +1,7 @@
 # hello world demo
 driver hi:
-load $pro_lib.console.(.);
-print ("Hello World");
+load $pro_lib.console;
+
+print "Hello World";
 
 over.

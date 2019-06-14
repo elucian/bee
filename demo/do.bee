@@ -1,8 +1,7 @@
-+--------------------------------------
-| Bubble sort using do and for loop   |
-+-------------------------------------+
++-------------------------------------------
+| Bubble sort using while..do and for..do   |
++-------------------------------------------+
 driver bs:
-
 load $pro_lib.console.(.);
 
 # bubble sort for integers
@@ -11,7 +10,7 @@ rule sort(this @ [Z]):
   make n := length(this)-1;
   make swap ∈ L;
   ** repetitive block do
-  do
+  while swap do
     alter swap := False; ** reset flag
     for i ∈ (0.!n) do
       ** this pair is out of order ?

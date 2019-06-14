@@ -18,10 +18,10 @@ rule generator{min, max ∈ Z}() => (r @ Z):
 return;
 
 # instantiate one rule object
-clone count := generator{0,9};
+make count := generator{0,9};
 
 # instantiate a fixture for test
-clone test  := generator{4,12};
+make test  := generator{4,12};
 
 # test cloned rule: count()
 trial
@@ -40,10 +40,6 @@ done;
 +--------------------------------------------------
 | This is a demo, we advice against this practice |
 +-------------------------------------------------+
---------------------------------------------------
---| teest
---| test
---------------------------------------------------
 
 # use rule properties to check rule status
 print count.max;  ** 9
