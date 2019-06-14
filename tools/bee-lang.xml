@@ -27,7 +27,7 @@
             <Keywords name="Keywords1">driver aspect module load alias type make rule return like</Keywords>
             <Keywords name="Keywords2">when else case while repeat for next trial error final patch do done&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords3">exit fail pass raise over halt stop skip abort yield rest wait retry</Keywords>
-            <Keywords name="Keywords4">play start apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;draw wipe show hide</Keywords>
+            <Keywords name="Keywords4">begin apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;draw wipe show hide</Keywords>
             <Keywords name="Keywords5">self result null&#x000D;&#x000A;Null True False On Off</Keywords>
             <Keywords name="Keywords6">u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;T12 T24 MDY DMY</Keywords>
             <Keywords name="Keywords7">$ &amp;&#x000D;&#x000A;A B C D E F G H I J K L M N O P Q R S T U V W K X Y Z &#x0411; &#x0413; &#x0414; &#x0416; &#x0418; &#x041B; &#x0424; &#x0426; &#x0427; &#x0428; &#x0429; &#x042D; &#x042F; </Keywords>
