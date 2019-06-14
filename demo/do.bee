@@ -1,18 +1,40 @@
-+-----------------------------------------
-       repetitive statement demo
------------------------------------------+
-driver do:
++--------------------------------------
+| Bubble sort using do and for loop   |
++-------------------------------------+
+driver bs:
 
 load $pro_lib.console.(.);
 
-make a :=  [Z](10);   ** array of 10 Words
-make n :=  a.count(); ** index of last element
+# bubble sort for integers
+rule sort(this @ [Z]):
+  ** local variables
+  make n := length(this)-1;
+  make temp ∈ Z; 
+  make swap ∈ L;
+  ** repetitive block do
+  do
+    alter swap := False; ** reset flag
+    for i ∈ (0.!n) do
+      ** this pair is out of order ?
+      when this[i] < this[i+1] do
+        ** swap elements
+        alter temp     := this[i];
+        alter this[i]  := this[i+1];
+        alter this[i+1]:= temp;
+        alter swap := True;
+      done;
+    next;
+    exit if ¬ swap;
+  repeat;
+return;
+# define test & result fixture
+make test   := [1,4,1,5,9,2,6,5,3,5];
+make result := [1,1,2,3,4,5,5,5,6,9];
+# test sort rule
+apply sort(test);
+print test; ** expect [1,1,2,3,4,5,5,5,6,9]
 
-# array traversal
-make i ∈ Z;
-while (i < n) do
-   print ('r[{0}] := {1}' <+ (i, a[i]));
-   alter i += 1;
-repeat;
+# check result
+pass if test = result;
 
 over.
