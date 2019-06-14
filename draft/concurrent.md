@@ -4,41 +4,40 @@ Bee is designed for high performance computing.
 
 **features:**
 
-* asynchronous calls
-* resumable coroutines 
+* concurrency
+* coroutines 
 
-## Asynchronous call
+## Concurrency
 
-One or more routines can be run in parallel if the call is asynchronous.
+One or more routines can be run in parallel using "begin" instead of "apply".
 
 keyword | description
 --------|----------------------------------------------------------------------
 begin   | call a rule asynchronously and create new thread
 rest    | temporary suspend main thread and wait for all threads to synchronize
-wait    | suspend a thread for specific number of seconds, milliseconds
+wait    | suspend a thread for specific number of seconds
 yield   | interrupting current thread and give priority to other thread
 
 **example:**
 
 Asynchronous call can be done using a control loop and keyword `begin`:
 
-```# suspend for 2.5 sec
-rule test():
-  wait 2.5;
+```# suspend n seconds
+rule test(n ∈ N):
+  write "n";
+  wait n;
+  print ".";
 return;
-# start control loop
-make i := 0; 
-while i ≤ 4 do
-  begin test();
-  alter i += 1;
-  wait 1;
+# begin 4 threads
+for i ∈ (1..4) do
+  begin test(i);
 repeat;
-rest;
+rest; ** wait to finish
 ```
 
 **file:** [ac.md](demo/ac.md); **  asynchronous call
 
-## Resumable Coroutines 
+## Coroutines 
 
 Coroutines are two methods that wait for each other to execute in turn.
 
