@@ -9,7 +9,6 @@ load $pro_lib.console.(.);
 rule sort(this @ [Z]):
   ** local variables
   make n := length(this)-1;
-  make temp ∈ Z; 
   make swap ∈ L;
   ** repetitive block do
   do
@@ -17,10 +16,10 @@ rule sort(this @ [Z]):
     for i ∈ (0.!n) do
       ** this pair is out of order ?
       when this[i] < this[i+1] do
-        ** swap elements
-        alter temp     := this[i];
-        alter this[i]  := this[i+1];
-        alter this[i+1]:= temp;
+        ** swap elements using XOR
+        alter this[i]   := this[i]   ⊕ this[i+1];
+        alter this[i+1] := this[i+1] ⊕ this[i];
+        alter this[i]   := this[i]   ⊕ this[i+1];
         alter swap := True;
       done;
     next;
