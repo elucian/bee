@@ -4,10 +4,10 @@ Bee is designed for high performance computing.
 
 **features:**
 
-* concurrency
-* coroutines 
+* parallel processes
+* coroutines
 
-## Concurrency
+## Multi-thread
 
 One or more routines can be run in parallel using "begin" instead of "apply".
 
@@ -35,7 +35,7 @@ repeat;
 rest; ** wait to finish
 ```
 
-**file:** [ac.md](demo/ac.md); **  asynchronous call
+**Demo code:** [ac.bee](demo/ac.bee);**  asynchronous call
 
 ## Coroutines 
 
@@ -80,4 +80,4 @@ rest; ** wait for both foo and bar to finish
 over.
 ``` 
 
-**See also:** [pc.wee](../demo/pc.wee)
+**Demo code:** [pc.wee](../demo/pc.bee)
