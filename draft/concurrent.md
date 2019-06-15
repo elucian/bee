@@ -4,7 +4,10 @@ Bee is designed for high performance computing using multi-core processors.
 
 **features:**
 
-* Multi-tread
+For improving performance Be is implementing 3 design patterns:
+
+* Multi-thread routine
+* Generators
 * Coroutines
 
 ## Multi-thread run
@@ -50,13 +53,11 @@ Coroutines can be used as a _side branch_ in parallel of the main thread.
 * main thread must store a handler to running coroutines;
 
 ```
-load $bee.lib.time:(.);
-
-# generate 10 numbers
+# generate 10 numbers and stop
 rule test(n @ N):
   for i ∈ (0..10) do
     alter n := i;
-    yield; ** suspend and wait for main thread
+    yield; ** suspend and wait for the main thread
   next;
 return;
 
@@ -64,11 +65,16 @@ return;
 make r ∈ N; ** result reference
 make branch := test(r); ** side branch
 while r > 0 do
-  write r;
-  write ",";
+  write r; write ",";
   yield branch; ** resume test instance
 repeat;
 print; ** 1,2,3,4,5,6,7,8,9,0,
+
+# using for loop with generator operator "<+"
+# this operator will yield values from a coroutine
+for x <+ test(r) do
+  write r; write ",";
+repeat;
 ```
 
 **producer-consumer:**
