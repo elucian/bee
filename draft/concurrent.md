@@ -54,9 +54,7 @@ load $bee.lib.time:(.);
 # generate 100 numbers
 rule test():
   for i ∈ (0..10) do
-    alter x := i;
-    write i;
-    write ",";
+    write i; write ",";
     yield; ** suspend and wait for main thread
   next;
 return;
