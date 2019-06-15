@@ -6,17 +6,16 @@ Bee is designed for high performance computing using multi-core processors.
 
 For improving performance Be is implementing 3 design patterns:
 
-* Multi-thread routine
-* Generators
+* Multi-threading
 * Coroutines
 
-## Multi-thread run
+## Multi-threading
 
 One or more routines can be run in parallel using "begin" instead of "apply".
 
 keyword | description
 --------|----------------------------------------------------------------------
-begin   | call a rule asynchronously and create new thread
+begin   | call a rule asynchronously and create a new thread
 rest    | temporary suspend main thread and wait for all threads to synchronize
 wait    | suspend a thread for specific number of seconds
 yield   | interrupting current thread and give priority to other thread
@@ -64,12 +63,11 @@ return;
 # create a branch from rule test:
 make  r ∈ N; ** result reference
 begin test(r); ** side branch 
-# first value r = 0 is ignored
-while r > 0 do
+while r ≥ 0 do
   write r; write ",";
   yield test; ** suspend main thread and resume test 
 repeat;
-print; ** 1,2,3,4,5,6,7,8,9,
+print; ** 0,1,2,3,4,5,6,7,8,9,
 ```
 
 **producer-consumer:**
@@ -77,6 +75,7 @@ print; ** 1,2,3,4,5,6,7,8,9,
 Coroutines can be used in producer/consumer design paradigm.
 
 * for this you need two rules: one is producer and other is consumer,
+* the main thread is starting threads and then using _rest_ is waiting,
 * producer is a dispatcher that distribute the work,
 * consumer is a worker that resolve one task or a bunch of tasks;
 * producer is usually working on a single thread;
@@ -102,7 +101,7 @@ rule foo(channel @ (N)):
       alter channel += mark; ** append
       exit if mark = target; ** stop the producer
     done;
-    yield bar; ** suspend and broadcast wake-up for bar
+    yield bar; ** suspend foo and broadcast wake-up for bar
   repeat;  
 return;
 # second coroutine (consume)
@@ -114,7 +113,7 @@ rule bar(channel @ (N)):
       wait 1; ** slow down for a second
     done;
     exit if mark = target;          
-    yield foo; ** suspend and broadcast wake-up for foo
+    yield foo; ** suspend bar and signal foo to wake-up
   repeat;  
 return;
 # call foo asynchronously on 1 thread
@@ -122,7 +121,7 @@ begin foo(n); ** commence producer foo
 
 # call bar asynchronously on 4 threads
 for i ∈ (1..4) do
-  begin bar(n); ** commence second consumer
+  begin bar(n); ** start a consumer thread
 next;  
 rest; ** wait for both foo and bar to finish
 
