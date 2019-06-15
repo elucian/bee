@@ -49,7 +49,7 @@ Coroutines are two methods that wait for each other to execute in turn.
 Coroutines can be used as a _side branch_ in parallel of the main thread.
 
 * you need only one rule to create a side branch;
-* call a branch using "make" or "apply" and suspended using "yield";
+* call a branch using "begin" and suspended using "yield";
 * main thread must store a handler to running coroutines;
 
 ```
@@ -62,19 +62,14 @@ rule test(n @ N):
 return;
 
 # create a branch from rule test:
-make r ∈ N; ** result reference
-make branch := test(r); ** side branch
+make  r ∈ N; ** result reference
+begin test(r); ** side branch 
+# first value r = 0 is ignored
 while r > 0 do
   write r; write ",";
-  yield branch; ** resume test instance
+  yield test; ** suspend main thread and resume test 
 repeat;
 print; ** 1,2,3,4,5,6,7,8,9,0,
-
-# using for loop with generator operator "<+"
-# this operator will yield values from a coroutine
-for x <+ test(r) do
-  write r; write ",";
-repeat;
 ```
 
 **producer-consumer:**
