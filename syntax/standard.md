@@ -47,6 +47,24 @@ Standard library contains:
 | parse    | Convert one string into one number
 | random   | Create random numbers
  
+
+## Date Time
+
+Modules for _date_ and _time_ will contain all required rules.
+
+**time**
+
+| rule     | Purpose
+|----------|------------------------------------------ 
+| now      | get current time
+
+
+**date**
+
+| rule     | Purpose
+|----------|------------------------------------------ 
+| now      | get current date
+
 ## Mathematics
 
 Library math will implement rules:

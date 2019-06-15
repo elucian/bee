@@ -41,39 +41,85 @@ rest; ** wait to finish
 
 Coroutines are two methods that wait for each other to execute in turn.
 
-* coroutines can be executed on multiple threads
-* coroutines can be used in producer/consumer paradigm
+**design pattern:**
+
+* coroutines can be call in synchronous mode using _apply_
+* coroutines are suspended/resumable routines
+* coroutines can be used as a side branch 
+
+
+```
+load $bee.lib.time:(.);
+
+# generate 100 numbers
+rule test():
+  for i ∈ (0..10) do
+    alter x := i;
+    write i;
+    write ",";
+    yield; ** suspend and wait for main thread
+  next;
+return;
+
+# force test to generate for 10 seconds
+make start := time.now();
+make time  := 0;
+make r ∈ N; ** result
+while time < 10 do
+  apply test(); ** start or resume if suspended
+  print;
+  wait 0.1; ** slow down between prints
+  apply time := time.now() - start;
+repeat;
+```
 
 **design pattern:**
+
+* coroutines can be call in asyncronous mode using _begin_,
+* coroutines can be executed on multiple threads,
+* coroutines can be used in producer/consumer paradigm.
 
 ```
 #driver
 
-make n ∈ (N);  ** channel
-make c :: 100; ** capacity
-make x :: 10;  ** duration
+make n ∈  (N);   ** channel
+make c :: 100;   ** batch capacity
+
+make target := 1000;  ** simulate data target
+make mark ∈ N;        ** current item to process
+
+# data source/target to process
+make s := [0](1000); ** array of integers
 # first coroutine (produce)
 rule foo(channel @ (N)):
-  for i ∈ (0..c) do
-    print "+" + i;  
-    alter channel += i;
-    wait x;
-  done;
-  yield bar;
+  while mark < target) do 
+    # prepare next batch
+    while channel.count < c do
+      alter mark += 1;       ** side effect
+      alter channel += mark; ** append
+      exit if mark = target; ** stop the producer
+    done;
+    yield bar; ** suspend and broadcast wake-up for bar
+  repeat;  
 return;
 # second coroutine (consume)
 rule bar(channel @ (N)):  
-  while channel ≠ () do
-    print "-" + channel.head;  
-    alter channel -= channel.head;
-    wait  2·x;
-  done;
-  yield foo;
+  while True do
+    while channel ≠ () do
+      print ":>" + channel.head;  
+      alter channel -= channel.head;
+      wait 1; ** slow down for a second
+    done;
+    exit if mark = target;          
+    yield foo; ** suspend and broadcast wake-up for foo
+  repeat;  
 return;
-# call foo and bar asynchronously
-begin foo(n); ** commence foo
-begin bar(n); ** commence bar (first consumer)
-begin bar(n); ** commence bar (second consumer)
+# call foo asynchronously on 1 thread
+begin foo(n); ** commence producer foo 
+
+# call bar asynchronously on 2 threads
+begin bar(n); ** commence first consumer
+begin bar(n); ** commence second consumer
 
 rest; ** wait for both foo and bar to finish
 
