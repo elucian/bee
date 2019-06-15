@@ -41,41 +41,40 @@ rest; ** wait to finish
 
 Coroutines are two methods that wait for each other to execute in turn.
 
-**design pattern:**
+**side branch:**
 
 * coroutines can be call in synchronous mode using _apply_
 * coroutines are suspended/resumable routines
-* coroutines can be used as a side branch 
+* coroutines can be used as a _side branch_
 
 
 ```
 load $bee.lib.time:(.);
 
 # generate 100 numbers
-rule test():
+rule test(n @ N):
   for i ∈ (0..10) do
-    write i; write ",";
+    alter n := i;
     yield; ** suspend and wait for main thread
   next;
 return;
 
-# force test to generate for 10 seconds
-make start := time.now();
-make time  := 0;
-make r ∈ N; ** result
-while time < 10 do
-  apply test(); ** start or resume if suspended
-  print;
-  wait 0.1; ** slow down between prints
-  apply time := time.now() - start;
+# create a clone of test
+make r ∈ N; ** result reference
+make clone := test(r); ** side branch
+while r > 0 do
+  write r;
+  write ",";
+  yield clone;
 repeat;
+print; ** 1,2,3,4,5,6,7,8,9,0,
 ```
 
-**design pattern:**
+**producer-consumer:**
 
-* coroutines can be call in asyncronous mode using _begin_,
-* coroutines can be executed on multiple threads,
 * coroutines can be used in producer/consumer paradigm.
+* coroutines can be call in asynchronous mode using _begin_,
+* coroutines can be executed on multiple threads,
 
 ```
 #driver
