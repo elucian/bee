@@ -3,34 +3,39 @@
 -----------------------------------+
 driver pc:
 
-make  c  := 1000 ∈ N;    ** channel capacity
-make  ch := () ∈ (N);    ** define empty channel
+make  c  := 100 ∈ N;       ** channel capacity
+make  ch := ()  ∈ (N);     ** define empty channel
+make  processing :=  True; ** stop semaphore for consumers
 
 # ch is the communication channel
 rule producer(ch @ (N)):
-  while length(ch) < c do
-    alter ch += random(10); ** Add
+  alter processing := True;
+  for j in (1..1000) do
+    for i in (1..c) do
+      alter ch += random(10); ** append
+    next;
     yield consumer;
-  repeat;
+  repeat;  
+  alter processing := False;
 return;
 
 # ch is the communication channel
 rule consumer(ch @ (N)):
-  make item ∈ N;
-  while (len(ch) > 0) do
-    alter ch -= ch.head;   ** FIFO
-    wait  20;
-    yield producer;
-  repeat;
+  while processing do
+    while (len(ch) > 0) do
+      alter ch -= ch.head;   ** FIFO
+      wait  20;
+    repeat;
+    yield producer;  
+  repeat;    
 return;
 
 ** produce on 1 thread
 begin producer(q);
 
-** consume on 2 threads  
-while (i < 2) do
-   begin consumer(ch);
-   alter i += 1;
+** consume on 7 threads  
+for i ∈ (1..7) do
+  begin consumer(ch);
 repeat;
 rest;
 
