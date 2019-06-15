@@ -1,6 +1,6 @@
 ## Data Processing
 
-By using collections and control structures one can load, modify and store data.
+By using collections and control structures one can read, modify and store data.
 
 * [Array Operations](#Array-Operations)
 * [Array Slicing](#Array-Slicing)
