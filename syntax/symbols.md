@@ -10,9 +10,6 @@ We recommend usage of programmable keyboards with more than 12 programmable keys
 
 My keyboard settings is saved in file G110.xml
 
-
-
-
 ```  
       M1    M2   M3
 -----------------------

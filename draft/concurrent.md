@@ -55,7 +55,7 @@ Coroutines can be used as a _side branch_ in parallel of the main thread.
 ```
 # generate 10 numbers and stop
 rule test(n @ N):
-  for i ∈ (0..10) do
+  for i ∈ (0..9) do
     alter n := i;
     yield; ** suspend and wait for the main thread
   next;
@@ -69,7 +69,7 @@ while r > 0 do
   write r; write ",";
   yield test; ** suspend main thread and resume test 
 repeat;
-print; ** 1,2,3,4,5,6,7,8,9,0,
+print; ** 1,2,3,4,5,6,7,8,9,
 ```
 
 **producer-consumer:**
