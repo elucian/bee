@@ -35,7 +35,7 @@ repeat;
 rest; ** wait to finish
 ```
 
-**Demo code:** [ac.bee](demo/ac.bee);**  asynchronous call
+**Demo code:** [ac.bee](../demo/ac.bee);
 
 ## Coroutines 
 
@@ -80,4 +80,4 @@ rest; ** wait for both foo and bar to finish
 over.
 ``` 
 
-**Demo code:** [pc.wee](../demo/pc.bee)
+**Demo code:** [pc.bee](../demo/pc.bee)
