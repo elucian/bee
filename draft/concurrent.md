@@ -1,13 +1,13 @@
 ## Bee concurrency
 
-Bee is designed for high performance computing.
+Bee is designed for high performance computing using multi-core processors.
 
 **features:**
 
-* parallel processes
-* coroutines
+* Multi-tread
+* Coroutines
 
-## Multi-thread
+## Multi-thread run
 
 One or more routines can be run in parallel using "begin" instead of "apply".
 
