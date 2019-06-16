@@ -11,7 +11,7 @@ For improving performance Be is implementing 3 design patterns:
 
 ## Multi-threading
 
-One or more routines can be run in parallel using "begin" instead of "apply".
+One or more routines can be run in parallel using _"begin"_ instead of _"apply"_.
 
 keyword | description
 --------|----------------------------------------------------------------------
@@ -22,7 +22,7 @@ yield   | interrupting current thread and give priority to other thread
 
 **example:**
 
-Asynchronous call can be done using a control loop and keyword `begin`:
+Asynchronous call can be done using a control loop and keyword _"begin"_:
 
 ```# suspend n seconds
 rule test(n ∈ N):
@@ -48,7 +48,7 @@ Coroutines are two methods that wait for each other to execute in turn.
 Coroutines can be used as a _side branch_ in parallel of the main thread.
 
 * you need only one rule to create a side branch;
-* call a branch using "begin" and suspended using "yield";
+* call a branch using _"begin"_ and suspended using _"yield"_;
 * main thread must store a handler to running coroutines;
 
 ```
