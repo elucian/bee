@@ -85,7 +85,7 @@ Coroutines can be used in producer/consumer design paradigm.
 #driver
 
 make n ∈  (N);   ** channel
-make c :: 100;   ** batch capacity
+make c := 100;   ** batch capacity
 
 make target := 1000;  ** simulate data target
 make mark ∈ N;        ** current item to process

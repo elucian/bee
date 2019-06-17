@@ -164,17 +164,17 @@ type Error := {code ∈ Z, message ∈ S} <: Object;
 
 ```
 # exception objects
-make $zero_division :: {100,"division by zero"}        ∈ Error;
-make $null_reference:: {101,"null reference usage"}    ∈ Error;
-make $value_overflow:: {102,"value overflow"}          ∈ Error;
-make $out_of_range  :: {103,"value out of range"}      ∈ Error;
-make $type_mismatch :: {104,"data type mismatch"}      ∈ Error;
-make $user_error    :: {200,"user defined error"}      ∈ Error;
+$zero_division  := {100,"division by zero"}        ∈ Error;
+$null_reference := {101,"null reference usage"}    ∈ Error;
+$value_overflow := {102,"value overflow"}          ∈ Error;
+$out_of_range   := {103,"value out of range"}      ∈ Error;
+$type_mismatch  := {104,"data type mismatch"}      ∈ Error;
+$user_error     := {200,"user defined error"}      ∈ Error;
 ...
 
 # Standard error
-make $standard_error  :: {1,"standard error"}    ∈ Error;
-make $unexpected_error:: {2,"unexpected error"}  ∈ Error;
+make $standard_error  : {1,"standard error"}    ∈ Error;
+make $unexpected_error: {2,"unexpected error"}  ∈ Error;
 ```
 
 **Read next:** [Project Structure](structure.md)

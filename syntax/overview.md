@@ -135,22 +135,26 @@ These are symbolic representations for primitive data types:
 |9r+9j      |  C    | (r+j)& (0,1,2,3,4,5,6,7,8,9)
 |9r-9j      |  C    | (r-j)& (0,1,2,3,4,5,6,7,8,9)
 
+## Shared constants
+
+You can define a shared constant using _make_ and operator ":".
+
 **pattern:**
 ```
-make name := constant ∈ Type; ** full declaration
-make name := constant;  ** partial declaration
+make name: constant ∈ Type; ** full declaration
+make name: constant;  ** partial declaration
 ```
 
 **example:**
 ```
-make n := U+2200 ∈ A;  ** Symbol: ∀
+make n: U+2200 ∈ A;  ** Symbol: ∀
 ```
 
 **Note:** 
-* U is reserved letter that signify: Unsigned \| Unicode;
-* Compiler will find "U+" and "U-" unique;
-* After U+ compiler is expecting 4 hexadecimal symbols;
-* After U- compiler is expecting 8 hexadecimal symbols;
+* Constants are in fact immutable variables;
+* Symbol U is reserved letter and it signify: Unicode;
+* After  U+ compiler is expecting 4 hexadecimal symbols;
+* After  U- compiler is expecting 8 hexadecimal symbols;
 
 ## Reference Types
 
@@ -212,7 +216,7 @@ print r;       ** r = 10 (unmodified)
 **share vs copy**
 
 * A reference is shared using operator ":=".
-* An object is copied using operator   ":+".
+* An object is copied using operator   "::".
 
 ```# create a reference
 make  a := 1 ∈ Z;
@@ -221,8 +225,8 @@ make  c := a; ** share a reference
 
 print c = a; ** 1: same value
 print c ≡ a; ** 1: same reference
-# transfer value by copy
-make  b :+ a ; ** new reference
+# transfer value by deep copy
+make  b :: a ; ** new reference
 
 print a = b; ** 1: same value
 print a ≡ b; ** 0: different reference
@@ -358,8 +362,8 @@ type QDom := (-10..-1:0.01, 1..10:0.01) <: Q;
 Constants are identifiers representing a non-mutable value.
 
 ```
-make constant_name :: constant_literal;
-make constant_name :: constant_literal ∈ type_name;
+make constant_name: constant_literal;
+make constant_name: constant_literal ∈ type_name;
 ```
 
 **Notes:** 
@@ -376,9 +380,9 @@ Variables are defined using keyword _make_ plus one of the operators:
 operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable/element type 
- :       | initialize element value
- :=      | initialize variable \| assign by share 
- :+      | initialize variable \| assign by copy
+ :       | pair-up element:value in collection or argument list
+ :=      | binding  = assign a value \| borrow a reference
+ ::      | cloning  = duplicate object \| deep copy
  
 ```# primitive variable declarations with type
 make var_name ∈  type_name;
@@ -413,7 +417,7 @@ print b;          ** expected 12
 
 **Examples:**
 ```# declare a constant
-make pi :: 3.14 ∈ R;
+make pi: 3.14 ∈ R;
 # declare multiple variables
 make a   ∈ Z;  ** Integer 
 make x,y ∈ R;  ** Double
@@ -764,20 +768,23 @@ A rule can have multiple results. For binding results to variables we are using 
 
 **Example:** 
 ```# rule with two results "s" and "d"
-rule com(x,y ∈ Z) => (s, d @ Z):
+# x is mandatory y is optional
+rule com(x ∈ Z, y:0 ∈ Z) => (s, d @ Z):
   alter s := x + y; 
   alter d := x - y;
 return;
 # capture result into new variables b, c
 make b, c := com(3,2) ∈ Z;
+print (b, c); ** 5 1
 
-print b;  ** 5 
-print c;  ** 1 
+# ignore one result and use only one parameter
+make a, _ := com(3) ∈ Z;
+print a;  ** 3 
 ```
 
 **Notes:**   
+* Multiple results are defined exactly like output parameters;
 * A rule with multiple results can not be used in expressions;
-* Multiple results are defined with names, exactly like parameters;
 * You can capture results into multiple variables separated by comma;
 * You can ignore one result using anonymous variable "_"
 

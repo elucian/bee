@@ -275,7 +275,7 @@ Errors can be defined in your program using next notation:
 
 ```
 # define error
-make error_name :: {code,"message"} ∈ Error;
+make error_name := {code,"message"} ∈ Error;
 ```
 
 Errors can be issued using: fail, raise or pass. 
@@ -332,7 +332,7 @@ done;
 
 ```
 # define a custom error
-make my_error :: {201, 'my error'} ∈ E;
+make my_error := {201, 'my error'} ∈ E;
 trial
   fail my_error; ** issue custom error
 error 201 do

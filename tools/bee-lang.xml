@@ -30,7 +30,7 @@
             <Keywords name="Keywords4">begin apply alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;draw wipe show hide</Keywords>
             <Keywords name="Keywords5">self result null&#x000D;&#x000A;Null True False On Off</Keywords>
             <Keywords name="Keywords6">u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;T12 T24 MDY DMY</Keywords>
-            <Keywords name="Keywords7">$ &amp;&#x000D;&#x000A;A B C D E F G H I J K L M N O P Q R S T U V W K X Y Z &#x0411; &#x0413; &#x0414; &#x0416; &#x0418; &#x041B; &#x0424; &#x0426; &#x0427; &#x0428; &#x0429; &#x042D; &#x042F; </Keywords>
+            <Keywords name="Keywords7">$ &amp;&#x000D;&#x000A;A B C D E F G H I J K L M N O P Q R S T U V W K X Y Z &#x0411; &#x0413; &#x0414; &#x0416; &#x0418; &#x041B; &#x0424; &#x0426; &#x0427; &#x0428; &#x0429; &#x042D; &#x042F;</Keywords>
             <Keywords name="Keywords8">&#x03B1; &#x03B2; &#x0263; &#x03B5; &#x03B4; &#x03BC; &#x03C9; &#x03BB; &#x03C6; &#x03C0;&#x000D;&#x000A;&#x0394; &#x0393; &#x039B; &#x03A6; &#x03A8; &#x03A9; &#x22A5; &#x01C1;&#x000D;&#x000A;&#x000D;&#x000A;</Keywords>
             <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06{ 07 08} 09&quot; 10\ 11&quot; 12``` 13 14``` 15&apos; 16\ 17&apos; 18** 19 20((EOL)) 21` 22 23`</Keywords>
         </KeywordLists>

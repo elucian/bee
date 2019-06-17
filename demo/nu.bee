@@ -18,7 +18,7 @@ print d ≡ s;  ** 1 same reference
 print d = s;  ** 1 same value
 
 # assign "by copy"
-alter e :+ d; ** copy value of d
+alter e :: d; ** copy value of d
 alter e += 1;
 print e; ** 12 (modified)
 print d; ** 11 (unmodified)
@@ -33,7 +33,7 @@ make c := 0  ∈ Z;   ** reference
 trial:
   alter c := i; ** auto boxing, makes c = 10 
   alter i := c; ** not possible (fail)
-other
+patch
   ** implicit unboxing error
   print "unboxing error:" + &error.message;
 done;

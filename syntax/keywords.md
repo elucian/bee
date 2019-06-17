@@ -4,8 +4,8 @@ Bee core has 46 reserved keywords so far:
 
 ```
 03: if, is, as
-03: driver, aspect, module
-07: make, rule, like, load, alias, type, return
+04: driver, aspect, module, return
+06: make, rule, like, load, alias, type
 07: read, write, print, alter, scrap, apply, begin
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
@@ -42,6 +42,7 @@ Next statements are used to declare new elements in a component.
 | make     | Create a new variable or multiple variables
 | rule     | Create a new _rule_ or _prototype_
 | return   | End rule declaration and transfer control to caller
+
 
 ### Execution statements
 
