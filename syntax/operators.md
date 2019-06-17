@@ -69,7 +69,7 @@ symbol| description
  `##` | Subtitle single line comments
  `**` | End of line comments
  `..` | Define domain (n..m) \| Array slice [n..m]
- `::` | Create a clone \| Deep copy
+ `::` | Initialize a constant
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
  `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
@@ -81,7 +81,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 symbol| meaning
 ------|--------------------------------------------------------------------
  `:=` | Binding value \| Borrow reference 
- `::` | Clone object  \| Copy object
+ `::` | Deep copy \| Initialize constant
  `+=` | Increment value \| append element
  `-=` | Decrement value \| remove element
  `·=` | Multiplication modifier 
