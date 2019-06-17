@@ -5,11 +5,11 @@ driver ti:
 load $pro_lib.console.(.);
 
 # constant type inference
-make a : 10;     ** Z (integer on 64bit)
-make x : 0.5;    ** R (double precision)
-make y : 1/2;    ** Q (rational number)
-make f : False;  ** L (logic)
-make t : True;   ** L (logic)
+make a :: 10;     ** Z (integer on 64bit)
+make x :: 0.5;    ** R (double precision)
+make y :: 1/2;    ** Q (rational number)
+make f :: False;  ** L (logic)
+make t :: True;   ** L (logic)
 
 # variable type inference
 make v := (1,2,3);     ** List of Z

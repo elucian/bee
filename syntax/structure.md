@@ -320,7 +320,7 @@ over.
 In Bee all members that begin with dot "." are public members.
 
 ```
-make .pi: 3.14; ** public constant
+make .pi :: 3.14; ** public constant
 make .v ∈ N;    ** public variable
 
 # public rule

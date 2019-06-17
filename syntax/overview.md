@@ -135,26 +135,6 @@ These are symbolic representations for primitive data types:
 |9r+9j      |  C    | (r+j)& (0,1,2,3,4,5,6,7,8,9)
 |9r-9j      |  C    | (r-j)& (0,1,2,3,4,5,6,7,8,9)
 
-## Shared constants
-
-You can define a shared constant using _make_ and operator ":".
-
-**pattern:**
-```
-make name: constant ∈ Type; ** full declaration
-make name: constant;  ** partial declaration
-```
-
-**example:**
-```
-make n: U+2200 ∈ A;  ** Symbol: ∀
-```
-
-**Note:** 
-* Constants are in fact immutable variables;
-* Symbol U is reserved letter and it signify: Unicode;
-* After  U+ compiler is expecting 4 hexadecimal symbols;
-* After  U- compiler is expecting 8 hexadecimal symbols;
 
 ## Reference Types
 
@@ -362,9 +342,11 @@ type QDom := (-10..-1:0.01, 1..10:0.01) <: Q;
 Constants are identifiers representing a non-mutable value.
 
 ```
-make constant_name: constant_literal;
-make constant_name: constant_literal ∈ type_name;
+make constant_name :: constant_literal;
+make constant_name :: constant_literal ∈ type_name;
 ```
+**Warning:**
+Same operator "::" can be used to create a clone of an existing variable.
 
 **Notes:** 
 
@@ -372,6 +354,16 @@ make constant_name: constant_literal ∈ type_name;
 * System constants have prefix "$" and are public all the time,
 * Other constants can be public if they are using prefix ".",
 * Local constants are also possible and encouraged if necessary.
+
+**example:**
+```
+make n :: U+2200     ∈ A;  ** Symbol: ∀
+make n :: U-00002200 ∈ U;  ** Symbol: ∀
+```
+
+**Note:** 
+* After  U+ compiler is expecting 4 hexadecimal symbols;
+* After  U- compiler is expecting 8 hexadecimal symbols;
 
 ## Variable declarations
 
@@ -417,7 +409,7 @@ print b;          ** expected 12
 
 **Examples:**
 ```# declare a constant
-make pi: 3.14 ∈ R;
+make pi :: 3.14 ∈ R;
 # declare multiple variables
 make a   ∈ Z;  ** Integer 
 make x,y ∈ R;  ** Double
