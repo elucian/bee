@@ -407,8 +407,8 @@ Following other functions should be available
 ### Special attributes
 A list has properties that can be used in logical expressions:
 
-* List.empty()  ** True or False
-* List.full()   ** True or False
+* List.empty()  !True or False
+* List.full()   !True or False
 
 
 ## Collection Iteration
@@ -608,11 +608,11 @@ print "\a{0} > \a{1}" ? (x,y); !"0 > A"
 
 These escape notations are used in rare occasions .
 
-```
-\'  = symbol '
-\"  = symbol "
-\\  = symbol \
-```
+
+* \\'  = symbol `'`
+* \\"  = symbol `"`
+* \\   = symbol `\\`
+
 
 **Escape Placeholders**
 

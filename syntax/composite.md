@@ -72,12 +72,12 @@ A tuple is enumeration of elements enclosed in parenthesis and separated by comm
 
 **examples**
 ```
-(a, b ∈ Z, c @ B) ** parameters
-(result @ X)      ** single result
-(r1,r2 @ Z)       ** multiple results
-('a','b','c')     ** list of strings
-(1,2,3)           ** list of integers
-(1,`2`,'x')       ** list of various literals
+(a, b ∈ Z, c @ B) ! parameters
+(result @ X)      ! single result
+(r1,r2 @ Z)       ! multiple results
+('a','b','c')     ! list of strings
+(1,2,3)           ! list of integers
+(1,`2`,'x')       ! list of various literals
 ```
 
 **Notes:**

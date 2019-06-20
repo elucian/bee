@@ -301,10 +301,10 @@ A component can establish one or more local name-spaces where you can define com
 make i := 1 ∈ Z; 
 trial
   ** local name-space
-  make v := i; !v is local reference to nonlocal: i 
+  make v := i;     !v is local reference to nonlocal: i 
   make i := 2 ∈ Z; !create i local 
-  print i; !expected: 2 (local)
-  print v; !expected: 1 (nonlocal)
+  print i;         !expected: 2 (local)
+  print v;         !expected: 1 (nonlocal)
 done;
 print i; !expected: 1  (unmodified)
 
@@ -343,28 +343,28 @@ Comments can be used to document the code or the configuration files.
 
 **Single line**
 
-For single line comments we use one or two symbols: 
+For single line comments we use one or two stars like: "\*\*";   
 
-{ "#", "**" } 
-
-* `** ` is used as title comment
-* `**` is used as end of line comment
+* This comment can be extended to multiple stars to create a separator,
+* You can use single line comment at beginning of new line,
+* You can use two spaces to indent the comment and align with the code.
 
 **End of line**
 
-After code line, before (EOL) you can use optional comments: "**",
- 
-* you can use "**" in the middle of an expression, before the ";",
+Before new line of code: (EOL) you can use comments starting with bang: "!"
+
+* notice one line may be or not a full statement. the end of statement is not (EOL)
+* you can use "!" in the middle of an expression, before the end of statement ";",
 * you can have multiple statements separated by ";" in a line but only one comment;
 
 **Notes:** 
-Bee syntax is Wiki friendly: you can open .md files using Bee highlighter in Notepad++
+Bee syntax is Wiki friendly: you can open *.md files using Bee highlighter for Notepad++
 
 **Limitations:**
-1. You can not use single "#" for titles. You must use two: "##". Single is prefix.
-2. You can not use contractions. This is silly but if you do you mess-up the highlighter
-3. You should use new line after exclamation mark. Else the next phrase is gray.
-4. Symbol "\`" has special meaning in Bee. Sometimes it must be escaped using "\\".
+1. You can not use single "#" for titles: it is a prefix. However you can use two: "##",
+2. You can not use contractions. This is silly but if you do you mess-up the highlighter,
+3. You should not use exclamation mark in text. Else the next phrase will show gray,
+4. Symbol "\`" has special meaning in Bee. Sometimes it must be escaped using "\\`".
 
 **Example:**
 
@@ -401,7 +401,7 @@ When a program is executed the driver is located and executed first. If a progra
 
 One aspect is executed when is loaded first time from driver or from another aspect. Rogue statements from an aspect can be used for _aspect initialization_. You can not run an aspect a second time during the lifespan of a session.
 
-**modules:**
+**module:**
 
 The driver or aspect can load numerous modules. After loading, all public elements can be executed on demand. Before execution the driver can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
 

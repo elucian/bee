@@ -282,10 +282,10 @@ Errors can be issued using: fail, raise or pass.
 
 ```
 ** "fail" can be used in several ways to issue an error
-fail;                              ** "standard error"
-fail "message";                    ** "custom error" 
-fail {code:value, message:string}; !"instant error"
-fail error_name;                   ** "defined error"
+fail;                              ! standard error
+fail "message";                    ! custom error
+fail {code:value, message:string}; ! instant error
+fail error_name;                   ! defined error
 
 ** "pass" can create only $unexpected_error: 201
 pass; !clear #error message

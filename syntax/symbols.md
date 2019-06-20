@@ -98,7 +98,7 @@ Fraction sign "⁄" is not supported. Bee is using regular slash "/" for fractio
 ¹/₂ ¹/₃ ¹/₄ ¹/₅ ¹/₆ ¹/₇ ¹/₈ ¹/₉ ¹/₁₀ ¹/₁₀₀ 
 ```
 
-*Note:** Direct fractional exponent is not supported except with using caret: "^"
+**Note:** Direct fractional exponent is not supported except with using caret: "^"
 
 ```
 x^(¹/₂)
