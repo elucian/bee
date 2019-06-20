@@ -70,7 +70,7 @@ symbol| description
  `..` | Define domain (n..m) \| Define array slice [n..m]
  `./` | Define domain (n./m) (m is excluded)
  `/.` | Define domain (n/.m) (n is excluded) 
- `::` | Initialize a constant
+ `//` | Define domain (n//m) (n,m are excluded) 
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
  `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
@@ -111,12 +111,12 @@ symbol | meaning
 Operator: "/" can be used in combination with other operators:
 
 ```
-  x /= y; ! x ≠ y (not equivalent)
-  x /≡ y; ! not the same 
-  x /∈ y; ! not belong
-  x /≈ y; ! not similar
-  x /> y; ! x ≤ y
-  x /< y; ! x ≥ y
+  x /= y; ! equivalent to: ¬(x = y)
+  x /≡ y; ! equivalent to: ¬(x ≡ y)
+  x /∈ y; ! equivalent to: ¬(x ∈ y)
+  x /≈ y; ! equivalent to: ¬(x ≈ y)
+  x /> y; ! equivalent to: ¬(x > y)
+  x /< y; ! equivalent to: ¬(x < y)
 ```
 
 ## Collection operators
