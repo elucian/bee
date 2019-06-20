@@ -52,7 +52,7 @@ By nesting multiple _when_ blocks you can create a multi-path selector known as 
 ```
 make a ∈ Z;
 write 'a = ';
-read  a;# first decision
+read  a;** first decision
 when a ≤ 0 do 
   print 'a ≤ 0';
   ** second decision
@@ -60,9 +60,9 @@ when a ≤ 0 do
     print 'a = 0';
   else
     print "a < 0"; 
-  done; ** a ≤ 0
+  done; !a ≤ 0
   ** continue
-done; ** a = 0
+done; !a = 0
 ```
 
 ## Case
@@ -109,9 +109,9 @@ This block start with _"while"_ and is ending with _"repeat"_:
 while condition do
   ** repetitive block
   ...
-  skip if (condition); ** continue
+  skip if (condition); !continue
   ...
-  stop if (condition); ** break
+  stop if (condition); !break
   ...
 repeat;
 ```
@@ -126,7 +126,7 @@ repeat;
 Two nested blocks: observe "done" and "repeat" are making code readable.
 
 ```
-# two nested blocks
+** two nested blocks
 make a := 10;
 while a > 0 do
   alter a -= 1;
@@ -165,9 +165,9 @@ Start with "for" and ends with "next". It is used to traverse a _domain_ or _col
 ```
 for var ∈ (min..max:rate) do
   ...
-  skip if (condition); ** fast forward
+  skip if (condition); !fast forward
   ...
-  stop if (condition); ** early transfer
+  stop if (condition); !early transfer
   ...
 next;
 ```
@@ -179,9 +179,9 @@ next;
 ```
 for i ∈ (0..10) do
   when i % 2 = 0 do
-    skip; ** fast forward
+    skip; !fast forward
   else
-    write i; ** odd numbers
+    write i; !odd numbers
   done;
   write ',' if (i < 9);        
 next;
@@ -198,9 +198,9 @@ Using domain ratio the example above can be simplified:
 +------------------------------------+
 driver domain_test:
 
-#    min ↓  ↓max  ↓ = ratio
+**    min ↓  ↓max  ↓ = ratio
 for i ∈ (1..9:    2) do
-  write i; ** odd numbers
+  write i; !odd numbers
   write ',' if (i < 9);        
 next;
 
@@ -226,7 +226,7 @@ This statement start with "trial" keyword and ends with "done".
 
 **pattern:**
 ```
-# a complex trial  with patch
+** a complex trial  with patch
 trial
   ...
   abort if condition;
@@ -243,18 +243,18 @@ error code do
 patch
   ** all other errors
   ...
-  retry if condition; ** repeat
+  retry if condition; !repeat
   ...
-  raise if condition; ** propagate
+  raise if condition; !propagate
 final
   ** finalization statement   
-  print "final error:" + &error.code if &error.code > 0;
+  print "final error:" + #error.code if #error.code > 0;
 done;
 ```
 
 **Note:**
 
-* System variable &error is clear after trial is done;
+* System variable #error is clear after trial is done;
 * It is possible to have nested trial blocks;
 
 **Transfer**
@@ -274,22 +274,22 @@ Next statements are directly associated with trial block:
 Errors can be defined in your program using next notation:
 
 ```
-# define error
+** define error
 make error_name := {code,"message"} ∈ Error;
 ```
 
 Errors can be issued using: fail, raise or pass. 
 
 ```
-# "fail" can be used in several ways to issue an error
+** "fail" can be used in several ways to issue an error
 fail;                              ** "standard error"
 fail "message";                    ** "custom error" 
-fail {code:value, message:string}; ** "instant error"
+fail {code:value, message:string}; !"instant error"
 fail error_name;                   ** "defined error"
 
-# "pass" can create only $unexpected_error: 201
-pass; ** clear &error message
-pass if condition; ** can create "unexpected error"
+** "pass" can create only $unexpected_error: 201
+pass; !clear #error message
+pass if condition; !can create "unexpected error"
 ```
 
 **Note:** 
@@ -323,7 +323,7 @@ make  y ∈ Q;
 trial
   alter x := 1/0;
 final
-  print &error.message if &error.code ≠ 0;
+  print #error.message if #error.code ≠ 0;
   print 'x = ' + x;
 done;
 ```
@@ -331,16 +331,16 @@ done;
 **Custom errors:**
 
 ```
-# define a custom error
+** define a custom error
 make my_error := {201, 'my error'} ∈ E;
 trial
-  fail my_error; ** issue custom error
+  fail my_error; !issue custom error
 error 201 do
-  print &error.message;
-  print &error.line;
+  print #error.message;
+  print #error.line;
   ** will fall through
 patch  
-  raise; ** propagate the error
+  raise; !propagate the error
 done;  
 ```
 
@@ -363,9 +363,9 @@ trial
   read a;
 error $out_of_range do
   when count < 3 do
-    retry; ** try again
+    retry; !try again
   else       
-    abort; ** give up 
+    abort; !give up 
   done;    
 final
   when  a ∈ (0..9);

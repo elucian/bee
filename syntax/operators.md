@@ -25,14 +25,14 @@ symbol  | description
 
 symbol| description
 ------|----------------------------------------------------------------
+ `!`  | End of line comment
+ `?`  | Template modifier. Associated with string templates 
  `*`  | String replication
- `#`  | Single line comments \| Digit placeholder: format template
+ `#`  | System variable  \| Global variable
  `$`  | System constant  \| Environment variables
- `&`  | System variable  \| Global variable
+ `&`  | String concatenation
  `@`  | Define method result /| input/output parameters
  `∈`  | Define variable/constant/result/input only parameter
- `?`  | Template modifier. Associated with string templates
- `!`  | Exclude lower or upper limit in domain notation
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
  `:`  | Pair up key-value in a collection or rule call
@@ -66,9 +66,10 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------------------
- `##` | Subtitle single line comments
- `**` | End of line comments
- `..` | Define domain (n..m) \| Array slice [n..m]
+ `**` | Single line comment (allow indentation)
+ `..` | Define domain (n..m) \| Define array slice [n..m]
+ `./` | Define domain (n./m) (m is excluded)
+ `/.` | Define domain (n/.m) (n is excluded) 
  `::` | Initialize a constant
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
@@ -86,7 +87,6 @@ symbol| meaning
  `-=` | Decrement value \| remove element
  `·=` | Multiplication modifier 
  `÷=` | Real division modifier
- `/=` | Rational division modifier
  `^=` | Power  modifier
  `%=` | Modulo modifier
 
@@ -106,13 +106,17 @@ symbol | meaning
  `≥`   | greater than or equal to
  `≤`   | less than or equal to
 
+**negation:** 
 
-**missing:** 
-
-Operator: not "≡" do not exist in Bee. You can use expression:
+Operator: "/" can be used in combination with other operators:
 
 ```
-  ¬(x ≡ y); ** not the same
+  x /= y; ! x ≠ y (not equivalent)
+  x /≡ y; ! not the same 
+  x /∈ y; ! not belong
+  x /≈ y; ! not similar
+  x /> y; ! x ≤ y
+  x /< y; ! x ≥ y
 ```
 
 ## Collection operators
@@ -188,7 +192,9 @@ Symbol| Description
 ------|---------------------------------------------------------------
  `*`  | String pattern repetition \| String generator
  `&`  | concatenate two strings as they are
+ `+`  | concatenate two strings after trimming first string 
+ `.`  | concatenate two literals using \ or // depending on OS
  `/`  | concatenate two strings with / and de-duplicate last
- `\`  | concatenate two strings with \\ and de-duplicate last
+ `\\` | concatenate two strings with \\ and de-duplicate last
  
 **Read Next:** [keywords](keywords.md)

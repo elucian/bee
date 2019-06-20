@@ -26,7 +26,7 @@ Bee is using Unicode symbols prime (′) for minutes and (″) for seconds of ar
 make α := 180°   ∈ ∠;
 make β := 0°0′0″ ∈ ∠;
 
-pass if α ≈ π ; ** α ≠ π
+pass if α ≈ π;  !α ≠ π
 ```
 
 **Notes**

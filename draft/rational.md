@@ -22,12 +22,12 @@ It can be used with type inference to create Q numbers:
 
 **Example:**
 ```
-make x := 0    ∈ Q; ** 0     
-make a := 1/2  ∈ Q; ** 0.5   
-make b := 1/4  ∈ Q; ** 0.25  
-make c := 1/8  ∈ Q; ** 0.125 
-make d := 1/8  ∈ Q; ** 0.062
-make e := 1/8  ∈ Q; ** 0.031
+make x := 0    ∈ Q; !0     
+make a := 1/2  ∈ Q; !0.5   
+make b := 1/4  ∈ Q; !0.25  
+make c := 1/8  ∈ Q; !0.125 
+make d := 1/8  ∈ Q; !0.062
+make e := 1/8  ∈ Q; !0.031
 ```
 
 **Note:** 
@@ -48,11 +48,11 @@ Is defined using _"fixed point arithmetic"_ declared using Q notation:
 
 * number of bits = m+n+1
 * precision is 2⁻ⁿ
-* range is [-(2ᵐ)... (2ᵐ-2⁻ⁿ)]
+* range is [-(2ᵐ)..(2ᵐ-2⁻ⁿ)]
 
 
 **For example:**
-A number format "Q5.2" can store in range(-32.00 to 31.75) on 8 bits.  
+A number format "Q5.2" can store in range (-32.00..31.75) on 8 bits.  
 
 * with precision of 2⁻² = 1/4 = 0.25
 * from value: -2⁵ = -32.00
@@ -60,8 +60,8 @@ A number format "Q5.2" can store in range(-32.00 to 31.75) on 8 bits.
 
 ```
 make  v ∈ Q5.2;
-alter v := -32;   ** minim value
-alter v := 31.75; ** maxim value
+alter v := -32; !minim value
+alter v := 31.75; !maxim value
 ```
 
 See also: [wikipedia](https://en.wikipedia.org/wiki/Q_(number_format))
@@ -86,21 +86,21 @@ Next I have predefined some numbers for orientation.
 
 A very large number with high precision on 64 bit:
 
-**Q50.12# 
+**Q50.12** 
 * Min: -1125899906842624
 * Max: +1125899906842623
 * Res: 0.000244140625
 
 A number on 32 bit with precision = 0.0005:
 
-**Q20.11# 
+**Q20.11** 
 * Min:-1048576
 * Max: 1048575
 * Res: 0.00048828125
 
 ## Default Q number
 
-**Q14.17# 
+**Q14.17** 
 
 Default Q number has precision 10⁻⁵ = 2⁻¹⁷ ≈ 0.00001 and occupy 32 bit.
 
@@ -123,18 +123,18 @@ Rational numbers and other numbers can be compared using "≈" instead of "=".
 In next example b = 0.33(3), delta = (b - a) = 0.083 
 
 ```
-# override default precision
+** override default precision
 #precision := 0.01;
 
-make a := 0.25;  ** real
-make b := 1/3;   ** rational
+make a := 0.25; !real
+make b := 1/3; !rational
 
-# using specified precision 0.01 < 0.083
-print (a ≈ b);  ** false
+** using specified precision 0.01 < 0.083
+print (a ≈ b); !false
 
-print (a ≈ b ± 0.1);  ** true
-print (a ≈ c ± 0.5);  ** true
-print (b ≈ c ± 0.5);  ** true
+print (a ≈ b ± 0.1); !true
+print (a ≈ c ± 0.5); !true
+print (b ≈ c ± 0.5); !true
 ```
 
 **Notes:** 

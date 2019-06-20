@@ -4,11 +4,11 @@
 driver me:
 load $pro_lib.console.(.);
 
-# enumeration with public members
+** enumeration with public members
 type Number := {.zero, .one, .two} <: Ordinal;
 make test ∈ Number;
-alter test := zero; ** instance of Number
-# make a rule for define Number
+alter test := zero; ! instance of Number
+** make a rule for define Number
 rule convert(self @ Number) => (y @ S):
   alter y := ('zero'  if self = zero,
               'one'   if self = one,
@@ -16,13 +16,13 @@ rule convert(self @ Number) => (y @ S):
               'none');
 return;
 
-# a wrapper rule for convert
+** a wrapper rule for convert
 rule equal(self ∈ Number, s ∈ S) => (r @ L):
   alter r := (s = convert(x));
 return;
     
-# calling test rules 
-print test.convert;       ** will print "zero"
-print test.equal('zero'); ** will print 1
+** calling test rules 
+print test.convert;       ! will print "zero"
+print test.equal('zero'); ! will print 1
 
 over.

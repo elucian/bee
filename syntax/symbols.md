@@ -1,4 +1,4 @@
-# Special symbols
+** Special symbols
 
 You must use a special font to enable Bee symbols:
 

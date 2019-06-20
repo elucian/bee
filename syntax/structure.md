@@ -107,13 +107,13 @@ System variables are defined usually at the beginning of the component.
 Some system variables are available for debugging:
 
 ```
-&timer  ** contains duration information about last executed statement
-&stack  ** contains debug information about current call stack
-&trace  ** contains reporting information about executed statements
-&level  ** contains how deep is the current call stack
-&count  ** contains last query count: updated/inserted/deleted records
-&query  ** contains last native query statement
-&error  ** contains last error message
+#timer: contains duration information about last executed statement
+#stack: contains debug information about current call stack
+#trace: contains reporting information about executed statements
+#level: contains how deep is the current call stack
+#count: contains last query count: updated/inserted/deleted records
+#query: contains last native query statement
+#error: contains last error message
 ```
 
 **notes:** 
@@ -129,9 +129,9 @@ A component is a source file with extension .bee. You can organize an applicatio
 
 One _component_ is identified by a _name_ created with one different keyword depending on component role:
 
-* #driver: define the leading component name for an application;
-* #aspect: define a component that belong to an application;
-* #module: define a component that can be reused by many applications;
+* driver: define the leading component name for an application;
+* aspect: define a component that belong to an application;
+* module: define a component that can be reused by many applications;
 
 **notes:**
 * One application can have one single _driver_;
@@ -168,11 +168,11 @@ A module is a reusable component stored in a library. This in a sub-folder of _"
 
 Bee is using 7 kind of declarations:
 
-* load     ** import : a library in global scope
-* alias    ** declare: alternative name for library or aspect
-* type     ** declare: data types
-* make     ** declare: variable
-* rule     ** declare: named code block
+* load  :import  a library in global scope
+* alias :declare alternative name for library or aspect
+* type  :declare data types
+* make  :declare variable
+* rule  :declare named code block
 
 ## Statement
 
@@ -180,10 +180,10 @@ Each statement start with one imperative keyword:
 
 **Examples:**
 
-* alter    ** change/modify variable value or assign new value
-* read     ** accept input from console into a variable
-* write    ** output to console result of an expressions
-* apply    ** execute one rule in synchronous mode
+* alter  :change/modify variable value or assign new value
+* read   :accept input from console into a variable
+* write  :output to console result of an expressions
+* apply  :execute one rule in synchronous mode
 
 **notes:**
 
@@ -217,20 +217,20 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 
 ```
 driver main:
-# read the number of parameters
+** read the number of parameters
 make c := $params.count;
 halt if (c = 0);
-# print comma separated parameters
+** print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
   write $params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
-# print the buffer to console
+** print the buffer to console
 print;
   
-over; ** end of driver
+over; !end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -278,10 +278,10 @@ alias new_name := qualifier.member_name;
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(.); ** load cpp library
-load $runtime.asm_lib:(.); ** load asm library
-load $runtime.bee_lib:(.); ** load bee core library
-load $program.pro_lib:(.); ** load project library
+load $runtime.cpp_lib:(.); !load cpp library
+load $runtime.asm_lib:(.); !load asm library
+load $runtime.bee_lib:(.); !load bee core library
+load $program.pro_lib:(.); !load project library
 ```
 
 ## Global context
@@ -297,16 +297,16 @@ A component can establish one or more local name-spaces where you can define com
 
 **example:**
 ```
-# component name-space
+** component name-space
 make i := 1 ∈ Z; 
 trial
   ** local name-space
-  make v := i;     ** v is local reference to nonlocal: i 
-  make i := 2 ∈ Z; ** create i local 
-  print i;  ** expected: 2 (local)
-  print v;  ** expected: 1 (nonlocal)
+  make v := i; !v is local reference to nonlocal: i 
+  make i := 2 ∈ Z; !create i local 
+  print i; !expected: 2 (local)
+  print v; !expected: 1 (nonlocal)
 done;
-print i;  ** expected: 1  (unmodified)
+print i; !expected: 1  (unmodified)
 
 over.
 ```
@@ -320,13 +320,13 @@ over.
 In Bee all members that begin with dot "." are public members.
 
 ```
-make .pi :: 3.14; ** public constant
-make .v ∈ N;    ** public variable
+make .pi :: 3.14; !public constant
+make .v ∈ N;      !public variable
 
-# public rule
+** public rule
 rule .f(x ∈ N) ∈ N => (x + 1);
 
-# public rule
+** public rule
 rule .m(x, y ∈ N) => (r @ N);
   alter r := x + y;
 return;
@@ -347,7 +347,7 @@ For single line comments we use one or two symbols:
 
 { "#", "**" } 
 
-* `# ` is used as title comment
+* `** ` is used as title comment
 * `**` is used as end of line comment
 
 **End of line**
@@ -358,10 +358,13 @@ After code line, before (EOL) you can use optional comments: "**",
 * you can have multiple statements separated by ";" in a line but only one comment;
 
 **Notes:** 
-Bee syntax is Wiki friendly: you can open it using Bee syntax color in Notepad++
+Bee syntax is Wiki friendly: you can open .md files using Bee highlighter in Notepad++
 
-1. In Wiki "#" represents a title. For subtitles you can use two: "##".
-2. In Wiki "**" is making bold text, that is kind of title. 
+**Limitations:**
+1. You can not use single "#" for titles. You must use two: "##". Single is prefix.
+2. You can not use contractions. This is silly but if you do you mess-up the highlighter
+3. You should use new line after exclamation mark. Else the next phrase is gray.
+4. Symbol "\`" has special meaning in Bee. Sometimes it must be escaped using "\\".
 
 **Example:**
 
@@ -369,22 +372,24 @@ In next example we are using various comments into a demo program.
 
 ```
 +------------------------------------------------------------------
-| At the beginning of program we can have  several comments,      | 
+| At the beginning of program you can have  several comments,     | 
 | to explain how the program works. This notation is preferred.   |
 +-----------------------------------------------------------------+
 driver main:
 
-# This is a single line comment
-pass; ** this is end of line comment  
-  ... 
-over. 
+** This is a single line comment
+pass; !this statement does nothing
+... 
+** Other statements
+over. !end of driver main
+
 *******************************************************************
 ** This is the old style boxed comment, used for matrix printers **
 *******************************************************************
 ```
 
 **note:** 
-Any test after the end of program is considered a comment and is ignored by the compiler. After last "." nothing else is parsed. So you can use free text.
+Any test after the end of program is considered a comment and is ignored by the compiler. After "over." nothing is parsed. So you can use free text or even code that you wish to preserve for later use.
 
 ## Execution
 
@@ -403,15 +408,15 @@ The driver or aspect can load numerous modules. After loading, all public elemen
 
 **pattern:**
 
-```# initialize an aspect
+```** initialize an aspect
 load qualifier := $pro.src.aspect_name;
-# results can be captured using alter
+** results can be captured using alter
 alter result := qualifier.rule_name(arguments);
 
-# give alias to aspect rule
+** give alias to aspect rule
 alias new_name := qualifier.rule_name;
 
-# apply aspect using its alias:
+** apply aspect using its alias:
 alter result := new_name(arguments);
 ```
 
@@ -433,7 +438,7 @@ alter result := new_name(arguments);
 ```
 aspect mod:
 
-# next rule is public
+** next rule is public
 rule .main(i ∈ Z) => (v @ N):
   when (i < 0) do
     alter v := -i;
@@ -449,14 +454,14 @@ over.
 
 ```
 driver main:
-# define aspect "mod"
+** define aspect "mod"
 load mod := $pro.mod;
 
-# define variable result
+** define variable result
 make result ∈ N;
-# execute main procedure from aspect "mod"
+** execute main procedure from aspect "mod"
 alter result := mod.main(-3);
-print result;  ** expect: 3
+print result; !expect: 3
 
 over.
 ```

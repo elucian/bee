@@ -138,15 +138,15 @@ Two data types must be available: File, Folder
 
 **File methods**
 
-clean  ** erase all data in the file
-save   ** save file buffer to disk 
-change ** modify file attributes
+clean  ! erase all data in the file
+save   ! save file buffer to disk 
+change ! modify file attributes
 
 **Folder methods**
 
-select ** select this folder as working folder
-purge  ** remove all files from folder
-change ** modify folder attributes
+select ! select this folder as working folder
+purge  ! remove all files from folder
+change ! modify folder attributes
 
 **Making files/folders**
 
@@ -158,12 +158,12 @@ make folder_name := Folder.open('name');
 ## Errors
 Bee has pre-define Error objects with codes in range (1..200):
 
-```# global type
+```** global type
 type Error := {code ∈ Z, message ∈ S} <: Object;
 ```
 
 ```
-# exception objects
+** exception objects
 $zero_division  :: {100,"division by zero"}        ∈ Error;
 $null_reference :: {101,"null reference usage"}    ∈ Error;
 $value_overflow :: {102,"value overflow"}          ∈ Error;
@@ -172,7 +172,7 @@ $type_mismatch  :: {104,"data type mismatch"}      ∈ Error;
 $user_error     :: {200,"user defined error"}      ∈ Error;
 ...
 
-# Standard error
+** Standard error
 make $standard_error  :: {1,"standard error"}    ∈ Error;
 make $unexpected_error:: {2,"unexpected error"}  ∈ Error;
 ```

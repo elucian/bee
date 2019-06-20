@@ -3,16 +3,16 @@
 +---------------------------+
 driver fi:
 load $pro_lib.console.(.);
-# declare Fibonacci rule
+** declare Fibonacci rule
 rule fib(n ∈ N) => (y @ N):
   when (n = 1 ∨ n = 0) do
-    alter y := 1; ** last value
+    alter y := 1; ! last value
   else     
     alter y := fib(n - 1) + fib(n - 2);
   done;
 return;
-# call define fib 
+** call define fib 
 make r := fib(5);
-# print the result
+** print the result
 print r;
 over. ** end driver fi

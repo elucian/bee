@@ -6,26 +6,26 @@ driver cs:
 
 load $pro_lib.console.(.);
 
-# declare two natural numbers
+** declare two natural numbers
 make a := 10, b := 5 ∈ N;
-# simple decision 
+** simple decision 
 print ("a = b") if a = b;
 print ("a < b") if a < b;
 print ("a > b") if a > b;
 
-# single branch decision
+** single branch decision
 when a = b do
   print ("a = b");
 done;
 
-# decision with alternate branch
+** decision with alternate branch
 when a < 5 do
   print "a < 5";
 else
   print "no";
 done;
 
-# nested statements are supported
+** nested statements are supported
 alter a := True, b := False;
 when a ∧ b do
   print ("a ≠ 0 and b ≠ 0");
@@ -42,7 +42,7 @@ done;
 +---------------------------------------
 |  case statement replace nested when  |
 +--------------------------------------+
-# mutual exclusive multi-path selector
+** mutual exclusive multi-path selector
 alter a := 2;
 case a ∈ [0..4] do
   ** this is true since a = 2
@@ -54,7 +54,7 @@ case a < 0 do
   ** this is not true since a > 0
   print ('a ≤ 0');
 else
-  print ('a ≥ 5'); ** no match
+  print ('a ≥ 5'); ! no match
 done;
 
 over.

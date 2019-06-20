@@ -6,20 +6,20 @@ load $pro_lib.console.(.);
 
 write "define a number:";
 make x ∈ N; read x; 
-# only if conditional
+** only if conditional
 
 print "x = 0" if x = 0;
-# single branch
+** single branch
 when x = 1 do
   print "x = 1";
 done;
-# two branches
+** two branches
 when x ≠ 5 do
   print "x ≠ 5";
 else
   print "x = 5";
 done;
-# nested branches
+** nested branches
 alter x := 1;
 when x ≥ 1 do
   print "x ≥ 1":
@@ -32,9 +32,9 @@ else
   print "x < 1";
 done;
  
-# x ≥ 1
-# x = 1
-# nested when
+** x ≥ 1
+** x = 1
+** nested when
 when x < 1 do
   print "x < 1";
 else
@@ -44,5 +44,5 @@ else
     print "x = 1";
   done;
 done;
-# expect x = 1
+** expect x = 1
 over.

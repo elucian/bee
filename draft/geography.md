@@ -10,7 +10,7 @@ Bee language has limited support for measurement units. Calculations often repre
 
 Earth coordinates can be represented using default Q numbers on 32 bit.
 
-# |angle    |equivalent |
+** |angle    |equivalent |
 --|---------|-----------|---------------------
 2 |0.01°	|1.1132     | km
 3 |0.001°	|111.32     | m
@@ -24,9 +24,9 @@ Earth coordinates can be represented using default Q numbers on 32 bit.
 * Φ = Latitude  :° ′ ″
 
 ```
-type Δ := (0 .. +100000000) <: Q; ** twice equatorial
-type Λ := (-180° .. +180° ) <: Q; ** longitude angle (degree)
-type Φ := (-90°  .. +90°  ) <: Q; ** latitude angle (degree)
+type Δ := (0..+100000000) <: Q; !twice equatorial
+type Λ := (-180°..+180° ) <: Q; !longitude angle (degree)
+type Φ := (-90°..+90°   ) <: Q; !latitude angle (degree)
 ```
 
 Map data types are represented by Unicode symbols:
@@ -44,25 +44,25 @@ Map data types are represented by Unicode symbols:
 * ⁉  = Condition
 
 ```
-# map simple node: λ = Latitude, φ = Longitude, i = index
+** map simple node: λ = Latitude, φ = Longitude, i = index
   type • := {i ∈ N, λ ∈ Λ, φ ∈ Φ} <: Object;
   
-# network node: λ = Latitude, φ = Longitude, ε = Elevation
+** network node: λ = Latitude, φ = Longitude, ε = Elevation
   type ◉ := {id ∈ N, λ ∈ Λ, φ ∈ Φ, ε ∈ Δ} <: Object;             
  
-# network link
+** network link
   type ↯ := {id ∈ N, start_node ∈ ◉, end_node ∈ ◉, shape ∈ [•]} <: Object;
   
-# place of interest
+** place of interest
   type ◈ := {id ∈ N, point ∈ •, label ∈ S} <: Object;
 
-# area 
+** area 
   type ■ := {id ∈ N, origin ∈ •, shape ∈ [•], category ∈ S} <: Object;
 
-# area of interest
+** area of interest
   type ▣ := {id ∈ N, point ∈ •, shape ∈ [•], label ∈ S} <: Object;
   
-# map area
+** map area
   type ♁ := {origin ∈ •, extent ∈ •, scale ∈ Q 
              nodes ∈ [◉], links ∈ [↯], 
              area ∈ [■], pint ∈ [◈], aint ∈  [▣] } <: Object;

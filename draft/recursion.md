@@ -9,7 +9,7 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 
 **Example1** 
 
-```# this rule is not optimized:
+```** this rule is not optimized:
 rule fact(n ∈ N) => (r @ N):
   when (n = 0) do
     alter r := 1;
@@ -21,7 +21,7 @@ return;
 
 **Example2**
 ```
-# this rule can be optimized:
+** this rule can be optimized:
 rule tail(n ∈ N, acc ∈ N) => (r @ N):
   when (n = 0) do
     alter r:= acc;
@@ -37,7 +37,7 @@ return;
 
 **Example3**
 ```
-# this rule is manually optimized:
+** this rule is manually optimized:
 rule fact(a ∈ N, b ∈ N) => (r @ N):
   while (b > 1) do
     alter a := a · a + a;

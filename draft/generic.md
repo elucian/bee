@@ -44,7 +44,7 @@ apply foo((param ,param ...) => (expression));
 
 In this example, _bubble_ is a generic rule:
 
-```# this sort is generic 
+```** this sort is generic 
 rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
@@ -75,18 +75,18 @@ return;
 
 **sort usage**
 
-```# define object type to be sorted
+```** define object type to be sorted
 type Person := { name ∈ S, age ∈ N } <: Object;
-# define order as lambda expression for type Person
+** define order as lambda expression for type Person
 make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
-# define sort rule for Person, as a clone from _bubble_
+** define sort rule for Person, as a clone from _bubble_
 make sort := bubble{Person};
-# define clients and suppliers
+** define clients and suppliers
 make clients   ∈ [Person](100);
 make suppliers ∈ [Person](10);
-# populate clients and suppliers somehow
+** populate clients and suppliers somehow
 ...
-# use new order action to sort clients and suppliers
+** use new order action to sort clients and suppliers
 apply sort(clients, gt:order);
 apply sort(suppliers, gt:order);
 ```

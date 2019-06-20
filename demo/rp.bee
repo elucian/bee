@@ -4,21 +4,21 @@
 driver rp:
 load $pro_lib.console.(.);
 
-# declare rule with rule "cmp" as parameter
+** declare rule with rule "cmp" as parameter
 rule compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r @ L):
   alter r := cmp(a,b);
 return;
 
-# declare a lambda expression:
+** declare a lambda expression:
 make lt := (a,b ∈ Z) ∈ L => (a < b);
 make test ∈ L;
 
-# delegate rule compare to execute expression: lt
+** delegate rule compare to execute expression: lt
 alter test := compare(1,2,cmp:lt);
-print test; ** expect 1
+print test; ! expect 1
 
-# delegate rule compare to execute an anonymous lambda expression
+** delegate rule compare to execute an anonymous lambda expression
 alter test := compare(1, 2, (a, b) => (a ≥ b));
-print test; ** expect 1
+print test; ! expect 1
 
 over.

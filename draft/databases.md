@@ -1,4 +1,4 @@
-# Database Layer
+** Database Layer
 
 Bee has basic interaction with relational databases. 
 
@@ -35,7 +35,7 @@ load Oracle := $bee_lib.db.oracle;
 One application can connect to multiple databases simultaneously. A specific kind of application called _pipeline_ can pull data from multiple sources to update one target database. 
 
 **pattern:**
-```# create a wrapper for database connection
+```** create a wrapper for database connection
 rule connect(name, password, database ∈ S) => (db @ Oracle.Database):
   ** prepare credentials
   make credential := user + '/' + password + '@'+ dbname;
@@ -43,7 +43,7 @@ rule connect(name, password, database ∈ S) => (db @ Oracle.Database):
   apply db.connect(credential);
 return;
 
-# create database connection
+** create database connection
 make db := connect(user:'test',password:'password',database:'bee_demo');
 ```
 
@@ -85,12 +85,12 @@ Records are _object instances_ created from table structure in memory. A record 
 
 **record type
 ```
-# This type is defined in core database library
+** This type is defined in core database library
 type Record := {rowid ∈ S(32), status ∈ Status} <: Object;
 ```
 **record status**
 ```
-# This type is defined in core database library
+** This type is defined in core database library
 type Status := {.unknown:0 .verified, .updated, .deleted } <: Ordinal;
 ```
 
@@ -103,34 +103,34 @@ For table structure we must define a _record type_ then use generic _Table_ to d
 
 ```
 type Record_Name := {field_name ∈ Type, ...}  <: Record;              ** entity record
-make table_name  := db.open('table_name','w') ∈  Table{Record_Name};  ** table mapping
+make table_name  := db.open('table_name','w') ∈  Table{Record_Name}; !table mapping
 ```
 
 **table methods**
 ```
-# first record
+** first record
 make  bookmark ∈ Table_Record;
 apply table_name.first;
-alter bookmark := table_name.record ; ** bookmark current record 
+alter bookmark := table_name.record;  !bookmark current record 
 
-# fetch next record
+** fetch next record
 apply table_name.fetch;
 
-# last record
+** last record
 apply table_name.last;
 
-# previous record
+** previous record
 apply table_name.back;
 
-# synchronize current record
+** synchronize current record
 apply table_name.seek(bookmark);
 
-# find a specific record
+** find a specific record
 apply table_name.find(field_name:value,...);
 
-# get filed values
-print table_name.field_name; ** data from current record
-pass if bookmark.field_name = table_name.field_name; ** same data 
+** get filed values
+print table_name.field_name; !data from current record
+pass if bookmark.field_name = table_name.field_name; !same data 
 ```
 
 **Table traversal**
@@ -139,10 +139,10 @@ You can read one table record by record:
 **pattern:**
 ```
 ....
-# table must be open to be scanned
+** table must be open to be scanned
 for record ∈ table_name do
   ** use current_record fields
-  print record.status; ** expect: 1 = .verified
+  print record.status; !expect: 1 = .verified
   ... 
 next;
 ```
@@ -174,10 +174,10 @@ Any of the following operations will start automatically a transaction:
 
 Bee can add new data records into one table using _append()_ rule.
 
-```# create empty record
+```** create empty record
 apply table_name.append;
 
-# modify record attributes
+** modify record attributes
 alter table_name.field_name := value;
 ...
 
@@ -190,10 +190,10 @@ Bee can do single or multiple row updates in one transaction.
 
 **Syntax:**
 
-```# use search fields and values
+```** use search fields and values
 apply table_name.find(search_field:value, search_field:value ...);
 
-# prepare record
+** prepare record
 alter table_name.field_name := value;
   ...
 apply db.commit;```
@@ -204,19 +204,19 @@ This statement will remove one or more records from a table.
 
 **Syntax**
 
-```# Find one single record and delete
+```** Find one single record and delete
 make  table_name.find(search_field:value,...);
 apply table_name.delete;
-# check status
+** check status
 pass if table_name.status = deleted;
 apply db.commit;
-# Using search fields to delete multiple records
+** Using search fields to delete multiple records
 apply table_name.delete(search_field:value,...);
 apply db.commit;
-# Remove all records from a table in bulk
+** Remove all records from a table in bulk
 apply table_name.scrub;
 apply db.commit;
-# delete current record using _for_
+** delete current record using _for_
 for record ∈ table_name do
   record.delete if (condition);
 done;
@@ -231,13 +231,13 @@ apply db.commit;
 
 Sometimes we need to bypass the ORM and execute native SQL:
 
-```# apply a modification query to database
+```** apply a modification query to database
 apply db.query(query_template ? source)
-# apply a query that return; a buffer
+** apply a query that return; a buffer
 type  TRecord := {
       field_name ∈ Type,      
       ...
-      };# execute query string and return a list of records
+      };** execute query string and return a list of records
 make  buffer ∈ (TRecord); 
 alter buffer := db.query(query_template ? source); 
 ```
@@ -247,15 +247,15 @@ alter buffer := db.query(query_template ? source);
 Some databases have support for stored procedures:
 
 ```
-# prepare an object (not updatable)
+** prepare an object (not updatable)
 type  Result_Record := {
       field_name ∈ Type,      
       ...
       } <: Object;
-# prepare a list of records      
+** prepare a list of records      
 make  buffer ∈ (Result_Record); 
 
-# execute stored procedure
+** execute stored procedure
 alter buffer := db.execute procedure_name(arguments); 
 ```
 

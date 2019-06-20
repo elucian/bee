@@ -38,26 +38,26 @@ Expressions are created using identifiers, operators, rules and constant literal
 * have a result that can be printed to console;
 
 **Examples**
-```# simple expressions in print statement# no need for parentheses for a single value
+```** simple expressions in print statement** no need for parentheses for a single value
 print 10; 
 print "this is a test";
 
-# complex expressions can use ()
+** complex expressions can use ()
 print (10 + 10 + 15);  
 print (10 > 5 | 2 < 3);
-# enumeration of multiple expressions# print: separate multiple values with one space
+** enumeration of multiple expressions** print: separate multiple values with one space
 print (1,',',2,',',3);
 print (10, 11, 12);
 
-# to avoid new line and spaces use "write"
-write 0;     ** no need for parenthesis 
-write (1,2); ** writing a list
-write (3,4); ** writing 
-# after write use print to write a new line
-print; ** 01234
-# Calculation that fail will generate an error
+** to avoid new line and spaces use "write"
+write 0; !no need for parenthesis 
+write (1,2); !writing a list
+write (3,4); !writing 
+** after write use print to write a new line
+print; !01234
+** Calculation that fail will generate an error
 alter x := 5 ∈ R;
-alter x := x ÷ 0; ** error: division by 0
+alter x := x ÷ 0; !error: division by 0
 ```
 
 **Notes:** 
@@ -75,6 +75,11 @@ Bee use 3 kind of data types:
 2. Primitive data types;
 3. Composite data types;
 
+**note**
+* Each data type has a default representation for constant literals,
+* Each data type has a default representation for print & output,
+* Default representation can be changed using a type hint or format.
+
 ## Native Types
 
 Native types are defined using one small letter followed by a number.
@@ -91,6 +96,12 @@ Native types are defined using one small letter followed by a number.
 | i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
 | f32  | signed    | 4   |Double precision float (0..+)
 | f64  | signed    | 8   |Double precision float (-..+)
+
+**notes:**
+
+* Using print with: unsigned types, will produce hexadecimal representations,
+* Using print with: integer a float, will produce decimal representations,
+
 
 ## Primitive Types
 
@@ -113,6 +124,8 @@ Primitive data types are defined using one capital letter.
 
 * Primitive data types are references to native types,
 * Type inference will create primitive data types,
+* Using print with type A, W and U will create a symbol,
+* Using print with L will output 0 and 1,
 
 ## Constant Literals
 
@@ -142,37 +155,37 @@ Most data types are references except native types that are values.
 
 **identifiers...**
 
-* native type name start with lowercase letter follow by a number representing bit length;
-* primitive reference type name consist of a single capital letter;
-* composite reference type name can start with a capital letter or Unicode symbol;
+* native data type name start with lowercase letter follow by a number representing bit length;
+* primitive data type name consist of a single capital letter;
+* composite data type name start with a capital letter or Unicode symbol other than reserved operators;
 
 **examples:**
 ```
-u8   ** native type: byte
-i32  ** native type: binary integer
-Z    ** primitive type: long integer
-R    ** primitive type: double float
-Q5.2    ** primitive type: precision 0.25 
-Object  ** composite type: root class for objects
-File    ** composite type: text file
-
+u8      ! native type: byte
+i32     ! native type: binary integer
+Z       ! primitive type: long integer
+R       ! primitive type: double float
+Q5.2    ! primitive type: precision 0.25 
+Object  ! composite type: root class for objects
+File    ! composite type: text file
+∠ ⊡ ⊙ ↗ ! geometric type: angle, dot, dot, vector
 ```
 **boxing**
 
 Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. Auto-boxing is possible if the types are compatible. Otherwise you must perform explicit boxing.
 
 ```
-make k ∈ Z;    ** reference integer
-make n ∈ i64;  ** native integer
+make k ∈ Z; !reference integer
+make n ∈ i64; !native integer
 
-alter k := n;      ** auto-boxing
-alter k := n as Z; ** explicit boxing
-# reference identity
-print n = k; ** 1 (same value)
-print n ≡ k; ** 0 (different location)
-# consequence
-alter n := 2;  ** i = 2 (modified)
-print k;       ** k = 0 (unmodified)
+alter k := n; !auto-boxing
+alter k := n as Z; !explicit boxing
+** reference identity
+print n = k; !1 (same value)
+print n ≡ k; !0 (different location)
+** consequence
+alter n := 2; !i = 2 (modified)
+print k; !k = 0 (unmodified)
 
 ```
 
@@ -181,16 +194,16 @@ print k;       ** k = 0 (unmodified)
 Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
 
 ```
-make r := 10 ∈ Z;   ** reference to integer
-make n := 0  ∈ i32; ** native type
+make r := 10 ∈ Z; !reference to integer
+make n := 0  ∈ i32; !native type
 
-alter n := r as i64; ** explicit unboxing
-# verify value identity
-print n = r; ** 1 (same value)
-print n ≡ r; ** 0 (different location)
-# consequence
-alter n += 2;  ** n = 12 (modified)
-print r;       ** r = 10 (unmodified)
+alter n := r as i64; !explicit unboxing
+** verify value identity
+print n = r; !1 (same value)
+print n ≡ r; !0 (different location)
+** consequence
+alter n += 2; !n = 12 (modified)
+print r; !r = 10 (unmodified)
 ```
 
 **share vs copy**
@@ -198,18 +211,18 @@ print r;       ** r = 10 (unmodified)
 * A reference is shared using operator ":=".
 * An object is copied using operator   "::".
 
-```# create a reference
+```** create a reference
 make  a := 1 ∈ Z;
-# transfer reference value
-make  c := a; ** share a reference
+** transfer reference value
+make  c := a;!share a reference
 
-print c = a; ** 1: same value
-print c ≡ a; ** 1: same reference
-# transfer value by deep copy
-make  b :: a ; ** new reference
+pass if c = a; !1 (same value)
+pass if c ≡ a; !1 (same reference)
+** transfer value by deep copy
+make  b :: a; !new reference
 
-print a = b; ** 1: same value
-print a ≡ b; ** 0: different reference
+pass if a = b; !1 (same value)
+fail if a ≡ b; !0 (different reference)
 ```
 
 ## Composite types
@@ -251,10 +264,10 @@ Bee define a collection literal using a special notation based on brackets.
 User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
-# declare new type
+** declare new type
 type Type_Identifier := type_descriptor <: super_type
 
-# declare new references
+** declare new references
 make var_name,var_name ... ∈ Type_Identifier
 ```
 
@@ -267,8 +280,8 @@ make var_name,var_name ... ∈ Type_Identifier
 
 **Example:**
 ```
-type Digit := (0..9) <: W;    ** superset default notation
-type Digit := (0..9) <: Word; ** superset equivalent full name 
+type Digit := (0..9) <: W; !superset default notation
+type Digit := (0..9) <: Word; !superset equivalent full name 
 ```
 
 ## Domain subtypes
@@ -282,14 +295,14 @@ type Domain_Name = (min..max:rate) <: Primitive_Type;
 ```
 
 **Examples:**
-```# sub-type declarations
+```** sub-type declarations
 type Positive  := (0..+:0.01) <: Q; 
 type Negative  := (-..0:0.01) <: Q; 
-type Digit     := (0..9) <: Z;      
-type Alpha     := (`A`..`z`) <: A;  
+type Digit     := (0..9)      <: Z;      
+type Alpha     := (`A`..`z`)  <: A;  
 type Latin     := (U+0041..U+FB02) <: U;
 
-# check variable belong to sub-type
+** check variable belong to sub-type
 when (`x` ∈ Alpha) do
   print 'yes';
 else
@@ -299,16 +312,17 @@ done;
 
 **Notes:**
 
-* Use n.!m to exclude upper limit from range,
-* Use n!.m to exclude lower limit from range,
-* Use n!!m to exclude both limits from range,
+* Use (n..m) include n and m in domain,
+* Use (n/.m) to exclude lower limit from range,
+* Use (n./m) to exclude upper limits from range,
+* Use (n//m) to exclude both limits from range,
 * Use symbol - for unlimited negative number,
-* Use symbil + for unlimited positive number.
+* Use symbol + for unlimited positive number.
 
 **example:**
-```# continuous default rate is 1
-print (0..5); ** 0,1,2,3,4,5
-print (0.!5); ** 0,1,2,3,4
+```** continuous default rate is 1
+print (0..5); !0,1,2,3,4,5
+print (0./5); !0,1,2,3,4
 
 ```
 
@@ -318,22 +332,22 @@ A domain can use a special notation for multiple numeric intervals called segmen
 
 **syntax:**
 ```
-(segment, segment ...) ** continuous domain notation
+(segment, segment ...) ! continuous domain notation
 ```
 
-* segment ::= n..m:ratio  ** include n, include m if (m % ratio) = 0
-* segment ::= n!.m:ratio  ** exclude n, include m if (m % ratio) = 0
-* segment ::= n.!m:ratio  ** include n, exclude m 
-* segment ::= n!!m:ratio  ** exclude both n and m
+* segment ::=  n..m:ratio  :include n, include m if (m % ratio) = 0
+* segment ::=  n./m:ratio  :exclude n, include m if (m % ratio) = 0
+* segment ::=  n/.m:ratio  :include n, exclude m 
+* segment ::=  n//m:ratio  :exclude both n and m
 
 **example:**
-```# integer domain with two segments
+```** integer domain with two segments
 type ZDom := (-9..1,1..9) <: Z; 
-# integer domain with two segments and ratio
-type ZDom := (0..8:2,1..9:2) <: Z; 
-# real domain with two rations: 0.01 and 0.1
-type RDom := (0.!10:0.01,10..100:0.1) <: R; 
-# two rational segments with same ratio: 0.01
+** integer domain with two segments and ratio
+type ZDom := (0..8:2 , 1..9:2) <: Z; 
+** real domain with two rations: 0.01 and 0.1
+type RDom := (0./10:0.01, 10..100:0.1) <: R; 
+** two rational segments with same ratio: 0.01
 type QDom := (-10..-1:0.01, 1..10:0.01) <: Q; 
 ```
 
@@ -357,8 +371,8 @@ Same operator "::" can be used to create a clone of an existing variable.
 
 **example:**
 ```
-make n :: U+2200     ∈ A;  ** Symbol: ∀
-make n :: U-00002200 ∈ U;  ** Symbol: ∀
+make n :: U+2200     ∈ A; !Symbol: ∀
+make n :: U-00002200 ∈ U; !Symbol: ∀
 ```
 
 **Note:** 
@@ -376,10 +390,10 @@ operator | purpose
  :=      | binding  = assign a value \| borrow a reference
  ::      | cloning  = duplicate object \| deep copy
  
-```# primitive variable declarations with type
+```** primitive variable declarations with type
 make var_name ∈  type_name;
 make var_name := constant ∈ type_name;
-# partial declaration using type inference
+** partial declaration using type inference
 make var_name := constant; 
 make var_name := expression; 
 ```
@@ -398,9 +412,9 @@ One can modify variables using _alter_ statement.
 ```
 make a := 10, b := 0 ∈ Z;
 
-alter b := a + 1; ** modify b underline value
-alter b += 1;     ** modify b using modifier
-print b;          ** expected 12
+alter b := a + 1; !modify b underline value
+alter b += 1;     !modify b using modifier
+print b;          !expected 12
 ```
 
 **Notes:** 
@@ -408,20 +422,20 @@ print b;          ** expected 12
 * The alter statement can use operator { := } or a modifier { += -= ÷= ·= ^= %= }
 
 **Examples:**
-```# declare a constant
+```** declare a constant
 make pi :: 3.14 ∈ R;
-# declare multiple variables
-make a   ∈ Z;  ** Integer 
-make x,y ∈ R;  ** Double
-make q,p ∈ L;  ** Logic
+** declare multiple variables
+make a   ∈ Z; !Integer 
+make x,y ∈ R; !Double
+make q,p ∈ L; !Logic
 
-# using modifiers
-alter a := 10;  ** modify value of a := 10
-alter a += 1;   ** increment value of a := 11
-alter a -= 1;   ** decrement value of a := 10
-# modify two variables using one constant
+** using modifiers
+alter a := 10; !modify value of a := 10
+alter a += 1; !increment value of a := 11
+alter a -= 1; !decrement value of a := 10
+** modify two variables using one constant
 alter (x, y) := 10.5;
-# modify two variables using two constants
+** modify two variables using two constants
 alter (q, p) ? (True, False);  
 ```
 
@@ -439,13 +453,13 @@ When data type mismatch you must perform explicit conversion.
 make a := 0, b := 20 ∈ Z;
 make v := 10.5, x := 0.0 ∈ R;
 
-# explicit conversion
+** explicit conversion
 alter a := v as N;
-print a; ** truncated to 10 
+print a; !truncated to 10 
 
-# explicit conversion
+** explicit conversion
 alter x := b as R;
-print x; ** expect 20.0
+print x; !expect 20.0
 ```
 
 ## Alphanumeric type
@@ -453,13 +467,13 @@ print x; ** expect 20.0
 Bee define A as single UTF-8 code point with representation: U+HH
 
 ```
-make a, b ∈ A; ** ASCII 
-make x, y ∈ B; ** Binary integer
+make a, b ∈ A; !ASCII 
+make x, y ∈ B; !Binary integer
 
-alter a := '0';     ** ASCII symbol '0'
-alter x := a as B;  ** convert to binary 30
-alter y := 30;      ** decimal code for '0'
-alter b := y as A;  ** convert to ASCII symbol '0'
+alter a := '0'; !ASCII symbol '0'
+alter x := a as B; !convert to binary 30
+alter y := 30; !decimal code for '0'
+alter b := y as A; !convert to ASCII symbol '0'
 ```
 
 ## Type checking
@@ -467,18 +481,18 @@ alter b := y as A;  ** convert to ASCII symbol '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0;    ** integer variable 
-make b := 0.0;  ** real variable 
+make a := 0; !integer variable 
+make b := 0.0; !real variable 
 
-alter b := 10;    ** FAIL: b is of type: Real
-alter a := 10.5;  ** FAIL: a is of type: Integer
+alter b := 10; !FAIL: b is of type: Real
+alter a := 10.5; !FAIL: a is of type: Integer
 ```
 
 You can use operator "is" to verify data type
 
 ```
 make a := 0 ∈ Z;
-# expected: Integer
+** expected: Integer
 fail "Unexpected error: a is not Integer" if ¬ (a is Z);
 ```
 
@@ -489,19 +503,19 @@ Logic type is an enumeration of two public symbols: False and True
 ```
 type .L := {.False:0, .True:1} <: Ordinal;
 
-# printing logical values
-print True;   ** 1
-print False;  ** 0
+** printing logical values
+print True; !1
+print False; !0
 ```
 
 ## Logic operations
 
 Bee uses several familiar logic operators:
 
-*  ¬ (not) 
-*  ∧ (and) 
-*  ∨ (or)  
-*  ⊕ (xor)  
+* ¬ (not) 
+* ∧ (and) 
+* ∨ (or)  
+* ⊕ (xor)  
  
 Precedence: { ¬, ∧, ∨, ⊕ }
 
@@ -515,8 +529,8 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 ```
 make x := 4 ∈ Z;
 
-print x = 4 ; ** 1 (equal)
-print x ≡ 4 ; ** 0 (not identical)
+print x = 4;  !1 (equal)
+print x ≡ 4;  !0 (not identical)
 
 when (x = 4) ∧ (x - 4 = 0) do
   print "True";
@@ -527,9 +541,9 @@ done;
 
 
 **design**
-```# logic values are numeric
-print False - True;  ** -1 
-print True  + True;  ** +2
+```** logic values are numeric
+print False - True; !-1 
+print True  + True; !+2
 ```
 
 **Precedence:** 
@@ -541,20 +555,20 @@ Logic operators have greater precedence than comparison.
 Logical expression have value { False, True }
 
 ```
-make x := False; ** Type = L
-make y := True;  ** Type = L
+make x := False; !Type = L
+make y := True; !Type = L
 
-# simple expressions
-print   x; ** 0
-print ¬ x; ** 1
+** simple expressions
+print   x; !0
+print ¬ x; !1
 
-# complex expressions
-print  (x = y); ** 0
-print  (x ≠ y); ** 1
-print  (x < y); ** 1
-print  (x > y); ** 0
-print  (x ∧ y); ** 0
-print  (x ∨ y); ** 1
+** complex expressions
+print  (x = y); !0
+print  (x ≠ y); !1
+print  (x < y); !1
+print  (x > y); !0
+print  (x ∧ y); !0
+print  (x ∨ y); !1
 
 ```
 **Notes:** 
@@ -570,8 +584,8 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a as L; ** 0
-alter y := b as L; ** 1
+alter x := a as L; !0
+alter y := b as L; !1
 ```
 
 **Notes:** 
@@ -599,9 +613,9 @@ The statement is executed only if the expression evaluate to True.
 
 ```
 make a := 0 ∈ Z;
-# conditional execution
+** conditional execution
 alter a := 1 if (a = 0);
-# conditional print
+** conditional print
 print "a is 0" if (a = 0);
 print "a >  0" if (a ≥ 0);
 ```
@@ -619,12 +633,12 @@ These expressions are separated by coma and enclosed in ().
 
 ```
 make var_name ∈ type;
-# single condition matching
+** single condition matching
 alter var_name := (xp if cnd1, dx);
 
-# multiple matching with default value
+** multiple matching with default value
 alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
-# alternative code alignment
+** alternative code alignment
 alter var_name := (
    xp1 if cnd1,
    xp2 if cnd2,
@@ -646,7 +660,7 @@ make x := '0';
 read (x,"x:>");
 
 make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'] | "unknown");
-print ("x is " + kind); ** expect: "x is digit"
+print ("x is " + kind); !expect: "x is digit"
 over.
 ```
 
@@ -656,25 +670,25 @@ A lambda expressions is a named expression with specified result type:
 
 **syntax**
 
-```# simple declaration of Lambda expression using type inference
+```** simple declaration of Lambda expression using type inference
 make name := (param ∈ Type,...) ∈ Type => (expression);
 ```
 
-```# you can define a lambda signature first
+```** you can define a lambda signature first
 type SigName := (Type,...) ∈ Type <: Lambda;
-# then you can use the signature to create expression
+** then you can use the signature to create expression
 make name := SigName(param ∈ Type,...) ∈ Type => (expression);
 ```
 
 **Example:** 
 
-```# define "exp" as Lambda expression
+```** define "exp" as Lambda expression
 make exp := (x,y ∈ Z) ∈ Z => (x + y);
-# "exp" type is created using type inference
-print type(exp); ** Lambda
-# use the lambda expression
-make z := 1 + 2 · exp(1,1) ;
-print  z;  ** print 5
+** "exp" type is created using type inference
+print type(exp); !Lambda
+** use the lambda expression
+make z := 1 + 2 · exp(1,1); 
+print  z; !print 5
 ```
 
 **properties:**
@@ -731,11 +745,11 @@ A rule can be used for different purpose depending on a particular syntax patter
 Parameters are special variables defined in rule signature.
 
 **Example:**
-```# a rule with two parameter
+```** a rule with two parameter
 rule foo(name ∈ S, message @ S):
   alter message:= "hello:" + name + ". I am Foo. Nice to meet you!";
 return;
-# using apply + rule name will execute the rule  
+** using apply + rule name will execute the rule  
 make str ∈ S;
 apply foo("Bee", str);
 print str; 
@@ -759,19 +773,19 @@ hello: Bee. I am Foo. Nice to meet you!
 A rule can have multiple results. For binding results to variables we are using operator: ":="
 
 **Example:** 
-```# rule with two results "s" and "d"
-# x is mandatory y is optional
+```** rule with two results "s" and "d"
+** x is mandatory y is optional
 rule com(x ∈ Z, y:0 ∈ Z) => (s, d @ Z):
   alter s := x + y; 
   alter d := x - y;
 return;
-# capture result into new variables b, c
+** capture result into new variables b, c
 make b, c := com(3,2) ∈ Z;
-print (b, c); ** 5 1
+print (b, c); !5 1
 
-# ignore one result and use only one parameter
+** ignore one result and use only one parameter
 make a, _ := com(3) ∈ Z;
-print a;  ** 3 
+print a; !3 
 ```
 
 **Notes:**   
@@ -785,19 +799,19 @@ print a;  ** 3
 A rule with a single result can be used as a _function_;
 
 **pattern:**
-```# define a functional rule
+```** define a functional rule
 rule name(param ∈ type,...) => (result @ type):    
    ...
-   exit if (condition); ** early transfer
+   exit if (condition); !early transfer
    ...
-   alter result := expression; ** computing the result
+   alter result := expression; !computing the result
    ...
 return;
-# direct call and print the result
+** direct call and print the result
 print rule_name(argument,...);
-# capture rule result and make a new variable:
+** capture rule result and make a new variable:
 make  r := rule_name(argument,...);
-# capture result using existing variable:
+** capture result using existing variable:
 make  n ∈ type;
 alter n := rule_name(argument,...)
 
@@ -820,7 +834,7 @@ A function is pure if:
 * A downgraded rule can be called also _dirty rule_ that is not _pure_;
 
 **See also:**
-* [bs.bee](../demo/bs.bee);   ** Bubble Sort
+* [bs.bee](../demo/bs.bee); !Bubble Sort
 
 ## Rule as routine
 
@@ -843,13 +857,13 @@ rule rule_name(param ∈ type,...):
    make .x, .y, .z := 0 ∈ Z; 
    ...
 return;
-# modify rule states
+** modify rule states
 alter rule_name.x = 1;
 alter rule_name.y = 2;
 alter rule_name.z = 3;
-# read rule states
-print (rule_name.x, rule_name.y, rule_name.z);  ** 1 2 3
-# execute a rule that has no results:
+** read rule states
+print (rule_name.x, rule_name.y, rule_name.z); !1 2 3
+** execute a rule that has no results:
 apply rule_name(param:argument, ...);
 ```
 
@@ -876,9 +890,9 @@ rule method_name(bind: @ ObjType, param ∈ type,...) => (result @ type):
    ...
    result := expression;
 return;
-# create an object instance
+** create an object instance
 make obj := {attribute:value, ...} ∈ ObjectYpe;
-# execute a method and ignore the result
+** execute a method and ignore the result
 apply obj.method_name(argument, ...);
 ```
 
@@ -889,7 +903,7 @@ See also: [Composite:Object](composite#object)
 A _generic rule_ is a _prototype_ that can be _cloned_ to create _dynamic rules_.
 
 **pattern:**
-```# define a rule prototype 
+```** define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result @ Type):
   ...
   ** a prototype can have attributes
@@ -900,10 +914,10 @@ rule prototype_name{attributes}(parameters) => (result @ Type):
   ** compute the result
   alter result := expression(arguments);
 return;
-# making a clone from prototype
+** making a clone from prototype
 make new_rule := prototype_name{arguments};
 fail if ¬ (new_rule is Rule); 
-# using the clone
+** using the clone
 make r := new_rule(arguments);
 ```
 
@@ -914,22 +928,22 @@ make r := new_rule(arguments);
 * A clone can be created in _local context_ of another rule or in _component context_;
 
 **example:**
-```# this is a generic rule
+```** this is a generic rule
 rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
   alter r := (s + i);
 return;
-# instantiate two clones:
-make inc(i ∈ Z) := shift{s: +1} => (r @ Z); ** increment 
-make dec(i ∈ Z) := shift{s: -1} => (r @ Z); ** decrement 
-# verify clone properties
-print inc.s; **  1
-print dec.s; ** -1
-# use first clone: inc()
-print inc(1); ** 2
-print inc(4); ** 5
-# use second clone: dec()
-print dec(1); **  0
-print dec(2); **  1
+** instantiate two clones:
+make inc(i ∈ Z) := shift{s: +1} => (r @ Z); !increment 
+make dec(i ∈ Z) := shift{s: -1} => (r @ Z); !decrement 
+** verify clone properties
+print inc.s; ! 1
+print dec.s; !-1
+** use first clone: inc()
+print inc(1); ! 2
+print inc(4); ! 5
+** use second clone: dec()
+print dec(1); ! 0
+print dec(2); ! 1
 ```
 
 ## External rules
@@ -942,8 +956,8 @@ This is myLib.bee file:
 ```
 module  myLib;
 
-load myLib := $bee.lib.cpp.myLib; ** load cpp library
-# define a wrapper for external "fib"
+load myLib := $bee.lib.cpp.myLib; !load cpp library
+** define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x @ Z));
   alter x := myLib.fib(n);
 return;
@@ -952,10 +966,10 @@ return;
 This is the driver file.
 ```
 driver main:
-# load library
+** load library
 load myLib := $bee.lib.myLib;
 
-# use external rule
+** use external rule
 print myLib.fib(5);
 ```
 
