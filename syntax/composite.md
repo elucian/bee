@@ -645,7 +645,7 @@ make my_error  := {201,"exception: \s{1}"} ∈ Error;
 
 fail my_error ? 'test' if flag;
 ```
-** expected output
+**output:**
 ```
 exception: 'test'
 ```
