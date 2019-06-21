@@ -10,8 +10,8 @@ Name             | Description
 -----------------|----------------------------------
 [when](#when)    | conditional block statement
 [case](#case)    | conditional path selector
-[for](#for)      | collection iterator
 [while](#while)  | conditional repetitive block
+[for](#for-each) | collection iterator
 [trial](#trial)  | serial list of small tasks
 
 **Restriction:**
@@ -299,7 +299,7 @@ The standard module will define standard _error objects_ as constants:
 * code: 2   = $unexpected_error with message: "unexpected error";
 * code: 200 = $user_error       with message: "user defined error";
 
-**See also:** [Standard:Exception](standard@exception);
+**See also:** [Standard:Exception](standard.md#errors);
 
 **patch**
 
