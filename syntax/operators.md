@@ -49,8 +49,8 @@ Listed in the order of precedence top down.
 
 symbol| description
 ------|------------------------------------------------------------------
- `/`  | Rational number division (higher precedence)
  `-`  | Change sign, replace "y = -x" with "y = -1·x"
+ `/`  | Rational number division 
  `^`  | Power symbol used with fractions or expressions   
  `·`  | Multiplication
  `÷`  | Real division 
@@ -131,8 +131,8 @@ symbol | result     |meaning
  `+`   | String     |Concatenation between two strings
  `+`   | List       |Concatenation between two lists
  `+`   | Array      |Concatenation between two arrays
- `∀`   | Element    |Enumerate all elements from a collection
- `∃`   | Logic      |Check if exist one element in a collection
+ `∀`   | Element    |Specify all elements from a collection X[∀]
+ `∃`   | Logic      |Check a collection for quality or qualification
                                           
 ## Logic Operators 
 
@@ -191,10 +191,11 @@ Arity = 2
 Symbol| Description
 ------|---------------------------------------------------------------
  `*`  | String pattern repetition \| String generator
- `&`  | concatenate two strings as they are
- `+`  | concatenate two strings after trimming first string 
  `.`  | concatenate two literals using \ or // depending on OS
  `/`  | concatenate two strings with / and de-duplicate last
  `\\` | concatenate two strings with \\ and de-duplicate last
+ `+`  | concatenate two strings after trimming first string 
+ `&`  | concatenate two strings as they are
+
  
 **Read Next:** [keywords](keywords.md)
