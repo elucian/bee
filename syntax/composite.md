@@ -379,7 +379,7 @@ Literals for strings are enclosed in 2 kind of quotes:
 -------|--------------------------------
  \`_\` | type A = ASCII
  '_'   | type S = String
- "_"   | type U = Text
+ "_"   | type X = Text
 
 **Alternative literals**
 * Using wrong quotes can trigger implicit type coercion
@@ -388,7 +388,7 @@ Literals for strings are enclosed in 2 kind of quotes:
 
 ### Single quoted
 
-Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 code points.
+Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 UTF32 code points.
 
 ```** define String sub-type
 type Str128 := S(128) <: String; 
