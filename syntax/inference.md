@@ -17,7 +17,7 @@ make s := '∈';    !type = U
 make s := 'str'   !type = S
 make b := "Text"; !type = X
 ** numeric expressions
-make i := 0; !type := Z
+make i := 0;   !type := Z
 make j := 0.5; !type := R
 ** define synonyms for logic constants
 make false :: False; !type L = 0
@@ -100,14 +100,13 @@ make s := ' ' * 10;
 ```
 
 **Examples:**
-```** create a string of 8 digits
-make a := '00000000';
-** equivalent of previous declaration
-make a := '0' * 8;
-** used in expression will generate string
-make b := (a + ' ') * 4;
+```** make a string from pattern 01
+make  a := '01' * 4;
+print a; ! 01010101;
 
-print b; !00000000 00000000 00000000 00000000
+** used in expression will generate string
+make  b := (a & ' ') * 4;
+print b; ! 01010101 01010101 01010101 01010101
 ```
 
 **Read next:** [Data Processing](processing.md)
