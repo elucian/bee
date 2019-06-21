@@ -579,30 +579,28 @@ fail if test.b ≠ 1; !verify attribute b
 
 ## Varargs
 
-Is a last parameter in a parameter list, declared with _empty array_ prefix: []
+The last parameter in a parameter list can use prefix: "\*"
 
 ```
-rule foo([]bar ∈ [Z]) => (x @ Z):
+rule foo(*bar ∈ [Z]) => (x @ Z):
   make c := bar.count();
   ** precondition
   when (c = 0) do
     alter x := 0;
     exit;
   done;
-  alter i := 0; 
   ** sum all parameters  
-  while (i < c) do
+  for i ∈ (0./c) do
     alter x += bar[i];
-    alter i += 1;
   repeat;
 return;
 
 ** we can call foo with variable number of arguments
-print foo(); !0
-print foo(1); !1
-print foo(1,2); !3
-print foo(1,2,3); !6
-
+print foo();        !0
+print foo(1);       !1
+print foo(1,2);     !3
+print foo(1,2,3);   !6
+print foo(1,2,3,4); !10
 ```
 
 **first & last**
@@ -641,13 +639,12 @@ Template modifier "?" can be used to customize the error message:
 make  flag ∈ L;
 read (flag, 'enter flag (0/1):');
 
-make my_error  := {201,"exception: \s{1}"} ∈ Error;
-
+make my_error := {201,"error: \s{1}"} ∈ Error;
 fail my_error ? 'test' if flag;
 ```
 **output:**
 ```
-exception: 'test'
+error: 'test'
 ```
 
 **Notes:**
