@@ -470,9 +470,9 @@ Bee define A as single UTF-8 code point with representation: U+HH
 make a, b ∈ A; !ASCII 
 make x, y ∈ B; !Binary integer
 
-alter a := '0'; !ASCII symbol '0'
+alter a := '0';    !ASCII symbol '0'
 alter x := a as B; !convert to binary 30
-alter y := 30; !decimal code for '0'
+alter y := 30;     !decimal code for '0'
 alter b := y as A; !convert to ASCII symbol '0'
 ```
 
@@ -481,10 +481,10 @@ alter b := y as A; !convert to ASCII symbol '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0; !integer variable 
+make a := 0;   !integer variable 
 make b := 0.0; !real variable 
 
-alter b := 10; !FAIL: b is of type: Real
+alter b := 10;   !FAIL: b is of type: Real
 alter a := 10.5; !FAIL: a is of type: Integer
 ```
 
@@ -637,12 +637,12 @@ make var_name ∈ type;
 alter var_name := (xp if cnd1, dx);
 
 ** multiple matching with default value
-alter var_name := (xp1 if cnd1, xp2 if cnd2,... dx);
+alter var_name := (xp1 if cnd1, xp2 if cnd2,..., dx);
 ** alternative code alignment
-alter var_name := (
-   xp1 if cnd1,
-   xp2 if cnd2,
-   dx);
+alter var_name := 
+  (xp1 if cnd1
+  ,xp2 if cnd2
+  ,dx);
 ```
 
 **Legend:**
@@ -659,7 +659,7 @@ dx   := default expression (optional condition).
 make x := '0';
 read (x,"x:>");
 
-make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'] | "unknown");
+make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
 print ("x is " + kind); !expect: "x is digit"
 over.
 ```

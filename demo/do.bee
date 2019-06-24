@@ -12,8 +12,8 @@ rule sort(this @ [Z]):
   ** repetitive block do
   while swap do
     alter swap := False; ! reset flag
-    for i ∈ (0.!n) do
-      ** this pair is out of order ?
+    for i ∈ (0./n) do
+      ** this pair is out of order ?      
       when this[i] < this[i+1] do
         ** swap elements using XOR
         alter this[i]   := this[i]   ⊕ this[i+1];
