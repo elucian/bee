@@ -6,11 +6,11 @@ driver dt:
 load $pro_lib.console.(.);
 
 ** this type is public (uses dot prefix)
-type .Data := {key:U, value:N} <: Hash;
+type .New_Data := {key:U, value:N} <: Hash;
 
-** make variable using defined data type:
-make  x ∈ Data;
-alter x := {key:'a', make:10};
+** make variable using new data type:
+make  x ∈ New_Data;
+alter x := {key:'a', value:10};
 +----------------------------------------------------
 |  public enumeration type with public elements     |
 |  elements starting with "." do not need qualifier |
