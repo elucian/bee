@@ -1,5 +1,5 @@
 +----------------------------------------------
-          Working with references              
+|          Working with references            |  
 ----------------------------------------------+
 driver nu:
 load $pro_lib.console.(.);
@@ -29,7 +29,7 @@ print e = d; // 1 same value
 
 ** boxing/ unboxing
 make i := 10 ∈ i32; // native type
-make c := 0  ∈ Z ;   // reference
+make c := 0  ∈ Z ;  // reference
 trial:
   alter c := i; // auto boxing, makes c = 10 
   alter i := c; // not possible (fail)

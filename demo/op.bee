@@ -1,5 +1,5 @@
 +------------------------------------
-       Input/Output parameters
+|      Input/Output parameters      |
 ------------------------------------+
 driver op:
 load $pro_lib.console.(.);
