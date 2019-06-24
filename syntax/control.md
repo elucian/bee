@@ -83,6 +83,7 @@ done;
 **Note:** 
 * _case_ is a multi-path selector
 * _case_ is also known as _conditional search_
+* _case_ is preferred way to replace a _ladder_
 
 **example:**
 ```
@@ -97,7 +98,6 @@ else
   print ("ok: a =" + a);
 done; 
 ```
-
 
 ## While
 
