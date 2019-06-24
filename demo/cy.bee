@@ -9,8 +9,8 @@ make a ∈ [Z](10);
 ** use repetitive statement while
 make  i:= 0 ∈ Z;
 while i = 9 do
-  alter a[i] := i; ! assign index
-  alter i += 1;    ! increment
+  alter a[i] := i; // assign index
+  alter i += 1;    // increment
 repeat;
 
-over. ** end of driver
+over. // end of driver

@@ -91,4 +91,4 @@ apply sort(clients, gt:order);
 apply sort(suppliers, gt:order);
 ```
 
-**Read next:** [overview](../syntax/overview.md)
+**Read next:** [overview](./syntax/overview.md)

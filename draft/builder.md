@@ -32,8 +32,8 @@ make test1, test2 ∈ {Z}
 alter test1 := { x  | x ∈ source}
 alter test2 := { x² | x ∈ source}
 ** expected result
-print test1; !{1,2,3}
-print test2; !{1,4,9}
+print test1; //{1,2,3}
+print test2; //{1,4,9}
 ```
 
 ## Hash Builder
@@ -67,7 +67,7 @@ Qualifiers can be used as logical expressions in statements: { when, if, while e
 ```
 ** create a set of bit-masks
 make here := {0b10011,0b10001,0b11101};
-make verify ∈ L; !logical flag
+make verify ∈ L; //logical flag
 
 ** verify if any mask element has second bit from the end
 alter verify := ∃(x ∈ here) ∧ (x ⊕ 0b10 = x);

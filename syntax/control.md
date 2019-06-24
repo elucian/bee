@@ -60,9 +60,9 @@ when a ≤ 0 do
     print 'a = 0';
   else
     print "a < 0"; 
-  done; !a ≤ 0
+  done; //a ≤ 0
   ** continue
-done; !a = 0
+done; //a = 0
 ```
 
 ## Case
@@ -109,9 +109,9 @@ This block start with _"while"_ and is ending with _"repeat"_:
 while condition do
   ** repetitive block
   ...
-  skip if (condition); !continue
+  skip if (condition); //continue
   ...
-  stop if (condition); !break
+  stop if (condition); //break
   ...
 repeat;
 ```
@@ -165,9 +165,9 @@ Start with "for" and ends with "next". It is used to traverse a _domain_ or _col
 ```
 for var ∈ (min..max:rate) do
   ...
-  skip if (condition); !fast forward
+  skip if (condition); //fast forward
   ...
-  stop if (condition); !early transfer
+  stop if (condition); //early transfer
   ...
 next;
 ```
@@ -179,9 +179,9 @@ next;
 ```
 for i ∈ (0..10) do
   when i % 2 = 0 do
-    skip; !fast forward
+    skip; //fast forward
   else
-    write i; !odd numbers
+    write i; //odd numbers
   done;
   write ',' if (i < 9);        
 next;
@@ -200,7 +200,7 @@ driver domain_test:
 
 **    min ↓  ↓max  ↓ = ratio
 for i ∈ (1..9:    2) do
-  write i; !odd numbers
+  write i; //odd numbers
   write ',' if (i < 9);        
 next;
 
@@ -243,9 +243,9 @@ error code do
 patch
   ** all other errors
   ...
-  retry if condition; !repeat
+  retry if condition; //repeat
   ...
-  raise if condition; !propagate
+  raise if condition; //propagate
 final
   ** finalization statement   
   print "final error:" + #error.code if #error.code > 0;
@@ -282,14 +282,14 @@ Errors can be issued using: fail, raise or pass.
 
 ```
 ** "fail" can be used in several ways to issue an error
-fail;                              ! standard error
-fail "message";                    ! custom error
-fail {code:value, message:string}; ! instant error
-fail error_name;                   ! defined error
+fail;                              // standard error
+fail "message";                    // custom error
+fail {code:value, message:string}; //instant error
+fail error_name;                   // defined error
 
 ** "pass" can create only $unexpected_error: 201
-pass; !clear #error message
-pass if condition; !can create "unexpected error"
+pass; //clear #error message
+pass if condition; //can create "unexpected error"
 ```
 
 **Note:** 
@@ -334,13 +334,13 @@ done;
 ** define a custom error
 make my_error := {201, 'my error'} ∈ E;
 trial
-  fail my_error; !issue custom error
+  fail my_error; //issue custom error
 error 201 do
   print #error.message;
   print #error.line;
   ** will fall through
 patch  
-  raise; !propagate the error
+  raise; //propagate the error
 done;  
 ```
 
@@ -363,9 +363,9 @@ trial
   read a;
 error $out_of_range do
   when count < 3 do
-    retry; !try again
+    retry; //try again
   else       
-    abort; !give up 
+    abort; //give up 
   done;    
 final
   when  a ∈ (0..9);

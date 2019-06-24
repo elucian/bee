@@ -24,14 +24,14 @@ By using collections and control structures one can read, modify and store data.
 **example:**
 
 ```
-make test ∈ [R](10); !vector of 10 real numbers
+make test ∈ [R](10); //vector of 10 real numbers
 make m := length(test)-1;
 ** array index start from 0
-print test[0]; !first element
-print test[m]; !last element
+print test[0]; //first element
+print test[m]; //last element
 ** alternative notation
-print test[0]; !first element
-print test[-1]; !last element
+print test[0]; //first element
+print test[-1]; //last element
 ** array traversal 
 make x := 0;
 while (x < m) do
@@ -51,17 +51,17 @@ over.
 **operations**
 
 ```
-make a1 := [1, 2, 3]; !Initialized array
-make a2 := [2, 3, 4]; !Initialized array
+make a1 := [1, 2, 3]; //Initialized array
+make a2 := [2, 3, 4]; //Initialized array
 ** addition between two Arrays "+" 
-make a3 := a1 + a2; ![1,2,3,2,3,4]
+make a3 := a1 + a2; //[1,2,3,2,3,4]
 ** difference between two Arrays "-"
-make a4 := l1 - l2; ![1]
-make a5 := l2 - l1; ![4]
+make a4 := l1 - l2; //[1]
+make a5 := l2 - l1; //[4]
 ** intersection between two Arrays "&" 
-make a6 := a1 ∩ a2; ![2,3]
+make a6 := a1 ∩ a2; //[2,3]
 ** union between two Arrays "|" 
-make a7 := a1 ∪ a2; ![1,2,3,4]
+make a7 := a1 ∪ a2; //[1,2,3,4]
 ```
 
 **example:**
@@ -101,17 +101,17 @@ Array capacity can be modified using union operator "+". This will reset the arr
 make array := [0](10); 
 make refer := array;
 
-print array ≡ refer; !0 = True (same array)
+print array ≡ refer; //0 = True (same array)
 
 ** extend array with 10 more elements
-alter array    += [0](10); !10 new elements
-alter array[∀] := 1; !modify all 
+alter array    += [0](10); //10 new elements
+alter array[∀] := 1; //modify all 
 
 ** print new array and reference
-print array; ![1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-print refer; ![0,0,0,0,0,0,0,0,0,0]  
+print array; //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+print refer; //[0,0,0,0,0,0,0,0,0,0]  
 
-print array ≡ refer; !0 = False (different arrays)
+print array ≡ refer; //0 = False (different arrays)
 ```
 
 ## Array slicing
@@ -138,16 +138,16 @@ Anonymous slicing notation can be used to extract or modify specific elements fr
 ```
 make a:= [0,1,2,3,4,5,6,7,8,9];
 do
-  print a[1..-1]; !will print [0,1,2,3,4,5,6,7,8,9]
-  print a[-3..-1]; !will print [7,8,9]
-  print a[1..1]; !will print [0]
-  print a[1..4]; !will print [1,2,3,4]
+  print a[1..-1]; //will print [0,1,2,3,4,5,6,7,8,9]
+  print a[-3..-1]; //will print [7,8,9]
+  print a[1..1]; //will print [0]
+  print a[1..4]; //will print [1,2,3,4]
  
 ** modify first 4 elements
   alter a[0..3] += 2; 
   
 ** first 4 elements of (a) are modified
-  print a; ![2,3,4,5,4,5,6,7,8,9]
+  print a; //[2,3,4,5,4,5,6,7,8,9]
 done;
 ```
 
@@ -157,21 +157,21 @@ Slicing notation can be used to create a view to original array.
 
 ```** original array
 make   a := [0](5); 
-print  a;  ![0,0,0,0,0]
+print  a;  //[0,0,0,0,0]
 ** making two slices
-make c := a[0..2]; ![0,0,0]
-make e := a[3..4]; ![0,0]
+make c := a[0..2]; //[0,0,0]
+make e := a[3..4]; //[0,0]
 
 ** modify slice elements
 alter c[∀] := 1;
 alter e[∀] := 2;
 
 ** original array is modified
-print a; ![1,1,1,2,2]
+print a; //[1,1,1,2,2]
 
 ** modify last 2 elements using anonymous slicing
 alter a[3..-1] := [2,3];
-print a; ![1,1,1,2,3]
+print a; //[1,1,1,2,3]
 ```
 ## Matrix Operations
 
@@ -198,17 +198,17 @@ do
   M[∀] := 100;
 ** modify all elements
   M[∀] += 10;
-  print(M); ![[110,110],[110,110]]
+  print(M); //[[110,110],[110,110]]
 
 ** modify an entire row 
   M[1,∀] := 0;
   M[2,∀] := 1;
-  print(M); ![[0,0],[1,1]]
+  print(M); //[[0,0],[1,1]]
   
 ** modify an entire column
   M[∀,1] += 1;
   M[∀,2] += 2;
-  print(M); ![[1,2],[2,3]]
+  print(M); //[[1,2],[2,3]]
 done;
 ```
 
@@ -244,8 +244,8 @@ make M :=
       ];     
 ** traverse matrix      
 make row, col := 0;
-while col < 3 do     ! traverse columns
-  while row < 3 do   ! traverse row first
+while col < 3 do     // traverse columns
+  while row < 3 do   // traverse row first
     print M[row,col];
     alter row += 1;
   repeat;
@@ -254,7 +254,7 @@ repeat;
 
 ** traversal with for
 for e ∈ M do
-  print e; !element
+  print e; //element
 next;
 ```
 
@@ -272,21 +272,21 @@ make hash_map := {(key:map(key)) | key domain ∧ condition(key)};
 New set defined from a domain of integers:
 
 ```
-make  new_set := { x | x ∈ (0..5)   }; !{0,1,2,3,4,5}
-make  new_set := { x | x ∈ (0..9:2) }; !{0,2,4,6,8}
+make  new_set := { x | x ∈ (0..5)   }; //{0,1,2,3,4,5}
+make  new_set := { x | x ∈ (0..9:2) }; //{0,2,4,6,8}
 ```
 
 New map defined from a domain 
 ```
-make  new_map := { (x:x²) | x ∈ (0./10) ∧ (x % 2 = 0) }; 
-print new_map; !{(0:0),(2:4),(4:16),(6:36),(8:64)}
+make  new_map := { (x:x²) | x ∈ (0.!10) ∧ (x % 2 = 0) }; 
+print new_map; //{(0:0),(2:4),(4:16),(6:36),(8:64)}
 ```
 
 ## Array Builder
 Similar to a set builder you can initialize an array or matrix:
 
 ```
-make array  := [ x | x ∈ (1..10:2) ]; ![1,3,5,7,9]
+make array  := [ x | x ∈ (1..10:2) ]; //[1,3,5,7,9]
 ```
 ### Collection Casting
 
@@ -299,7 +299,7 @@ make source := [0,1,2,2,2,2];
 do
   ** eliminate duplicates
   make set := { x | x ∈ source };
-  print set; !{0,1,2} 
+  print set; //{0,1,2} 
 done;
 ```
 
@@ -311,7 +311,7 @@ Build notation can use expressions to filter out elements during build.
 make source := [0,1,2,3,4,5];
 do
   make set := { x | x ∈ source ∧ (x % 2 = 0) };
-  print set; !{0,2,4} 
+  print set; //{0,2,4} 
 done;
 ```
 
@@ -324,7 +324,7 @@ make source := {0,1,2,3,4,5};
 do
   ** create Table pairs (key, value) for Table map   
   make target := {(x:x^2) | x ∈ source };
-  print target; !{ 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
+  print target; //{ 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
 done;
 ```
 
@@ -345,7 +345,7 @@ Therefore List union act very similar to append, except we add multiple elements
   make c := ();
 
   alter c := a + b;
-  print c; !('a','b','c','1','2','3');
+  print c; //('a','b','c','1','2','3');
 ```
 
 ### Join built-in
@@ -353,7 +353,7 @@ The join function receive a list and convert elements into a string separated be
 
 ```
   make str := join([1,2,3],',');
-  print (str); ! '1,2,3';
+  print (str); //'1,2,3';
 ```
 
 ### Split built-in
@@ -361,7 +361,7 @@ The join function receive a list and convert elements into a string separated be
 
 ```
 make lst := split("1,2,3",",");
-print lst; !(1,2,3)
+print lst; //(1,2,3)
 ```
 
 ### List as stack
@@ -369,14 +369,14 @@ print lst; !(1,2,3)
 A stack is a LIFO list of elements: LIFO = (last in first out)
 
 ```
-make a := (1, 2, 3); !list
+make a := (1, 2, 3); //list
 make last ∈ N;
 ** append to stack with operator "+="
-alter a += 4; !(1,2,3,4)
+alter a += 4; //(1,2,3,4)
 ** read last element using "-="
-alter last := a.tail; !last = 4
+alter last := a.tail; //last = 4
 ** remove last element using -=
-alter a -= last; !a = (1,2,3)
+alter a -= last; //a = (1,2,3)
 ```
 
 ### List as queue
@@ -387,11 +387,11 @@ A queue is a FIFO collection of elements: (first in first out)
 make q := (1,2,3); 
 make first: N;
 ** enqueue new element into list "+=" 
-alter q += 4; !(1,2,3,4)
+alter q += 4; //(1,2,3,4)
 ** read first element using ":="
-alter first := a.head; !first = 1
+alter first := a.head; //first = 1
 ** dequeue first element using "-="
-alter a -= first; !a = (2,3,4)
+alter a -= first; //a = (2,3,4)
 ```
 
 
@@ -399,16 +399,16 @@ alter a -= first; !a = (2,3,4)
 ### Other built-ins
 
 Following other functions should be available
-* List.append(value) !can append an element at the end of the list
-* List.insert(value) !can insert an element at the beginning of the list
-* List.delete(value) !can delete one element at specified index
-* List.count() !retrieve the number of elements 
+* List.append(value) // can append an element at the end of the list
+* List.insert(value) // can insert an element at the beginning of the list
+* List.delete(value) // can delete one element at specified index
+* List.count()       // retrieve the number of elements 
 
 ### Special attributes
 A list has properties that can be used in logical expressions:
 
-* List.empty()  !True or False
-* List.full()   !True or False
+* List.empty()  //True or False
+* List.full()   //True or False
 
 
 ## Collection Iteration
@@ -450,7 +450,7 @@ Hash tables are sorted in memory by _key_ for faster search. It is more difficul
 make my_map := {(1:'a'),(2:'b'),(3:'c')};
 make my_key := 3;
 when (my_key ∈ my_map) do
-  print('True'); !expected
+  print('True'); //expected
 else
   print('False');
 done;
@@ -478,7 +478,7 @@ Output:
 
 ### Example
 ```  
-make animals := {}; !partial declaration
+make animals := {}; //partial declaration
 do
   ** establish element types (S:X)
   alter animals['Rover'] := "dog";
@@ -508,8 +508,8 @@ Strings can be concatenated using:
 make str := ""; 
 do
   ** set string value using different operators
-  alter str := "this " & " string"; !"this  string"
-  alter str := "this " + " string"; !"this string"
+  alter str := "this " & " string"; //"this  string"
+  alter str := "this " + " string"; //"this string"
 done;
 ```
 
@@ -519,8 +519,8 @@ Two strings can be concatenated using concatenation operator "/" or "\\". This o
 ```
 make s := "";
 do  
-  alter s := 'te/' / '/st'; !"te/st"
-  alter s := 'te/' \ '/st'; !"te\\st"
+  alter s := 'te/' / '/st'; //"te/st"
+  alter s := 'te/' \ '/st'; //"te\\st"
 done;
 ```
 
@@ -590,18 +590,18 @@ make template := "\{1} \{2}...";
 make var1 := 123; 
 make var2 := 456;
 ...
-print template ? (var1,var2,...); !123 456
+print template ? (var1,var2,...); //123 456
 ```
 
 **Examples:**
 ```
 ** define two A codes
-make x := 30; !Code ASCII 0
-make y := 41; !Code ASCII A
+make x := 30; //Code ASCII 0
+make y := 41; //Code ASCII A
 
 ** template writing
-print "\{0} > \{1}"   ? (x,y); !"30 > 41 > {2}" 
-print "\a{0} > \a{1}" ? (x,y); !"0 > A"  
+print "\{0} > \{1}"   ? (x,y); //"30 > 41 > {2}" 
+print "\a{0} > \a{1}" ? (x,y); //"0 > A"  
 
 ```
 **Special Escapes**
@@ -708,9 +708,9 @@ return;
 
 Where pattern cab gave two forms: 
 
-* '(ap:m.d)' ! ###,###,###.###
-* '(ap:m,d)' ! ###.###.###,###
-* '(ap:m;d)' ! ###.### | ###,### 
+* '(ap:m.d)' // ###,###,###.###
+* '(ap:m,d)' // ###.###.###,###
+* '(ap:m;d)' // ###.### | ###,### 
 
 **Note:** Last pattern is depending on regional settings: $decimal:'.'/','
 
@@ -720,15 +720,18 @@ Where pattern cab gave two forms:
 * d is number of decimals after "."
 
 ### Alignment symbol "a" can be one of:
+
 ```
 > is used to align to the right
 < is used to align to the left
 ^ is used to align to center
 ```
+
 ### Format examples:
+
 ```
- '\(>_:10)'   ! right align string fill with spaces to 10 characters
- '\(>0:10.2)' ! right align fill with 0 up to 10 digits and use 2 decimals
+ '\(>_:10)'   // right align string fill with spaces to 10 characters
+ '\(>0:10.2)' // right align fill with 0 up to 10 digits and use 2 decimals
 ```
 
 ### Text functions

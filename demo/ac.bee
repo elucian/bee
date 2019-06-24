@@ -7,7 +7,7 @@ driver ac:
 rule test(n ∈ N):
   wait n; 
   print ".";
-return; ! test
+return; // test
 
 ** start 8 threads
 make i := 0; 
@@ -15,6 +15,6 @@ while (i ≤ 8) do
   begin test(i);
   alter i += 1;
 repeat;
-rest; ! synchronize
+rest; // synchronize
 
 over.

@@ -117,7 +117,7 @@ rule ,rename(name, new_name ∈ S);
 
 **Examples:**
 
-* File Open:[fo.bee](../demo/fo.bee)
+* File Open:[fo.bee](./demo/fo.bee)
 
 **File IO**
 
@@ -138,15 +138,15 @@ Two data types must be available: File, Folder
 
 **File methods**
 
-clean  ! erase all data in the file
-save   ! save file buffer to disk 
-change ! modify file attributes
+* clean  // erase all data in the file
+* save   // save file buffer to disk 
+* change // modify file attributes
 
 **Folder methods**
 
-select ! select this folder as working folder
-purge  ! remove all files from folder
-change ! modify folder attributes
+* select // select this folder as working folder
+* purge  // remove all files from folder
+* change // modify folder attributes
 
 **Making files/folders**
 

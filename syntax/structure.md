@@ -230,7 +230,7 @@ repeat;
 ** print the buffer to console
 print;
   
-over; !end of driver
+over; //end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -278,10 +278,10 @@ alias new_name := qualifier.member_name;
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(.); !load cpp library
-load $runtime.asm_lib:(.); !load asm library
-load $runtime.bee_lib:(.); !load bee core library
-load $program.pro_lib:(.); !load project library
+load $runtime.cpp_lib:(.); //load cpp library
+load $runtime.asm_lib:(.); //load asm library
+load $runtime.bee_lib:(.); //load bee core library
+load $program.pro_lib:(.); //load project library
 ```
 
 ## Global context
@@ -301,18 +301,18 @@ A component can establish one or more local name-spaces where you can define com
 make i := 1 ∈ Z; 
 trial
   ** local name-space
-  make v := i;     !v is local reference to nonlocal: i 
-  make i := 2 ∈ Z; !create i local 
-  print i;         !expected: 2 (local)
-  print v;         !expected: 1 (nonlocal)
+  make v := i;     // v is local reference to nonlocal: i 
+  make i := 2 ∈ Z; // create i local 
+  print i;         // expected: 2 (local)
+  print v;         // expected: 1 (nonlocal)
 done;
-print i; !expected: 1  (unmodified)
+print i; //expected: 1  (unmodified)
 
 over.
 ```
 **See examples:** 
-* [lv.bee](../demo/lv.bee)
-* [gv.bee](../demo/gv.bee)  
+* [lv.bee](./demo/lv.bee)
+* [gv.bee](./demo/gv.bee)  
 
 
 ## Public members
@@ -320,8 +320,8 @@ over.
 In Bee all members that begin with dot "." are public members.
 
 ```
-make .pi :: 3.14; !public constant
-make .v ∈ N;      !public variable
+make .pi :: 3.14; //public constant
+make .v ∈ N;      //public variable
 
 ** public rule
 rule .f(x ∈ N) ∈ N => (x + 1);
@@ -351,19 +351,18 @@ For single line comments we use one or two stars like: "\*\*";
 
 **End of line**
 
-Before new line of code: (EOL) you can use comments starting with bang: "!"
+Before new line of code: (EOL) you can use comments starting with bang: "//"
 
 * notice one line may be or not a full statement. the end of statement is not (EOL)
-* you can use "!" in the middle of an expression, before the end of statement ";",
+* you can use "//" in the middle of an expression, if expression is on multiple lines,
 * you can have multiple statements separated by ";" in a line but only one comment;
 
 **Notes:** 
 Bee syntax is Wiki friendly: you can open *.md files using Bee highlighter for Notepad++
 
 **Limitations:**
-1. You can not use single "#" for titles: it is a prefix. However you can use two: "##",
+1. Single sign "#" is a prefix. However "##" is a title and recognized by Bee highlighter,
 2. You can not use contractions. This is silly but if you do you mess-up the highlighter,
-3. You should not use exclamation mark in text. Else the next phrase will show gray,
 4. Symbol "\`" has special meaning in Bee. Sometimes it must be escaped using "\\`".
 
 **Example:**
@@ -378,10 +377,10 @@ In next example we are using various comments into a demo program.
 driver main:
 
 ** This is a single line comment
-pass; !this statement does nothing
+pass; // does nothing
 ... 
 ** Other statements
-over. !end of driver main
+over. // end of main
 
 *******************************************************************
 ** This is the old style boxed comment, used for matrix printers **
@@ -461,7 +460,7 @@ load mod := $pro.mod;
 make result ∈ N;
 ** execute main procedure from aspect "mod"
 alter result := mod.main(-3);
-print result; !expect: 3
+print result; //expect: 3
 
 over.
 ```

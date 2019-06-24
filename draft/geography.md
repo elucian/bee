@@ -24,9 +24,9 @@ Earth coordinates can be represented using default Q numbers on 32 bit.
 * Φ = Latitude  :° ′ ″
 
 ```
-type Δ := (0..+100000000) <: Q; !twice equatorial
-type Λ := (-180°..+180° ) <: Q; !longitude angle (degree)
-type Φ := (-90°..+90°   ) <: Q; !latitude angle (degree)
+type Δ := (0..+100000000) <: Q; //twice equatorial
+type Λ := (-180°..+180° ) <: Q; //longitude angle (degree)
+type Φ := (-90°..+90°   ) <: Q; //latitude angle (degree)
 ```
 
 Map data types are represented by Unicode symbols:

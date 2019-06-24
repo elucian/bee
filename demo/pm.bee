@@ -12,11 +12,11 @@ rule pm(p1,p2 ∈ N) ∈ N =>
   ,3 if p1 > p2
   ,4 if True );
 ** execute pm expression
-print pm(0,2); ! 0
-print pm(1,0); ! 1
-print pm(1,1); ! 2
-print pm(1,2); ! 3
-print pm(2,1); ! 4
+print pm(0,2); // 0
+print pm(1,0); // 1
+print pm(1,1); // 2
+print pm(1,2); // 3
+print pm(2,1); // 4
 
 over.
 

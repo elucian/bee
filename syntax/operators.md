@@ -25,7 +25,7 @@ symbol  | description
 
 symbol| description
 ------|----------------------------------------------------------------
- `!`  | End of line comment
+ `!`  | Negation symbol for relations \| Excluded from domain
  `?`  | Template modifier. Associated with string templates 
  `*`  | String replication
  `#`  | System variable  \| Global variable
@@ -66,11 +66,12 @@ Double symbols is a group of two ASCII symbols considered as one.
 
 symbol| description
 ------|------------------------------------------------------------------
+ `//` | End of line comment (may be in expression) 
  `**` | Single line comment (allow indentation)
  `..` | Define domain (n..m) \| Define array slice [n..m]
- `./` | Define domain (n./m) (m is excluded)
- `/.` | Define domain (n/.m) (n is excluded) 
- `//` | Define domain (n//m) (n,m are excluded) 
+ `.!` | Define domain (n.!m) (m is excluded)
+ `!.` | Define domain (n!.m) (n is excluded) 
+ `!!` | Define domain (n!!m) (n,m are excluded) 
  `=>` | Define: rule expression \| rule result
  `<:` | Define subset from set \| Specify super-type for a new type
  `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
@@ -108,15 +109,13 @@ symbol | meaning
 
 **negation:** 
 
-Operator: "/" can be used in combination with other operators:
+Operator: "!" can be used in combination with other operators:
 
 ```
-  x /= y; ! equivalent to: ¬(x = y)
-  x /≡ y; ! equivalent to: ¬(x ≡ y)
-  x /∈ y; ! equivalent to: ¬(x ∈ y)
-  x /≈ y; ! equivalent to: ¬(x ≈ y)
-  x /> y; ! equivalent to: ¬(x > y)
-  x /< y; ! equivalent to: ¬(x < y)
+  x != y; //equivalent to: ¬(x = y)
+  x !≡ y; //equivalent to: ¬(x ≡ y)
+  x !∈ y; //equivalent to: ¬(x ∈ y)
+  x !≈ y; //equivalent to: ¬(x ≈ y)
 ```
 
 ## Collection operators
@@ -191,7 +190,7 @@ Arity = 2
 Symbol| Description
 ------|---------------------------------------------------------------
  `*`  | String pattern repetition \| String generator
- `.`  | concatenate two literals using \ or // depending on OS
+ `.`  | concatenate two literals using \ or; // depending on OS
  `/`  | concatenate two strings with / and de-duplicate last
  `\\` | concatenate two strings with \\ and de-duplicate last
  `+`  | concatenate two strings after trimming first string 

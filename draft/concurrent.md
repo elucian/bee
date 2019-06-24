@@ -34,10 +34,10 @@ return;
 for i ∈ (1..4) do
   begin test(i);
 repeat;
-rest; !wait to finish
+rest; //wait to finish
 ```
 
-**Demo code:** [ac.bee](../demo/ac.bee);
+**Demo code:** [ac.bee](./demo/ac.bee);
 
 ## Coroutines 
 
@@ -56,18 +56,18 @@ Coroutines can be used as a _side branch_ in parallel of the main thread.
 rule test(n @ N):
   for i ∈ (0..9) do
     alter n := i;
-    yield; !suspend and wait for the main thread
+    yield; //suspend and wait for the main thread
   next;
 return;
 
 ** create a branch from rule test:
-make  r ∈ N; !result reference
-begin test(r); !side branch 
+make  r ∈ N; //result reference
+begin test(r); //side branch 
 while r ≥ 0 do
   write r; write ",";
-  yield test; !suspend main thread and resume test 
+  yield test; //suspend main thread and resume test 
 repeat;
-print; !0,1,2,3,4,5,6,7,8,9,
+print; //0,1,2,3,4,5,6,7,8,9,
 ```
 
 **producer-consumer:**
@@ -84,24 +84,24 @@ Coroutines can be used in producer/consumer design paradigm.
 ```
 #driver
 
-make n ∈  (N); !channel
-make c := 100; !batch capacity
+make n ∈  (N); //channel
+make c := 100; //batch capacity
 
-make target := 1000; !simulate data target
-make mark ∈ N; !current item to process
+make target := 1000; //simulate data target
+make mark ∈ N; //current item to process
 
 ** data source/target to process
-make s := [0](1000); !array of integers
+make s := [0](1000); //array of integers
 ** first coroutine (produce)
 rule foo(channel @ (N)):
   while mark < target) do 
     ** prepare next batch
     while channel.count < c do
-      alter mark += 1; !side effect
-      alter channel += mark; !append
-      exit if mark = target; !stop the producer
+      alter mark += 1; //side effect
+      alter channel += mark; //append
+      exit if mark = target; //stop the producer
     done;
-    yield bar; !suspend foo and broadcast wake-up for bar
+    yield bar; //suspend foo and broadcast wake-up for bar
   repeat;  
 return;
 ** second coroutine (consume)
@@ -110,22 +110,22 @@ rule bar(channel @ (N)):
     while channel ≠ () do
       print ":>" + channel.head;  
       alter channel -= channel.head;
-      wait 1; !slow down for a second
+      wait 1; //slow down for a second
     done;
     exit if mark = target;          
-    yield foo; !suspend bar and signal foo to wake-up
+    yield foo; //suspend bar and signal foo to wake-up
   repeat;  
 return;
 ** call foo asynchronously on 1 thread
-begin foo(n); !commence producer foo 
+begin foo(n); //commence producer foo 
 
 ** call bar asynchronously on 4 threads
 for i ∈ (1..4) do
-  begin bar(n); !start a consumer thread
+  begin bar(n); //start a consumer thread
 next;  
-rest; !wait for both foo and bar to finish
+rest; //wait for both foo and bar to finish
 
 over.
 ``` 
 
-**Demo code:** [pc.bee](../demo/pc.bee)
+**Demo code:** [pc.bee](./demo/pc.bee)

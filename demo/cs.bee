@@ -54,7 +54,7 @@ case a < 0 do
   ** this is not true since a > 0
   print ('a ≤ 0');
 else
-  print ('a ≥ 5'); ! no match
+  print ('a ≥ 5'); // no match
 done;
 
 over.

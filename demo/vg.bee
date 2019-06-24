@@ -6,8 +6,8 @@ driver vg:
 load $lib.graphic.core:(.);
 
 ** define two points and two vectors
-make p1, p2 ∈ ⊡; ! graphic point
-make v1, v2 ∈ ↗; ! graphic vector
+make p1, p2 ∈ ⊡; // graphic point
+make v1, v2 ∈ ↗; // graphic vector
 
 ** setup the points
 alter p1 := {x:0,  y:0};   
@@ -29,8 +29,8 @@ draw c;
 draw p1, p2;
 draw v1;
 
-show c ; ! activate canvas
-wait 30; ! wait 30 seconds
+show c ; // activate canvas
+wait 30; // wait 30 seconds
 
 +-----------------------------------
   hide canvas from view

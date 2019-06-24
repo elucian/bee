@@ -26,15 +26,15 @@ Read next pages in order to learn about Bee:
 
 Next there are some more raw ideas:
 
-1. [Demo code](../demo/readme.md)
-1. [Draft features](../draft/readme.md)
+1. [Demo code](./demo/readme.md)
+1. [Draft features](./draft/readme.md)
 
 ## Tools
 
 For syntax highlight you can use Notepad++ (UDL):
  
-* [bee-lang.xml](../tools/bee-lang.xml)
-* [md-wiki.xml](../tools/md-wiki.xml)
+* [bee-lang.xml](./tools/bee-lang.xml)
+* [md-wiki.xml](./tools/md-wiki.xml)
 
 **notes:**:
 * You must change the default style to "twilight" for black background

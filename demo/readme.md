@@ -35,5 +35,5 @@ For syntax highlighter you can use Notepad++.
 
 **Download:**
  
-* [bee-lang.xml](../tools/bee-lang.xml)
-* [md-wiki.xml](../tools/md-wiki.xml)
+* [bee-lang.xml](./tools/bee-lang.xml)
+* [md-wiki.xml](./tools/md-wiki.xml)

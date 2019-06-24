@@ -13,7 +13,7 @@ return;
 ** unpacking and modify two variables
 make n,m ∈ Z;
 alter (n,m) := test(1,2);
-print (n, m); ! will print 2, 3
+print (n, m); // will print 2, 3
 
 ** rule with structured result
 type Rec {x ∈ Z, y ∈ R} <: Object;
@@ -24,6 +24,6 @@ return;
 
 ** test rule using make instead of apply
 make  r := demo(1, 0.5);
-print r ; ! {x:1, y:0.5}
+print r ; // {x:1, y:0.5}
 
 over. 

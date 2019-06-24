@@ -103,7 +103,7 @@ For table structure we must define a _record type_ then use generic _Table_ to d
 
 ```
 type Record_Name := {field_name ∈ Type, ...}  <: Record;              ** entity record
-make table_name  := db.open('table_name','w') ∈  Table{Record_Name}; !table mapping
+make table_name  := db.open('table_name','w') ∈  Table{Record_Name}; //table mapping
 ```
 
 **table methods**
@@ -111,7 +111,7 @@ make table_name  := db.open('table_name','w') ∈  Table{Record_Name}; !table ma
 ** first record
 make  bookmark ∈ Table_Record;
 apply table_name.first;
-alter bookmark := table_name.record;  !bookmark current record 
+alter bookmark := table_name.record;  //bookmark current record 
 
 ** fetch next record
 apply table_name.fetch;
@@ -129,8 +129,8 @@ apply table_name.seek(bookmark);
 apply table_name.find(field_name:value,...);
 
 ** get filed values
-print table_name.field_name; !data from current record
-pass if bookmark.field_name = table_name.field_name; !same data 
+print table_name.field_name; //data from current record
+pass if bookmark.field_name = table_name.field_name; //same data 
 ```
 
 **Table traversal**
@@ -142,7 +142,7 @@ You can read one table record by record:
 ** table must be open to be scanned
 for record ∈ table_name do
   ** use current_record fields
-  print record.status; !expect: 1 = .verified
+  print record.status; //expect: 1 = .verified
   ... 
 next;
 ```
