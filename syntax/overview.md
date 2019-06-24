@@ -175,17 +175,17 @@ File    // composite type: text file
 Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. Auto-boxing is possible if the types are compatible. Otherwise you must perform explicit boxing.
 
 ```
-make k ∈ Z; //reference integer
+make k ∈ Z;   //reference integer
 make n ∈ i64; //native integer
 
 alter k := n; //auto-boxing
-alter k := n as Z; //explicit boxing
+alter k := n -> Z; //explicit boxing
 ** reference identity
 print n = k; //1 (same value)
 print n ≡ k; //0 (different location)
 ** consequence
 alter n := 2; //i = 2 (modified)
-print k; //k = 0 (unmodified)
+print k;      //k = 0 (unmodified)
 
 ```
 
@@ -197,7 +197,7 @@ Unboxing is the process of converting a reference to a native type. This will un
 make r := 10 ∈ Z; //reference to integer
 make n := 0  ∈ i32; //native type
 
-alter n := r as i64; //explicit unboxing
+alter n := r -> i64; //explicit unboxing
 ** verify value identity
 print n = r; //1 (same value)
 print n ≡ r; //0 (different location)
@@ -431,8 +431,8 @@ make q,p ∈ L; //Logic
 
 ** using modifiers
 alter a := 10; //modify value of a := 10
-alter a += 1; //increment value of a := 11
-alter a -= 1; //decrement value of a := 10
+alter a += 1;  //increment value of a := 11
+alter a -= 1;  //decrement value of a := 10
 ** modify two variables using one constant
 alter (x, y) := 10.5;
 ** modify two variables using two constants
@@ -454,11 +454,11 @@ make a := 0, b := 20 ∈ Z;
 make v := 10.5, x := 0.0 ∈ R;
 
 ** explicit conversion
-alter a := v as N;
+alter a := v -> N;
 print a; //truncated to 10 
 
 ** explicit conversion
-alter x := b as R;
+alter x := b -> R;
 print x; //expect 20.0
 ```
 
@@ -471,9 +471,9 @@ make a, b ∈ A; //ASCII
 make x, y ∈ B; //Binary integer
 
 alter a := '0';    //ASCII symbol '0'
-alter x := a as B; //convert to binary 30
+alter x := a -> B; //convert to binary 30
 alter y := 30;     //decimal code for '0'
-alter b := y as A; //convert to ASCII symbol '0'
+alter b := y -> A; //convert to ASCII symbol '0'
 ```
 
 ## Type checking
@@ -584,8 +584,8 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a as L; //0
-alter y := b as L; //1
+alter x := a -> L; //0
+alter y := b -> L; //1
 ```
 
 **Notes:** 

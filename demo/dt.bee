@@ -1,5 +1,5 @@
 +----------------------------------------------------
-|              defined data types                   |
+|        user defined data types                    |
 ----------------------------------------------------+
 driver dt:
 
@@ -8,7 +8,7 @@ load $pro_lib.console.(.);
 ** this type is public (uses dot prefix)
 type .Data := {key:U, value:N} <: Hash;
 
-** make variable using defubed alias
+** make variable using defined data type:
 make  x ∈ Data;
 alter x := {key:'a', make:10};
 +----------------------------------------------------

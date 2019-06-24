@@ -1,9 +1,9 @@
 ## Bee Keywords
 
-Bee core has 46 reserved keywords so far: 
+Bee core has 45 reserved keywords so far: 
 
 ```
-03: if, is, as
+03: if, is
 04: driver, aspect, module, return
 06: make, rule, like, load, alias, type
 07: read, write, print, alter, scrap, apply, begin
@@ -24,8 +24,6 @@ Bee core has 46 reserved keywords so far:
 |----------|--------------------------------------------------------------
 | if       | conditional for simple statements
 | is       | query element or variable data type
-| as       | explicit data type casting operator
-
 
 ### Definition statements
 

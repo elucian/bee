@@ -73,6 +73,7 @@ symbol| description
  `!.` | Define domain (n!.m) (n is excluded) 
  `!!` | Define domain (n!!m) (n,m are excluded) 
  `=>` | Define: rule expression \| rule result
+ `->` | Data cast pipeline operator / Type conversion
  `<:` | Define subset from set \| Specify super-type for a new type
  `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
  
