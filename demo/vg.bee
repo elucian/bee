@@ -3,7 +3,7 @@
 ------------------------------------+
 driver vg:
 
-load $lib.graphic.core:(.);
+load $lib.graphic.core:(*);
 
 ** define two points and two vectors
 make p1, p2 ∈ ⊡; // graphic point

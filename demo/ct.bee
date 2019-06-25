@@ -3,7 +3,7 @@
 ----------------------------------+
 driver ct:
 
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** enumeration is a type 
 type Enum := {.fst:1, .snd, .trd} <: Ordinal;

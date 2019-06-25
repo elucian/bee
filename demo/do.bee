@@ -2,7 +2,7 @@
 | Bubble sort using while..do and for..do   |
 +-------------------------------------------+
 driver bs:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** bubble sort for integers
 rule sort(this @ [Z]):

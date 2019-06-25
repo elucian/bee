@@ -2,7 +2,7 @@
 |          Working with references            |  
 ----------------------------------------------+
 driver nu:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 make s := 10 ∈ Z; // define integer reference
 make d, e ∈ Z;    // reference to natural number

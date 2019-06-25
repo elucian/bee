@@ -2,7 +2,7 @@
    input/output demo
 --------------------------+
 driver io:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 print ("Hello. I'm Bee!");
 make your_name ∈ S, 

@@ -2,7 +2,7 @@
 ** recursive objects demo    **
 *******************************
 driver ro:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** define recursive type Person
 type Person := {

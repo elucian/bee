@@ -26,7 +26,7 @@ A model is a complex data structure mapping Bee data types to database. Bee can 
 A model must load database library using this statement:
 
 ```
-load $bee_lib.db.core:(.);
+load $bee_lib.db.core:(*);
 load Oracle := $bee_lib.db.oracle;
 ```
 

@@ -2,7 +2,7 @@
    Bee input value demo
 --------------------------+
 driver in:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 make a ∈ N;
 print "to stop enter 0";

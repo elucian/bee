@@ -248,11 +248,11 @@ Libraries and components can be imported like this:
 **Imports:**
 
 ```
-load $bee_lib.folder_name:(.);
+load $bee_lib.folder_name:(*);
 load $bee_lib.folder_name:(x,y,z);
 ```
 
-* using:(.) all public members are borrowed in local scope;
+* using:(*) all public members are borrowed in local scope;
 * using:(x,y,z) only some public members are borrowed in local scope;
 
 **Qualifier**
@@ -278,10 +278,10 @@ alias new_name := qualifier.member_name;
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(.); //load cpp library
-load $runtime.asm_lib:(.); //load asm library
-load $runtime.bee_lib:(.); //load bee core library
-load $program.pro_lib:(.); //load project library
+load $runtime.cpp_lib:(*); //load cpp library
+load $runtime.asm_lib:(*); //load asm library
+load $runtime.bee_lib:(*); //load bee core library
+load $program.pro_lib:(*); //load project library
 ```
 
 ## Global context

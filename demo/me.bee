@@ -2,7 +2,7 @@
  demonstrate rule associated to a type
 ----------------------------------------+
 driver me:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** enumeration with public members
 type Number := {.zero, .one, .two} <: Ordinal;

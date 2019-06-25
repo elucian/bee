@@ -3,7 +3,7 @@
 ----------------------------------------------------+
 driver dt:
 
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** this type is public (uses dot prefix)
 type .New_Data := {key:U, value:N} <: Hash;

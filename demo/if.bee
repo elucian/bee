@@ -2,7 +2,7 @@
    "if" and "else" decisions
 -------------------------------+
 driver if:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 write "define a number:";
 make x ∈ N; read x; 

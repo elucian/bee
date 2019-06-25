@@ -2,7 +2,7 @@
 |  Lambda expression as a parameter   |
 +-------------------------------------+
 driver rp:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** declare rule with rule "cmp" as parameter
 rule compare(a,b ∈ Z, cmp @ (Z,Z) ∈ L) => (r @ L):

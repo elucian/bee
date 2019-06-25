@@ -2,7 +2,7 @@
 |      Input/Output parameters      |
 ------------------------------------+
 driver op:
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** rule with input/output parameters
 ** operator "@"  define input/output reference 
@@ -13,7 +13,7 @@ return;
 ** define native integers using inference
 make x, y := 10;
 ** execute pro and expect x, y  to be modified
-apply pro (a @ x, b @ y);
+apply pro (a: x, b: y);
 ** verify new values for arguments
 print x; // will print 11
 print y; // will print 12

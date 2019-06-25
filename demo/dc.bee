@@ -3,7 +3,7 @@
 +----------------------------------------+
 driver dc:
 
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 make n ∈ Z; // Integer on 64 bit
 make l ∈ L; // Logical value False := 0

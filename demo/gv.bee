@@ -4,7 +4,7 @@
 ------------------------------+
 driver gv:
 
-load $pro_lib.console.(.);
+load $pro_lib.console.(*);
 
 ** declare a global variable $xS
 make x := 1;
@@ -17,6 +17,7 @@ rule add1:
   alter x += 1;
   print x;
 return;
+
 ** call a subroutine by name
 apply add1; // print 2
 apply add1; // print 3
