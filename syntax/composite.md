@@ -11,7 +11,7 @@ Composite types are complex data structures.
 * [set](#set)
 * [hash map](#hash-map)
 * [strings](#strings)
-* [object](#object)
+* [objects](#objects)
 * [method](#method)
 * [varargs](#varargs)
 * [exception](#exception)
@@ -250,6 +250,11 @@ alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 print mat[0,0]; //first element
 print mat[3,3]; //last element
 
+** support for 2D matrix literals
+pass if mat ≡ ⎡ 1,  2 , 3,  4 ⎤
+              ⎢ 5,  6 , 7,  8 ⎥
+              ⎢ 9, 10 ,11, 12 ⎥
+              ⎣13, 14 ,15, 16 ⎦
 ```
 
 **Note:** Elements are organized in _row-major_ order.
@@ -257,17 +262,17 @@ print mat[3,3]; //last element
 So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```** elements in matrix can be accessed using while
-make i := 0;
-make mat := [1,2,3] × [1,2,3]; 
+make i := 0
+make mat := [1,2,3] × [1,2,3] 
  
-make x := length(mat);
+make x := length(mat)
   
 while (i < x) do
-  write (mat[x], ',');
-  i += 1;
-repeat;
-print;
-over.
+  write (mat[x], ',')
+  i += 1
+repeat
+print
+over
 ```
 
 output:
@@ -471,9 +476,9 @@ print test_file; ///work/project/src/test.bee
 
 ```
 
-## Object
+## Objects
 
-Object types are data structures with elements enclosed in curly brackets { , , ,} and separated by comma. 
+Object type is a data structure with elements enclosed in curly brackets { , , ,} and separated by comma. 
 
 **Pattern:**
 ```** declare a category of objects

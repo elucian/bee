@@ -7,30 +7,30 @@ driver gc:
 type GenI := {min ,max , ci ∈ Z} <: Object;
 
 ** reset generator
-rule reset(self @ GenI, p_min , p_max ∈ Z):
+rule gen_reset(self @ GenI, p_min , p_max ∈ Z):
   alter self.min := p_min;
   alter self.max := p_max;
   alter self.ci  := p_min;
 return;
 ** get next index
-rule next(self @ GenI) => (i @ Z):
+rule get_next(self @ GenI) => (i @ Z):
   alter i  := self.ci;
   alter self.ci += 1;
 return;
 ** detect when finish
-rule finish(self @ GenI)  => (r @ L):
+rule gen_finish(self @ GenI)  => (r @ L):
   alter r := (self.ci ≥ self.max);
 return;
 ** use GenI to make one instance: 
 make foo := {min:10,max:20} ∈ GenI;
 make x   := 0;
-while ¬ foo.finish() do
-  alter x := foo,next();
+while ¬ foo.gen_finish() do
+  alter x := foo.get_next();
   write (x,",");
 repeat;
 ** expect: 10,11,12,13,14,15,16,17,18,19,20, 
 ** test reset rule
-apply foo.reset();
+apply foo.gen_reset();
 
 fail if foo.ci ≠ 10; // expect: 10
 

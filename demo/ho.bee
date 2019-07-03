@@ -32,24 +32,21 @@ trial
     write set.index; 
     write ','
   repeat; 
-  print; //  0,1,2,3,4,5,6,7,8,9,  
+  print;     //  0,1,2,3,4,5,6,7,8,9,  
 final
   ** count(): failed
   print set; //  {0,1,2,3,4,5,6,7,8,9}  
 done;
-+--------------------------------------------------
-| This is a demo, we advice against this practice |
-+-------------------------------------------------+
 
 ** use rule properties to check rule status
-print count.max ; // 9
+print count.max ;  // 9
 print count.index; // 10 (count is finished)
 
 ** expectation verification: 
 fail if set ≠ {0,1,2,3,4,5,6,7,8,9};
 
 ** inspect the other clone object
-print test.max ;   // expect 12
+print test.max ;  // expect 12
 print test.index; // expect 4
 
 ** inspect the prototype

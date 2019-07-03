@@ -40,7 +40,8 @@ symbol| description
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
  `|`  | Declarative collection builder: {set, list, hash, array}
- `_`  | Anonymous variable \| Has constant value one space (_ = ' ')
+ `|`  | Exact divisor: since 15 = 3 · 5 then (3 \∣ 15 = True) and (5 \∣ 15 = True) 
+ `_`  | Anonymous variable \| Constant value = one space (_ = ' ')
  `\\` | Escape character (\\n := New Line) \| maybe regular expressions
 
 ## Numeric operators  
@@ -76,6 +77,8 @@ symbol| description
  `->` | Data cast pipeline operator / Type conversion
  `<:` | Define subset from set \| Specify super-type for a new type
  `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
+ `<<` | Much less      0.1 \<\< 2  but not (0.1 \<\< 1) 
+ `>>` | Much greater   2 \>\> 0.9  but not (1 \>\> 0.9)
  
 ## Modifiers
 
@@ -103,6 +106,7 @@ symbol | meaning
  `≠`   | divergent values \| divergent objects (deep comparison)
  `≡`   | same reference (shallow comparison)
  `≈`   | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
+ `~`   | similar numbers: (0.2 ~ 0.9)  \| similar symbols: ('a' ~ 'b') 
  `>`   | value is greater than 
  `<`   | value is less than
  `≥`   | greater than or equal to
@@ -127,7 +131,7 @@ symbol | result     |meaning
  `∪`   | Set        |Union between two collections
  `⊂`   | Logic      |Set is included in superset: "⊂"
  `⊃`   | Logic      |Set contain subset: "⊃"  
- `⊖`   | Set        |Set symmetric difference  
+ `Δ`   | Set        |Set symmetric difference  
  `+`   | String     |Concatenation between two strings
  `+`   | List       |Concatenation between two lists
  `+`   | Array      |Concatenation between two arrays

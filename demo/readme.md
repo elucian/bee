@@ -23,8 +23,8 @@ Unverified Bee demo source files:
 1. [nu.bee](nu.bee) - Working with references
 1. [op.bee](op.bee) - Output parameters
 1. [rp.bee](ro.bee) - Rule as parameter
-1. [ho.bee](ho.bee) - Rule object demo /high order object
-1. [gc.bee](gc.bee) - Generator demo /rule clones
+1. [ho.bee](ho.bee) - High order rules 
+1. [gc.bee](gc.bee) - Generator object demo 
 1. [bs.bee](bs.bee) - Bubble sort algorithm
 1. [do.bee](do.bee) - Sort demo with do and for
 1. [ac.bee](ac.bee) - Asynchronous call using _start_
