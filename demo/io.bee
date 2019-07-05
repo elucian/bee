@@ -4,11 +4,11 @@
 driver io:
 load $pro_lib.console.(*);
 
-print ("Hello. I'm Bee!");
+print "Hello. I'm Bee!";
 make your_name ∈ S, 
 make your_age  ∈ (1..200);
  
-write ("Your name?:"); 
+write "Your name?:"; 
 read your_name;
 
 print "hello:" + your_name;

@@ -327,7 +327,7 @@ make .v ∈ N;      //public variable
 rule .f(x ∈ N) ∈ N => (x + 1);
 
 ** public rule
-rule .m(x, y ∈ N) => (r @ N);
+rule .m(x, y ∈ N) => (r @ N):
   alter r := x + y;
 return;
 ```

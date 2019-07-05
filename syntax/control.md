@@ -368,7 +368,7 @@ error $out_of_range do
     abort; //give up 
   done;    
 final
-  when  a ∈ (0..9);
+  when  a ∈ (0..9) do
     write "incorrect";
   else
     write "correct";
