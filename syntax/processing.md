@@ -30,7 +30,7 @@ make m := length(test)-1;
 print test[0]; //first element
 print test[m]; //last element
 ** alternative notation
-print test[0]; //first element
+print test[0];  //first element
 print test[-1]; //last element
 ** array traversal 
 make x := 0;
@@ -236,13 +236,11 @@ Matrix Traversal When you traverse elements use rows first, than you change the 
 Example: In this example we traverse all the rows then all the column, this is the most efficient way to traverse a matrix.
 
 ```
-make M := 
-      [ 
-       ['a0','b0','c0'],
-       ['a1','b1','c1'],
-       ['a2','b2','c2']
-      ];     
-** traverse matrix      
+make M := ⎡'a0','b0','c0'⎤
+          ⎢'a1','b1','c1'⎥
+          ⎣'a2','b2','c2'⎦
+          
+* traverse matrix      
 make row, col := 0;
 while col < 3 do     // traverse columns
   while row < 3 do   // traverse row first
@@ -575,18 +573,19 @@ The ESCAPE code is also a constant in Bee that can be used with string template:
 
 ### String Templates
 
-We use hash "\{}" to create a placeholder into a String or Text. You can use operator "?" to replace the placeholders with values from a data source. If placeholder is not found the result will contain the placeholder unmodified.
+We use hash "\#" to create a placeholder into a String or Text. You can use operator "?" to replace the placeholders with values from a data source. If placeholder is not found the result will contain the placeholder unmodified.
 
 **Notes:**
 
-* We can include values into a string using template modifier: "?"
-* Inside template we use "\{#}" notation to find a value using the member index
-* Template must be included in double quotes " " not single quotes
-* If a placeholder index is not found then it is preserved unmodified
+* Template must be included in double quotes " " not single quotes;
+* Inside template we use "\#" or "\{#}" where "#" is the member index;
+* The index start from 0 and it can be negative (-1) is the last element;
+* If a placeholder index is not found then it is preserved unmodified;
+* We can include values into a string using template modifier: "?".
 
 **example:**
 ```
-make template := "\{1} \{2}...";
+make template := "\0 \1...";
 make var1 := 123; 
 make var2 := 456;
 ...
@@ -599,7 +598,7 @@ print template ? (var1,var2,...); //123 456
 make x := 30; //Code ASCII 0
 make y := 41; //Code ASCII A
 
-** template writing
+** template writing alternative
 print "\{0} > \{1}"   ? (x,y); //"30 > 41 > {2}" 
 print "\a{0} > \a{1}" ? (x,y); //"0 > A"  
 
@@ -612,7 +611,13 @@ These escape notations are used in rare occasions .
 * \\'  = symbol `'`
 * \\"  = symbol `"`
 * \\   = symbol `\\`
+* \\#  = digit
 
+**example:**
+```
+print " \###.##"   ? 1234.567; //   234.56
+print " \#,###.##" ? 1234.567; // 1,234.56
+```
 
 **Escape Placeholders**
 
