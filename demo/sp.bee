@@ -2,14 +2,17 @@ driver sp:
 load $pro_lib.console.(*);
 
 rule swap(x @ Z, y @ Z):
-   make  t := x; //temporary value
-   alter y := x, x := t;
+   ** create temporary value
+   make  t := x; 
+   
+   ** swap the values in a single statement
+   alter y := x, x := t; 
 return;
 
 rule main():
    make a := 1, b := 2;
    print "a = \n  b = \n" ? (a,b);
-   apply swap(a, b); //function call  
+   apply swap(a, b); 
    print "a = \n b = \n \n" ? (a, b);
 return;
 over.
