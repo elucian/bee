@@ -4,16 +4,12 @@ In /draft folder we store ideas for future development.
 
 ## Procedure
 
-To create a mew draft you follow a simple procedure:
+To create a new draft you follow a simple procedure:
 
 1. Clone Bee then create a new branch with your user-name or feature-name;
 2. Create a new *.md file and describe the new feature;
 3. Optional create a sub-folder with feature-name and upload *.bee examples;
 4. Talk about your suggestion on discord or reddit, then make a pull request.
-
-## Acceptance
-
-If your suggestion accepted, we will implement it into the compiler.   
 
 ## Draft proposals
 

@@ -12,8 +12,8 @@ return;
 
 ** unpacking and modify two variables
 make n,m ∈ Z;
-alter (n,m) := test(1,2);
-print (n, m); // will print 2, 3
+alter n,m := test(1,2);
+print n,m; // will print 2, 3
 
 ** rule with structured result
 type Rec {x ∈ Z, y ∈ R} <: Object;

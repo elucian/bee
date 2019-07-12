@@ -26,14 +26,13 @@ make set_name := { map(x,y) | (x,y) ∈ DS × DS};
 
 **example:**
 ```
-make source := [1,2,1,2,3]
-make test1, test2 ∈ {Z}
+make test1, test2 ∈ {Z};
 ** copy source elements
-alter test1 := { x  | x ∈ source}
-alter test2 := { x² | x ∈ source}
+alter test1 := { x  | x ∈ (1..3)};
+alter test2 := { x² | x ∈ (1..3)};
 ** expected result
-print test1; //{1,2,3}
-print test2; //{1,4,9}
+fail if test1 ≠ {1,2,3};
+fail if test2 ≠ {1,4,9};
 ```
 
 ## Hash Builder
@@ -43,15 +42,13 @@ A set builder can create also a hash map with two methods:
 **syntax**
 
 ```
-make map_name := { (k:map(k)) | (k ∈ source) ∧ condition(k)}
-make map_name := { (x : y) | (x, y) ∈ (DS × DS) ∧ condition(x,y)}
+make map_name := { (key:map(key)) | (key ∈ source) ∧ condition(key)}
 ```
 
-* map(k)    ::= rule or expression
-* DS        ::= domain source: A,Z,N ...
-* key       ::= a value member from source
-* source    ::= a collection or domain of values
-* condition ::= a logical expression (filter)
+* source ::= a collection or domain of values
+* key    ::= a value member from source
+* map()  ::= rule or expression that produce value for key
+* condition() ::= a logical expression or logical rule
 
 ## Logic Qualifiers
 

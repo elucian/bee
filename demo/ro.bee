@@ -26,7 +26,7 @@ alter r2 := {name:'Barbu', age:25,
             };
 
 ** object unpacking into new variables
-make r_name, r_age, r_children <+ r2;
+make r_name, r_age, r_children := r2;
 
 ** using introspection
 print type(r_name); // S

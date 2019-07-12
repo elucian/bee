@@ -666,7 +666,7 @@ over.
 
 ## Lambda expressions
 
-A lambda expressions is a named expression with specified result type:
+A lambda expressions is a named expression with parameters and specified result type:
 
 **syntax**
 
