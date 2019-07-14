@@ -608,8 +608,8 @@ make x := 30; //Code ASCII 0
 make y := 41; //Code ASCII A
 
 ** template writing alternative
-print "#(n) > :(n)" ? (x,y); //"30 > 41" 
-print "#(a) > :(a)" ? (x,y); //"0 > A"  
+print "#(n) > #(n)" ? (x,y); //"30 > 41" 
+print "#(a) > #(a)" ? (x,y); //"0 > A"  
 
 ** using two dots : to separate hour from minutes 
 print "#(n):#(n)" ? (10, 45); // 10:45
