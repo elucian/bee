@@ -356,23 +356,21 @@ type QDom := (-10..-1:0.01, 1..10:0.01) <: Q;
 Constants are identifiers representing a non-mutable value.
 
 ```
-make constant_name :: constant_literal;
-make constant_name :: constant_literal ∈ type_name;
+make constant_name : constant_literal;
+make constant_name : constant_literal ∈ type_name;
 ```
-**Warning:**
-Same operator "::" can be used to create a clone of an existing variable.
 
 **Notes:** 
 
-* Constant initial value is assigned using operator "::",
+* Constant initial value is assigned using operator ":",
 * System constants have prefix "$" and are public all the time,
 * Other constants can be public if they are using prefix ".",
 * Local constants are also possible and encouraged if necessary.
 
 **example:**
 ```
-make n :: U+2200     ∈ A; //Symbol: ∀
-make n :: U-00002200 ∈ U; //Symbol: ∀
+make n : U+2200     ∈ A; //Symbol: ∀
+make n : U-00002200 ∈ U; //Symbol: ∀
 ```
 
 **Note:** 
