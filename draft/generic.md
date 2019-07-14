@@ -76,7 +76,7 @@ return;
 **sort usage**
 
 ```** define object type to be sorted
-type Person := { name ∈ S, age ∈ N } <: Object;
+type Person: { name ∈ S, age ∈ N } <: Object;
 ** define order as lambda expression for type Person
 make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
 ** define sort rule for Person, as a clone from _bubble_

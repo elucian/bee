@@ -5,7 +5,7 @@ driver me:
 load $pro_lib.console.(*);
 
 ** enumeration with public members
-type Number := {.zero, .one, .two} <: Ordinal;
+type Number: {.zero, .one, .two} <: Ordinal;
 make test ∈ Number;
 alter test := zero; // instance of Number
 ** make a rule for define Number

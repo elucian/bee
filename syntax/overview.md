@@ -265,7 +265,7 @@ User can define composite types and sub-types using operator "<:" (sub-type).
 
 ```
 ** declare new type
-type Type_Identifier := type_descriptor <: super_type
+type Type_Identifier = type_descriptor <: super_type
 
 ** declare new references
 make var_name,var_name ... ∈ Type_Identifier
@@ -280,8 +280,8 @@ make var_name,var_name ... ∈ Type_Identifier
 
 **Example:**
 ```
-type Digit := (0..9) <: W; //superset default notation
-type Digit := (0..9) <: Word; //superset equivalent full name 
+type Digit: (0..9) <: W; //superset default notation
+type Digit: (0..9) <: Word; //superset equivalent full name 
 ```
 
 ## Domain subtypes
@@ -296,11 +296,11 @@ type Domain_Name = (min..max:rate) <: Primitive_Type;
 
 **Examples:**
 ```** sub-type declarations
-type Positive  := (0..+:0.01) <: Q; 
-type Negative  := (-..0:0.01) <: Q; 
-type Digit     := (0..9)      <: Z;      
-type Alpha     := (`A`..`z`)  <: A;  
-type Latin     := (U+0041..U+FB02) <: U;
+type Positive: (0..+:0.01) <: Q; 
+type Negative: (-..0:0.01) <: Q; 
+type Digit:    (0..9)      <: Z;      
+type Alpha:    (`A`..`z`)  <: A;  
+type Latin:    (U+0041..U+FB02) <: U;
 
 ** check variable belong to sub-type
 when (`x` ∈ Alpha) do
@@ -342,13 +342,13 @@ A domain can use a special notation for multiple numeric intervals called segmen
 
 **example:**
 ```** integer domain with two segments
-type ZDom := (-9..1,1..9) <: Z; 
+type ZDom: (-9..1,1..9) <: Z; 
 ** integer domain with two segments and ratio
-type ZDom := (0..8:2 , 1..9:2) <: Z; 
+type ZDom: (0..8:2 , 1..9:2) <: Z; 
 ** real domain with two rations: 0.01 and 0.1
-type RDom := (0.!10:0.01, 10..100:0.1) <: R; 
+type RDom: (0.!10:0.01, 10..100:0.1) <: R; 
 ** two rational segments with same ratio: 0.01
-type QDom := (-10..-1:0.01, 1..10:0.01) <: Q; 
+type QDom: (-10..-1:0.01, 1..10:0.01) <: Q; 
 ```
 
 ## Constant declaration
@@ -500,7 +500,7 @@ fail "Unexpected error: a is not Integer" if ¬ (a is Z);
 Logic type is an enumeration of two public symbols: False and True
 
 ```
-type .L := {.False:0, .True:1} <: Ordinal;
+type .L: {.False:0, .True:1} <: Ordinal;
 
 ** printing logical values
 print True; //1
@@ -555,7 +555,7 @@ Logical expression have value { False, True }
 
 ```
 make x := False; //Type = L
-make y := True; //Type = L
+make y := True;  //Type = L
 
 ** simple expressions
 print   x; //0
@@ -674,7 +674,7 @@ make name := (param ∈ Type,...) ∈ Type => (expression);
 ```
 
 ```** you can define a lambda signature first
-type SigName := (Type,...) ∈ Type <: Lambda;
+type SigName: (Type,...) ∈ Type <: Lambda;
 ** then you can use the signature to create expression
 make name := SigName(param ∈ Type,...) ∈ Type => (expression);
 ```

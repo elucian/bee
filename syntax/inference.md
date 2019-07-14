@@ -23,7 +23,7 @@ make j := 0.5; //type := R
 make false : False; //type L = 0
 make true  : True; //type L = 1
 ** multiple variables
-make x,y,z := 5; //type := Z
+make x,y,z := 5; //type = Z
 ** combination of types
 make n := 0, m := 0.5; //types Z and R
 ```

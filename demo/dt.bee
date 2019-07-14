@@ -15,7 +15,7 @@ alter x := {key:'a', value:10};
 |  public enumeration type with public elements     |
 |  elements starting with "." do not need qualifier |
 ----------------------------------------------------+ 
-type Number := { 
+type Number: { 
    .zero, 
    .one, 
    .two, 

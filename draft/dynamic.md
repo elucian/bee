@@ -21,13 +21,13 @@ over.
 Lambda expression signature is a type declaration;
 
 ```** declare a rule signature
-type CMP := (Z,Z) ∈ L <: Lambda;
+type CMP: (Z,Z) ∈ L <: Lambda;
 ** instantiate 3 Lambda expressions like "CMP"
 make gt := (x, y ∈ Z) ∈ L => (x > y) like CMP;
 make lt := (x, y ∈ Z) ∈ L => (x < y) like CMP;
 make eq := (x, y ∈ Z) ∈ L => (x = y) like CMP;
 ** define a dictionary of rules
-type Dic := {(String(2) : CMP)} <: Hash;
+type Dic: {(S(2) : CMP)} <: Hash;
  ** define a hash map of expressions
 make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic;
 ** call 3 rules in very unusual way

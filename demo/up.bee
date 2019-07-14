@@ -16,7 +16,8 @@ alter n,m := test(1,2);
 print n,m; // will print 2, 3
 
 ** rule with structured result
-type Rec {x ∈ Z, y ∈ R} <: Object;
+type Rec: {x ∈ Z, y ∈ R} <: Object;
+
 rule demo(x ∈ Z, y ∈ R) => (r @ Rec):
   alter r.x := x;
   alter r.y := y;

@@ -592,8 +592,8 @@ We use notation "#()" or "#()[]" to create a placeholder template inside of a St
 
 **Example:**
 ```
-** next template uses $(n) placeholder
-make template := "Duration:$(n) minutes and $(n) seconds";
+** next template uses #(n) placeholder
+make template := "Duration:#(n) minutes and #(n) seconds";
 make var1 := 4; 
 make var2 := 55;
 ...
@@ -645,6 +645,7 @@ print "Alpha:   #(a) and #(a)" ? (30, 41);
 print "Strings: #(s) and #(s)" ? ('odd','even');
 print "Quoted:  #(q) and #(q)" ? ('odd','even');
 print "Unicode: #(u) and #(u)" ? (U+2260,U+2261);
+print "Unicode: #(q) and #(q)" ? (U+2260,U+2261);
 ```
 
 **Expected output:**

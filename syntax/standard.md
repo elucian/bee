@@ -159,7 +159,7 @@ make folder_name := Folder.open('name');
 Bee has pre-define Error objects with codes in range (1..200):
 
 ```** global type
-type Error := {code ∈ Z, message ∈ S} <: Object;
+type Error: {code ∈ Z, message ∈ S} <: Object;
 ```
 
 ```

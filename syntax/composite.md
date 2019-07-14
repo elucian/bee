@@ -29,7 +29,7 @@ Bee uses composite types to declare ...
 A new type is defined from a super-type using symbol "<:"
 
 ```
-type new_type := descriptor <: super_type
+type new_type: descriptor <: super_type
 ```
 
 new_type   ::= identifier name usually start with capital letter
@@ -46,7 +46,7 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 
 **pattern:**
 ```
-type type_name := { name1:0, name2, name3} <: Ordinal;
+type type_name: { name1:0, name2, name3} <: Ordinal;
 
 make a, b, c ∈ type_name;
 
@@ -58,7 +58,7 @@ alter c := type_name.name3; //c=4
 **Note:** When element name start with "." no need to use qualifiers for the individual values
 
 ```** using public elements in enumeration
-type type_names := { .name0, .name1 } <: Ordinal;
+type type_names: { .name0, .name1 } <: Ordinal;
 
 make a, b ∈ type_name;
 
@@ -125,7 +125,7 @@ A list has two very important elements: _head_ and _tail_.
 You can define a _list type_ using empty list: ()
 
 ```
-type type_name := (element_type) <: List; 
+type type_name: (element_type) <: List; 
 ```
 
 **variable declaration**
@@ -147,7 +147,7 @@ make name := (constant,...) ∈ (element_type); //full declaration
 **example:**
 
 ```** define a list type of unsigned short integers
-type Lou  := (u16) <: List;
+type Lou: (u16) <: List;
 ** define a list variable of defined type Lou
 make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 ** list traversal
@@ -168,7 +168,7 @@ make array_name ∈ [element_type]  ;    //undefined capacity
 make array_name ∈ [element_type](c);   //capacity c
 make array_name ∈ [element_type](n,m); //capacity c = n·m
 ** define new kind of array
-type Array_Type := [element_type](c) <: Array; 
+type Array_Type: [element_type](c) <: Array; 
 ** use previous  defined type
 make array_name ∈ Array_Type;  
 ```
@@ -287,7 +287,7 @@ output:
 A set is a sorted collection of unique values.
 
 ```** user define a set
-type NS := {N} <: Set; //Natural set
+type NS: {N} <: Set; //Natural set
 make uds ∈ NS; 
 ** define a variable set 
 make s1 := {1,2,3} ∈ {N}; //3 elements
@@ -324,7 +324,7 @@ A hash map is a set of (key:value) pairs sorted by key.
 
 **syntax**
 ```** define a hash map type
-type type_name := {(key_type : value_type)} <: Hash;
+type type_name: {(key_type: value_type)} <: Hash;
 ** declare a new empty hash map
 make new_map := {} ∈ type_name;
 ```
@@ -357,7 +357,7 @@ print map; //expected: {'b'="second", 'c'="third"}
 We can check if an element is included in a collection using "∈".
 
 ```
-type  Tmap := {(A:U)} <: Hash;
+type  Tmap: {(A:U)} <: Hash;
 
 make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
@@ -396,7 +396,7 @@ Literals for strings are enclosed in 2 kind of quotes:
 Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 UTF32 code points.
 
 ```** define String sub-type
-type Str128 := S(128) <: String; 
+type Str128: S(128) <: String; 
 make s := 'this is a test' ∈ Str128;
 ** two compatible representation of strings
 make str ∈  S(25); //string with capacity minim  25x4 = 100 bytes
@@ -482,7 +482,7 @@ Object type is a data structure with elements enclosed in curly brackets { , , ,
 
 **Pattern:**
 ```** declare a category of objects
-type  Type_name := {attribute ∈ type_name, ...} <: Object;
+type  Type_name: {attribute ∈ type_name, ...} <: Object;
 ** create an object instance using default constructor
 make item_name := {
        attribute : constant,
@@ -506,7 +506,7 @@ Type size is a constant that can be calculated using: size(type).
 
 **Example:**
 ```
-type  Person := {name ∈ S, age ∈ N} <: Object;
+type  Person: {name ∈ S, age ∈ N} <: Object;
 ** array of 10 persons
 make catalog ∈ [Person](10);
   ** initialize value using literals
@@ -530,7 +530,7 @@ We can limit how deep a call stack become using a directive. $recursion:1000
 
 ```
 ** example of single recursive node
-type Node := { 
+type Node: { 
   data ∈ Z,       // integer data
   previous ∈ Node // reference to previous node
 } <: Object;
@@ -553,7 +553,7 @@ An object can have associated rules that are called _methods_:
 
 **pattern:**
 ```** define Foo as object with 2 public attributes:
-type Foo := {a, b ∈ N} <: Object;
+type Foo: {a, b ∈ N} <: Object;
   ** constructor has the same name as the type
 rule foo(p1,p2 ∈ N) => (self @ Foo):
   make self := {a:p1, b:p2};
@@ -618,7 +618,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 
 **definition**
 ```** global exception type
-type Error := {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
+type Error: {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
 ** global system error
 make #error ∈ Error;
 ```

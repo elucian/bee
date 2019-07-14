@@ -4,7 +4,7 @@
 driver gc:
 
 ** first make a class
-type GenI := {min ,max , ci ∈ Z} <: Object;
+type GenI: {min ,max , ci ∈ Z} <: Object;
 
 ** reset generator
 rule gen_reset(self @ GenI, p_min , p_max ∈ Z):

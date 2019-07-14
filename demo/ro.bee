@@ -5,7 +5,7 @@ driver ro:
 load $pro_lib.console.(*);
 
 ** define recursive type Person
-type Person := {
+type Person: {
       name ∈ S, 
       age  ∈ N,  
       children ∈ (Person) // list of persons

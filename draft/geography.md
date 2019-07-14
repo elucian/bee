@@ -20,13 +20,13 @@ d |angle    |equivalent |
 ## Data Types
 
 * Δ = Distance  :meters
-* Ψ = Longitude :g° m′ s″
-* Φ = Latitude  :g° m′ s″
+* Λ = Longitude  :g° m′ s″
+* Φ = Latitude :g° m′ s″
 
 ```
-type Δ := (0..+100000000) <: Q; //twice equatorial
-type Λ := (-180°..+180° ) <: Q; //longitude angle (degree)
-type Φ := (-90°..+90°   ) <: Q; //latitude angle (degree)
+type Δ: (0..+100000000) <: Q; //twice equatorial
+type Λ: (-180°..+180° ) <: Q; //longitude angle (degree)
+type Φ: (-90°..+90°   ) <: Q; //latitude angle (degree)
 ```
 
 Map data types are represented by Unicode symbols:
@@ -45,33 +45,33 @@ Map data types are represented by Unicode symbols:
 
 ```
 ** map simple point: λ = Latitude, φ = Longitude, i = index
-  type • := {i ∈ N, λ ∈ Ψ, φ ∈ Φ} <: Object;
+  type • : {i ∈ N, λ ∈ Λ, φ ∈ Φ} <: Object;
   
 ** network node:  λ = Latitude, φ = Longitude, ε = Elevation
-  type ◉ := {id ∈ N, λ ∈ Ψ, φ ∈ Φ, ε ∈ P} <: Object;             
+  type ◉ : {id ∈ N, λ ∈ Λ, φ ∈ Φ, ε ∈ P} <: Object;             
  
 ** network link
-  type ↯ := {id ∈ N, start_node ∈ ◉, end_node ∈ ◉, shape ∈ [•]} <: Object;
+  type ↯ : {id ∈ N, start_node ∈ ◉, end_node ∈ ◉, shape ∈ [•]} <: Object;
   
 ** place of interest
-  type ◈ := {id ∈ N, point ∈ •, label ∈ S} <: Object;
+  type ◈ : {id ∈ N, point ∈ •, label ∈ S} <: Object;
 
 ** map area 
-  type ■ := {id ∈ N, origin ∈ •, shape ∈ [•], category ∈ S} <: Object;
+  type ■ : {id ∈ N, origin ∈ •, shape ∈ [•], category ∈ S} <: Object;
 
 ** area of interest
-  type ▣ := {id ∈ N, point ∈ •, shape ∈ [•], label ∈ S} <: Object;
+  type ▣ : {id ∈ N, point ∈ •, shape ∈ [•], label ∈ S} <: Object;
   
 ** map data model
-  type ♁ := {origin ∈ •, extent ∈ •, scale ∈ Q 
+  type ♁ : {origin ∈ •, extent ∈ •, scale ∈ Q 
              nodes ∈ [◉], links ∈ [↯], 
              area ∈ [■], pint ∈ [◈], aint ∈  [▣] } <: Object;
 ```
 
 **legend**
 
-* λ = latitude
 * φ = longitude
+* λ = latitude
 * ε = elevation
 
 ## Space objects

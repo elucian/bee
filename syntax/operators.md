@@ -36,7 +36,8 @@ symbol| description
  `∈`  | Define variable/constant/result/input only parameter
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
- `:`  | Pair up key-value in a collection or rule call \| Define constant value 
+ `:`  | Pair up key-value in a collection or rule call 
+ `:`  | Define constant or type or rule or component name
  `;`  | End of statement \| Statement separator
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute

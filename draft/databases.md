@@ -86,12 +86,12 @@ Records are _object instances_ created from table structure in memory. A record 
 **record type
 ```
 ** This type is defined in core database library
-type Record := {rowid ∈ S(32), status ∈ Status} <: Object;
+type Record: {rowid ∈ S(32), status ∈ Status} <: Object;
 ```
 **record status**
 ```
 ** This type is defined in core database library
-type Status := {.unknown:0 .verified, .updated, .deleted } <: Ordinal;
+type Status: {.unknown:0 .verified, .updated, .deleted } <: Ordinal;
 ```
 
 **table structure**
@@ -102,8 +102,8 @@ For table structure we must define a _record type_ then use generic _Table_ to d
 * For table_name is  gppd tp ise plural lowecase names like: "persons"
 
 ```
-type Record_Name := {field_name ∈ Type, ...}  <: Record;              ** entity record
-make table_name  := db.open('table_name','w') ∈  Table{Record_Name}; //table mapping
+type Record_Name: {field_name ∈ Type, ...}  <: Record;              ** entity record
+make table_name := db.open('table_name','w') ∈  Table{Record_Name}; //table mapping
 ```
 
 **table methods**
@@ -234,7 +234,7 @@ Sometimes we need to bypass the ORM and execute native SQL:
 ```** apply a modification query to database
 apply db.query(query_template ? source)
 ** apply a query that return; a buffer
-type  TRecord := {
+type  TRecord: {
       field_name ∈ Type,      
       ...
       };** execute query string and return a list of records
@@ -248,7 +248,7 @@ Some databases have support for stored procedures:
 
 ```
 ** prepare an object (not updatable)
-type  Result_Record := {
+type  Result_Record: {
       field_name ∈ Type,      
       ...
       } <: Object;
