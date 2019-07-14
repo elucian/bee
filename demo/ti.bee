@@ -8,8 +8,8 @@ load $pro_lib.console.(*);
 make a : 10;     // Z (integer on 64bit)
 make x : 0.5;    // R (double precision)
 make y : 1/2;    // Q (rational number)
-make f : False ; // L (logic)
-make t : True ;  // L (logic)
+make f : False;  // L (logic)
+make t : True;   // L (logic)
 
 ** variable type inference
 make v := (1,2,3);     // List of Z
@@ -26,14 +26,14 @@ rule add(x,y:0) => (z @ Z):
   alter z := x + y;
 return;
 
-print add(1,1); // will print 2
+print add(1,1);  // will print 2
 
 ** argument x is mandatory, y is optional
 rule plus(x ∈ Z, y:1 ∈ Z) => (z @ Z):
   alter z := (x + y);
 return;
 
-print plus(0) ;   // will print 1
+print plus(0);   // will print 1
 print plus(1,2); // will print 3
 
 ** input/output arguments
@@ -42,7 +42,7 @@ rule inc(x, y @ Z):
   alter y += 1;
 return;
 
-make i,k ∈ Z ;   // references
+make i,k ∈ Z ;  // references
 apply inc(i,k); // i = 1 and k = 1
 print (i,k);    // expect: 1 1
 
