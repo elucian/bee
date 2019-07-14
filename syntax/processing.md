@@ -9,7 +9,7 @@ By using collections and control structures one can read, modify and store data.
 * [List operations](#List-operations)
 * [Collection iteration](#Collection-iteration)
 * [String Generator](#String-Generator)
-* [String Interpolation](#String-templates)
+* [String Interpolation](#String-interpolation)
 
 ## Array Operations
 
@@ -615,7 +615,7 @@ print "#(a) > :(a)" ? (x,y); //"0 > A"
 print "#(n):#(n)" ? (10, 45); // 10:45
 
 ** using numeric format
-print "#(1,000.00)" ? (1000.45; // 1,234.56
+print "#(1,000.00)" ? (1000.45); // 1,234.56
 ```
 
 **Placeholders:**
@@ -635,6 +635,7 @@ Format template stings can use escape sequences:
 "#(t)"  = time format defined by #time
 "#(d)"  = date format defined by #date
 "#()[]" = search element by index or by key
+
 ```
 
 **Examples:**
@@ -713,9 +714,9 @@ return;
 
 Where pattern cab gave two forms: 
 
-* '#(ap:l.d)' // 1,000.00
-* '#(ap:l,d)' // 1.000,00
-* '#(ap:l;d)' // 1,000.00 | 1.000,00 (depending on country)
+* #(ap:l.d) // 1,000.00
+* #(ap:l,d) // 1.000,00
+* #(ap:l;d) // 1,000.00 | 1.000,00 (depending on country)
 
 **Note:** Last pattern is depending on regional settings: $decimal:'.'/','
 
