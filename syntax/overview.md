@@ -387,6 +387,7 @@ operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable/element type 
  :       | pair-up element:value in collection or argument list
+ :       | define initial value for a constant
  :=      | binding  = assign a value \| borrow a reference
  ::      | cloning  = duplicate object \| deep copy
  
@@ -423,7 +424,7 @@ print b;          // expected 12
 
 **Examples:**
 ```** declare a constant
-make pi :: 3.14 ∈ R;
+make pi : 3.14 ∈ R;
 ** declare multiple variables
 make a   ∈ Z; //Integer 
 make x,y ∈ R; //Double

@@ -592,8 +592,8 @@ We use notation "#()" or "#()[]" to create a placeholder template inside of a St
 
 **Example:**
 ```
-** next template uses :: that is converted to single ":" 
-make template := "Duration:$(2) minutes and $(2) seconds";
+** next template uses $(n) placeholder
+make template := "Duration:$(n) minutes and $(n) seconds";
 make var1 := 4; 
 make var2 := 55;
 ...
@@ -611,7 +611,7 @@ make y := 41; //Code ASCII A
 print "#(n) > :(n)" ? (x,y); //"30 > 41" 
 print "#(a) > :(a)" ? (x,y); //"0 > A"  
 
-** using two dots :: for hour and minutes 
+** using two dots : to separate hour from minutes 
 print "#(n):#(n)" ? (10, 45); // 10:45
 
 ** using numeric format

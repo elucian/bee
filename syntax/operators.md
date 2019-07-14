@@ -25,7 +25,7 @@ symbol  | description
 ## Single Symbols
 
 symbol| description
-------|----------------------------------------------------------------
+------|-------------------------------------------------------------------------------
  `!`  | Negation symbol for relations \| Excluded from domain
  `?`  | Template modifier. Associated with string templates 
  `*`  | String replication
@@ -36,7 +36,7 @@ symbol| description
  `∈`  | Define variable/constant/result/input only parameter
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
- `:`  | Pair up key-value in a collection or rule call
+ `:`  | Pair up key-value in a collection or rule call \| Define constant value 
  `;`  | End of statement \| Statement separator
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
@@ -88,7 +88,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 symbol| meaning
 ------|--------------------------------------------------------------------
  `:=` | Binding value \| Borrow reference 
- `::` | Deep copy \| Initialize constant
+ `::` | Deep copy \| Clone operator
  `+=` | Increment value \| append element
  `-=` | Decrement value \| remove element
  `·=` | Multiplication modifier 
