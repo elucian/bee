@@ -1,5 +1,5 @@
 +-------------------------------------
-   rule collector demonstration 
+   result ∨unpacking demonstration 
 -------------------------------------+
 driver up:
 load $pro_lib.console.(*);

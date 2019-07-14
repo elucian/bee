@@ -42,7 +42,7 @@ symbol| description
  `|`  | Declarative collection builder: {set, list, hash, array}
  `|`  | Exact divisor: since 15 = 3 · 5 then (3 \∣ 15 = True) and (5 \∣ 15 = True) 
  `_`  | Anonymous variable \| Constant value = one space (_ = ' ')
- `\\` | Escape character (\\n := New Line) \| maybe regular expressions
+ `\\` | Escape character (\\n := New Line) 
 
 ## Numeric operators  
 

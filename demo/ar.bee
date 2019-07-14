@@ -15,7 +15,7 @@ next;
 
 ** array traversal and print
 for i ∈ (0.!10) do
-   print " a[\n] = \n" ? (i, a[i]);
+   print " a[#(n)] = #(n)" ? (i, a[i]);
 next;
  
 over.

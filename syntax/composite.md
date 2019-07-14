@@ -419,7 +419,7 @@ alter y := parse('10,000.3333',2,',.'); //convert to real 10000.33
 **Notes:** 
 
 * These strings are NUL terminated Arrays and are immutable;
-* These strings have no support for templates {} notation;
+* These strings have no support for templates notation;
 * Default capacity must be specified to support longer strings;
 
 ### Double quoted
@@ -637,19 +637,19 @@ fail my_error if condition;
 pass if condition;
 ```
 
-Template modifier "?" can be used to customize the error message:
+String interpolation "?" can be used to customize the error messages:
 
 **example:**
 ```
 make  flag ∈ L;
 read (flag, 'enter flag (0/1):');
 
-make my_error := {201,"error: \s{1}"} ∈ Error;
-fail my_error ? 'test' if flag;
+make my_error := {201,"error:#(s)"} ∈ Error;
+fail (my_error ? 'test') if flag;
 ```
 **output:**
 ```
-error: 'test'
+error:'test'
 ```
 
 **Notes:**

@@ -9,7 +9,7 @@ By using collections and control structures one can read, modify and store data.
 * [List operations](#List-operations)
 * [Collection iteration](#Collection-iteration)
 * [String Generator](#String-Generator)
-* [String Templates](#String-templates)
+* [String Interpolation](#String-templates)
 
 ## Array Operations
 
@@ -76,14 +76,14 @@ rule test_array:
     alter my_array[i] := i;     
     alter i += 1;
   repeat;
-  ** array  elements using escape template \[]
-  print ("This is the first element: \[1]" ? my_array); 
-  print ("This is the last element: \[-1]" ? my_array);
+  ** array  elements using escape template by index #[]
+  print ("First element: #[1]"  ? my_array); 
+  print ("Last element:  #[-1]" ? my_array);
   
   ** range of array elements are comma separated [1,2,3]
-  print ("These are the first two: \[1..2]"        ? my_array);
-  print ("These are the lat two: \[-2..-1]"        ? my_array);
-  print ("These are all except lat two: \[1..-3]"  ? my_array);
+  print ("First two: #[1..2]"  ? my_array);
+  print ("Lat two:   #[-2..-1]"  ? my_array);
+  print ("All except lat two: #[1..-3]"  ? my_array);
 return;
 ```
 
@@ -173,6 +173,7 @@ print a; //[1,1,1,2,2]
 alter a[3..-1] := [2,3];
 print a; //[1,1,1,2,3]
 ```
+
 ## Matrix Operations
 
 Modify all elements of the matrix is possible using [∀] and assign operator “ := ”
@@ -240,7 +241,7 @@ make M := ⎡'a0','b0','c0'⎤
           ⎢'a1','b1','c1'⎥
           ⎣'a2','b2','c2'⎦
           
-* traverse matrix      
+** traverse matrix      
 make row, col := 0;
 while col < 3 do     // traverse columns
   while row < 3 do   // traverse row first
@@ -403,6 +404,7 @@ Following other functions should be available
 * List.count()       // retrieve the number of elements 
 
 ### Special attributes
+
 A list has properties that can be used in logical expressions:
 
 * List.empty()  //True or False
@@ -443,6 +445,7 @@ Hash tables are sorted in memory by _key_ for faster search. It is more difficul
 
 
 **example:**
+
 ```
 ** check if a key is present in a hash collection
 make my_map := {(1:'a'),(2:'b'),(3:'c')};
@@ -475,6 +478,7 @@ Output:
 * An empty hash map will be created using notation {} 
 
 ### Example
+
 ```  
 make animals := {}; //partial declaration
 do
@@ -488,6 +492,7 @@ do
 done;
 ```
 output:
+
 ```
 {('Rover':"dog"),('Bear':"dog"),('Kiwi':"bird")}  
 ```
@@ -551,105 +556,96 @@ print ('+' + sep + '+');
 
 ### Control codes
 
-You can include old fashion control codes in strings using ESCAPE notation.
+You can insert constants using notation $X or #(nn):
 
-**ESCAPE**
+**Codes:**
 
-DEC|HEXA |ESCAPE|NAME
----|-----|------|------------------
-0  |0x00 |\NUL  |Null
-8  |0x08 |\BS   |Backspace
-9  |0x09 |\HT   |Horizontal Tab
-10 |0x0A |\LF   |Line Feed
-11 |0x0B |\VT   |Vertical Tab
-12 |0x0C |\FF   |Form Feed
-13 |0x0D |\CR   |Carriage Return
-27 |0x1B |\ESC  |Escape
-
-**Note:**
-
-The ESCAPE code is also a constant in Bee that can be used with string template:'\x'
+ DEC  | HEX    |CODE  |NAME
+------|--------|------|------------------
+  00  | 0x00   |$NL   |Null
+  08  | 0x08   |$BS   |Backspace
+  09  | 0x09   |$HT   |Horizontal Tab
+  10  | 0x0A   |$LF   |Line Feed
+  11  | 0x0B   |$VT   |Vertical Tab
+  12  | 0x0C   |$FF   |Form Feed
+  13  | 0x0D   |$CR   |Carriage Return
+  27  | 0x1B   |$ES   |Escape
+  39  | 0x27   |$AP   |Apostroph  ''
+  34  | 0x22   |$QM   |Quotation  ""
 
 
-### String Templates
+### String Interpolation
 
-We use hash "\#" to create a placeholder into a String or Text. You can use operator "?" to replace the placeholders with values from a data source. If placeholder is not found the result will contain the placeholder unmodified.
+In computer programming, string interpolation is the process of evaluating a string literal named template that contains one or more placeholders. An interpolation expression is yielding a result in which the placeholders are replaced with their corresponding values. 
+
+We use notation "#()" or "#()[]" to create a placeholder template inside of a String or Text. You can use operator "?" to replace the placeholder with values from a data source. If placeholder is not found the result will contain the placeholder unmodified.
 
 **Notes:**
 
-* Template must be included in double quotes " " not single quotes;
-* Inside template we use "\#" or "\{#}" where "#" is the member index;
-* The index start from 0 and it can be negative (-1) is the last element;
-* If a placeholder index is not found then it is preserved unmodified;
-* We can include values into a string using template modifier: "?".
+* We can inject values into a string template using modifier symbol: "?";
+* System constants "$" are automatically interpolated, do not require symbol "?";
+* Template must be included in double quotes "..." not single quotes '...';
+* Inside template we use a symbol or format "#()" follow by index "[]";
+* The index start from "[0]" and it can be negative;
+* If a placeholder index is not resolved then it is preserved unmodified;
+* Unlike JavaScript or other languages, variables are not recognized in string templates;
 
-**example:**
+**Example:**
 ```
-make template := "\0 \1...";
-make var1 := 123; 
-make var2 := 456;
+** next template uses :: that is converted to single ":" 
+make template := "Duration:$(2) minutes and $(2) seconds";
+make var1 := 4; 
+make var2 := 55;
 ...
-print template ? (var1,var2,...); //123 456
+print template ? (var1,var2,...); //Duration:4 minutes and 55 seconds
 ```
 
-**Examples:**
+**Example:**
+
 ```
 ** define two A codes
 make x := 30; //Code ASCII 0
 make y := 41; //Code ASCII A
 
 ** template writing alternative
-print "\{0} > \{1}"   ? (x,y); //"30 > 41 > {2}" 
-print "\a{0} > \a{1}" ? (x,y); //"0 > A"  
+print "#(n) > :(n)" ? (x,y); //"30 > 41" 
+print "#(a) > :(a)" ? (x,y); //"0 > A"  
 
-```
-**Special Escapes**
+** using two dots :: for hour and minutes 
+print "#(n):#(n)" ? (10, 45); // 10:45
 
-These escape notations are used in rare occasions .
-
-
-* \\'  = symbol `'`
-* \\"  = symbol `"`
-* \\   = symbol `\\`
-* \\#  = digit
-
-**example:**
-```
-print " \###.##"   ? 1234.567; //   234.56
-print " \#,###.##" ? 1234.567; // 1,234.56
+** using numeric format
+print "#(1,000.00)" ? (1000.45; // 1,234.56
 ```
 
-**Escape Placeholders**
+**Placeholders:**
 
-Format/template stings can use escape sequences:
+Format template stings can use escape sequences:
 
 ```
-\x  : control code for ESCAPE constants
-\s  : single quoted string for string, symbol or number
-\q  : double quoted string for string, symbol or number
-\a  : ASCII symbol for number
-\u  : Unicode symbol for number
-\+  : UTF16 code point representation (U+HHHH) for symbol
-\-  : UTF32 code point representation (U-HHHHHHHH) for symbol
-\n  : decimal number  
-\b  : binary number
-\h  : hexadecimal number
-\t  : time format defined by #time
-\d  : date format defined by #date
-\() : [numeric format](#numeric-format)
-\{} : Value: by name \| by index \| by key
-\[] : Array/Matrix element by index 
-\[] : Set/Hash value search by key
+"#(n)"  = decimal number using default precision
+"#(s)"  = single quoted string for string, symbol or number
+"#(q)"  = double quoted string for string, symbol or number
+"#(a)"  = ASCII symbol representation of code
+"#(u)"  = Unicode symbol representation of code
+"#(+)"  = UTF16 code point representation (U+HHHH) for symbol
+"#(-)"  = UTF32 code point representation (U-HHHHHHHH) for symbol
+"#(b)"  = binary number
+"#(h)"  = hexadecimal number
+"#(t)"  = time format defined by #time
+"#(d)"  = date format defined by #date
+"#()[]" = search element by index or by key
 ```
 
 **Examples:**
 ```
-print "Numbers: \n and \n" ? (10, 11);
-print "Alpha:   \a and \a" ? (30, 41);
-print "Strings: \s and \s" ? ('odd','even');
-print "Quoted:  \q and \q" ? ('odd','even');
-print "Unicode: \u and \u" ? (U+2260,U+2261);
+print "Numbers: #(n) and #(n)" ? (10, 11);
+print "Alpha:   #(a) and #(a)" ? (30, 41);
+print "Strings: #(s) and #(s)" ? ('odd','even');
+print "Quoted:  #(q) and #(q)" ? ('odd','even');
+print "Unicode: #(u) and #(u)" ? (U+2260,U+2261);
 ```
+
 **Expected output:**
 ```
 Numbers: 10 and 11
@@ -659,9 +655,11 @@ Quoted:  "odd" and "even"
 Unicode: ≠ and ≡
 ```
 
-**Notes:** 
+**Notes:**
+ 
 * Template modifier: "?" is polymorph and overloaded, 
 * For template source you can use: { tuple, list, set, hash, array, matrix }.
+* The parentheses () or [] are exclusive optional. You can use one or the other or both.
 
 ## Large template
 
@@ -674,9 +672,10 @@ A large template can be stored into a file, loaded from file and format().
 5. Alternative use _format()_ build-in rule to replace all placeholders;
 
 **Using Hash:**
+
 ```
-make template1 := "Hey look at this \{key1} it \{key2}!";
-make template2 := "Hey look at this \s{key1} it \q{key2}!";
+make template1 := "Hey look at this #[key1] it #[key2]!";
+make template2 := "Hey look at this #(s)[key1] it #(q)[key2]!";
 make map       := {("key1":"test"),("key2":"works")};
 
 print template.format(map);
@@ -691,7 +690,7 @@ Hey look at this 'test' it "works"!
 
 **Using Set:**
 ```
-make  template := "Hey look at this \{0} it \{1}";
+make  template := "Hey look at this #[0] it #:[1]";
 make  my_set   := {"test","works!"};
 print template ? my_set; 
 ```
@@ -702,10 +701,11 @@ Hey look at this test it works!
 ```
 
 ## Numeric format
+
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(Number: number, String: pattern) => (result @ S):
+rule format(number ∈ R, pattern ∈ S) => (result @ S):
   ...
 return;
   
@@ -713,15 +713,15 @@ return;
 
 Where pattern cab gave two forms: 
 
-* '(ap:m.d)' // ###,###,###.###
-* '(ap:m,d)' // ###.###.###,###
-* '(ap:m;d)' // ###.### | ###,### 
+* '#(ap:l.d)' // 1,000.00
+* '#(ap:l,d)' // 1.000,00
+* '#(ap:l;d)' // 1,000.00 | 1.000,00 (depending on country)
 
 **Note:** Last pattern is depending on regional settings: $decimal:'.'/','
 
 * a is alignment one of { < > ^ }, 
-* p is the padding character: { _ - + = ** . }
-* m is the length of result
+* p is the padding character: { _ 0 }
+* l is the length of result
 * d is number of decimals after "."
 
 ### Alignment symbol "a" can be one of:
@@ -729,23 +729,29 @@ Where pattern cab gave two forms:
 ```
 > is used to align to the right
 < is used to align to the left
-^ is used to align to center
+= is used to align to center
 ```
 
 ### Format examples:
 
 ```
- '\(>_:10)'   // right align string fill with spaces to 10 characters
- '\(>0:10.2)' // right align fill with 0 up to 10 digits and use 2 decimals
+ "#(n)"       // numeric notation, with default precision left align
+ "#(10)"      // right align numeric with 10 digits padded with spaces
+ "#(10.2)"    // 10 integer digits and 2 decimals, right padded with spaces
+ "#(>_:10)"   // right align 10 digits padded with spaces
+ "#(>0:10.2)" // right align padded to 10 integer digits and 2 decimals
+ "#(>0:10,2)" // right align European numeric style with 2 decimals
 ```
 
-### Text functions
+### Text functions:
 
-* Text:    format (Text: str, Table: map);
-* Text:    replace(Text: str, String: target, String: arrow );
-* Integer: find   (Text: str, String: pattern);
-* Integer: count  (Text: str, String: pattern);
-* Integer: length (Text: str);
+* format (str ∈ X, map ∈ {S}) ∈ X;
+* format (str ∈ X, map ∈ {Z}) ∈ X;
+* format (str ∈ X, map ∈ [Z]) ∈ X;
+* replace(str ∈ X, target  ∈ S, arrow ∈ S) ∈ X;
+* find   (str ∈ X, pattern ∈ S) ∈ N;
+* count  (str ∈ X, pattern ∈ S) ∈ N;
+* length (str ∈ X) ∈ N;
 
 **Reading a Text:**
 

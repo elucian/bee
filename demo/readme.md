@@ -15,7 +15,7 @@ Unverified Bee demo source files:
 1. [lv.bee](lv.bee) - Local variable demo
 1. [dt.bee](dt.bee) - User defined data types
 1. [ti.bee](ti.bee) - Type inference demo
-1. [up.bee](up.bee) - Template demo
+1. [up.bee](up.bee) - String interpolation debo
 1. [ro.bee](ro.bee) - Recursive objects
 1. [me.bee](me.bee) - Rule dispatch demo
 1. [pm.bee](pm.bee) - Pattern matching

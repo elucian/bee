@@ -13,18 +13,20 @@ print "x = 0" if x = 0;
 when x = 1 do
   print "x = 1";
 done;
+
 ** two branches
 when x ≠ 5 do
   print "x ≠ 5";
 else
   print "x = 5";
 done;
-** nested branches
+
+** nested in positive branch
 alter x := 1;
 when x ≥ 1 do
   print "x ≥ 1":
   when x = 1 do
-    print "x = 1";
+    print "x = 1"; //expected
   else
     print "x > 1";
   done;
@@ -32,17 +34,16 @@ else
   print "x < 1";
 done;
  
-** x ≥ 1
-** x = 1
-** nested when
+** nested in negative branch
+alter x := 1;
 when x < 1 do
   print "x < 1";
 else
   when x > 1 do
     print "x > 1";
   else
-    print "x = 1";
+    print "x = 1"; //expected
   done;
 done;
-** expect x = 1
+
 over.

@@ -28,10 +28,12 @@ while ¬ foo.gen_finish() do
   alter x := foo.get_next();
   write (x,",");
 repeat;
-** expect: 10,11,12,13,14,15,16,17,18,19,20, 
+
+** flush the buffer
+print; //10,11,12,13,14,15,16,17,18,19,20, 
+
 ** test reset rule
 apply foo.gen_reset();
-
 fail if foo.ci ≠ 10; // expect: 10
 
 over.
