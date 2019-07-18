@@ -26,7 +26,7 @@ This notation can be used to create an arguments of type expression, declared wi
 
 **signature**
 ```
-rule foo( exp @ (type,type, ...) ∈ type);
+rule foo(exp(type,type, ...) ∈ type);
    ... 
    ** you can use the  exp
    make r := exp(param,...);
@@ -37,7 +37,7 @@ return;
 Call rule "foo" with anonymous rule as argument by name:
 
 ```
-apply foo((param ,param ...) => (expression));
+apply foo(exp:(param ,param ...) => (expression));
 ```
 
 ## Bubble sort
@@ -45,7 +45,7 @@ apply foo((param ,param ...) => (expression));
 In this example, _bubble_ is a generic rule:
 
 ```** this sort is generic 
-rule bubble{TT ∈ Type}(array ∈ [TT], gt @ (TT,TT) ∈ L):
+rule bubble{TT ∈ Type}(array ∈ [TT], gt(TT,TT) ∈ L):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
   make temp ∈ TT;
