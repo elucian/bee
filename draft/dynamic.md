@@ -9,7 +9,7 @@ print plus(1,1);
 
 print;
 ** later implement the rule
-rule plus(a,b ∈ Z) => (r @ Z):
+rule plus(a,b ∈ Z) => (r ∈ Z):
   alter r := (a + b);
 return;
 

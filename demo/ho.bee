@@ -7,7 +7,7 @@ load $pro_lib.console.(*);
 
 ** create a rule prototype
 ** this rule can be used or cloned 
-rule generator{min, max ∈ Z}() => (r @ Z):
+rule generator{min, max ∈ Z}() => (r ∈ Z):
   make .index := min ∈ Z;
   when .index > max do
     fail (201, "index out of bounds");

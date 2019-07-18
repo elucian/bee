@@ -720,7 +720,6 @@ Rules are named blocks of code, representing a program fragment that can be exec
 **Notes:**
 * A rule is declared with keyword _rule_;
 * A rule can resolve a single task;
-* A rule can have input and output parameters;
 * A rule can have optional one or multiple results;
 * A rule can have local variables and constants;
 * A rule can have public attributes;
@@ -745,7 +744,7 @@ Parameters are special variables defined in rule signature.
 
 **Example:**
 ```** a rule with two parameter
-rule foo(name ∈ S, message @ S):
+rule foo(name ∈ S, message ∈ S):
   alter message:= "hello:" + name + ". I am Foo. Nice to meet you!";
 return;
 ** using apply + rule name will execute the rule  
@@ -762,19 +761,19 @@ hello: Bee. I am Foo. Nice to meet you!
 
 **Notes:**   
 * Parameters are enumerated in a tuple;
-* Input parameters can be optional, output parameters are mandatory;
+* Some parameters can be optional if initial value is declared;
 * Optional parameters are initialized with pair-up operator ":";
-* Input parameters are defined with "∈" and transfer value: _by copy_;
-* Output parameters are defined with "@" and transfer value: _by share_;
+* Native types are input parameters transfer value: _by copy_;
+* Composite type and object parameters transfer value: _by share_;
 
 ### Results
 
-A rule can have multiple results. For binding results to variables we are using operator: ":="
+A rule can have multiple results. Result variables must be declared and assigned.
 
 **Example:** 
 ```** rule with two results "s" and "d"
-** x is mandatory y is optional
-rule com(x ∈ Z, y:0 ∈ Z) => (s, d @ Z):
+** parameter x is mandatory y is optional
+rule com(x ∈ Z, y:0 ∈ Z) => (s, d ∈ Z):
   alter s := x + y; 
   alter d := x - y;
 return;
@@ -788,10 +787,11 @@ print a; //3
 ```
 
 **Notes:**   
-* Multiple results are defined exactly like output parameters;
-* A rule with multiple results can not be used in expressions;
+* Multiple results are defined by name and can also have initial value;
 * You can capture results into multiple variables separated by comma;
-* You can ignore one result using anonymous variable "_"
+* You can ignore one result using anonymous variable "_";
+* Rules with multiple results can not be used in expressions.
+
 
 ### Rule as function
 
@@ -799,7 +799,7 @@ A rule with a single result can be used as a _function_;
 
 **pattern:**
 ```** define a functional rule
-rule name(param ∈ type,...) => (result @ type):    
+rule name(param ∈ type,...) => (result ∈ type):    
    ...
    exit if (condition); //early transfer
    ...
@@ -872,20 +872,20 @@ apply rule_name(param:argument, ...);
 
 ## Rule as method
 
-A rule binding first parameter to input/output is called: _method_ 
+A rule binding first parameter to an object or composite type is called: _method_ 
 
 **properties:**
 
 * A method can have results;
 * A method can have side-effects;
-* A methods is defined in same component as the data type;
-* A method can be overwritten in another component;
+* A methods is defined in same module as the data type;
+* A method can be overwritten in another module;
 
 **pattern:**
 ```
 type ObjType: {attribute:type, ...} <: Object;
 
-rule method_name(bind: @ ObjType, param ∈ type,...) => (result @ type):
+rule method_name(self ∈ ObjType, param ∈ type,...) => (result ∈ type):
    ...
    result := expression;
 return;
@@ -903,7 +903,7 @@ A _generic rule_ is a _prototype_ that can be _cloned_ to create _dynamic rules_
 
 **pattern:**
 ```** define a rule prototype 
-rule prototype_name{attributes}(parameters) => (result @ Type):
+rule prototype_name{attributes}(parameters) => (result ∈ Type):
   ...
   ** a prototype can have attributes
   ** these attributes are shared between all clones
@@ -928,12 +928,12 @@ make r := new_rule(arguments);
 
 **example:**
 ```** this is a generic rule
-rule shift{s ∈ Z}(i ∈ Z) => (r @ Z):
+rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
   alter r := (s + i);
 return;
 ** instantiate two clones:
-make inc(i ∈ Z) := shift{s: +1} => (r @ Z); //increment 
-make dec(i ∈ Z) := shift{s: -1} => (r @ Z); //decrement 
+make inc(i ∈ Z) := shift{s: +1} => (r ∈ Z); //increment 
+make dec(i ∈ Z) := shift{s: -1} => (r ∈ Z); //decrement 
 ** verify clone properties
 print inc.s; //1
 print dec.s; //-1
@@ -957,7 +957,7 @@ module  myLib;
 
 load myLib := $bee.lib.cpp.myLib; //load cpp library
 ** define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x @ Z));
+rule fib(n ∈ Z) => (x ∈ Z));
   alter x := myLib.fib(n);
 return;
 ```

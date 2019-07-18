@@ -72,9 +72,9 @@ A tuple is enumeration of elements enclosed in parenthesis and separated by comm
 
 **examples**
 ```
-(a, b ∈ Z, c @ B) // parameters
-(result @ X)      // single result
-(r1,r2 @ Z)       // multiple results
+(a, b ∈ Z, c ∈ B) // parameters
+(result ∈ X)      // single result
+(r1,r2 ∈ Z)       // multiple results
 ('a','b','c')     // list of strings
 (1,2,3)           // list of integers
 (1,`2`,'x')       // list of various literals
@@ -95,7 +95,7 @@ Bee tuples are very different from Python and other languages.
 A rule can have multiple results defined using a tuple:
 
 ```** rule with multiple results
-rule test(x,y ∈ Z) => (r, c @ Z):
+rule test(x,y ∈ Z) => (r, c ∈ Z):
   alter r += x+1;
   alter c += y+1;
 return;
@@ -555,11 +555,11 @@ An object can have associated rules that are called _methods_:
 ```** define Foo as object with 2 public attributes:
 type Foo: {a, b ∈ N} <: Object;
   ** constructor has the same name as the type
-rule foo(p1,p2 ∈ N) => (self @ Foo):
+rule foo(p1,p2 ∈ N) => (self ∈ Foo):
   make self := {a:p1, b:p2};
 return;
 ** define a method for Foo
-rule bar(self @ Foo):
+rule bar(self ∈ Foo):
   print "a =" + self.a;
   print "b =" + self.b;
 return;
@@ -587,7 +587,7 @@ fail if test.b ≠ 1; //verify attribute b
 The last parameter in a parameter list can use prefix: "\*"
 
 ```
-rule foo(*bar ∈ [Z]) => (x @ Z):
+rule foo(*bar ∈ [Z]) => (x ∈ Z):
   make c := bar.count();
   ** precondition
   when (c = 0) do

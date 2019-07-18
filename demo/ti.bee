@@ -22,14 +22,14 @@ make t := '1:45am'     -> T12; // Time
 make d := '10/10/2010' -> DMY; // Date
 
 ** optional parameters inference
-rule add(x,y:0) => (z @ Z):
+rule add(x,y:0) => (z ∈ Z):
   alter z := x + y;
 return;
 
 print add(1,1);  // will print 2
 
 ** argument x is mandatory, y is optional
-rule plus(x ∈ Z, y:1 ∈ Z) => (z @ Z):
+rule plus(x ∈ Z, y:1 ∈ Z) => (z ∈ Z):
   alter z := (x + y);
 return;
 
@@ -37,7 +37,7 @@ print plus(0);   // will print 1
 print plus(1,2); // will print 3
 
 ** input/output arguments
-rule inc(x, y @ Z):
+rule inc(x, y ∈ Z):
   alter x += 1;
   alter y += 1;
 return;

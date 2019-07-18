@@ -4,7 +4,7 @@ A generic rule is using one or more "type" parameters.
 
 **pattern:**
 ```
-rule name{Name ∈ Type,...}(param ∈ Name) => (result @ Name):
+rule name{Name ∈ Type,...}(param ∈ Name) => (result ∈ Name):
    alter result := expression(param);
 return;
 ```
@@ -22,7 +22,7 @@ Anonymous expression is like lambda expression except it does not have a name:
 (param ∈ type_name, ,...) => (expression)
 ```
 
-This notation can be used to create an arguments of type expression, declared with "@" like:
+This notation can be used to create an arguments of type expression, declared with "∈" like:
 
 **signature**
 ```

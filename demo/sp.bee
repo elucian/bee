@@ -1,7 +1,7 @@
 driver sp:
 load $pro_lib.console.(*);
 
-rule swap(x @ Z, y @ Z):
+rule swap(x ∈ Z, y ∈ Z):
    ** create temporary value
    make  t := x; 
    

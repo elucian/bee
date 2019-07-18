@@ -36,7 +36,7 @@ One application can connect to multiple databases simultaneously. A specific kin
 
 **pattern:**
 ```** create a wrapper for database connection
-rule connect(name, password, database ∈ S) => (db @ Oracle.Database):
+rule connect(name, password, database ∈ S) => (db ∈ Oracle.Database):
   ** prepare credentials
   make credential := user + '/' + password + '@'+ dbname;
   ** connect to database

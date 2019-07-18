@@ -9,7 +9,7 @@ type Number: {.zero, .one, .two} <: Ordinal;
 make test ∈ Number;
 alter test := zero; // instance of Number
 ** make a rule for define Number
-rule convert(self @ Number) => (y @ S):
+rule convert(self ∈ Number) => (y ∈ S):
   alter y := ('zero'  if self = zero,
               'one'   if self = one,
               'two'   if self = two,
@@ -17,7 +17,7 @@ rule convert(self @ Number) => (y @ S):
 return;
 
 ** a wrapper rule for convert
-rule equal(self ∈ Number, s ∈ S) => (r @ L):
+rule equal(self ∈ Number, s ∈ S) => (r ∈ L):
   alter r := (s = convert(x));
 return;
     

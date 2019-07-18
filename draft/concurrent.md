@@ -53,7 +53,7 @@ Coroutines can be used as a _side branch_ in parallel of the main thread.
 
 ```
 ** generate 10 numbers and stop
-rule test(n @ N):
+rule test(n ∈ N):
   for i ∈ (0..9) do
     alter n := i;
     yield; //suspend and wait for the main thread
@@ -93,7 +93,7 @@ make mark ∈ N; //current item to process
 ** data source/target to process
 make s := [0](1000); //array of integers
 ** first coroutine (produce)
-rule foo(channel @ (N)):
+rule foo(channel ∈ (N)):
   while mark < target) do 
     ** prepare next batch
     while channel.count < c do
@@ -105,7 +105,7 @@ rule foo(channel @ (N)):
   repeat;  
 return;
 ** second coroutine (consume)
-rule bar(channel @ (N)):  
+rule bar(channel ∈ (N)):  
   while True do
     while channel ≠ () do
       print ":>" + channel.head;  

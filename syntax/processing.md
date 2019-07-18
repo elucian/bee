@@ -707,7 +707,7 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(number ∈ R, pattern ∈ S) => (result @ S):
+rule format(number ∈ R, pattern ∈ S) => (result ∈ S):
   ...
 return;
   

@@ -8,7 +8,7 @@ make  ch := ()  ∈ (N);     // define empty channel
 make  processing :=  True; // stop semaphore for consumers
 
 ** ch is the communication channel
-rule producer(ch @ (N)):
+rule producer(ch ∈ (N)):
   alter processing := True;
   for j in (1..1000) do
     for i in (1..c) do
@@ -20,7 +20,7 @@ rule producer(ch @ (N)):
 return;
 
 ** ch is the communication channel
-rule consumer(ch @ (N)):
+rule consumer(ch ∈ (N)):
   while processing do
     while (len(ch) > 0) do
       alter ch -= ch.head ;   // FIFO

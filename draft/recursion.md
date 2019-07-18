@@ -10,7 +10,7 @@ Normally during recursion, the runtime needs to keep track of all the recursive 
 **Example1** 
 
 ```** this rule is not optimized:
-rule fact(n ∈ N) => (r @ N):
+rule fact(n ∈ N) => (r ∈ N):
   when (n = 0) do
     alter r := 1;
   else  
@@ -22,7 +22,7 @@ return;
 **Example2**
 ```
 ** this rule can be optimized:
-rule tail(n ∈ N, acc ∈ N) => (r @ N):
+rule tail(n ∈ N, acc ∈ N) => (r ∈ N):
   when (n = 0) do
     alter r:= acc;
   else
@@ -30,7 +30,7 @@ rule tail(n ∈ N, acc ∈ N) => (r @ N):
   done; 
 return;
 
-rule fact(n ∈ N) => (r @ N):
+rule fact(n ∈ N) => (r ∈ N):
   alter r := tail(n , 1);
 return;  
 ```  
@@ -38,7 +38,7 @@ return;
 **Example3**
 ```
 ** this rule is manually optimized:
-rule fact(a ∈ N, b ∈ N) => (r @ N):
+rule fact(a ∈ N, b ∈ N) => (r ∈ N):
   while (b > 1) do
     alter a := a · a + a;
     alter b := b - 1;

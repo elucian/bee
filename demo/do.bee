@@ -5,7 +5,7 @@ driver bs:
 load $pro_lib.console.(*);
 
 ** bubble sort for integers
-rule sort(this @ [Z]):
+rule sort(this ∈ [Z]):
   ** local variables
   make n := length(this)-1;
   make swap ∈ L;

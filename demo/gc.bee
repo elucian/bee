@@ -7,18 +7,18 @@ driver gc:
 type GenI: {min ,max , ci ∈ Z} <: Object;
 
 ** reset generator
-rule gen_reset(self @ GenI, p_min , p_max ∈ Z):
+rule gen_reset(self ∈ GenI, p_min , p_max ∈ Z):
   alter self.min := p_min;
   alter self.max := p_max;
   alter self.ci  := p_min;
 return;
 ** get next index
-rule get_next(self @ GenI) => (i @ Z):
+rule get_next(self ∈ GenI) => (i ∈ Z):
   alter i  := self.ci;
   alter self.ci += 1;
 return;
 ** detect when finish
-rule gen_finish(self @ GenI)  => (r @ L):
+rule gen_finish(self ∈ GenI)  => (r ∈ L):
   alter r := (self.ci ≥ self.max);
 return;
 ** use GenI to make one instance: 

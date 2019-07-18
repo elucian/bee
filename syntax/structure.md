@@ -327,7 +327,7 @@ make .v ∈ N;      //public variable
 rule .f(x ∈ N) ∈ N => (x + 1);
 
 ** public rule
-rule .m(x, y ∈ N) => (r @ N):
+rule .m(x, y ∈ N) => (r ∈ N):
   alter r := x + y;
 return;
 ```
@@ -438,7 +438,7 @@ alter result := new_name(arguments);
 aspect mod:
 
 ** next rule is public
-rule .main(i ∈ Z) => (v @ N):
+rule .main(i ∈ Z) => (v ∈ N):
   when (i < 0) do
     alter v := -i;
   else

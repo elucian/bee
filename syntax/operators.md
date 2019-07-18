@@ -29,10 +29,10 @@ symbol| description
  `!`  | Negation symbol for relations \| Excluded from domain
  `?`  | Template modifier. Associated with string templates 
  `*`  | String replication
- `#`  | System variable  \| Global variable
+ `∈`  | System variable  \| Global variable
  `$`  | System constant  \| Environment variables
- `&`  | String concatenation
- `@`  | Define method result /| input/output parameters
+ `&`  | String concatenation \| number concatenation
+ `#`  | String interpolation placeholder for operator "?"
  `∈`  | Define variable/constant/result/input only parameter
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
