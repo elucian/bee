@@ -124,7 +124,7 @@ In next example b = 0.33(3), delta = (b - a) = 0.083
 
 ```
 ** override default precision
-#precision := 0.01;
+@precision := 0.01;
 
 make a := 0.25; //real
 make b := 1/3; //rational

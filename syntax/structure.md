@@ -89,7 +89,7 @@ Directives are controlling the application compilation. These directives have a 
 |$timer    | 10            | Control time in seconds before a loop give up
 |$debug    | Off / On      | Control if debug information is included
 |$echo     | Off / On      | Control if statement is printed to console in case of error
-|$trace    | Off / On      | Control if #trace variable is populated with information
+|$trace    | Off / On      | Control if @trace variable is getting populated with information
 |$date     | DMY / MDY     | Control date format: DD/MM/YYYY or MM/DD/YYYY
 |$time     | T24 / T12     | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
 |$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
@@ -104,22 +104,22 @@ System variables are defined usually at the beginning of the component.
 
 **introspection:**
 
-Some system variables are available for debugging:
+Following system variables are available for debugging:
 
 ```
-#timer: contains duration information about last executed statement
-#stack: contains debug information about current call stack
-#trace: contains reporting information about executed statements
-#level: contains how deep is the current call stack
-#count: contains last query count: updated/inserted/deleted records
-#query: contains last native query statement
-#error: contains last error message
+@timer: contains duration information about last executed statement
+@stack: contains debug information about current call stack
+@trace: contains reporting information about executed statements
+@level: contains how deep is the current call stack
+@count: contains last query count: updated/inserted/deleted records
+@query: contains last native query statement
+@error: contains last error message
 ```
 
 **notes:** 
 * System variables are global and may be specific to a component;
 * User can create new system variables specific to application;
-* Prefix "&" is used to avoid scope qualifier and improve code readability;
+* Prefix "@" is used to avoid scope qualifier and improve code readability;
 
 ### Components
 
@@ -145,7 +145,7 @@ There is one single _driver_ component for one application. It has the role to l
 
 **usability:**
 
-A _driver_ can read configuration files, define system constants, system variables, application menus, database connections and such. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_.
+A _driver_ can read configuration file: folder names, database connections, precision and other things. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_.
 
 ### Aspects
 An application architect can separate system concerns in multiple _aspects_. One aspect is a component located in _"src"_ folder. A driver can load an aspect only once, then it can use any of its public members on demand. 
@@ -269,10 +269,10 @@ When a component is loaded with qualifier, you can not borrow its members. All p
 
 **Alias**
 
-You can create an alias for a for specific members:
+You can create an alias for a specific member to eliminate qualifiers:
 
 ```
-alias new_name := qualifier.member_name;
+alias new_name: qualifier.member_name;
 ```
 
 **Examples:**
@@ -413,7 +413,7 @@ load qualifier := $pro.src.aspect_name;
 alter result := qualifier.rule_name(arguments);
 
 ** give alias to aspect rule
-alias new_name := qualifier.rule_name;
+alias new_name: qualifier.rule_name;
 
 ** apply aspect using its alias:
 alter result := new_name(arguments);

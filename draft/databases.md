@@ -265,4 +265,4 @@ For debugging the SQL, Bee enable introspection.
 
 * Before execution, database related statements are converted into SQL strings; 
 * We can visualize these strings by using: $trace = On to log query statements; 
-* We can use #query system variable to print out last SQL statement. 
+* We can use @query system variable to print out last SQL statement. 

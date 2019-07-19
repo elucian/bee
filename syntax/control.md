@@ -248,13 +248,13 @@ patch
   raise if condition; //propagate
 final
   ** finalization statement   
-  print "final error:" + #error.code if #error.code > 0;
+  print "final error:" + @error.code if @error.code > 0;
 done;
 ```
 
 **Note:**
 
-* System variable #error is clear after trial is done;
+* System variable @error is clear after trial is done;
 * It is possible to have nested trial blocks;
 
 **Transfer**
@@ -288,12 +288,12 @@ fail {code:value, message:string}; //instant error
 fail error_name;                   // defined error
 
 ** "pass" can create only $unexpected_error: 201
-pass; //clear #error message
+pass; //clear @error message
 pass if condition; //can create "unexpected error"
 ```
 
 **Note:** 
-The standard module will define standard _error objects_ as constants:
+The standard module will define standard _error objects_ as system constants:
 
 * code: 1   = $standard_error   with message: "standard error";
 * code: 2   = $unexpected_error with message: "unexpected error";
@@ -323,7 +323,7 @@ make  y ∈ Q;
 trial
   alter x := 1/0;
 final
-  print #error.message if #error.code ≠ 0;
+  print @error.message if @error.code ≠ 0;
   print 'x = ' + x;
 done;
 ```
@@ -336,8 +336,8 @@ make my_error := {201, 'my error'} ∈ E;
 trial
   fail my_error; //issue custom error
 error 201 do
-  print #error.message;
-  print #error.line;
+  print @error.message;
+  print @error.line;
   ** will fall through
 patch  
   raise; //propagate the error

@@ -82,7 +82,7 @@ Coroutines can be used in producer/consumer design paradigm.
 * consumer is usually working on multiple threads;
 
 ```
-#driver
+driver pc:
 
 make n ∈  (N); //channel
 make c := 100; //batch capacity

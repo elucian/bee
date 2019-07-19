@@ -632,8 +632,8 @@ Format template stings can use escape sequences:
 "#(-)"  = UTF32 code point representation (U-HHHHHHHH) for symbol
 "#(b)"  = binary number
 "#(h)"  = hexadecimal number
-"#(t)"  = time format defined by #time
-"#(d)"  = date format defined by #date
+"#(t)"  = time format defined by @time
+"#(d)"  = date format defined by @date
 "#()[]" = search element by index or by key
 
 ```
@@ -715,9 +715,9 @@ return;
 
 Where pattern cab gave two forms: 
 
-* #(ap:l.d) // 1,000.00
-* #(ap:l,d) // 1.000,00
-* #(ap:l;d) // 1,000.00 | 1.000,00 (depending on country)
+* p := "#(ap:l.d)" // 1,000.00
+* p := "#(ap:l,d)" // 1.000,00
+* p := "#(ap:l;d)" // 1,000.00 | 1.000,00 (depending on country)
 
 **Note:** Last pattern is depending on regional settings: $decimal:'.'/','
 

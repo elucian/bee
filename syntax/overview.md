@@ -133,8 +133,6 @@ These are symbolic representations for primitive data types:
 
 |Example    | Type  | Literal characters
 |-----------|-------|-----------------------------------------------------------
-|False      |  L    | (0,1)
-|True       |  L    | (1,0)
 |123        |  Z    | (0,1,2,3,4,5,6,7,8,9)
 |0b10101010 |  B    | (0b) & (0,1)
 |U+FF       |  A    | (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
@@ -353,11 +351,14 @@ type QDom: (-10..-1:0.01, 1..10:0.01) <: Q;
 
 ## Constant declaration
 
-Constants are identifiers representing a non-mutable value.
+Constants are alias to literals, representing a non-mutable values.
 
 ```
-make constant_name : constant_literal;
-make constant_name : constant_literal ∈ type_name;
+** using implicit type
+alias constant_name: constant_literal;  
+
+** using explicit type
+alias constant_name: constant_literal ∈ type_name; 
 ```
 
 **Notes:** 
@@ -369,8 +370,8 @@ make constant_name : constant_literal ∈ type_name;
 
 **example:**
 ```
-make n : U+2200     ∈ A; //Symbol: ∀
-make n : U-00002200 ∈ U; //Symbol: ∀
+alias n: U+2200     ∈ A; //Symbol: ∀
+alias n: U-00002200 ∈ U; //Symbol: ∀
 ```
 
 **Note:** 
@@ -384,10 +385,11 @@ Variables are defined using keyword _make_ plus one of the operators:
 operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable/element type 
- :       | pair-up element:value in collection or argument list
+ :       | pair-up element:value for collections
  :       | define initial value for a constant
- :=      | binding  = assign a value \| borrow a reference
- ::      | cloning  = duplicate object \| deep copy
+ :       | define initial value for a parameter
+ :=      | binding  = assign a value \| share a reference
+ ::      | cloning  = duplicate object \| collection
  
 ```** primitive variable declarations with type
 make var_name ∈  type_name;

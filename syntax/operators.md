@@ -29,11 +29,11 @@ symbol| description
  `!`  | Negation symbol for relations \| Excluded from domain
  `?`  | Template modifier. Associated with string templates 
  `*`  | String replication
- `∈`  | System variable  \| Global variable
+ `@`  | System variable  \| Global variable
  `$`  | System constant  \| Environment variables
  `&`  | String concatenation \| number concatenation
  `#`  | String interpolation placeholder for operator "?"
- `∈`  | Define variable/constant/result/input only parameter
+ `∈`  | Define variable/constant/result/parameter type
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
  `:`  | Pair up key-value in a collection or rule call 
@@ -108,11 +108,13 @@ symbol | meaning
  `≠`   | divergent values \| divergent objects (deep comparison)
  `≡`   | same reference (shallow comparison)
  `≈`   | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
- `~`   | similar numbers: (0.2 ~ 0.9)  \| similar symbols: ('a' ~ 'b') 
- `>`   | value is greater than 
- `<`   | value is less than
+ `~`   | similar numbers: (0.1 ~ 0.9) \| not similar (-1 !~ +1) 
+ `~`   | similar characters: ('a' ~ 'A')  \| not similar ('a' !~ 'B')
+ `>`   | value is greater than: (2 > 1)
+ `<`   | value is less than: (1 < 2)
  `≥`   | greater than or equal to
  `≤`   | less than or equal to
+
 
 **negation:** 
 
@@ -138,11 +140,11 @@ symbol | result     |meaning
  `+`   | List       |Concatenation between two lists
  `+`   | Array      |Concatenation between two arrays
  `∀`   | Element    |Specify all elements from a collection X[∀]
- `∃`   | Logic      |Check a collection for quality or qualification
+ `∃`   | Logic      |Check a collection for qualification using an expression
                                           
 ## Logic Operators 
 
-Bee is using constants:  True = 1 and False = 0
+Bee is using enumeration symbols:  True = 1 and False = 0
 
 symbol| meaning    | notes
 ------|----------- |-------------------------------
@@ -195,13 +197,13 @@ Arity = 2
 ## String operators
 
 Symbol| Description
-------|---------------------------------------------------------------
+------|-------------------------------------------------------------------
  `*`  | String pattern repetition \| String generator
  `.`  | concatenate two literals using \ or; // depending on OS
  `/`  | concatenate two strings with / and de-duplicate last
  `\\` | concatenate two strings with \\ and de-duplicate last
  `+`  | concatenate two strings after trimming first string 
- `&`  | concatenate two strings as they are
+ `&`  | concatenate two strings as they are or numbers as string literals
 
  
 **Read Next:** [keywords](keywords.md)

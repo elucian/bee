@@ -35,7 +35,7 @@ Next statements are used to declare new elements in a component.
 | aspect   | Define aspect component
 | module   | Define reusable component
 | load     | Load module or aspect
-| alias    | Suppress scope qualifier for members from components
+| alias    | Declare constant \| Eliminate scope qualifier
 | type     | Declare data super-type or sub-type in a component
 | make     | Create a new variable or multiple variables
 | rule     | Create a new _rule_ or _prototype_
