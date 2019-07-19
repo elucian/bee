@@ -61,13 +61,13 @@ rule test(n ∈ N):
 return;
 
 ** create a branch from rule test:
-make  r ∈ N; //result reference
-begin test(r); //side branch 
+make  r ∈ N;   // result reference
+begin test(r); // side branch 
 while r ≥ 0 do
   write r; write ",";
-  yield test; //suspend main thread and resume test 
+  yield test;  // suspend main thread and resume test 
 repeat;
-print; //0,1,2,3,4,5,6,7,8,9,
+print;  // 0,1,2,3,4,5,6,7,8,9,
 ```
 
 **producer-consumer:**
@@ -84,11 +84,11 @@ Coroutines can be used in producer/consumer design paradigm.
 ```
 driver pc:
 
-make n ∈  (N); //channel
-make c := 100; //batch capacity
+make n ∈  (N); // channel
+make c := 100; // batch capacity
 
-make target := 1000; //simulate data target
-make mark ∈ N; //current item to process
+make target := 1000; // simulate data target
+make mark ∈ N; // current item to process
 
 ** data source/target to process
 make s := [0](1000); //array of integers
@@ -116,14 +116,14 @@ rule bar(channel ∈ (N)):
     yield foo; //suspend bar and signal foo to wake-up
   repeat;  
 return;
-** call foo asynchronously on 1 thread
-begin foo(n); //commence producer foo 
+** call foo asynchronously on 1 thread 
+begin foo(n); // commence producer foo 
 
 ** call bar asynchronously on 4 threads
 for i ∈ (1..4) do
   begin bar(n); //start a consumer thread
 next;  
-rest; //wait for both foo and bar to finish
+rest; // wait for both foo and bar to finish
 
 over.
 ``` 

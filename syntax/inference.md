@@ -20,8 +20,8 @@ make b := "Text"; //type = X
 make i := 0;   //type := Z
 make j := 0.5; //type := R
 ** define synonyms for logic constants
-alias false: False; //type L = 0
-alias true : True;  //type L = 1
+save false := 0; //type L = 0
+save true  := 1; //type L = 1
 ** multiple variables
 make x,y,z := 5; //type = Z
 ** combination of types

@@ -468,7 +468,7 @@ alter c := 'This is ' + 'fixed size string';
 ** automatic conversion to string
 alter s := '40' & 5; //'405'
 ** URL/path concatenation
-make test_file := $pro.'src'.'test.bee';
+save test_file := $pro.'src'.'test.bee';
 ** when $platform = "Windows"** Let's say $pro = "c:\work\project\"
 print test_file; //c:\work\project\src\test.bee
 ** when $platform = "Linux"** Let's say $pro = "/work/project/"

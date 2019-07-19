@@ -351,27 +351,27 @@ type QDom: (-10..-1:0.01, 1..10:0.01) <: Q;
 
 ## Constant declaration
 
-Constants are alias to literals, representing a non-mutable values.
+Constants are defined identifiers for literal constants. 
 
 ```
 ** using implicit type
-alias constant_name: constant_literal;  
+save constant_name  := constant_literal;  
 
 ** using explicit type
-alias constant_name: constant_literal ∈ type_name; 
+save constant_name := constant_literal ∈ type_name; 
 ```
 
 **Notes:** 
 
-* Constant initial value is assigned using operator ":",
-* System constants have prefix "$" and are public all the time,
-* Other constants can be public if they are using prefix ".",
-* Local constants are also possible and encouraged if necessary.
+* Constant initial value is assigned using operator ":=" or "::",
+* System constants are public and have prefix "$",
+* User defined constants using prefix "." are also public,
+* Local constants are possible and are transien.
 
 **example:**
 ```
-alias n: U+2200     ∈ A; //Symbol: ∀
-alias n: U-00002200 ∈ U; //Symbol: ∀
+save n := U+2200     ∈ A; //Symbol: ∀
+save n := U-00002200 ∈ U; //Symbol: ∀
 ```
 
 **Note:** 
@@ -386,7 +386,6 @@ operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable/element type 
  :       | pair-up element:value for collections
- :       | define initial value for a constant
  :       | define initial value for a parameter
  :=      | binding  = assign a value \| share a reference
  ::      | cloning  = duplicate object \| collection
@@ -424,7 +423,7 @@ print b;          // expected 12
 
 **Examples:**
 ```** declare a constant
-make pi : 3.14 ∈ R;
+save pi := 3.14 ∈ R;
 ** declare multiple variables
 make a   ∈ Z; //Integer 
 make x,y ∈ R; //Double
@@ -880,7 +879,7 @@ A rule binding first parameter to an object or composite type is called: _method
 
 * A method can have results;
 * A method can have side-effects;
-* A methods is defined in same module as the data type;
+* A method is defined in same module as the data type;
 * A method can be overwritten in another module;
 
 **pattern:**
@@ -955,7 +954,7 @@ These rules are usually wrapped in modules.
 **Example:**
 This is myLib.bee file: 
 ```
-module  myLib;
+module myLib:
 
 load myLib := $bee.lib.cpp.myLib; //load cpp library
 ** define a wrapper for external "fib"

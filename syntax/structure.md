@@ -68,7 +68,7 @@ Bee can use a runt-time configuration file:
 ### System Constants
  System constants are using "$" prefix. These constants are global and immutable. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ component.
 
-| Constant | Environment| Description                |
+|Constant  | Environment| Description                |
 |----------|------------|----------------------------|
 |$bee_home | BEE_HOME   | Bee home folder            |
 |$bee_lib  | BEE_LIB    | Bee library home           |
@@ -78,24 +78,24 @@ Bee can use a runt-time configuration file:
 |$pro_mod  | N/A        | Program components home    |
 |$pro_log  | N/A        | Reporting folder           |
 
-### System directives
+### Compiler directives
 
-Directives are controlling the application compilation. These directives have a pre-defined values. You can setup these values in compiler configuration file. Once compilation is done you can not change these options.
+Compiler directives are system constants that control the compilation process. You can setup these options in compiler configuration file or in driver source file. You can not change these options after compilation. They are available for normal control flow statements. You can use _when_ statement to check $platform for example.
 
-| Constant | Default value | Description
+|Constant  | Default value | Description
 |----------|---------------|----------------------------------------------------------------
 |$precision| 0.001         | Control numeric precision
 |$recursion| 10000         | Control how deep a recursion before give up
 |$timer    | 10            | Control time in seconds before a loop give up
-|$debug    | Off / On      | Control if debug information is included
-|$echo     | Off / On      | Control if statement is printed to console in case of error
-|$trace    | Off / On      | Control if @trace variable is getting populated with information
-|$date     | DMY / MDY     | Control date format: DD/MM/YYYY or MM/DD/YYYY
-|$time     | T24 / T12     | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
-|$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
+|$debug    | 'Off'         | Control if debug information is included
+|$echo     | 'Off'         | Control if statement is printed to console in case of error
+|$trace    | 'Off'         | Control if @trace variable is getting populated with information
+|$date     | 'DMY' / 'MDY' | Control date format: DD/MM/YYYY or MM/DD/YYYY
+|$time     | 'T24' / 'T12' | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
+|$platform | 'Windows'     | Alternative: "Linux", "Mac" is the target platform
 
 **note**
-* You can overwrite system directives in driver but not in _aspect_ or _method_ components;
+* You can overwrite compiler parameters in driver but not in _aspect_ or _module_ components;
 * Precision is controlling both: rational numbers and display precision for floating numbers;
 
 ### System Variables
@@ -107,19 +107,20 @@ System variables are defined usually at the beginning of the component.
 Following system variables are available for debugging:
 
 ```
-@timer: contains duration information about last executed statement
-@stack: contains debug information about current call stack
-@trace: contains reporting information about executed statements
-@level: contains how deep is the current call stack
-@count: contains last query count: updated/inserted/deleted records
-@query: contains last native query statement
-@error: contains last error message
+@params //contains a vector of strings, with program parameters
+@names  //contains a vector of strings, with parameter names
+@timer  //contains duration information about last executed statement
+@stack  //contains debug information about current call stack
+@trace  //contains reporting information about executed statements
+@level  //contains how deep is the current call stack
+@count  //contains last query count: updated/inserted/deleted records
+@query  //contains last native query statement
+@error  //contains last error or is empty = {}
 ```
 
 **notes:** 
-* System variables are global and may be specific to a component;
-* User can create new system variables specific to application;
-* Prefix "@" is used to avoid scope qualifier and improve code readability;
+* System variables are global and are defined in a library;
+* Prefix "@" is used to improve code readability;
 
 ### Components
 
@@ -129,7 +130,7 @@ A component is a source file with extension .bee. You can organize an applicatio
 
 One _component_ is identified by a _name_ created with one different keyword depending on component role:
 
-* driver: define the leading component name for an application;
+* driver: define the leading component for an application;
 * aspect: define a component that belong to an application;
 * module: define a component that can be reused by many applications;
 
@@ -137,42 +138,44 @@ One _component_ is identified by a _name_ created with one different keyword dep
 * One application can have one single _driver_;
 * One _driver_ can load multiple _aspects_ and _modules_;
 * One _aspect_ can also load _aspects_ and _modules_;
-* One _module_ can also load modules but not _aspects_;
+* One _module_ can also load _modules_ but not _aspects_;
 * One component file is ending with keyword _over_;
 
 ### Drivers
-There is one single _driver_ component for one application. It has the role to lead the application main thread. When _driver_ execution is over the application give control back to the operating system. 
+There is one single _driver_ component for each application. It has the role to lead the application main thread. When _driver_ execution is over the application give control back to the operating system. 
 
 **usability:**
 
 A _driver_ can read configuration file: folder names, database connections, precision and other things. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_.
 
 ### Aspects
-An application architect can separate system concerns in multiple _aspects_. One aspect is a component located in _"src"_ folder. A driver can load an aspect only once, then it can use any of its public members on demand. 
+An application architect can separate system concerns in multiple _aspects_. One _aspect_ is a component located in _"src"_ folder. A _driver_ can load an _aspect_ only once, then it can use any of its public members on demand using dot notation. 
 
 
 **Usability:**
-* At least one aspect element must be public;
-* Usually an aspect do not have rogue statements;
-* If aspect has rogue statements these are executed only once, when the aspect is loaded first time;
-* Aspect variables have one single value shared in application global context.
+* At least one _aspect_ element must be public;
+* Usually an _aspect_ do not have rogue statements;
+* If _aspect_ has rogue statements these are executed only once, when the _aspect_ is loaded first time;
+* All _aspect_ variables and constants can have each one single value shared in application context.
 
 ### Modules
-A module is a reusable component stored in a library. This in a sub-folder of _"lib"_. One driver or aspect can _load_ from a library one or more modules. From each module we can use one or more public members with scope qualifier.
+A _module_ is a reusable component stored in a _library_. This in a sub-folder of _"lib"_ folder. One driver or aspect can _load_ from a library one or more _modules_. From each _module_ we can use one or more public members with scope qualifier using dot notation.
 
 **notes:**
-* Modules must have public members;
+* Modules must have at least one public member;
 * Modules does not have rogue statements;
+* Modules can not be stored in project folders;
 
 ## Declaration
 
-Bee is using 7 kind of declarations:
+Bee is using 6 kind of declarations:
 
-* load  :import  a library in global scope
-* alias :declare alternative name for library or aspect
-* type  :declare data types
-* make  :declare variable
-* rule  :declare named code block
+* load  // import  a library in global scope
+* alias // declare alternative name for library or aspect
+* type  // declare data types
+* make  // declare variable
+* save  // declare a constant
+* rule  // declare named code block
 
 ## Statement
 
@@ -197,11 +200,11 @@ Each statement start with one imperative keyword:
 ### Code block
 Statements can be contained in blocks of code.
 
-* when  :create two ways decision statement
-* case  :create multi path conditional selector
-* while :create conditional repetitive block
-* for   :create iterator for all elements in a domain or collection
-* trial :create a block of code that may fail, to handle exceptions
+* when  // create two ways decision statement
+* case  // create multi path conditional selector
+* while // create conditional repetitive block
+* for   // create iterator for all elements in a domain or collection
+* trial // create a block of code that may fail, to handle exceptions
 
 **notes:**
 
@@ -218,12 +221,12 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 ```
 driver main:
 ** read the number of parameters
-make c := $params.count;
+make c := @params.count;
 halt if (c = 0);
 ** print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
-  write $params[i];
+  write @params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;
@@ -272,16 +275,16 @@ When a component is loaded with qualifier, you can not borrow its members. All p
 You can create an alias for a specific member to eliminate qualifiers:
 
 ```
-alias new_name: qualifier.member_name;
+alias new_name := qualifier.member_name;
 ```
 
 **Examples:**
 
 ```
-load $runtime.cpp_lib:(*); //load cpp library
-load $runtime.asm_lib:(*); //load asm library
-load $runtime.bee_lib:(*); //load bee core library
-load $program.pro_lib:(*); //load project library
+load $runtime.cpp_lib:(*); // load cpp library
+load $runtime.asm_lib:(*); // load asm library
+load $runtime.bee_lib:(*); // load bee core library
+load $program.pro_lib:(*); // load project library
 ```
 
 ## Global context
@@ -320,8 +323,8 @@ over.
 In Bee all members that begin with dot "." are public members.
 
 ```
-make .pi : 3.14; //public constant
-make .v ∈ N;      //public variable
+save .pi := 3.14; // public constant
+make .v ∈ N;      // public variable
 
 ** public rule
 rule .f(x ∈ N) ∈ N => (x + 1);
@@ -413,14 +416,14 @@ load qualifier := $pro.src.aspect_name;
 alter result := qualifier.rule_name(arguments);
 
 ** give alias to aspect rule
-alias new_name: qualifier.rule_name;
+alias new_name := qualifier.rule_name;
 
 ** apply aspect using its alias:
 alter result := new_name(arguments);
 ```
 
 **Notes:**
-* An application can have a single driver;
+* Any application can have a single driver;
 * Aspect can be loaded from a driver or another aspect;
 * Public and private states from an aspect are persistent;
 * Aspect can be initialized only once;
@@ -429,11 +432,11 @@ alter result := new_name(arguments);
 
 **Restriction:**
 * one component can not be loaded from inside a rule;
-* the same component can not be loaded twice with different qualifiers;
-* one component can have same file name with another but must use a different qualifier;
+* the same component can not be loaded twice;
 
 **Example:**
 
+Define an aspect named "mod".
 ```
 aspect mod:
 
@@ -451,9 +454,10 @@ over.
 
 **Using aspect:**
 
+Define driver named "main" and use previous defined "mod"
 ```
 driver main:
-** define aspect "mod"
+** using aspect "mod"
 load mod := $pro.mod;
 
 ** define variable result
