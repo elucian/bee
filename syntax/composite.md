@@ -153,9 +153,9 @@ make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 ** list traversal
 for x ∈ list do
   write x;
-  write _ if (x ≠ list.head);
+  write "," if (x ≠ list.head);
 next;
-print; //0 1 2 3 4 5
+print; //0,1,2,3,4,5
 ```
 
 ## Array
