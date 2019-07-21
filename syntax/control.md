@@ -4,25 +4,39 @@ A control flow statement is an unnamed block of code.
 
 **Statements:**
 
-Bee has 5 control flow statements.
+Bee has 7 control flow statements.
 
 Name             | Description
 -----------------|----------------------------------
-[when](#when)    | conditional block statement
-[case](#case)    | conditional path selector
+[when](#when)    | single-condition dual path statement
+[case](#case)    | multi-condition multi-path selector
+[do](#do)        | unconditional anonymous block
+[repeat](#repeat)| unconditional repetitive block
 [while](#while)  | conditional repetitive block
-[for](#for-each) | collection iterator
-[trial](#trial)  | serial list of small tasks
+[for](#for-each) | collection iterator block
+[trial](#trial)  | exception handler block
 
 **Restriction:**
 
 * You can not use _"make"_ inside any control flow statements,
 * You can not use a conditional _"if"_ for a control flow statement.
 
+## do
+This statement is also called _local context_. It begins with _"do"_ and is ending with _"done"_;
+
+**example:**
+```
+make x = 0; //global
+do
+  make x = 1; //local
+  print x; // 1
+done;
+print x; // 0
+```
 
 ## when
 
-This statement also called _branch_. It starts with _when_ and is ending with _done_:
+This statement is also called _branch_. It starts with _"when"_ and is ending with _"done"_:
 
 **syntax**
 ```
@@ -98,6 +112,22 @@ case a > 9 do
 else
   print ("ok: a = " & a);
 done; 
+```
+## Repeat
+
+This block start with _"do"_ and is ending with _"repeat"_:
+
+**example**
+
+```
+make x = 0; //control variable
+do
+  make x += 1;
+  stop if x = 10;
+  write x & ",";
+repeat;
+write x; 
+print; // 1,2,3,4,5,6,7,8,9,10
 ```
 
 ## While
