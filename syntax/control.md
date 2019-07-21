@@ -122,13 +122,15 @@ This block start with _"do"_ and is ending with _"repeat"_:
 ```
 make x = 0; //control variable
 do
-  make x += 1;
+  alter x += 1;
   stop if x = 10;
   write x & ",";
 repeat;
 write x; 
 print; // 1,2,3,4,5,6,7,8,9,10
 ```
+
+**Note:** You should never use _"make"_ inside a loop.
 
 ## While
 

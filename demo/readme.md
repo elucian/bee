@@ -8,7 +8,8 @@ Unverified Bee demo source files:
 1. [ct.bee](ct.bee) - Composite types
 1. [if.bee](if.bee) - Decision statements
 1. [in.bee](in.bee) - Input multiple values
-1. [cs.bee](cs.bee) - Control structures
+1. [cs.bee](cs.bee) - Conditional statements
+1. [do.bee](do.bee) - Repetitive statements
 1. [fn.bee](fn.bee) - Rule declaration
 1. [fi.bee](fi.bee) - Recursive rule
 1. [gv.bee](gv.bee) - Global variables
@@ -25,8 +26,8 @@ Unverified Bee demo source files:
 1. [rp.bee](ro.bee) - Rule as parameter
 1. [ho.bee](ho.bee) - High order rules 
 1. [gc.bee](gc.bee) - Generator object demo 
-1. [bs.bee](bs.bee) - Bubble sort algorithm
-1. [do.bee](do.bee) - Sort demo with do and for
+1. [bs.bee](bs.bee) - Bubble sort algorithm using while
+1. [b2.bee](bs.bee) - Bubble sort algorithm using for
 1. [ac.bee](ac.bee) - Asynchronous call using _start_
 
 ## Tools

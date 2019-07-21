@@ -1,38 +1,24 @@
-+-------------------------------------------
-| Bubble sort using while..do and for..do   |
-+-------------------------------------------+
-driver bs:
++---------------------------------------
+| Local context & repetitive statement |
++--------------------------------------+
+driver 'do.bee':
 load $pro_lib.console.(*);
 
-** bubble sort for integers
-rule sort(this ∈ [Z]):
-  ** local variables
-  make n := length(this)-1;
-  make swap ∈ L;
-  ** repetitive block do
-  while swap do
-    alter swap := False; // reset flag
-    for i ∈ (0.!n) do
-      ** this pair is out of order ?      
-      when this[i] < this[i+1] do
-        ** swap elements using XOR
-        alter this[i]   := this[i]   ⊕ this[i+1];
-        alter this[i+1] := this[i+1] ⊕ this[i];
-        alter this[i]   := this[i]   ⊕ this[i+1];
-        alter swap := True;
-      done;
-    next;
-    exit if ¬ swap;
-  repeat;
-return;
-** define test & result fixture
-make test   := [1,4,1,5,9,2,6,5,3,5];
-make result := [1,1,2,3,4,5,5,5,6,9];
-** test sort rule
-apply sort(test);
-print test; // expect [1,1,2,3,4,5,5,5,6,9]
+** local context
+make x = 0; //global
+do
+  make x = 1; //local
+  print x; // expect: 1
+done;
+print x; // expect: 0
 
-** check result
-pass if test = result;
+** repetitive block
+do
+  make x += 1;    // increment
+  stop if x = 10; // exit condition
+  write x & ",";  // write in buffer
+repeat;
+write x; // write in buffer 
+print;   // expected: 1,2,3,4,5,6,7,8,9,10
 
 over.
