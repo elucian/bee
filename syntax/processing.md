@@ -623,7 +623,9 @@ print "#(1,000.00)" ? (1000.45); // 1,234.56
 Format template stings can use escape sequences:
 
 ```
-"#(n)"  = decimal number using default precision
+"#(n)"  = natural number 
+"#(z)"  = integer number
+"#(r)"  = real number using default precision
 "#(s)"  = single quoted string for string, symbol or number
 "#(q)"  = double quoted string for string, symbol or number
 "#(a)"  = ASCII symbol representation of code
@@ -634,7 +636,9 @@ Format template stings can use escape sequences:
 "#(h)"  = hexadecimal number
 "#(t)"  = time format defined by @time
 "#(d)"  = date format defined by @date
-"#()[]" = search element by index or by key
+"#(f)"  
+"#(r)"  = real number
+"#(f)[]"= search element by index or by key
 
 ```
 
@@ -737,7 +741,9 @@ Where pattern cab gave two forms:
 ### Format examples:
 
 ```
- "#(n)"       // numeric notation, with default precision left align
+ "#(r)"       // real number, with default precision left align 
+ "#(n)"       // natural number, unsigned left align
+ "#(z)"       // integer number, with sign left align
  "#(10)"      // right align numeric with 10 digits padded with spaces
  "#(10.2)"    // 10 integer digits and 2 decimals, right padded with spaces
  "#(>_:10)"   // right align 10 digits padded with spaces

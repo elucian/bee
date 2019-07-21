@@ -86,6 +86,7 @@ done;
 * _case_ is preferred way to replace a _ladder_
 
 **example:**
+
 ```
 make a ∈ Z;
 write  'Enter a number between 0 and 9:'
@@ -95,7 +96,7 @@ case a < 0 do
 case a > 9 do
   print 'wrong: a > 9';
 else
-  print ("ok: a =" + a);
+  print ("ok: a = " & a);
 done; 
 ```
 
