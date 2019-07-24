@@ -84,7 +84,7 @@ Compiler directives are system constants that control the compilation process. Y
 
 |Constant  | Default value | Description
 |----------|---------------|----------------------------------------------------------------
-|$precision| 0.001         | Control numeric precision
+|$precision| 0.00001       | Control numeric precision
 |$recursion| 10000         | Control how deep a recursion before give up
 |$timer    | 10            | Control time in seconds before a loop give up
 |$debug    | 'Off'         | Control if debug information is included
@@ -96,7 +96,7 @@ Compiler directives are system constants that control the compilation process. Y
 
 **note**
 * You can overwrite compiler parameters in driver but not in _aspect_ or _module_ components;
-* Precision is controlling both: rational numbers and display precision for floating numbers;
+* Precision is controlling display precision for real numbers, float and double numbers;
 
 ### System Variables
 

@@ -5,7 +5,7 @@ since `q` may be equal to 1, every binary integer is also a rational number.
 
 **Note:** Q numbers are approximated numbers.
 
-* Default precision for Q numbers is $precision := 0.001 (micro);
+* Default precision for Q numbers is $precision: 10⁻⁵ = 0.00001 
 * Default precision can be set in _driver_: $precision:x;
 * Operator "≈" is using the precision if the operator "±" is not used;
 
@@ -123,11 +123,13 @@ Rational numbers and other numbers can be compared using "≈" instead of "=".
 In next example b = 0.33(3), delta = (b - a) = 0.083 
 
 ```
+driver test:
+
 ** override default precision
-@precision := 0.01;
+$precision := 0.01;
 
 make a := 0.25; //real
-make b := 1/3; //rational
+make b := 1/3;  //rational
 
 ** using specified precision 0.01 < 0.083
 print (a ≈ b); //false
