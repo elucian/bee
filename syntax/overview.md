@@ -196,6 +196,7 @@ make r := 10 ∈ Z;   //reference to integer
 make n := 0  ∈ i64; //native type
 
 alter n := r -> i64; //explicit unboxing
+alter n := i64(r);   //equivalent
 ** verify value identity
 print n = r; //0 (false: different types)
 print n ≡ r; //1 (true:  equivalent) - ignore types
@@ -212,15 +213,15 @@ print r; //r = 10 (unmodified)
 ```** create a reference
 make  a := 1 ∈ Z;
 ** transfer reference value
-make  c := a; //share a reference
+make  c := a ∈ Z; //share a reference
 
 pass if c = a; //1 (same location)
-pass if c ≡ a; //1 (same value)
+pass if c ≡ a; //1 (equivalent values)
 ** transfer value by deep copy
 make  b :: a; //new reference
 
-pass if a = b; //0 (different location)
-fail if a ≡ b; //1 (same values)
+fail if a = b; //0 (different location)
+pass if a ≡ b; //1 (equivalent values)
 ```
 
 ## Composite types
