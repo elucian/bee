@@ -94,24 +94,53 @@ This is the last element: 10
 ```
 
 **resize**
-Array capacity can be modified using union operator "+". This will reset the array reference. That means it will not update any slice or other references you may have to this array. 
+Array capacity can be modified using union operator "+" or "+=". This will reset the array reference. That means it will not update any slice or other references you may have to this array. 
 
 ```
 ** define new array and reference
 make array := [0](10); 
-make refer := array;
+make acopy := array; //copy reference
 
-print array ≡ refer; //0 = True (same array)
+print array = acopy; //1 = True (same array)
 
 ** extend array with 10 more elements
-alter array    += [0](10); //10 new elements
-alter array[∀] := 1; //modify all 
+alter acopy    ++ [0](10); //10 new elements
+alter acopy[*] := 1; //modify all 
 
 ** print new array and reference
-print array; //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-print refer; //[0,0,0,0,0,0,0,0,0,0]  
+print acopy;  //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+print array;  //[0,0,0,0,0,0,0,0,0,0]
 
-print array ≡ refer; //0 = False (different arrays)
+print array = acopy; //0 = False (different arrays)
+```
+
+## Array spreading
+
+Array data can be used as arguments for feeding a function that receive variable arguments.
+
+```
+rule sum(*args ∈ [i64]) => (result: 0 ∈ Z): 
+  for e ∈ args do 
+    result += e;
+  done;  
+return;
+
+make array := [1,2,3,4,5,6,7,8,9,10];
+make s := sum(*array); //array spreading
+```
+
+## Array decomposition
+
+Array data can be assigned to multiple variables. Last elements can be captured using rest notation:
+
+```
+make array := [1,2,3,4,5];
+
+make x, y, *other :=  [1,2,3,4,5]; //decomposition
+
+print "x = #(n)" ? x;  // x = 1
+print "y = #(n)" ? y;  // y = 2
+print "other = #[*]" ? other; //other = [3,4,5]
 ```
 
 ## Array slicing
@@ -138,10 +167,10 @@ Anonymous slicing notation can be used to extract or modify specific elements fr
 ```
 make a:= [0,1,2,3,4,5,6,7,8,9];
 do
-  print a[1..-1]; //will print [0,1,2,3,4,5,6,7,8,9]
-  print a[-3..-1]; //will print [7,8,9]
-  print a[1..1]; //will print [0]
-  print a[1..4]; //will print [1,2,3,4]
+  print a[1..-1];  // will print [0,1,2,3,4,5,6,7,8,9]
+  print a[-3..-1]; // will print [7,8,9]
+  print a[1..1];   // will print [0]
+  print a[1..4];   // will print [1,2,3,4]
  
 ** modify first 4 elements
   alter a[0..3] += 2; 
@@ -162,9 +191,9 @@ print  a;  //[0,0,0,0,0]
 make c := a[0..2]; //[0,0,0]
 make e := a[3..4]; //[0,0]
 
-** modify slice elements
-alter c[∀] := 1;
-alter e[∀] := 2;
+** modify all slice elements
+alter c[*] := 1;
+alter e[*] := 2;
 
 ** original array is modified
 print a; //[1,1,1,2,2]
@@ -176,14 +205,14 @@ alter a[3..-1] := [2,3];
 
 ## Matrix Operations
 
-Modify all elements of the matrix is possible using [∀] and assign operator “ := ”
+Modify all elements of the matrix is possible using [*] and assign operator “ := ”
 
 ```
 ** a matrix having 2 rows and 2 columns
 ** initialize all elements with 100
 make M: [Z](2,2);
 do
-  M[∀] := 100;
+  M[*] := 100;
   print (M);
 done;
 ```
@@ -196,19 +225,19 @@ A matrix can support scalar operations like Array
 make M ∈ [Z](2,2);
 do
 ** assign same value to all elements
-  M[∀] := 100;
+  M[*] := 100;
 ** modify all elements
-  M[∀] += 10;
+  M[*] += 10;
   print(M); //[[110,110],[110,110]]
 
 ** modify an entire row 
-  M[1,∀] := 0;
-  M[2,∀] := 1;
+  M[1,*] := 0;
+  M[2,*] := 1;
   print(M); //[[0,0],[1,1]]
   
 ** modify an entire column
-  M[∀,1] += 1;
-  M[∀,2] += 2;
+  M[*,1] += 1;
+  M[*,2] += 2;
   print(M); //[[1,2],[2,3]]
 done;
 ```
@@ -221,7 +250,7 @@ Two matrices can be added to each other if they have the same dimensions.
 make M  := [1](10,10) + [2](10,10);
 
 ** verify the result is a matrix of same dimensions  
-pass if M = [3](10,10);
+pass if M ≡ [3](10,10); //expected
 ```
 
 **Memory impedance**
@@ -330,8 +359,8 @@ done;
 ## List Operations
 We can add elements to a list or remove elements from the list very fast: 
 
-* operator += append one element to end of list
-* operator -= delete one element by reference
+* operator ++ append one element to end of list
+* operator -- delete one element by reference
 
 
 ### List Concatenation
@@ -370,12 +399,12 @@ A stack is a LIFO list of elements: LIFO = (last in first out)
 ```
 make a := (1, 2, 3); //list
 make last ∈ N;
-** append to stack with operator "+="
-alter a += 4; //(1,2,3,4)
-** read last element using "-="
+** append to stack with operator "++"
+alter a ++ 4; //(1,2,3,4)
+** read last element using "++"
 alter last := a.tail; //last = 4
-** remove last element using -=
-alter a -= last; //a = (1,2,3)
+** remove last element using "--"
+alter a -- last; //a = (1,2,3)
 ```
 
 ### List as queue
@@ -385,12 +414,12 @@ A queue is a FIFO collection of elements: (first in first out)
 ```
 make q := (1,2,3); 
 make first: N;
-** enqueue new element into list "+=" 
-alter q += 4; //(1,2,3,4)
+** enqueue new element into list "++" 
+alter q ++ 4; //(1,2,3,4)
 ** read first element using ":="
 alter first := a.head; //first = 1
-** dequeue first element using "-="
-alter a -= first; //a = (2,3,4)
+** dequeue first element using "--"
+alter a -- first; //a = (2,3,4)
 ```
 
 
@@ -427,7 +456,7 @@ Available for: {List, Table, Set} but not Array or Slice
 **Example:**
 ```
 make my_map := {("a":1),("b":2),("c":3)};
-for key,value ∈ my_map do
+for (key, value) ∈ my_map do
   print('("' + key + '",' + value +')');
 next;
 ```
@@ -623,49 +652,53 @@ print "#(1,000.00)" ? (1000.45); // 1,234.56
 Format template stings can use escape sequences:
 
 ```
-"#(n)"  = natural number 
-"#(z)"  = integer number
-"#(r)"  = real number using default precision
-"#(s)"  = single quoted string for string, symbol or number
-"#(q)"  = double quoted string for string, symbol or number
-"#(a)"  = ASCII symbol representation of code
-"#(u)"  = Unicode symbol representation of code
-"#(+)"  = UTF16 code point representation (U+HHHH) for symbol
-"#(-)"  = UTF32 code point representation (U-HHHHHHHH) for symbol
-"#(b)"  = binary number
-"#(h)"  = hexadecimal number
-"#(t)"  = time format defined by @time
-"#(d)"  = date format defined by @date
-"#(f)"  
-"#(r)"  = real number
-"#(f)[]"= search element by index or by key
+"#(n)"   = natural number 
+"#(z)"   = integer number
+"#(r)"   = real number using default precision
+"#(s)"   = single quoted string for string, symbol or number
+"#(q)"   = double quoted string for string, symbol or number
+"#(a)"   = ASCII symbol representation of code
+"#(u)"   = Unicode symbol representation of code
+"#(+)"   = UTF16 code point representation (U+HHHH) for symbol
+"#(-)"   = UTF32 code point representation (U-HHHHHHHH) for symbol
+"#(b)"   = binary number
+"#(h)"   = hexadecimal number
+"#(t)"   = time format defined by @time
+"#(d)"   = date format defined by @date
+"#[*]"   = array decomposition (separated by comma)
+"#(n)[*]"= array decomposition with natural numbers
+"#(n)[i]"= search element by index or by key
+
 
 ```
 
 **Examples:**
 ```
-print "Numbers: #(n) and #(n)" ? (10, 11);
-print "Alpha:   #(a) and #(a)" ? (30, 41);
-print "Strings: #(s) and #(s)" ? ('odd','even');
-print "Quoted:  #(q) and #(q)" ? ('odd','even');
-print "Unicode: #(u) and #(u)" ? (U+2260,U+2261);
-print "Unicode: #(q) and #(q)" ? (U+2260,U+2261);
+print "Numbers:   #(n) and #(n)" ? (10, 11);
+print "Alpha:     #(a) and #(a)" ? (30, 41);
+print "Strings:   #(s) and #(s)" ? ('odd','even');
+print "Quoted:    #(q) and #(q)" ? ('odd','even');
+print "Unicode:   #(u) and #(u)" ? (U+2260,U+2261);
+print "Unicode:   #(q) and #(q)" ? (U+2260,U+2261);
+print "Collection:#[*] and #[*]" ? ([1,2,3],{1,2,3};
 ```
 
 **Expected output:**
 ```
-Numbers: 10 and 11
-Alpha:   0 and A
-Strings: 'odd' and 'even'
-Quoted:  "odd" and "even"
-Unicode: ≠ and ≡
+Numbers:   10 and 11
+Alpha:     0 and A
+Strings:   'odd' and 'even'
+Quoted:    "odd" and "even"
+Unicode:   ≠ and ≡
+Collection:[1,2,3] and {1,2,3}
 ```
 
 **Notes:**
  
 * Template modifier: "?" is polymorph and overloaded, 
-* For template source you can use: { tuple, list, set, hash, array, matrix }.
-* The parentheses () or [] are exclusive optional. You can use one or the other or both.
+* For template source you can use: { tuple, list, set, hash, array, matrix },
+* The parentheses () or [] are exclusive optional. You can use one or the other or both,
+* Multiple [*] can be used with any enumerable collection types
 
 ## Large template
 
@@ -696,8 +729,8 @@ Hey look at this 'test' it "works"!
 
 **Using Set:**
 ```
-make  template := "Hey look at this #[0] it #:[1]";
-make  my_set   := {"test","works!"};
+make  template := "Hey look at this #[0] it #[1]!";
+make  my_set   := {"test","works"};
 print template ? my_set; 
 ```
 

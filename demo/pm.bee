@@ -6,9 +6,9 @@ load $pro_lib.console.(*);
 
 ** making a lambda expression
 make pm := (p1,p2 ∈ N) ∈ N =>
-  (0 if p1 = 0 
-  ,1 if p2 = 0  
-  ,2 if p1 = p2 
+  (0 if p1 ≡ 0 
+  ,1 if p2 ≡ 0  
+  ,2 if p1 ≡ p2 
   ,3 if p1 > p2
   ,4 if True );
   

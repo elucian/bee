@@ -17,32 +17,32 @@ make s := '∈';    //type = U
 make s := 'str';  //type = S
 make b := "Text"; //type = X
 ** numeric expressions
-make i := 0;   //type := Z
-make j := 0.5; //type := R
+make i := 0;   //type := i64
+make j := 0.5; //type := f64
 ** define synonyms for logic constants
-save false := 0; //type L = 0
-save true  := 1; //type L = 1
-** multiple variables
-make x,y,z := 5; //type = Z
+save false := False; //type L = 0
+save true  := True;  //type L = 1
+** multiple variables get same value
+make x, y, z := 5; //type = i64
 ** combination of types
-make n := 0, m := 0.5; //types Z and R
+make n := 0, m := 0.5; //types i64 and f64
 ```
 
 ## Composite
 
 Composite structures are using () [] and {} to create different types:
 
-```** create one list of integers
+```** create one list of integers (i64)
 make t := (1,2); 
-** create one list of symbols
-make l := ('a','b');
+** create one list of symbols (type = A)
+make l := (`a`,`b`);
 ** create an Array with capacity of 4 integers
 make d := [1,2,3,4];
-** create an Array with capacity of 10 real numbers
+** create an Array with capacity of 10 float numbers (f64)
 make e := [0.0](10);
-** create a data set of integers
+** create a data set of integers (i64)
 make s := {1,2,3,4};
-** create a hash map of (Z:U)
+** create a hash map of (i64:U)
 make c := {(1:"storage"),(2:"string")};
 ** create an object with two attributes
 make  b := {name:'Goliath', age:30};
@@ -56,12 +56,12 @@ When we define parameters we can use type inference for:
 
 In rule foo, parameters a, b are optional.
 
-```** result type is Z
+```** result type is i64
 rule foo(a,b: 0) ∈ Z => (a + b);
                                   
-print foo(); //0               
-print foo(1); //1
-print foo(1,2); //3
+print foo();    // 0               
+print foo(1);   // 1
+print foo(1,2); // 3
 ```
 
 **Multiple parameters:**
@@ -69,11 +69,11 @@ print foo(1,2); //3
 Parameters: a, b are mandatory, c is optional.
 
 ```
-make foo := (a,b ∈ Z, c: 0) ∈ Z => (a+b+c);
+make foo := (a,b ∈ i64, c: 0) ∈ Z => (a + b + c);
 
-print foo(1,2); //3
-print foo(1,2,3); //6
-print foo(1); //Error: expected 2 arguments
+print foo(1,2);   // 3
+print foo(1,2,3); // 6
+print foo(1);     //Error: expected 2 arguments
 
 ```
 
@@ -81,8 +81,7 @@ print foo(1); //Error: expected 2 arguments
 
 We can use parameter name and pair-up ":" symbol for argument value.
 
-```** fn with optional parameters** result type is missing
-make bar := (a,b,c:0) ∈ Z => (a+b+c);
+```** fn with optional parameters (i64)make bar := (a:0, b:0, c:0) ∈ Z => (a+b+c);
 ** observe we use pair-up to new value to argument
 print bar(a:1); //print 1 because (b,c := 0) 
 print bar(b:1); //print 1 because (a,b := 0) 

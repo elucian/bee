@@ -8,9 +8,9 @@ write "define a number:";
 make x ∈ N; read x; 
 ** only if conditional
 
-print "x = 0" if x = 0;
+print "x = 0" if x ≡ 0;
 ** single branch
-when x = 1 do
+when x ≡ 1 do
   print "x = 1";
 done;
 
@@ -25,7 +25,7 @@ done;
 alter x := 1;
 when x ≥ 1 do
   print "x ≥ 1":
-  when x = 1 do
+  when x ≡ 1 do
     print "x = 1"; //expected
   else
     print "x > 1";

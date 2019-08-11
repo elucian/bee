@@ -14,8 +14,8 @@ print s; // s = 11  (modified)
 print d; // d = 11  (modified) 
 
 ** verify identity
-print d ≡ s ; // 1 same reference
-print d = s ; // 1 same value
+print d = s ; // 1 same
+print d ≡ s ; // 1 equivalent
 
 ** assign "by copy"
 alter e :: d; // copy value of d
@@ -24,8 +24,8 @@ print e; // 12 (modified)
 print d; // 11 (unmodified)
 
 ** verify identity
-print e ≡ d; // 0 different reference
-print e = d; // 1 same value
+print e = d; // 0 different reference
+print e ≡ d; // 1 equivalent value
 
 ** boxing/ unboxing
 make i := 10 ∈ i32; // native type
@@ -42,7 +42,7 @@ done;
 alter i := d -> i32;
 
 ** verify identity
-print i ≡ d; // 0 different locations
-print i = c; // 1 same value
+print i = d; // 0 different locations
+print i ≡ c; // 1 equivalent value
 
 over.

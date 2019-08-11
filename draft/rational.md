@@ -94,9 +94,9 @@ A very large number with high precision on 64 bit:
 A number on 32 bit with precision = 0.0005:
 
 **Q20.11** 
-* Min:-1048576
-* Max: 1048575
-* Res: 0.00048828125
+* Min: -1048576
+* Max:  1048575
+* Res:  0.00048828125
 
 ## Default Q number
 

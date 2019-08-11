@@ -89,13 +89,13 @@ Native types are defined using one small letter followed by a number.
 | u8   | unsigned  | 1   |Unsigned 8  bit, max: 0xFF 
 | u16  | unsigned  | 2   |Unsigned 16 bit, max: 0xFFFF
 | u32  | unsigned  | 4   |Unsigned 32 bit, max: 0xFFFFFFFF
-| u64  | unsigned  | 8   |Unsigned large positive integer [0..+]
+| u64  | unsigned  | 8   |Unsigned large positive integer [0..+*]
 | i8   | signed    | 1   |Signed half   integer 8  bit  [-128..127]    
 | i16  | signed    | 2   |Signed short  integer 16 bit  [-32768..+32767]
-| i32  | signed    | 4   |Signed binary integer 32 bit  [-..+]
-| i64  | signed    | 8   |Signed large  integer 64 bit  [-..+]
-| f32  | signed    | 4   |Double precision float (0..+)
-| f64  | signed    | 8   |Double precision float (-..+)
+| i32  | signed    | 4   |Signed binary integer 32 bit  [-..+*]
+| i64  | signed    | 8   |Signed large  integer 64 bit  [-..+*]
+| f32  | signed    | 4   |Double precision float (0..+*)
+| f64  | signed    | 8   |Double precision float (-*..+*)
 
 **notes:**
 
@@ -173,14 +173,14 @@ File    // composite type: text file
 Boxing is the process of converting a native type to reference type. This will wrap the value and stores it on the heap. Auto-boxing is possible if the types are compatible. Otherwise you must perform explicit boxing.
 
 ```
-make k ∈ Z;   //reference integer
-make n ∈ i64; //native integer
+make k ∈ Z;   //reference to integer = 0
+make n ∈ i64; //native integer = 0
 
 alter k := n; //auto-boxing
 alter k := n -> Z; //explicit boxing
 ** reference identity
-print n = k; //1 (same value)
-print n ≡ k; //0 (different location)
+print n = k; //0 (false, different types and locations)
+print n ≡ k; //1 (true, equivalent values)
 ** consequence
 alter n := 2; //i = 2 (modified)
 print k;      //k = 0 (unmodified)
@@ -192,13 +192,13 @@ print k;      //k = 0 (unmodified)
 Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
 
 ```
-make r := 10 ∈ Z; //reference to integer
-make n := 0  ∈ i32; //native type
+make r := 10 ∈ Z;   //reference to integer
+make n := 0  ∈ i64; //native type
 
 alter n := r -> i64; //explicit unboxing
 ** verify value identity
-print n = r; //1 (same value)
-print n ≡ r; //0 (different location)
+print n = r; //0 (false: different types)
+print n ≡ r; //1 (true:  equivalent) - ignore types
 ** consequence
 alter n += 2; //n = 12 (modified)
 print r; //r = 10 (unmodified)
@@ -206,21 +206,21 @@ print r; //r = 10 (unmodified)
 
 **share vs copy**
 
-* A reference is shared using operator ":=".
-* An object is copied using operator   "::".
+* A reference is shared using operator ":="
+* An object is copied using operator   "::"
 
 ```** create a reference
 make  a := 1 ∈ Z;
 ** transfer reference value
 make  c := a; //share a reference
 
-pass if c = a; //1 (same value)
-pass if c ≡ a; //1 (same reference)
+pass if c = a; //1 (same location)
+pass if c ≡ a; //1 (same value)
 ** transfer value by deep copy
 make  b :: a; //new reference
 
-pass if a = b; //1 (same value)
-fail if a ≡ b; //0 (different reference)
+pass if a = b; //0 (different location)
+fail if a ≡ b; //1 (same values)
 ```
 
 ## Composite types
@@ -294,10 +294,10 @@ type Domain_Name = (min..max:rate) <: Primitive_Type;
 
 **Examples:**
 ```** sub-type declarations
-type Positive: (0..+:0.01) <: Q; 
-type Negative: (-..0:0.01) <: Q; 
-type Digit:    (0..9)      <: Z;      
-type Alpha:    (`A`..`z`)  <: A;  
+type Positive: (0..+:0.01)   <: Q; 
+type Negative: (-..0:0.01)   <: Q; 
+type Digit:    (0..9)        <: Z;      
+type Alpha:    (`A`..`z`)    <: A;  
 type Latin:    (U+0041..U+FB02) <: U;
 
 ** check variable belong to sub-type
@@ -434,9 +434,12 @@ alter a := 10; //modify value of a := 10
 alter a += 1;  //increment value of a := 11
 alter a -= 1;  //decrement value of a := 10
 ** modify two variables using one constant
-alter (x, y) := 10.5;
+alter x, y := 10.5;
 ** modify two variables using two constants
-alter (q, p) ? (True, False);  
+alter q, p := True, False;  
+
+** swapping two variables
+alter p, q := q, p
 ```
 
 ## Type conversion
@@ -520,25 +523,23 @@ Bee uses several familiar logic operators:
 Precedence: { ¬, ∧, ∨, ⊕ }
 
 **comparison**
-Comparison operators will create a logical response: False = 0 or True = 1.
+Comparison operators will create a logical response: False ≡ 0 or True ≡ 1.
 
 * comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥)
 * belonging  ( ∈, ⊃, ⊂ )
 
 **example:**
 ```
-make x := 4 ∈ Z;
+make  x := 4 ∈ Z; //forced type to reference
 
-print x = 4;  //1 (equal)
-print x ≡ 4;  //0 (not identical)
+print x = 4;  //0 (false: not the same)
+print x ≥ 4;  //1 (true: greater or equivalent to 4)
+print x ≡ 4;  //1 (true: equivalent values)
 
-when (x = 4) ∧ (x - 4 = 0) do
-  print "True";
-else
-  print "False";  
-done;
+// expressions will produce native types
+print (x - 4 = 0) //1 (true)
+print (x - 4 ≡ 0) //1 (true)
 ```
-
 
 **design**
 ```** logic values are numeric
@@ -564,6 +565,7 @@ print ¬ x; //1
 
 ** complex expressions
 print  (x = y); //0
+print  (x ≡ y); //0
 print  (x ≠ y); //1
 print  (x < y); //1
 print  (x > y); //0
@@ -584,7 +586,7 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a -> L; //0
+alter x := a -> L; //0 
 alter y := b -> L; //1
 ```
 
@@ -614,14 +616,14 @@ The statement is executed only if the expression evaluate to True.
 ```
 make a := 0 ∈ Z;
 ** conditional execution
-alter a := 1 if (a = 0);
+alter a := 1 if (a ≡ 0);
 ** conditional print
-print "a is 0" if (a = 0);
+print "a is 0" if (a ≡ 0);
 print "a >  0" if (a ≥ 0);
 ```
 
 **Notes:** 
-* Keyword "if" and "else" are not related
+* Keywords "if" do not have "else"
 * Conditions are enclosed in ()
 
 ## Pattern Matching
@@ -782,8 +784,8 @@ return;
 make b, c := com(3,2) ∈ Z;
 print (b, c); //5 1
 
-** ignore one result and use only one parameter
-make a, _ := com(3) ∈ Z;
+** ignore one result using variable "_"
+make  a, _ := com(3);
 print a; //3 
 ```
 
@@ -858,9 +860,9 @@ rule rule_name(param ∈ type,...):
    ...
 return;
 ** modify rule states
-alter rule_name.x = 1;
-alter rule_name.y = 2;
-alter rule_name.z = 3;
+alter rule_name.x := 1;
+alter rule_name.y := 2;
+alter rule_name.z := 3;
 ** read rule states
 print (rule_name.x, rule_name.y, rule_name.z); //1 2 3
 ** execute a rule that has no results:

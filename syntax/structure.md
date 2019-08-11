@@ -427,7 +427,8 @@ alter result := new_name(arguments);
 * Aspect can be loaded from a driver or another aspect;
 * Public and private states from an aspect are persistent;
 * Aspect can be initialized only once;
-* Aspect elements can be used multiple times; 
+* Aspect members can be used multiple times; 
+
 
 
 **Restriction:**

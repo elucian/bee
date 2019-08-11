@@ -8,7 +8,7 @@ Read about supported symbols here: [symbols](symbols.md)
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
 | `+-...-+` | Block comments \| Boxed comments
-| `#(....)` | String interpolation (placeholder)
+| `#(....)` | String interpolation (placeholder) for operator "?"
 | `(_,_,_)` | Expression \| Tuple literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
@@ -28,11 +28,11 @@ symbol| description
 ------|-------------------------------------------------------------------------------
  `!`  | Negation symbol for relations \| Excluded from domain
  `?`  | Template modifier. Associated with string templates 
- `*`  | String replication
+ `*`  | String replication \| Varargs prefix \| Spread operator \| Many something
  `@`  | System variable  \| Global variable
  `$`  | System constant  \| Environment variables
  `&`  | String concatenation \| number concatenation
- `#`  | String interpolation placeholder for operator "?"
+ `#`  | String interpolation \| placeholders for operator "?"
  `∈`  | Define variable/constant/result/parameter type
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
@@ -75,12 +75,16 @@ symbol| description
  `.!` | Define domain (n.!m) (m is excluded)
  `!.` | Define domain (n!.m) (n is excluded) 
  `!!` | Define domain (n!!m) (n,m are excluded) 
+ `-.` | Minus infinite range: instead of (-∞..0) write: (-..0)
+ `.+` | Plust infinite range: instead of (0..+∞) write: (0..+)
  `=>` | Define: rule expression \| rule result
  `->` | Data cast pipeline operator / Type conversion
  `<:` | Define subset from set \| Specify super-type for a new type
- `++` | Extend a matrix by specified (n,m) columns (n ≥ 1)
  `<<` | Much less      0.1 \<\< 2  but not (0.1 \<\< 1) 
  `>>` | Much greater   2 \>\> 0.9  but not (1 \>\> 0.9)
+ `::` | Deep copy \| Clone operator
+ `++` | Append one or more elements into collection 
+ `--` | Remove one or more elements from collection
  
 ## Modifiers
 
@@ -88,10 +92,9 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
 ------|--------------------------------------------------------------------
- `:=` | Binding value \| Borrow reference 
- `::` | Deep copy \| Clone operator
- `+=` | Increment value \| append element
- `-=` | Decrement value \| remove element
+ `:=` | Binding value \| share reference 
+ `+=` | Increment value
+ `-=` | Decrement value
  `·=` | Multiplication modifier 
  `÷=` | Real division modifier
  `^=` | Power  modifier
@@ -104,9 +107,9 @@ Relation operators are used to compare expressions.
 symbol | meaning
 -------|--------------------------------------------------------------------
  `∈`   | check if element belong to collection
- `=`   | same value \| equivalent objects (deep comparison)
- `≠`   | divergent values \| divergent objects (deep comparison)
- `≡`   | same reference (shallow comparison)
+ `=`   | same values \| same references (shallow comparison)
+ `≠`   | divergent values  \| divergent objects (shallow comparison)
+ `≡`   | equivalent values \| objects (deep comparison)
  `≈`   | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
  `~`   | similar numbers: (0.1 ~ 0.9) \| not similar (-1 !~ +1) 
  `~`   | similar characters: ('a' ~ 'A')  \| not similar ('a' !~ 'B')
@@ -121,10 +124,11 @@ symbol | meaning
 Operator: "!" can be used in combination with other operators:
 
 ```
-  x != y; //equivalent to: ¬(x = y)
-  x !≡ y; //equivalent to: ¬(x ≡ y)
-  x !∈ y; //equivalent to: ¬(x ∈ y)
-  x !≈ y; //equivalent to: ¬(x ≈ y)
+ x != y; //equivalent to: ¬(x = y)
+ x !≡ y; //equivalent to: ¬(x ≡ y)
+ x !∈ y; //equivalent to: ¬(x ∈ y)
+ x !≈ y; //equivalent to: ¬(x ≈ y)
+ x !~ y; //equivalent to: ¬(x ~ y)
 ```
 
 ## Collection operators
@@ -139,8 +143,8 @@ symbol | result     |meaning
  `+`   | String     |Concatenation between two strings
  `+`   | List       |Concatenation between two lists
  `+`   | Array      |Concatenation between two arrays
- `∀`   | Element    |Specify all elements from a collection X[∀]
- `∃`   | Logic      |Check a collection for qualification using an expression
+ `∀`   | Element    |All: used in collection qualification
+ `∃`   | Logic      |One: used in collection qualification
                                           
 ## Logic Operators 
 
@@ -177,12 +181,12 @@ symbol| meaning       | notes
 
 Arity = 1
 
- a    | ¬ a | a « 1 | a » 2  
-------|-----|-------|--------
- 0000 |1111 | 0000  | 0000   
- 1111 |0000 | 1110  | 0011   
- 0111 |1000 | 1110  | 0001   
- 0110 |1001 | 1100  | 0001   
+ a    | ¬ a  | a « 1 | a » 2  
+------|------|-------|--------
+ 0000 | 1111 | 0000  | 0000   
+ 1111 | 0000 | 1110  | 0011   
+ 0111 | 1000 | 1110  | 0001   
+ 0110 | 1001 | 1100  | 0001   
 
 
 Arity = 2
@@ -198,7 +202,7 @@ Arity = 2
 
 Symbol| Description
 ------|-------------------------------------------------------------------
- `*`  | String pattern repetition \| String generator
+ `*`  | pattern repetition (right operator mus tbe numeric) 
  `.`  | concatenate two literals using \ or; // depending on OS
  `/`  | concatenate two strings with / and de-duplicate last
  `\\` | concatenate two strings with \\ and de-duplicate last

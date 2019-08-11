@@ -96,8 +96,8 @@ A rule can have multiple results defined using a tuple:
 
 ```** rule with multiple results
 rule test(x,y ∈ Z) => (r, c ∈ Z):
-  alter r += x+1;
-  alter c += y+1;
+  alter r := x+1;
+  alter c := y+1;
 return;
 
 make n, m ∈ Z;
@@ -178,6 +178,7 @@ make array_name ∈ Array_Type;
 * Array index start from 0 to c-1 where c is capacity;
 * Array capacity is immutable after array initialization;
 
+
 **example:**
 
 ```
@@ -190,8 +191,11 @@ repeat;
 
 **Notes:**
 
+* First element in array can be found using array_name[0],
+* Last element in array can be found using array_name[-1],
 * Array can be initially empty [] with default capacity = 0, 
 * Arrays with defined capacity are automatically initialized.
+
 
 **initialize elements**
 
@@ -206,12 +210,12 @@ alter zum[1]  := 1;
 alter zum[10] := 10; 
 print zum; //expect [1,2,2,2,2,2,2,2,2,10]
 ** modify all elements
-alter zum[..] += 1; 
+alter zum[*] += 1; 
 print zum; //expect [2,3,3,3,3,3,3,3,3,11]
 ** reset all elements
-alter zum[..] := 0; //[0,0,0,0,0,0,0,0,0,0]
+alter zum[*] := 0; //[0,0,0,0,0,0,0,0,0,0]
 ** modify multiple elements using an Array literal
-alter zum[..] := [1,2,3];
+alter zum[*] := [1,2,3];
 print zum; //expect [1,2,3,1,2,3,1,2,3,1]
 ** reset zum reference (replace zum)
 alter zum := [1,2,3];
@@ -228,8 +232,8 @@ We can define an empty array and initialize elements later.
 make vec ∈ [U]; 
 make nec ∈ [N]; 
 ** arrays are empty
-print vec = []; //True
-print nec = []; //True
+print vec ≡ []; //True
+print nec ≡ []; //True
 ** array capacity becomes: 10
 alter vec := 'x'; //10;
 print vec; //expect ['x','x','x','x','x','x','x','x','x','x']
@@ -300,7 +304,7 @@ make d1 := s1 - s2; //{1}        :difference 1
 make d2 := s2 - s1; //{4}        :difference 2
 make d  := s2 ⊖ s1; //{1,4}      :symmetric difference
 ** verify expectation
-pass if d = d1 ∪ d2; //equivalent (else fail)
+pass if d ≡ d1 ∪ d2; //equivalent (else fail)
 ** belonging check
 print s1 ⊂ s;  //True
 print s  ⊃ s2; //True
@@ -590,7 +594,7 @@ The last parameter in a parameter list can use prefix: "\*"
 rule foo(*bar ∈ [Z]) => (x ∈ Z):
   make c := bar.count();
   ** precondition
-  when (c = 0) do
+  when (c ≡ 0) do
     alter x := 0;
     exit;
   done;
@@ -607,11 +611,6 @@ print foo(1,2);     //3
 print foo(1,2,3);   //6
 print foo(1,2,3,4); //10
 ```
-
-**first & last**
-
-* First element in array: array_name[0]
-* Last element in array: array_name[-1]
 
 ## Exception
 An exception is a recoverable error. It can be declared by the user or by the system:

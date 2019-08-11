@@ -130,7 +130,7 @@ apply table_name.find(field_name:value,...);
 
 ** get filed values
 print table_name.field_name; //data from current record
-pass if bookmark.field_name = table_name.field_name; //same data 
+pass if bookmark.field_name ≡ table_name.field_name; //same data 
 ```
 
 **Table traversal**
@@ -208,7 +208,7 @@ This statement will remove one or more records from a table.
 make  table_name.find(search_field:value,...);
 apply table_name.delete;
 ** check status
-pass if table_name.status = deleted;
+pass if table_name.status ≡ deleted;
 apply db.commit;
 ** Using search fields to delete multiple records
 apply table_name.delete(search_field:value,...);
@@ -224,7 +224,7 @@ apply db.commit;
 ```
 
 **Note:** 
-* After delete the record still exist with _status_ = _deleted_;
+* After delete the record still exist with _status_ ≡ _deleted_;
 * After closing the table all references to records become Null;
 
 ## Direct SQL

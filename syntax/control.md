@@ -26,9 +26,9 @@ This statement is also called _local context_. It begins with _"do"_ and is endi
 
 **example:**
 ```
-make x = 0; //global
+make x := 0; //global
 do
-  make x = 1; //local
+  make x := 1; //local
   print x; // 1
 done;
 print x; // 0
@@ -70,13 +70,12 @@ read  a;** first decision
 when a ≤ 0 do 
   print 'a ≤ 0';
   ** second decision
-  when a = 0 do 
+  when a ≡ 0 do 
     print 'a = 0';
   else
     print "a < 0"; 
   done; //a ≤ 0
-  ** continue
-done; //a = 0
+done; 
 ```
 
 ## Case
@@ -120,10 +119,10 @@ This block start with _"do"_ and is ending with _"repeat"_:
 **example**
 
 ```
-make x = 0; //control variable
+make x := 0; //control variable
 do
   alter x += 1;
-  stop if x = 10;
+  stop if x ≡ 10;
   write x & ",";
 repeat;
 write x; 

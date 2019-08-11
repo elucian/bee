@@ -5,9 +5,9 @@ driver 'do.bee':
 load $pro_lib.console.(*);
 
 ** local context
-make x = 0; //global
+make x := 0; //global
 do
-  make x = 1; //local
+  make x := 1; //local
   print x; // expect: 1
 done;
 print x; // expect: 0
@@ -15,7 +15,7 @@ print x; // expect: 0
 ** repetitive block
 do
   alter x += 1;   // increment
-  stop if x = 10; // exit condition
+  stop if x ≡ 10; // exit condition
   write x & ",";  // write in buffer
 repeat;
 write x; // write in buffer 
