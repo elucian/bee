@@ -909,7 +909,7 @@ A _generic rule_ is a _prototype_ that can be _cloned_ to create _dynamic rules_
 ```** define a rule prototype 
 rule prototype_name{attributes}(parameters) => (result ∈ Type):
   ...
-  ** a prototype can have attributes
+  ** a prototype can have public attributes
   ** these attributes are shared between all clones
   make .x, .y, .z := 0 ∈ Z;  
   ...
@@ -936,9 +936,9 @@ rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
   alter r := (s + i);
 return;
 ** instantiate two clones:
-make inc(i ∈ Z) := shift{s: +1} => (r ∈ Z); //increment 
-make dec(i ∈ Z) := shift{s: -1} => (r ∈ Z); //decrement 
-** verify clone properties
+make inc(i ∈ Z) := shift{+1} => (r ∈ Z); //increment 
+make dec(i ∈ Z) := shift{-1} => (r ∈ Z); //decrement 
+** verify clone attributes
 print inc.s; //1
 print dec.s; //-1
 ** use first clone: inc()
