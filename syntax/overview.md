@@ -259,11 +259,11 @@ Bee define a collection literal using a special notation based on brackets.
 
 ## Type declaration
 
-User can define composite types and sub-types using operator "<:" (sub-type).
+User can define composite types and sub-types using operators ":" and "<:" (sub-type).
 
 ```
 ** declare new type
-type Type_Identifier = type_descriptor <: super_type
+type Type_Identifier: type_descriptor <: super_type
 
 ** declare new references
 make var_name,var_name ... ∈ Type_Identifier
@@ -294,10 +294,10 @@ type Domain_Name = (min..max:rate) <: Primitive_Type;
 
 **Examples:**
 ```** sub-type declarations
-type Positive: (0..+:0.01)   <: Q; 
-type Negative: (-..0:0.01)   <: Q; 
-type Digit:    (0..9)        <: Z;      
-type Alpha:    (`A`..`z`)    <: A;  
+type Positive: (0..+:0.01)      <: Q; 
+type Negative: (-..0:0.01)      <: Q; 
+type Digit:    (0..9)           <: Z;      
+type Alpha:    (`A`..`z`)       <: A;  
 type Latin:    (U+0041..U+FB02) <: U;
 
 ** check variable belong to sub-type

@@ -680,7 +680,7 @@ print "Strings:   #(s) and #(s)" ? ('odd','even');
 print "Quoted:    #(q) and #(q)" ? ('odd','even');
 print "Unicode:   #(u) and #(u)" ? (U+2260,U+2261);
 print "Unicode:   #(q) and #(q)" ? (U+2260,U+2261);
-print "Collection:#[*] and #[*]" ? ([1,2,3],{1,2,3};
+print "Collection:#[*] and #[*]" ? ([1,2,3],{1,2,3});
 ```
 
 **Expected output:**
