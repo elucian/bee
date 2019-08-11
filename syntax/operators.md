@@ -107,9 +107,9 @@ Relation operators are used to compare expressions.
 symbol | meaning
 -------|--------------------------------------------------------------------
  `∈`   | check if element belong to collection
- `=`   | same values \| same references (shallow comparison)
- `≠`   | divergent values  \| divergent objects (shallow comparison)
- `≡`   | equivalent values \| objects (deep comparison)
+ `=`   | same values & same type \| same references (shallow comparison)
+ `≠`   | divergent values & divergent types \| divergent objects (shallow comparison)
+ `≡`   | equivalent values & compatible types \| equivalent attributes  (deep comparison)
  `≈`   | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
  `~`   | similar numbers: (0.1 ~ 0.9) \| not similar (-1 !~ +1) 
  `~`   | similar characters: ('a' ~ 'A')  \| not similar ('a' !~ 'B')

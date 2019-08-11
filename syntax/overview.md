@@ -533,9 +533,10 @@ Comparison operators will create a logical response: False ≡ 0 or True ≡ 1.
 ```
 make  x := 4 ∈ Z; //forced type to reference
 
-print x = 4;  //0 (false: not the same)
+print x = 4;  //0 (false: not the same type)
+print x ≡ 4;  //1 (true: equivalent values & compatible types)
 print x ≥ 4;  //1 (true: greater or equivalent to 4)
-print x ≡ 4;  //1 (true: equivalent values)
+
 
 // expressions will produce native types
 print (x - 4 = 0) //1 (true)
