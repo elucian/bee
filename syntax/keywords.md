@@ -1,12 +1,12 @@
 ## Bee Keywords
 
-Bee core has 45 reserved keywords so far: 
+Bee core has 48 reserved keywords so far: 
 
 ```
-03: if, is
+04: if, is, all
 04: driver, aspect, module, return
 06: make, rule, like, load, alias, type
-07: read, write, print, alter, scrap, apply, begin
+09: read, write, print, alter, scrap, apply, begin, process, resolve
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
 05: fail, pass, raise, abort, retry
@@ -24,6 +24,7 @@ Bee core has 45 reserved keywords so far:
 |----------|--------------------------------------------------------------
 | if       | conditional for simple statements
 | is       | query element or variable data type
+| all      | used in combination with resolve
 
 ### Definition statements
 
@@ -49,13 +50,15 @@ Next keywords are simple statements. These represents actions called _imperative
 
 | Keyword  | Purpose
 |----------|-------------------------------------------------------------
-| apply    | Apply one routine in synchronous mode and expect no results
-| begin    | Comence execution for a routine in asynchronous mode
+| apply    | Comence execution of a routine in synchronous mode
+| begin    | Comence execution of a routine in asynchronous mode
 | read     | Flush the console buffer and accept user input from console 
 | write    | Add something to console buffer but no new line 
 | print    | Output expression result, variable or constant to console 
 | alter    | Mutate variable value using an expression
-| scrap    | Remove one element from a collection
+| scrap    | Remove one element from its collection
+| process  | Execute an aspect in asynchronous mode
+| resolve  | Synchronize parallel execution of pending aspects
 
 ## Control statements
 

@@ -314,7 +314,7 @@ done;
 * Use (n..m) include n and m in domain,
 * Use (n!.m) to exclude lower limit from range,
 * Use (n.!m) to exclude upper limits from range,
-* Use (n; //m) to exclude both limits from range,
+* Use (n!!m) to exclude both limits from range,
 * Use symbol - for unlimited negative number,
 * Use symbol + for unlimited positive number.
 
@@ -940,14 +940,14 @@ return;
 make inc(i ∈ Z) := shift{+1} => (r ∈ Z); //increment 
 make dec(i ∈ Z) := shift{-1} => (r ∈ Z); //decrement 
 ** verify clone attributes
-print inc.s; //1
-print dec.s; //-1
+print inc.s; //  1
+print dec.s; // -1
 ** use first clone: inc()
-print inc(1); //2
-print inc(4); //5
+print inc(1); // 2
+print inc(4); // 5
 ** use second clone: dec()
-print dec(1); //0
-print dec(2); //1
+print dec(1); // 0
+print dec(2); // 1
 ```
 
 ## External rules

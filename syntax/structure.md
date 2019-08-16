@@ -124,54 +124,54 @@ Following system variables are available for debugging:
 
 ### Components
 
-A component is a source file with extension .bee. You can organize an application using components. When compiled, all components are merged into a single monolithic application. Bee do not use dynamic loaded components: (.dll). 
+A component is a source file with extension .bee. You can organize an application using multiple components. When compiled, all components are merged into a single monolithic application. 
 
 **Name:**
 
 One _component_ is identified by a _name_ created with one different keyword depending on component role:
 
 * driver: define the leading component for an application;
-* aspect: define a component that belong to an application;
 * module: define a component that can be reused by many applications;
-
-**notes:**
-* One application can have one single _driver_;
-* One _driver_ can load multiple _aspects_ and _modules_;
-* One _aspect_ can also load _aspects_ and _modules_;
-* One _module_ can also load _modules_ but not _aspects_;
-* One component file is ending with keyword _over_;
+* aspect: define a component that belong to an application;
 
 ### Drivers
-There is one single _driver_ component for each application. It has the role to lead the application main thread. When _driver_ execution is over the application give control back to the operating system. 
+A _driver_ is the main application component. It has the role to lead the application main thread. When _driver_ execution is over the application give control back to the operating system.
 
-**usability:**
+**notes:**
 
-A _driver_ can read configuration file: folder names, database connections, precision and other things. It is the application entry point. A driver can be terminated early using keywords: _halt_, or _fail_.
-
-### Aspects
-An application architect can separate system concerns in multiple _aspects_. One _aspect_ is a component located in _"src"_ folder. A _driver_ can load an _aspect_ only once, then it can use any of its public members on demand using dot notation. 
-
-
-**Usability:**
-* At least one _aspect_ element must be public;
-* Usually an _aspect_ do not have rogue statements;
-* If _aspect_ has rogue statements these are executed only once, when the _aspect_ is loaded first time;
-* All _aspect_ variables and constants can have each one single value shared in application context.
+* A _driver_ is the application entry point,
+* Any application must have one single _driver_,
+* A _driver_ can read configuration files at startup,
+* A driver can be terminated early using keywords: _halt_, or _fail_.
 
 ### Modules
-A _module_ is a reusable component stored in a _library_. This in a sub-folder of _"lib"_ folder. One driver or aspect can _load_ from a library one or more _modules_. From each _module_ we can use one or more public members with scope qualifier using dot notation.
+A _module_ is a reusable component usually located in a sub-folder of _"lib"_ folder. One driver or aspect can _load_ from a _library_ one or more _modules_ usin _load_ statement. From each _module_ we can use one or more public members with scope qualifier using dot notation or aliases.
 
 **notes:**
 * Modules must have at least one public member;
 * Modules does not have rogue statements;
-* Modules can not be stored in project folders;
+* Modules can not be stored in project _"src"_ folder;
+* You can loaded a module one single time;
+* You can not load a module from a block statement;
+
+### Aspects
+An _aspect_ is a component located in _"src"_ folder. A _driver_ or another _aspect_ can execute an _aspect_ multiple times. After _aspect_ is executed, its states are removed from memory. Think of an aspect as a code fragment.
+
+**notes:**
+* At _aspect_ do not have public elements;
+* An _aspect_ have rogue statements;
+* An _aspect_ that has no rogue statements is unusable or unfinished;
+* An _aspect_ can have parameters and side effects;
+* An _aspect_ can be executed in parallel on multiple threads;
+* An _aspect_ can be executed in parallel with other aspects;
+* An _aspect_ do not have a result but it can modify its parameters;
 
 ## Declaration
 
 Bee is using 6 kind of declarations:
 
-* load  // import  a library in global scope
-* alias // declare alternative name for library or aspect
+* load  // import  a module in global scope
+* alias // declare alternative name for module
 * type  // declare data types
 * make  // declare variable
 * save  // declare a constant
@@ -246,33 +246,35 @@ Do not try to understand this example. It is just a worm-up!
 
 ## External code
 
-Libraries and components can be imported like this:
+Modules can be imported from a library folder like this:
 
 **Imports:**
 
 ```
-load $bee_lib.folder_name:(*);
-load $bee_lib.folder_name:(x,y,z);
+load $bee_lib.folder_name:(*);     //load all modules from folder
+load $bee_lib.folder_name:(x,y,z); //load modules x.bee, y.bee and z.bee
 ```
 
-* using:(*) all public members are borrowed in local scope;
-* using:(x,y,z) only some public members are borrowed in local scope;
+* using:(*) all modules from a folder are loaded in local scope;
+* using:(x,y,z) only some modules are loaded in local scope;
 
 **Qualifier**
-Bee use _"dot notation"_ to locate external members. After load the file name becomes scope qualifier for this notation. It is possible to change the qualifier name using `:=` like in example below:
+Bee use _"dot notation"_ to locate external members. After load the file name becomes the scope qualifier for this notation. It is possible to change the qualifier name using `:=` like in example below:
 
 ```
-load  qualifier := $bee_lib.folder_name;
-apply qualifier.member_name;
+load  qualifier := $bee_lib.folder_name.module_name; // load a single module
+apply qualifier.member_name; // using a fake qualifier
 ```
 
 **Note:**
 
-When a component is loaded with qualifier, you can not borrow its members. All public members must use the specified qualifier or you can use "with" block to suppress the qualifier for a region of code.
+A module is loaded with a fake qualifier only once. If you do it several times, the last qualifier is used. So it is legal to load all modules from one folder, then for a particular module you overwrite the qualifier name.
+
+All public members must use the specified qualifier or you can use "with" block to suppress the qualifier for a region of code. Using "with" is useful but sometimes not good enough so we have invented the "alias".
 
 **Alias**
 
-You can create an alias for a specific member to eliminate qualifiers:
+You can create an alias for a specific member to eliminate the qualifier. This method can be used to "merge" public members into current scope. A member can have one single alias in a component. If you do it multiple times, only the last alias is used. It is a bad practice to change the alias of a member.
 
 ```
 alias new_name := qualifier.member_name;
@@ -289,19 +291,19 @@ load $program.pro_lib:(*); // load project library
 
 ## Global context
 
-One application has a global context where variables and constants are allocated. Each application file can contribute with new elements that can be created in this context. The global context can be also called _application context_ or _session context_;
+One application has a global context where variables and constants are allocated. Each application file can contribute with public elements that can be merged in this context. The global context can be also called _application context_ or _session context_;
 
-* Global context helps to store and identify _public identifiers_ from all loaded components;
-* When a component is loaded, all public members are defined in the _global context_;
+* Global context helps to use _public identifiers_ from loaded components;
+* When a component is loaded, its public members are defined in the _global context_;
 
 ## Name space
 
-A component can establish one or more local name-spaces where you can define component members and statements.
+A component has its own name-space where you can define members and statements. Component namespace can contain public or private members.
 
 **example:**
 ```
 ** component name-space
-make i := 1 ∈ Z; 
+make i := 1 ∈ Z;   // create a private variable
 trial
   ** local name-space
   make v := i;     // v is local reference to nonlocal: i 
@@ -323,13 +325,14 @@ over.
 In Bee all members that begin with dot "." are public members.
 
 ```
-save .pi := 3.14; // public constant
-make .v ∈ N;      // public variable
+** component name-space
+save .pi := 3.14; // public constant (global)
+make .v ∈ N;      // public variable (global)
 
-** public rule
+** public rule f
 rule .f(x ∈ N) ∈ N => (x + 1);
 
-** public rule
+** public rule m
 rule .m(x, y ∈ N) => (r ∈ N):
   alter r := x + y;
 return;
@@ -338,7 +341,8 @@ return;
 **note:** 
 * private members are visible in current component and do not require _scoping_ notation;
 * public members are visible from external components using _scoping_ notation;
-
+* public members can be renamed in global scope using "alias" statement;
+* public members that have alias can still be called using the original identifiers;
 
 ## Comments
 
@@ -401,7 +405,7 @@ When a program is executed the driver is located and executed first. If a progra
 
 **aspect:**
 
-One aspect is executed when is loaded first time from driver or from another aspect. Rogue statements from an aspect can be used for _aspect initialization_. You can not run an aspect a second time during the lifespan of a session.
+One aspect is executed from driver or from another aspect. When executed rogue statements of an aspect are executed top down in sequential order. You can not run an aspect from itself. Recursive aspects are not supported.
 
 **module:**
 
@@ -410,39 +414,29 @@ The driver or aspect can load numerous modules. After loading, all public elemen
 
 **pattern:**
 
-```** initialize an aspect
-load qualifier := $pro.src.aspect_name;
-** results can be captured using alter
-alter result := qualifier.rule_name(arguments);
+This pattern demonstrate how to use a rule from a module named "module_name"
+
+```** loading a module
+load qualifier := $pro.src.module_name;
+** results can be captured using make
+make result := qualifier.rule_name(arguments);
 
 ** give alias to aspect rule
 alias new_name := qualifier.rule_name;
 
-** apply aspect using its alias:
+** modify a variable using rule alias:
 alter result := new_name(arguments);
 ```
 
-**Notes:**
-* Any application can have a single driver;
-* Aspect can be loaded from a driver or another aspect;
-* Public and private states from an aspect are persistent;
-* Aspect can be initialized only once;
-* Aspect members can be used multiple times; 
+**pattern:**
 
-
-
-**Restriction:**
-* one component can not be loaded from inside a rule;
-* the same component can not be loaded twice;
-
-**Example:**
-
-Define an aspect named "mod".
+This pattern demonstrate how to use an aspect named "test".
 ```
-aspect mod:
+** define aspect with parameter p and result "r"
+aspect test(p ∈ N) => (r ∈ N):
 
-** next rule is public
-rule .main(i ∈ Z) => (v ∈ N):
+** define a private rule
+rule abs(i ∈ Z) => (v ∈ N):
   when (i < 0) do
     alter v := -i;
   else
@@ -450,22 +444,35 @@ rule .main(i ∈ Z) => (v ∈ N):
   done;  
 return;
 
+alter r := abs(p); //call private rule "abs"
+
 over.
 ```
 
 **Using aspect:**
 
-Define driver named "main" and use previous defined "mod"
+Define driver named "main" and use previous defined "test" aspect.
 ```
+** define a driver main.bee
 driver main:
-** using aspect "mod"
-load mod := $pro.mod;
-
-** define variable result
+** define variable result
 make result ∈ N;
-** execute main procedure from aspect "mod"
-alter result := mod.main(-3);
+** resolve one aspect "test" and collect the result
+resolve $pro_lib.test(-3) +> result;
 print result; //expect: 3
+
+** define a collector (collection)
+make collect ∈ [N]
+
+** register processes for parallel execution
+process $pro_lib.test( 1)  +> collect;  
+process $pro_lib.test(-1)  +> collect;  
+process $pro_lib.test(-2)  +> collect;  
+process $pro_lib.test(-3)  +> collect;  
+
+resolve all;   // execute all pending process
+
+print collect; // [1,1,2,3]
 
 over.
 ```

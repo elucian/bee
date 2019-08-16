@@ -1,4 +1,4 @@
-** Type inference
+## Type inference
 
 Type inference is a logical deduction of type from constant literals.
 
