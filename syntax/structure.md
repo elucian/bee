@@ -158,13 +158,13 @@ A _module_ is a reusable component usually located in a sub-folder of _"lib"_ fo
 An _aspect_ is a component located in _"src"_ folder. A _driver_ or another _aspect_ can execute an _aspect_ multiple times. After _aspect_ is executed, its states are removed from memory. Think of an aspect as a code fragment.
 
 **notes:**
-* At _aspect_ do not have public elements;
+* An _aspect_ do not have public elements;
 * An _aspect_ have rogue statements;
 * An _aspect_ that has no rogue statements is unusable or unfinished;
 * An _aspect_ can have parameters and side effects;
 * An _aspect_ can be executed in parallel on multiple threads;
 * An _aspect_ can be executed in parallel with other aspects;
-* An _aspect_ do not have a result but it can modify its parameters;
+* An _aspect_ can have results but can not be used in expressions;
 
 ## Declaration
 
