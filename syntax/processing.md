@@ -480,9 +480,9 @@ Hash tables are sorted in memory by _key_ for faster search. It is more difficul
 make my_map := {(1:'a'),(2:'b'),(3:'c')};
 make my_key := 3;
 when (my_key ∈ my_map) do
-  print('True'); //expected
+  print("True"); //expected
 else
-  print('False');
+  print("False");
 done;
 ```
 
@@ -498,7 +498,7 @@ done;
 
 Output:
 ```
-{('Bear':'dog'),('Kiwi':'bird')}
+{("Bear":"dog"),("Kiwi":"bird")}
 ```
 
 ## Type inference
@@ -512,18 +512,18 @@ Output:
 make animals := {}; //partial declaration
 do
   ** establish element types (S:X)
-  alter animals['Rover'] := "dog";
+  alter animals["Rover"] := "dog";
 
   ** use direct assignment to create 2 more element
-  alter animals['Bear'] := "dog";
-  alter animals['Kiwi'] := "bird";
+  alter animals["Bear"] := "dog";
+  alter animals["Kiwi"] := "bird";
   print(animals);
 done;
 ```
 output:
 
 ```
-{('Rover':"dog"),('Bear':"dog"),('Kiwi':"bird")}  
+{('Rover':"dog"),("Bear":"dog"),("Kiwi":"bird")}  
 ```
 
 ## String: concatenation
