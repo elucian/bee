@@ -26,7 +26,7 @@ We already know how to create objects using an object literal.
 
 ```
 **declare an object**
-make object := {attribute:value ...} <: Object; //full declaration
+make object := {attribute:value ...} ∈ Object; //full declaration
 make object := {attribute:value ...}; // type inference
 
 ```
@@ -37,7 +37,7 @@ You can create simple objects using Object() default constructor:
 
 ```
 make object_name := Object(attribute:value, ...); // using type inference
-make object_name := Object(attribute:value, ...) <: Object; //full declaration
+make object_name := Object(attribute:value, ...) ∈ Object; //full declaration
 ```
 
 One object can receive attribute names that do not exist. Default constructor will create new attributes automatic and assign the value for each. Attributes do not need to be created for default constructor. However after object is created the structure is locked: no other attributes can be added.
