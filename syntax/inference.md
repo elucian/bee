@@ -1,6 +1,6 @@
 ## Type inference
 
-Type inference is a logical deduction of type from constant literals.
+Type inference is a logical deduction of data type from constant literals.
 
 **bookmarks**
 * [Default](#Default)
@@ -11,14 +11,14 @@ Type inference is a logical deduction of type from constant literals.
 ## Default
 Each literal has associated a default type.
 
-```** character expressions
-make c := `a`;    //type = A
-make s := '∈';    //type = U
-make s := 'str';  //type = S
-make b := "Text"; //type = X
+```** string expressions
+make c := 'a'     ;  //type = A
+make s := '∈'     ;  //type = U
+make s := "str"   ;  //type = String
+make b := <Text>  ;  //type = Text
 ** numeric expressions
-make i := 0;   //type := i64
-make j := 0.5; //type := f64
+make i := 0;    //type := i64
+make j := 0.50; //type := f64
 ** define synonyms for logic constants
 save false := False; //type L = 0
 save true  := True;  //type L = 1
@@ -28,24 +28,40 @@ make x, y, z := 5; //type = i64
 make n := 0, m := 0.5; //types i64 and f64
 ```
 
+**reason:**
+* Bee infer largest possible number that can hold the constant
+* Is using signed integers to be able to hold also negative numbers
+* To have simple design principle (KIS) we do not use suffix for type literals
+
+**Note:** If you do not know what sufix is: 10u could be an unsigned 10 while 10i could be signed 10. We consider this notation too complicated and it may be a burden if you use this in expressions.
+
 ## Composite
 
 Composite structures are using () [] and {} to create different types:
 
-```** create one list of integers (i64)
+```
+** boxed integer (type = Z)
+make i := [10]; // this notation does not make an array!
+** list of integers (i64)
 make t := (1,2); 
-** create one list of symbols (type = A)
-make l := (`a`,`b`);
-** create an Array with capacity of 4 integers
+
+** list of references (Z)
+make t := ([1],[2]); 
+** list of symbols (type = A)
+make l := ('a','b');
+
+** list of Unicode symbol (type = U)
+make l := ('Δ', 'Λ', 'Γ');
+** array with capacity of 4 integers: i64
 make d := [1,2,3,4];
-** create an Array with capacity of 10 float numbers (f64)
-make e := [0.0](10);
-** create a data set of integers (i64)
+** array with capacity of 10 float numbers: f64
+make e := [0.00](10);
+** data set of integers: i64
 make s := {1,2,3,4};
-** create a hash map of (i64:U)
+** hash map of (i64: String)
 make c := {(1:"storage"),(2:"string")};
-** create an object with two attributes
-make  b := {name:'Goliath', age:30};
+** object with two attributes
+make  b := {name:"Goliath", age:30};
 
 ```
 
@@ -100,7 +116,7 @@ make s := ' ' * 10;
 
 **Examples:**
 ```** make a string from pattern 01
-make  a := '01' * 4;
+make  a := "01" * 4;
 print a; //01010101;
 
 ** used in expression will generate string
