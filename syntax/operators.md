@@ -12,14 +12,15 @@ Read about supported symbols here: [symbols](symbols.md)
 | `(_,_,_)` | Expression \| Tuple literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
+| `{*...*}` | Expresion comment \| Outline large code block
 
 
 ## Strings
 
 symbol  | description
 --------|-----------------------------------------------------
- \`z\`  | Single ASCII symbol 
- 'x'    | Fixed capacity Unicode string literal 
+ ``z``  | ASCII symbol 
+ 'x'    | Unicode UTF32 symbol
  "y"    | Variable capacity Unicode string literal
 
 ## Single Symbols
@@ -36,8 +37,8 @@ symbol| description
  `∈`  | Define variable/constant/result/parameter type
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
- `:`  | Pair-up key-value in: objects, rule parameters, rule arguments, hash-map pairs
  `:`  | Define type or rule or component
+ `:`  | Pair-up key-value in: objects, rule parameters, rule arguments, hash-map pairs
  `;`  | End of statement \| Statement separator
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
