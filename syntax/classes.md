@@ -20,22 +20,38 @@ A class is a composite data type. It implement properties and methods required t
 * Inheritance: an object inherit its base class;
 * Polymorphic: an object can play its base class role;
 
-## Design
-A class is inherited from a base class or from root class called: Object.
+## Object
 
-**simple objects**
-
-You can create simple objects using Object default constructor:
+We already know how to create objects using an object literal.
 
 ```
-make object_name := Object(attribute:value, ...);
+**declare an object**
+make object := {attribute:value ...} <: Object; //full declaration
+make object := {attribute:value ...}; // type inference
+
+```
+
+**object constructor**
+
+You can create simple objects using Object() default constructor:
+
+```
+make object_name := Object(attribute:value, ...); // using type inference
+make object_name := Object(attribute:value, ...) <: Object; //full declaration
 ```
 
 One object can receive attribute names that do not exist. Default constructor will create new attributes automatic and assign the value for each. Attributes do not need to be created for default constructor. However after object is created the structure is locked: no other attributes can be added.
 
-**define class:**
+## Class
 
-You can create more complex object using a class.
+A class is a subtype from a base class or from root class called: Object.
+
+```
+class class_name(self, parameters) <: Object:
+...
+```
+
+## Design
 
 ```
 class class_name(self, parameters) <: base_class:
