@@ -65,13 +65,13 @@ By nesting multiple _when_ blocks you can create a multi-path selector known as 
 
 ```
 make a ∈ Z;
-write 'a = ';
+write "a = ";
 read  a;** first decision
 when a ≤ 0 do 
-  print 'a ≤ 0';
+  print "a ≤ 0";
   ** second decision
   when a ≡ 0 do 
-    print 'a = 0';
+    print "a = 0";
   else
     print "a < 0"; 
   done; //a ≤ 0
@@ -102,12 +102,12 @@ done;
 
 ```
 make a ∈ Z;
-write  'Enter a number between 0 and 9:'
+write  "Enter a number between 0 and 9:"
 read    a;
 case a < 0 do
-  print 'wrong: a < 0';
+  print "wrong: a < 0";
 case a > 9 do
-  print 'wrong: a > 9';
+  print "wrong: a > 9";
 else
   print ("ok: a = " & a);
 done; 
@@ -356,7 +356,7 @@ trial
   alter x := 1/0;
 final
   print @error.message if @error.code ≠ 0;
-  print 'x = ' + x;
+  print "x = " + x;
 done;
 ```
 
@@ -364,7 +364,7 @@ done;
 
 ```
 ** define a custom error
-make my_error := {201, 'my error'} ∈ E;
+make my_error := {201, "my error"} ∈ E;
 trial
   fail my_error; //issue custom error
 error 201 do

@@ -261,7 +261,7 @@ alter buffer := db.execute procedure_name(arguments);
 
 ## Introspection
 
-For debugging the SQL, Bee enable introspection. 
+For debugging the SQL,  Bee enable introspection.
 
 * Before execution, database related statements are converted into SQL strings; 
 * We can visualize these strings by using: $trace = On to log query statements; 

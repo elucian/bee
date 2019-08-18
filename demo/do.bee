@@ -1,7 +1,7 @@
 +---------------------------------------
 | Local context & repetitive statement |
 +--------------------------------------+
-driver 'do.bee':
+driver "do":
 load $pro_lib.console.(*);
 
 ** local context

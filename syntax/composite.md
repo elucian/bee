@@ -75,9 +75,9 @@ A tuple is enumeration of elements enclosed in parenthesis and separated by comm
 (a, b ∈ Z, c ∈ B) // parameters
 (result ∈ X)      // single result
 (r1,r2 ∈ Z)       // multiple results
-('a','b','c')     // list of strings
+('a','b','c')     // list of Unicode characters
 (1,2,3)           // list of integers
-(1,`2`,'x')       // list of various literals
+(1,'2',"x")       // enumeration of various literals
 ```
 
 **Notes:**
@@ -107,8 +107,8 @@ alter n, m := test(1,2);
 print n; //2
 print m; //3
 ** ignore one result using "_"
-alter  n, _ := test(3,0);
-print  n; //4
+alter n, _ := test(3,0);
+print n; //4
 ```
 
 ## List
@@ -182,7 +182,7 @@ make array_name ∈ Array_Type;
 **example:**
 
 ```
-make array := [`a`, `b`, `c`];
+make array := ['a', 'b', 'c'];
 for c ∈ array do
   write c;
   write ',';
@@ -229,16 +229,16 @@ print zum; //expect [1,1,1,1,1,1,1,1,1,1];
 We can define an empty array and initialize elements later.
 
 ```** array without capacity (partial type inference)
-make vec ∈ [U]; 
-make nec ∈ [N]; 
+make vec ∈ [A](); 
+make nec ∈ [N](); 
 ** arrays are empty
 print vec ≡ []; //True
 print nec ≡ []; //True
 ** array capacity becomes: 10
-alter vec := 'x'; //10;
+alter vec := 'x' × 10; //10;
 print vec; //expect ['x','x','x','x','x','x','x','x','x','x']
 ** array capacity becomes: 10
-alter nec := 0; //10;
+alter nec := 0 × 10; //10;
 print nec; //expect [0,0,0,0,0,0,0,0,0,0]
 ```
 
@@ -266,14 +266,15 @@ pass if mat ≡ ⎡ 1,  2 , 3,  4 ⎤
 So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```** elements in matrix can be accessed using while
-make i := 0
-make mat := [1,2,3] × [1,2,3] 
+make i   := 0
+make mat := [i32](3,3);
  
 make x := length(mat)
   
 while (i < x) do
-  write (mat[x], ',')
-  i += 1
+  mat[i] := i+1;
+  write (mat[x], ',') 
+  i += 1;
 repeat
 print
 over
@@ -282,8 +283,8 @@ over
 output:
 ```
 ⎡ 1  2  3 ⎤
-⎢ 2  4  6 ⎥
-⎣ 3  6  9 ⎦
+⎢ 4  5  6 ⎥
+⎣ 7  8  9 ⎦
 ```
 
 ## Set
@@ -311,9 +312,8 @@ print s  ⊃ s2; //True
 ** declare a new set
 make a := {1,2,3} ∈ {N};
 ** using operator +/- to mutate set a
-alter a := a + 4; {1,2,3,4}; //append 4
-alter a := a - 3; {1,2,4};   //remove 3
-
+alter a ++ 4; // {1,2,3,4}
+alter a -- 3; // {1,2,4}
 ```
 
 **Notes:** 
@@ -373,41 +373,63 @@ done;
   
 ```
 
-## Strings
+## String
 
-Bee has one: A type = ASCII = char, and 2 kind of Unicode strings: {S,X}
+Bee has 2 kind of strings: 
 
-* A:       Is equivalent to char, occupy a single bit;
-* String:  Is UTF8 array with a limited capacity: 1024 bit;
-* Text:    Is UTF8 encoded text with unrestricted capacity;
+* String: Double quoted string,
+* Text: Large blob string,
 
-**Note:** 
-Literals for strings are enclosed in 2 kind of quotes:
+
+**Notes:** 
+
+* Literals for symbols are enclosed single quotes;
+* Literals for strings are enclosed in double quotes;
 
  quote | used for   
--------|--------------------------------
- \`_\` | type A = ASCII
- '_'   | type S = String
- "_"   | type X = Text
+-------|--------------------------------------------------
+ '_'   | one Symbol: Unicode or ASCII
+ "_"   | unrestricted capacity Unicode String or Template
 
-**Alternative literals**
-* Using wrong quotes can trigger implicit type coercion
-* Notation U+FFFF is for UTF16 code points 
-* Notation U-FFFFFFFF is for UTF32 code points
+### Text
+For large text literals (Text) we can use a markup language:
 
-### Single quoted
+* `<text>...</text>`  : Text block
+* `<query>...</query>`: SQL text block
+* `<html>...</html>`  : HTML template
+* `<xml>...</xml>`    : XML template
 
-Single quoted strings are Unicode UTF8 strings with limited capacity of 1024 bit ≤ 128 UTF32 code points.
+**Example:**
+```
+make query = 
+<query>
+   select name, age
+    from persons
+   where age < 24;    
+</query>; //Text
+```
 
-```** define String sub-type
-type Str128: S(128) <: String; 
-make s := 'this is a test' ∈ Str128;
-** two compatible representation of strings
-make str ∈  S(25); //string with capacity minim  25x4 = 100 bytes
-make a   ∈ [B](25); //array of binary code points 25x4 = 100 bytes
+### Single quoted literals
 
-alter str := 'Short string'; 
-alter a   := split(str);
+Single quoted literals can contain a single symbol. 
+
+```** Unrestricted capacity string
+make test = "Unicode string: Δ Λ Φ Γ Ψ Ω" ∈ String;
+
+** fixed capacity array or ASCII symbols
+type A128: [A](128) <: Array; // define a sub-type
+make str ∈ A128
+** populate array using spreading operator (*)
+
+alter *str := "test"; //spreading a literal
+print str; // ['t','e','s','t']
+
+** fixed capacity array of symbols UTF8
+make  uco ∈ [U](128);
+
+alter *uco := "∈≡≤≥÷≠"; //spreading a literal
+print uco; // ['∈','≡','≤','≥','÷','≠']; 
+
 ```
 
 **conversion**
@@ -416,22 +438,29 @@ Conversion of a string into number is done; using _parse_ rule:
 ```
 make x,y ∈ R;
 ** rule parse return; a Real number
-alter x := parse('123.5',2,',.'); //convert to real 123.5
-alter y := parse('10,000.3333',2,',.'); //convert to real 10000.33
+alter x := parse("123.5",2); //convert to real 123.5
+alter y := parse("10,000.3333",2); //convert to real 10000.33
 ```
 
 **Notes:** 
 
-* These strings are NUL terminated Arrays and are immutable;
-* These strings have no support for templates notation;
-* Default capacity must be specified to support longer strings;
+* Array strings are NUL terminated;
+* Array strings are mutable;
 
-### Double quoted
+### Double quoted literals
 
-Double quoted strings are Unicode UTF8 strings.  Bee support "escape" notation using escape \\ symbol in double quoted strings. This will be internally replaced by a code point. Print command will render the encoded string and will represent it to output device.
-
+Double quoted string literals are Unicode UTF8 strings.
 
 **example:**
+```
+** fixed capacity string UTF8
+make uco ∈ String; 
+alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
+```
+
+**Escape**
+You can use this literal with escape sequence: \\n to break a line
+
 ```
 print("this represents \n new line in string");
 ```
@@ -447,8 +476,6 @@ new line in string
 * This kind of string is mutable;
 * This string can be a "rope" or "radix tree";
 
-**See also:** [symbols.md](symbols.md)
-
 ### Concatenation
 
 Below operators will concatenate two strings.
@@ -460,17 +487,19 @@ symbol| description
   `+` | Concatenate two strings after trimming first string
   `.` | Concatenate path using using '/' or '\\' depending on OS type
   `/` | URL/Path concatenation: trim and use single separator: "/"
-  `\` | Path concatenation: trim and use single separator: "\\"
+  `\\`| Path concatenation: trim and use single separator: "\\"
   
 **examples**
-make m := "-" * 10 ∈ S; //m = "----------"
+
+make m := '-' * 10 ∈ S; //m = "----------"
 make u, c, s ∈ S; //default length is 128 octets = 1024 bit
+
 ```
 ** string concatenation
-alter u := 'This is ' & ' a short string.';
-alter c := 'This is ' + 'fixed size string'; 
+alter u := "This is " & " a short string.";
+alter c := "This is " + "a large string"; 
 ** automatic conversion to string
-alter s := '40' & 5; //'405'
+alter s := "40" & 5; // "405"
 ** URL/path concatenation
 save test_file := $pro.'src'.'test.bee';
 ** when $platform = "Windows"** Let's say $pro = "c:\work\project\"
@@ -523,7 +552,7 @@ print caralog[1].name; //will print Martin
 
 ** member type can be check using _type()_ built in
 print type(Person.name); //will print U
-print type(Person.age); //will print W
+print type(Person.age);  //will print W
 
 ** print size of structure
 print size(Person);
@@ -535,8 +564,8 @@ We can limit how deep a call stack become using a directive. $recursion:1000
 ```
 ** example of single recursive node
 type Node: { 
-  data ∈ Z,       // integer data
-  previous ∈ Node // reference to previous node
+  data ∈ Z,       /* integer data */
+  previous ∈ Node /* reference to previous node */
 } <: Object;
 ```
 
@@ -545,9 +574,9 @@ This kind of structure can be used to create a data chain.
 ```
 ** example of double recursive node
 type Node <: {
-  data  ∈ Z,    / integer data
-  prior ∈ Node, / reference to previous node
-  next  ∈ Node  / reference to next node
+  data  ∈ Z,    /* integer data */
+  prior ∈ Node, /* reference to previous node */
+  next  ∈ Node  /* reference to next node */
 } <: Object;
 ```
 
@@ -641,14 +670,14 @@ String interpolation "?" can be used to customize the error messages:
 **example:**
 ```
 make  flag ∈ L;
-read (flag, 'enter flag (0/1):');
+read (flag, "enter flag (0/1):");
 
 make my_error := {201,"error:#(s)"} ∈ Error;
-fail (my_error ? 'test') if flag;
+fail (my_error ? "test") if flag;
 ```
 **output:**
 ```
-error:'test'
+error:"test"
 ```
 
 **Notes:**

@@ -27,7 +27,7 @@ make gt := (x, y ∈ Z) ∈ L => (x > y) like CMP;
 make lt := (x, y ∈ Z) ∈ L => (x < y) like CMP;
 make eq := (x, y ∈ Z) ∈ L => (x ≡ y) like CMP;
 ** define a dictionary of rules
-type Dic: {(S(2) : CMP)} <: Hash;
+type Dic: {(String(2) : CMP)} <: Hash;
  ** define a hash map of expressions
 make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic;
 ** call 3 rules in very unusual way

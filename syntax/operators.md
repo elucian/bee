@@ -7,20 +7,19 @@ Read about supported symbols here: [symbols](symbols.md)
 
 |Symbol     | Description
 |-----------|--------------------------------------------------------------
-| `+-...-+` | Block comments \| Boxed comments
+| `+-...-+` | Multi-line boxed comments
 | `#(....)` | String interpolation (placeholder) for operator "?"
 | `(_,_,_)` | Expression \| Tuple literal \| Data record
 | `[_,_,_]` | Range \| Index \| Array literals \| Parameterize types
 | `{_,_,_}` | Ordinal type \| Set of values \| Hash map
-| `{*...*}` | Expresion comment \| Outline large code block
+| `/*...*/` | Old style C expression comments
 
 
 ## Strings
 
 symbol  | description
 --------|-----------------------------------------------------
- ``z``  | ASCII symbol 
- 'x'    | Unicode UTF32 symbol
+ 'x'    | Fixed capacity Unicode UTF32 string literal
  "y"    | Variable capacity Unicode string literal
 
 ## Single Symbols
@@ -45,7 +44,7 @@ symbol| description
  `\|` | Declarative collection builder: {set, list, hash, array}
  `\|` | Exact divisor: since 15 = 3 · 5 then (3 \∣ 15 = True) and (5 \∣ 15 = True) 
  `_`  | Anonymous variable \| Constant value = one space (_ = ' ')
- `\\` | Escape character (\\n := New Line)
+ `\\` | Escape character (`\\n` := New Line), (`\\"` = Double Quotes)
 
 ## Numeric operators  
 

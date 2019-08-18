@@ -488,10 +488,10 @@ done;
 
 **example:**
 ```
-make animals ∈ {S,S};
+make animals ∈ {String,String};
 do
-  alter animals['Bear'] := 'dog';
-  alter animals['Kiwi'] := 'bird';
+  alter animals["Bear"] := "dog";
+  alter animals["Kiwi"] := "bird";
   print(animals);
 done;
 ```
@@ -551,8 +551,8 @@ Two strings can be concatenated using concatenation operator "/" or "\\". This o
 ```
 make s := "";
 do  
-  alter s := 'te/' / '/st'; //"te/st"
-  alter s := 'te/' \ '/st'; //"te\\st"
+  alter s := "te/" / "/st"; //"te/st"
+  alter s := "te/" \ "/st"; //"te\\st"
 done;
 ```
 

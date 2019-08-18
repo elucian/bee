@@ -87,12 +87,12 @@ Compiler directives are system constants that control the compilation process. Y
 |$precision| 0.00001       | Control numeric precision
 |$recursion| 10000         | Control how deep a recursion before give up
 |$timer    | 10            | Control time in seconds before a loop give up
-|$debug    | 'Off'         | Control if debug information is included
-|$echo     | 'Off'         | Control if statement is printed to console in case of error
-|$trace    | 'Off'         | Control if @trace variable is getting populated with information
-|$date     | 'DMY' / 'MDY' | Control date format: DD/MM/YYYY or MM/DD/YYYY
-|$time     | 'T24' / 'T12' | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
-|$platform | 'Windows'     | Alternative: "Linux", "Mac" is the target platform
+|$debug    | "Off"         | Control if debug information is included
+|$echo     | "Off"         | Control if statement is printed to console in case of error
+|$trace    | "Off"         | Control if @trace variable is getting populated with information
+|$date     | "DMY" / "MDY" | Control date format: DD/MM/YYYY or MM/DD/YYYY
+|$time     | "T24" / "T12" | Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS
+|$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
 
 **note**
 * You can overwrite compiler parameters in driver but not in _aspect_ or _module_ components;
@@ -145,7 +145,7 @@ A _driver_ is the main application component. It has the role to lead the applic
 * A driver can be terminated early using keywords: _halt_, or _fail_.
 
 ### Modules
-A _module_ is a reusable component usually located in a sub-folder of _"lib"_ folder. One driver or aspect can _load_ from a _library_ one or more _modules_ usin _load_ statement. From each _module_ we can use one or more public members with scope qualifier using dot notation or aliases.
+A _module_ is a reusable component usually located in a sub-folder of _"lib"_ folder. One driver or aspect can _load_ from a _library_ one or more _modules_ using _load_ statement. From each _module_ we can use one or more public members with scope qualifier using dot notation or aliases.
 
 **notes:**
 * Modules must have at least one public member;
@@ -364,13 +364,24 @@ Before new line of code: (EOL) you can use comments starting with bang: "//"
 * you can use "//" in the middle of an expression, if expression is on multiple lines,
 * you can have multiple statements separated by ";" in a line but only one comment;
 
+**Box comment
+
+This notation is specific to Bee language. It is a multi-line comment starting with "+-" and end with "-+". The upper right corner is missing. I guess you will notice this defect later. However you can use old-style C comments.
+
+**Old style C comments
+
+This notation is supported in Bee for large section of blocks. It start with "/*" and end with "*/". Anything in between these two symbols are comments. Nested comments are supported. This kind of comments can be embedded in expressions. Therefore sometimes they are called "expression comments".
+
 **Notes:** 
-Bee syntax is Wiki friendly: you can open *.md files using Bee highlighter for Notepad++
+* Bee syntax is Wiki friendly: you can open *.md files using Bee highlighter for Notepad++
+* Bee comments are inspired from C language, Ada language and Wiki notation
+* Single hash "#" and double hash "##" is a title and recognized by Bee highlighter
 
 **Limitations:**
-1. Single sign "#" is a prefix. However "##" is a title and recognized by Bee highlighter,
-2. You can not use contractions. This is silly but if you do you mess-up the highlighter,
-4. Symbol "\`" has special meaning in Bee. Sometimes it must be escaped using "\\`".
+
+1. You can not use contractions. This is silly but if you do you mess-up the highlighter,
+1. Symbol "\\" has special meaning in Bee. Sometimes it must be escaped double bar "\\\\".
+1. Symbol "//" can be used in Wiki URL, therefore you can not use it in expressions () [] or {}.
 
 **Example:**
 
@@ -386,8 +397,20 @@ driver main:
 ** This is a single line comment
 pass; // does nothing
 ... 
-** Other statements
-over. // end of main
+
+/* 
+   This kind of comment is supported.
+   /* Expression comments are allowed */
+   /* Nested comments are allowed. */   
+*/
+
+** Expression comments
+print ("comment in expression \n", /*first line*/
+       "is working \n",            /*second line*/
+       "this is a test \n"         /*last line*/ 
+      ); // end of expression
+
+over. // end of driver
 
 *******************************************************************
 ** This is the old style boxed comment, used for matrix printers **
@@ -430,21 +453,21 @@ alter result := new_name(arguments);
 
 **pattern:**
 
-This pattern demonstrate how to use an aspect named "test".
+This pattern demonstrate how to declare an aspect named "test".
 ```
 ** define aspect with parameter p and result "r"
 aspect test(p ∈ N) => (r ∈ N):
 
 ** define a private rule
 rule abs(i ∈ Z) => (v ∈ N):
-  when (i < 0) do
+  when (i < 0) do 
     alter v := -i;
   else
     alter v := i;
   done;  
 return;
 
-alter r := abs(p); //call private rule "abs"
+alter r := abs(p); //call private rule"abs"
 
 over.
 ```
@@ -465,10 +488,10 @@ print result; //expect: 3
 make collect ∈ [N]
 
 ** register processes for parallel execution
-process $pro_lib.test( 1)  +> collect;  
-process $pro_lib.test(-1)  +> collect;  
-process $pro_lib.test(-2)  +> collect;  
-process $pro_lib.test(-3)  +> collect;  
+process $pro_lib.test( 1) +> collect;  
+process $pro_lib.test(-1) +> collect;  
+process $pro_lib.test(-2) +> collect;  
+process $pro_lib.test(-3) +> collect;  
 
 resolve all;   // execute all pending process
 
