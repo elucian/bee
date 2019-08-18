@@ -5,7 +5,7 @@ Bee language is using single inheritance similar to Java.
 **bookmarks**
 
 * [concept](#concept)
-* [design](#design)
+* [class](#class)
 * [parameters](#parameters)
 * [instance](#instance)
 * [attributes](#attributes)
@@ -44,7 +44,7 @@ One object can receive attribute names that do not exist. Default constructor wi
 
 ## Class
 
-A class is a subtype from a base class or from root class called: Object.
+A class is a subtype from a base class or from root class called: Object().
 
 ```
 class class_name(self, parameters) <: Object:
@@ -52,6 +52,10 @@ class class_name(self, parameters) <: Object:
 ```
 
 ## Design
+
+In addition to a simple object, you can create a class with constructor and destructor in a single statement. A class is actually an object factory or a name-space depending on the way is defined. A class can be a simple collection of attributes and properties or can be much more if we create business rules for it.
+
+**pattern:**
 
 ```
 class class_name(self, parameters) <: base_class:
@@ -99,11 +103,18 @@ The _self_ is the current instance that is created using make. When _self_ is Nu
 
 A class can have object attributes and class attributes.
 
-**Object attributes**
+* object attributes are declared with qualifier "self"
+* class attributes are declared with qualifier "this"
 
-* To declare and use object attributes we use scope qualifier self.*
-* To access public object attributes we can use object name as qualifier:
-* Oh yes, attributes can be public or private. Private attribute start with _
+### Object attributes
+
+Object attributes are declared in local context and represent variables.
+
+**notes**
+
+* To declare and use public attributes we use scope qualifier `self.name`,
+* Attributes can be private if name start with `_` like `self._name`
+* Object attributes can have one different value for each object instance.
 
 Declaration:
 ```
@@ -117,19 +128,63 @@ Declaration:
 
 Dot notation:
 ```
+** To access public attributes use dot notation:
   object_name.object_attribute;
 ```
 
-**Class attribute**
-Class attributes are static and can be accessed using two scope qualifiers:
+### Class attributes
+
+You can define class attributes using prefix "this":
+
+**Example:**
+This pattern show how to declare class attributes.
 
 ```
-  object_name.class_attribute;
-  class_name.class_attribute;
+class Demo(self ∈ Demo) <: Object:
+  this.hasObjects := True; //define public attribute
+  this._count     := 1;    //declare private attribute
+create
+  when self = Null do
+     self := Object() if ; //call default constructor    
+     this.public_attr +=1; //count new object
+  done;   
+remove
+  this._count -=1 if this._count >0; //count down one object
+  this.hasObjects := (_count > 0);   //reset public property    
+return;
 ```
 
-**Class Tree**
+**notes**
+
+* class attributes can be public or private,
+* class attributes can have a single value at a time,
+* value of class attributes are static and apear to be common for all objects.
+
+**Using class attributes**
+
+Class attributes are static and can be accessed using two alternative scope qualifiers:
+
+```
+** using class attribute with class qualifier
+print (Demo.hasObjects); // expect: 0
+
+make obj = Demo(); //create instance of Demo
+
+** using class attribute with object qualifier
+print (obj.hasObjects); // expect: 1
+
+** making a test
+fail if obj.hasObject ≠ Demo.hasObjects; //expect to pass
+```
+
+## Class Tree
 There is a special class that has name _"Object"_ and represents the "root" class. Each classes can grow from Object or from other "base class" forming a _"class tree"_. Bee is using single inheritance model. 
+
+**Notes**
+* Parameter "self" has type "Demo" that is redundant and optional,
+* A class that do not have parameter self can not be instantiated,
+* A class that do not instantiate self in explicit mode will return Null, 
+
 
 ## Constructor
 A class can have a single constructor. A constructor can use decision statements based on parameter values to create _"self"_ object in different creative ways based on conditions depending on parameters. This is call conditional constructor.
