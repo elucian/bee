@@ -42,10 +42,10 @@ symbol| description
  `;`  | End of statement \| Statement separator
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
- `|`  | Declarative collection builder: {set, list, hash, array}
- `|`  | Exact divisor: since 15 = 3 · 5 then (3 \∣ 15 = True) and (5 \∣ 15 = True) 
+ `\|` | Declarative collection builder: {set, list, hash, array}
+ `\|` | Exact divisor: since 15 = 3 · 5 then (3 \∣ 15 = True) and (5 \∣ 15 = True) 
  `_`  | Anonymous variable \| Constant value = one space (_ = ' ')
- `\\` | Escape character (\\n := New Line) 
+ `\\` | Escape character (\\n := New Line)
 
 ## Numeric operators  
 
