@@ -168,7 +168,7 @@ while a > 0 do
   done;
 else
   ** when a < 0  
-  print (`last a =` + a);
+  print ("last a =" + a);
 repeat;
 ```
 
