@@ -10,7 +10,9 @@ Bee language is using single inheritance similar to Java.
 * [instance](#instance)
 * [attributes](#attributes)
 * [constructor](#constructor)
-* [generics](#generics)
+* [comparing](#comparing)
+* [methods](#methods)
+* [rules](#rules)
  
 ## Concept
 
@@ -51,45 +53,44 @@ class class_name(self, parameters) <: Object:
 ...
 ```
 
-## Design
+**Class design**
 
 In addition to a simple object, you can create a class with constructor and destructor in a single statement. A class is actually an object factory or a name-space depending on the way is defined. A class can be a simple collection of attributes and properties or can be much more if we create business rules for it.
 
 **pattern:**
 
 ```
-class class_name(self, parameters) <: base_class:
-  ** class local context
+class class_name(param:value ∈ type, ...*args ∈ [String]) <: base_class:
+  ** class local scope
   ...
-create
+create  //constructor
   ** call base class constructor
-  base_class(self, object_attribute:argument,...);
+  self := base_class(argument,...);
   ... 
-remove
+  ** object local scope
+  ...  
+remove //destructor
   ** object release region
   ...
 return;
 ```
 
+**Class Tree**
+There is a special class that has name _"Object"_ and represents the root class. Each classes can inherit from Object or from other _"base class"_ forming a _"class tree"_. Each child class will have public elements of parent class.
+
+**Notes**
+* Parameter "self" is a reference to object that is about to be created,
+* A class that do not have "create" region can not have "remove" either,
+* A class that do not have "create" region can not be instantiated.
+
 ## Parameters 
-A class can have parameters that receive values during object initialization. You can define optional parameters with default values using a pairs ":" symbol like (param_name:value ∈ type). Parameters have a local scope in class. They can be modified. If a parameter is of type reference its value will be propagated out but only if it is captured by a argument variable.
+A class can have parameters that receive values for object initialization.  Parameters have a local scope in class. If a parameter is of type reference its value will be propagated out but only if it is captured by a argument variable.
 
-**example**
-```
-** declare object from arbitrary class and initialize with the constructor
-make object_name := class_name(param:value,...);
+Class parameters can be assigned by name or by position. Last parameter in a class can use prefix (*) and receive multiple values (*args). This argument is called "variable argument" and is an Array that leaves on the stack and is created from the rest of the arguments.
 
-** defered initialization (alternative)
-make object_name ∈ class_name; 
-
-** object is not initialized yest
-pass if object_name ≡ Null; // Not initialized 
-
-** initialize the object using the constructor
-class_name(object_name, param:value, ...);
-```
-
-**note** Parameter self, do not need to be specified.
+**notes** 
+* A constructor can be called a second time for same object, but this is a bad practice,
+* A good constructor can check parameter self and fail if it is not Null.
 
 ## Instance
 The _self_ is the current instance that is created using make. When _self_ is Null it can be created using superclass. If the superclass do not have a constructor, self must be explicit initialized using the Object() constructor. If self remain null after create the object can not be used.
@@ -99,95 +100,81 @@ The _self_ is the current instance that is created using make. When _self_ is Nu
 * Bee use make to create a new object,
 * Object can be created by the class constructor.
 
+**example**
+```
+** declare object from arbitrary class and initialize with the constructor
+make object_name := class_name(param:value,...);
+
+** deferred initialization (alternative)
+make object_name ∈ class_name; 
+
+** object is not initialized yest
+pass if object_name ≡ Null; // Not initialized 
+
+** initialize the object using the constructor
+alter object_name := class_name(param:value, ...);
+``
+
 ## Attributes
 
-A class can have object attributes and class attributes.
+A class can have properties and attributes.
 
-* object attributes are declared with qualifier "self"
-* class attributes are declared with qualifier "this"
-
-### Object attributes
-
-Object attributes are declared in local context and represent variables.
-
-**notes**
-
-* To declare and use public attributes we use scope qualifier `self.name`,
-* Attributes can be private if name start with `_` like `self._name`
-* Object attributes can have one different value for each object instance.
-
-Declaration:
-```
-  ** public attribute
-  self.attrbute_name := value ∈ type;  
-  
-  ** private attribute 
-  self._attrbute_name := value ∈ type;  
-  
-```
-
-Dot notation:
-```
-** To access public attributes use dot notation:
-  object_name.object_attribute;
-```
-
-### Class attributes
-
-You can define class attributes using prefix "this":
+* properties belong to class scope 
+* attributes belong to object scope
 
 **Example:**
-This pattern show how to declare class attributes.
+This example show how to declare class properties and object attributes.
 
 ```
-class Demo(self ∈ Demo) <: Object:
-  this.hasObjects := True; //define public attribute
-  this._count     := 1;    //declare private attribute
-create
+class Demo(param ∈ String) <: Object:
+  ** declare class properties
+  make .hasObjects := True; //define public property
+  make _count      := 1;    //declare private property
+create  
   when self = Null do
-     self := Object() if ; //call default constructor    
-     this.public_attr +=1; //count new object
-  done;   
+     self := Object(); //call default constructor    
+     alter _count +=1; //count new object
+  done; 
+  ** declare object attributes
+  make .public   :=  param;    //public attribute
+  make _private  := "private"; //private attribute
 remove
-  this._count -=1 if this._count >0; //count down one object
-  this.hasObjects := (_count > 0);   //reset public property    
+  alter _count -=1 if _count > 0; //count down one object
+  alter .hasObjects := (_count > 0);  //reset public property    
 return;
 ```
 
 **notes**
 
-* class attributes can be public or private,
-* class attributes can have a single value at a time,
-* value of class attributes are static and apear to be common for all objects.
+* attributes and properties can be public or private,
+* public attributes and properties start with ".",
+* private attributes and properties start with "_",
+* inherited attributes of _current object_ can be accessed using "self" qualifier.
+* inherited properties of _base class_  can be accessed using "base" qualifier.
 
-**Using class attributes**
+## Using the class
 
-Class attributes are static and can be accessed using two alternative scope qualifiers:
+Class can be used as is or it can be instantiated.
 
 ```
 ** using class attribute with class qualifier
 print (Demo.hasObjects); // expect: 0
 
-make obj = Demo(); //create instance of Demo
+make obj := Demo("my value"); //create instance of Demo
 
 ** using class attribute with object qualifier
 print (obj.hasObjects); // expect: 1
 
 ** making a test
 fail if obj.hasObject ≠ Demo.hasObjects; //expect to pass
+
+** using object attributes with dot notation
+print (obj.public);   // expect: "my value"
+print (obj._private); // expect to fail
 ```
 
-## Class Tree
-There is a special class that has name _"Object"_ and represents the "root" class. Each classes can grow from Object or from other "base class" forming a _"class tree"_. Bee is using single inheritance model. 
-
-**Notes**
-* Parameter "self" has type "Demo" that is redundant and optional,
-* A class that do not have parameter self can not be instantiated,
-* A class that do not instantiate self in explicit mode will return Null, 
-
-
 ## Constructor
-A class can have a single constructor. A constructor can use decision statements based on parameter values to create _"self"_ object in different creative ways based on conditions depending on parameters. This is call conditional constructor.
+A class can have a single constructor. A constructor can use decision statements to create _"self"_ object with different parameters. This is call _conditional constructor_. If the constructor fail to create _"self"_ object will be Null. A Null object can not be used, it has no properties and no attributes.
 
 ```
 ...
@@ -202,10 +189,8 @@ create
   fail if self = Null; //verify if initialization is successful
 return;
 ```
-**Idea to discuss**
-Can we use this to create multiple-inheritance? Maybe call a second constructor using self. So it is augmented in turn with properties and methods from different constructors. Then maybe it will become a monster with 7 heads.
 
-## Comparing objects
+## Comparing
 We can use comparison operators: {"=", "≠", "!="} and {"≡","!≡"} with objects. First comparison "=" will compare the object location. If the objects have same location they are also equal. Second compare object class and object attributes. If is the same class and all attributes are equal the objects are equivalent.
 
 Operator (match) "~" and "!~", are going to work with objects. Two objects are similar if they have the same class. The attributes may be different. If the classes are different the operator will return false.
@@ -219,7 +204,7 @@ Operator "is" can be used with an object to check if the object is derived from 
 Operators ">" and "<" can work with objects that have a single attribute, or multiple attributes. This operation could be overwritten by a particular class. The default Object, has this "order" implemented in a generic fashion. It may not work correctly if an object has more than one attribute. Two objects must be from the same base_class to be compared.
 
 **Initialization**
-Objects can be declared and initialize simultaneously using operator ":=" with constructor, or can be declared first using "∈" and initialize later using alter and operator ":=" with the a constructor call. Second call must use self as argument.
+Objects can be declared and initialize simultaneously using operator ":=" with constructor, or can be declared first using "∈" and initialize later using alter and operator ":=" with the a constructor call. After the call the object should not be Null. If it is you will get a runtime error.
 
 **Example:**
 ```
@@ -241,34 +226,62 @@ rule main:
 return;
 ```
 
-## Generics
+## Methods
 
-A class can receive type as parameters. This allows to create generic algorithms for different data types. A similar effect can be created using variant parameters. The difference is at compile time the generic types create more efficient code.
+The methods are rules associated to a class instance. 
 
-**Generic Class:**
+**pattern:**
+
 ```
-class {Generic_Type:Default_Type,...} Generic_Name(self: Null, param ∈ Generic_Type,...) <: Base_Class:
-  ** declarations
-  ...
-create
-  ** constructor
-  ...
+** declare a private method
+rule _rule_name(self ∈ Class_Name, param ∈ Data_Type ...) => (result ∈ Type):
+   pass; // do nothing
 return;
 ```
 
-**Using Generic:**
-Generic class is used to define a subtype then you can declare one or more objects using alias type:
+**note** 
+* self parameter is explicit declared and must be not Null,
+* inside methods you can access self object using dot notation,
+* methods can be called with dot notation,
+* only objects have methods, classes have rules,
+* methods are public or private to the component,
+* public methods start with "." while private methods can use "_" prefix.
+
+## Rules
+
+A class can have internal rules that can be public or private.
+
+**pattern**
 
 ```
-** declare new alias type from generic
-type new_type: Generic_Class{Generic_Type:Type_Name};
+** define a class with rules
+class Test() <: Object:
+  ** private class rule
+  rule _hidden(message ∈ String):
+    print(message);
+  return;
 
-** create new object: using new alias with arguments
-make object_name :=  new_type(param:value,...);
+  ** public class rules
+  rule .run_me(message ∈ String):
+    apply _hidden(message);
+  return;  
+return;
 
-** alternative: create new object directly from generic type
-make onject_name := generic_class{Type_Name}(param:value,...);
+** using rules of a class
+apply Test.run_me("Hello World"); 
+
+** making an alias for an internal rule;
+alias run_me := Test.run_me;
+apply run_me("I'm alive!");
 
 ```
 
-**Read next:** [Processing](processing.md)
+**Notes:** 
+* In the example above the class is used as a name-space,
+* A class with rules can also have properties,
+* A class with rules usually is not instantiated,
+* Sometimes classes with rules can also have constructor and destructor.
+
+Generics are in draft and not yet fully designed.
+
+**Read next:** [Standard Library](standard.md)

@@ -1,3 +1,10 @@
+## Generics in Bee
+
+Bee has generic rules and generic classes. The notation for both is very similar and consistent. You declare a generic rule when you act upon native or primitive data. You can declare a generic class to create a customized collection that can hold a specific data type.
+
+* [Generic rules](#generic_rules)
+* [Generic Classes](#generic_classes)
+
 ## Generic Rules
 
 A generic rule is using one or more "type" parameters. 
@@ -13,7 +20,7 @@ return;
 * Type can be any known type or sub-type;
 * Name is "first class" value of type: _Type_;
 
-## Anonymous Expression
+### Anonymous Expression
 
 Anonymous expression is like lambda expression except it does not have a name:
 
@@ -40,7 +47,7 @@ Call rule "foo" with anonymous rule as argument by name:
 apply foo(exp:(param ,param ...) => (expression));
 ```
 
-## Bubble sort
+### Bubble sort
 
 In this example, _bubble_ is a generic rule:
 
@@ -89,6 +96,36 @@ make suppliers ∈ [Person](10);
 ** use new order action to sort clients and suppliers
 apply sort(clients, gt:order);
 apply sort(suppliers, gt:order);
+```
+
+## Generic Classes
+
+A class can receive type as parameters. This allows to create generic algorithms for different data types. A similar effect can be created using variant parameters. The difference is at compile time the generic types create more efficient code.
+
+**declare:**
+```
+class {Generic_Type:Default_Type,...} Generic_Name(self: Null, param ∈ Generic_Type,...) <: Base_Class:
+  ** declarations
+  ...
+create
+  ** constructor
+  ...
+return;
+```
+
+**usage:**
+Generic class is used to define a subtype then you can declare one or more objects using alias type:
+
+```
+** declare new alias type from generic
+type new_type: Generic_Class{Generic_Type:Type_Name};
+
+** create new object: using new alias with arguments
+make object_name :=  new_type(param:value,...);
+
+** alternative: create new object directly from generic type
+make onject_name := generic_class{Type_Name}(param:value,...);
+
 ```
 
 **Read next:** [overview](./syntax/overview.md)

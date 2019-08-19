@@ -107,8 +107,6 @@ System variables are defined usually at the beginning of the component.
 Following system variables are available for debugging:
 
 ```
-@params //contains a vector of strings, with program parameters
-@names  //contains a vector of strings, with parameter names
 @timer  //contains duration information about last executed statement
 @stack  //contains debug information about current call stack
 @trace  //contains reporting information about executed statements
@@ -219,14 +217,14 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-driver main:
+driver main(*params ∈ String):
 ** read the number of parameters
-make c := @params.count;
+make c := params.count;
 halt if (c = 0);
 ** print comma separated parameters
 make i:= 0 ∈ Z;
 while (i < c) do
-  write @params[i];
+  write params[i];
   alter i += 1;
   write "," if (i < c);
 repeat;

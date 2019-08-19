@@ -801,4 +801,4 @@ Text is iterable by "row". The row separator CR or CRLF. So we can read a text l
 **Note:**
 The text also support escape sequences like a normal string. However in a text literal we do not have to escape the single quote symbols: "'". We have to escape the double quotes like: "This is \"quoted\" text". This is very rare since quoted text should use symbols: "« »" like "«quoted»".
 
-**Read next:** [Standard Library](standard.md)
+**Read next:** [Classes](classes.md)
