@@ -5,7 +5,7 @@ driver ar:
 load $pro_lib.console.(*);
  
 ** define array with 10 elements
-make a[Z](10);   
+make a ∈ [Z](10);   
 make i := 0; //control variable
 
 ** array initialization
