@@ -10,9 +10,9 @@ make test ∈ Number;
 alter test := zero; // instance of Number
 ** make a rule for define Number
 rule convert(self ∈ Number) => (y ∈ S):
-  alter y := ("zero"  if self ≡ zero,
-              "one"   if self ≡ one,
-              "two"   if self ≡ two,
+  alter y := ("zero"  if self = zero,
+              "one"   if self = one,
+              "two"   if self = two,
               "none");
 return;
 
