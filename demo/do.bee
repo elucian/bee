@@ -15,7 +15,7 @@ print x; // expect: 0
 ** repetitive block
 do
   alter x += 1;   // increment
-  stop if x ≡ 10; // exit condition
+  stop if x = 10; // exit condition
   write x & ",";  // write in buffer
 repeat;
 write x; // write in buffer 

@@ -9,12 +9,12 @@ load $pro_lib.console.(*);
 ** declare two natural numbers
 make a := 10, b := 5 ∈ N;
 ** simple decision 
-print ("a = b") if a ≡ b;
+print ("a = b") if a = b;
 print ("a < b") if a < b;
 print ("a > b") if a > b;
 
 ** single branch decision
-when a ≡ b do
+when a = b do
   print ("a = b");
 done;
 

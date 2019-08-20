@@ -18,7 +18,7 @@ return;
 
 ** a wrapper rule for convert
 rule equal(self ∈ Number, s ∈ S) => (r ∈ L):
-  alter r := (s ≡ convert(x));
+  alter r := (s = convert(x));
 return;
     
 ** calling test rules 

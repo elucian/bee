@@ -34,7 +34,7 @@ type Number: {
 ** example of use
 make a := 0;
 ** example of use
-when a ≡ zero do
+when a = zero do
   print "zero!";
 else
   print "life is misery!";

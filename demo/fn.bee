@@ -13,7 +13,7 @@ print add(1, 2);    // print 3
 print add(-10, 10); // print 0
 
 ** recursive lambda expression
-make fac := (n ∈ N) ∈ N => (1 if n ≡ 0, fac(n-1));
-pass if fac(3) ≡ 6;
+make fac := (n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
+pass if fac(3) = 6;
  
 over.
