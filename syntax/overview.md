@@ -258,8 +258,8 @@ pass if c = a; //1 (same values)
 pass if c ≡ a; //1 (identical location)
 
 ** consequence
-alter a := 2
-print c // 2 (modified)
+alter a := 2;
+print c; // 2 (modified)
 pass if a = c; // will pass
 
 ** copy value

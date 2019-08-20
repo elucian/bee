@@ -223,7 +223,7 @@ rule main:
   
   ** objects are not identical
   pass if (o!≡ n); // expected to pass  
-  fail if (o ≡ n); // unexpected to pass
+  fail if (o ≡ n); // expected to pass  
 return;
 ```
 
