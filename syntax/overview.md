@@ -185,8 +185,18 @@ References are variables holding the memory address for _denoted values_. The _d
 ```
 make k := 20 ∈ Z; // reference to i64 denoted value 20
 
-print k = 20 // 1 = True
-print k ≡ 20 // 1 = True
+** comparing with literals
+print k = 20  // 1 = True   (equal values)
+print k ≡ k   // 1 = True,  (identity rule) 
+
+** a reference is not identical to a value
+print type(k) // Z
+print type(20)// i64
+print k ≡ 20  // 0 = False, (different types) 
+
+** comparing with expression result
+print k ≡ 15 + 5  // 0 = False, expression return native
+print k = 15 + 5  // 1 = True,  same value
 ```
 
 **value boxing**
@@ -197,12 +207,13 @@ Boxing is the process of converting a native type to a primitive type. This will
 make k ∈ Z;   //reference to integer = 0
 make n ∈ i64; //native integer = 0
 
-alter k := n; //auto-boxing denoted value 10
-alter k := n  -> Z; //explicit boxing denoted value 10
+** auto boxin and explicit boxing
+alter k := n; //auto-boxing denoted value 0
+alter k := n  -> Z; //explicit boxing denoted value 0
 
-** boxing will copy a native value
-print n = k; //0 (false, different types and locations)
-print n ≡ k; //1 (true, equivalent values)
+** comparison
+print n = k; //1 (true,  same values)
+print n ≡ k; //0 (false, almost identical but types are different)
 
 ** consequence
 alter n := 2; //n = 2 
@@ -211,7 +222,6 @@ print k;      //k = 0 (unmodified)
 ** consequence
 print k := 10; //k = 10 
 print n;       //n = 2 (unmodified)
-
 ```
 
 **value unboxing**
@@ -226,12 +236,12 @@ alter n := r -> i64; //explicit unboxing
 alter n := i64(r);   //equivalent
 
 ** verify value identity
-print n = r; //0 (false: different types)
-print n ≡ r; //1 (true:  equivalent) - ignore types
+print n = r; //1 (true:  same values)
+print n ≡ r; //0 (false: different types)
 
 ** consequence
 alter n += 2; //n = 12 (modified)
-print r; //r = 10 (unmodified)
+print r;      //r = 10 (unmodified)
 ```
 
 **share vs copy**
@@ -240,20 +250,29 @@ print r; //r = 10 (unmodified)
 * A reference is copied using operator "::"
 
 ```
-** create a reference
-make  a := 1 ∈ Z;
+** define test data
+make  a := 1 ∈ Z; // create a reference
+make  c := a ∈ Z; // share a reference
 
-** copy a reference
-make  c := a ∈ Z;
+pass if c = a; //1 (same values)
+pass if c ≡ a; //1 (identical location)
 
-pass if c = a; //1 (same location)
-pass if c ≡ a; //1 (equivalent values)
+** consequence
+alter a := 2
+print c // 2 (modified)
+pass if a = c; // will pass
 
-** copy a value
-make  b :: a; 
+** copy value
+make  b :: a; // value 2
 
-fail if a = b; //0 (different location)
-pass if a ≡ b; //1 (equivalent values)
+pass if a  = b; //pass (same values)
+pass if a !≡ b; //pass (different location)
+
+** consequence
+alter a := 3;
+print b; // 2 (unmodified)
+
+pass if a != b; //no longer equal
 ```
 
 ## Composite types
@@ -593,18 +612,33 @@ Comparison operators will create a logical response: False = 0 or True = 1.
 
 **example:**
 ```
-make  x := 4 ∈ Z; //forced type to reference
+make  x := 4 ∈ Z;   //forced type to reference
+make  y := 4 ∈ i64; //forced native type
+make  z := 4 ∈ i64; //second native type
 
+** value comparison
 print x = 4;  //1 (true: equal values)
-print x ≡ 4;  //1 (true: equivalent values)
+print x = y;  //1 (true: equal values)
+
+** type & value comparison
+print x ≡ 4;  //0 (false: same value but different types)
+print y ≡ 4;  //1 (true: same type and same values)
+print x ≡ y;  //0 (false: same value but different types)
+print y ≡ z;  //1 (true: same type and same values)
+
+** identity comparison
+make a := 4  ∈ Z;   //forced type to reference
+print x ≡ a; //0 (false: same type, same value, different location)
+
+** ordering
 print x ≥ 4;  //1 (true: greater or equivalent to 4)
 print x ≤ 4;  //1 (true: less than or equivalent to 4)
 print x > 4;  //1 (true: greater than 4)
 print x < 4;  //1 (true: greater less than 4)
 
-// expressions can be compared to literals
+** expressions can be compared to literals
 print x - 4 = 0; //1 (true)
-print x - 4 ≡ 0; //1 (true)
+print x - 4 ≡ 0; //1 (true) (expressions have native results)
 ```
 
 **design**
@@ -612,6 +646,15 @@ print x - 4 ≡ 0; //1 (true)
 ** logic values are numeric
 print False - True; //-1 
 print True  + True; //+2
+
+** logic values are singleton
+print True  ≡ True;  //1 true
+print False ≡ False; //1 true
+
+** Null value is not a logical value
+print Null  ≡ Null   //1 true
+print Null  ≡ False  //0 false
+print Null  = False  //0 false  
 ```
 
 **Precedence:** 
@@ -653,7 +696,7 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make x, y ∈ L;
 make a := 0.0, b := 1.5;
 
-alter x := a -> L; //0 
+alter x := a -> L; //0
 alter y := b -> L; //1
 ```
 
@@ -675,18 +718,18 @@ statement if condition;
 The statement is executed only if the expression evaluate to True. 
 
 **restrictions:**
-1. Do not use with type statement;
-1. Do not use with make statement;
-1. Do not use with block statement;
+1. Can not use "if" with type statement;
+1. Can not use "if" with make statement;
+1. Can not use "if" with block statement;
 
 ```
 make a := 0 ∈ Z;
 
 ** conditional execution
-alter a := 1 if a ≡ 0;
+alter a := 1 if a = 0;
 
 ** conditional print
-print "a is 0" if a ≡ 0;
+print "a is 0" if a = 0;
 print "a >  0" if a ≥ 0;
 ```
 

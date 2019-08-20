@@ -99,7 +99,7 @@ rule foo(channel ∈ (N)):
     while channel.count < c do
       alter mark += 1; //side effect
       alter channel ++ mark; //append
-      exit if mark ≡ target; //stop the producer
+      exit if mark = target; //stop the producer
     done;
     yield bar; //suspend foo and broadcast wake-up for bar
   repeat;  
@@ -112,7 +112,7 @@ rule bar(channel ∈ (N)):
       alter channel -= channel.head;
       wait 1; //slow down for a second
     done;
-    exit if mark ≡ target;          
+    exit if mark = target;          
     yield foo; //suspend bar and signal foo to wake-up
   repeat;  
 return;

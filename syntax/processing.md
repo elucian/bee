@@ -250,7 +250,7 @@ Two matrices can be added to each other if they have the same dimensions.
 make M  := [1](10,10) + [2](10,10);
 
 ** verify the result is a matrix of same dimensions  
-pass if M ≡ [3](10,10); //expected
+pass if M = [3](10,10); //expected
 ```
 
 **Memory impedance**

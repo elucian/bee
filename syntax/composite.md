@@ -232,8 +232,8 @@ We can define an empty array and initialize elements later.
 make vec ∈ [A](); 
 make nec ∈ [N](); 
 ** arrays are empty
-print vec ≡ []; //True
-print nec ≡ []; //True
+print vec = []; //True
+print nec = []; //True
 ** array capacity becomes: 10
 alter vec := 'x' × 10; //10;
 print vec; //expect ['x','x','x','x','x','x','x','x','x','x']
@@ -255,7 +255,7 @@ print mat[0,0]; //first element
 print mat[3,3]; //last element
 
 ** support for 2D matrix literals
-pass if mat ≡ ⎡ 1,  2 , 3,  4 ⎤
+pass if mat = ⎡ 1,  2 , 3,  4 ⎤
               ⎢ 5,  6 , 7,  8 ⎥
               ⎢ 9, 10 ,11, 12 ⎥
               ⎣13, 14 ,15, 16 ⎦
@@ -305,7 +305,7 @@ make d1 := s1 - s2; //{1}        :difference 1
 make d2 := s2 - s1; //{4}        :difference 2
 make d  := s2 ⊖ s1; //{1,4}      :symmetric difference
 ** verify expectation
-pass if d ≡ d1 ∪ d2; //equivalent (else fail)
+pass if d = d1 ∪ d2; //equivalent (else fail)
 ** belonging check
 print s1 ⊂ s;  //True
 print s  ⊃ s2; //True
@@ -623,7 +623,7 @@ The last parameter in a parameter list can use prefix: "\*"
 rule foo(*bar ∈ [Z]) => (x ∈ Z):
   make c := bar.count();
   ** precondition
-  when (c ≡ 0) do
+  when (c = 0) do
     alter x := 0;
     exit;
   done;

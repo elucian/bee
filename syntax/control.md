@@ -70,7 +70,7 @@ read  a;** first decision
 when a ≤ 0 do 
   print "a ≤ 0";
   ** second decision
-  when a ≡ 0 do 
+  when a = 0 do 
     print "a = 0";
   else
     print "a < 0"; 
@@ -122,7 +122,7 @@ This block start with _"do"_ and is ending with _"repeat"_:
 make x := 0; //control variable
 do
   alter x += 1;
-  stop if x ≡ 10;
+  stop if x = 10;
   write x & ",";
 repeat;
 write x; 

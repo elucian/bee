@@ -42,7 +42,7 @@ symbol| description
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
  `\|` | Declarative collection builder: set := `{x | x ∈ array}`
- `\|` | Exact divisor: since 15 ≡ 3 · 5 then `(3 ∣ 15 = True)` and `(5 ∣ 15 = True)`
+ `\|` | Exact divisor: since 15 = 3 · 5 then `(3 ∣ 15 = True)` and `(5 ∣ 15 = True)`
  `_`  | Anonymous variable \| Constant value = one space (_ = ' ')
  `\\` | Escape character ( `\n` := New Line), ( `\"` = Double Quotes)
 
@@ -80,6 +80,7 @@ symbol| description
  `=>` | Define: rule expression \| rule result
  `->` | Data cast pipeline operator / Type conversion
  `<:` | Define subset from set \| Specify super-type for a new type
+ `:>` | Can be used as logical operator: is super-type for object ...
  `<<` | Much less      0.1 \<\< 2  but not (0.1 \<\< 1) 
  `>>` | Much greater   2 \>\> 0.9  but not (1 \>\> 0.9)
  `::` | Deep copy \| Clone operator
@@ -108,12 +109,12 @@ Relation operators are used to compare expressions.
 symbol | meaning
 -------|--------------------------------------------------------------------
  `∈`   | check if element belong to collection
- `=`   | shallow comparison \| same { values, objects, references, types }
- `≠`   | shallow comparison \| different { values, objects, types }
- `≡`   | deep comparison    \| equivalent { values & types & attributes } 
+ `=`   | equal     { values or attributes}
+ `≠`   | different { values or attributes}
+ `≡`   | identical \|  { type & values & location } 
  `≈`   | approximative equal numbers, used with `±` like: (x ≈ 4 ± 0.25)
- `~`   | similar numbers: (0.1 ~ 0.9) \| not similar (-1 !~ +1) 
- `~`   | similar characters: ('a' ~ 'A')  \| not similar ('a' !~ 'B')
+ `~`   | similar (have the same type but value may be different) 
+ `~`   | equivalent type(a) = type(b)
  `>`   | value is greater than: (2 > 1)
  `<`   | value is less than: (1 < 2)
  `≥`   | greater than or equal to

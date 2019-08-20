@@ -109,7 +109,7 @@ make object_name := class_name(param:value,...);
 make object_name ∈ class_name; 
 
 ** object is not initialized yest
-pass if object_name ≡ Null; // Not initialized 
+pass if object_name = Null; // Not initialized 
 
 ** initialize the object using the constructor
 alter object_name := class_name(param:value, ...);
@@ -191,11 +191,11 @@ return;
 ```
 
 ## Comparing
-We can use comparison operators: {"=", "≠", "!="} and {"≡","!≡"} with objects. First comparison "=" will compare the object location. If the objects have same location they are also equal. Second compare object class and object attributes. If is the same class and all attributes are equal the objects are equivalent.
+We can use comparison operators: {"=", "≠", "!="} and {"≡","!≡"} with objects. First comparison "=" will compare the object attributes. If the objects have equal attributes they are also equal. Second "≡" compare object location. If is the same the objects are identical.
 
-Operator (match) "~" and "!~", are going to work with objects. Two objects are similar if they have the same class. The attributes may be different. If the classes are different the operator will return false.
+Operator (match) "~" and "!~", work with objects. Two objects are similar if they have the same class. The attributes may be different. If the classes are different the operator will return False.
 
-Superclass subclass operator: "<:" used like `object <: Class_Name` can be used as logical operator for objects. If is used in a logical expression it will return true if A is subclass of class C and false if not. Operator ":>" is similar but works the other way. 
+Superclass subclass operator: "<:" used like `object <: Class_Name` can be used as logical operator. If is used in a logical expression it will return true if `object` is subclass of class `Class_Name` and false if not. Operator ":>" is similar but works the other way: `Class :> object`. 
 
 Operator "is" can be used with an object to check if the object is derived from specified class like:  `object is Class_Name`. Notice this can not be used with two objects. You must use "=" and "≡" to compare two objects.
 
@@ -216,13 +216,14 @@ rule main:
   alter n := Object(test:1); 
   
   ** objects are equivalent
-  pass if (o ≡ n); // equivalent  
+  pass if (o = n); // equivalent  
+  fail if (o ≠ n); // equivalent  
   print o; {test:1};
   print n; {test:1};
   
-  ** objects are not the same
-  fail if (o = n); // unexpected to fail
-  pass if (o ≠ n); // expected to pass
+  ** objects are not identical
+  pass if (o!≡ n); // expected to pass  
+  fail if (o ≡ n); // unexpected to pass
 return;
 ```
 

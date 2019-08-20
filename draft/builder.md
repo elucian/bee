@@ -67,10 +67,10 @@ make here := {0b10011,0b10001,0b11101};
 make verify ∈ L; //logical flag
 
 ** verify if any mask element has second bit from the end
-alter verify := ∃(x ∈ here) ∧ (x ⊕ 0b10 ≡ x);
+alter verify := ∃(x ∈ here) ∧ (x ⊕ 0b10 = x);
 
 ** verify if all elements in Here have first bit from the end
-alter verify := ∀(x ∈ here) ∧ (x ⊕ 0b01 ≡ x);
+alter verify := ∀(x ∈ here) ∧ (x ⊕ 0b01 = x);
 ```
 
 **syntax:**
