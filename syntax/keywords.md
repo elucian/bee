@@ -1,16 +1,16 @@
 ## Bee Keywords
 
-Bee core has 48 reserved keywords so far: 
+Bee core has 45 reserved keywords so far: 
 
 ```
-04: if, is, all
+02: if, is
 04: driver, aspect, module, return
 06: make, rule, like, load, alias, type
-09: read, write, print, alter, scrap, apply, begin, process, resolve
+09: read, write, print, alter, scrap, apply, begin, defer, wait
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
 05: fail, pass, raise, abort, retry
-08: exit, skip, stop, halt, wait, rest, yield, over.
+06: exit, skip, stop, halt, yield, over.
 ```
 
 **notes:** 
@@ -24,7 +24,6 @@ Bee core has 48 reserved keywords so far:
 |----------|--------------------------------------------------------------
 | if       | conditional for simple statements
 | is       | query element or variable data type
-| all      | used in combination with resolve
 
 ### Definition statements
 
@@ -49,16 +48,17 @@ Next statements are used to declare new elements in a component.
 Next keywords are simple statements. These represents actions called _imperative statements_.
 
 | Keyword  | Purpose
-|----------|-------------------------------------------------------------
-| apply    | Comence execution of a routine in synchronous mode
-| begin    | Comence execution of a routine in asynchronous mode
+|----------|-----------------------------------------------------------------------------
+| apply    | Execute a rule or aspect
+| begin    | Commence execution of a coroutine or aspect 
+| defer    | Postpone execution of a coroutine or aspect 
+| wait     | Suspend current thread execution for a number of seconds
 | read     | Flush the console buffer and accept user input from console 
 | write    | Add something to console buffer but no new line 
 | print    | Output expression result, variable or constant to console 
 | alter    | Mutate variable value using an expression
 | scrap    | Remove one element from its collection
-| process  | Execute an aspect in asynchronous mode
-| resolve  | Synchronize parallel execution of pending aspects
+
 
 ## Control statements
 
@@ -95,8 +95,6 @@ These keywords transfer control or make an interruption of current thread.
 | raise    | Used in exception handler to propagate an error out of trial block
 | abort    | Force silent early interruption of trial block
 | retry    | Repeat a trial statement from the beginning
-| wait     | Suspend execution for a number of seconds
-| rest     | Suspend execution of main thread and wait for all coroutines to finish
 | yield    | Suspend one coroutine and give control to another routine
 | halt     | Create unrecoverable error and stop program
 | over     | End driver, library or component file. Dot suffix is mandatory.

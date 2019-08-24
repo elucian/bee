@@ -3,40 +3,51 @@
 -----------------------------------+
 driver pc:
 
-make c  := 100 ∈ N;       // channel capacity
-make ch := ()  ∈ (N);     // define empty channel
-make processing :=  True; // stop semaphore for consumers
+** data source/target to process
+make s := [0](1000); //array of integers
 
-** ch is the communication channel
-rule producer(ch ∈ (N)):
-  alter processing := True;
-  for j in (1..1000) do
-    for i in (1..c) do
-      alter ch ++ random(10); // append
-    next;
-    yield consumer;
+** producer coroutine
+rule foo(channel ∈ (N), start, end, batch ∈ N):
+    ** prepare next batch    
+  make mark := start;
+  while mark < end do    
+    while channel.length < batch do
+      alter channel ++ mark; //append mark to channel
+      exit if mark = end;    //stop the producer
+      alter mark += 1; //next number in channel
+    done;
+    yield; //suspend producer
+    alter mark := 0;
   repeat;  
-  alter processing := False;
 return;
 
-** ch is the communication channel
-rule consumer(ch ∈ (N)):
-  while processing do
-    while (len(ch) > 0) do
-      alter ch -- ch.head ;   // FIFO
-      wait  20;
-    repeat;
-    yield producer;  
-  repeat;    
+** consumer coroutine
+rule bar(channel ∈ (N), batch ∈ N):  
+  make index = 0;
+  while channel.length > 0 do
+    for index in [0..batch]  do
+      write channel.head,",";  
+      alter channel -= channel.head;
+      wait 1; //slow down for a second
+      exit if channel.length = 0; //empty
+    done;
+    print
+    yield; //suspend consumer
+  repeat;  
 return;
 
-** produce on 1 thread
-begin producer(q);
+** prepare a channel
+make ch ∈  (N); //empty list of natural numbers
 
-** consume on 7 threads  
-for i ∈ (1..7) do
-  begin consumer(ch);
-repeat;
-rest;
+** activate producer
+begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
+while ch.length > 0 do
+  ** prepare consumers
+  for i ∈ (1..4) do
+    defer bar(n); //asynchronous call
+  next; 
+  yield bar; // execute consumers on 4 threads
+  yield foo if (ch.length = 0); // execute producer on single thread
+repeat;  
 
 over.

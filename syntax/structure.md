@@ -113,7 +113,8 @@ Following system variables are available for debugging:
 @level  //contains how deep is the current call stack
 @count  //contains last query count: updated/inserted/deleted records
 @query  //contains last native query statement
-@error  //contains last error or is empty = {}
+@error   //contains last error or is empty = {}
+@threads //contains number of active threads
 ```
 
 **notes:** 
@@ -478,20 +479,20 @@ Define driver named "main" and use previous defined "test" aspect.
 driver main:
 ** define variable result
 make result ∈ N;
-** resolve one aspect "test" and collect the result
-resolve $pro_lib.test(-3) +> result;
+** execute one aspect "test" and collect the result
+apply $pro_lib.test(-3) +> result;
 print result; //expect: 3
 
 ** define a collector (collection)
 make collect ∈ [N]
 
-** register processes for parallel execution
-process $pro_lib.test( 1) +> collect;  
-process $pro_lib.test(-1) +> collect;  
-process $pro_lib.test(-2) +> collect;  
-process $pro_lib.test(-3) +> collect;  
+** prepare aspects for parallel execution
+defer $pro_lib.test( 1) +> collect;  
+defer $pro_lib.test(-1) +> collect;  
+defer $pro_lib.test(-2) +> collect;  
+defer $pro_lib.test(-3) +> collect;  
 
-resolve all;   // execute all pending process
+yield; // execute pending aspects (using 4 threads)
 
 print collect; // [1,1,2,3]
 

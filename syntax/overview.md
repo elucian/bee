@@ -2,10 +2,11 @@
 
 We have used a _simple design_ for notation based on examples and notes:
 
-* We use suggestive descriptors;
-* We use "::=" to explain a descriptor;
-* We use "..." for repetitive sequences;
-* We use notes to explain the semantics;
+* We use suggestive descriptors,
+* We use "::=" to explain a descriptor,
+* We use "..." for repetitive sequences,
+* We use notes to explain the semantics,
+* Optional keyword is enclosed in square brackets.
 
 **bookmarks**
 

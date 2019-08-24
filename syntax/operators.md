@@ -86,7 +86,7 @@ symbol| description
  `::` | Deep copy \| Clone operator
  `++` | Append one or more elements into collection 
  `--` | Remove one or more elements from collection
- `+>` | Collect aspect result in process or resolve statement
+ `+>` | Collect result of an aspect
  
 ## Modifiers
 
