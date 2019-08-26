@@ -10,7 +10,7 @@ rule swap(x ∈ Z, y ∈ Z):
 return;
 
 rule main():
-   make a := 1, b := 2;
+   make (a: 1, b: 2) ∈ Z;
    print "a = #(n), b = #(n)" ? (a,b);
    apply swap(a, b); 
    print "a = #(n), b = #(n)" ? (a,b);

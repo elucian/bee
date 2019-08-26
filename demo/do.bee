@@ -5,9 +5,9 @@ driver "do":
 load $pro_lib.console.(*);
 
 ** local context
-make x := 0; //global
+make x ∈ Z; //global
 do
-  make x := 1; //local
+  make  x := 1; //local
   print x; // expect: 1
 done;
 print x; // expect: 0

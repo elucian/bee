@@ -26,18 +26,19 @@ print s["second"]; // 2
 print s["third"] ; // 3
 
 ** array with capacity
-make v1 := [Z](10) ; // vector of 10 integer elements
-make v2 := [R](2,3); // matrix of 2 rows and 3 columns
+make v1 ∈ [Z](10) ; // vector of 10 integer elements
+make v2 ∈ [R](2,3); // matrix of 2 rows and 3 columns
 ** dynamic alter / map collections
-make p := {U};     // alter collection of symbols
-make m := {(R:S)}; // hash map of strings with real key
+make p ∈ {U};     // alter collection of symbols
+make m ∈ {(R:S)}; // hash map of strings with real key
+
 ** Establish map using literals
 alter m := {'a':1, 'b':2, 'c':3}
 ** complex list examples
-make := (U) ;   // a list of characters
-make := (R) ;   // a list of real numbers
-make := ((U)); // a list of lists of symbols
-make := ([U](10)); // a list of array with 10 symbols
+make ∈ (U) ;   // a list of characters
+make ∈ (R) ;   // a list of real numbers
+make ∈ ((U)); // a list of lists of symbols
+make ∈ ([U](10)); // a list of array with 10 symbols
 
 ** Array and Matrix literals
 make l2 := [1,2,3];        // array of 3 elements

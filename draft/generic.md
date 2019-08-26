@@ -85,7 +85,7 @@ return;
 ```** define object type to be sorted
 type Person: { name ∈ String, age ∈ N } <: Object;
 ** define order as lambda expression for type Person
-make order := ( p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
+make order := λ(p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
 ** define sort rule for Person, as a clone from _bubble_
 make sort := bubble{Person};
 ** define clients and suppliers

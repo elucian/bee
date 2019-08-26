@@ -113,7 +113,7 @@ pass if object_name = Null; // Not initialized
 
 ** initialize the object using the constructor
 alter object_name := class_name(param:value, ...);
-``
+```
 
 ## Attributes
 
@@ -181,7 +181,7 @@ A class can have a single constructor. A constructor can use decision statements
 create
   ** conditional constructor
   fail if self ≠ Null; //block object reuse
-  when (condition) do
+  when condition do
     base_class(self, some_arguments); //forward self to base_class
   else
     base_class(self, other_arguments); //forward self to base_class
@@ -218,8 +218,9 @@ rule main:
   ** objects are equivalent
   pass if (o = n); // equivalent  
   fail if (o ≠ n); // equivalent  
-  print o; {test:1};
-  print n; {test:1};
+
+  print o; // {test:1};
+  print n; // {test:1};
   
   ** objects are not identical
   pass if (o!≡ n); // expected to pass  

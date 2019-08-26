@@ -31,12 +31,12 @@ We have used a _simple design_ for notation based on examples and notes:
 ## Expressions
 Expressions are created using identifiers, operators, rules and constant literals. 
 
-* can use () to establish order of operations;
+* can use () to establish order of operations,
 * can be enumerated using comma separator ","
-* can be combined to create more complex expressions;
-* have type that is calculated using type inference;
-* have a result that can be assigned to variables;
-* have a result that can be printed to console;
+* can be combined to create more complex expressions,
+* have a result that can be assigned to variables,
+* have a result that can be printed to console,
+* result type is given automatically using logical inference;
 
 **Examples**
 ```
@@ -47,32 +47,27 @@ print "this is a test";
 
 ** complex expressions can use ()
 print (10 + 10 + 15);  
-print (10 > 5 | 2 < 3);
+print (10 > 5) | (2 < 3);
 
 ** enumeration of multiple expressions
 ** print: separate multiple values with one space
-print (1,',',2,',',3);
-print (10, 11, 12);
+print 1,2,3;         // 1 2 3
+print 1,',',2,',',3; // 1,2,3
 
 ** to avoid new line and spaces use "write"
-write 0; //no need for parenthesis 
-write (1,2); //writing a list
-write (3,4); //writing 
+write 0;   //add 0  to print buffer
+write 1,2; //add 12 to print buffer 
+write 3,4; //add 34 to print buffer 
 
-** after write use print to write a new line
-print; //01234
-
-** Calculation that fail will generate an error
-alter x := 5 ∈ R;
-alter x := x ÷ 0; //error: division by 0
+** after write use print to flash and add new line
+print; //output buffer: 01234
 ```
 
 **Notes:** 
-* print statement can receive multiple arguments;
-* multiple arguments are separated by comma;
-* multiple arguments are enclosed in parenthesis;
-* print statement add new line by default;
-* write statement can be used to avoid new line;
+* print statement can receive multiple arguments,
+* multiple arguments are separated by comma,
+* print statement add new line by default,
+* write statement can be used to avoid new line.
 
 ## Data types
 
@@ -90,73 +85,40 @@ Bee give names to _data types_. It uses ASCII characters and numbers or Unicode 
 
 **examples:**
 ```
-u8      // native type: byte
-i32     // native type: binary integer
-Z       // primitive type: long integer
-R       // primitive type: double float
+Z(32)   // primitive type: long integer
 Q(5.2)  // primitive type: precision 0.25 
-Object  // composite type: root class for objects
 File    // composite type: text file
 List    // composite type: list of values
 ∠ ⊡ ↗   // geometric type: angle, dot, vector
 ```
 
-Bee use 3 kind of data types:
+Bee use 2 kind of data types:
 
-1. Native data types;
-2. Primitive data types;
-3. Composite data types;
-
-**note**
-* Each data type has a default representation for constant literals,
-* Each data type has a default representation for print & output,
-* Default representation can be changed using a _format template_.
-
-## Native Types
-
-Native types are defined using one small letter followed by a number.
-
-| Type | Sign      |Bytes|Description
-|------|-----------|-----|------------------------------------------------------------
-| u8   | unsigned  | 1   |Unsigned 8  bit, max: 255
-| u16  | unsigned  | 2   |Unsigned 16 bit, max: 64535
-| u32  | unsigned  | 4   |Unsigned 32 bit, max: 4294967295
-| u64  | unsigned  | 8   |Unsigned large positive integer [0..+*]
-| i8   | signed    | 1   |Signed half   integer 8  bit  [-128..127]    
-| i16  | signed    | 2   |Signed short  integer 16 bit  [-32768..+32767]
-| i32  | signed    | 4   |Signed binary integer 32 bit  [-..+*]
-| i64  | signed    | 8   |Signed large  integer 64 bit  [-..+*]
-| f32  | signed    | 4   |Double precision float (0..+*)
-| f64  | signed    | 8   |Double precision float (-*..+*)
-
-**Note:**
-
-* Default representation for native types is decimal
-* Native types can be stored on heap or on stack
+1. Primitive data types;
+2. Composite data types;
 
 ## Primitive Types
 
 Primitive data types are defined using one capital letter. 
 
-| Name     |Ref |Native| Description + Default representation
-|----------|----|------|-------------------------------------------------------------------
-| Logic    | L  | u8   | Numeric enumeration of two values: 0, 1 
-| Alpha    | A  | u8   | Alpha-numeric code point E-Ascii on 8 bit, max: 0xFF
-| Binary   | B  | u16  | Binary number on 8 bit, max: 0b11111111
-| Word     | W  | u16  | Word number on 16 bit, max: 0xFFFF (UTF16)
-| Unicode  | U  | u32  | Unsigned code point on 32 bit, max: U-FFFFFFFF (UTF32)  
-| Rational | Q  | u32  | Fix point representation number: like 1/2. Notation:  Q(14,17)
-| Natural  | N  | u64  | Unsigned large positive integer [0..+]
-| Integer  | Z  | i64  | Signed large integer 64 bit  [-..+]
-| Real     | R  | f64  | Double precision float (-..+)
-| Complex  | C  | u128 | Similar to Q numbers, except on two floats: C(32,32) C(64,64)
+| Name     |Ref | Description + Default representation
+|----------|----|-------------------------------------------------------------------
+| Logic    | L  | Numeric enumeration of two values: 0 = False, 1 = True 
+| Alpha    | A  | Alpha-numeric code point E-ASCII ('0'..'9') ('a'..'Z')
+| Binary   | B  | Binary number on 16 bit, max: 0b11111111 11111111
+| Unicode  | U  | Unsigned code point on 32 bit, max: U-FFFFFFFF (UTF32)  
+| Rational | Q  | Fix point representation number: like 1/2. Notation:  Q(14,17)
+| Natural  | N  | Unsigned large positive integer 64 bit [0..+]
+| Integer  | Z  | Signed large integer 64 bit  [-..+]  Z(64)
+| Real     | R  | Double precision float 64 bit (-..+) R(64)
 
 **notes:**
 
-* Primitive data types are references to native types,
-* Default representation for primitive type can be decimal or hexadecimal,
+* Each data type has a default representation for print & output,
+* Default representation can be changed using a _format template_,
 * Using print with primitive type will create a specific representation,
-* Using print with native types will convert into primitive type before printing,
+* Precision can be specified in parenthesis after the type: Z(32) = 32 bit integer,
+* Primitive data types are values allocated on the stack or in the registry.
 
 ## Constant Literals
 
@@ -166,120 +128,25 @@ These are symbolic representations for primitive data types:
 |-----------|-------|-----------------------------------------------------------
 |'a'        |  A    | (+-) & (0..9) & (a..z) & (A..Z)
 |'Ω'        |  U    | (Δ Λ Φ Γ Ψ Ω Σ Π π ⊥ ǁ α β ɣ ε δ μ ω ...)
-|123        |  Z    | (-+) & (0,1,2,3,4,5,6,7,8,9)
 |0b11111111 |  B    | (0b) & (0,1)
-|0xFF       |  A    | (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|U+FFFF     |  B    | (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|1234567890 |  N    | (0,1,2,3,4,5,6,7,8,9)
+|+0         |  Z    | (-+) & (0,1,2,3,4,5,6,7,8,9)
+|0xFFFF     |  A    | (0x) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
+|U+FFFF     |  U    | (U+) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |U-FFFFFFFF |  U    | (U-) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
-|0xFFFFFFFF |  N    | (0x) & (0,1,2,3,4,5,6,7,8,9) & ABCDEF
 |0.05       |  R    | (-.) & (0,1,2,3,4,5,6,7,8,9) 
 |-1/2       |  Q    | (-/) & (0,1,2,3,4,5,6,7,8,9)
 |1E10       |  R    | (-1E)& (0,1,2,3,4,5,6,7,8,9) 
 |1e10       |  R    | (-1e)& (0,1,2,3,4,5,6,7,8,9) 
-|9r+9j      |  C    | (r+j)& (0,1,2,3,4,5,6,7,8,9)
-|9r-9j      |  C    | (r-j)& (0,1,2,3,4,5,6,7,8,9)
 
-**denoted value**
+**note**
 
-References are variables holding the memory address for _denoted values_. The _denoted value_ can be a native type or an object. Denoted value is stored on heap while a reference is usually stored on the stack. Sometimes _denoted value_ is also called _underline value_.
-
-```
-make k := 20 ∈ Z; // reference to i64 denoted value 20
-
-** comparing with literals
-print k = 20  // 1 = True   (equal values)
-print k ≡ k   // 1 = True,  (identity rule) 
-
-** a reference is not identical to a value
-print type(k) // Z
-print type(20)// i64
-print k ≡ 20  // 0 = False, (different types) 
-
-** comparing with expression result
-print k ≡ 15 + 5  // 0 = False, expression return native
-print k = 15 + 5  // 1 = True,  same value
-```
-
-**value boxing**
-
-Boxing is the process of converting a native type to a primitive type. This will wrap the value and stores it on the heap. Auto-boxing is possible if the types are compatible. Otherwise you must perform explicit boxing using operator "->". In next example read the comments to understand it better:
-
-```
-make k ∈ Z;   //reference to integer = 0
-make n ∈ i64; //native integer = 0
-
-** auto boxin and explicit boxing
-alter k := n; //auto-boxing denoted value 0
-alter k := n  -> Z; //explicit boxing denoted value 0
-
-** comparison
-print n = k; //1 (true,  same values)
-print n ≡ k; //0 (false, almost identical but types are different)
-
-** consequence
-alter n := 2; //n = 2 
-print k;      //k = 0 (unmodified)
-
-** consequence
-print k := 10; //k = 10 
-print n;       //n = 2 (unmodified)
-```
-
-**value unboxing**
-
-Unboxing is the process of converting a reference to a native type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
-
-```
-make r := 10 ∈ Z;   //reference to integer
-make n := 0  ∈ i64; //native type
-
-alter n := r -> i64; //explicit unboxing
-alter n := i64(r);   //equivalent
-
-** verify value identity
-print n = r; //1 (true:  same values)
-print n ≡ r; //0 (false: different types)
-
-** consequence
-alter n += 2; //n = 12 (modified)
-print r;      //r = 10 (unmodified)
-```
-
-**share vs copy**
-
-* A reference is shared using operator ":="
-* A reference is copied using operator "::"
-
-```
-** define test data
-make  a := 1 ∈ Z; // create a reference
-make  c := a ∈ Z; // share a reference
-
-pass if c = a; //1 (same values)
-pass if c ≡ a; //1 (identical location)
-
-** consequence
-alter a := 2;
-print c; // 2 (modified)
-pass if a = c; // will pass
-
-** copy value
-make  b :: a; // value 2
-
-pass if a  = b; //pass (same values)
-pass if a !≡ b; //pass (different location)
-
-** consequence
-alter a := 3;
-print b; // 2 (unmodified)
-
-pass if a != b; //no longer equal
-```
+* constant literals are identical to themselves 
+* primitive variables are identical to themselves
 
 ## Composite types
 
 Predefined composite types start with capital letter: 
-
 
 | Name    | Description
 |---------|----------------------------------------------------------------
@@ -301,8 +168,8 @@ Bee define a collection literal using a special notation based on brackets.
 
 | symnols | Collection type
 |---------|------------------------------------------------------------------
-| ()      | Expression/ Tuple / List
-| []      | Array/ Matrix/ Dynamic Array
+| ()      | List
+| []      | Array/ Matrix
 | {}      | Ordinal / Set / Hash  / Object
 
 **Notes:** 
@@ -327,11 +194,10 @@ make var_name,var_name ... ∈ Type_Identifier;
 * User defined sub-types can be native types and can start with lowercase;
 * Public user data types start with dot prefix;
 
-
 **Example:**
 ```
-type Digit: (0..9) <: W;    //superset default notation
-type Digit: (0..9) <: Word; //superset equivalent full name 
+type Digit: (0..9) <: B; //binary superset 
+type Digit: (0..9) <: Z; //integer superset
 ```
 
 ## Domain subtypes
@@ -341,7 +207,7 @@ Domain notation is used to create a subset from a superset.
 **syntax**
 
 ```
-type Domain_Name = (min..max:rate) <: Primitive_Type;
+type Name = (min..max:rate) <: PrimitiveType;
 ```
 
 **Examples:**
@@ -353,7 +219,7 @@ type Digit:    (0..9)           <: Z;
 type Alpha:    ('A'..'z')       <: A;  
 type Latin:    (U+0041..U+FB02) <: U;
 
-** check variable belong to sub-type
+** check variable belong to type
 when ('x' ∈ Alpha) do
   print "yes";
 else
@@ -387,10 +253,10 @@ A domain can use a special notation for multiple numeric intervals called segmen
 (segment, segment ...) // continuous domain notation
 ```
 
-* segment ::=  n..m:ratio  :include n, include m if (m % ratio) = 0
-* segment ::=  n.!m:ratio  :exclude n, include m if (m % ratio) = 0
-* segment ::=  n!.m:ratio  :include n, exclude m 
-* segment ::=  n; //m:ratio  :exclude both n and m
+* segment ::=  n..m:ratio  // include n, include m if (m % ratio) = 0
+* segment ::=  n.!m:ratio  // exclude n, include m if (m % ratio) = 0
+* segment ::=  n!.m:ratio  // include n, exclude m 
+* segment ::=  n!!m:ratio  // exclude both n and m
 
 **example:**
 ```
@@ -413,7 +279,7 @@ Constants are defined identifiers for literal constants.
 
 ```
 ** using implicit type
-save constant_name  := constant_literal;  
+save constant_name := constant_literal;  
 
 ** using explicit type
 save constant_name := constant_literal ∈ type_name; 
@@ -421,10 +287,10 @@ save constant_name := constant_literal ∈ type_name;
 
 **Notes:** 
 
-* Constant initial value is assigned using operator ":=" or "::",
+* Constant initial value is assigned using operator ":",
 * System constants are public and have prefix "$",
 * User defined constants using prefix "." are also public,
-* Local constants are possible and are transien.
+* Local constants are possible but they are transient.
 
 **example:**
 ```
@@ -443,27 +309,34 @@ Variables are defined using keyword _make_ plus one of the operators:
 operator | purpose
 ---------|------------------------------------------------------------------
  ∈       | declare variable/element type 
- :       | pair-up element:value for collections
- :       | define initial value for a parameter
- :=      | binding  = assign a value \| share a reference
- ::      | cloning  = duplicate object \| collection
+ :       | define type \| pair-up initial values \| pair-up arguments
+ :=      | binding  = assign value     \| share reference
+ ::      | cloning  = duplicate object \| clone collection
  
+**Notes:**
+* Symbol ":" can be used to initialize one variable at a time in a list, 
+* Symbol ":" can accept only constant literals for initial values (var:con,...),
+* Symbol ":" accept expressions when it is used in function call (param:exp),
+* Symbol ":" can be used to create pairs for hash map (key:exp),
+* Symbol ":=" and "::" can be used to initialize multiple variables in a list.
+
 ```
 ** primitive variable declarations with type
-make var_name ∈  type_name;
-make var_name := constant ∈ type_name;
+make var_name ∈  type_name; // declaration without initial value
+make var_name := constant ∈ type_name; // declaration with initialization
 
 ** partial declaration using type inference
-make var_name := constant; 
-make var_name := expression; 
+make var_name := expression; //expression ":=" do not require type hint ("∈").
+
+** Multiple variables can be define in one single line using comma separator:
+make (var_name, var_name ...) ∈  TypeName;  //default initial values
+make (var_name, var_name ...) := Expression; //use expression type inference for initial value
+
+** Initialize multiple variables in a list with different values
+make (var1:value1, var2:value2 ...) ∈  TypeName;
 ```
 
-Multiple variables can be define in one single line using comma separator:
-```
-make var_name, var_name ... ∈ Type;
-make var_name, var_name ... := constant ∈ Type;
-make var_name, var_name ... := expression ∈ Type;
-```
+
 
 ## Modify values
 
@@ -471,9 +344,9 @@ One can modify variables using _alter_ statement.
 
 **example:**
 ```
-make a := 10, b := 0 ∈ Z;
+make (a:10, b:0) ∈ Z; // initialize two variables
 
-alter b := a + 1; // modify b underline value
+alter b := a + 1; // modify b using assign value
 alter b += 1;     // modify b using modifier
 print b;          // expected 12
 ```
@@ -501,10 +374,10 @@ alter a -= 1;  //decrement value of a := 10
 alter x, y := 10.5;
 
 ** modify two variables using two constants
-alter (q, p) := (True, False);  
+alter q, p := True, False;  
 
 ** swapping two variables
-alter (p, q) := (q, p)
+alter p, q := q, p;
 ```
 
 ## Type conversion
@@ -518,8 +391,8 @@ When data type mismatch you must perform explicit conversion.
 
 **example:**
 ```
-make a := 0, b := 20 ∈ Z;
-make v := 10.5, x := 0.0 ∈ R;
+make (a: 0, b:20) ∈ Z;
+make (v: 10.5, x: 0.0) ∈ R;
 
 ** explicit conversion
 alter a := v -> N;
@@ -539,10 +412,10 @@ print x; //expect 20.00
 Bee define A as single UTF-8 code point with representation: U+HH
 
 ```
-make a, b ∈ A; //ASCII 
-make x, y ∈ B; //Binary integer
+make (a, b) ∈ A; //ASCII 
+make (x, y) ∈ B; //Binary integer
 
-alter a :=`0`;    //ASCII symbol '0'
+alter a :='0';     //ASCII symbol '0'
 alter x := a -> B; //convert to binary 30
 alter y := 30;     //decimal code for '0'
 alter b := y -> A; //convert to ASCII symbol '0'
@@ -553,22 +426,22 @@ alter b := y -> A; //convert to ASCII symbol '0'
 We can use variable type to validate expression type.
 
 ```
-make a := 0;   //integer variable 
+make a := 0;   //integer variable
 make b := 0.0; //real variable 
 
-alter a := 10.5; //Warning: a is of type: Integer  
-alter b := 10;   //Warning: b is of type: Real
+alter a:= 10.5; //Warning: a is of type: Integer  
+alter b:= 10;   //Warning: b is of type: Real
 
 print a, b; // 10, 10.00
 ```
 
-You can use operator "is" to verify data type:
+You can use operator "∈" to verify data type:
 
 ```
 make a := 0 ∈ Z;
 
 ** expected: Integer
-fail if ¬ (a is Z);
+fail if ¬ (a ∈ Z); // fail if a is not integer
 ```
 
 ## Logic type
@@ -582,8 +455,6 @@ type .L: {.False: 0, .True: 1} <: Ordinal;
 print True;  //1
 print False; //0
 ```
-
-We know all enumeration in Bee are i32 so Logic type is also native i32.
 
 ## Logic operations
 
@@ -601,70 +472,58 @@ Precedence: { ¬, ∧, ∨, ⊕ }. Symbol ¬ apply first (has higher precedence)
 In Bee logic operators are also bitwise operators. You can use logic operators with numeric variables. 
 
 ```
-4 ∨ 3 = 7; // 100 ∨ 011 = 111 = 7;
-4 ∧ 7 = 4; // 100 ∧ 111 = 100 = 4;
+print 4 ∨ 3 = 7; //1: 100 ∨ 011 = 111 = 7;
+print 4 ∧ 7 = 4; //1: 100 ∧ 111 = 100 = 4;
 ```
 
 **comparison**
-Comparison operators will create a logical response: False = 0 or True = 1.
+Comparison operators will create a logical response: 1 = True or 0 = False
 
 * comparison ( ≈, =, ≠, ≡, >, <, ≤, ≥)
 * belonging  ( ∈, ⊃, ⊂ )
 
 **example:**
 ```
-make  x := 4 ∈ Z;   //forced type to reference
-make  y := 4 ∈ i64; //forced native type
-make  z := 4 ∈ i64; //second native type
+make  (x, y) := 4 ∈  Z;  //primitive integer
 
 ** value comparison
-print x = 4;  //1 (true: equal values)
-print x = y;  //1 (true: equal values)
+print x = 4;  //1 (equal)
+print x ≡ 4;  //1 (identical)
+print x = y;  //1  
+print x ≡ y;  //1 
+print x ≠ 5;  //1 (different)
+print x!≡ 5;  //1 (not identical)
 
-** type & value comparison
-print x ≡ 4;  //0 (false: same value but different types)
-print y ≡ 4;  //1 (true: same type and same values)
-print x ≡ y;  //0 (false: same value but different types)
-print y ≡ z;  //1 (true: same type and same values)
+** reference ordering
+print x ≥ y;  //1: x and a are actually equal
+print x ≥ 4;  //1: greater or equivalent to 4
+print x ≤ 4;  //1: less than or equivalent to 4
+print x > 4;  //0: not greater than 4
+print x < 4;  //0: not less than 4
 
-** identity comparison
-make a := 4  ∈ Z;   //forced type to reference
-print x ≡ a; //0 (false: same type, same value, different location)
 
-** ordering
-print x ≥ 4;  //1 (true: greater or equivalent to 4)
-print x ≤ 4;  //1 (true: less than or equivalent to 4)
-print x > 4;  //1 (true: greater than 4)
-print x < 4;  //1 (true: greater less than 4)
-
-** expressions can be compared to literals
-print x - 4 = 0; //1 (true)
-print x - 4 ≡ 0; //1 (true) (expressions have native results)
+** arithmetic expressions have primitive results
+print x - 4 = 0; //1 
+print x - 4 ≡ 0; //1 
 ```
 
-**design**
+**singleton**
+
+Primitive types are unique. That means they are identical.
+
 ```
-** logic values are numeric
-print False - True; //-1 
-print True  + True; //+2
-
-** logic values are singleton
-print True  ≡ True;  //1 true
-print False ≡ False; //1 true
-
-** Null value is not a logical value
-print Null  ≡ Null   //1 true
-print Null  ≡ False  //0 false
-print Null  = False  //0 false  
+** primitive values are singleton
+print  1  ≡  1;  //1
+print 's' ≡ 's'; //1
 ```
 
 **Precedence:** 
 
-Logic operators have greater precedence than comparison.
+Logic operators have greater precedence than comparison operators.
 
 ## Logical expression
 
-Logical expression have value { False, True }
+Logical expression have value { 0 = False, 1 = True }
 
 ```
 make x := False ∈ L; 
@@ -694,8 +553,8 @@ print (x ⊕ y); //1
 Any numeric expression ca be converted to logic using coercion operation `-> L`
 
 ```
-make x, y ∈ L;
-make a := 0.0, b := 1.5;
+make (x, y) ∈ L;
+make (a:0.0, b:1.5) ∈ R;
 
 alter x := a -> L; //0
 alter y := b -> L; //1
@@ -706,6 +565,25 @@ alter y := b -> L; //1
 * Fraction is truncated before conversion to logical;
 * A string: "Yes", "yes", "True", "true", "On","on", "T", "t" or "1" convert to: True = 1
 * A string: "No", "no", "False", "false", "Off","off", "F", "f" or "0" convert to: False = 0
+
+**design**
+
+```
+** logical values are singleton
+print True  ≡ True;   //1
+print False ≡ False;  //1
+
+** logical values are numeric
+print False - True; //-1 
+print True  + True; //+2
+
+** Null value is a singleton
+print Null  ≡ Null   //1
+
+** Null is not the same as false
+print Null  ≡ False  //0
+print Null  = False  //0
+```
 
 
 ## Conditionals
@@ -764,20 +642,21 @@ alter var :=
 
 **Legend:**
  
-```
-var  := predefined variable,
-exp1 := expression of same type with var,
-cnd1 := condition to produce exp1,
-def  := default expression (no condition).
-```
+* var  ::= predefined variable,
+* exp1 ::= expression of same type with var,
+* cnd1 ::= condition to produce exp1,
+* def  ::= default expression (no condition).
+
 
 **example:**
 ```
-make x := '0';
-read (x,"x:>");
+make x := '0'; //symbol
+write "x:"
+read   x;
 
 make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
 print ("x is " + kind); //expect: "x is digit"
+
 over.
 ```
 
@@ -788,23 +667,26 @@ A lambda expressions is a named expression with parameters and specified result 
 **syntax**
 
 ```
-** simple declaration of Lambda expression using type inference
-make name := (param ∈ Type,...) ∈ Type => (expression);
+** declaration of Lambda expression
+make name:= λ(param ∈ Type,...) ∈ ResultType => (expression);
 ```
 
 ```
 ** you can define a lambda signature first
 type SigName: (Type,...) ∈ Type <: Lambda;
 
-** then you can use the signature to create expression
-make name := SigName(param ∈ Type,...) ∈ Type => (expression);
+** then you can declare a λ variable
+make name ∈ SigName; // Null Expression
+
+** then you can modify assign expression to variable
+alter name := λ(param ∈ Type,...) ∈ Type => (expression);
 ```
 
 **Example:** 
 
 ```
 ** define "exp" as Lambda expression
-make exp := (x,y ∈ Z) ∈ Z => (x + y);
+make exp: (x,y ∈ Z) ∈ Z => (x + y);
 
 ** "exp" type is created using type inference
 print type(exp); //Lambda
@@ -869,12 +751,12 @@ Parameters are special variables defined in rule signature.
 **Example:**
 ```
 ** a rule with two parameter
-rule foo(name ∈ S, message ∈ S):
+rule foo(name, message ∈ String):
   alter message:= "hello:" + name + ". I am Foo. Nice to meet you!";
 return;
 
 ** using apply + rule name will execute the rule  
-make str ∈ S;
+make str ∈ String;
 apply foo("Bee", str);
 print str; 
 ```
@@ -887,7 +769,7 @@ hello: Bee. I am Foo. Nice to meet you!
 
 **Notes:**   
 * Parameters are enumerated in a tuple;
-* Some parameters can be optional if initial value is declared;
+* Some parameters can be optional if initialized;
 * Optional parameters are initialized with pair-up operator ":";
 * Native types are input parameters transfer value: _by copy_;
 * Composite type and object parameters transfer value: _by share_;
@@ -897,6 +779,9 @@ hello: Bee. I am Foo. Nice to meet you!
 A rule can have multiple results. Result variables must be declared and assigned.
 
 **Example:** 
+
+In this example we have a rule that return a list of two values.
+
 ```
 ** rule with two results "s" and "d"
 ** parameter x is mandatory y is optional
@@ -905,21 +790,25 @@ rule com(x ∈ Z, y:0 ∈ Z) => (s, d ∈ Z):
   alter d := x - y;
 return;
 
-** capture result into new variables b, c
-make b, c := com(3,2) ∈ Z;
-print (b, c); //5 1
+** capture result into a single variable
+make  r := com(3,2); //create a list
+print r; // (5,1) 
+
+** deconstruction of result into variables: s, d
+make  s, d := com(3,2);  // capture two values
+print s, d, sep:"," ;    // 5,1 (use separator = ",")
 
 ** ignore one result using variable "_"
 make  a, _ := com(3);
-print a; //3 
+print a; // 3 
 ```
 
 **Notes:**   
-* Multiple results are defined by name and can also have initial value;
+* Multiple results are declared with name and can also have initial value;
+* A rule with multiple results can be called using spread operator (*) 
 * You can capture results into multiple variables separated by comma;
 * You can ignore one result using anonymous variable "_";
-* Rules with multiple results can not be used in expressions.
-
+* Rules with multiple results can not be used in expressions;
 
 ### Rule as function
 
@@ -930,7 +819,7 @@ A rule with a single result can be used as a _function_;
 ** define a functional rule
 rule name(param ∈ type,...) => (result ∈ type):    
    ...
-   exit if (condition); //early transfer
+   exit if condition; //early transfer
    ...
    alter result := expression; //computing the result
    ...
@@ -949,20 +838,20 @@ alter n := rule_name(argument,...)
 ```
 
 **Restrictions:**
-A function is pure if:
+A rule is pure if:
 
 * do not have multiple results but one;
 * do not have public attributes;
 * do not perform unsafe data conversions;
 * do not raise any unhandled errors;
 * do not have side-effects;
-* do not call a downgraded function;
+* do not call a downgraded rule;
 
 **Notes:**
-* Usually a pure function is also deterministic;
+* Usually a pure rule is also deterministic;
 * If a rule break one of these restrictions it is _downgraded_ by the compiler;
 * Downgraded rules can be used in assignments and print but not in expressions;
-* A downgraded rule can be called also _dirty rule_ that is not _pure_;
+* A downgraded rule that is not _pure_ can be called also a _dirty rule_ ;
 
 **See also:**
 * [bs.bee](./demo/bs.bee); //Bubble Sort
@@ -975,7 +864,7 @@ A rule that have no results can be called _routine_:
 
 * A routine can have attributes;
 * A routine can have side-effects;
-* A routine can modify component variables;
+* A routine can modify shared variables;
 * A routine can call any other routine;
 
 **attributes:**
@@ -985,14 +874,14 @@ Attributes of a routine are local variables starting with dot prefix.
 **pattern:**
 ```
 rule rule_name(param ∈ type,...):   
-   make .x, .y, .z := 0 ∈ Z; 
+   make (.x, .y, .z) := 0 ∈ Z; 
    ...
 return;
 
 ** modify rule states
-alter rule_name.x := 1;
-alter rule_name.y := 2;
-alter rule_name.z := 3;
+alter rule_name.x  := 1;
+alter rule_name.y  := 2;
+alter rule_name.z  := 3;
 
 ** read rule states
 print (rule_name.x, rule_name.y, rule_name.z); //1 2 3
@@ -1045,7 +934,7 @@ rule prototype_name{attributes}(parameters) => (result ∈ Type):
   ...
   ** a prototype can have public attributes
   ** these attributes are shared between all clones
-  make .x, .y, .z := 0 ∈ Z;  
+  make (.x, .y, .z) := 0 ∈ Z;  
   ...
   
   ** compute the result
@@ -1100,7 +989,7 @@ This is myLib.bee file:
 ```
 module myLib:
 
-load myLib := $bee.lib.cpp.myLib; //load cpp library
+load $bee.lib.cpp.myLib; //load cpp library
 
 ** define a wrapper for external "fib"
 rule fib(n ∈ Z) => (x ∈ Z));

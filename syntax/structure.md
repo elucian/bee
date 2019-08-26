@@ -238,7 +238,7 @@ over; //end of driver
 Do not try to understand this example. It is just a worm-up! 
 
 **Notes:** 
-* This program is a driver :=  having file-name "main.bee";
+* This program is a driver having file-name "main.bee";
 * Input parameter _*params_ is an array of strings;
 * Any Bee component is ending with mandatory keyword: _"over"_; 
 * Early driver termination can be trigger using: halt or exit;
@@ -439,12 +439,13 @@ The driver or aspect can load numerous modules. After loading, all public elemen
 This pattern demonstrate how to use a rule from a module named "module_name"
 
 ```** loading a module
-load qualifier := $pro.src.module_name;
-** results can be captured using make
-make result := qualifier.rule_name(arguments);
+load $pro.src.module_name;
 
 ** give alias to aspect rule
-alias new_name := qualifier.rule_name;
+alias new_name: qualifier.rule_name;
+
+** results can be captured using make
+make result := qualifier.rule_name(arguments);
 
 ** modify a variable using rule alias:
 alter result := new_name(arguments);

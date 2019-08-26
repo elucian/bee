@@ -6,13 +6,13 @@ driver fo:
 load $pro_lib.console.(*);
 
 ** initialize the system library 
-load io   := $bee.system.io:(*);
-load con  := $bee.system.console:(*);
+load $bee.system.io:(*);
+load $bee.system.console:(*);
 
 make file := io.open('foo.txt','+w');
 
 ** write into the file using print
-apply file.print("Hello World!");
+apply file.write("Hello World!",LF);
 
 ** read the entire content from file
 make  content := file.read() ∈ W;
@@ -20,6 +20,7 @@ apply file.close;
 
 ** display the entire content to console
 write content;
+
 print;
  
 over.

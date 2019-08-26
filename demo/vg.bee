@@ -6,8 +6,8 @@ driver vg:
 load $lib.graphic.core:(*);
 
 ** define two points and two vectors
-make p1, p2 ∈ ⊡; // graphic point
-make v1, v2 ∈ ↗; // graphic vector
+make (p1, p2) ∈ ⊡; // graphic point
+make (v1, v2) ∈ ↗; // graphic vector
 
 ** setup the points
 alter p1 := {x:0,  y:0};   
@@ -18,7 +18,7 @@ alter v1 := {o:p1, p:p2};
 alter v2 := {o:p2, p:p1};  
 
 ** define one 2D graphic layer
-make c := {o:{0,0}, w := 1200, h := 675}; 
+make c := {o:{0,0}, w: 1200, h: 675}; 
 
 ** check canvas properties
 alter c.size  := 400;

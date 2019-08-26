@@ -23,8 +23,8 @@ With Comb Dot: °
 Bee is using Unicode symbols prime (′) for minutes and (″) for seconds of arc:
 
 ```
-make α := 180°   ∈ ∠;
-make β := 0°0′0″ ∈ ∠;
+make α:= 180°   ∈ ∠;
+make β:= 0°0′0″ ∈ ∠;
 
 pass if α ≈ π;  //α ≠ π
 ```
@@ -41,7 +41,7 @@ Type   | Name    | Signature                    | Description
   V    | Canvas  | {o ∈ ⊡, w,h ∈ Z, m ∈ [Y]}    | Canvas (with points and shapes)
   Y    | Layer   | {c ∈ B, v ∈ L,   m ∈ [H]}    | Layer with c = color, m = set of shapes
   H    | Shape   | {o ∈ ⊡, s ∈ ⌂, α ∈ ∠ }       | Shape, with origin and rotation
-  G    | Tag     | {o ∈ ⊡, t ∈ S, α, β ∈ ∠}     | Graphic label with rotation
+  G    | Tag     | {o ∈ ⊡, t ∈ String, α, β ∈ ∠}| Graphic label with rotation
 
 **legend**
 ```

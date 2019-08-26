@@ -141,9 +141,9 @@ This block start with _"while"_ and is ending with _"repeat"_:
 while condition do
   ** repetitive block
   ...
-  skip if (condition); //continue
+  skip if condition; //continue
   ...
-  stop if (condition); //break
+  stop if condition; //break
   ...
 repeat;
 ```
@@ -197,9 +197,9 @@ Start with "for" and ends with "next". It is used to traverse a _domain_ or _col
 ```
 for var ∈ (min..max:rate) do
   ...
-  skip if (condition); //fast forward
+  skip if condition; //fast forward
   ...
-  stop if (condition); //early transfer
+  stop if condition; //early transfer
   ...
 next;
 ```

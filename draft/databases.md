@@ -36,7 +36,7 @@ One application can connect to multiple databases simultaneously. A specific kin
 
 **pattern:**
 ```** create a wrapper for database connection
-rule connect(name, password, database ∈ S) => (db ∈ Oracle.Database):
+rule connect(name, password, database ∈ String) => (db ∈ Oracle.Database):
   ** prepare credentials
   make credential := user + '/' + password + '@'+ dbname;
   ** connect to database
@@ -218,7 +218,7 @@ apply table_name.scrub;
 apply db.commit;
 ** delete current record using _for_
 for record ∈ table_name do
-  record.delete if (condition);
+  record.delete if condition;
 done;
 apply db.commit;
 ```

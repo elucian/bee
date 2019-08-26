@@ -104,12 +104,12 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-rule .open(name ∈ S, mode ∈ A) => (file ∈ File);
+rule .open(name ∈ String, mode ∈ A) => (file ∈ File);
 rule .close(file ∈ File);
 rule .list(folder ∈ Folder) ∈ (S);
-rule .exist(name ∈ S) ∈ L;
-rule ,remove(name ∈ S); 
-rule ,rename(name, new_name ∈ S); 
+rule .exist(name ∈ String) ∈ L;
+rule ,remove(name ∈ String); 
+rule ,rename(name, new_name ∈ String); 
 ...
 
 ```
@@ -159,7 +159,7 @@ make folder_name := Folder.open('name');
 Bee has pre-define Error objects with codes in range (1..200):
 
 ```** global type
-type Error: {code ∈ Z, message ∈ S} <: Object;
+type Error: {code ∈ Z, message ∈ String} <: Object;
 ```
 
 ```

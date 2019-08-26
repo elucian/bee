@@ -4,8 +4,8 @@
 driver nu:
 load $pro_lib.console.(*);
 
-make s := 10 ∈ Z; // define integer reference
-make d, e ∈ Z;    // reference to natural number
+make s: 10 ∈ [Z];   // define integer reference
+make d, e  ∈ [Z];   // reference to natural number
 
 ** assign "by share" 
 alter d := s; 
@@ -28,22 +28,22 @@ print e = d; // 1 same value
 print e ≡ d; // 0 different reference
 
 ** boxing/ unboxing
-make i := 10 ∈ i32; // native type
-make c := 0  ∈ Z ;  // reference
+make i := 10 ∈  Z  ; // native type
+make c := 0  ∈ [Z] ;  // reference
 trial:
   alter c := i; // auto boxing, makes c = 10 
   alter i := c; // not possible (fail)
 patch
   ** implicit unboxing error
-  print "unboxing error:" + &error.message;
+  print "unboxing error:" + @error.message;
 done;
 
 ** explicit unboxing
-alter i := d -> i32;
+alter i := Z(c)
 
 ** verify identity
 print i = c; // 1 same value
-print i ≡ d; // 0 different locations
+print i ≡ c; // 0 different locations
 
 
 over.

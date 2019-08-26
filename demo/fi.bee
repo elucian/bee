@@ -2,17 +2,20 @@
 |  Demo Fibonacci rule      |
 +---------------------------+
 driver fi:
+
 load $pro_lib.console.(*);
 ** declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):
   when (n = 1) ∨ (n = 0) do
-    alter y := 1; !first value
+    alter y := 1; //first value
   else     
     alter y := fib(n-1) + fib(n-2);
   done;
 return;
+
 ** call fib rule using argument 5
 make r := fib(n:5);
+
 ** print the result to console
 print r;
 over. //end driver fi

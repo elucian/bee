@@ -10,7 +10,7 @@ rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
 return;
 
 ** declare a lambda expression:
-make lt := (a,b ∈ Z) ∈ L => (a < b);
+make lt := λ(a,b ∈ Z) ∈ L => (a < b);
 make test ∈ L;
 
 ** delegate rule compare to execute expression: lt

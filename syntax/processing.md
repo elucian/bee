@@ -2,14 +2,105 @@
 
 By using collections and control structures one can read, modify and store data.
 
+* [Boxed values](#Boxed values)
 * [Array Operations](#Array-Operations)
 * [Array Slicing](#Array-Slicing)
 * [Matrix Operations](#Matrix-Operations)
 * [Set builders](#Set-builders)
 * [List operations](#List-operations)
 * [Collection iteration](#Collection-iteration)
-* [String Generator](#String-Generator)
+* [String generator](#String-generator)
 * [String Interpolation](#String-interpolation)
+
+## Boxed values
+
+A boxed value is a reference to a primitive type. A boxed value can be an array, or an object with a single value.
+
+**boxing**
+Boxing is the process of converting a primitive type to a reference. 
+
+```
+make n ∈  Z;  //primitive integer 
+make k ∈ [Z]; //array of integers with fix capacity: 1
+
+** check type of variable
+print type(k);          //Array[Z]
+print type(k) is Array; //1
+
+** auto boxing
+alter k := n;  //auto-boxing
+
+** comparison
+print n = 0; //1 (true, initial value)
+print n = k; //1 (true, same values)
+print n ≡ k; //0 (false, different types)
+
+** consequence
+alter n := 2; //n = 2 (modify n)
+print k;      //k = 0 (unmodified)
+
+print k := 10; //auto-boxing
+print n;       //n = 2 (unmodified)
+```
+
+**unboxing**
+
+Unboxing is the process of converting a reference to a primitive type. This will unwrap the value from the heap and stores it on the stack. Unboxing is always explicit. If you try to do implicit unboxing the compiler will signal an error.
+
+```
+make r := 10 ∈ [Z]; //reference to integer
+make n := 0  ∈  Z;  //native type
+
+** use data type like a function
+alter n := Z(r);   //explicit unboxing (default notation)
+alter n := r -> Z  //explicit unboxing (alternative notation)
+
+** verify value identity
+print n = r; //1 (true:  same values)
+print n ≡ r; //0 (false: different types)
+
+** consequence: variables are unbound
+alter n += 2; //n = 12 (modified)
+print r;      //r = 10 (unmodified)
+```
+
+## Share vs copy
+
+A reference can be shared between two variables. As a consequence, when one is modified the other is also modified.
+
+* A reference is shared using operator ":="
+* A reference is copied using operator "::"
+
+```
+** create a reference using ":="
+make  a := [1]; // create a reference
+make  c := [a]; // share a reference
+
+** variable c is bound to a
+pass if c = a; //1 (same values)
+pass if c ≡ a; //1 (same location, same data type)
+
+** consequence of sharing:
+alter a := 2; //auto-boxing new value
+print a; // [2] (new value is boxed)
+print c; // [2] (shared reference is modified)
+
+pass if c = a; // will pass
+pass if c ≡ a; // reference is bound
+
+** create a clone using "::"
+make  b :: a; // value [2]
+
+pass if a  = b; //pass (same values)
+pass if a !≡ b; //pass (different location)
+
+** consequence of cloning:
+alter a := 3;
+print a; // [3] (new value)
+print b; // [2] (unmodified)
+
+pass if a != b; //no longer equal
+```
 
 ## Array Operations
 
@@ -70,7 +161,7 @@ rule test_array:
   ** array  with capacity of 10 elements
   make my_array ∈ [Z](10);
   make m := my_array.capacity();
-  make i := 0 ∈ u4;
+  make i := 0 ∈ N;
   ** traverse array and modify elements
   while i < m do
     alter my_array[i] := i;     
@@ -119,7 +210,7 @@ print array = acopy; //0 = False (different arrays)
 Array data can be used as arguments for feeding a function that receive variable arguments.
 
 ```
-rule sum(*args ∈ [i64]) => (result: 0 ∈ Z): 
+rule sum(*args ∈ Z) => (result: 0 ∈ Z): 
   for e ∈ args do 
     result += e;
   done;  
@@ -136,7 +227,7 @@ Array data can be assigned to multiple variables. Last elements can be captured 
 ```
 make array := [1,2,3,4,5];
 
-make x, y, *other :=  [1,2,3,4,5]; //decomposition
+make (x, y, *other) := [1,2,3,4,5]; //decomposition
 
 print "x = #(n)" ? x;  // x = 1
 print "y = #(n)" ? y;  // y = 2
@@ -165,7 +256,7 @@ Where: n,m are 2 optional numbers, n ≥ 0, m <= capacity-1.
 Anonymous slicing notation can be used to extract or modify specific elements from an array; 
 
 ```
-make a:= [0,1,2,3,4,5,6,7,8,9];
+make a:= [0,1,2,3,4,5,6,7,8,9]; // initialized array
 do
   print a[1..-1];  // will print [0,1,2,3,4,5,6,7,8,9]
   print a[-3..-1]; // will print [7,8,9]
@@ -185,7 +276,7 @@ done;
 Slicing notation can be used to create a view to original array.
 
 ```** original array
-make   a := [0](5); 
+make   a:= [0](5); 
 print  a;  //[0,0,0,0,0]
 ** making two slices
 make c := a[0..2]; //[0,0,0]
@@ -210,7 +301,7 @@ Modify all elements of the matrix is possible using [*] and assign operator “ 
 ```
 ** a matrix having 2 rows and 2 columns
 ** initialize all elements with 100
-make M: [Z](2,2);
+make M ∈ [Z](2,2);
 do
   M[*] := 100;
   print (M);
@@ -247,7 +338,7 @@ Two matrices can be added to each other if they have the same dimensions.
 
 ```
 ** creation of matrix with 10 × 10 elements
-make M  := [1](10,10) + [2](10,10);
+make M  := [1](10,10) + [2](10,10); //type inference
 
 ** verify the result is a matrix of same dimensions  
 pass if M = [3](10,10); //expected
@@ -271,7 +362,8 @@ make M := ⎡'a0','b0','c0'⎤
           ⎣'a2','b2','c2'⎦
           
 ** traverse matrix      
-make row, col := 0;
+make row, col := 0;  // type inference: ∈ Z
+
 while col < 3 do     // traverse columns
   while row < 3 do   // traverse row first
     print M[row,col];
@@ -399,11 +491,11 @@ A stack is a LIFO list of elements: LIFO = (last in first out)
 ```
 make a := (1, 2, 3); //list
 make last ∈ N;
-** append to stack with operator "++"
+** append operator: "++"
 alter a ++ 4; //(1,2,3,4)
-** read last element using "++"
+** read last element
 alter last := a.tail; //last = 4
-** remove last element using "--"
+** remove operator "--"
 alter a -- last; //a = (1,2,3)
 ```
 
@@ -421,8 +513,6 @@ alter first := a.head; //first = 1
 ** dequeue first element using "--"
 alter a -- first; //a = (2,3,4)
 ```
-
-
 
 ### Other built-ins
 
@@ -479,7 +569,7 @@ Hash tables are sorted in memory by _key_ for faster search. It is more difficul
 ** check if a key is present in a hash collection
 make my_map := {(1:'a'),(2:'b'),(3:'c')};
 make my_key := 3;
-when (my_key ∈ my_map) do
+when my_key ∈ my_map do
   print("True"); //expected
 else
   print("False");
@@ -539,9 +629,12 @@ Strings can be concatenated using:
 ** this is example of string concatenation
 make str := ""; 
 do
-  ** set string value using different operators
+  ** concatenate string as they are (no trim)
   alter str := "this " & " string"; //"this  string"
+  
+  ** trim before concatenation and add one space
   alter str := "this " + " string"; //"this string"
+  alter str := "this" + "string";     //"this string"
 done;
 ```
 
@@ -553,14 +646,33 @@ make s := "";
 do  
   alter s := "te/" / "/st"; //"te/st"
   alter s := "te/" \ "/st"; //"te\\st"
+  alter s := "te"."st"; //"te\\st" or "te/st" depending on OS
 done;
 ```
 
-## String Replicator
+## String Generator
 
-It is common to create strings automatically.
+Replication operator: "*" will concatenate a string with itself multiple times:
 
-**Operator:**  "*"
+```
+** create string of 10 spaces
+make s := ' ' * 10;
+```
+
+**Examples:**
+```
+** make a string from pattern 01
+make  a := "01" * 4;
+print a; //01010101;
+
+** used in expression will generate string
+make  b := (a & ' ') * 4;
+print b; //01010101 01010101 01010101 01010101
+```
+
+## String Pattern
+
+It is common to create strings from a string pattern using operator "*".
 
 ```
 make str := constant * n ∈ S(n);
@@ -744,7 +856,7 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(number ∈ R, pattern ∈ S) => (result ∈ S):
+rule format(number ∈ R, pattern ∈ String) => (result ∈ String):
   ...
 return;
   
@@ -786,12 +898,12 @@ Where pattern cab gave two forms:
 
 ### Text functions:
 
-* format (str ∈ X, map ∈ {S}) ∈ X;
+* format (str ∈ X, map ∈ {String}) ∈ X;
 * format (str ∈ X, map ∈ {Z}) ∈ X;
 * format (str ∈ X, map ∈ [Z]) ∈ X;
-* replace(str ∈ X, target  ∈ S, arrow ∈ S) ∈ X;
-* find   (str ∈ X, pattern ∈ S) ∈ N;
-* count  (str ∈ X, pattern ∈ S) ∈ N;
+* replace(str ∈ X, target  ∈ String, arrow ∈ String) ∈ X;
+* find   (str ∈ X, pattern ∈ String) ∈ N;
+* count  (str ∈ X, pattern ∈ String) ∈ N;
 * length (str ∈ X) ∈ N;
 
 **Reading a Text:**

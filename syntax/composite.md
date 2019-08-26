@@ -132,9 +132,9 @@ type type_name: (element_type) <: List;
 You can use one of three forms of declarations:
 
 ```
-make name ∈  (element_type); //explicit declaration
+make name ∈  (TypeName);     //explicit declaration
 make name := (constant,...); //implicit declaration
-make name := (constant,...) ∈ (element_type); //full declaration
+make name := (constant,...) ∈ ListType; //full declaration
 ```
 
 **properties**
@@ -146,8 +146,13 @@ make name := (constant,...) ∈ (element_type); //full declaration
 
 **example:**
 
-```** define a list type of unsigned short integers
-type Lou: (u16) <: List;
+```
+** define a diverse lists
+make two := () ∈ (Z);  //empty list of integers = ()
+make one := (0,);      //initialize list with single element
+make two := (1,2);     //initialize list with two elements
+** define a list type of unsigned short integer
+type Lou: (N) <: List;
 ** define a list variable of defined type Lou
 make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 ** list traversal
@@ -164,7 +169,8 @@ Bee define Arrays using notation [Type](c), where c is the capacity.
 
 **syntax**
 ```** diverse array variables
-make array_name ∈ [element_type]  ;    //undefined capacity
+make array_name ∈ [element_type]  ;    //single element array
+make array_name ∈ [element_type]();    //undefined capacity array
 make array_name ∈ [element_type](c);   //capacity c
 make array_name ∈ [element_type](n,m); //capacity c = n·m
 ** define new kind of array
@@ -182,7 +188,7 @@ make array_name ∈ Array_Type;
 **example:**
 
 ```
-make array := ['a', 'b', 'c'];
+make array := ['a', 'b', 'c']; // initialized array
 for c ∈ array do
   write c;
   write ',';
@@ -199,30 +205,17 @@ repeat;
 
 **initialize elements**
 
-Initial value for elements can be set during declaration:
+Initial value for elements can be set during declaration or later:
 
-```** you can use 4 optional initialization notations 
-make zum  := 0       ∈ [Z](10); //explicit initialization using single value
-make zet  := 1..10   ∈ [Z];     //explicit initialization using range
-make test := 0..10:2 ∈ [Z];     //explicit initialization using rate
+```** you can use a single value to initialize all vector elements
+make zum: 0 ∈ [Z](10); //explicit initialization using single value
 ** modify one element by index
 alter zum[1]  := 1; 
-alter zum[10] := 10; 
-print zum; //expect [1,2,2,2,2,2,2,2,2,10]
+alter zum[-1] := 9; 
+print zum; //expect [0,1,0,0,0,0,0,0,0,9]
 ** modify all elements
-alter zum[*] += 1; 
-print zum; //expect [2,3,3,3,3,3,3,3,3,11]
-** reset all elements
-alter zum[*] := 0; //[0,0,0,0,0,0,0,0,0,0]
-** modify multiple elements using an Array literal
-alter zum[*] := [1,2,3];
-print zum; //expect [1,2,3,1,2,3,1,2,3,1]
-** reset zum reference (replace zum)
-alter zum := [1,2,3];
-print zum; //expect [1,2,3];
-** transfer a reference 
-alter zum := zet;
-print zum; //expect [1,1,1,1,1,1,1,1,1,1];
+alter zum[*] := 0; 
+print zum; //expect [0,0,0,0,0,0,0,0,0,0]
 ```
 
 **differed initialization**
@@ -234,7 +227,7 @@ make nec ∈ [N]();
 ** arrays are empty
 print vec = []; //True
 print nec = []; //True
-** array capacity becomes: 10
+** initialize with operator "×"
 alter vec := 'x' × 10; //10;
 print vec; //expect ['x','x','x','x','x','x','x','x','x','x']
 ** array capacity becomes: 10
@@ -248,11 +241,12 @@ A matrix is an array with 2 or more dimensions.
 
 **Example:** 
 ```
-make mat ∈ [R](4,4) <: Matrix; //define matrix
+type Mat: [R](4,4) <: Matrix;
+make mat ∈ Mat //define matrix
 ** modify matrix using ":=" operator
 alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-print mat[0,0]; //first element
-print mat[3,3]; //last element
+print mat[0,0]; //1  = first element
+print mat[3,3]; //16 = last element
 
 ** support for 2D matrix literals
 pass if mat = ⎡ 1,  2 , 3,  4 ⎤
@@ -267,17 +261,16 @@ So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```** elements in matrix can be accessed using while
 make i   := 0
-make mat := [i32](3,3);
- 
-make x := length(mat)
+make mat := [Z](3,3);
+make x   := mat.length;
   
 while (i < x) do
   mat[i] := i+1;
   write (mat[x], ',') 
   i += 1;
 repeat
-print
-over
+print;
+over.
 ```
 
 output:
@@ -310,7 +303,7 @@ pass if d = d1 ∪ d2; //equivalent (else fail)
 print s1 ⊂ s;  //True
 print s  ⊃ s2; //True
 ** declare a new set
-make a := {1,2,3} ∈ {N};
+make a := {1,2,3};
 ** using operator +/- to mutate set a
 alter a ++ 4; // {1,2,3,4}
 alter a -- 3; // {1,2,4}
@@ -401,7 +394,7 @@ For large text literals (Text) we can use a markup language:
 
 **Example:**
 ```
-make query = 
+make query := 
 <query>
    select name, age
     from persons
@@ -414,7 +407,7 @@ make query =
 Single quoted literals can contain a single symbol. 
 
 ```** Unrestricted capacity string
-make test = "Unicode string: Δ Λ Φ Γ Ψ Ω" ∈ String;
+make test := "Unicode string: Δ Λ Φ Γ Ψ Ω" ∈ String;
 
 ** fixed capacity array or ASCII symbols
 type A128: [A](128) <: Array; // define a sub-type
@@ -491,7 +484,7 @@ symbol| description
   
 **examples**
 
-make m := '-' * 10 ∈ S; //m = "----------"
+make m := '-' * 10 ∈ String; //m = "----------"
 make u, c, s ∈ S; //default length is 128 octets = 1024 bit
 
 ```
@@ -539,7 +532,7 @@ Type size is a constant that can be calculated using: size(type).
 
 **Example:**
 ```
-type  Person: {name ∈ S, age ∈ N} <: Object;
+type  Person: {name ∈ String, age ∈ N} <: Object;
 ** array of 10 persons
 make catalog ∈ [Person](10);
   ** initialize value using literals
@@ -646,7 +639,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 
 **definition**
 ```** global exception type
-type Error: {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
+type Error: {code ∈ Z, message ∈ String, line ∈ Z} <: Object;
 ** global system error
 make @error ∈ Error;
 ```

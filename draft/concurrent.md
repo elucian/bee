@@ -99,7 +99,7 @@ rule foo(channel ∈ (N), start, end, batch ∈ N):
 return;
 ** consumer coroutine
 rule bar(channel ∈ (N), batch ∈ N):  
-  make index = 0;
+  make index := 0;
   while channel.length > 0 do
     for index in [0..batch]  do
       write channel.head,",";  

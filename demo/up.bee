@@ -1,5 +1,5 @@
 +-------------------------------------
-   result ∨unpacking demonstration 
+   result unpacking
 -------------------------------------+
 driver up:
 load $pro_lib.console.(*);
@@ -11,7 +11,7 @@ rule test(x, y ∈ Z) => (a,b ∈ Z):
 return;
 
 ** unpacking and modify two variables
-make n,m ∈ Z;
+make (n,m) ∈ Z;
 alter n,m := test(1,2);
 print n,m; // will print 2, 3
 
@@ -23,7 +23,7 @@ rule demo(x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.y := y;
 return;
 
-** test rule using make instead of apply
+** test rule using make instead
 make  r := demo(1, 0.5);
 print r ; // {x:1, y:0.5}
 

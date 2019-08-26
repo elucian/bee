@@ -1,5 +1,6 @@
 +-----------------------------------
-      type inference demo
+  type inference is using
+  operator := for initialization
 -----------------------------------+
 driver ti:
 load $pro_lib.console.(*);
@@ -37,13 +38,13 @@ print plus(0);   // will print 1
 print plus(1,2); // will print 3
 
 ** input/output arguments
-rule inc(x, y ∈ Z):
+rule inc(x, y ∈ [Z]):
   alter x += 1;
   alter y += 1;
 return;
 
-make i,k ∈ Z ;  // references
-apply inc(i,k); // i = 1 and k = 1
-print (i,k);    // expect: 1 1
+make  (i,k) ∈ [Z] ; // references
+apply inc(i,k);     // i = 1 and k = 1
+print (i,k);        // expect: 1 1
 
 over.

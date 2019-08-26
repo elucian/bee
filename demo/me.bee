@@ -6,8 +6,10 @@ load $pro_lib.console.(*);
 
 ** enumeration with public members
 type Number: {.zero, .one, .two} <: Ordinal;
+
 make test ∈ Number;
 alter test := zero; // instance of Number
+
 ** make a rule for define Number
 rule convert(self ∈ Number) => (y ∈ S):
   alter y := ("zero"  if self = zero,

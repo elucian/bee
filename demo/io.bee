@@ -5,7 +5,7 @@ driver io:
 load $pro_lib.console.(*);
 
 print "Hello. I'm Bee!";
-make your_name ∈ S, 
+make your_name ∈ String, 
 make your_age  ∈ (1..200);
  
 write "Your name?:"; 

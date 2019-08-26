@@ -11,7 +11,7 @@ rule pro(a,b ∈ N):
 return;
 
 ** define native integers using inference
-make x, y := 10;
+make (x, y) := 10;
 
 ** execute pro and expect x, y  to be modified
 apply pro (x, y);

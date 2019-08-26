@@ -7,7 +7,7 @@ driver cs:
 load $pro_lib.console.(*);
 
 ** declare two natural numbers
-make a := 10, b := 5 ∈ N;
+make (a: 10, b: 5) ∈ N;
 ** simple decision 
 print ("a = b") if a = b;
 print ("a < b") if a < b;
@@ -26,7 +26,8 @@ else
 done;
 
 ** nested statements are supported
-alter a := True, b := False;
+alter a:= 1; // True
+alter b:= 0; // False
 when a ∧ b do
   print ("a ≠ 0 and b ≠ 0");
   when a ≥ b do
