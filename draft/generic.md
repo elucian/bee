@@ -11,7 +11,7 @@ A generic rule is using one or more "type" parameters.
 
 **pattern:**
 ```
-rule name{TypeName,...}(param ∈ TypeName) => (result ∈ TypeName):
+rule name{TypeName}(param ∈ TypeName) => (result ∈ TypeName):
    alter result := expression(param);
 return;
 ```
@@ -19,6 +19,22 @@ return;
 **note:** 
 * TypeName can be any known type or sub-type;
 * TypeName is first class value having type: _Type_;
+
+**example:**
+```
+** this is a generic rule
+rule shift{T}(s, i ∈ T) => (r ∈ T):
+  alter r := (s + i);
+return;
+
+** instantiate two clones:
+rule sh_int  := shift{Z} //shift integer
+rule sh_real := shift{R} //shift real
+
+** verify clone attributes
+print sh_int(0,1);    // 1
+print sh_real(5,0.5); // 5.5
+```
 
 ### Variable rule
 
@@ -54,7 +70,7 @@ print foo(my_rule:test, a:10, b:10); //20
 
 In this example, _bubble_ is a generic rule:
 
-```** this sort is generic 
+```** this rule is generic rule
 rule bubble{TT ∈ Type}(array ∈ [TT], gt(TT,TT) ∈ L):
   make n := length(array) ∈ N; 
   make swap := True ∈ L;
