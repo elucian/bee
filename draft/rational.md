@@ -70,37 +70,37 @@ See also: [wikipedia](https://en.wikipedia.org/wiki/Q_(number_format))
 
 Next I have predefined some numbers for orientation.
 
-|Bytes  |  1\\4  | 1\\8  | 1\\16  | 1\\32 | 1\\64 
-|-------|--------|-------|--------|-------|-------
-| r ≈   | 0.25   | 0.125 | 0.062  | 0.031 | 0.015 
-|-------|--------|-------|--------|-------|-------
-|  8    | Q5.2   | Q4.3  | Q3.4   | Q2.5  | Q1.6   
-|  16   | Q13.2  | Q12.3 | Q11.4  | Q10.5 | Q9.6  
-|  32   | Q29.2  | Q28.3 | Q27.4  | Q26.5 | Q25.6 
-|  64   | Q61.2  | Q60.3 | Q59.4  | Q58.5 | Q56.6 
-|  128  | Q125.2 | Q124.3|Q123.4  | Q122.5| Q121.6
+| Bytes |  1\\4  | 1\\8   | 1\\16  | 1\\32  | 1\\64 
+|-------|--------|--------|--------|--------|---------
+| rez ≈ | 0.25   | 0.125  | 0.062  | 0.031  | 0.015 
+|-------|--------|--------|--------|--------|---------
+|  8    |Q(5.2  )|Q(4.3  )|Q(3.4  )|Q(2.5  )|Q(1.6  ) 
+|  16   |Q(13.2 )|Q(12.3 )|Q(11.4 )|Q(10.5 )|Q(9.6  )
+|  32   |Q(29.2 )|Q(28.3 )|Q(27.4 )|Q(26.5 )|Q(25.6 )
+|  64   |Q(61.2 )|Q(60.3 )|Q(59.4 )|Q(58.5 )|Q(56.6 )
+|  128  |Q(125.2)|Q(124.3)|Q(123.4)|Q(122.5)|Q(121.6)
 
-**Note:** r ≈ is the approximate precision.
+**Note:** r ≈ is the approximate resolution.
 
 **Examples:**
 
-A very large number with high precision on 64 bit:
+A very large number with high resolution on 64 bit:
 
-**Q50.12** 
+**Q(50.12)** 
 * Min: -1125899906842624
 * Max: +1125899906842623
 * Res: 0.000244140625
 
-A number on 32 bit with precision = 0.0005:
+A number on 32 bit with resolution = 0.0005:
 
-**Q20.11** 
+**Q(20.11)** 
 * Min: -1048576
 * Max:  1048575
 * Res:  0.00048828125
 
 ## Default Q number
 
-**Q14.17** 
+**Q(14.17)** 
 
 Default Q number has precision 10⁻⁵ = 2⁻¹⁷ ≈ 0.00001 and occupy 32 bit.
 

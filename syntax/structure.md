@@ -232,7 +232,7 @@ repeat;
 ** print the buffer to console
 print;
   
-over; //end of driver
+over. //end of driver
 ```
 
 Do not try to understand this example. It is just a worm-up! 
@@ -453,12 +453,13 @@ alter result := new_name(arguments);
 
 **pattern:**
 
-This pattern demonstrate how to declare an aspect named "test".
+This pattern demonstrate how to declare an aspect named "test.bee".
+
 ```
-** define aspect with parameter p and result "r"
+** define aspect with parameter "p" and result "r"
 aspect test(p ∈ N) => (r ∈ N):
 
-** define a private rule
+** define a local rule
 rule abs(i ∈ Z) => (v ∈ N):
   when (i < 0) do 
     alter v := -i;
@@ -467,7 +468,7 @@ rule abs(i ∈ Z) => (v ∈ N):
   done;  
 return;
 
-alter r := abs(p); //call private rule"abs"
+alter r := abs(p); //call rule"abs"
 
 over.
 ```
@@ -484,14 +485,17 @@ make result ∈ N;
 apply $pro_lib.test(-3) +> result;
 print result; //expect: 3
 
+** define one alias for an aspect
+alias test := $pro_lib.test;
+
 ** define a collector (collection)
 make collect ∈ [N]
 
 ** prepare aspects for parallel execution
-defer $pro_lib.test( 1) +> collect;  
-defer $pro_lib.test(-1) +> collect;  
-defer $pro_lib.test(-2) +> collect;  
-defer $pro_lib.test(-3) +> collect;  
+defer test( 1) +> collect;  
+defer test(-1) +> collect;  
+defer test(-2) +> collect;  
+defer test(-3) +> collect;  
 
 yield; // execute pending aspects (using 4 threads)
 
