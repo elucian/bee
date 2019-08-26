@@ -60,7 +60,7 @@ In addition to a simple object, you can create a class with constructor and dest
 **pattern:**
 
 ```
-class class_name(param:value ∈ type, ...*args ∈ [String]) <: base_class:
+class class_name(param:value ∈ type, ...*args ∈ [S]) <: base_class:
   ** class local scope
   ...
 create  //constructor
@@ -126,7 +126,7 @@ A class can have properties and attributes.
 This example show how to declare class properties and object attributes.
 
 ```
-class Demo(param ∈ String) <: Object:
+class Demo(param ∈ S) <: Object:
   ** declare class properties
   make .hasObjects := True; //define public property
   make _count      := 1;    //declare private property
@@ -257,12 +257,12 @@ A class can have internal rules that can be public or private.
 ** define a class with rules
 class Test() <: Object:
   ** private class rule
-  rule _hidden(message ∈ String):
+  rule _hidden(message ∈ S):
     print(message);
   return;
 
   ** public class rules
-  rule .run_me(message ∈ String):
+  rule .run_me(message ∈ S):
     apply _hidden(message);
   return;  
 return;

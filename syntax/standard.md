@@ -104,12 +104,12 @@ To read and print into files and save to disk, we must use system.io library. Th
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-rule .open(name ∈ String, mode ∈ A) => (file ∈ File);
+rule .open(name ∈ S, mode ∈ A) => (file ∈ File);
 rule .close(file ∈ File);
 rule .list(folder ∈ Folder) ∈ (S);
-rule .exist(name ∈ String) ∈ L;
-rule ,remove(name ∈ String); 
-rule ,rename(name, new_name ∈ String); 
+rule .exist(name ∈ S) ∈ L;
+rule ,delete(name ∈ S); 
+rule ,rename(name, new_name ∈ S); 
 ...
 
 ```
@@ -130,7 +130,7 @@ System IO rules
 | exist   | Check if file or folder exist on disk
 | list    | Read a list of files and folders from directory
 | tree    | Read tree of directory in memory
-| remove  | Remove a file / directory
+| delete  | Remove a file / directory
 | rename  | Make a new directory
 
 
@@ -159,17 +159,17 @@ make folder_name := Folder.open('name');
 Bee has pre-define Error objects with codes in range (1..200):
 
 ```** global type
-type Error: {code ∈ Z, message ∈ String} <: Object;
+type Error: {code ∈ Z, message ∈ S} <: Object;
 ```
 
 ```
 ** exception objects
-$zero_division  := {100,"division by zero"}        ∈ Error;
-$null_reference := {101,"null reference usage"}    ∈ Error;
-$value_overflow := {102,"value overflow"}          ∈ Error;
-$out_of_range   := {103,"value out of range"}      ∈ Error;
-$type_mismatch  := {104,"data type mismatch"}      ∈ Error;
-$user_error     := {200,"user defined error"}      ∈ Error;
+$zero_division  := {100,"division by zero"}     ∈ Error;
+$null_reference := {101,"null reference usage"} ∈ Error;
+$value_overflow := {102,"value overflow"}       ∈ Error;
+$out_of_range   := {103,"value out of range"}   ∈ Error;
+$type_mismatch  := {104,"data type mismatch"}   ∈ Error;
+$user_error     := {200,"user defined error"}   ∈ Error;
 ...
 
 ** Standard error

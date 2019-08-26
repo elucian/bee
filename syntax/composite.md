@@ -345,7 +345,7 @@ print map; //expected: {'b'="second", 'c'="third"}
 
 **Notes:** 
 * Hash operators are working like for a set of keys;
-* Hash key type must be numeric or sortable:{String, Date, Time};
+* Hash key type must be numeric or sortable:{S, Date, Time};
 * Hash key type can not be double quoted string or other collection;
 
 
@@ -370,8 +370,8 @@ done;
 
 Bee has 2 kind of strings: 
 
-* String: Double quoted string,
-* Text: Large blob string,
+* S:    Quoted string,
+* Text: Blob string.
 
 
 **Notes:** 
@@ -381,8 +381,8 @@ Bee has 2 kind of strings:
 
  quote | used for   
 -------|--------------------------------------------------
- '_'   | one Symbol: Unicode or ASCII
- "_"   | unrestricted capacity Unicode String or Template
+ '_'   | Unicode or ASCII single symbol
+ "_"   | Unicode string or string template
 
 ### Text
 For large text literals (Text) we can use a markup language:
@@ -402,53 +402,37 @@ make query :=
 </query>; //Text
 ```
 
-### Single quoted literals
+### Array of symbols
 
 Single quoted literals can contain a single symbol. 
 
-```** Unrestricted capacity string
-make test := "Unicode string: Δ Λ Φ Γ Ψ Ω" ∈ String;
-
-** fixed capacity array or ASCII symbols
+```** fixed capacity array or ASCII symbols
 type A128: [A](128) <: Array; // define a sub-type
 make str ∈ A128
-** populate array using spreading operator (*)
 
+** populate array using spreading operator (*)
 alter *str := "test"; //spreading a literal
-print str; // ['t','e','s','t']
+print  str;   // ['t','e','s','t']
 
 ** fixed capacity array of symbols UTF8
 make  uco ∈ [U](128);
 
 alter *uco := "∈≡≤≥÷≠"; //spreading a literal
 print uco; // ['∈','≡','≤','≥','÷','≠']; 
-
 ```
 
-**conversion**
-Conversion of a string into number is done; using _parse_ rule:
-
-```
-make x,y ∈ R;
-** rule parse return; a Real number
-alter x := parse("123.5",2); //convert to real 123.5
-alter y := parse("10,000.3333",2); //convert to real 10000.33
-```
-
-**Notes:** 
-
-* Array strings are NUL terminated;
-* Array strings are mutable;
-
-### Double quoted literals
+### String literals
 
 Double quoted string literals are Unicode UTF8 strings.
 
 **example:**
 ```
 ** fixed capacity string UTF8
-make uco ∈ String; 
+make  uco ∈ S; 
 alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
+
+** strings are printed without quotes
+print uco; // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨
 ```
 
 **Escape**
@@ -463,6 +447,7 @@ output:
 this represents 
 new line in string
 ```
+
 
 **Note:** 
 
@@ -484,8 +469,8 @@ symbol| description
   
 **examples**
 
-make m := '-' * 10 ∈ String; //m = "----------"
-make u, c, s ∈ S; //default length is 128 octets = 1024 bit
+make m := ('-' * 10) ∈ S; //m = "----------"
+make (u, c, s) ∈ S; //default length is 128 octets = 1024 bit
 
 ```
 ** string concatenation
@@ -501,6 +486,23 @@ print test_file; //c:\work\project\src\test.bee
 print test_file; ///work/project/src/test.bee
 
 ```
+
+### Conversion
+Conversion of a string into number is done; using _parse_ rule:
+
+```
+make x,y ∈ R;
+
+** rule parse return; a Real number
+alter x := parse("123.5",2); //convert to real 123.5
+alter y := parse("10,000.3333",2); //convert to real 10000.33
+```
+
+**Notes:** 
+
+* Array strings are NUL terminated;
+* Array strings are mutable;
+
 
 ## Objects
 
@@ -532,7 +534,7 @@ Type size is a constant that can be calculated using: size(type).
 
 **Example:**
 ```
-type  Person: {name ∈ String, age ∈ N} <: Object;
+type  Person: {name ∈ S, age ∈ N} <: Object;
 ** array of 10 persons
 make catalog ∈ [Person](10);
   ** initialize value using literals
@@ -639,7 +641,7 @@ An exception is a recoverable error. It can be declared by the user or by the sy
 
 **definition**
 ```** global exception type
-type Error: {code ∈ Z, message ∈ String, line ∈ Z} <: Object;
+type Error: {code ∈ Z, message ∈ S, line ∈ Z} <: Object;
 ** global system error
 make @error ∈ Error;
 ```

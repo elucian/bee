@@ -13,7 +13,7 @@ Each literal has associated a default type, induced by operators {":=", "::", ":
 ```** string expressions
 make c := 'a'     ;  //type = A
 make s := '∈'     ;  //type = U
-make s := "str"   ;  //type = String
+make s := "str"   ;  //type = S
 make b := <Text>  ;  //type = Text
 ** numeric expressions
 make i := 0;    //type = Z
@@ -22,23 +22,12 @@ make j := 0.50; //type = R
 save false := False; //type L = 0
 save true  := True;  //type L = 1
 ** multiple variables get same value
-make x, y, z := 5; //type = Z
+make (x, y, z) := 5; //type = Z for all
 
 ** multiple variables get multiple values
-make int, rea := 4, 4.44;
+make (int, rea) := (4, 4.44);
 print type(int); // Z
 print type(rea); // R
-```
-
-**Notes:** 
-* Type inference is triggered by operator ":=", or "::"
-
-**Restriction:**
-
-You can nod use two operators ":=" in a single line:
-
-```
-make n := 0, m := 0.5; //ERROR
 ```
 
 ## Composite
@@ -72,14 +61,14 @@ make  b := {name:"Goliath", age:30};
 ```
 
 ## Parameters
-When we define parameters we can not use type inference: 
+When we define parameters we can use type inference only for optional parameters: 
 
 **Optional Parameters:**
 
-In rule foo, parameters a, b are optional.
-
-```** result type is Z
-rule foo(a: 0, b: 0 ∈ Z) ∈ Z => (a + b);
+```** in rule foo, parameters a, b are optional.
+rule foo(a: 0, b: 0) => (r ∈ Z):
+  alter r := a + b;
+rule;  
                                   
 print foo();    // 0               
 print foo(1);   // 1
@@ -88,23 +77,25 @@ print foo(1,2); // 3
 
 **Multiple parameters:**
 
-Parameters: a, b are mandatory, c is optional.
-
 ```
-make foo: (a,b,c:0 ∈ Z) ∈ Z => (a + b + c);
+** parameters: a, b are mandatory, c is optional.
+rule foo(a, b ∈ Z, c:0) => (r ∈ Z):
+  alter r := (a + b + c);
+return;  
 
 print foo(1,2);   // 3
 print foo(1,2,3); // 6
-print foo(1);     //Error: expected 2 arguments
-
+print foo(1);     // Error: expected 2 arguments
 ```
 
 **Pass arguments by name:**
 
 We can use parameter name and pair-up ":" symbol for argument value.
 
-```** fn with optional parameters (Z)make bar: (a:0, b:0, c:0 ∈ Z) ∈ Z => (a+b+c);
-** observe we use pair-up to new value to argument
+```** rule with optional parameters (Z)rule bar(a:0, b:0, c:0 ∈ Z) => (result ∈ Z):
+  alter result := (a+b+c);
+return;  
+** observe we use pair-up ":" to give value for each argument
 print bar(a:1); //print 1 because (b,c := 0) 
 print bar(b:1); //print 1 because (a,b := 0) 
 print bar(c:1); //print 1 because (a,b := 0) 

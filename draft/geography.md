@@ -54,13 +54,13 @@ Map data types are represented by Unicode symbols:
   type ↯ : {id ∈ N, start_node ∈ ◉, end_node ∈ ◉, shape ∈ [•]} <: Object;
   
 ** place of interest
-  type ◈ : {id ∈ N, point ∈ •, label ∈ String} <: Object;
+  type ◈ : {id ∈ N, point ∈ •, label ∈ S} <: Object;
 
 ** map area 
-  type ■ : {id ∈ N, origin ∈ •, shape ∈ [•], category ∈ String} <: Object;
+  type ■ : {id ∈ N, origin ∈ •, shape ∈ [•], category ∈ S} <: Object;
 
 ** area of interest
-  type ▣ : {id ∈ N, point ∈ •, shape ∈ [•], label ∈ String} <: Object;
+  type ▣ : {id ∈ N, point ∈ •, shape ∈ [•], label ∈ S} <: Object;
   
 ** map data model
   type ♁ : {origin ∈ •, extent ∈ •, scale ∈ Q 

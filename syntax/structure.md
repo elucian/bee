@@ -218,7 +218,7 @@ A _driver_ or _aspect_ can contain statements that do not belong to any rule. Th
 **Example:**
 
 ```
-driver main(*params ∈ String):
+driver main(*params ∈ S):
 ** read the number of parameters
 make c := params.count;
 halt if (c = 0);

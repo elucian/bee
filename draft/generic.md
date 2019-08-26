@@ -11,40 +11,43 @@ A generic rule is using one or more "type" parameters.
 
 **pattern:**
 ```
-rule name{Name ∈ Type,...}(param ∈ Name) => (result ∈ Name):
+rule name{TypeName,...}(param ∈ TypeName) => (result ∈ TypeName):
    alter result := expression(param);
 return;
 ```
 
 **note:** 
-* Type can be any known type or sub-type;
-* Name is "first class" value of type: _Type_;
+* TypeName can be any known type or sub-type;
+* TypeName is first class value having type: _Type_;
 
-### Anonymous Expression
+### Variable rule
 
-Anonymous expression is like lambda expression except it does not have a name:
+You can define rule signature and later create a _variable rule_.
 
-**anonymous expression**
+**syntax**
 ```
-(param ∈ type_name, ,...) => (expression)
+type VariableRule: (Z,Z,...) => Z;
 ```
 
 This notation can be used to create an arguments of type expression, declared with "∈" like:
 
-**signature**
+**parameter**
+
 ```
-rule foo(exp(type,type, ...) ∈ type);
-   ... 
-   ** you can use the  exp
-   make r := exp(param,...);
-   print r;
+** Using a rule as input parameter
+rule foo(my_rule ∈ VariableRule, a, b ∈ Z) => (r ∈ Z):
+   make r := my_rule(a,b); //call my_rule 
 return;
 ```
 
-Call rule "foo" with anonymous rule as argument by name:
+Call rule "foo" with other rule as argument:
 
 ```
-apply foo(exp:(param ,param ...) => (expression));
+** making a rule that look like VariableRule
+rule test(a, b ∈ TypeName) => (a + b);
+
+** call rule foo with "test" as argument
+print foo(my_rule:test, a:10, b:10); //20
 ```
 
 ### Bubble sort
@@ -83,11 +86,11 @@ return;
 **sort usage**
 
 ```** define object type to be sorted
-type Person: { name ∈ String, age ∈ N } <: Object;
-** define order as lambda expression for type Person
-make order := λ(p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
-** define sort rule for Person, as a clone from _bubble_
-make sort := bubble{Person};
+type Person: { name ∈ S, age ∈ N } <: Object;
+** define order rule for type Person
+rule order(p1, p2 ∈ Person) ∈ L => (p1.name > p2.name);
+** define a clone of bubble rule, called: "sort", specific to Person
+rule sort := bubble{Person};
 ** define clients and suppliers
 make clients   ∈ [Person](100);
 make suppliers ∈ [Person](10);
@@ -104,7 +107,7 @@ A class can receive type as parameters. This allows to create generic algorithms
 
 **declare:**
 ```
-class {Generic_Type:Default_Type,...} Generic_Name(self: Null, param ∈ Generic_Type,...) <: Base_Class:
+class {Generic_Type} Generic_Name(param ∈ Generic_Type,...) <: Base_Class:
   ** declarations
   ...
 create
@@ -117,15 +120,20 @@ return;
 Generic class is used to define a subtype then you can declare one or more objects using alias type:
 
 ```
-** declare new alias type from generic
-type new_type: Generic_Class{Generic_Type:Type_Name};
+** declare new type from generic
+type New_Type: Generic_Class{Type_Name};
 
 ** create new object: using new alias with arguments
-make object_name :=  new_type(param:value,...);
+make object_name :=  Tew_Type(param:value,...);
 
 ** alternative: create new object directly from generic type
-make onject_name := generic_class{Type_Name}(param:value,...);
+make onject_name := Generic_Class{Type_Name}(param:value,...);
+```
 
+**alternative:**
+```
+** create new object directly from generic type
+make onject_name := Generic_Class{Type_Name}(param:value,...);
 ```
 
 **Read next:** [overview](./syntax/overview.md)

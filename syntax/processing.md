@@ -495,7 +495,7 @@ make last ∈ N;
 alter a ++ 4; //(1,2,3,4)
 ** read last element
 alter last := a.tail; //last = 4
-** remove operator "--"
+** delete operator "--"
 alter a -- last; //a = (1,2,3)
 ```
 
@@ -578,7 +578,7 @@ done;
 
 **example:**
 ```
-make animals ∈ {String,String};
+make animals ∈ {S,S};
 do
   alter animals["Bear"] := "dog";
   alter animals["Kiwi"] := "bird";
@@ -856,7 +856,7 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(number ∈ R, pattern ∈ String) => (result ∈ String):
+rule format(number ∈ R, pattern ∈ S) => (result ∈ S):
   ...
 return;
   
@@ -898,13 +898,13 @@ Where pattern cab gave two forms:
 
 ### Text functions:
 
-* format (str ∈ X, map ∈ {String}) ∈ X;
-* format (str ∈ X, map ∈ {Z}) ∈ X;
-* format (str ∈ X, map ∈ [Z]) ∈ X;
-* replace(str ∈ X, target  ∈ String, arrow ∈ String) ∈ X;
-* find   (str ∈ X, pattern ∈ String) ∈ N;
-* count  (str ∈ X, pattern ∈ String) ∈ N;
-* length (str ∈ X) ∈ N;
+* format (str ∈ Text, map ∈ {S}) ∈ X;
+* format (str ∈ Text, map ∈ {Z}) ∈ X;
+* format (str ∈ Text, map ∈ [Z]) ∈ X;
+* replace(str ∈ Text, target  ∈ String, arrow ∈ String) ∈ X;
+* find   (str ∈ Text, pattern ∈ String) ∈ N;
+* count  (str ∈ Text, pattern ∈ String) ∈ N;
+* length (str ∈ Text) ∈ N;
 
 **Reading a Text:**
 

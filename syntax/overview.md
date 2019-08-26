@@ -110,6 +110,8 @@ Primitive data types are defined using one capital letter.
 | Natural  | N  | Unsigned large positive integer 64 bit [0..+]
 | Integer  | Z  | Signed large integer 64 bit  [-..+]  Z(64)
 | Real     | R  | Double precision float 64 bit (-..+) R(64)
+| Complex  | C  | Double precision pair of double float numbers (9r+9j)
+| String   | S  | Immutable, UTF8 encoded double quoted string
 
 **notes:**
 
@@ -127,6 +129,7 @@ These are symbolic representations for primitive data types:
 |-----------|-------|-----------------------------------------------------------
 |'a'        |  A    | (+-) & (0..9) & (a..z) & (A..Z)
 |'Ω'        |  U    | (Δ Λ Φ Γ Ψ Ω Σ Π π ⊥ ǁ α β ɣ ε δ μ ω ...)
+|"str"      |  S    | (∀) 
 |0b11111111 |  B    | (0b) & (0,1)
 |1234567890 |  N    | (0,1,2,3,4,5,6,7,8,9)
 |+0         |  Z    | (-+) & (0,1,2,3,4,5,6,7,8,9)
@@ -149,8 +152,7 @@ Predefined composite types start with capital letter:
 
 | Name    | Description
 |---------|----------------------------------------------------------------
-| String  | Single quote ASCII string
-| Text    | Double quote UTF8 stromg 
+| Text    | Multi-line large block of text
 | Date    | DD/MM/YYYY 
 | Time    | hh:mm,ms
 | Error   | Error object: {code, message, line}
@@ -691,12 +693,12 @@ Parameters are special variables defined in rule signature.
 **Example:**
 ```
 ** a rule with two parameter
-rule foo(name, message ∈ String):
+rule foo(name, message ∈ S):
   alter message:= "hello:" + name + ". I am Foo. Nice to meet you!";
 return;
 
 ** using apply + rule name will execute the rule  
-make str ∈ String;
+make str ∈ S;
 apply foo("Bee", str);
 print str; 
 ```
@@ -708,11 +710,10 @@ hello: Bee. I am Foo. Nice to meet you!
 ```
 
 **Notes:**   
-* Parameters are enumerated in a tuple;
-* Some parameters can be optional if initialized;
+* Parameters are enumerated in a list like structure;
 * Optional parameters are initialized with pair-up operator ":";
-* Native types are input parameters transfer value: _by copy_;
-* Composite type and object parameters transfer value: _by share_;
+* Primitive types parameters receive values: _by copy_;
+* Composite type parameters receive value: _by share_;
 
 ### Results
 
@@ -752,7 +753,7 @@ print a; // 3
 
 ### Rule as function
 
-A rule with a single result can be used as a _function_;
+A pure rule with a single result can be used as a _function_;
 
 **pattern:**
 ```
@@ -777,8 +778,11 @@ alter n := rule_name(argument,...)
 
 ```
 
-**Restrictions:**
-A rule is pure if:
+**Pure rules:**
+
+Compiler can detect is a rule is pure.
+
+A rule is pure when ...
 
 * do not have multiple results but one;
 * do not have public attributes;
@@ -787,11 +791,13 @@ A rule is pure if:
 * do not have side-effects;
 * do not call a downgraded rule;
 
+
 **Notes:**
-* Usually a pure rule is also deterministic;
-* If a rule break one of these restrictions it is _downgraded_ by the compiler;
-* Downgraded rules can be used in assignments and print but not in expressions;
-* A downgraded rule that is not _pure_ can be called also a _dirty rule_ ;
+* Pure rules are deterministic in contrast to stochastic rules,
+* If a rule is not pure is _downgraded_ by the compiler as _dirty_,
+* Dirty rules can be used in assignments but not in expressions,
+* Dirty rules can not be send as parameter to other functions,
+* Compiler should warn you if you use a dirty rule as a function.
 
 **See also:**
 * [bs.bee](./demo/bs.bee); //Bubble Sort
@@ -802,10 +808,10 @@ A rule that have no results can be called _routine_:
 
 **properties:**
 
-* A routine can have attributes;
-* A routine can have side-effects;
-* A routine can modify shared variables;
-* A routine can call any other routine;
+* A routine can have attributes,
+* A routine can have side-effects,
+* A routine can modify shared variables,
+* A routine can call any other routine,
 
 **attributes:**
 
@@ -840,15 +846,16 @@ A rule binding first parameter to an object or composite type is called: _method
 
 **properties:**
 
-* A method can have results;
-* A method can have side-effects;
-* A method is defined in same module as the data type;
+* A method can have results and can be used as function,
+* A method can have side-effects but then is not pure,
+* A method is defined in same module as the data type,
 * A method can be overwritten in another module;
 
 **pattern:**
 ```
 type ObjType: {attribute:type, ...} <: Object;
 
+** define a method for ObjType
 rule method_name(self ∈ ObjType, param ∈ type,...) => (result ∈ type):
    ...
    result := expression;
@@ -862,62 +869,6 @@ apply obj.method_name(argument, ...);
 ```
 
 See also: [Composite:Object](composite#object)
-
-## Rule as generic
-
-A _generic rule_ is a _prototype_ that can be _cloned_ to create _dynamic rules_.
-
-**pattern:**
-```
-** define a rule prototype 
-rule prototype_name{attributes}(parameters) => (result ∈ Type):
-  ...
-  ** a prototype can have public attributes
-  ** these attributes are shared between all clones
-  make (.x, .y, .z) := 0 ∈ Z;  
-  ...
-  
-  ** compute the result
-  alter result := expression(arguments);
-return;
-
-** making a clone from prototype
-make new_rule := prototype_name{arguments};
-fail if ¬ (new_rule is Rule); 
-
-** using the clone
-make r := new_rule(arguments);
-```
-
-**Notes:**
-* A clone have same _parameters_ same _results_ and same functionality as the prototype;
-* A clone has its  _own attributes_: defined using curly brackets {attributes}; 
-* A clone has some _shared attributes_: defined in the prototype with dot prefix;
-* A clone can be created in _local context_ of another rule or in _component context_;
-
-**example:**
-```
-** this is a generic rule
-rule shift{s ∈ Z}(i ∈ Z) => (r ∈ Z):
-  alter r := (s + i);
-return;
-
-** instantiate two clones:
-make inc(i ∈ Z) := shift{+1} => (r ∈ Z); //increment 
-make dec(i ∈ Z) := shift{-1} => (r ∈ Z); //decrement 
-
-** verify clone attributes
-print inc.s; //  1
-print dec.s; // -1
-
-** use first clone: inc()
-print inc(1); // 2
-print inc(4); // 5
-
-** use second clone: dec()
-print dec(1); // 0
-print dec(2); // 1
-```
 
 ## Forward declaration
 

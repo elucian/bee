@@ -70,7 +70,7 @@ make lt := (x, y ∈ Z) ∈ L => (x < y);
 make eq := (x, y ∈ Z) ∈ L => (x = y);
 
 ** define a dictionary of rules
-type Dic: {(String(2) : CMP)} <: Hash;
+type Dic: {(S(2) : CMP)} <: Hash;
  
 ** define a hash map of expressions
 make dic := {('gt':gt),('lt':lt),('eq':eq)} ∈ Dic;
