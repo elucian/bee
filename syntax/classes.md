@@ -29,7 +29,7 @@ We already know how to create objects using an object literal.
 ```
 **declare an object**
 make object := {attribute:value ...} ∈ Object; //full declaration
-make object := {attribute:value ...}; // type inference
+make object := {attribute:value ...}; // type inference for Object
 
 ```
 
@@ -193,18 +193,16 @@ return;
 ## Comparing
 We can use comparison operators: {"=", "≠", "!="} and {"≡","!≡"} with objects. First comparison "=" will compare the object attributes. If the objects have equal attributes they are also equal. Second "≡" compare object location. If is the same the objects are identical.
 
-Operator (match) "~" and "!~", work with objects. Two objects are similar if they have the same class. The attributes may be different. If the classes are different the operator will return False.
-
-Superclass subclass operator: "<:" used like `object <: Class_Name` can be used as logical operator. If is used in a logical expression it will return true if `object` is subclass of class `Class_Name` and false if not. Operator ":>" is similar but works the other way: `Class :> object`. 
+Two objects are similar if they have the same class. The attributes may be different. For this we use "similar" operator that looks like this: "\~".
 
 Operator "is" can be used with an object to check if the object is derived from specified class like:  `object is Class_Name`. Notice this can not be used with two objects. You must use "=" and "≡" to compare two objects.
 
 **Ordering objects:** 
 
-Operators ">" and "<" can work with objects that have a single attribute, or multiple attributes. This operation could be overwritten by a particular class. The default Object, has this "order" implemented in a generic fashion. It may not work correctly if an object has more than one attribute. Two objects must be from the same base_class to be compared.
+Operators ">" and "<" can work with objects that have a single attribute, or multiple attributes. This operation could be overwritten by a particular class. The default Object, has "order" implemented in a generic fashion. It may not work correctly if an object has more than one attribute. Two objects must be from the same base_class to be compared.
 
 **Initialization**
-Objects can be declared and initialize simultaneously using operator ":=" with constructor, or can be declared first using "∈" and initialize later using alter and operator ":=" with the a constructor call. After the call the object should not be Null. If it is you will get a runtime error.
+Objects can be declared and initialize simultaneously using operator ":=" with constructor, or can be declared first using "∈" and initialize later using alter and operator ":=" with a constructor call. After the call the object should not be Null. If it is you should  not use it.
 
 **Example:**
 ```
@@ -212,8 +210,8 @@ rule main:
   make o,n ∈ Object; //  Null objects 
 
   ** initialize the objects
-  alter o := Object(test:1);
-  alter n := Object(test:1); 
+  alter o := {test:1};
+  alter n := {test:1}; 
   
   ** objects are equivalent
   pass if (o = n); // equivalent  

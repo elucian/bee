@@ -16,7 +16,7 @@ To create a new draft you follow a simple procedure:
 So far we have following features pending approval:
 
 1. [Generic](generic.md) - Generic rule demo 
-1. [Dynamic](dynamic.md) - Dynamic programming
+1. [Lambda](lambda.md) - Lambda expressions
 1. [Concurrent](concurrent.md) - Concurrent programming
 1. [Builder](builder.md) - Collection builder
 1. [Rational](rational.md) - Fixed point arithmetics

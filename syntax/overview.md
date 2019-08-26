@@ -21,7 +21,6 @@ We have used a _simple design_ for notation based on examples and notes:
 * [Logical expression](#logical-expression)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
-* [Lambda expressions](#lambda-expressions)
 * [Rule as function](#Rule-as-function)
 * [Rule as routine](#Rule-as-routine)
 * [Rule as method](#Rule-as-method)
@@ -660,65 +659,6 @@ print ("x is " + kind); //expect: "x is digit"
 over.
 ```
 
-## Lambda expressions
-
-A lambda expressions is a named expression with parameters and specified result type:
-
-**syntax**
-
-```
-** declaration of Lambda expression
-make name:= λ(param ∈ Type,...) ∈ ResultType => (expression);
-```
-
-```
-** you can define a lambda signature first
-type SigName: (Type,...) ∈ Type <: Lambda;
-
-** then you can declare a λ variable
-make name ∈ SigName; // Null Expression
-
-** then you can modify assign expression to variable
-alter name := λ(param ∈ Type,...) ∈ Type => (expression);
-```
-
-**Example:** 
-
-```
-** define "exp" as Lambda expression
-make exp: (x,y ∈ Z) ∈ Z => (x + y);
-
-** "exp" type is created using type inference
-print type(exp); //Lambda
-
-** use the lambda expression
-make z := 1 + 2 · exp(1,1); 
-print  z; //print 5
-```
-
-**properties:**
-
-Lambda Expressions...
-* are similar to mathematical functions;
-* are binding external states in context;
-* can be used in other expressions;
-* can be used as parameter in rules;
-* can be created from a rule as a result;
-* can be assigned to a variable of type: Lambda
-
-**restrictions:**
-* can have one single result;
-* can not be interrupted from execution;
-* can not call any rule that is downgraded;
-* do not have internal states;
-* do not have side-effects;
-* do not depend on external states;
-
-**result:**
-* result can be primitive or native type but not a collection;
-* result can be temporary and can be used in other expressions;
-
-
 ## Rules
 
 Rules are named blocks of code, representing a program fragment that can be executed multiple times on demand.
@@ -977,6 +917,29 @@ print inc(4); // 5
 ** use second clone: dec()
 print dec(1); // 0
 print dec(2); // 1
+```
+
+## Forward declaration
+
+Hoisting is a technique used by many compilers to identify declarations of members. Using this technique you can use an identifier before it is defined. In Bee there is no hoisting technique. You can not use an identifier before it is declared or loaded. 
+
+Two rules may call each other and create a cyclic interdependence. For this you can declare a rule "signature" before implementing it. That is called "forward declaration". Therefore the main rules are usually defined on the bottom of the source code.
+
+```
+** forward declaration for rule "plus"
+rule plus(Z,Z) ∈ Z; //signature
+
+** execute before implementation
+print plus(1,1);
+
+print;
+
+** later implement the rule "plus"
+rule plus(a,b ∈ Z) => (r ∈ Z): 
+  alter r := (a + b);
+return;
+
+over.
 ```
 
 ## External rules
