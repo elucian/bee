@@ -8,7 +8,7 @@ Composite types are complex data structures.
 * [tuple](#tuple)
 * [list](#list)
 * [array](#array)
-* [set](#set)
+* [data set](#data-set)
 * [hash map](#hash-map)
 * [strings](#strings)
 * [objects](#objects)
@@ -280,9 +280,9 @@ output:
 ⎣ 7  8  9 ⎦
 ```
 
-## Set
+## Data set
 
-A set is a sorted collection of unique values.
+A data set is a sorted collection of unique values.
 
 ```** user define a set
 type NS: {N} <: Set; //Natural set

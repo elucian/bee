@@ -70,17 +70,19 @@ print; //output buffer: 01234
 
 ## Data types
 
-Data types represent abstract _domains of values_. In other words, data type represent constrain rules that can be used to validate a particular data value. 
+Data types represent abstract _domains of values_. In other words, data type represent constrain rules that can be used to validate a particular data value. Data type is an attribute of any data element. There is no data without this attribute. 
 
 **Usability:** 
 
-* Bee has predefined data types. You can also create new data types based on predefined types. You can add new constraint rules that can improve data validation further.
+* Without data types, a computer language is dynamic. A dynamic language is more fragile and prone to errors. Bee language is _strongly typed_ language. That means any data is constrained by fixed _"data type"_ rules.
 
-* Without data types, a computer language is dynamic. A dynamic language is more fragile and prone to errors. Bee language is strongly typed. That means data is constrained by rules imposed by a _"data type"_.
+* Bee has predefined data types. You can create new data types based on predefined types using a special declaration. You can create sub-types or composite types having new constraints and rules that can improve data validation further. 
+
+* A data type can be manipulated using functions and operators. You can have a variable of type: _Type_. To detect a data type of any variable you can use function type(). Therefore type(type_variable) = Type.
 
 **Naming**
 
-Bee give names to _data types_. It uses ASCII characters and numbers or Unicode symbols. Sometimes data types are parametrized. You can add parameters enclosed in round brackets to customize the _constraint rules_.
+Bee uses diverse identifiers names to _data types_. It uses ASCII characters and numbers or Unicode symbols. Most predefined data types have a longer name and a code. You can use both to represent a type. They are synonyms (alias) to the same data type.
 
 **examples:**
 ```
@@ -100,18 +102,16 @@ Bee use 2 kind of data types:
 
 Primitive data types are defined using one capital letter. 
 
-| Name     |Ref | Description + Default representation
-|----------|----|-------------------------------------------------------------------
-| Logic    | L  | Numeric enumeration of two values: 0 = False, 1 = True 
-| Alpha    | A  | Alpha-numeric code point E-ASCII ('0'..'9') ('a'..'Z')
-| Binary   | B  | Binary number on 16 bit, max: 0b11111111 11111111
-| Unicode  | U  | Unsigned code point on 32 bit, max: U-FFFFFFFF (UTF32)  
-| Rational | Q  | Fix point representation number: like 1/2. Notation:  Q(14,17)
-| Natural  | N  | Unsigned large positive integer 64 bit [0..+]
-| Integer  | Z  | Signed large integer 64 bit  [-..+]  Z(64)
-| Real     | R  | Double precision float 64 bit (-..+) R(64)
-| Complex  | C  | Double precision pair of double float numbers (9r+9j)
-| String   | S  | Immutable, UTF8 encoded double quoted string
+| Alias    |Code | Description + Default representation
+|----------|-----|-------------------------------------------------------------------
+| Logic    | L   | Numeric enumeration of two values: 0 = False, 1 = True 
+| Alpha    | A   | Alpha-numeric code point E-ASCII ('0'..'9') ('a'..'Z')
+| Binary   | B   | Binary number on 16 bit, max: 0b11111111 11111111
+| Unicode  | U   | Unsigned code point on 32 bit, max: U-FFFFFFFF (UTF32)  
+| Rational | Q   | Fix point representation number: like 1/2. Notation:  Q(14,17)
+| Natural  | N   | Unsigned large positive integer 64 bit [0..+]
+| Integer  | Z   | Signed large integer 64 bit  [-..+]  Z(64)
+| Real     | R   | Double precision float 64 bit (-..+) R(64)
 
 **notes:**
 
@@ -150,13 +150,15 @@ These are symbolic representations for primitive data types:
 
 Predefined composite types start with capital letter: 
 
-| Name    | Description
-|---------|----------------------------------------------------------------
-| Text    | Multi-line large block of text
-| Date    | DD/MM/YYYY 
-| Time    | hh:mm,ms
-| Error   | Error object: {code, message, line}
-| File    | File handler
+| Alias   | Code| Description
+|---------|-----|-----------------------------------------------------------
+| Complex | C   | Double precision pair of double float numbers (9r+9j)
+| String  | S   | UTF8 encoded double quoted string
+| Text    | X   | Multi-line large block of text
+| Date    | D   | DD/MM/YYYY 
+| Time    | T   | hh:mm,ms
+| Error   | E   | Error object: {code, message, line}
+| File    | F   | File handler
 
 **Notes:**
 * Composite variables are references;
@@ -171,7 +173,7 @@ Bee define a collection literal using a special notation based on brackets.
 |---------|------------------------------------------------------------------
 | ()      | List
 | []      | Array/ Matrix
-| {}      | Ordinal / Set / Hash  / Object
+| {}      | Ordinal / Data Set / Hash Map / Object
 
 **Notes:** 
 * All collections are composite types therefore references; 
@@ -179,7 +181,7 @@ Bee define a collection literal using a special notation based on brackets.
 
 ## Type declaration
 
-User can define types and sub-types using operators ":" and "<:" (sub-type).
+User can define super-types and sub-types using operators ":" and "<:".
 
 ```
 ** declare new type
@@ -191,8 +193,9 @@ make var_name,var_name ... ∈ Type_Identifier;
 
 **Notes:**
 
-* User defined super-types are usually specialized composite types;
-* User defined sub-types can be native types and can start with lowercase;
+* User defined types are usually starting with capital letters;
+* User defined super-types are usually composite types;
+* User defined sub-types are usually domains of values;
 * Public user data types start with dot prefix;
 
 **Example:**
@@ -203,7 +206,7 @@ type Digit: (0..9) <: Z; //integer superset
 
 ## Domain subtypes
 
-Domain notation is used to create a subset from a superset.
+A domain is a range of values having superset a primitive type.
 
 **syntax**
 
@@ -217,14 +220,15 @@ type Name = (min..max:rate) <: PrimitiveType;
 type Positive: (0..+:0.01)      <: Q; 
 type Negative: (-..0:0.01)      <: Q; 
 type Digit:    (0..9)           <: Z;      
-type Alpha:    ('A'..'z')       <: A;  
+type Capital:  ('A'..'Z')       <: A;  
+type Lowercase:('a'..'z')       <: A;  
 type Latin:    (U+0041..U+FB02) <: U;
 
 ** check variable belong to type
-when ('x' ∈ Alpha) do
-  print "yes";
+when ('x' ∈ Capital) do
+  print "yes"; //unexpected
 else
-  print "no";
+  print "no";  //expected
 done;
 ```
 
