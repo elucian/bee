@@ -777,9 +777,9 @@ Format template stings can use escape sequences:
 "#(h)"   = hexadecimal number
 "#(t)"   = time format defined by @time
 "#(d)"   = date format defined by @date
-"#[*]"   = array decomposition (separated by comma)
-"#(n)[*]"= array decomposition with natural numbers
-"#(n)[i]"= search element by index or by key
+"#[*]"   = display array elements (separated by comma)
+"#[i]"   = search element by index [i]
+"#[k]"   = search element by key value [k]
 
 
 ```
@@ -792,7 +792,8 @@ print "Strings:   #(s) and #(s)" ? ('odd','even');
 print "Quoted:    #(q) and #(q)" ? ('odd','even');
 print "Unicode:   #(u) and #(u)" ? (U+2260,U+2261);
 print "Unicode:   #(q) and #(q)" ? (U+2260,U+2261);
-print "Collection:#[*] and #[*]" ? ([1,2,3],{1,2,3});
+print "Collection:#[*] and #[*]" ? ([1,2,3],{'a','b','c'});
+print "Collection:#(s)[*] and #(q)[*]" ? ([1,2,3],{'a','b','c'});
 ```
 
 **Expected output:**
@@ -802,7 +803,8 @@ Alpha:     0 and A
 Strings:   'odd' and 'even'
 Quoted:    "odd" and "even"
 Unicode:   ≠ and ≡
-Collection:[1,2,3] and {1,2,3}
+Collection:1,2,3 and a,b,c
+Collection:'1','2','3' and "a","b","c"
 ```
 
 **Notes:**
