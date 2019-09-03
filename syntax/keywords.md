@@ -1,16 +1,15 @@
 ## Bee Keywords
 
-Bee core has 45 reserved keywords so far: 
+Bee core has 41 reserved keywords so far: 
 
 ```
 02: if, is
-04: driver, aspect, module, return
-06: make, rule, like, load, alias, type
+07: make, rule, like, load, alias, type, return
 09: read, write, print, alter, scrap, apply, begin, defer, wait
 05: for, when, case, while, trial
 08: do, else, error, patch, final, repeat, next, done 
 05: fail, pass, raise, abort, retry
-06: exit, skip, stop, halt, yield, over.
+05: exit, skip, stop, halt, yield
 ```
 
 **notes:** 
@@ -27,16 +26,13 @@ Bee core has 45 reserved keywords so far:
 
 ### Definition statements
 
-Next statements are used to declare new elements in a component.
+Next statements are used to declare new elements in a module.
 
 | Keyword  | Purpose
 |----------|-------------------------------------------------------------------
-| driver   | Define lead component
-| aspect   | Define aspect component
-| module   | Define reusable component
-| load     | Load module or aspect
+| load     | Load module or module
 | alias    | Eliminate scope qualifier
-| type     | Declare data super-type or sub-type in a component
+| type     | Declare data super-type or sub-type in a module
 | make     | Create a new variable or multiple variables
 | save     | Declare constant \| Immutable variable
 | rule     | Create a new _rule_ or _prototype_
@@ -49,9 +45,9 @@ Next keywords are simple statements. These represents actions called _imperative
 
 | Keyword  | Purpose
 |----------|-----------------------------------------------------------------------------
-| apply    | Execute a rule or aspect
-| begin    | Commence execution of a coroutine or aspect 
-| defer    | Postpone execution of a coroutine or aspect 
+| apply    | Execute a rule or module that do not have a result
+| begin    | Commence execution of a coroutine or module 
+| defer    | Postpone execution of a coroutine or module 
 | wait     | Suspend current thread execution for a number of seconds
 | read     | Flush the console buffer and accept user input from console 
 | write    | Add something to console buffer but no new line 
@@ -87,7 +83,7 @@ These keywords transfer control or make an interruption of current thread.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------------------------
-| exit     | Force silent termination of a rule, aspect, program or driver
+| exit     | Force silent termination of a rule, module, program or driver
 | stop     | Interrupt a while loop and continue past repeat; keyword
 | skip     | Skip the rest of while block and continue from the beginning
 | fail     | Create error message if a condition is true else pass
@@ -97,6 +93,5 @@ These keywords transfer control or make an interruption of current thread.
 | retry    | Repeat a trial statement from the beginning
 | yield    | Suspend one coroutine and give control to another routine
 | halt     | Create unrecoverable error and stop program
-| over     | End driver, library or component file. Dot suffix is mandatory.
 
 **Read next:** [Syntax Overview](overview.md)

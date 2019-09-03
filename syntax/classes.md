@@ -244,7 +244,7 @@ return;
 * inside methods you can access self object using dot notation,
 * methods can be called with dot notation,
 * only objects have methods, classes have rules,
-* methods are public or private to the component,
+* methods are public or private to the module,
 * public methods start with "." while private methods can use "_" prefix.
 
 ## Rules
@@ -267,13 +267,15 @@ class Test() <: Object:
   return;  
 return;
 
-** using rules of a class
-apply Test.run_me("Hello World"); 
+** test class rules
+rule main()
+  ** using rules of a class
+  apply Test.run_me("Hello World"); 
 
-** making an alias for an internal rule;
-alias run_me := Test.run_me;
-apply run_me("I'm alive!");
-
+  ** making an alias for an internal rule;
+  alias run_me := Test.run_me;
+  apply run_me("I'm alive!");
+return;
 ```
 
 **Notes:** 

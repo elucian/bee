@@ -228,7 +228,6 @@ Using domain ratio the example above can be simplified:
 | "for" statement can use a "domain" |
 | domain notation: (min..max:ratio)  |
 +------------------------------------+
-driver domain_test:
 
 **    min ↓  ↓max  ↓ = ratio
 for i ∈ (1..9:    2) do
@@ -236,7 +235,6 @@ for i ∈ (1..9:    2) do
   write ',' if (i < 9);        
 next;
 
-over.
 ```
 
 ## Trial

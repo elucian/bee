@@ -77,7 +77,7 @@ Library math will implement rules:
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | aspect rule y := \|x\|  
+| mod      | module rule y := \|x\|  
 
 ## System Library
 

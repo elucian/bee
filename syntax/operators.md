@@ -36,7 +36,7 @@ symbol| description
  `∈`  | Define variable/constant/result/parameter type
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
- `:`  | Define type or rule or component
+ `:`  | Define type or rule or module
  `:`  | Pair-up key-value in: objects, rule parameters, rule arguments, hash-map pairs
  `;`  | End of statement \| Statement separator
  `.`  | Decimals for real numbers \| Path string concatenation
@@ -86,7 +86,8 @@ symbol| description
  `::` | Deep copy \| Clone operator
  `++` | Append one or more elements into collection 
  `--` | Remove one or more elements from collection
- `+>` | Collect result of an aspect
+ `+>` | Append left operand to beginning of a collection
+ `<+` | Append right operand to end of a collection 
  
 ## Modifiers
 
@@ -94,7 +95,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
 ------|--------------------------------------------------------------------
- `:=` | Binding value \| share reference 
+ `:=` | Binding value  \| Reference 
  `+=` | Increment value
  `-=` | Decrement value
  `·=` | Multiplication modifier 

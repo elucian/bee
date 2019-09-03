@@ -50,9 +50,11 @@ type type_name: { name1:0, name2, name3} <: Ordinal;
 
 make a, b, c ∈ type_name;
 
-alter a := type_name.name1; //a=2
-alter b := type_name.name2; //b=3
-alter c := type_name.name3; //c=4
+rule main():
+  alter a := type_name.name1; //a=2
+  alter b := type_name.name2; //b=3
+  alter c := type_name.name3; //c=4
+return;  
 ```
 
 **Note:** When element name start with "." no need to use qualifiers for the individual values
@@ -62,32 +64,34 @@ type type_names: { .name0, .name1 } <: Ordinal;
 
 make a, b ∈ type_name;
 
-alter  a := name0; //a = 0
-alter  b := name1; //b = 1
+rule main()
+  alter  a := name0; //a = 0
+  alter  b := name1; //b = 1
+return;  
 ```
 
 ## Tuple
 
-A tuple is enumeration of elements enclosed in parenthesis and separated by comma: 
+A tuple is enumeration of elements separated by comma: 
 
 **examples**
 ```
-(a, b ∈ Z, c ∈ B) // parameters
-(result ∈ X)      // single result
-(r1,r2 ∈ Z)       // multiple results
-('a','b','c')     // list of Unicode characters
-(1,2,3)           // list of integers
-(1,'2',"x")       // enumeration of various literals
+a, b ∈ Z, c ∈ B // declaration or parameters
+r1,r2 ∈ Z       // multiple results
+('a','b','c')   // list literal
+(1,2,3)         // list of integers
+1,'2',"x"       // enumeration of various literals
 ```
 
 **Notes:**
 
 Bee tuples are very different from Python and other languages.
 
-* Tuples are source code literals with a static structure;
-* Values in a tuple can have different data types;
-* Elements of tuple are ordered, but can not be addressed by index;
-* You can not define a variable of type tuple;
+* Tuples are source code literals with a static structure,
+* Tuple do not have to be enclose in parenthesis,
+* Values in a tuple can have different data types,
+* Elements of tuple are ordered, but can not be addressed by index,
+* You can not define a variable of type tuple; 
 
 **See also:** definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
 
@@ -100,15 +104,17 @@ rule test(x,y ∈ Z) => (r, c ∈ Z):
   alter c := y+1;
 return;
 
-make n, m ∈ Z;
-** collecting the results
-alter n, m := test(1,2);
-
-print n; //2
-print m; //3
-** ignore one result using "_"
-alter n, _ := test(3,0);
-print n; //4
+rule main()
+  make n, m ∈ Z;
+  ** collecting the results
+  alter n, m := test(1,2);
+  
+  print n; //2
+  print m; //3
+    ** ignore one result using "_"
+  alter n, _ := test(3,0);
+  print n; //4
+return;  
 ```
 
 ## List
@@ -125,16 +131,16 @@ A list has two very important elements: _head_ and _tail_.
 You can define a _list type_ using empty list: ()
 
 ```
-type type_name: (element_type) <: List; 
+type Type_name: (element_type) <: List; 
 ```
 
 **variable declaration**
 You can use one of three forms of declarations:
 
 ```
-make name ∈  (TypeName);     //explicit declaration
+make name ∈  (element_type); //explicit declaration
 make name := (constant,...); //implicit declaration
-make name := (constant,...) ∈ ListType; //full declaration
+make name := (constant,...) ∈ Type_name; //full declaration
 ```
 
 **properties**
@@ -156,11 +162,13 @@ type Lou: (N) <: List;
 ** define a list variable of defined type Lou
 make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
 ** list traversal
-for x ∈ list do
-  write x;
-  write "," if (x ≠ list.head);
-next;
-print; //0,1,2,3,4,5
+rule main():
+  for x ∈ list do
+    write x;
+    write "," if (x ≠ list.head);
+  next;
+  print; //0,1,2,3,4,5
+rule;  
 ```
 
 ## Array
@@ -189,10 +197,13 @@ make array_name ∈ Array_Type;
 
 ```
 make array := ['a', 'b', 'c']; // initialized array
-for c ∈ array do
-  write c;
-  write ',';
-repeat;
+
+rule main():
+  for c ∈ array do
+    write c;
+    write ',';
+  repeat;
+return;  
 ```
 
 **Notes:**
@@ -209,13 +220,15 @@ Initial value for elements can be set during declaration or later:
 
 ```** you can use a single value to initialize all vector elements
 make zum: 0 ∈ [Z](10); //explicit initialization using single value
-** modify one element by index
-alter zum[1]  := 1; 
-alter zum[-1] := 9; 
-print zum; //expect [0,1,0,0,0,0,0,0,0,9]
-** modify all elements
-alter zum[*] := 0; 
-print zum; //expect [0,0,0,0,0,0,0,0,0,0]
+
+rule main():  ** modify one element by index
+  alter zum[1]  := 1; 
+  alter zum[-1] := 9; 
+  print zum; //expect [0,1,0,0,0,0,0,0,0,9]
+    ** modify all elements
+  alter zum[*] := 0; 
+  print zum; //expect [0,0,0,0,0,0,0,0,0,0]
+return;  
 ```
 
 **differed initialization**
@@ -224,15 +237,17 @@ We can define an empty array and initialize elements later.
 ```** array without capacity (partial type inference)
 make vec ∈ [A](); 
 make nec ∈ [N](); 
-** arrays are empty
-print vec = []; //True
-print nec = []; //True
-** initialize with operator "×"
-alter vec := 'x' × 10; //10;
-print vec; //expect ['x','x','x','x','x','x','x','x','x','x']
-** array capacity becomes: 10
-alter nec := 0 × 10; //10;
-print nec; //expect [0,0,0,0,0,0,0,0,0,0]
+
+rule main():   ** arrays are empty
+   print vec = []; //True
+   print nec = []; //True
+      ** initialize with operator "×"
+   alter vec := 'x' × 10; //10;
+   print vec; //expect ['x','x','x','x','x','x','x','x','x','x']
+      ** array capacity becomes: 10
+   alter nec := 0 × 10; //10;
+   print nec; //expect [0,0,0,0,0,0,0,0,0,0]
+return;   
 ```
 
 ## Matrix
@@ -243,16 +258,18 @@ A matrix is an array with 2 or more dimensions.
 ```
 type Mat: [R](4,4) <: Matrix;
 make mat ∈ Mat //define matrix
-** modify matrix using ":=" operator
-alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
-print mat[0,0]; //1  = first element
-print mat[3,3]; //16 = last element
 
-** support for 2D matrix literals
-pass if mat = ⎡ 1,  2 , 3,  4 ⎤
-              ⎢ 5,  6 , 7,  8 ⎥
-              ⎢ 9, 10 ,11, 12 ⎥
-              ⎣13, 14 ,15, 16 ⎦
+rule main()  ** modify matrix using ":=" operator
+  alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+  print mat[0,0]; //1  = first element
+  print mat[3,3]; //16 = last element
+  
+  ** support for 2D matrix literals
+  pass if mat = ⎡ 1,  2 , 3,  4 ⎤
+                ⎢ 5,  6 , 7,  8 ⎥
+                ⎢ 9, 10 ,11, 12 ⎥
+                ⎣13, 14 ,15, 16 ⎦;
+return;                
 ```
 
 **Note:** Elements are organized in _row-major_ order.
@@ -260,17 +277,18 @@ pass if mat = ⎡ 1,  2 , 3,  4 ⎤
 So next program will print; 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,
 
 ```** elements in matrix can be accessed using while
-make i   := 0
+make i   := 0;
 make mat := [Z](3,3);
 make x   := mat.length;
-  
-while (i < x) do
-  mat[i] := i+1;
-  write (mat[x], ',') 
-  i += 1;
-repeat
-print;
-over.
+
+rule main():  
+  while (i < x) do
+    mat[i] := i+1;
+    write (mat[x], ',') 
+    i += 1;
+  repeat
+  print;
+return;  
 ```
 
 output:
@@ -297,16 +315,18 @@ make i  := s1 ∩ s2; //{2,3}      :intersection
 make d1 := s1 - s2; //{1}        :difference 1
 make d2 := s2 - s1; //{4}        :difference 2
 make d  := s2 ⊖ s1; //{1,4}      :symmetric difference
-** verify expectation
-pass if d = d1 ∪ d2; //equivalent (else fail)
-** belonging check
-print s1 ⊂ s;  //True
-print s  ⊃ s2; //True
-** declare a new set
-make a := {1,2,3};
-** using operator +/- to mutate set a
-alter a ++ 4; // {1,2,3,4}
-alter a -- 3; // {1,2,4}
+
+rule main():   ** verify expectation
+   pass if d = d1 ∪ d2; //equivalent (else fail)
+      ** belonging check
+   print s1 ⊂ s;  //True
+   print s  ⊃ s2; //True
+      ** declare a new set
+   make a := {1,2,3};
+      ** using operator +/- to mutate set a
+   alter a ++ 4; // {1,2,3,4}
+   alter a -- 3; // {1,2,4}
+return;   
 ```
 
 **Notes:** 
@@ -329,18 +349,19 @@ make new_map := {} ∈ type_name;
 **example:**
 ```** initial value of map
 make map := {('a':"first"), ('b':"second")};
-** create new element
-alter map['c'] := "third";
-** modification of non existent element will fail
-alter map['e'] := "forth"; //ERROR
-** finding elements by key
-print map['a']; //first
-print map['b']; //second
-print map['c']; //third
-** remove an element by key
-scrap map['a']; //remove "first" element
-print map; //expected: {'b'="second", 'c'="third"}
 
+rule main():   ** create new element
+   alter map['c'] := "third";
+      ** modification of non existent element will fail
+   alter map['e'] := "forth"; //ERROR
+      ** finding elements by key
+   print map['a']; //first
+   print map['b']; //second
+   print map['c']; //third
+      ** remove an element by key
+   scrap map['a']; //remove "first" element
+   print map; //expected: {'b'="second", 'c'="third"}
+return;
 ```
 
 **Notes:** 
@@ -358,11 +379,13 @@ type  Tmap: {(A:U)} <: Hash;
 
 make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
-when ('a' ∈ map) do
-  print("a is found");
-else
-  print("not found");
-done;
+rule main():
+   when ('a' ∈ map) do
+     print("a is found");
+   else
+     print("not found");
+   done;
+return;   
   
 ```
 
@@ -408,17 +431,18 @@ Single quoted literals can contain a single symbol.
 
 ```** fixed capacity array or ASCII symbols
 type A128: [A](128) <: Array; // define a sub-type
-make str ∈ A128
 
-** populate array using spreading operator (*)
-alter *str := "test"; //spreading a literal
-print  str;   // ['t','e','s','t']
-
-** fixed capacity array of symbols UTF8
-make  uco ∈ [U](128);
-
-alter *uco := "∈≡≤≥÷≠"; //spreading a literal
-print uco; // ['∈','≡','≤','≥','÷','≠']; 
+rule main()
+  ** populate array using spreading operator (*)
+  make str ∈ A128;
+  alter *str := "test"; //spreading a literal
+  print  str;   // ['t','e','s','t']
+  
+  ** fixed capacity array of symbols UTF8
+  make  uco ∈ [U](128);
+  alter *uco := "∈≡≤≥÷≠"; //spreading a literal
+  print uco; // ['∈','≡','≤','≥','÷','≠']; 
+return;  
 ```
 
 ### String literals
@@ -427,12 +451,14 @@ Double quoted string literals are Unicode UTF8 strings.
 
 **example:**
 ```
-** fixed capacity string UTF8
-make  uco ∈ S; 
-alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
-
-** strings are printed without quotes
-print uco; // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨
+rule main()
+   ** fixed capacity string UTF8
+   make  uco ∈ S; 
+   alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
+   
+   ** strings are printed without quotes
+   print uco; // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨
+return;      
 ```
 
 **Escape**
@@ -469,22 +495,22 @@ symbol| description
   
 **examples**
 
+```
 make m := ('-' * 10) ∈ S; //m = "----------"
 make (u, c, s) ∈ S; //default length is 128 octets = 1024 bit
 
-```
-** string concatenation
-alter u := "This is " & " a short string.";
-alter c := "This is " + "a large string"; 
-** automatic conversion to string
-alter s := "40" & 5; // "405"
-** URL/path concatenation
-save test_file := $pro.'src'.'test.bee';
-** when $platform = "Windows"** Let's say $pro = "c:\work\project\"
-print test_file; //c:\work\project\src\test.bee
-** when $platform = "Linux"** Let's say $pro = "/work/project/"
-print test_file; ///work/project/src/test.bee
-
+rule main():   ** string concatenation
+   alter u := "This is " & " a short string.";
+   alter c := "This is " + "a large string"; 
+      ** automatic conversion to string
+   alter s := "40" & 5; // "405"
+      ** URL/path concatenation
+   save test_file := $pro.'src'.'test.bee';
+      ** when $platform = "Windows"   ** Let's say $pro = "c:\work\project\"
+   print test_file; //c:\work\project\src\test.bee
+      ** when $platform = "Linux"   ** Let's say $pro = "/work/project/"
+   print test_file; ///work/project/src/test.bee
+return;
 ```
 
 ### Conversion
@@ -493,9 +519,11 @@ Conversion of a string into number is done; using _parse_ rule:
 ```
 make x,y ∈ R;
 
-** rule parse return; a Real number
-alter x := parse("123.5",2); //convert to real 123.5
-alter y := parse("10,000.3333",2); //convert to real 10000.33
+rule main():
+  ** rule parse return; a Real number
+  alter x := parse("123.5",2); //convert to real 123.5
+  alter y := parse("10,000.3333",2); //convert to real 10000.33
+return;  
 ```
 
 **Notes:** 
@@ -511,13 +539,15 @@ Object type is a data structure with elements enclosed in curly brackets { , , ,
 **Pattern:**
 ```** declare a category of objects
 type  Type_name: {attribute ∈ type_name, ...} <: Object;
-** create an object instance using default constructor
-make item_name := {
-       attribute : constant,
-       ...
-       } ∈ Type_name;
-** modify one object attribute
-alter object_name.attribute := new_value;
+
+rule main():  ** create an object instance using default constructor
+  make item_name := {
+         attribute : constant,
+         ...
+         } ∈ Type_name;
+    ** modify one object attribute
+  alter object_name.attribute := new_value;
+return;  
 ```
 
 **Object structure can be ...**
@@ -541,16 +571,18 @@ make catalog ∈ [Person](10);
 make catalog[0] := {name:"Cleopatra", age:15};
 make catalog[1] := {name:"Martin", age:17};
 
-** using one element with dot operators
-print caralog[0].name; //will print Cleopatra
-print caralog[1].name; //will print Martin
-
-** member type can be check using _type()_ built in
-print type(Person.name); //will print U
-print type(Person.age);  //will print W
-
-** print size of structure
-print size(Person);
+rule main():
+   ** using one element with dot operators
+   print caralog[0].name; //will print Cleopatra
+   print caralog[1].name; //will print Martin
+   
+   ** member type can be check using _type()_ built in
+   print type(Person.name); //will print U
+   print type(Person.age);  //will print W
+   
+   ** print size of structure
+   print size(Person);
+return;   
 ```
 
 ### Recursive
@@ -594,9 +626,11 @@ return;
 ** call constructor
 make test := foo(1,1);
 ** run bar() method using object test as dot qualifier
-apply test.bar;
-fail if test.a ≠ 1; //verify attribute a
-fail if test.b ≠ 1; //verify attribute b
+rule main():
+  apply test.bar;
+  fail if test.a ≠ 1; //verify attribute a
+  fail if test.b ≠ 1; //verify attribute b
+return;  
 ```
 
 **See also:** 
@@ -605,7 +639,7 @@ fail if test.b ≠ 1; //verify attribute b
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
-* Rules can be overwritten in other components;
+* Rules can be overwritten in other modules;
 * Rules can be private or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
@@ -629,11 +663,13 @@ rule foo(*bar ∈ [Z]) => (x ∈ Z):
 return;
 
 ** we can call foo with variable number of arguments
-print foo();        //0
-print foo(1);       //1
-print foo(1,2);     //3
-print foo(1,2,3);   //6
-print foo(1,2,3,4); //10
+rule main():
+   print foo();        //0
+   print foo(1);       //1
+   print foo(1,2);     //3
+   print foo(1,2,3);   //6
+   print foo(1,2,3,4); //10
+return;   
 ```
 
 ## Exception
@@ -664,11 +700,13 @@ String interpolation "?" can be used to customize the error messages:
 
 **example:**
 ```
-make  flag ∈ L;
-read (flag, "enter flag (0/1):");
-
-make my_error := {201,"error:#(s)"} ∈ Error;
-fail (my_error ? "test") if flag;
+rule main():
+   make  flag ∈ L;
+   read (flag, "enter flag (0/1):");
+   
+   make my_error := {201,"error:#(s)"} ∈ Error;
+   fail (my_error ? "test") if flag;
+return;   
 ```
 **output:**
 ```

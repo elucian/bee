@@ -79,8 +79,6 @@ Coroutines can be used in producer/consumer design paradigm.
 * consumer is usually working on multiple threads;
 
 ```
-driver pc:
-
 ** data source/target to process
 make s := [0](1000); //array of integers
 ** producer coroutine
@@ -125,7 +123,6 @@ while ch.length > 0 do
   yield foo if (ch.length = 0); // execute producer on single thread
 repeat;  
 
-over.
 ``` 
 
 **Demo code:** [pc.bee](./demo/pc.bee)

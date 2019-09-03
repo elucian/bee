@@ -41,25 +41,27 @@ Expressions are created using identifiers, operators, rules and constant literal
 ```
 ** simple expressions in print statement
 ** no need for parentheses for a single value
-print 10; 
-print "this is a test";
-
-** complex expressions can use ()
-print (10 + 10 + 15);  
-print (10 > 5) | (2 < 3);
-
-** enumeration of multiple expressions
-** print: separate multiple values with one space
-print 1,2,3;         // 1 2 3
-print 1,',',2,',',3; // 1,2,3
-
-** to avoid new line and spaces use "write"
-write 0;   //add 0  to print buffer
-write 1,2; //add 12 to print buffer 
-write 3,4; //add 34 to print buffer 
-
-** after write use print to flash and add new line
-print; //output buffer: 01234
+rule main():
+  print 10; 
+  print "this is a test";
+  
+  ** complex expressions can use ()
+  print (10 + 10 + 15);  
+  print (10 > 5) | (2 < 3);
+  
+  ** enumeration of multiple expressions
+  ** print: separate multiple values with one space
+  print 1,2,3;         // 1 2 3
+  print 1,',',2,',',3; // 1,2,3
+  
+  ** to avoid new line and spaces use "write"
+  write 0;   //add 0  to print buffer
+  write 1,2; //add 12 to print buffer 
+  write 3,4; //add 34 to print buffer 
+  
+  ** after write use print to flash and add new line
+  print; //output buffer: 01234
+return;  
 ```
 
 **Notes:** 
@@ -224,12 +226,14 @@ type Capital:  ('A'..'Z')       <: A;
 type Lowercase:('a'..'z')       <: A;  
 type Latin:    (U+0041..U+FB02) <: U;
 
-** check variable belong to type
-when ('x' ∈ Capital) do
-  print "yes"; //unexpected
-else
-  print "no";  //expected
-done;
+rule main():
+  ** check variable belong to type
+  when ('x' ∈ Capital) do
+    print "yes"; //unexpected
+  else
+    print "no";  //expected
+  done;
+return;  
 ```
 
 **Notes:**
@@ -244,9 +248,10 @@ done;
 **example:**
 ```
 ** continuous default rate is 1
-print (0..5); //0,1,2,3,4,5
-print (0.!5); //0,1,2,3,4
-
+rule main():
+  print (0..5); //0,1,2,3,4,5
+  print (0.!5); //0,1,2,3,4
+return;
 ```
 
 ## Domain segments
@@ -370,19 +375,21 @@ make a   ∈ Z; //Integer
 make x,y ∈ R; //Double
 make q,p ∈ L; //Logic
 
-** using modifiers
-alter a := 10; //modify value of a := 10
-alter a += 1;  //increment value of a := 11
-alter a -= 1;  //decrement value of a := 10
-
-** modify two variables using one single constant
-alter x, y := 10.5;
-
-** modify two variables using two constants
-alter q, p := True, False;  
-
-** swapping two variables
-alter p, q := q, p;
+rule main():
+  ** using modifiers
+  alter a := 10; //modify value of a := 10
+  alter a += 1;  //increment value of a := 11
+  alter a -= 1;  //decrement value of a := 10
+  
+  ** modify two variables using one single constant
+  alter x, y := 10.5;
+  
+  ** modify two variables using two constants
+  alter q, p := True, False;  
+  
+  ** swapping two variables
+  alter p, q := q, p;
+return;  
 ```
 
 ## Type conversion
@@ -399,13 +406,15 @@ When data type mismatch you must perform explicit conversion.
 make (a: 0, b:20) ∈ Z;
 make (v: 10.5, x: 0.0) ∈ R;
 
+rule main():
 ** explicit conversion
-alter a := v -> N;
-print a; //truncated to 10 
+   alter a := v -> N;
+   print a; //truncated to 10 
 
 ** explicit conversion
-alter x := b -> R;
-print x; //expect 20.00
+   alter x := b -> R;
+   print x; //expect 20.00
+return;   
 ```
 
 **notes:** 
@@ -420,10 +429,12 @@ Bee define A as single UTF-8 code point with representation: U+HH
 make (a, b) ∈ A; //ASCII 
 make (x, y) ∈ B; //Binary integer
 
-alter a :='0';     //ASCII symbol '0'
-alter x := a -> B; //convert to binary 30
-alter y := 30;     //decimal code for '0'
-alter b := y -> A; //convert to ASCII symbol '0'
+rule main():
+  alter a :='0';     //ASCII symbol '0'
+  alter x := a -> B; //convert to binary 30
+  alter y := 30;     //decimal code for '0'
+  alter b := y -> A; //convert to ASCII symbol '0'
+return;  
 ```
 
 ## Type checking
@@ -434,10 +445,11 @@ We can use variable type to validate expression type.
 make a := 0;   //integer variable
 make b := 0.0; //real variable 
 
-alter a:= 10.5; //Warning: a is of type: Integer  
-alter b:= 10;   //Warning: b is of type: Real
-
-print a, b; // 10, 10.00
+rule main():
+  alter a:= 10.5; //Warning: a is of type: Integer  
+  alter b:= 10;   //Warning: b is of type: Real
+  print a, b; // 10, 10.00
+return;  
 ```
 
 You can use operator "∈" to verify data type:
@@ -445,8 +457,10 @@ You can use operator "∈" to verify data type:
 ```
 make a := 0 ∈ Z;
 
-** expected: Integer
-fail if ¬ (a ∈ Z); // fail if a is not integer
+rule main():
+  ** expected: Integer
+  fail if ¬ (a ∈ Z); // fail if a is not integer
+return;  
 ```
 
 ## Logic type
@@ -457,8 +471,10 @@ Logic type is an enumeration of two public symbols: False and True
 type .L: {.False: 0, .True: 1} <: Ordinal;
 
 ** printing logical values
-print True;  //1
-print False; //0
+rule main():
+  print True;  //1
+  print False; //0
+return;  
 ```
 
 ## Logic operations
@@ -491,25 +507,27 @@ Comparison operators will create a logical response: 1 = True or 0 = False
 ```
 make  (x, y) := 4 ∈  Z;  //primitive integer
 
-** value comparison
-print x = 4;  //1 (equal)
-print x ≡ 4;  //1 (identical)
-print x = y;  //1  
-print x ≡ y;  //1 
-print x ≠ 5;  //1 (different)
-print x!≡ 5;  //1 (not identical)
-
-** reference ordering
-print x ≥ y;  //1: x and a are actually equal
-print x ≥ 4;  //1: greater or equivalent to 4
-print x ≤ 4;  //1: less than or equivalent to 4
-print x > 4;  //0: not greater than 4
-print x < 4;  //0: not less than 4
-
-
-** arithmetic expressions have primitive results
-print x - 4 = 0; //1 
-print x - 4 ≡ 0; //1 
+rule main():
+  ** value comparison
+  print x = 4;  //1 (equal)
+  print x ≡ 4;  //1 (identical)
+  print x = y;  //1  
+  print x ≡ y;  //1 
+  print x ≠ 5;  //1 (different)
+  print x!≡ 5;  //1 (not identical)
+  
+  ** reference ordering
+  print x ≥ y;  //1: x and a are actually equal
+  print x ≥ 4;  //1: greater or equivalent to 4
+  print x ≤ 4;  //1: less than or equivalent to 4
+  print x > 4;  //0: not greater than 4
+  print x < 4;  //0: not less than 4
+  
+  
+  ** arithmetic expressions have primitive results
+  print x - 4 = 0; //1 
+  print x - 4 ≡ 0; //1 
+return;  
 ```
 
 **singleton**
@@ -519,7 +537,7 @@ Primitive types are unique. That means they are identical.
 ```
 ** primitive values are singleton
 print  1  ≡  1;  //1
-print 's' ≡ 's'; //1
+print `s` ≡ `s`; //1
 ```
 
 **Precedence:** 
@@ -534,19 +552,21 @@ Logical expression have value { 0 = False, 1 = True }
 make x := False ∈ L; 
 make y := True  ∈ L; 
 
-** expressions with single operant
-print   x; //0
-print ¬ x; //1
-
-** expressions with two operands
-print (x = y); //0
-print (x ≡ y); //0
-print (x ≠ y); //1
-print (x < y); //1
-print (x > y); //0
-print (x ∧ y); //0
-print (x ∨ y); //1
-print (x ⊕ y); //1
+rule main():
+  ** expressions with single operant
+  print   x; //0
+  print ¬ x; //1
+  
+  ** expressions with two operands
+  print (x = y); //0
+  print (x ≡ y); //0
+  print (x ≠ y); //1
+  print (x < y); //1
+  print (x > y); //0
+  print (x ∧ y); //0
+  print (x ∨ y); //1
+  print (x ⊕ y); //1
+return;  
 ```
 **Notes:** 
 * Operators { ¬    } is unary operator;
@@ -561,8 +581,10 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make (x, y) ∈ L;
 make (a:0.0, b:1.5) ∈ R;
 
-alter x := a -> L; //0
-alter y := b -> L; //1
+rule main():
+  alter x := a -> L; //0
+  alter y := b -> L; //1
+return;  
 ```
 
 **Notes:** 
@@ -609,12 +631,14 @@ The statement is executed only if the expression evaluate to True.
 ```
 make a := 0 ∈ Z;
 
-** conditional execution
-alter a := 1 if a = 0;
+rule main():
+  ** conditional execution
+  alter a := 1 if a = 0;
 
-** conditional print
-print "a is 0" if a = 0;
-print "a >  0" if a ≥ 0;
+  ** conditional print
+  print "a is 0" if a = 0;
+  print "a >  0" if a ≥ 0;
+return;  
 ```
 
 **Notes:** 
@@ -631,18 +655,20 @@ These expressions are separated by coma and enclosed in ().
 ```
 make var ∈ type;
 
-** single condition matching
-alter var := (exp if cnd1, def);
-
-
-** multiple matching with default value
-alter var := (exp1 if cnd1, xp2 if cnd2,..., def);
-
-** alternative code alignment
-alter var := 
-  (exp1 if cnd1
-  ,exp2 if cnd2
-  ,def);
+rule main():
+  ** single condition matching
+  alter var := (exp if cnd1, def);
+  
+  
+  ** multiple matching with default value
+  alter var := (exp1 if cnd1, xp2 if cnd2,..., def);
+  
+  ** alternative code alignment
+  alter var := 
+    (exp1 if cnd1
+    ,exp2 if cnd2
+    ,def);
+return;  
 ```
 
 **Legend:**
@@ -655,14 +681,14 @@ alter var :=
 
 **example:**
 ```
-make x := '0'; //symbol
-write "x:"
-read   x;
-
-make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
-print ("x is " + kind); //expect: "x is digit"
-
-over.
+rule main():
+   make x := '0'; //symbol
+   write "x:"
+   read   x;
+   
+   make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
+   print ("x is " + kind); //expect: "x is digit"
+return;
 ```
 
 ## Rules
@@ -702,9 +728,11 @@ rule foo(name, message ∈ S):
 return;
 
 ** using apply + rule name will execute the rule  
-make str ∈ S;
-apply foo("Bee", str);
-print str; 
+rule main()
+  make str ∈ S;
+  apply foo("Bee", str);
+  print str; 
+return;  
 ```
 
 **Expected output:**
@@ -731,21 +759,23 @@ In this example we have a rule that return a list of two values.
 ** rule with two results "s" and "d"
 ** parameter x is mandatory y is optional
 rule com(x ∈ Z, y:0 ∈ Z) => (s, d ∈ Z):
-  alter s := x + y; 
-  alter d := x - y;
+   alter s := x + y; 
+   alter d := x - y;
 return;
 
-** capture result into a single variable
-make  r := com(3,2); //create a list
-print r; // (5,1) 
-
-** deconstruction of result into variables: s, d
-make  s, d := com(3,2);  // capture two values
-print s, d, sep:"," ;    // 5,1 (use separator = ",")
-
-** ignore one result using variable "_"
-make  a, _ := com(3);
-print a; // 3 
+rule main():
+   ** capture result into a single variable
+   make  r := com(3,2); //create a list
+   print r; // (5,1) 
+   
+   ** deconstruction of result into variables: s, d
+   make  s, d := com(3,2);  // capture two values
+   print s, d, sep:"," ;    // 5,1 (use separator = ",")
+   
+   ** ignore one result using variable "_"
+   make  a, _ := com(3);
+   print a; // 3 
+return;   
 ```
 
 **Notes:**   
@@ -770,16 +800,17 @@ rule name(param ∈ type,...) => (result ∈ type):
    ...
 return;
 
-** direct call and print the result
-print rule_name(argument,...);
-
-** capture rule result and make a new variable:
-make  r := rule_name(argument,...);
-
-** capture result using existing variable:
-make  n ∈ type;
-alter n := rule_name(argument,...)
-
+rule main():
+  ** direct call and print the result
+  print rule_name(argument,...);
+  
+  ** capture rule result and make a new variable:
+  make  r := rule_name(argument,...);
+  
+  ** capture result using existing variable:
+  make  n ∈ type;
+  alter n := rule_name(argument,...)
+return;
 ```
 
 **Pure rules:**
@@ -828,16 +859,18 @@ rule rule_name(param ∈ type,...):
    ...
 return;
 
-** modify rule states
-alter rule_name.x  := 1;
-alter rule_name.y  := 2;
-alter rule_name.z  := 3;
-
-** read rule states
-print (rule_name.x, rule_name.y, rule_name.z); //1 2 3
-
-** execute a rule that has no results:
-apply rule_name(param:argument, ...);
+rule main():
+  ** modify rule states
+  alter rule_name.x  := 1;
+  alter rule_name.y  := 2;
+  alter rule_name.z  := 3;
+  
+  ** read rule states
+  print (rule_name.x, rule_name.y, rule_name.z); //1 2 3
+  
+  ** execute a rule that has no results:
+    apply rule_name(param:argument, ...);
+return;    
 ```
 
 **Notes:**
@@ -865,11 +898,13 @@ rule method_name(self ∈ ObjType, param ∈ type,...) => (result ∈ type):
    result := expression;
 return;
 
-** create an object instance
-make obj := {attribute:value, ...} ∈ ObjectYpe;
-
-** execute a method and ignore the result
-apply obj.method_name(argument, ...);
+rule main():
+  ** create an object instance
+  make obj := {attribute:value, ...} ∈ ObjectYpe;
+  
+  ** execute a method and ignore the result
+  apply obj.method_name(argument, ...);
+return;  
 ```
 
 See also: [Composite:Object](composite#object)
@@ -884,17 +919,15 @@ Two rules may call each other and create a cyclic interdependence. For this you 
 ** forward declaration for rule "plus"
 rule plus(Z,Z) ∈ Z; //signature
 
-** execute before implementation
-print plus(1,1);
-
-print;
+rule main():
+   ** execute before implementation
+   print plus(1,1);  
+return   
 
 ** later implement the rule "plus"
 rule plus(a,b ∈ Z) => (r ∈ Z): 
   alter r := (a + b);
 return;
-
-over.
 ```
 
 ## External rules
@@ -905,7 +938,7 @@ These rules are usually wrapped in modules.
 **Example:**
 This is myLib.bee file: 
 ```
-module myLib:
+#module myLib
 
 load $bee.lib.cpp.myLib; //load cpp library
 
@@ -915,15 +948,17 @@ rule fib(n ∈ Z) => (x ∈ Z));
 return;
 ```
 
-This is the driver file.
+This is the main module:
 ```
-driver main:
+# module main
 
 ** load library
 load myLib := $bee.lib.myLib;
 
 ** use external rule
-print myLib.fib(5);
+rule main():
+  print myLib.fib(5);
+return;   
 ```
 
 To understand more about interacting with other languages check this article about ABI:

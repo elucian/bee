@@ -1,6 +1,6 @@
 ## Program structure
 
-Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension .bee or .cfg and it represents a component or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
+Bee language enable developers to create small programs using a single file, or a larger program using multiple files. Each file have extension .bee or .cfg and it represents a module or a configuration file. Bee is a space sensitive language. That means indentation of code and spaces are relevant.
 
 **bookmarks**
 
@@ -29,8 +29,8 @@ $pro_home
   |   |--server.exe
   |
   |-- src
-  |   |-- aspect1.bee
-  |   |-- aspect2.bee
+  |   |-- module1.bee
+  |   |-- module2.bee
   |
   |-- lib
   |   |-- library1.bee
@@ -65,8 +65,8 @@ Bee can use a runt-time configuration file:
 \>program_name -c file_name.cfg
 ```
 
-### System Constants
- System constants are using "$" prefix. These constants are global and immutable. There are several predefined constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new system constants at the beginning of your _driver_ component.
+### Global Constants
+ Global constants are using "$" prefix. There are several predefined system constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new global constants at the beginning of any module.
 
 |Constant  | Environment| Description                |
 |----------|------------|----------------------------|
@@ -75,12 +75,12 @@ Bee can use a runt-time configuration file:
 |$bee_path | BEE_PATH   | Bee library path           |
 |$pro_home | N/A        | Program home folder        |
 |$pro_lib  | N/A        | Program library home       |
-|$pro_mod  | N/A        | Program components home    |
+|$pro_mod  | N/A        | Program modules home    |
 |$pro_log  | N/A        | Reporting folder           |
 
 ### Compiler directives
 
-Compiler directives are system constants that control the compilation process. You can setup these options in compiler configuration file or in driver source file. You can not change these options after compilation. They are available for normal control flow statements. You can use _when_ statement to check $platform for example.
+Compiler directives are system constants that control the compilation process. You can setup these options in compiler configuration file or in source file. You can not change these options after compilation. They are available for normal control flow statements. You can use _when_ statement to check $platform for example.
 
 |Constant  | Default value | Description
 |----------|---------------|----------------------------------------------------------------
@@ -95,12 +95,12 @@ Compiler directives are system constants that control the compilation process. Y
 |$platform | "Windows"     | Alternative: "Linux", "Mac" is the target platform
 
 **note**
-* You can overwrite compiler parameters in driver but not in _aspect_ or _module_ components;
+* You can overwrite compiler parameters in driver but not in _module_ or _module_ modules;
 * Precision is controlling display precision for real numbers, float and double numbers;
 
-### System Variables
+### Global Variables
 
-System variables are defined usually at the beginning of the component. 
+Global variables are defined usually at the beginning of a module outside of any rule. 
 
 **introspection:**
 
@@ -118,54 +118,39 @@ Following system variables are available for debugging:
 ```
 
 **notes:** 
-* System variables are global and are defined in a library;
+* System variables are global and are defined in core library;
 * Prefix "@" is used to improve code readability;
 
-### Components
-
-A component is a source file with extension .bee. You can organize an application using multiple components. When compiled, all components are merged into a single monolithic application. 
-
-**Name:**
-
-One _component_ is identified by a _name_ created with one different keyword depending on component role:
-
-* driver: define the leading component for an application;
-* module: define a component that can be reused by many applications;
-* aspect: define a component that belong to an application;
-
-### Drivers
-A _driver_ is the main application component. It has the role to lead the application main thread. When _driver_ execution is over the application give control back to the operating system.
-
-**notes:**
-
-* A _driver_ is the application entry point,
-* Any application must have one single _driver_,
-* A _driver_ can read configuration files at startup,
-* A driver can be terminated early using keywords: _halt_, or _fail_.
-
 ### Modules
-A _module_ is a reusable component usually located in a sub-folder of _"lib"_ folder. One driver or aspect can _load_ from a _library_ one or more _modules_ using _load_ statement. From each _module_ we can use one or more public members with scope qualifier using dot notation or aliases.
+An _module_ is a file located in _"src"_ folder having extension *.bee. A _module_ can load another _module_ and can execute its rules multiple times. After _module_ is loaded, its global states are permanent in memory. 
 
 **notes:**
-* Modules must have at least one public member;
-* Modules does not have rogue statements;
-* Modules can not be stored in project _"src"_ folder;
-* You can loaded a module one single time;
-* You can not load a module from a block statement;
+* An  _module_ can have public elements,
+* One _module_ can can contain rule main(),
+* One _module_ can load multiple other modules,
+* One _module_ can be loaded a single time in another module,
+* You can not load a module from a block statement,
 
-### Aspects
-An _aspect_ is a component located in _"src"_ folder. A _driver_ or another _aspect_ can execute an _aspect_ multiple times. After _aspect_ is executed, its states are removed from memory. Think of an aspect as a code fragment.
+### Library
+A _library_ is a reusable module located in a sub-folder _"lib"_. One module can _load_ multiple _libraries_ using _load_ statement. From each _library_ you can use one or more public members using scope qualifier and dot notation.
 
 **notes:**
-* An _aspect_ do not have public elements;
-* An _aspect_ have rogue statements;
-* An _aspect_ that has no rogue statements is unusable or unfinished;
-* An _aspect_ can have parameters and side effects;
-* An _aspect_ can be executed in parallel on multiple threads;
-* An _aspect_ can be executed in parallel with other aspects;
-* An _aspect_ can have results but can not be used in expressions;
+* A library must have at least one public member,
+* A library can not contain a rule called main(),
+* A library can not be stored in project _"src"_ folder,
+* You can loaded a library one single time in a module,
+* You can not load a library from a block statement.
 
-## Declaration
+## Main module
+
+One module that contains rule main() is the application _main module_. Main module is usually defining _global constants_, _global variables_ and main rule. A good designer will split the rest of the application in secondary modules.
+
+**restrictions**
+
+* main module can not be imported in other modules;
+* main module do not have public members;
+
+## Declarations
 
 Bee is using 6 kind of declarations:
 
@@ -176,7 +161,7 @@ Bee is using 6 kind of declarations:
 * save  // declare a constant
 * rule  // declare named code block
 
-## Statement
+## Statements
 
 Each statement start with one imperative keyword: 
 
@@ -196,7 +181,7 @@ Each statement start with one imperative keyword:
 * You can create _line comment_ using "*" 
 * A statement may continue after _line comment_ on the next line;
 
-### Code block
+### Code blocks
 Statements can be contained in blocks of code.
 
 * when  // create two ways decision statement
@@ -211,37 +196,39 @@ Statements can be contained in blocks of code.
 * Closing keyword can be one of: { done, repeat, next };
 * Statements in nested blocks are using indentation at 2 spaces;
 
-### Rogue statement
 
-A _driver_ or _aspect_ can contain statements that do not belong to any rule. These are called _rogue_ statements and are driving the program execution. Rogue statements are executed top down until to last keyword that is usually _over_.
+### Main rule
+
+A module can define "rules". These are sub-programs that can be executed on demand. One special rule is the main() rule that can be defined in the main module. This rule can receive multiple parameters and is automatically executed when program starts.
 
 **Example:**
 
 ```
-driver main(*params ∈ S):
-** read the number of parameters
-make c := params.count;
-halt if (c = 0);
-** print comma separated parameters
-make i:= 0 ∈ Z;
-while (i < c) do
-  write params[i];
-  alter i += 1;
-  write "," if (i < c);
-repeat;
-** print the buffer to console
-print;
-  
-over. //end of driver
+# demonstrate main rule
+rule main(*params ∈ S):
+   ** read the number of parameters
+   make c := params.count;
+   halt if (c = 0);
+   
+   ** print comma separated parameters
+   make i:= 0 ∈ Z;
+   while (i < c) do
+     write params[i];
+     alter i += 1;
+     write "," if (i < c);
+   repeat;
+   ** print the buffer to console
+   print;  
+return;
 ```
 
-Do not try to understand this example. It is just a worm-up! 
+Do not try to understand this example. It is just a worm-up code! 
 
 **Notes:** 
-* This program is a driver having file-name "main.bee";
+* This program consist of one main module;
 * Input parameter _*params_ is an array of strings;
-* Any Bee component is ending with mandatory keyword: _"over"_; 
-* Early driver termination can be trigger using: halt or exit;
+* Early program termination can be trigger using: halt or exit;
+* Any rule is ending with mandatory keyword: _"return"_; 
 
 ## External code
 
@@ -273,7 +260,7 @@ All public members must use the specified qualifier or you can use "with" block 
 
 **Alias**
 
-You can create an alias for a specific member to eliminate the qualifier. This method can be used to "merge" public members into current scope. A member can have one single alias in a component. If you do it multiple times, only the last alias is used. It is a bad practice to change the alias of a member.
+You can create an alias for a specific member to eliminate the qualifier. This method can be used to "merge" public members into current scope. A member can have one single alias in a module. If you do it multiple times, only the last alias is used. It is a bad practice to change the alias of a member.
 
 ```
 alias new_name := qualifier.member_name;
@@ -288,45 +275,21 @@ load $runtime.bee_lib:(*); // load bee core library
 load $program.pro_lib:(*); // load project library
 ```
 
-## Global context
+## Global scope
 
-One application has a global context where variables and constants are allocated. Each application file can contribute with public elements that can be merged in this context. The global context can be also called _application context_ or _session context_;
+One application has a global scppe where variables and constants are allocated. Each application file can contribute with public elements that can be merged in this scope. The global scope can be also called _application scope_ or _session scope_;
 
-* Global context helps to use _public identifiers_ from loaded components;
-* When a component is loaded, its public members are defined in the _global context_;
+* Global scope helps to use _public identifiers_ from loaded modules;
+* When a module is loaded, its public members are defined in the _global scope_;
 
 ## Name space
 
-A component has its own name-space where you can define members and statements. Component namespace can contain public or private members.
-
-**example:**
-```
-** component name-space
-make i := 1 ∈ Z;   // create a private variable
-trial
-  ** local name-space
-  make v := i;     // v is local reference to nonlocal: i 
-  make i := 2 ∈ Z; // create i local 
-  print i;         // expected: 2 (local)
-  print v;         // expected: 1 (nonlocal)
-done;
-print i; //expected: 1  (unmodified)
-
-over.
-```
-**See examples:** 
-* [lv.bee](./demo/lv.bee)
-* [gv.bee](./demo/gv.bee)  
-
-
-## Public members
-
-In Bee all members that begin with dot "." are public members.
+A module has its own name-space where you can define members and statements. Module name-space can contain public or local members. Public members start with "." while local members do not have any prefix or suffix.
 
 ```
-** component name-space
-save .pi := 3.14; // public constant (global)
-make .v ∈ N;      // public variable (global)
+** module name-space
+save .pi := 3.14; // public constant
+make .v ∈ N;      // public variable
 
 ** public rule f
 rule .f(x ∈ N) ∈ N => (x + 1);
@@ -337,11 +300,10 @@ rule .m(x, y ∈ N) => (r ∈ N):
 return;
 ```
 
-**note:** 
-* private members are visible in current component and do not require _scoping_ notation;
-* public members are visible from external components using _scoping_ notation;
-* public members can be renamed in global scope using "alias" statement;
-* public members that have alias can still be called using the original identifiers;
+**See examples:** 
+* [lv.bee](./demo/lv.bee)
+* [gv.bee](./demo/gv.bee)  
+
 
 ## Comments
 
@@ -357,12 +319,12 @@ For single line comments we use one or two stars like: "\*\*";
 
 **End of line**
 
-Before new line of code: (EOL) you can use comments starting with bang: "//"
+Before new line of code: (EOL) you can use comments starting with: "//"
 
-* notice one line may be or not a full statement. the end of statement is not (EOL)
+* notice one line may be or not a full statement. the end of statement is not (EOL),
 * you can use "//" in the middle of an expression, if expression is on multiple lines,
-* you can have multiple statements separated by ";" in a line but only one comment;
-
+* you can have multiple statements separated by ";" in a line but only one comment,
+* you can not use "//" inside paranthesis of any kind (), [] or {}.
 **Box comment
 
 This notation is specific to Bee language. It is a multi-line comment starting with "+-" and end with "-+". The upper right corner is missing. I guess you will notice this defect later. However you can use old-style C comments.
@@ -391,11 +353,6 @@ In next example we are using various comments into a demo program.
 | At the beginning of program you can have  several comments,     | 
 | to explain how the program works. This notation is preferred.   |
 +-----------------------------------------------------------------+
-driver main:
-
-** This is a single line comment
-pass; // does nothing
-... 
 
 /* 
    This kind of comment is supported.
@@ -403,35 +360,31 @@ pass; // does nothing
    /* Nested comments are allowed. */   
 */
 
-** Expression comments
-print ("comment in expression \n", /*first line*/
-       "is working \n",            /*second line*/
-       "this is a test \n"         /*last line*/ 
-      ); // end of expression
-
-over. // end of driver
+rule main():
+  ** This is a single line comment
+  pass; // does nothing
+  ... 
+   
+  ** Expression comments
+  print ("comment in expression \n", /*first line*/
+         "is working \n",            /*second line*/
+         "this is a test \n"         /*last line*/ 
+        ); // end of expression
+  
+return;
 
 *******************************************************************
 ** This is the old style boxed comment, used for matrix printers **
 *******************************************************************
 ```
 
-**note:** 
-Any test after the end of program is considered a comment and is ignored by the compiler. After "over." nothing is parsed. So you can use free text or even code that you wish to preserve for later use.
-
 ## Execution
 
-**driver:**
-
-When a program is executed the driver is located and executed first. If a program do not have a "driver", it can not be executed nor compiled. The driver is the program main entry point. It is executed only once. 
-
-**aspect:**
-
-One aspect is executed from driver or from another aspect. When executed rogue statements of an aspect are executed top down in sequential order. You can not run an aspect from itself. Recursive aspects are not supported.
+When a program is executed the _main module_ is located and executed first. If a program do not have a _main module_, it can not be executed nor compiled. The main() rule is the program main entry point. It is executed only once.  If you try to execute rule main() you can but there is no point to it.
 
 **module:**
 
-The driver or aspect can load numerous modules. After loading, all public elements can be executed on demand. Before execution the driver can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
+The main module can load numerous modules and libraries. After loading, all public elements can be executed on demand. Before execution the main() rule can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
 
 
 **pattern:**
@@ -441,67 +394,53 @@ This pattern demonstrate how to use a rule from a module named "module_name"
 ```** loading a module
 load $pro.src.module_name;
 
-** give alias to aspect rule
-alias new_name: qualifier.rule_name;
+** give alias to module rule
+alias new_name: module_name.rule_name;
 
-** results can be captured using make
-make result := qualifier.rule_name(arguments);
-
-** modify a variable using rule alias:
-alter result := new_name(arguments);
+rule main():
+   ** results can be captured using make
+   make result := module_name.rule_name(arguments);
+   
+   ** modify a variable using rule alias:
+   alter result := new_name(arguments);
+return;   
 ```
 
-**pattern:**
+## Using a module
 
-This pattern demonstrate how to declare an aspect named "test.bee".
+This pattern demonstrate how to declare an module named "test.bee".
 
 ```
-** define aspect with parameter "p" and result "r"
-aspect test(p ∈ N) => (r ∈ N):
-
-** define a local rule
-rule abs(i ∈ Z) => (v ∈ N):
+** define a public rule
+rule .abs(i ∈ Z) => (v ∈ N):
   when (i < 0) do 
     alter v := -i;
   else
     alter v := i;
   done;  
 return;
-
-alter r := abs(p); //call rule"abs"
-
-over.
 ```
 
-**Using aspect:**
+Define main module and use previous defined "test" module.
 
-Define driver named "main" and use previous defined "test" aspect.
 ```
-** define a driver main.bee
-driver main:
-** define variable result
+** define variable result
 make result ∈ N;
-** execute one aspect "test" and collect the result
-apply $pro_lib.test(-3) +> result;
-print result; //expect: 3
+** execute one module "test" and collect the result
+load $pro_src.test;
 
-** define one alias for an aspect
-alias test := $pro_lib.test;
 
-** define a collector (collection)
-make collect ∈ [N]
+** define a collector (list)
+make collect ∈ (N);
 
-** prepare aspects for parallel execution
-defer test( 1) +> collect;  
-defer test(-1) +> collect;  
-defer test(-2) +> collect;  
-defer test(-3) +> collect;  
-
-yield; // execute pending aspects (using 4 threads)
-
-print collect; // [1,1,2,3]
-
-over.
+** execute test() and append result in collect
+rule main():
+   apply test.abs( 1) +> collect;  
+   apply test.abs(-1) +> collect;  
+   apply test.abs(-2) +> collect;  
+   apply test.abs(-3) +> collect;    
+   print collect; // (1,1,2,3)
+return;   
 ```
 
 **Read next:** [Syntax Overview](overview.md)

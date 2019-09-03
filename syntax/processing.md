@@ -131,7 +131,6 @@ while (x < m) do
 repeat;
 ** print all elements of array
 print test;
-over.
 ```
 
 **Output:**

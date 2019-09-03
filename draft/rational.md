@@ -123,8 +123,6 @@ Rational numbers and other numbers can be compared using "≈" instead of "=".
 In next example b = 0.33(3), delta = (b - a) = 0.083 
 
 ```
-driver test:
-
 ** override default precision
 $precision := 0.01;
 
