@@ -1,42 +1,40 @@
 +-----------------------------------------
 |      variable declaration demo         |
 +----------------------------------------+
-driver dc:
-
 load $pro_lib.console.(*);
-
-make n ∈ Z; // Integer on 64 bit
-make l ∈ L; // Logical value False := 0
-make h ∈ S; // Default 255 char string
-
-** printing initial values
-print n; // 0
-print l; // 0 
-print h; // ''
-
-** declaring with initial value
-make (g, h) := -10 ∈ Z;
-make (x: 10, y: 20) ∈ N;
-
-** native array are auto initialized
-make a:= 0  ∈ [N](10) ; // array of 10 natural numbers
-make b:= '' ∈ [U](10) ; // array of 10 NUL symbols
-make m:= 0  ∈ [N](3,3); // matrix of 3x3 natural numbers
-
-print a; // [0,0,0,0,0,0,0,0,0,0]
-print b; // ['','','','','','','','','','']
-print m; // [[0,0,0], [0,0,0], [0,0,0]]
-
-** use all member initialization [*]
-alter b[*] := 's'; // assign 's' for all elements 
-alter a[*] :=  5 ; // scalar modification, make all = 5
-alter m[*] :=  1 ; // scalar matrix modification
-** use index to find member
-print a[0] ;   // will print 5
-print b[0] ;   // will print 's' 
-print m[2,2]; // will print 1
-** use slice to alter elements
-alter a[2..*] := 1; // [5,5,1,1,1,1,1,1,1,1] 
-alter a[0..5] := 2; // [2,2,2,2,2,2,1,1,1,1] 
-
-over.
+rule main():
+   make n ∈ Z; // Integer on 64 bit
+   make l ∈ L; // Logical value False := 0
+   make h ∈ S; // Default 255 char string
+   
+   ** printing initial values
+   print n; // 0
+   print l; // 0 
+   print h; // ''
+   
+   ** declaring with initial value
+   make (g, h) := -10 ∈ Z;
+   make (x: 10, y: 20) ∈ N;
+   
+   ** native array are auto initialized
+   make a:= 0  ∈ [N](10) ; // array of 10 natural numbers
+   make b:= '' ∈ [U](10) ; // array of 10 NUL symbols
+   make m:= 0  ∈ [N](3,3); // matrix of 3x3 natural numbers
+   
+   print a; // [0,0,0,0,0,0,0,0,0,0]
+   print b; // ['','','','','','','','','','']
+   print m; // [[0,0,0], [0,0,0], [0,0,0]]
+   
+   ** use all member initialization [*]
+   alter b[*] := 's'; // assign 's' for all elements 
+   alter a[*] :=  5 ; // scalar modification, make all = 5
+   alter m[*] :=  1 ; // scalar matrix modification
+   ** use index to find member
+   print a[0] ;   // will print 5
+   print b[0] ;   // will print 's' 
+   print m[2,2]; // will print 1
+   ** use slice to alter elements
+   alter a[2..*] := 1; // [5,5,1,1,1,1,1,1,1,1] 
+   alter a[0..5] := 2; // [2,2,2,2,2,2,1,1,1,1] 
+return;
+#end of module

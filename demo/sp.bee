@@ -1,11 +1,13 @@
-driver sp:
++---------------------------
+|     Swap rule demo       |
+---------------------------+
 load $pro_lib.console.(*);
 
 rule swap(x ∈ Z, y ∈ Z):
    ** create temporary value
    make  t := x; 
    
-   ** swap the values in a single statement
+   ** swap the values
    alter y := x, x := t; 
 return;
 
@@ -15,4 +17,4 @@ rule main():
    apply swap(a, b); 
    print "a = #(n), b = #(n)" ? (a,b);
 return;
-over.
+#end of module

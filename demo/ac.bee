@@ -1,20 +1,19 @@
 +------------------------------------
 |  asynchronous call using "begin"  |
 +-----------------------------------+
-driver ac:
-
 ** suspend for 2.5 sec
 rule test(n ∈ N):
   wait n; 
   print ".";
 return; // test
 
-** start 8 threads
-make i := 0; 
-while (i ≤ 8) do
-  begin test(i);
-  alter i += 1;
-repeat;
-rest; // synchronize
-
-over.
+rule main():
+  ** start 8 threads
+  make i := 0; 
+  while (i ≤ 8) do
+    defer test(i);
+    alter i += 1;
+  repeat;
+  yield test; // synchronize
+return;
+#end of module

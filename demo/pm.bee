@@ -1,7 +1,6 @@
 +-------------------------------
   pattern matching expression
 ------------------------------+
-driver pm:
 load $pro_lib.console.(*);
 
 ** making a lambda expression
@@ -11,13 +10,14 @@ make pm := (p1,p2 ∈ N) ∈ N =>
   ,2 if p1 = p2 
   ,3 if p1 > p2
   ,4 if True );
-  
-** execute pm expression
-print pm(0,2); // 0
-print pm(1,0); // 1
-print pm(1,1); // 2
-print pm(1,2); // 3
-print pm(2,1); // 4
 
-over.
+rule main():  
+  ** execute pm expression
+  print pm(0,2); // 0
+  print pm(1,0); // 1
+  print pm(1,1); // 2
+  print pm(1,2); // 3
+  print pm(2,1); // 4
+return;
+#end of module
 

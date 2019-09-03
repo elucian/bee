@@ -1,49 +1,49 @@
 +-------------------------------
    "if" and "else" decisions
 -------------------------------+
-driver if:
 load $pro_lib.console.(*);
 
-write "define a number:";
-make x ∈ N; read x; 
-** only if conditional
-
-print "x = 0" if x = 0;
-** single branch
-when x = 1 do
-  print "x = 1";
-done;
-
-** two branches
-when x ≠ 5 do
-  print "x ≠ 5";
-else
-  print "x = 5";
-done;
-
-** nested in positive branch
-alter x := 1;
-when x ≥ 1 do
-  print "x ≥ 1":
+rule main():
+  write "define a number:";
+  make x ∈ N; read x; 
+  ** only if conditional
+  
+  print "x = 0" if x = 0;
+  ** single branch
   when x = 1 do
-    print "x = 1"; //expected
-  else
-    print "x > 1";
+    print "x = 1";
   done;
-else
-  print "x < 1";
-done;
- 
-** nested in negative branch
-alter x := 1;
-when x < 1 do
-  print "x < 1";
-else
-  when x > 1 do
-    print "x > 1";
+  
+  ** two branches
+  when x ≠ 5 do
+    print "x ≠ 5";
   else
-    print "x = 1"; //expected
+    print "x = 5";
   done;
-done;
-
-over.
+  
+  ** nested in positive branch
+  alter x := 1;
+  when x ≥ 1 do
+    print "x ≥ 1":
+    when x = 1 do
+      print "x = 1"; //expected
+    else
+      print "x > 1";
+    done;
+  else
+    print "x < 1";
+  done;
+   
+  ** nested in negative branch
+  alter x := 1;
+  when x < 1 do
+    print "x < 1";
+  else
+    when x > 1 do
+      print "x > 1";
+    else
+      print "x = 1"; //expected
+    done;
+  done;
+return;
+#end of module

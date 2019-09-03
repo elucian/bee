@@ -1,24 +1,24 @@
 +---------------------------------------
 | Local context & repetitive statement |
 +--------------------------------------+
-driver "do":
 load $pro_lib.console.(*);
 
-** local context
-make x ∈ Z; //global
-do
-  make  x := 1; //local
-  print x; // expect: 1
-done;
-print x; // expect: 0
-
-** repetitive block
-do
-  alter x += 1;   // increment
-  stop if x = 10; // exit condition
-  write x & ",";  // write in buffer
-repeat;
-write x; // write in buffer 
-print;   // expected: 1,2,3,4,5,6,7,8,9,10
-
-over.
+rule main():
+  ** local context
+  make x ∈ Z; //global
+  do
+    make  x := 1; //local
+    print x; // expect: 1
+  done;
+  print x; // expect: 0
+  
+  ** repetitive block
+  do
+    alter x += 1;   // increment
+    stop if x = 10; // exit condition
+    write x & ",";  // write in buffer
+  repeat;
+  write x; // write in buffer 
+  print;   // expected: 1,2,3,4,5,6,7,8,9,10
+return;
+#end of module

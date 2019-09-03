@@ -1,8 +1,6 @@
 +-----------------------------------
 |      Generator Class demo        |
 +----------------------------------+
-driver gc:
-
 ** first make a class
 type GenI: {min ,max , ci ∈ Z} <: Object;
 
@@ -21,19 +19,21 @@ return;
 rule gen_finish(self ∈ GenI)  => (r ∈ L):
   alter r := (self.ci ≥ self.max);
 return;
-** use GenI to make one instance: 
-make foo := {min:10,max:20} ∈ GenI;
-make x   := 0;
-while ¬ foo.gen_finish() do
-  alter x := foo.get_next();
-  write (x,",");
-repeat;
 
-** flush the buffer
-print; //10,11,12,13,14,15,16,17,18,19,20, 
-
-** test reset rule
-apply foo.gen_reset();
-fail if foo.ci ≠ 10; // expect: 10
-
-over.
+rule main():
+   ** use GenI to make one instance: 
+   make foo := {min:10,max:20} ∈ GenI;
+   make x   := 0;
+   while ¬ foo.gen_finish() do
+     alter x := foo.get_next();
+     write (x,",");
+   repeat;
+   
+   ** flush the buffer
+   print; //10,11,12,13,14,15,16,17,18,19,20, 
+   
+   ** test reset rule
+   apply foo.gen_reset();
+   fail if foo.ci ≠ 10; // expect: 10
+return;   
+#end of module

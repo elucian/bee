@@ -1,7 +1,7 @@
 ** hello world demo
-driver hi:
-load $pro_lib.console;
+load $pro_lib.console:(*);
 
-print "Hello World";
-
-over.
+rule main():
+  print "Hello World";
+return;
+#end of module

@@ -1,8 +1,6 @@
 +----------------------------------------------------
 |        user defined data types                    |
 ----------------------------------------------------+
-driver dt:
-
 load $pro_lib.console.(*);
 
 ** this type is public (uses dot prefix)
@@ -33,12 +31,13 @@ type Number: {
 | all other elements have previous value  + 1      |
 ---------------------------------------------------+
 ** example of use
-make a := 0;
-** example of use
-when a = zero do
-  print "zero!";
-else
-  print "life is misery!";
-done;
-
-over.
+rule main():
+  make a := 0;
+  ** example of use
+  when a = zero do
+    print "zero!";
+  else
+    print "life is misery!";
+  done;
+return;
+#end of module

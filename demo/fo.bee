@@ -1,26 +1,25 @@
 +--------------------------------
  open a file and write into it. 
 --------------------------------+
-driver fo:
-
 load $pro_lib.console.(*);
 
 ** initialize the system library 
 load $bee.system.io:(*);
 load $bee.system.console:(*);
 
-make file := io.open('foo.txt','+w');
-
-** write into the file using print
-apply file.write("Hello World!",LF);
-
-** read the entire content from file
-make  content := file.read() ∈ W;
-apply file.close;
-
-** display the entire content to console
-write content;
-
-print;
- 
-over.
+rule main():
+   make file := io.open('foo.txt','+w');
+   
+   ** write into the file using print
+   apply file.write("Hello World!",LF);
+   
+   ** read the entire content from file
+   make  content := file.read() ∈ W;
+   apply file.close;
+   
+   ** display the entire content to console
+   write content;
+   
+   print;
+return;    
+#end of module

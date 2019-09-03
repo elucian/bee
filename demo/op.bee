@@ -1,23 +1,23 @@
 +------------------------------------
 |      Input/Output parameters      |
 ------------------------------------+
-driver op:
 load $pro_lib.console.(*);
 
 ** rule with boxed parameters
-rule pro(a,b ∈ N):
+rule pro(a,b ∈ [N]):
   alter a += 1; // alter parameter a
   alter b += 2; // alter parameter b 
 return;
 
-** define native integers using inference
-make (x, y) := 10;
-
-** execute pro and expect x, y  to be modified
-apply pro (x, y);
-
-** verify new values for arguments
-print x; // will print 11
-print y; // will print 12
-  
-over.
+rule main():
+   ** define native integers using inference
+   make x, y := [10];
+   
+   ** execute pro and expect x, y  to be modified
+   apply pro (x, y);
+   
+   ** verify new values for arguments
+   print x; // will print 11
+   print y; // will print 12
+return;  
+#end of module

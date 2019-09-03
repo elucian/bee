@@ -1,8 +1,6 @@
 +-----------------------------------
   Producer-consumer design pattern 
 -----------------------------------+
-driver pc:
-
 ** data source/target to process
 make s := [0](1000); //array of integers
 
@@ -36,18 +34,19 @@ rule bar(channel ∈ (N), batch ∈ N):
   repeat;  
 return;
 
-** prepare a channel
-make ch ∈  (N); //empty list of natural numbers
-
-** activate producer
-begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
-while ch.length > 0 do
-  ** prepare consumers
-  for i ∈ (1..4) do
-    defer bar(n); //asynchronous call
-  next; 
-  yield bar; // execute consumers on 4 threads
-  yield foo if (ch.length = 0); // execute producer on single thread
-repeat;  
-
-over.
+rule main():
+  ** prepare a channel
+  make ch ∈  (N); //empty list of natural numbers
+  
+  ** activate producer
+  begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
+  while ch.length > 0 do
+    ** prepare consumers
+    for i ∈ (1..4) do
+      defer bar(n); //asynchronous call
+    next; 
+    yield bar; // execute consumers on 4 threads
+    yield foo if (ch.length = 0); // execute producer on single thread
+  repeat;  
+return;  
+#end of module

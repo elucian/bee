@@ -1,21 +1,21 @@
 +--------------------------
 |  array traversal demo    |
 +--------------------------+
-driver ar:
 load $pro_lib.console.(*);
  
 ** define array with 10 elements
 make a ∈ [Z](10);   
 make i := 0; //control variable
 
-** array initialization
-for i ∈ (0.!10) do
-   alter a[i] := i; 
-next;
-
-** array traversal and print
-for i ∈ (0.!10) do
-   print " a[#(n)] = #(n)" ? (i, a[i]);
-next;
- 
-over.
+rule main():
+  ** array initialization
+  for i ∈ (0.!10) do
+     alter a[i] := i; 
+  next;
+  
+  ** array traversal and print
+  for i ∈ (0.!10) do
+     print " a[#(n)] = #(n)" ? (i, a[i]);
+  next;
+return; 
+#end of module

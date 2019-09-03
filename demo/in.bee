@@ -1,14 +1,14 @@
 +--------------------------
    Bee input value demo
 --------------------------+
-driver in:
 load $pro_lib.console.(*);
 
-make a ∈ N;
-print "to stop enter 0";
-while (a ≠ 0) do
-  read  (a, "enter a number: #(n)");
-  print ("you have enter:> #(n)" ? a);
-repeat;
-
-over.
+rule main():
+  make a ∈ N;
+  print "to stop enter 0";
+  while (a ≠ 0) do
+    read  (a, "enter a number: #(n)");
+    print ("you have enter:> #(n)" ? a);
+  repeat;
+return;
+#end of module
