@@ -19,16 +19,16 @@ Name             | Description
 **Restriction:**
 
 * You can not use _"make"_ inside any control flow statements,
-* You can not use a conditional _"if"_ for a control flow statement.
+* You can not use a conditional _"if"_ after done.
 
 ## do
-This statement is also called _local context_. It begins with _"do"_ and is ending with _"done"_;
+This statement establish a local _name space_. It begins with _"do"_ and is ending with _"done"_;
 
 **example:**
 ```
-make x := 0; //global
+make x := 0; //outer scope
 do
-  make x := 1; //local
+  make x := 1; //inner scope
   print x; // 1
 done;
 print x; // 0
@@ -36,7 +36,7 @@ print x; // 0
 
 ## when
 
-This statement is also called _branch_. It starts with _"when"_ and is ending with _"done"_:
+This statement is also called _branch_. It create a logic branch unsing a condition:
 
 **syntax**
 ```
@@ -46,7 +46,7 @@ when condition do
 done;
 ```
 
-This selector is called _fork_. It create two logical pas-ways using a condition:
+This statement is called _fork_. It create two logical branches using a condition:
 
 **pattern:**
 ```
@@ -64,8 +64,8 @@ done;
 By nesting multiple _when_ blocks you can create a multi-path selector known as _ladder_:
 
 ```
-make a ∈ Z;
 write "a = ";
+make  a ∈ Z;
 read  a;** first decision
 when a ≤ 0 do 
   print "a ≤ 0";
@@ -101,9 +101,8 @@ done;
 **example:**
 
 ```
-make a ∈ Z;
 write  "Enter a number between 0 and 9:"
-read    a;
+make a ∈ Z; read a;
 case a < 0 do
   print "wrong: a < 0";
 case a > 9 do
@@ -114,9 +113,11 @@ done;
 ```
 ## Repeat
 
-This block start with _"do"_ and is ending with _"repeat"_:
+Repeat block is very similar to do block except is repetitive.
 
 **example**
+
+This block start with _"do"_ and is ending with _"repeat"_:
 
 ```
 make x := 0; //control variable
@@ -129,7 +130,25 @@ write x;
 print; // 1,2,3,4,5,6,7,8,9,10
 ```
 
-**Note:** You should never use _"make"_ inside a loop.
+**example**
+This block start with _"do"_ and is ending with _"repeat if"_:
+
+
+```
+make x := 0; //control variable
+do
+  alter x += 1;
+  write x & ",";
+repeat if x != 10;
+write x; 
+print; // 1,2,3,4,5,6,7,8,9,10,
+```
+
+**Notes:** 
+
+* You should never use _"make"_ inside a loop,
+* Bee has a limit on how many loops before giving up: @loop_limit
+
 
 ## While
 
@@ -145,13 +164,15 @@ while condition do
   ...
   stop if condition; //break
   ...
+else
+  ...  
 repeat;
 ```
 
 **Notes:** 
-* If condition is true all the time we can end-up in infinite loop;
-* Infinite while can be interrupted by timer variable: {&timer := 60};
-* When timer expire, the loop will terminate. By default &timer is 60s;
+* Infinite loop can be interrupted by timer variable:  @loop_timer := 60s;
+* Infinite loop can be also interrupted by loop limit: @loop_limit := 0; 
+* You can add a secondary (if) conditional after repeat but this is unusual;
 
 **example:**
 
@@ -207,6 +228,7 @@ next;
 **Notes:**    
 * Control variable is declared in local scope;
 * Control variable is incremented using next;
+* You can add (if) conditional after next but this is unusual;
 
 ```
 for i ∈ (0..10) do
@@ -230,7 +252,7 @@ Using domain ratio the example above can be simplified:
 +------------------------------------+
 
 **    min ↓  ↓max  ↓ = ratio
-for i ∈ (1..9:    2) do
+for i ∈ (1..9: 2) do
   write i; //odd numbers
   write ',' if (i < 9);        
 next;
