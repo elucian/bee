@@ -76,20 +76,20 @@ symbol| description
  `!.` | Define domain (n!.m) (n is excluded) 
  `!!` | Define domain (n!!m) (n,m are excluded) 
  `-.` | Minus infinite range: instead of (-∞..0) write: (-..0)
- `.+` | Plust infinite range: instead of (0..+∞) write: (0..+)
+ `.+` | Plus infinite range: instead of (0..+∞) write: (0..+)
  `=>` | Define: rule expression \| rule result
  `->` | Data cast pipeline operator / Type conversion
  `<:` | Define subset from set \| Specify super-type for a new type
  `:>` | Can be used as logical operator: is super-type for object
- `<<` | Much less      0.1 \<\< 2  but not (0.1 \<\< 1) 
- `>>` | Much greater   2 \>\> 0.9  but not (1 \>\> 0.9)
+ `<<` | Shift values of collection to right by removing first elements
+ `>>` | Shift values of collection to left by removing first elements
  `::` | Deep copy \| Clone operator
- `++` | Concatenate two lists use like L := A ++ B (return a new list)
- `--` | Symmetric difference, use like C := A -- B (return a new set)
- `-?` | Find and delete one element matching right operand, from a collection
- `-*` | Find and delete all elements matching right operant, from a collection
- `+>` | Append left operand to beginning of a collection
- `<+` | Append right operand to end of a collection 
+ `++` | Concatenate two lists or extend an array 
+ `--` | Symmetric difference or shrink an array 
+ `-?` | Find and delete one element, from a collection
+ `-*` | Find and delete some elements, from a collection
+ `+>` | Append element to beginning of a collection 
+ `<+` | Append element to end of a collection  
  
 ## Modifiers
 

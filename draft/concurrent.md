@@ -83,7 +83,7 @@ Coroutines can be used in producer/consumer design paradigm.
 make s := [0](1000); //array of integers
 ** producer coroutine
 rule foo(channel ∈ (N), start, end, batch ∈ N):
-    ** prepare next batch    
+  ** prepare next batch    
   make mark := start;
   while mark < end do    
     while channel.length < batch do

@@ -169,17 +169,17 @@ Each statement start with one imperative keyword:
 
 * alter  :change/modify variable value or assign new value
 * read   :accept input from console into a variable
-* write  :output to console result of an expressions
-* apply  :execute one rule in synchronous mode
+* write  :register in console cash result of an expressions
+* print  :output to console with end of new line and flush console cash
+* apply  :execute one rule in synchronous mode and wait for it to finish
+* begin  :start execution of a rule in asynchronous mode and do not wait to finish
 
 **notes:**
 
-* One statement is usually indented 2 space;
-* One statement is usually described in a single line;
-* One expression in a statement can extend on multiple lines;
-* Multiple statements on a single line are separated with ";"
-* You can create _line comment_ using "*" 
-* A statement may continue after _line comment_ on the next line;
+* One statement is usually indented 2 space,
+* One statement is usually described in a single line,
+* Multiple statements on a single line are separated with ";",
+* One expression in a statement can extend on multiple lines.
 
 ### Code blocks
 Statements can be contained in blocks of code.
@@ -192,9 +192,9 @@ Statements can be contained in blocks of code.
 
 **notes:**
 
-* Each block is finalized with a different keyword:
-* Closing keyword can be one of: { done, repeat, next };
-* Statements in nested blocks are using indentation at 2 spaces;
+* Each block is finalized with a different keyword,
+* Closing keyword can be one of: { done, repeat, next },
+* Statements in nested blocks are using indentation at 2 spaces.
 
 
 ### Main rule
@@ -277,25 +277,26 @@ load $program.pro_lib:(*); // load project library
 
 ## Global scope
 
-One application has a global scppe where variables and constants are allocated. Each application file can contribute with public elements that can be merged in this scope. The global scope can be also called _application scope_ or _session scope_;
+One application has a global scope where variables and constants are allocated. Each application file can contribute with global elements that can be merged in this single scope. Global scope can be also called _application scope_;
 
 * Global scope helps to use _public identifiers_ from loaded modules;
 * When a module is loaded, its public members are defined in the _global scope_;
 
 ## Name space
 
-A module has its own name-space where you can define members and statements. Module name-space can contain public or local members. Public members start with "." while local members do not have any prefix or suffix.
+A module has its own scope, that is called name-space where you can define members and statements. Module scope can contain public or private members. Public members start with "." while private members do not have any prefix or suffix.
 
 ```
 ** module name-space
-save .pi := 3.14; // public constant
-make .v ∈ N;      // public variable
+save .pi := 3.14;   // public constant
+make .v   ∈ N;      // public variable
+make str := "test"; // private variable
 
-** public rule f
-rule .f(x ∈ N) ∈ N => (x + 1);
+** expression rule foo is private
+rule foo(x ∈ N) ∈ N => (x + 1);
 
-** public rule m
-rule .m(x, y ∈ N) => (r ∈ N):
+** block rule bar is public
+rule.bar(x, y ∈ N) => (r ∈ N):
   alter r := x + y;
 return;
 ```
@@ -424,9 +425,7 @@ return;
 Define main module and use previous defined "test" module.
 
 ```
-** define variable result
-make result ∈ N;
-** execute one module "test" and collect the result
+** execute one module "test" and collect the result
 load $pro_src.test;
 
 
@@ -435,11 +434,14 @@ make collect ∈ (N);
 
 ** execute test() and append result in collect
 rule main():
-   apply test.abs( 1) +> collect;  
-   apply test.abs(-1) +> collect;  
-   apply test.abs(-2) +> collect;  
-   apply test.abs(-3) +> collect;    
-   print collect; // (1,1,2,3)
+   ** normal use
+   print abs(-1) // 1
+   
+   apply test.abs( 1) <+ collect;  
+   apply test.abs(-2) <+ collect;  
+   apply test.abs(-3) +> collect;  
+   apply test.abs(-4) +> collect;    
+   print collect; // (4,3,1,2)
 return;   
 ```
 

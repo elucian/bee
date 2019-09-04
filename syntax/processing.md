@@ -14,21 +14,22 @@ By using collections and control structures one can read, modify and store data.
 
 ## Boxed values
 
-A boxed value is a reference to a primitive type. A boxed value can be an array, or an object with a single value.
+A boxed value is a reference to a primitive type. 
 
 **boxing**
 Boxing is the process of converting a primitive type to a reference. 
 
 ```
 make n ∈  Z;  //primitive integer 
-make k ∈ [Z]; //array of integers with fix capacity: 1
+make k ∈ [Z]; //boxed value
 
 ** check type of variable
-print type(k);          //Array[Z]
-print type(k) is Array; //1
+print type(k);          //[Z]
+print type(k) is Array; //1 = True
 
-** auto boxing
-alter k := n;  //auto-boxing
+** boxing notation
+alter k :=  n;  //auto-boxing
+alter k := [n]; //explicit boxing
 
 ** comparison
 print n = 0; //1 (true, initial value)
@@ -68,28 +69,36 @@ print r;      //r = 10 (unmodified)
 
 A reference can be shared between two variables. As a consequence, when one is modified the other is also modified.
 
-* A reference is shared using operator ":="
-* A reference is copied using operator "::"
+
+**example of sharing**
+
+A reference is shared using operator ":="
 
 ```
 ** create a reference using ":="
 make  a := [1]; // create a reference
-make  c := [a]; // share a reference
+make  b :=  b;  // share a reference
 
 ** variable c is bound to a
-pass if c = a; //1 (same values)
-pass if c ≡ a; //1 (same location, same data type)
+pass if b = a; //1 (same values)
+pass if b ≡ a; //1 (same location, same data type)
 
 ** consequence of sharing:
-alter a := 2; //auto-boxing new value
-print a; // [2] (new value is boxed)
-print c; // [2] (shared reference is modified)
+alter a := 2; // [2] (modify denoted value)
+print a;      // [2] (new value is boxed)
+print b;      // [2] (shared reference is modified)
 
-pass if c = a; // will pass
-pass if c ≡ a; // reference is bound
+pass if b = a; // will pass
+pass if b ≡ a; // references are bound
+```
 
+**example for cloning**
+* A reference is copied using operator "::"
+
+```
 ** create a clone using "::"
-make  b :: a; // value [2]
+make  a := [1]; // create a reference
+make  b :: a;   // value [1]
 
 pass if a  = b; //pass (same values)
 pass if a !≡ b; //pass (different location)
@@ -97,9 +106,10 @@ pass if a !≡ b; //pass (different location)
 ** consequence of cloning:
 alter a := 3;
 print a; // [3] (new value)
-print b; // [2] (unmodified)
+print b; // [1] (unmodified)
 
 pass if a != b; //no longer equal
+pass if a !≡ b; //pass (different location)
 ```
 
 ## Array Operations
@@ -226,7 +236,7 @@ Array data can be assigned to multiple variables. Last elements can be captured 
 ```
 make array := [1,2,3,4,5];
 
-make (x, y, *other) := [1,2,3,4,5]; //decomposition
+make x, y, *other := [1,2,3,4,5]; //decomposition
 
 print "x = #(n)" ? x;  // x = 1
 print "y = #(n)" ? y;  // y = 2
@@ -450,9 +460,12 @@ done;
 ## List Operations
 We can add elements to a list or remove elements from the list very fast: 
 
-* operator ++ append one element to end of list
-* operator -- delete one element by reference
-
+* operator <+ append one element to end of list
+* operator +> append one element to beginning of list
+* operator -? delete one element by searching value
+* operator -* delete all elements by value
+* operator << shift left  a list (remove first element)
+* operator >> shift right a list (remove last element)
 
 ### List Concatenation
 List concatenation is ready using operator “+”. This operator represent union. 
@@ -490,12 +503,12 @@ A stack is a LIFO list of elements: LIFO = (last in first out)
 ```
 make a := (1, 2, 3); //list
 make last ∈ N;
-** append operator: "++"
-alter a ++ 4; //(1,2,3,4)
+** append operator: "<+"
+alter a <+ 4; //(1,2,3,4)
 ** read last element
 alter last := a.tail; //last = 4
-** delete operator "--"
-alter a -- last; //a = (1,2,3)
+** delete operator "-?"
+alter a -? last; //a = (1,2,3)
 ```
 
 ### List as queue
@@ -506,11 +519,11 @@ A queue is a FIFO collection of elements: (first in first out)
 make q := (1,2,3); 
 make first: N;
 ** enqueue new element into list "++" 
-alter q ++ 4; //(1,2,3,4)
+alter q <+ 4; //(1,2,3,4)
 ** read first element using ":="
 alter first := a.head; //first = 1
-** dequeue first element using "--"
-alter a -- first; //a = (2,3,4)
+** shift list to left with 1
+scrap a << 1; //a = (2,3,4)
 ```
 
 ### Other built-ins

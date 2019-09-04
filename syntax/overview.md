@@ -84,15 +84,18 @@ Data types represent abstract _domains of values_. In other words, data type rep
 
 **Naming**
 
-Bee uses diverse identifiers names to _data types_. It uses ASCII characters and numbers or Unicode symbols. Most predefined data types have a longer name and a code. You can use both to represent a type. They are synonyms (alias) to the same data type.
+Bee uses diverse identifiers names to _data types_. It uses ASCII characters and numbers or Unicode symbols. Most predefined data types have a longer name and a code. You can use both to represent a type. Lonf names are synonyms (alias) to the short name.
 
 **examples:**
 ```
-Z(32)   // primitive type: long integer
-Q(5.2)  // primitive type: precision 0.25 
+Z(64)   // primitive type: long integer
+Integer // same as Z(64)
+
+Q(50.12) // primitive type: precision 0.0002
+Rational // same as Q(50.12)
+
 File    // composite type: text file
 List    // composite type: list of values
-∠ ⊡ ↗   // geometric type: angle, dot, vector
 ```
 
 Bee use 2 kind of data types:
@@ -129,9 +132,9 @@ These are symbolic representations for primitive data types:
 
 |Example    | Type  | Literal characters
 |-----------|-------|-----------------------------------------------------------
-|'a'        |  A    | (+-) & (0..9) & (a..z) & (A..Z)
+|`a`        |  A    | (+-) & (0..9) & (a..z) & (A..Z)
 |'Ω'        |  U    | (Δ Λ Φ Γ Ψ Ω Σ Π π ⊥ ǁ α β ɣ ε δ μ ω ...)
-|"str"      |  S    | (∀) 
+|"str"      |  S    | (∀ UTF8) 
 |0b11111111 |  B    | (0b) & (0,1)
 |1234567890 |  N    | (0,1,2,3,4,5,6,7,8,9)
 |+0         |  Z    | (-+) & (0,1,2,3,4,5,6,7,8,9)
@@ -155,10 +158,10 @@ Predefined composite types start with capital letter:
 | Alias   | Code| Description
 |---------|-----|-----------------------------------------------------------
 | Complex | C   | Double precision pair of double float numbers (9r+9j)
-| String  | S   | UTF8 encoded double quoted string
-| Text    | X   | Multi-line large block of text
-| Date    | D   | DD/MM/YYYY 
-| Time    | T   | hh:mm,ms
+| String  | S   | UTF8 encoded double quoted string "α β ɣ ε δ μ ω"
+| Text    | X   | Multi-line large block of text <text>... </text>
+| Date    | D   | "DD/MM/YYYY"
+| Time    | T   | "hh:mm,ms"
 | Error   | E   | Error object: {code, message, line}
 | File    | F   | File handler
 
@@ -173,9 +176,9 @@ Bee define a collection literal using a special notation based on brackets.
 
 | symnols | Collection type
 |---------|------------------------------------------------------------------
-| ()      | List
-| []      | Array/ Matrix
-| {}      | Ordinal / Data Set / Hash Map / Object
+| ()      | List literal
+| []      | Array/ Matrix literal
+| {}      | Ordinal / Data Set / Hash Map / Object Literal
 
 **Notes:** 
 * All collections are composite types therefore references; 
@@ -345,8 +348,6 @@ make (var_name, var_name ...) := Expression; //use expression type inference for
 ** Initialize multiple variables in a list with different values
 make (var1:value1, var2:value2 ...) ∈  TypeName;
 ```
-
-
 
 ## Modify values
 
@@ -861,15 +862,15 @@ return;
 
 rule main():
   ** modify rule states
-  alter rule_name.x  := 1;
-  alter rule_name.y  := 2;
-  alter rule_name.z  := 3;
+  alter rule_name.x := 1;
+  alter rule_name.y := 2;
+  alter rule_name.z := 3;
   
   ** read rule states
   print (rule_name.x, rule_name.y, rule_name.z); //1 2 3
   
   ** execute a rule that has no results:
-    apply rule_name(param:argument, ...);
+  apply rule_name(param:argument, ...);
 return;    
 ```
 

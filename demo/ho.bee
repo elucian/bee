@@ -27,7 +27,7 @@ rule main()
     make set ∈ {Z}; 
     ** this loop is infinite
     while True do
-      alter set ++ count();
+      alter set <+ count();
       write set.index; 
       write ','
     repeat; 

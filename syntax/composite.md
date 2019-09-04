@@ -324,8 +324,8 @@ rule main():   ** verify expectation
       ** declare a new set
    make a := {1,2,3};
       ** using operator +/- to mutate set a
-   alter a ++ 4; // {1,2,3,4}
-   alter a -- 3; // {1,2,4}
+   alter a <+ 4; // {1,2,3,4}
+   alter a -? 3; // {1,2,4}
 return;   
 ```
 
