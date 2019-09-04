@@ -80,12 +80,14 @@ symbol| description
  `=>` | Define: rule expression \| rule result
  `->` | Data cast pipeline operator / Type conversion
  `<:` | Define subset from set \| Specify super-type for a new type
- `:>` | Can be used as logical operator: is super-type for object ...
+ `:>` | Can be used as logical operator: is super-type for object
  `<<` | Much less      0.1 \<\< 2  but not (0.1 \<\< 1) 
  `>>` | Much greater   2 \>\> 0.9  but not (1 \>\> 0.9)
  `::` | Deep copy \| Clone operator
- `++` | Append one or more elements into collection 
- `--` | Remove one or more elements from collection
+ `++` | Concatenate two lists use like L := A ++ B (return a new list)
+ `--` | Symmetric difference, use like C := A -- B (return a new set)
+ `-?` | Find and delete one element matching right operand, from a collection
+ `-*` | Find and delete all elements matching right operant, from a collection
  `+>` | Append left operand to beginning of a collection
  `<+` | Append right operand to end of a collection 
  

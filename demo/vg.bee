@@ -1,8 +1,6 @@
 +------------------------------------
       vector graphics prospect
 ------------------------------------+
-driver vg:
-
 load $lib.graphic.core:(*);
 
 ** define two points and two vectors

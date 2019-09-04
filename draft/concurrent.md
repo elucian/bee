@@ -31,7 +31,7 @@ return;
 for i ∈ (1..4) do
   begin test;
 repeat;
-yield; //wait for pending test to finish;
+yield test; //wait for pending test to finish;
 ```
 
 **Demo code:** [ac.bee](./demo/ac.bee);
@@ -50,21 +50,21 @@ Coroutines can be used as a _branch_ of main thread.
 
 ```
 ** generate 10 numbers and stop
-rule test(n ∈ N):
-  for i ∈ (0..9) do
-    alter n := i;    
+rule test(n ∈ N) => (r ∈ N):
+  for i ∈ (0..n) do
+    alter r := i;    
     yield; //suspend and wait for the main thread
   next;
 return;
 
 ** start secondary process
-make  r ∈ N;   // result reference
-begin test(r); // start side branch 
-while r ≥ 0 do
+make  r ∈ N;       // result reference
+begin r := test(9) // start side branch and collect in r 
+while r ≤ 9 do
   write (r, ",");
   yield test;  // suspend main thread and resume test 
 repeat;
-print;    // 0,1,2,3,4,5,6,7,8,9,
+print;  // 0,1,2,3,4,5,6,7,8,9,
 ```
 
 **producer-consumer:**
@@ -87,7 +87,7 @@ rule foo(channel ∈ (N), start, end, batch ∈ N):
   make mark := start;
   while mark < end do    
     while channel.length < batch do
-      alter channel ++ mark; //append mark to channel
+      alter channel <+ mark; //append mark to channel
       exit if mark = end;    //stop the producer
       alter mark += 1; //next number in channel
     done;
@@ -101,7 +101,7 @@ rule bar(channel ∈ (N), batch ∈ N):
   while channel.length > 0 do
     for index in [0..batch]  do
       write channel.head,",";  
-      alter channel -= channel.head;
+      alter channel -? channel.head;
       wait 1; //slow down for a second
       exit if channel.length = 0; //empty
     done;
