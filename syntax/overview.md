@@ -13,7 +13,6 @@ We have used a _simple design_ for notation based on examples and notes:
 * [Expressions](#expressions)
 * [Primitive types](#primitive-types)
 * [Constant literals](#constant-literals)
-* [Reference types](#reference-types)
 * [Composite types](#composite-types)
 * [Collection types](#collection-types)
 * [Type declaration](#type-declaration)
@@ -24,7 +23,6 @@ We have used a _simple design_ for notation based on examples and notes:
 * [Rule as function](#Rule-as-function)
 * [Rule as routine](#Rule-as-routine)
 * [Rule as method](#Rule-as-method)
-* [Rule as generic](#Rule-as-generic)
 * [External rules](#external-rules)
 
 ## Expressions
@@ -39,9 +37,9 @@ Expressions are created using identifiers, operators, rules and constant literal
 
 **Examples**
 ```
-** simple expressions in print statement
-** no need for parentheses for a single value
+# demo some print statements
 rule main():
+  ** no need for parentheses for a single value
   print 10; 
   print "this is a test";
   

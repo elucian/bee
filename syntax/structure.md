@@ -288,15 +288,15 @@ One application has a global scope where variables and constants are allocated. 
 A module has its own scope, that is called name-space where you can define members and statements. Module scope can contain public or private members. Public members start with "." while private members do not have any prefix or suffix.
 
 ```
-** module name-space
+# module name-space
 save .pi := 3.14;   // public constant
 make .v   ∈ N;      // public variable
 make str := "test"; // private variable
 
-** expression rule foo is private
+# expression rule foo is private
 rule foo(x ∈ N) ∈ N => (x + 1);
 
-** block rule bar is public
+# block rule bar is public
 rule.bar(x, y ∈ N) => (r ∈ N):
   alter r := x + y;
 return;
@@ -327,11 +327,12 @@ Before new line of code: (EOL) you can use comments starting with: "//"
 * you can use "//" in the middle of an expression, if expression is on multiple lines,
 * you can have multiple statements separated by ";" in a line but only one comment,
 * you can not use "//" inside paranthesis of any kind (), [] or {}.
-**Box comment
+
+**Box comment**
 
 This notation is specific to Bee language. It is a multi-line comment starting with "+-" and end with "-+". The upper right corner is missing. I guess you will notice this defect later. However you can use old-style C comments.
 
-**Old style C comments
+**Old style C comments**
 
 This notation is supported in Bee for large section of blocks. It start with "/*" and end with "*/". Anything in between these two symbols are comments. Nested comments are supported. This kind of comments can be embedded in expressions. Therefore sometimes they are called "expression comments".
 
@@ -362,8 +363,9 @@ In next example we are using various comments into a demo program.
    /* Nested comments are allowed. */   
 */
 
+# rule descriptive comments (unindented comment outside rules)
 rule main():
-  ** This is a single line comment
+  ** This is a single line comment (indented comment inside rule)
   pass; // does nothing
   ... 
    
@@ -393,10 +395,10 @@ The main module can load numerous modules and libraries. After loading, all publ
 
 This pattern demonstrate how to use a rule from a module named "module_name"
 
-```** loading a module
+```# loading a module
 load $pro.src.module_name;
 
-** give alias to module rule
+# give alias to module rule
 alias new_name: module_name.rule_name;
 
 rule main():
@@ -413,7 +415,7 @@ return;
 This pattern demonstrate how to declare an module named "test.bee".
 
 ```
-** define a public rule
+# define a public rule
 rule .abs(i ∈ Z) => (v ∈ N):
   when (i < 0) do 
     alter v := -i;
@@ -426,14 +428,14 @@ return;
 Define main module and use previous defined "test" module.
 
 ```
-** execute one module "test" and collect the result
+# execute one module "test" and collect the result
 load $pro_src.test;
 
 
-** define a collector (list)
+# define a collector (list)
 make collect ∈ (N);
 
-** execute test() and append result in collect
+# execute test() and append result in collect
 rule main():
    ** normal use
    print abs(-1) // 1
