@@ -7,10 +7,11 @@ Bee language enable developers to create small programs using a single file, or 
 Next you can learn general concepts about Bee applications:
 
 * [Project](#project)
-* [Declaration](#declaration)
-* [Statement](#statement)
+* [Modules](#modules)
+* [Declarations](#declarations)
+* [Statements](#statements)
 * [External Code](#external-code)
-* [Context](#global-context)
+* [Name space](#name-space)
 * [Comments](#comments)
 * [Execution](#execution)
 
@@ -141,7 +142,7 @@ A _library_ is a reusable module located in a sub-folder _"lib"_. One module can
 * You can loaded a library one single time in a module,
 * You can not load a library from a block statement.
 
-## Main module
+### Main module
 
 One module that contains rule main() is the application _main module_. Main module is usually defining _global constants_, _global variables_ and main rule. A good designer will split the rest of the application in secondary modules.
 
@@ -161,7 +162,7 @@ Bee is using 6 kind of declarations:
 * save  // declare a constant
 * rule  // declare named code block
 
-## Statements
+### Statements
 
 Each statement start with one imperative keyword: 
 
