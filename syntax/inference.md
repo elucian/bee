@@ -69,10 +69,12 @@ When we define parameters we can use type inference only for optional parameters
 rule foo(a: 0, b: 0) => (r ∈ Z):
   alter r := a + b;
 rule;  
-                                  
-print foo();    // 0               
-print foo(1);   // 1
-print foo(1,2); // 3
+        
+rule main():        
+  print foo();    // 0               
+  print foo(1);   // 1
+  print foo(1,2); // 3
+return;  
 ```
 
 **Multiple parameters:**
@@ -83,9 +85,11 @@ rule foo(a, b ∈ Z, c:0) => (r ∈ Z):
   alter r := (a + b + c);
 return;  
 
-print foo(1,2);   // 3
-print foo(1,2,3); // 6
-print foo(1);     // Error: expected 2 arguments
+rule main():
+  print foo(1,2);   // 3
+  print foo(1,2,3); // 6
+  print foo(1);     // Error: expected 2 arguments
+return;  
 ```
 
 **Pass arguments by name:**
@@ -96,9 +100,11 @@ We can use parameter name and pair-up ":" symbol for argument value.
   alter result := (a+b+c);
 return;  
 ** observe we use pair-up ":" to give value for each argument
-print bar(a:1); //print 1 because (b,c := 0) 
-print bar(b:1); //print 1 because (a,b := 0) 
-print bar(c:1); //print 1 because (a,b := 0) 
+rule main():
+  print bar(a:1); //print 1 because (b,c := 0) 
+  print bar(b:1); //print 1 because (a,b := 0) 
+  print bar(c:1); //print 1 because (a,b := 0) 
+return;  
 ```
 
 **Read next:** [Data Processing](processing.md)

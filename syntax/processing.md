@@ -201,17 +201,19 @@ Array capacity can be modified using union operator "+" or "+=". This will reset
 make array := [0](10); 
 make acopy := array; //copy reference
 
-print array = acopy; //1 = True (same array)
-
-** extend array with 10 more elements
-alter acopy    ++ [0](10); //10 new elements
-alter acopy[*] := 1; //modify all 
-
-** print new array and reference
-print acopy;  //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-print array;  //[0,0,0,0,0,0,0,0,0,0]
-
-print array = acopy; //0 = False (different arrays)
+rule main():
+  print array = acopy; //1 = True (same array)
+  
+  ** extend array with 10 more elements
+  alter acopy    ++ [0](10); //10 new elements
+  alter acopy[*] := 1; //modify all 
+  
+  ** print new array and reference
+  print acopy;  //[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+  print array;  //[0,0,0,0,0,0,0,0,0,0]
+  
+  print array = acopy; //0 = False (different arrays)
+return;
 ```
 
 ## Array spreading
@@ -238,9 +240,11 @@ make array := [1,2,3,4,5];
 
 make x, y, *other := [1,2,3,4,5]; //decomposition
 
-print "x = #(n)" ? x;  // x = 1
-print "y = #(n)" ? y;  // y = 2
-print "other = #[*]" ? other; //other = [3,4,5]
+rule main():
+  print "x = #(n)" ? x;  // x = 1
+  print "y = #(n)" ? y;  // y = 2
+  print "other = #[*]" ? other; //other = [3,4,5]
+return;  
 ```
 
 ## Array slicing
@@ -265,8 +269,9 @@ Where: n,m are 2 optional numbers, n ≥ 0, m <= capacity-1.
 Anonymous slicing notation can be used to extract or modify specific elements from an array; 
 
 ```
-make a:= [0,1,2,3,4,5,6,7,8,9]; // initialized array
-do
+** initialized array
+make a:= [0,1,2,3,4,5,6,7,8,9]; 
+rule main():
   print a[1..-1];  // will print [0,1,2,3,4,5,6,7,8,9]
   print a[-3..-1]; // will print [7,8,9]
   print a[1..1];   // will print [0]
@@ -277,7 +282,7 @@ do
   
 ** first 4 elements of (a) are modified
   print a; //[2,3,4,5,4,5,6,7,8,9]
-done;
+return;
 ```
 
 **example:**
@@ -285,22 +290,23 @@ done;
 Slicing notation can be used to create a view to original array.
 
 ```** original array
-make   a:= [0](5); 
-print  a;  //[0,0,0,0,0]
-** making two slices
+make a:= [0](5); //[0,0,0,0,0]
+
+** making two slices
 make c := a[0..2]; //[0,0,0]
 make e := a[3..4]; //[0,0]
 
-** modify all slice elements
-alter c[*] := 1;
-alter e[*] := 2;
-
-** original array is modified
-print a; //[1,1,1,2,2]
-
-** modify last 2 elements using anonymous slicing
-alter a[3..-1] := [2,3];
-print a; //[1,1,1,2,3]
+rule main():
+  ** modify all slice elements
+  alter c[*] := 1;
+  alter e[*] := 2;
+  
+  ** original array is modified
+  print a; //[1,1,1,2,2]
+  
+  ** modify last 2 elements using anonymous slicing
+  alter a[3..-1] := [2,3];    print a; //[1,1,1,2,3]
+return;  
 ```
 
 ## Matrix Operations
@@ -309,21 +315,21 @@ Modify all elements of the matrix is possible using [*] and assign operator “ 
 
 ```
 ** a matrix having 2 rows and 2 columns
-** initialize all elements with 100
 make M ∈ [Z](2,2);
-do
-  M[*] := 100;
-  print (M);
-done;
-```
-[[100,100],[100,100]]
 
-A matrix can be initialized using literals or constructor.
-A matrix can support scalar operations like Array 
+rule main():
+  M[*] := 100; //initialize all elements with 100
+  print (M);   //[[100,100],[100,100]]
+return;
+```
+
+* A matrix can be initialized using literals or constructor.
+* A matrix can support scalar operations like Array 
 
 ```
 make M ∈ [Z](2,2);
-do
+
+rule main():
 ** assign same value to all elements
   M[*] := 100;
 ** modify all elements
@@ -339,7 +345,7 @@ do
   M[*,1] += 1;
   M[*,2] += 2;
   print(M); //[[1,2],[2,3]]
-done;
+return;
 ```
 
 **matrix addition**
@@ -370,21 +376,24 @@ make M := ⎡'a0','b0','c0'⎤
           ⎢'a1','b1','c1'⎥
           ⎣'a2','b2','c2'⎦
           
-** traverse matrix      
-make row, col := 0;  // type inference: ∈ Z
-
-while col < 3 do     // traverse columns
-  while row < 3 do   // traverse row first
-    print M[row,col];
-    alter row += 1;
+rule main():
+  ** local control variables
+  make row, col := 0;  // type inference: ∈ Z
+  
+  ** traverse matrix      
+  while col < 3 do     // traverse columns
+    while row < 3 do   // traverse row first
+      print M[row,col];
+      alter row += 1;
+    repeat;
+    alter col += 1;
   repeat;
-  alter col += 1;
-repeat;
-
-** traversal with for
-for e ∈ M do
-  print e; //element
-next;
+  
+  ** traversal with for
+  for e ∈ M do
+    print e; //element
+  next;
+return;  
 ```
 
 ## Set Builders
@@ -408,7 +417,10 @@ make  new_set := { x | x ∈ (0..9:2) }; //{0,2,4,6,8}
 New map defined from a domain 
 ```
 make  new_map := { (x:x²) | x ∈ (0.!10) ∧ (x % 2 = 0) }; 
-print new_map; //{(0:0),(2:4),(4:16),(6:36),(8:64)}
+
+rule main():
+  print new_map; //{(0:0),(2:4),(4:16),(6:36),(8:64)}
+return;  
 ```
 
 ## Array Builder
@@ -425,11 +437,11 @@ Collection members can be copy into the new collection using collection builder:
 **Example:**
 ```
 make source := [0,1,2,2,2,2];
-do
-  ** eliminate duplicates
-  make set := { x | x ∈ source };
+
+rule main():
+  make set := { x | x ∈ source }; //eliminate duplicates
   print set; //{0,1,2} 
-done;
+return;
 ```
 
 ### Collection Filtering
@@ -438,10 +450,11 @@ Build notation can use expressions to filter out elements during build.
 **Example:**
 ```
 make source := [0,1,2,3,4,5];
-do
+
+rule main()
   make set := { x | x ∈ source ∧ (x % 2 = 0) };
   print set; //{0,2,4} 
-done;
+return;
 ```
 
 ### Collection Mapping
@@ -450,11 +463,11 @@ The elements in one set or list can be transformed by a function or expression t
 **Example:**
 ```
 make source := {0,1,2,3,4,5};
-do
+rule main():
   ** create Table pairs (key, value) for Table map   
   make target := {(x:x^2) | x ∈ source };
   print target; //{ 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
-done;
+return;
 ```
 
 ## List Operations
@@ -472,28 +485,33 @@ List concatenation is ready using operator “+”. This operator represent unio
 Therefore List union act very similar to append, except we add multiple elements. 
 
 ```
-  make a := ('a','b','c');
-  make b := ('1','2','3');
-  make c := ();
+make a := ('a','b','c');
+make b := ('1','2','3');
 
-  alter c := a + b;
+rule main():
+  make c := a + b;
   print c; //('a','b','c','1','2','3');
+return;  
 ```
 
 ### Join built-in
 The join function receive a list and convert elements into a string separated be specified character.
 
 ```
+rule main():
   make str := join([1,2,3],',');
   print (str); //'1,2,3';
+return;  
 ```
 
 ### Split built-in
 The join function receive a list and convert elements into a string separated be specified character.
 
 ```
-make lst := split("1,2,3",",");
-print lst; //(1,2,3)
+rule main():
+  make lst := split("1,2,3",",");
+  print lst; //(1,2,3)
+return;  
 ```
 
 ### List as stack
@@ -503,12 +521,14 @@ A stack is a LIFO list of elements: LIFO = (last in first out)
 ```
 make a := (1, 2, 3); //list
 make last ∈ N;
-** append operator: "<+"
-alter a <+ 4; //(1,2,3,4)
-** read last element
-alter last := a.tail; //last = 4
-** delete operator "-?"
-alter a -? last; //a = (1,2,3)
+
+rule main():  ** append operator: "<+"
+  alter a <+ 4; //(1,2,3,4)
+    ** read last element
+  alter last := a.tail; //last = 4
+    ** delete operator "-?"
+  alter a -? last; //a = (1,2,3)
+return;  
 ```
 
 ### List as queue
@@ -518,12 +538,14 @@ A queue is a FIFO collection of elements: (first in first out)
 ```
 make q := (1,2,3); 
 make first: N;
-** enqueue new element into list "++" 
-alter q <+ 4; //(1,2,3,4)
-** read first element using ":="
-alter first := a.head; //first = 1
-** shift list to left with 1
-scrap a << 1; //a = (2,3,4)
+
+rule main():   ** enqueue new element into list "++" 
+   alter q <+ 4; //(1,2,3,4)
+      ** read first element using ":="
+   alter first := a.head; //first = 1
+      ** shift list to left with 1
+   scrap a << 1; //a = (2,3,4)
+return;   
 ```
 
 ### Other built-ins
@@ -557,10 +579,12 @@ Available for: {List, Table, Set} but not Array or Slice
 
 **Example:**
 ```
-make my_map := {("a":1),("b":2),("c":3)};
-for (key, value) ∈ my_map do
-  print('("' + key + '",' + value +')');
-next;
+rule main():
+   make my_map := {("a":1),("b":2),("c":3)};
+   for (key, value) ∈ my_map do
+     print('("' + key + '",' + value +')');
+   next;
+return;   
 ```
 
 Will print:
@@ -580,22 +604,25 @@ Hash tables are sorted in memory by _key_ for faster search. It is more difficul
 ```
 ** check if a key is present in a hash collection
 make my_map := {(1:'a'),(2:'b'),(3:'c')};
-make my_key := 3;
-when my_key ∈ my_map do
-  print("True"); //expected
-else
-  print("False");
-done;
+
+rule main()
+   make my_key := 3;
+   when my_key ∈ my_map do
+     print("True"); //expected
+   else
+     print("False");
+   done;
+return;   
 ```
 
 **example:**
 ```
 make animals ∈ {S,S};
-do
+rule main():
   alter animals["Bear"] := "dog";
   alter animals["Kiwi"] := "bird";
   print(animals);
-done;
+return;
 ```
 
 Output:
@@ -612,7 +639,8 @@ Output:
 
 ```  
 make animals := {}; //partial declaration
-do
+
+rule main():
   ** establish element types (S:X)
   alter animals["Rover"] := "dog";
 
@@ -620,7 +648,7 @@ do
   alter animals["Bear"] := "dog";
   alter animals["Kiwi"] := "bird";
   print(animals);
-done;
+return;
 ```
 output:
 
@@ -640,14 +668,15 @@ Strings can be concatenated using:
 ```
 ** this is example of string concatenation
 make str := ""; 
-do
+
+rule main():
   ** concatenate string as they are (no trim)
   alter str := "this " & " string"; //"this  string"
   
   ** trim before concatenation and add one space
   alter str := "this " + " string"; //"this string"
   alter str := "this" + "string";     //"this string"
-done;
+return;
 ```
 
 **path concatenation**
@@ -655,11 +684,11 @@ Two strings can be concatenated using concatenation operator "/" or "\\". This o
 
 ```
 make s := "";
-do  
+rule main()
   alter s := "te/" / "/st"; //"te/st"
   alter s := "te/" \ "/st"; //"te\\st"
   alter s := "te"."st"; //"te\\st" or "te/st" depending on OS
-done;
+return;
 ```
 
 ## String Generator
@@ -673,13 +702,15 @@ make s := ' ' * 10;
 
 **Examples:**
 ```
-** make a string from pattern 01
-make  a := "01" * 4;
-print a; //01010101;
-
-** used in expression will generate string
-make  b := (a & ' ') * 4;
-print b; //01010101 01010101 01010101 01010101
+rule main():
+  ** make a string from pattern 01
+  make  a := "01" * 4;
+  print a; //01010101;
+  
+  ** used in expression will generate string
+  make  b := (a & ' ') * 4;
+  print b; //01010101 01010101 01010101 01010101
+return;  
 ```
 
 ## String Pattern
@@ -694,9 +725,11 @@ make str := constant * n ∈ S(n);
 ```
 make sep := '-' * 19;
 
-print ('+' + sep + "-");
-print ('|   this is a test   |');
-print ('+' + sep + '+');
+rule main():
+  print ('+' + sep + "-");
+  print ('|   this is a test   |');
+  print ('+' + sep + '+');
+return;  
 ```
 
 **Output:**
@@ -750,7 +783,9 @@ make template := "Duration:#(n) minutes and #(n) seconds";
 make var1 := 4; 
 make var2 := 55;
 ...
-print template ? (var1,var2,...); //Duration:4 minutes and 55 seconds
+rule main():
+  print template ? (var1,var2,...); //Duration:4 minutes and 55 seconds
+return;  
 ```
 
 **Example:**
@@ -760,15 +795,17 @@ print template ? (var1,var2,...); //Duration:4 minutes and 55 seconds
 make x := 30; //Code ASCII 0
 make y := 41; //Code ASCII A
 
-** template writing alternative
-print "#(n) > #(n)" ? (x,y); //"30 > 41" 
-print "#(a) > #(a)" ? (x,y); //"0 > A"  
-
-** using two dots : to separate hour from minutes 
-print "#(n):#(n)" ? (10, 45); // 10:45
-
-** using numeric format
-print "#(1,000.00)" ? (1000.45); // 1,234.56
+rule main():
+   ** template writing alternative
+   print "#(n) > #(n)" ? (x,y); //"30 > 41" 
+   print "#(a) > #(a)" ? (x,y); //"0 > A"  
+   
+   ** using two dots : to separate hour from minutes 
+   print "#(n):#(n)" ? (10, 45); // 10:45
+   
+   ** using numeric format
+   print "#(1,000.00)" ? (1000.45); // 1,234.56
+return;   
 ```
 
 **Placeholders:**
@@ -843,8 +880,10 @@ make template1 := "Hey look at this #[key1] it #[key2]!";
 make template2 := "Hey look at this #(s)[key1] it #(q)[key2]!";
 make map       := {("key1":"test"),("key2":"works")};
 
-print template.format(map);
-print template ? map;
+rule main():
+  print template.format(map);
+  print template ? map;
+return;  
 ```
 
 Expect output:
@@ -857,7 +896,10 @@ Hey look at this 'test' it "works"!
 ```
 make  template := "Hey look at this #[0] it #[1]!";
 make  my_set   := {"test","works"};
-print template ? my_set; 
+
+rule main():
+  print template ? my_set; 
+return;  
 ```
 
 Expect Output:
