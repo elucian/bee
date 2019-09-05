@@ -366,7 +366,7 @@ return;
 
 **Notes:** 
 * Hash operators are working like for a set of keys;
-* Hash key type must be numeric or sortable:{S, Date, Time};
+* Hash key type must be numeric or sortable:{A, U, S, Date, Time};
 * Hash key type can not be double quoted string or other collection;
 
 
@@ -389,59 +389,62 @@ return;
   
 ```
 
-## String
+## Strings
 
-Bee has 2 kind of strings: 
+Bee has 4 kind of string literals: 
 
-* S:    Quoted string,
-* Text: Blob string.
+* A: ASCII symbol used for ASCII Array,
+* U: Unicode symbol ysed for Unicode Array,
+* S: Double quoted Unicode string,
+* X: Markup Unicode based large text.
 
 
 **Notes:** 
-
-* Literals for symbols are enclosed single quotes;
-* Literals for strings are enclosed in double quotes;
+*  A and U are primitive types single symbols and immutable
+* [A] and [U] can be used as boxed primitive types (mutable)
+* [A]() and [U]() can be used as references to fix capacity string Array (mutable)
 
  quote | used for   
--------|--------------------------------------------------
- '_'   | Unicode or ASCII single symbol
- "_"   | Unicode string or string template
+-------|------------------------------------------------------
+ `_`   | ASCII single symbol
+ '_'   | UTF32 Unicode single symbol
+ "_"   | Double quoted UTF8 Unicode string or string template
 
 ### Text
-For large text literals (Text) we can use a markup language:
+For large text literals (X) we can use a markup language:
 
 * `<text>...</text>`  : Text block
-* `<query>...</query>`: SQL text block
+* `<sql>...</sql>`    : SQL text block
 * `<html>...</html>`  : HTML template
 * `<xml>...</xml>`    : XML template
 
 **Example:**
 ```
 make query := 
-<query>
+<sql>
    select name, age
     from persons
    where age < 24;    
-</query>; //Text
+</sql>;
 ```
 
 ### Array of symbols
 
-Single quoted literals can contain a single symbol. 
+Single quoted or back quoted literals can contain a single symbol. 
 
 ```** fixed capacity array or ASCII symbols
-type A128: [A](128) <: Array; // define a sub-type
+type A128: [A](128) <: Array; 
 
 rule main()
   ** populate array using spreading operator (*)
   make str ∈ A128;
-  alter *str := "test"; //spreading a literal
-  print  str;   // ['t','e','s','t']
+  alter *str := "test"; //spreading a ASCII literal
+  print  str;   // [`t`,`e`,`s`,`t`]
   
-  ** fixed capacity array of symbols UTF8
-  make  uco ∈ [U](128);
-  alter *uco := "∈≡≤≥÷≠"; //spreading a literal
-  print uco; // ['∈','≡','≤','≥','÷','≠']; 
+  ** fixed capacity array of symbols UTF32
+  make   uco ∈ [U](128);
+  alter *uco := "∈≡≤≥÷≠"; //spreading a Unicode literal
+  print  uco; // ['∈','≡','≤','≥','÷','≠'];   
 return;  
 ```
 
@@ -453,11 +456,11 @@ Double quoted string literals are Unicode UTF8 strings.
 ```
 rule main()
    ** fixed capacity string UTF8
-   make  uco ∈ S; 
+   make  uco ∈ S; //Unicode string unknown capacity
    alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
    
-   ** strings are printed without quotes
-   print uco; // ∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨
+   ** strings are printed with quotes
+   print uco; //"∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨"
 return;      
 ```
 
@@ -475,10 +478,11 @@ new line in string
 ```
 
 
-**Note:** 
+**Notes:** 
 
-* This kind of string is mutable;
 * This string can be a "rope" or "radix tree";
+* Single quoted strings are not supported: 'like this';
+* Back quoted strings are not supported: `like this`;
 
 ### Concatenation
 
@@ -514,22 +518,17 @@ return;
 ```
 
 ### Conversion
-Conversion of a string into number is done; using _parse_ rule:
+Conversion of a string into number is done using _parse_ rule:
 
 ```
 make x,y ∈ R;
 
 rule main():
   ** rule parse return; a Real number
-  alter x := parse("123.5",2); //convert to real 123.5
+  alter x := parse("123.512",2); //convert to real 123.5
   alter y := parse("10,000.3333",2); //convert to real 10000.33
 return;  
 ```
-
-**Notes:** 
-
-* Array strings are NUL terminated;
-* Array strings are mutable;
 
 
 ## Objects

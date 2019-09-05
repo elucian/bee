@@ -49,7 +49,7 @@ One object can receive attribute names that do not exist. Default constructor wi
 A class is a subtype from a base class or from root class called: Object().
 
 ```
-class class_name(self, parameters) <: Object:
+class class_name(parameters) <: Object:
 ...
 ```
 

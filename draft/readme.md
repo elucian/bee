@@ -15,6 +15,7 @@ To create a new draft you follow a simple procedure:
 
 So far we have following features pending approval:
 
+1. [Classes](classes.md) - Define concept of class
 1. [Generic](generic.md) - Generic rule demo 
 1. [Lambda](lambda.md) - Lambda expressions
 1. [Concurrent](concurrent.md) - Concurrent programming

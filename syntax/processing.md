@@ -127,19 +127,23 @@ pass if a !≡ b; //pass (different location)
 ```
 make test ∈ [R](10); //vector of 10 real numbers
 make m := length(test)-1;
-** array index start from 0
+
+** array index start from 0
 print test[0]; //first element
 print test[m]; //last element
-** alternative notation
+
+** alternative notation
 print test[0];  //first element
 print test[-1]; //last element
-** array traversal 
+
+** array traversal 
 make x := 0;
 while (x < m) do
   alter test[i] := x;
   alter x += 1;
 repeat;
-** print all elements of array
+
+** print all elements of array
 print test;
 ```
 
@@ -153,14 +157,18 @@ print test;
 ```
 make a1 := [1, 2, 3]; //Initialized array
 make a2 := [2, 3, 4]; //Initialized array
-** addition between two Arrays "+" 
+
+** addition between two Arrays "+" 
 make a3 := a1 + a2; //[1,2,3,2,3,4]
-** difference between two Arrays "-"
+
+** difference between two Arrays "-"
 make a4 := l1 - l2; //[1]
 make a5 := l2 - l1; //[4]
-** intersection between two Arrays "&" 
+
+** intersection between two Arrays "&" 
 make a6 := a1 ∩ a2; //[2,3]
-** union between two Arrays "|" 
+
+** union between two Arrays "|" 
 make a7 := a1 ∪ a2; //[1,2,3,4]
 ```
 
@@ -253,11 +261,14 @@ A slice is a small view from a larger array, created with notation [n..m].
 
 **Syntax:**
 
-```** declare array with capacity c
+```
+** declare array with capacity c
 make array_name ∈ [element_type](c);
-** unnamed slice can be used in expressions
+
+** unnamed slice can be used in expressions
 print array_name[n..m]; 
-** create named slice from array
+
+** create named slice from array
 make slice_name := array_name[n..m]; 
 ```
 
@@ -289,7 +300,8 @@ return;
 
 Slicing notation can be used to create a view to original array.
 
-```** original array
+```
+** original array
 make a:= [0](5); //[0,0,0,0,0]
 
 ** making two slices
@@ -305,7 +317,8 @@ rule main():
   print a; //[1,1,1,2,2]
   
   ** modify last 2 elements using anonymous slicing
-  alter a[3..-1] := [2,3];    print a; //[1,1,1,2,3]
+  alter a[3..-1] := [2,3];  
+  print a; //[1,1,1,2,3]
 return;  
 ```
 
@@ -522,11 +535,14 @@ A stack is a LIFO list of elements: LIFO = (last in first out)
 make a := (1, 2, 3); //list
 make last ∈ N;
 
-rule main():  ** append operator: "<+"
+rule main():
+  ** append operator: "<+"
   alter a <+ 4; //(1,2,3,4)
-    ** read last element
+  
+  ** read last element
   alter last := a.tail; //last = 4
-    ** delete operator "-?"
+  
+  ** delete operator "-?"
   alter a -? last; //a = (1,2,3)
 return;  
 ```
@@ -539,11 +555,14 @@ A queue is a FIFO collection of elements: (first in first out)
 make q := (1,2,3); 
 make first: N;
 
-rule main():   ** enqueue new element into list "++" 
+rule main():
+   ** enqueue new element into list "++" 
    alter q <+ 4; //(1,2,3,4)
-      ** read first element using ":="
+   
+   ** read first element using ":="
    alter first := a.head; //first = 1
-      ** shift list to left with 1
+   
+   ** shift list to left with 1
    scrap a << 1; //a = (2,3,4)
 return;   
 ```
@@ -969,4 +988,4 @@ Text is iterable by "row". The row separator CR or CRLF. So we can read a text l
 **Note:**
 The text also support escape sequences like a normal string. However in a text literal we do not have to escape the single quote symbols: "'". We have to escape the double quotes like: "This is \"quoted\" text". This is very rare since quoted text should use symbols: "« »" like "«quoted»".
 
-**Read next:** [Classes](classes.md)
+**Read next:** [Standard Library](standard.md)
