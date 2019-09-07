@@ -39,10 +39,3 @@ For syntax highlight you can use Notepad++ (UDL):
 **notes:**:
 * You must change the default style to "twilight" for black background
 * You should change default font to "Dejavu Sans Mono", 16px and enable global font size
-
-## Community
-
-Follow Bee community on Reddit or Discord:
-
-*  [reddit: bee-lang](https://www.reddit.com/r/bee_lang/)
-*  [discord: sage-code](https://discordapp.com/invite/sNrcHur)
