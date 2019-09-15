@@ -44,6 +44,6 @@ rule fact(a ∈ N, b ∈ N) => (r ∈ N):
     alter b := b - 1;
   else
     alter r := a;
-  repeat;
+  loop;
 return;
 ```

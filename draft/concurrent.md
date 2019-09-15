@@ -28,9 +28,9 @@ rule test():
   wait 10;
 return;
 ** prepare for execution 4 threads
-for i ∈ (1..4) do
+with i ∈ [1..3] do
   begin test;
-repeat;
+loop;
 yield test; //wait for pending test to finish;
 ```
 
@@ -51,10 +51,10 @@ Coroutines can be used as a _branch_ of main thread.
 ```
 ** generate 10 numbers and stop
 rule test(n ∈ N) => (r ∈ N):
-  for i ∈ (0..n) do
+  with i ∈ (0..n) do
     alter r := i;    
     yield; //suspend and wait for the main thread
-  next;
+  loop;
 return;
 
 ** start secondary process
@@ -63,7 +63,7 @@ begin r := test(9) // start side branch and collect in r
 while r ≤ 9 do
   write (r, ",");
   yield test;  // suspend main thread and resume test 
-repeat;
+loop;
 print;  // 0,1,2,3,4,5,6,7,8,9,
 ```
 
@@ -93,13 +93,13 @@ rule foo(channel ∈ (N), start, end, batch ∈ N):
     done;
     yield; //suspend producer
     alter mark := 0;
-  repeat;  
+  loop;  
 return;
 ** consumer coroutine
 rule bar(channel ∈ (N), batch ∈ N):  
   make index := 0;
   while channel.length > 0 do
-    for index in [0..batch]  do
+    with index in [0..batch]  do
       write channel.head,",";  
       alter channel -? channel.head;
       wait 1; //slow down for a second
@@ -107,7 +107,7 @@ rule bar(channel ∈ (N), batch ∈ N):
     done;
     print
     yield; //suspend consumer
-  repeat;  
+  loop;  
 return;
 ** prepare a channel
 make ch ∈  (N); //empty list of natural numbers
@@ -116,12 +116,12 @@ make ch ∈  (N); //empty list of natural numbers
 begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
 while ch.length > 0 do
   ** prepare consumers
-  for i ∈ (1..4) do
+  with i ∈ (1..4) do
     defer bar(n); //asynchronous call
-  next; 
+  loop; 
   yield bar; // execute consumers on 4 threads
   yield foo if (ch.length = 0); // execute producer on single thread
-repeat;  
+loop;  
 
 ``` 
 

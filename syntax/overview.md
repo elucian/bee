@@ -70,7 +70,7 @@ return;
 
 ## Data types
 
-Data types represent abstract _domains of values_. In other words, data type represent constrain rules that can be used to validate a particular data value. Data type is an attribute of any data element. There is no data without this attribute. 
+Data types represent abstract _domains of values_. In other words, data type represent constrain rules that can be used to validate a particular data value. Data _"type"_ is an attribute of any data element. In Bee there is no data without this attribute. 
 
 **Usability:** 
 
@@ -109,17 +109,17 @@ Primitive data types are defined using one capital letter.
 |----------|-----|-------------------------------------------------------------------
 | Logic    | L   | Numeric enumeration of two values: 0 = False, 1 = True 
 | Alpha    | A   | Alpha-numeric code point E-ASCII ('0'..'9') ('a'..'Z')
-| Binary   | B   | Binary number on 16 bit, max: 0b11111111 11111111
+| Binary   | B   | Binary number on 8 bit, max: 0b11111111 (0..255) (0..0xFF)
 | Unicode  | U   | Unsigned code point on 32 bit, max: U-FFFFFFFF (UTF32)  
 | Rational | Q   | Fix point representation number: like 1/2. Notation:  Q(14,17)
 | Natural  | N   | Unsigned large positive integer 64 bit [0..+]
-| Integer  | Z   | Signed large integer 64 bit  [-..+]  Z(64)
+| Integer  | Z   | Signed large integer 64 bit   [-..+] Z(64)
 | Real     | R   | Double precision float 64 bit (-..+) R(64)
 
 **notes:**
 
-* Each data type has a default representation for print & output,
-* Default representation can be changed using a _format template_,
+* Each data type has a default representation for literal, print & output,
+* Output representation can be establish using a _format template_,
 * Using print with primitive type will create a specific representation,
 * Precision can be specified in parenthesis after the type: Z(32) = 32 bit integer,
 * Primitive data types are values allocated on the stack or in the registry.
@@ -146,25 +146,26 @@ These are symbolic representations for primitive data types:
 
 **note**
 
-* constant literals are identical to themselves 
-* primitive variables are identical to themselves
+* primitive types are ordered and can be compared,
+* primitive literals are identical to themselves,
+* primitive variables are identical to themselves.
 
 ## Composite types
 
-Predefined composite types start with capital letter: 
+Predefined composite types have an alias starting with capital letter: 
 
-| Alias   | Code| Description
-|---------|-----|-----------------------------------------------------------
-| Complex | C   | Double precision pair of double float numbers (9r+9j)
-| String  | S   | UTF8 encoded double quoted string "α β ɣ ε δ μ ω"
-| Text    | X   | Multi-line large block of text <text>... </text>
-| Date    | D   | "DD/MM/YYYY"
-| Time    | T   | "hh:mm,ms"
-| Error   | E   | Error object: {code, message, line}
-| File    | F   | File handler
+| Alias   | Type | Description
+|---------|------|-----------------------------------------------------------
+| Complex | C    | Double precision pair of double float numbers (9r+9j)
+| String  | S    | UTF8 encoded double quoted string "α β ɣ ε δ μ ω"
+| Text    | X    | Multi-line large block of text <text>... </text>
+| Date    | D    | "DD/MM/YYYY"
+| Time    | T    | "hh:mm,ms"
+| Error   | E    | Error object: {code, message, line}
+| File    | F    | File handler
 
 **Notes:**
-* Composite variables are references;
+* Composite variables are references to objects;
 * Composite variables have variable size;
 * Composite variables are  allocated on the heap;
 
@@ -172,15 +173,17 @@ Predefined composite types start with capital letter:
 
 Bee define a collection literal using a special notation based on brackets.
 
-| symnols | Collection type
-|---------|------------------------------------------------------------------
-| ()      | List literal
-| []      | Array/ Matrix literal
-| {}      | Ordinal / Data Set / Hash Map / Object Literal
+| delimiter | collection types
+|-----------|------------------------------------------------------------------
+| `()`      | List
+| `[]`      | Array / Matrix
+| `{}`      | Ordinal / Set / Hash / Object 
 
 **Notes:** 
-* All collections are composite types therefore references; 
-* Collection elements can be references or native types;
+* All collections are also composite types therefore references,
+* Collection elements can be references or native types,
+* Elements of collection are separated by comma,
+* Pair of values in Hash map and Object are separated by columns ":"
 
 ## Type declaration
 
@@ -196,92 +199,75 @@ make var_name,var_name ... ∈ Type_Identifier;
 
 **Notes:**
 
-* User defined types are usually starting with capital letters;
+* User defined types are starting with capital letter;
 * User defined super-types are usually composite types;
 * User defined sub-types are usually domains of values;
-* Public user data types start with dot prefix;
 
-**Example:**
-```
-type Digit: (0..9) <: B; //binary superset 
-type Digit: (0..9) <: Z; //integer superset
-```
+## Range
 
-## Domain subtypes
-
-A domain is a range of values having superset a primitive type.
+A range is a notation that can create a sub-set of integer numbers.
 
 **syntax**
 
 ```
-type Name = (min..max:rate) <: PrimitiveType;
+range ::= (min..max);
+```
+
+**Notes:**
+
+* Minim limit is included but max limit is excluded,
+* Range notation can be open at one end or both ends.
+
+**example:**
+```
+rule main():
+  print (0..5); // 0,1,2,3,4
+  
+  pass if  32667 ∈ (0..+); //expect to pass
+  pass if -32668 ∈ (-..0); //expect to pass
+return;
+```
+
+## Domain
+
+Domains and ranges are close related.
+
+* A domain include min and max limits,
+* A domain can be continuous or discrete,
+* A domain can be used to create a type.
+
+**syntax:**
+
+```
+domain ::= [min..max:ratio]  <: Super_Type
 ```
 
 **Examples:**
 ```
 ** sub-type declarations
-type Positive: (0..+:0.01)      <: Q; 
-type Negative: (-..0:0.01)      <: Q; 
-type Digit:    (0..9)           <: Z;      
-type Capital:  ('A'..'Z')       <: A;  
-type Lowercase:('a'..'z')       <: A;  
-type Latin:    (U+0041..U+FB02) <: U;
+type Digit:    ['0'..'9']       <: Z;      
+type Capital:  ['A'..'Z']       <: A;  
+type Lowercase:['a'..'z']       <: A;  
+type Latin:    [U+0041..U+FB02] <: U;
 
 rule main():
-  ** check variable belong to type
-  when ('x' ∈ Capital) do
-    print "yes"; //unexpected
-  else
-    print "no";  //expected
-  done;
+  ** following statements should pass
+  pass if '0' ∈ Digit;     
+  fail if 'x' ∈ Capital; 
+  pass if 'X' ∈ Capital; 
+  pass if 'e' ∈ Latin;   
 return;  
 ```
 
-**Notes:**
+**Example:**
 
-* Use (n..m) include n and m in domain,
-* Use (n!.m) to exclude lower limit from range,
-* Use (n.!m) to exclude upper limits from range,
-* Use (n!!m) to exclude both limits from range,
-* Use symbol - for unlimited negative number,
-* Use symbol + for unlimited positive number.
-
-**example:**
 ```
-** continuous default rate is 1
-rule main():
-  print (0..5); //0,1,2,3,4,5
-  print (0.!5); //0,1,2,3,4
-return;
-```
+** using ratio to generate Q numbers
+print [0..1:1/4]; // 0/4, 1/4, 2/4, 3/4, 4/4
 
-## Domain segments
+** using ratio to generate float numbers
+print [0..1:0.25]; // 0.00, 0.25, 0.50, 0.75, 1.00
 
-A domain can use a special notation for multiple numeric intervals called segments.
-
-**syntax:**
-```
-(segment, segment ...) // continuous domain notation
-```
-
-* segment ::=  n..m:ratio  // include n, include m if (m % ratio) = 0
-* segment ::=  n.!m:ratio  // exclude n, include m if (m % ratio) = 0
-* segment ::=  n!.m:ratio  // include n, exclude m 
-* segment ::=  n!!m:ratio  // exclude both n and m
-
-**example:**
-```
-** integer domain with two segments
-type ZDom: (-9..1,1..9) <: Z; 
-
-** integer domain with two segments and ratio
-type ZDom: (0..8:2 , 1..9:2) <: Z; 
-
-** real domain with two rations: 0.01 and 0.1
-type RDom: (0.!10:0.01, 10..100:0.1) <: R; 
-
-** two rational segments with same ratio: 0.01
-type QDom: (-10..-1:0.01, 1..10:0.01) <: Q; 
 ```
 
 ## Constant declaration
@@ -305,8 +291,8 @@ save constant_name := constant_literal ∈ type_name;
 
 **example:**
 ```
-save n := U+2200     ∈ A; //Symbol: ∀
-save n := U-00002200 ∈ U; //Symbol: ∀
+save n: U+2200     ∈ A; //Symbol: ∀
+save n: U-00002200 ∈ U; //Symbol: ∀
 ```
 
 **Note:** 
@@ -318,33 +304,32 @@ save n := U-00002200 ∈ U; //Symbol: ∀
 Variables are defined using keyword _make_ plus one of the operators:
 
 operator | purpose
----------|------------------------------------------------------------------
+---------|-----------------------------------------------------
  ∈       | declare variable/element type 
- :       | define type \| pair-up initial values \| pair-up arguments
- :=      | binding  = assign value     \| share reference
- ::      | cloning  = duplicate object \| clone collection
+ :       | define type \| initial value \| pair up
+ :=      | binding  \| share a reference \|execute expression
+ ::      | cloning  \| duplicate object  
  
 **Notes:**
-* Symbol ":" can be used to initialize one variable at a time in a list, 
-* Symbol ":" can accept only constant literals for initial values (var:con,...),
-* Symbol ":" accept expressions when it is used in function call (param:exp),
-* Symbol ":" can be used to create pairs for hash map (key:exp),
-* Symbol ":=" and "::" can be used to initialize multiple variables in a list.
+* Symbol ":" can be used to initialize one variable at a time, 
+* Symbol ":" can not accept expressions when is used in declarations,
+* Symbol ":" used in declarations require ∈ otherwise you must use ":=",
+* Symbol ":" can be used with expressions as pair-up operator.
 
 ```
 ** primitive variable declarations with type
 make var_name ∈  type_name; // declaration without initial value
-make var_name := constant ∈ type_name; // declaration with initialization
+make var_name : constant ∈ type_name; // declaration with initialization
 
 ** partial declaration using type inference
 make var_name := expression; //expression ":=" do not require type hint ("∈").
 
 ** Multiple variables can be define in one single line using comma separator:
-make (var_name, var_name ...) ∈  TypeName;  //default initial values
-make (var_name, var_name ...) := Expression; //use expression type inference for initial value
+make var1, var2 ... ∈  TypeName;  //default initial values
+make var1, var2 ... := Expression; //use type inference for initial values
 
 ** Initialize multiple variables in a list with different values
-make (var1:value1, var2:value2 ...) ∈  TypeName;
+make var1:con1, var2:con2 ... ∈  TypeName; 
 ```
 
 ## Modify values
@@ -353,11 +338,11 @@ One can modify variables using _alter_ statement.
 
 **example:**
 ```
-make (a:10, b:0) ∈ Z; // initialize two variables
+make a:10, b:0 ∈ Z; // initialize two variables
 
-alter b := a + 1; // modify b using assign value
-alter b += 1;     // modify b using modifier
-print b;          // expected 12
+alter b := a + 1;   // modify b using binding operator :=
+alter b += 1;       // modify b using modifier +=
+print b;            // expected 12
 ```
 
 **Notes:** 
@@ -367,7 +352,7 @@ print b;          // expected 12
 **Examples:**
 ```
 ** declare a constant
-save pi := 3.14 ∈ R;
+save pi: 3.14 ∈ R;
 
 ** declare multiple variables
 make a   ∈ Z; //Integer 
@@ -402,8 +387,8 @@ When data type mismatch you must perform explicit conversion.
 
 **example:**
 ```
-make (a: 0, b:20) ∈ Z;
-make (v: 10.5, x: 0.0) ∈ R;
+make a: 0, b:20 ∈ Z;
+make v: 10.5, x: 0.0 ∈ R;
 
 rule main():
 ** explicit conversion
@@ -425,8 +410,8 @@ return;
 Bee define A as single UTF-8 code point with representation: U+HH
 
 ```
-make (a, b) ∈ A; //ASCII 
-make (x, y) ∈ B; //Binary integer
+make a, b ∈ A; //ASCII 
+make x, y ∈ B; //Binary integer
 
 rule main():
   alter a :='0';     //ASCII symbol '0'
@@ -436,12 +421,30 @@ rule main():
 return;  
 ```
 
+## Type inference
+
+You can use symbol ":=" to initialize variables using type inference.
+
+```
+** declare constants
+save a := 4;   //integer constant
+save b := 2.5; //real constant
+save c := 1/8; //rational constant
+
+** declare variables
+make x := 0;   //integer variable 
+make y := 0.0; //real variable 
+make z := 0/0; //rational variable
+```
+**More:** [type inference](inference.md);
+
 ## Type checking
 
 We can use variable type to validate expression type.
 
 ```
-make a := 0;   //integer variable
+** using type inference
+make a := 0;   //integer variable 
 make b := 0.0; //real variable 
 
 rule main():
@@ -485,7 +488,7 @@ Bee uses several familiar logic operators from mathematics:
 * ∨ (or)  
 * ⊕ (xor)  
  
-Precedence: { ¬, ∧, ∨, ⊕ }. Symbol ¬ apply first (has higher precedence) 
+Precedence: { ¬, ∧, ∨, ⊕, = }. Symbol ¬ apply first (has higher precedence) 
 
 **bitwise**
 
@@ -504,7 +507,7 @@ Comparison operators will create a logical response: 1 = True or 0 = False
 
 **example:**
 ```
-make  (x, y) := 4 ∈  Z;  //primitive integer
+make  (x, y):4 ∈  Z; //primitive integer
 
 rule main():
   ** value comparison
@@ -611,7 +614,6 @@ print Null  ≡ False  //0
 print Null  = False  //0
 ```
 
-
 ## Conditionals
 
 A conditional is a logic expression used to control statement execution.
@@ -636,12 +638,11 @@ rule main():
 
   ** conditional print
   print "a is 0" if a = 0;
-  print "a >  0" if a ≥ 0;
 return;  
 ```
 
 **Notes:** 
-* Keywords "if" do not have "else"
+* Keywords "if" do not have "else",
 * There is no ";" before "if" keyword
 
 ## Pattern Matching
@@ -656,16 +657,16 @@ make var ∈ type;
 
 rule main():
   ** single condition matching
-  alter var := (exp if cnd1, def);
+  alter var := exp ? cnd1, def;
   
   
   ** multiple matching with default value
-  alter var := (exp1 if cnd1, xp2 if cnd2,..., def);
+  alter var := exp1 ? cnd1, xp2 ? cnd2,...,def;
   
   ** alternative code alignment
   alter var := 
-    (exp1 if cnd1
-    ,exp2 if cnd2
+    (exp1 ? cnd1
+    ,exp2 ? cnd2
     ,def);
 return;  
 ```
@@ -685,7 +686,7 @@ rule main():
    write "x:"
    read   x;
    
-   make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'], "unknown");
+   make kind := ("digit" if x ∈ ['0'..'9'], "letter" if x ∈ ['a'..'z'],or "unknown");
    print ("x is " + kind); //expect: "x is digit"
 return;
 ```
@@ -854,7 +855,7 @@ Attributes of a routine are local variables starting with dot prefix.
 **pattern:**
 ```
 rule rule_name(param ∈ type,...):   
-   make (.x, .y, .z) := 0 ∈ Z; 
+   make .x, .y, .z ∈ Z; 
    ...
 return;
 
@@ -865,7 +866,7 @@ rule main():
   alter rule_name.z := 3;
   
   ** read rule states
-  print (rule_name.x, rule_name.y, rule_name.z); //1 2 3
+  print rule_name.x, rule_name.y, rule_name.z; //1 2 3
   
   ** execute a rule that has no results:
   apply rule_name(param:argument, ...);
@@ -899,7 +900,7 @@ return;
 
 rule main():
   ** create an object instance
-  make obj := {attribute:value, ...} ∈ ObjectYpe;
+  make obj := {attribute:value, ...} ∈ Object_Type;
   
   ** execute a method and ignore the result
   apply obj.method_name(argument, ...);

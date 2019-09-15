@@ -194,7 +194,7 @@ Statements can be contained in blocks of code.
 **notes:**
 
 * Each block is finalized with a different keyword,
-* Closing keyword can be one of: { done, repeat, next },
+* Closing keyword can be one of: { done, loop, next },
 * Statements in nested blocks are using indentation at 2 spaces.
 
 
@@ -217,7 +217,7 @@ rule main(*params ∈ S):
      write params[i];
      alter i += 1;
      write "," if (i < c);
-   repeat;
+   loop;
    ** print the buffer to console
    print;  
 return;

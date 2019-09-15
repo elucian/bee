@@ -1,38 +1,26 @@
 ## Control Flow
 
-A control flow statement is an unnamed block of code. 
-
-**Statements:**
-
-Bee has 7 control flow statements.
+Bee has 4 keywords to start a control flow statement:
 
 Name             | Description
 -----------------|----------------------------------
 [when](#when)    | single-condition dual path statement
 [case](#case)    | multi-condition multi-path selector
-[do](#do)        | unconditional anonymous block
-[repeat](#repeat)| unconditional repetitive block
-[while](#while)  | conditional repetitive block
-[for](#for-each) | collection iterator block
-[trial](#trial)  | exception handler block
+[with](#with)    | collection or domain iterative block
+[trial](#trial)  | exception handler and work-flow block
 
-**Restriction:**
+## Repetition:
 
-* You can not use _"make"_ inside any control flow statements,
-* You can not use a conditional _"if"_ after done.
+Control flow statement is ending with one of two keywords:
 
-## do
-This statement establish a local _name space_. It begins with _"do"_ and is ending with _"done"_;
+* done - statement is executed once 
+* loop - statement is executed several times
 
-**example:**
-```
-make x := 0; //outer scope
-do
-  make x := 1; //inner scope
-  print x; // 1
-done;
-print x; // 0
-```
+**Notes:** 
+
+* You can use conditional _"if"_ after loop but not after _"done"_,
+* Careful using _"make"_ inside a loop, you could overwhelm the machine,
+* Bee has a limit on how many loops before giving up: @loop_limit.
 
 ## when
 
@@ -43,7 +31,7 @@ This statement is also called _branch_. It create a logic branch unsing a condit
 when condition do
   ** branch
   ...
-done;
+done or loop;
 ```
 
 This statement is called _fork_. It create two logical branches using a condition:
@@ -59,28 +47,39 @@ else
 done;
 ```
 
-**ladder:**
+**repetition:**
+```
+when condition do
+  ** primary branch
+  ...
+else
+  ** secondary branch
+  ...
+loop;
+```
 
-By nesting multiple _when_ blocks you can create a multi-path selector known as _ladder_:
+**example:**
+
+You can use multiple _when_ blocks to create nested path selectors:
 
 ```
-write "a = ";
+** first decision
 make  a ∈ Z;
-read  a;** first decision
 when a ≤ 0 do 
-  print "a ≤ 0";
+  write "a = ";
+  read  a;
   ** second decision
   when a = 0 do 
     print "a = 0";
   else
     print "a < 0"; 
   done; //a ≤ 0
-done; 
+loop; 
 ```
 
 ## Case
 
-This selector start with _case_ and is ending with _done_. 
+This selector is a multi-path _ladder_. 
 
 **pattern:**
 ```
@@ -91,154 +90,98 @@ case condition do
 ...  
 else
   ** final path
-done; 
+done or loop; 
 ```
 **Note:** 
-* _case_ is a multi-path selector
+* _case_ is preferred way to create a _ladder_
 * _case_ is also known as _conditional search_
-* _case_ is preferred way to replace a _ladder_
 
 **example:**
 
 ```
-write  "Enter a number between 0 and 9:"
-make a ∈ Z; read a;
+make a: 0 ∈ Z; 
+case a = 0 do 
+  write  "Enter a number between 0 and 9:"  
+  read a;
+  skip; //jump to loop
 case a < 0 do
   print "wrong: a < 0";
 case a > 9 do
-  print "wrong: a > 9";
+  print "wrong: a > 9"; 
 else
   print ("ok: a = " & a);
-done; 
+  stop; //stop execution of case
+loop; 
 ```
-## Repeat
 
-Repeat block is very similar to do block except is repetitive.
+## With
+
+This statement establish a local, anonymous _name space_.
+
+**example:**
+```
+** define local scope
+make x := 4; // outer scope
+with x: 0 ∈ Z, y: 0 ∈ Z do
+  alter x += 1; 
+  print x, y; // 1, 0
+done;
+print x; //4 (unmodified)
+print y; //  (undefined)
+```
 
 **example**
-
-This block start with _"do"_ and is ending with _"repeat"_:
+This entire block is repeated several times:
 
 ```
-make x := 0; //control variable
-do
+with x := 0 do
   alter x += 1;
-  stop if x = 10;
+  stop if x = 11;
   write x & ",";
-repeat;
-write x; 
+loop;
 print; // 1,2,3,4,5,6,7,8,9,10
 ```
 
 **example**
-This block start with _"do"_ and is ending with _"repeat if"_:
-
+This block similar with previous but is ending with conditional:
 
 ```
-make x := 0; //control variable
-do
+with x := 0 do
   alter x += 1;
   write x & ",";
-repeat if x != 10;
-write x; 
+loop if x < 11; //conditional repetition
+
 print; // 1,2,3,4,5,6,7,8,9,10,
 ```
 
-**Notes:** 
+## Visitor
 
-* You should never use _"make"_ inside a loop,
-* Bee has a limit on how many loops before giving up: @loop_limit
-
-
-## While
-
-This block start with _"while"_ and is ending with _"repeat"_:
-
-**Pattern:**
-
-```
-while condition do
-  ** repetitive block
-  ...
-  skip if condition; //continue
-  ...
-  stop if condition; //break
-  ...
-else
-  ...  
-repeat;
-```
-
-**Notes:** 
-* Infinite loop can be interrupted by timer variable:  @loop_timer := 60s;
-* Infinite loop can be also interrupted by loop limit: @loop_limit := 0; 
-* You can add a secondary (if) conditional after repeat but this is unusual;
-
-**example:**
-
-Two nested blocks: observe "done" and "repeat" are making code readable.
-
-```
-** two nested blocks
-make a := 10;
-while a > 0 do
-  alter a -= 1;
-  when a % 2 ≠ 0 do
-    write a;  
-    write ',';
-  done;
-else
-  ** when a < 0  
-  print ("last a =" + a);
-repeat;
-```
-
-**Nested loop**
-
-While statement can be nested:
-
-**pattern:** 
-
-```
-while condition do
-  ** outer loop
-  while condition do
-    ** inner loop
-    ...
-  repeat;  
-  ...  
-repeat;
-```
-
-## For each
-
-Start with "for" and ends with "next". It is used to traverse a _domain_ or _collection_:
+You can visit all elements of a domain using this pattern:
 
 **Pattern:**
 ```
-for var ∈ (min..max:rate) do
+with var ∈ (min..max:rate) do
   ...
   skip if condition; //fast forward
   ...
   stop if condition; //early transfer
   ...
-next;
+loop;
 ```
 
 **Notes:**    
-* Control variable is declared in local scope;
-* Control variable is incremented using next;
-* You can add (if) conditional after next but this is unusual;
+* Control variable is local to with scope;
+* Control variable is incremented automatically;
 
 ```
-for i ∈ (0..10) do
+with i ∈ (0..10) do
   when i % 2 = 0 do
     skip; //fast forward
   else
     write i; //odd numbers
   done;
   write ',' if (i < 9);        
-next;
+loop;
 ```
 > 1,3,5,7,9
 
@@ -247,16 +190,15 @@ Using domain ratio the example above can be simplified:
 
 ```
 +-------------------------------------
-| "for" statement can use a "domain" |
-| domain notation: (min..max:ratio)  |
-+------------------------------------+
+| "with" statement can use a "domain" |
+| domain notation: (min..max:ratio)   |
++-------------------------------------+
 
 **    min ↓  ↓max  ↓ = ratio
-for i ∈ (1..9: 2) do
+with i ∈ (1..9: 2) do
   write i; //odd numbers
   write ',' if (i < 9);        
-next;
-
+loop;
 ```
 
 ## Trial
@@ -265,7 +207,7 @@ This statement start with "trial" keyword and ends with "done".
 
 **Notes:**
 * Trial and error is a fundamental method of problem solving,
-* It consist of repeated attempts until a solution is found, 
+* It consist of looped attempts until a solution is found, 
 * Trial can be terminated early by a timer or by specific errors.
 
 **Keywords:**
@@ -273,7 +215,8 @@ This statement start with "trial" keyword and ends with "done".
 | word  | description
 |-------|--------------------------------------------------------
 | trial | start a series of task
-| patch | catch other errors not found by error regions
+| patch | catch errors with specific code or code range
+| cover | catch all other errors not fixed by a patch
 | done  | finalize a trial block
 
 **pattern:**
@@ -281,45 +224,34 @@ This statement start with "trial" keyword and ends with "done".
 ** a complex trial  with patch
 trial
   ...
-  abort if condition;
+  skip if condition; //jump to the end
   ...
-  fail if condition;
-error code do 
+  stop if condition; //force stop
+  ...
+  fail if condition; //create exception
+patch code do 
   ** handler1
   ...
-  retry;
-error code do
+  skip; //optional
+patch (domain) do
   ** handler2
   ...  
-  abort;  
-patch
-  ** all other errors
+  stop; //optional  
+cover
+  ** cover all other errors
   ...
-  retry if condition; //repeat
-  ...
-  raise if condition; //propagate
+  raise @error if condition; //propagate last error
 final
-  ** finalization statement   
+  ** finalization statement (executed before leaving)  
+  ** not executed when skip but: fail, raise or stop will
   print "final error:" + @error.code if @error.code > 0;
-done;
+done or loop;
 ```
 
 **Note:**
 
-* System variable @error is clear after trial is done;
-* It is possible to have nested trial blocks;
-
-**Transfer**
-
-Next statements are directly associated with trial block:
-
-| word  | description
-|-------|------------------------------------------------------------------------------
-| fail  | transfer execution to error handlers when a condition is satisfied
-| pass  | transfer execution to error handler unless a condition is satisfied
-| raise | propagate last error outside of trial block and transfer execution to parent
-| abort | give up, clear the error and transfer execution to the parent
-| retry | clear the error and repeat the trial to find a solution
+* System variable @error is clear after trial is ending;
+* It is unusual to create nested trial blocks;
 
 **Errors**
 
@@ -330,30 +262,47 @@ Errors can be defined in your program using next notation:
 make error_name := {code,"message"} ∈ Error;
 ```
 
-Errors can be issued using: fail, raise or pass. 
+Errors can be issued using: fail, pass or raise. 
 
 ```
 ** "fail" can be used in several ways to issue an error
-fail;                              // standard error
-fail "message";                    // custom error
-fail {code:value, message:string}; //instant error
-fail error_name;                   // defined error
+fail;              // fail error: 1
+fail if condition; // fail error: 1
 
 ** "pass" can create only $unexpected_error: 201
-pass; //clear @error message
-pass if condition; //can create "unexpected error"
+pass; //clear @error message and continue
+pass if condition; //pass error: 2
+
+** "raise" can create a customized error or message
+raise error_name  //create an error that is predefined
+raise @error      //propagate last error if is not empty
+raise "message"   //create instant user error: 3
+raise {code,"message"} //create instant custome error with code
 ```
 
 **Note:** 
 The standard module will define standard _error objects_ as system constants:
 
-* code: 1   = $standard_error   with message: "standard error";
-* code: 2   = $unexpected_error with message: "unexpected error";
-* code: 200 = $user_error       with message: "user defined error";
+* code: 1   = $fail_error  with standard message: "fail error";
+* code: 2   = $pass_error  with standard message: "pass error";
+* code: 3   = $raise_error with standard message: "raise error";
 
 **See also:** [Standard:Exception](standard.md#errors);
 
 **patch**
+This region can catch an error and fix it. Error can be catch by code or domain of codes. After patch the _"final"_ region is executed but only if the error handler does not do not transfer execution to somewhere else:
+
+Next statements are transfer statements used in trial block:
+
+| word  | description
+|-------|------------------------------------------------------------------------------
+| raise | transfer execution to error handlers with new error or reissue last error
+| fail  | transfer execution to error handlers when a condition is satisfied
+| pass  | transfer execution to error handler unless a condition is satisfied
+| stop  | give up, clear the error, execute final and transfer to the parent
+| skip  | do not execute anything else, just jump to end of the block
+
+**cover**
 
 This region is used for any other error that is not handled by _error_ handler regions. You can use any selector in this region to find an exceptions by code but you can also just report the error or log the error and abort the trial. Patch is not executed if any of previous "error" regions is triggered. 
 
@@ -387,11 +336,11 @@ done;
 make my_error := {201, "my error"} ∈ E;
 trial
   fail my_error; //issue custom error
-error 201 do
+patch 201 do
   print @error.message;
   print @error.line;
   ** will fall through
-patch  
+cover  
   raise; //propagate the error
 done;  
 ```
@@ -403,7 +352,7 @@ done;
 
 **Repeating trial:**
 
-By using _retry_ you can repeat a trial block
+By using _loop_ you repeat a trial block:
 
 ```
 make count ∈ (0..3); 
@@ -413,11 +362,16 @@ trial
   alter count += 1;
   write "enter a number between 0 and 9";
   read a;
-error $out_of_range do
+  stop if a = 0;
+  fail if a > 9; 
+  fail if a < 0;  
+patch $out_of_range do
   when count < 3 do
-    retry; //try again
+    write "wrong try again:" 
+    skip; //try again the same exact steps 3 times
   else       
-    abort; //give up 
+    write "wrong 3 times";
+    stop; //give up 
   done;    
 final
   when  a ∈ (0..9) do
@@ -426,7 +380,7 @@ final
     write "correct";
   done;  
   print;
-done;  
+loop;  
 ```
 
 **Note:** 

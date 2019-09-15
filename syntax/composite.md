@@ -20,9 +20,9 @@ Composite types are complex data structures.
 
 Bee uses composite types to declare ...
 
-* declare composite variables
-* declare composite constants
-* declare new data types
+* composite variables
+* composite constants
+* new data types
 
 ## Pattern
 
@@ -48,7 +48,7 @@ Ordinal is an abstract data set. It is a group of identifiers. Each identifier r
 ```
 type type_name: { name1:0, name2, name3} <: Ordinal;
 
-make a, b, c ∈ type_name;
+make a, b, c ∈ type_name; //a, b, c will have same type
 
 rule main():
   alter a := type_name.name1; //a=2
@@ -60,7 +60,7 @@ return;
 **Note:** When element name start with "." no need to use qualifiers for the individual values
 
 ```** using public elements in enumeration
-type type_names: { .name0, .name1 } <: Ordinal;
+type type_names: {.name0, .name1} <: Ordinal;
 
 make a, b ∈ type_name;
 
@@ -76,10 +76,10 @@ A tuple is enumeration of elements separated by comma:
 
 **examples**
 ```
-a, b ∈ Z, c ∈ B // declaration or parameters
+a, b ∈ Z, c ∈ B // tuple of declarations
 r1,r2 ∈ Z       // multiple results
-('a','b','c')   // list literal
-(1,2,3)         // list of integers
+'a','b','c'     // tuple of literal
+1,2,3           // tuple of integers
 1,'2',"x"       // enumeration of various literals
 ```
 
@@ -154,19 +154,19 @@ make name := (constant,...) ∈ Type_name; //full declaration
 
 ```
 ** define a diverse lists
-make two := () ∈ (Z);  //empty list of integers = ()
-make one := (0,);      //initialize list with single element
-make two := (1,2);     //initialize list with two elements
+make two:() ∈ (Z);  //empty list of integers = ()
+make one:(0,);      //initialize list with single element
+make two:(1,2);     //initialize list with two elements
 ** define a list type of unsigned short integer
-type Lou: (N) <: List;
+type Lou:(N) <: List;
 ** define a list variable of defined type Lou
-make list := (0, 1, 2, 3, 4, 5) ∈ Lou;
+make list:(0, 1, 2, 3, 4, 5) ∈ Lou;
 ** list traversal
 rule main():
-  for x ∈ list do
+  with x ∈ list do
     write x;
     write "," if (x ≠ list.head);
-  next;
+  loop;
   print; //0,1,2,3,4,5
 rule;  
 ```
@@ -199,10 +199,10 @@ make array_name ∈ Array_Type;
 make array := ['a', 'b', 'c']; // initialized array
 
 rule main():
-  for c ∈ array do
+  with c ∈ array do
     write c;
     write ',';
-  repeat;
+  loop;
 return;  
 ```
 
@@ -219,7 +219,7 @@ return;
 Initial value for elements can be set during declaration or later:
 
 ```** you can use a single value to initialize all vector elements
-make zum: 0 ∈ [Z](10); //explicit initialization using single value
+make zum:0 ∈ [Z](10); //explicit initialization using single value
 
 rule main():  ** modify one element by index
   alter zum[1]  := 1; 
@@ -284,9 +284,9 @@ make x   := mat.length;
 rule main():  
   while (i < x) do
     mat[i] := i+1;
-    write (mat[x], ',') 
+    write mat[x], ',';
     i += 1;
-  repeat
+  loop
   print;
 return;  
 ```
@@ -365,10 +365,9 @@ return;
 ```
 
 **Notes:** 
-* Hash operators are working like for a set of keys;
-* Hash key type must be numeric or sortable:{A, U, S, Date, Time};
-* Hash key type can not be double quoted string or other collection;
-
+* Hash operators are working like for a set of keys,
+* Hash key type must be numeric or sortable:{A, U, S, Date, Time},
+* Hash key type can not be double quoted string or other collection.
 
 ## Check for inclusion
 
@@ -454,7 +453,7 @@ Double quoted string literals are Unicode UTF8 strings.
 
 **example:**
 ```
-rule main()
+rule main():
    ** fixed capacity string UTF8
    make  uco ∈ S; //Unicode string unknown capacity
    alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
@@ -500,7 +499,7 @@ symbol| description
 **examples**
 
 ```
-make m := ('-' * 10) ∈ S; //m = "----------"
+make m: ('-' * 10) ∈ S; //m = "----------"
 make (u, c, s) ∈ S; //default length is 128 octets = 1024 bit
 
 rule main():   ** string concatenation
@@ -656,9 +655,9 @@ rule foo(*bar ∈ [Z]) => (x ∈ Z):
     exit;
   done;
   ** sum all parameters  
-  for i ∈ (0.!c) do
+  with i ∈ (0.!c) do
     alter x += bar[i];
-  repeat;
+  loop;
 return;
 
 ** we can call foo with variable number of arguments

@@ -8,7 +8,7 @@ Type inference is a logical deduction of data type from constant literals.
 * [Parameters](#Parameters)
 
 ## Default
-Each literal has associated a default type, induced by operators {":=", "::", ":"}.
+Each literal has associated a default type, induced by operators {":=", "::"}.
 
 ```** string expressions
 make c := 'a'     ;  //type = A
@@ -22,10 +22,10 @@ make j := 0.50; //type = R
 save false := False; //type L = 0
 save true  := True;  //type L = 1
 ** multiple variables get same value
-make (x, y, z) := 5; //type = Z for all
+make x, y, z := 5; //type = Z for all
 
 ** multiple variables get multiple values
-make (int, rea) := (4, 4.44);
+make int, rea := 4, 4.44;
 print type(int); // Z
 print type(rea); // R
 ```

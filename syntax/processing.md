@@ -16,6 +16,16 @@ By using collections and control structures one can read, modify and store data.
 
 A boxed value is a reference to a primitive type. 
 
+**syntax**
+Boxed value is an Array with a single element.
+
+
+```
+make int ∈ [Z]; //boxed integer
+make flt ∈ [R]; //boxed double float
+make flt ∈ [R]; //boxed double float
+```
+
 **boxing**
 Boxing is the process of converting a primitive type to a reference. 
 
@@ -141,7 +151,7 @@ make x := 0;
 while (x < m) do
   alter test[i] := x;
   alter x += 1;
-repeat;
+loop;
 
 ** print all elements of array
 print test;
@@ -183,7 +193,7 @@ rule test_array:
   while i < m do
     alter my_array[i] := i;     
     alter i += 1;
-  repeat;
+  loop;
   ** array  elements using escape template by index #[]
   print ("First element: #[1]"  ? my_array); 
   print ("Last element:  #[-1]" ? my_array);
@@ -230,7 +240,7 @@ Array data can be used as arguments for feeding a function that receive variable
 
 ```
 rule sum(*args ∈ Z) => (result: 0 ∈ Z): 
-  for e ∈ args do 
+  with e ∈ args do 
     result += e;
   done;  
 return;
@@ -393,19 +403,19 @@ rule main():
   ** local control variables
   make row, col := 0;  // type inference: ∈ Z
   
-  ** traverse matrix      
+  ** traverse matrix with index pattern     
   while col < 3 do     // traverse columns
     while row < 3 do   // traverse row first
       print M[row,col];
       alter row += 1;
-    repeat;
+    loop;
     alter col += 1;
-  repeat;
+  loop;
   
-  ** traversal with for
-  for e ∈ M do
+  ** traversal with visitor pattern
+  with e ∈ M do
     print e; //element
-  next;
+  loop;
 return;  
 ```
 
@@ -600,9 +610,9 @@ Available for: {List, Table, Set} but not Array or Slice
 ```
 rule main():
    make my_map := {("a":1),("b":2),("c":3)};
-   for (key, value) ∈ my_map do
+   with (key, value) ∈ my_map do
      print('("' + key + '",' + value +')');
-   next;
+   loop;
 return;   
 ```
 
@@ -888,7 +898,7 @@ A large template can be stored into a file, loaded from file and format().
 
 1. Create a map collection of elements;
 2. Create the template text and store it in external file;
-3. Use _for_ to visit the file row by row;
+3. Use a loop to visit the template file row by row;
 4. Use template modifier: "?" to replace placeholders row by row;
 5. Alternative use _format()_ build-in rule to replace all placeholders;
 

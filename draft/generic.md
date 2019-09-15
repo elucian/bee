@@ -89,8 +89,8 @@ rule bubble{TT ∈ Type}(array ∈ [TT], gt(TT,TT) ∈ L):
         alter swap := True;
       done;
       alter i += 1;
-    repeat;
-  repeat;
+    loop;
+  loop;
 return;
 ```
 

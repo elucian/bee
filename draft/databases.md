@@ -140,22 +140,22 @@ You can read one table record by record:
 ```
 ....
 ** table must be open to be scanned
-for record ∈ table_name do
+with record ∈ table_name do
   ** use current_record fields
   print record.status; //expect: 1 = .verified
   ... 
-next;
+loop;
 ```
 
 **Mutating data**
 You can modify table data using current _record_. First you modify record attributes, then you call commit or abort(). Bee is cashing the updated rows and perform a bulk update using a buffer to improve performance when you commit.
 
 ```
-for record ∈ table_name do
+with record ∈ table_name do
   ** update current record
   alter table_name.field_name := new_value;
   ...
-next;
+loop;
 apply db.commit;
 ```
 
@@ -217,7 +217,7 @@ apply db.commit;
 apply table_name.scrub;
 apply db.commit;
 ** delete current record using _for_
-for record ∈ table_name do
+with record ∈ table_name do
   record.delete if condition;
 done;
 apply db.commit;

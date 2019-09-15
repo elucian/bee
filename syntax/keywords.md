@@ -3,12 +3,12 @@
 Bee core has 41 reserved keywords so far: 
 
 ```
-02: if, is
+03: if, is, or, all
 07: make, rule, like, load, alias, type, return
 09: read, write, print, alter, scrap, wait, apply, begin, defer
-05: for, when, case, while, trial
-08: do, else, error, patch, final, repeat, next, done 
-05: fail, pass, raise, abort, retry
+08: with, when, case, else, while, loop, do, done 
+05: trial, cover, patch, final
+06: fail, pass, raise
 05: exit, skip, stop, halt, yield
 ```
 
@@ -58,7 +58,7 @@ Next keywords are simple statements. These represents actions called _imperative
 
 ## Control statements
 
-Control statements are also known as decision statements.
+Control statements are also known as selection statements.
 
 | Keyword  | Purpose
 |----------|------------------------------------------------------------
@@ -66,31 +66,28 @@ Control statements are also known as decision statements.
 | else     | Alternative path for when statement
 | case     | Conditional search multi-path selector
 | while    | Start conditional repetitive block
-| repeat   | End repetitive block while
-| for      | Start iteration loop for domain or collection
-| next     | Continue iteration with last element in domain or collection
+| loop     | Cause a block to repeat or a condition to reevaluate
+| with     | Start iteration loop for domain or collection
 | trial    | Protect a block of code that may have exceptions
-| error    | Associated with trial to catch one error
+| cover    | Associated with trial to catch other errors
 | patch    | Associated with trial to patch any other errors
 | final    | Associated with trial to finalize the trial block
 | do       | Begin a statement region in a block statement
-| done     | Finalize when, check and trial control statements
+| done     | Finalize with, when, case and trial control statements
 
 
-## Transfer keywords
+## Transfer statements
 
-These keywords transfer control or make an interruption of current thread. 
+These statements execute a jump or make an interruption of current thread. 
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------------------------
 | exit     | Force silent termination of a rule, module, program or driver
-| stop     | Interrupt a while loop and continue past repeat; keyword
+| stop     | Interrupt a while loop and continue past loop; keyword
 | skip     | Skip the rest of while block and continue from the beginning
 | fail     | Create error message if a condition is true else pass
 | pass     | Clear error message if a condition is true else fail
 | raise    | Used in exception handler to propagate an error out of trial block
-| abort    | Force silent early interruption of trial block
-| retry    | Repeat a trial statement from the beginning
 | yield    | Suspend one coroutine and give control to another routine
 | halt     | Create unrecoverable error and stop program
 
