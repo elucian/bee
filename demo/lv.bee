@@ -1,5 +1,5 @@
 +-------------------------------------------
-   demo for local variable site-effect
+   demo with local variable site-effect
 -------------------------------------------+
 load $pro_lib.console.(*);
 

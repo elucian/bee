@@ -1,5 +1,5 @@
 +----------------------------------
-   demo for composite types
+   demo with composite types
 ----------------------------------+
 load $pro_lib.console.(*);
 
@@ -43,7 +43,7 @@ rule main():
   ** Array and Matrix literals
   make l2 := [1,2,3];        // array of 3 elements
   make m2 := [[1,1],[2,2]] ; // matrix of 2x2
-  ** Demo for "set" operations
+  ** Demo with "set" operations
   make s1 := {Z}; // empty set of strings
   
   ** Initialized set of 3 elements

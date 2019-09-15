@@ -1,17 +1,17 @@
 +-------------------------------------------
-| Bubble sort using while..do and for..do   |
+| Bubble sort using when..do and for..do   |
 +-------------------------------------------+
 load $pro_lib.console.(*);
 
-** bubble sort for integers
+** bubble sort with integers
 rule sort(this ∈ [Z]):
   ** local variables
   make n := length(this)-1;
   make swap ∈ L;
   ** repetitive block do
-  while swap do
+  when swap do
     alter swap := False; // reset flag
-    for i ∈ (0.!n) do
+    with i ∈ (0.!n) do
       ** this pair is out of order ?      
       when this[i] < this[i+1] do
         ** swap elements using XOR
@@ -20,9 +20,9 @@ rule sort(this ∈ [Z]):
         alter this[i]   := this[i]   ⊕ this[i+1];
         alter swap := True;
       done;
-    next;
+    loop;
     exit if ¬ swap;
-  repeat;
+  loop;
 return;
 
 rule main():

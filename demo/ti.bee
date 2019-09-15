@@ -1,6 +1,6 @@
 +-----------------------------------
   type inference is using
-  operator := for initialization
+  operator := with initialization
 -----------------------------------+
 load $pro_lib.console.(*);
 

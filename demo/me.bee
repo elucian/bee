@@ -7,7 +7,7 @@ load $pro_lib.console.(*);
 type Number: {.zero, .one, .two} <: Ordinal;
 
 
-** make a rule for define Number
+** make a rule with define Number
 rule convert(self ∈ Number) => (y ∈ S):
   alter y := ("zero"  if self = zero,
               "one"   if self = one,
@@ -15,7 +15,7 @@ rule convert(self ∈ Number) => (y ∈ S):
               "none");
 return;
 
-** a wrapper rule for convert
+** a wrapper rule with convert
 rule equal(self ∈ Number, s ∈ S) => (r ∈ L):
   alter r := (s = convert(x));
 return;

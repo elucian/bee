@@ -1,30 +1,27 @@
 +--------------------------------------
-|   Bubble sort for Array of integers |
+|   Bubble sort with Array of integers |
 +-------------------------------------+
 driver bs:
 
 load $pro_lib.console.(*);
 
-** bubble sort for integers
+** bubble sort with integers
 rule sort(this ∈ [Z]):
   ** local variables
-  make n := length(this)-1;
-  make i := 0 ∈ N; 
+  make n := length(this);
   make swap := True ∈ L;
-  ** repetitive block: while
-  while swap do
-    alter i := 0;
+  ** repetitive block: when
+  when swap do
     alter swap := False; // reset flag
-    while (i ≤ n) do
+    with i ∈ (0..n-1) do
       ** this pair is out of order ?
       when this[i] < this[i+1] do
         ** swap two elements
-        alter (this[i+1], this[i]) := (this[i], this[i+1]);
+        alter this[i+1], this[i] := this[i], this[i+1];
         alter swap := True; // set flag
       done;
-      alter i += 1;
-    repeat;
-  repeat;
+    loop;
+  loop;
 return;
 
 rule main
@@ -33,7 +30,7 @@ rule main
   make result := [1,1,2,3,4,5,5,5,6,9];
   ** test sort rule
   apply sort(test);
-  print test; // expect [1,1,2,3,4,5,5,5,6,9]
+  print test; //[1,1,2,3,4,5,5,5,6,9]
 
   ** check result
   pass if test = result;

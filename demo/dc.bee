@@ -26,7 +26,7 @@ rule main():
    print m; // [[0,0,0], [0,0,0], [0,0,0]]
    
    ** use all member initialization [*]
-   alter b[*] := 's'; // assign 's' for all elements 
+   alter b[*] := 's'; // assign 's' with all elements 
    alter a[*] :=  5 ; // scalar modification, make all = 5
    alter m[*] :=  1 ; // scalar matrix modification
    ** use index to find member

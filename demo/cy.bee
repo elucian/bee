@@ -1,15 +1,15 @@
 +--------------------------------
-| Demo for repetitive statement |
+| Demo with repetitive statement |
 +-------------------------------+
 ** declare array of 10 integers
 make a ∈ [Z](10);
 
 rule main():
-  ** use repetitive statement while
+  ** use repetitive statement when
   make  i ∈ Z;
-  while i ≤ 9 do
+  when i ≤ 9 do
     alter a[i] := i; // assign index
     alter i += 1;    // increment
-  repeat;
+  loop;
 return;
 #end of module

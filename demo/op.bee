@@ -16,7 +16,7 @@ rule main():
    ** execute pro and expect x, y  to be modified
    apply pro (x, y);
    
-   ** verify new values for arguments
+   ** verify new values with arguments
    print x; // will print 11
    print y; // will print 12
 return;  

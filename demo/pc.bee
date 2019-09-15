@@ -8,30 +8,30 @@ make s := [0](1000); //array of integers
 rule foo(channel ∈ (N), start, end, batch ∈ N):
     ** prepare next batch    
   make mark := start;
-  while mark < end do    
-    while channel.length < batch do
+  when mark < end do    
+    when channel.length < batch do
       alter channel <+ mark; //append mark to channel
       exit if mark = end;    //stop the producer
       alter mark += 1; //next number in channel
     done;
     yield; //suspend producer
     alter mark := 0;
-  repeat;  
+  loop;  
 return;
 
 ** consumer coroutine
 rule bar(channel ∈ (N), batch ∈ N):  
   make index = 0;
-  while channel.length > 0 do
-    for index in [0..batch]  do
+  when channel.length > 0 do
+    with index in [0..batch]  do
       write channel.head,",";  
       alter channel -? channel.head;
-      wait 1; //slow down for a second
+      wait 1; //slow down with a second
       exit if channel.length = 0; //empty
     done;
     print
     yield; //suspend consumer
-  repeat;  
+  loop;  
 return;
 
 rule main():
@@ -40,13 +40,13 @@ rule main():
   
   ** activate producer
   begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
-  while ch.length > 0 do
+  when ch.length > 0 do
     ** prepare consumers
-    for i ∈ (1..4) do
+    with i ∈ (1..4) do
       defer bar(n); //asynchronous call
-    next; 
+    loop; 
     yield bar; // execute consumers on 4 threads
     yield foo if (ch.length = 0); // execute producer on single thread
-  repeat;  
+  loop;  
 return;  
 #end of module
