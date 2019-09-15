@@ -1,7 +1,7 @@
 +----------------------------
 |  Demo Fibonacci rule      |
 +---------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 ** declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):
   when (n = 1) ∨ (n = 0) do

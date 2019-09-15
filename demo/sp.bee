@@ -1,7 +1,7 @@
 +---------------------------
 |     Swap rule demo       |
 ---------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 rule swap(x ∈ Z, y ∈ Z):
    ** create temporary value

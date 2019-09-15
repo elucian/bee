@@ -1,7 +1,7 @@
 +------------------------------------
 |      Input/Output parameters      |
 ------------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** rule with boxed parameters
 rule pro(a,b ∈ [N]):

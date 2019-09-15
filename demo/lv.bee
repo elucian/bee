@@ -1,7 +1,7 @@
 +-------------------------------------------
    demo with local variable site-effect
 -------------------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** global variable
 make x := 1;

@@ -1,7 +1,7 @@
 +---------------------------------
   High order rules & rule objects
 ----------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** create a rule prototype
 ** this rule can be used or cloned 
@@ -26,7 +26,7 @@ rule main()
   trial
     make set ∈ {Z}; 
     ** this loop is infinite
-    when True do
+    do
       alter set <+ count();
       write set.index; 
       write ','

@@ -1,7 +1,7 @@
 +----------------------------------------------
 |          Working with references            |  
 ----------------------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 rule main():
   make s: 10 ∈ [Z];   // define integer reference

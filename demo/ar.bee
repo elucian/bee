@@ -1,7 +1,7 @@
 +--------------------------
 |  array traversal demo    |
 +--------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
  
 ** define array with 10 elements
 make a ∈ [Z](10);   

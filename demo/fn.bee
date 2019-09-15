@@ -1,7 +1,7 @@
 +-----------------------------------
   declare and use an expression rule
 -----------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** lambda expression
 make add := λ(a, b ∈ Z) ∈ Z => (a + b);

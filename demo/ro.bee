@@ -1,7 +1,7 @@
 *******************************
 ** recursive objects demo    **
 *******************************
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** define recursive type Person
 type Person: {

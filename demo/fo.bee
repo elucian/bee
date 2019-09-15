@@ -1,7 +1,7 @@
 +--------------------------------
  open a file and write into it. 
 --------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** initialize the system library 
 load $bee.system.io:(*);
@@ -14,7 +14,7 @@ rule main():
    apply file.write("Hello World!",LF);
    
    ** read the entire content from file
-   make  content := file.read() ∈ W;
+   make  content := file.read() ∈  X;
    apply file.close;
    
    ** display the entire content to console

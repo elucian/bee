@@ -1,7 +1,7 @@
 +-----------------------------------------
 |      variable declaration demo         |
 +----------------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 rule main():
    make n ∈ Z; // Integer on 64 bit
    make l ∈ L; // Logical value False := 0

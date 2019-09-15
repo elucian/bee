@@ -2,7 +2,7 @@
 |  conditional statements:       |  
 |  when and case in one demo
 +-------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 rule main():
   ** declare two natural numbers

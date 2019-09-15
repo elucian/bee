@@ -3,7 +3,7 @@
 +-------------------------------------+
 driver bs:
 
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** bubble sort with integers
 rule sort(this ∈ [Z]):

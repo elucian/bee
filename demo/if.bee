@@ -1,49 +1,14 @@
 +-------------------------------
-   "if" and "else" decisions
+   "if" conditional execution
 -------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 rule main():
   write "define a number:";
   make x ∈ N; read x; 
-  ** only if conditional
   
+  ** one of this will print
   print "x = 0" if x = 0;
-  ** single branch
-  when x = 1 do
-    print "x = 1";
-  done;
-  
-  ** two branches
-  when x ≠ 5 do
-    print "x ≠ 5";
-  else
-    print "x = 5";
-  done;
-  
-  ** nested in positive branch
-  alter x := 1;
-  when x ≥ 1 do
-    print "x ≥ 1":
-    when x = 1 do
-      print "x = 1"; //expected
-    else
-      print "x > 1";
-    done;
-  else
-    print "x < 1";
-  done;
-   
-  ** nested in negative branch
-  alter x := 1;
-  when x < 1 do
-    print "x < 1";
-  else
-    when x > 1 do
-      print "x > 1";
-    else
-      print "x = 1"; //expected
-    done;
-  done;
+  print "x ≠ 0" if x ≠ 0;
 return;
 #end of module

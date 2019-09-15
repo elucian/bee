@@ -1,7 +1,7 @@
 +-------------------------------------
    result unpacking
 -------------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** rule with two results
 rule test(x, y ∈ Z) => (a,b ∈ Z):

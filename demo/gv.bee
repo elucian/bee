@@ -2,7 +2,7 @@
    global variables are public
    use prefix @ and lowercase
 ------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** declare a share variable x
 make @x := 1;

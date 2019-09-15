@@ -1,7 +1,7 @@
 +-------------------------------------------
 | Bubble sort using when..do and for..do   |
 +-------------------------------------------+
-load $pro_lib.console.(*);
+load $pro_lib.console:(*);
 
 ** bubble sort with integers
 rule sort(this ∈ [Z]):
