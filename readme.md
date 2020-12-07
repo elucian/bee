@@ -1,6 +1,6 @@
 <p align="center">
-<a href="https://sagecode.net/bee-lang" target="_blank" align="center">
-<img src="https://sagecode.net/wp-content/uploads/2018/12/bee-logo.png" alt="Eve Logo" width="114" height="107" ></img>
+<a href="https://sagecode.net/bee" target="_blank" align="center">
+<img src="https://sagecode.net/bee/img/bee-logo.jpg" alt="Eve Logo" width="114" height="107" ></img>
 </a>
 </p>
 
