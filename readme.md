@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://sagecode.net/bee" target="_blank" align="center">
-<img src="https://sagecode.net/bee/img/bee-logo.jpg" alt="Eve Logo" width="114" height="107" ></img>
+<img src="https://sagecode.net/bee/img/bee-logo.jpg" alt="Bee Logo" width="114" height="107" ></img>
 </a>
 </p>
 
