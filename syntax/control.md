@@ -1,22 +1,21 @@
 ## Control Flow
 
-Bee has 6 keywords to start a control flow statement:
+Bee has 5 keywords to start a control flow statement:
 
 Name             | Description
 -----------------|----------------------------------
+[do](#do)     | uncontitional block
 [when](#when)    | single-condition dual path statement
-[do](#cycle)     | uncontitional repetitive block
-[while](#while)  | conditional repetitive block
 [with](#with)    | collection or domain iterative block
 [match](#match)  | multi-path (switch) selector
 [trial](#trial)  | exception handler and work-flow block
 
 ## Block:
 
-Control flow statements are used to alter the linear workflow to create decisions, repetitions or branches. They are implemented as block statements. Each block start with a specific keyword, and must end with one of these two:
+Control flow statements are used to alter the linear program workflow. They are implemented as block statements. Each block start with a specific keyword, and must end with one of these two:
 
 * done - statement is executed once 
-* redo - statement is executed several times
+* next - statement is executed several times
 
 **Notes:** 
 
@@ -26,122 +25,108 @@ Control flow statements are used to alter the linear workflow to create decision
 * Don''t use _"make"_ inside a repetitive block, it recreates the variable,
 * Bee has a limit on how many loops before giving up: @loop_limit.
 
+## run
+
+Execute a block of code once or multiple times depending on conditions.
+
+**local block:**
+
+```
+given
+  // local variables
+run
+  // local block
+  ...
+over;
+```
+
+**over with condition:**
+
+```
+given
+  // local variables
+run
+  // repetitive block
+  ...
+over if endCondition;
+```
+
+**more with condition:**
+
+```
+given
+  // control variables
+run
+  // repetitive block
+  ...
+more if runCondition;
+```
+
+  
 ## when
 
 This statement is also called _branch_. It create a logic branch unsing a condition:
-
-**syntax**
-```
-when condition do
-  ** branch
-  ...
-done;
-```
-
-This statement is called _fork_. It create two logical branches using a condition:
 
 **pattern:**
 ```
 when condition do
   ** primary branch
   ...
-else
+else 
   ** secondary branch
   ...
 done;
 ```
-## do
 
-Execute a block of code until is intrerupted by "stop" or final condition;
-
-**Syntax:**
-```
-do
-  ** shortcut iteration
-  loop if condition;
-  ...
-  ** early interruption
-  stop if condition;
-  ...
-redo if (repeatCondition);
-```
-
-## While
-
-This statement is repeating until a specific condition is encounter.
-
-**repetition:**
-```
-while condition do
-  ** primary branch
-  ...
-else
-  ** secondary branch
-  ...
-redo;
-```
-
-**example:**
+**nesting:**
 
 You can use multiple _when_ blocks to create nested path selectors:
 
 ```
-** control variable
-make  a ∈ Z;
-
-** first decision
-while a ≤ 0 do
+given
+  a ∈ Z; //control variable
+when a ≤ 0 do
   write "a = ";
   read  a;
-  ** second decision
-  when a = 0 do 
+  when a = 0 do
     print "a = 0";
   else
     print "a < 0"; 
   done; //a ≤ 0
-redo; 
+done; 
 ```
 
-## With
+**lather:**
 
-This statement establish a local, anonymous _name space_.
+```
+given
+  a ∈ Z; //control variable
+run
+  write "a = ";
+  read  a;
+  ** second decision
+  when a = 0 do
+    print "a = 0";
+  orif a < 0
+    print "a < 0"; 
+  else 
+    print "a > 0";   
+  done; //a ≤ 0
+over; 
+```
+
+
+## with
+
+Run a block for a specific number of times from a domain or range.
 
 **example:**
 ```
-** local variable
-make x := 4; // outer scope
-
 ** define local scope
-with x <- (0..3); y <- (0..3) do
-  alter x += 1; 
-  print x, y; // 1, 0  
-redo;
-print x; //4 (unmodified)
-print y; //  (undefined)
-```
-
-**example:**
-This entire block is repeated several times:
-
-```
-with x :0 do
-  alter x += 1;
-  stop if x = 11;
-  write x & ",";
-redo;
-print; // 1,2,3,4,5,6,7,8,9,10
-```
-
-**example**
-This block similar with previous but is ending with conditional:
-
-```
-with x := 0 do
-  alter x += 1;
-  write x & ",";
-redo if x < 11; //conditional repetition
-
-print; // 1,2,3,4,5,6,7,8,9,10,
+with x <- (0..3) run
+  write x, ",";
+more;
+print; //0,1,2,3 
 ```
 
 ## Visitor
@@ -150,13 +135,13 @@ You can visit all elements of a domain using this pattern:
 
 **Pattern:**
 ```
-with var ∈ (min..max:rate) do
+with <- (min..max:rate) run
   ...
   loop if condition; //fast forward
   ...
-  stop if condition; //early transfer
+  exit if condition; //early transfer
   ...
-redo;
+more;
 ```
 
 **Notes:**    
@@ -164,14 +149,14 @@ redo;
 * Control variable is incremented automatically;
 
 ```
-with i <- (0..10) do
+with i <- (0..10) run
   when i % 2 = 0 do
     loop;    //fast forward
   else
     write i; //odd numbers
   done;
   write ',' if (i < 9);        
-redo;
+more;
 ```
 > 1,3,5,7,9
 
@@ -184,10 +169,10 @@ Using domain ratio the example above can be simplified:
 | domain notation: (min..max:ratio)   |
 +-------------------------------------+
 **    min ↓  ↓max  ↓ = ratio
-with i <- (1..9:    2) do
+with i <- (1..9:    2) run
   write i; //odd numbers
   write ',' if (i < 9);        
-redo;
+more;
 ```
 
 ## match
@@ -196,10 +181,10 @@ This selector is a multi-path _ladder_.
 
 **pattern:**
 ```
-match x first
-  match value1 do
+match x [all | one]
+  match v1 do
     //first path
-  match value2 do
+  match v2 do
     // second path
   match (v1,v2,v3) do
     // other path    
@@ -214,25 +199,23 @@ done;
 Using repetitive statement with match selector:
 
 ```
-with a := 0 do
+given a := 0 run
   write  "Enter a number between 1 and 9 or 0 to stop:"    
   read a;
-  loop if a < 0 or a > 9;  
-  check a all
+  loop if $a < 0 or $a > 9;  
+  check $a one
     match 0 do
-        stop; //jump to redo
+        exit; //stop the loop
     match (1,3,5,7,9) do
         print "a is odd";
-        a := 0;
-        skip; //jump to redo  
+        $a := 0;
     match (2,4,6,8) do
         print "wrong: a > 9"; 
-        a:= 0;
-        skip; //jump to redo   
+        $a:= 0;
     none
         print ("ok: a = " & a);
   done;  
-redo; 
+more;
 ```
 
 ## Trial
