@@ -1,25 +1,29 @@
 ## Control Flow
 
-Bee has 4 keywords to start a control flow statement:
+Bee has 6 keywords to start a control flow statement:
 
 Name             | Description
 -----------------|----------------------------------
 [when](#when)    | single-condition dual path statement
-[case](#case)    | multi-condition multi-path selector
+[do](#cycle)     | uncontitional repetitive block
+[while](#while)  | conditional repetitive block
 [with](#with)    | collection or domain iterative block
+[match](#match)  | multi-path (switch) selector
 [trial](#trial)  | exception handler and work-flow block
 
-## Repetition:
+## Block:
 
-Control flow statement is ending with one of two keywords:
+Control flow statements are used to alter the linear workflow to create decisions, repetitions or branches. They are implemented as block statements. Each block start with a specific keyword, and must end with one of these two:
 
 * done - statement is executed once 
-* loop - statement is executed several times
+* redo - statement is executed several times
 
 **Notes:** 
 
-* You can use conditional _"if"_ after loop but not after _"done"_,
-* Careful using _"make"_ inside a loop, you could overwhelm the machine,
+* You can force terminate a repetitive block using "stop",
+* You can shortcut a repetitive block using "loop" keyword,
+* You can use conditional _"if"_ after redo but not after _"done"_,
+* Don''t use _"make"_ inside a repetitive block, it recreates the variable,
 * Bee has a limit on how many loops before giving up: @loop_limit.
 
 ## when
@@ -31,7 +35,7 @@ This statement is also called _branch_. It create a logic branch unsing a condit
 when condition do
   ** branch
   ...
-done or loop;
+done;
 ```
 
 This statement is called _fork_. It create two logical branches using a condition:
@@ -46,16 +50,35 @@ else
   ...
 done;
 ```
+## do
+
+Execute a block of code until is intrerupted by "stop" or final condition;
+
+**Syntax:**
+```
+do
+  ** shortcut iteration
+  loop if condition;
+  ...
+  ** early interruption
+  stop if condition;
+  ...
+redo if (repeatCondition);
+```
+
+## While
+
+This statement is repeating until a specific condition is encounter.
 
 **repetition:**
 ```
-when condition do
+while condition do
   ** primary branch
   ...
 else
   ** secondary branch
   ...
-loop;
+redo;
 ```
 
 **example:**
@@ -63,9 +86,11 @@ loop;
 You can use multiple _when_ blocks to create nested path selectors:
 
 ```
-** first decision
+** control variable
 make  a ∈ Z;
-when a ≤ 0 do 
+
+** first decision
+while a ≤ 0 do
   write "a = ";
   read  a;
   ** second decision
@@ -74,44 +99,7 @@ when a ≤ 0 do
   else
     print "a < 0"; 
   done; //a ≤ 0
-loop; 
-```
-
-## Case
-
-This selector is a multi-path _ladder_. 
-
-**pattern:**
-```
-case condition do
-  ** first path
-case condition do
-  ** second path
-...  
-else
-  ** final path
-done or loop; 
-```
-**Note:** 
-* _case_ is preferred way to create a _ladder_
-* _case_ is also known as _conditional search_
-
-**example:**
-
-```
-make a: 0 ∈ Z; 
-case a = 0 do 
-  write  "Enter a number between 0 and 9:"  
-  read a;
-  skip; //jump to loop
-case a < 0 do
-  print "wrong: a < 0";
-case a > 9 do
-  print "wrong: a > 9"; 
-else
-  print ("ok: a = " & a);
-  stop; //stop execution of case
-loop; 
+redo; 
 ```
 
 ## With
@@ -120,25 +108,27 @@ This statement establish a local, anonymous _name space_.
 
 **example:**
 ```
-** define local scope
+** local variable
 make x := 4; // outer scope
-with x: 0 ∈ Z, y: 0 ∈ Z do
+
+** define local scope
+with x <- (0..3); y <- (0..3) do
   alter x += 1; 
-  print x, y; // 1, 0
-done;
+  print x, y; // 1, 0  
+redo;
 print x; //4 (unmodified)
 print y; //  (undefined)
 ```
 
-**example**
+**example:**
 This entire block is repeated several times:
 
 ```
-with x := 0 do
+with x :0 do
   alter x += 1;
   stop if x = 11;
   write x & ",";
-loop;
+redo;
 print; // 1,2,3,4,5,6,7,8,9,10
 ```
 
@@ -149,7 +139,7 @@ This block similar with previous but is ending with conditional:
 with x := 0 do
   alter x += 1;
   write x & ",";
-loop if x < 11; //conditional repetition
+redo if x < 11; //conditional repetition
 
 print; // 1,2,3,4,5,6,7,8,9,10,
 ```
@@ -162,11 +152,11 @@ You can visit all elements of a domain using this pattern:
 ```
 with var ∈ (min..max:rate) do
   ...
-  skip if condition; //fast forward
+  loop if condition; //fast forward
   ...
   stop if condition; //early transfer
   ...
-loop;
+redo;
 ```
 
 **Notes:**    
@@ -174,14 +164,14 @@ loop;
 * Control variable is incremented automatically;
 
 ```
-with i ∈ (0..10) do
+with i <- (0..10) do
   when i % 2 = 0 do
-    skip; //fast forward
+    loop;    //fast forward
   else
     write i; //odd numbers
   done;
   write ',' if (i < 9);        
-loop;
+redo;
 ```
 > 1,3,5,7,9
 
@@ -193,12 +183,56 @@ Using domain ratio the example above can be simplified:
 | "with" statement can use a "domain" |
 | domain notation: (min..max:ratio)   |
 +-------------------------------------+
-
 **    min ↓  ↓max  ↓ = ratio
-with i ∈ (1..9: 2) do
+with i <- (1..9:    2) do
   write i; //odd numbers
   write ',' if (i < 9);        
-loop;
+redo;
+```
+
+## match
+
+This selector is a multi-path _ladder_. 
+
+**pattern:**
+```
+match x first
+  match value1 do
+    //first path
+  match value2 do
+    // second path
+  match (v1,v2,v3) do
+    // other path    
+    ...  
+  none
+    //default path
+done; 
+```
+
+**example:**
+
+Using repetitive statement with match selector:
+
+```
+with a := 0 do
+  write  "Enter a number between 1 and 9 or 0 to stop:"    
+  read a;
+  loop if a < 0 or a > 9;  
+  check a all
+    match 0 do
+        stop; //jump to redo
+    match (1,3,5,7,9) do
+        print "a is odd";
+        a := 0;
+        skip; //jump to redo  
+    match (2,4,6,8) do
+        print "wrong: a > 9"; 
+        a:= 0;
+        skip; //jump to redo   
+    none
+        print ("ok: a = " & a);
+  done;  
+redo; 
 ```
 
 ## Trial
@@ -218,34 +252,44 @@ This statement start with "trial" keyword and ends with "done".
 | patch | catch errors with specific code or code range
 | cover | catch all other errors not fixed by a patch
 | done  | finalize a trial block
+| all   | check a
+| pass  | end trial block succesfully
+| fail  | end trial block with failure (default error)
+| raise | end trial block with specified exception
+| retry | repeat trial block
 
 **pattern:**
 ```
 ** a complex trial  with patch
-trial
-  ...
-  skip if condition; //jump to the end
-  ...
-  stop if condition; //force stop
-  ...
-  fail if condition; //create exception
+trial [all | first]
+  //trial initialization (cases may be missing)
+    ...
+  case condition1 do
+    ...
+    pass if passCondition;   //optional end trial
+  case condition2 do
+    ...
+    fail if failCondition;   //optional create exception   
+  default // trial rule
+    ...
+    raise @error if otherCondition; //optional rize error
 patch code do 
   ** handler1
   ...
-  skip; //optional
-patch (domain) do
+  retry; //optional repeat the trial
+patch (code,code) do
   ** handler2
   ...  
-  stop; //optional  
+  pass; //optional stop the trial 
 cover
   ** cover all other errors
   ...
   raise @error if condition; //propagate last error
 final
   ** finalization statement (executed before leaving)  
-  ** not executed when skip but: fail, raise or stop will
+  ** not executed when loop but: fail, raise or stop will
   print "final error:" + @error.code if @error.code > 0;
-done or loop;
+done;
 ```
 
 **Note:**
@@ -295,12 +339,11 @@ This region can catch an error and fix it. Error can be catch by code or domain 
 Next statements are transfer statements used in trial block:
 
 | word  | description
-|-------|------------------------------------------------------------------------------
+|-------|--------------------------------------------------------------------------
 | raise | transfer execution to error handlers with new error or reissue last error
 | fail  | transfer execution to error handlers when a condition is satisfied
 | pass  | transfer execution to error handler unless a condition is satisfied
-| stop  | give up, clear the error, execute final and transfer to the parent
-| skip  | do not execute anything else, just jump to end of the block
+| retry | restart the trial block
 
 **cover**
 
@@ -362,16 +405,15 @@ trial
   alter count += 1;
   write "enter a number between 0 and 9";
   read a;
-  stop if a = 0;
-  fail if a > 9; 
-  fail if a < 0;  
+  fail  if a > 9; 
+  fail  if a < 0;  
 patch $out_of_range do
   when count < 3 do
     write "wrong try again:" 
-    skip; //try again the same exact steps 3 times
+    retry; //try again the same exact steps 3 times
   else       
     write "wrong 3 times";
-    stop; //give up 
+    fail; //give up 
   done;    
 final
   when  a ∈ (0..9) do
@@ -380,7 +422,7 @@ final
     write "correct";
   done;  
   print;
-loop;  
+done;  
 ```
 
 **Note:** 

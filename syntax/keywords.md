@@ -3,12 +3,12 @@
 Bee core has 41 reserved keywords so far: 
 
 ```
-03: if, is, or, all
-07: make, rule, like, load, alias, type, return
+03: if, is, or 
+07: make, like, load, alias, type, method, return
 09: read, write, print, alter, scrap, wait, apply, begin, defer
-08: with, when, case, else, while, loop, do, done 
-05: trial, cover, patch, final
-06: fail, pass, raise
+09: with, when, case, else, while, do, redo, done 
+05: trial, cover, patch, final, case, default
+03: fail, pass, raise, retry
 05: exit, skip, stop, halt, yield
 ```
 
@@ -23,6 +23,7 @@ Bee core has 41 reserved keywords so far:
 |----------|--------------------------------------------------------------
 | if       | conditional for simple statements
 | is       | query element or variable data type
+| in       | used in repetitive statement to generate values from a range
 
 ### Definition statements
 
@@ -35,8 +36,8 @@ Next statements are used to declare new elements in a module.
 | type     | Declare data super-type or sub-type in a module
 | make     | Create a new variable or multiple variables
 | save     | Declare constant \| Immutable variable
-| rule     | Create a new _rule_ or _prototype_
-| return   | End rule declaration and transfer control to caller
+| method   | Create a new _business rule_ or _prototype_
+| return   | End _method_ declaration and transfer control to caller
 
 
 ### Execution statements
@@ -44,8 +45,8 @@ Next statements are used to declare new elements in a module.
 Next keywords are simple statements. These represents actions called _imperative statements_.
 
 | Keyword  | Purpose
-|----------|-----------------------------------------------------------------------------
-| apply    | Execute a rule or module that do not have a result
+|----------|--------------------------------------------------------------------
+| apply    | Execute a _method_ and ignore the _result_ if there is one
 | begin    | Commence execution of a coroutine or module 
 | defer    | Postpone execution of a coroutine or module 
 | wait     | Suspend current thread execution for a number of seconds
@@ -66,15 +67,14 @@ Control statements are also known as selection statements.
 | else     | Alternative path for when statement
 | case     | Conditional search multi-path selector
 | while    | Start conditional repetitive block
-| loop     | Cause a block to repeat or a condition to reevaluate
-| with     | Start iteration loop for domain or collection
+| with     | Start iteration for a domain or collection
 | trial    | Protect a block of code that may have exceptions
 | cover    | Associated with trial to catch other errors
 | patch    | Associated with trial to patch any other errors
 | final    | Associated with trial to finalize the trial block
 | do       | Begin a statement region in a block statement
 | done     | Finalize with, when, case and trial control statements
-
+| redo     | Cause a block to repeat or a condition to reevaluate
 
 ## Transfer statements
 
@@ -82,13 +82,14 @@ These statements execute a jump or make an interruption of current thread.
 
 | Keyword  | Purpose
 |----------|--------------------------------------------------------------------
-| exit     | Force silent termination of a rule, module, program or driver
-| stop     | Interrupt a while loop and continue past loop; keyword
+| exit     | Force silent termination of a method, module, program or driver
+| stop     | Interrupt a while redo and continue past redo; keyword
 | skip     | Skip the rest of while block and continue from the beginning
 | fail     | Create error message if a condition is true else pass
 | pass     | Clear error message if a condition is true else fail
 | raise    | Used in exception handler to propagate an error out of trial block
 | yield    | Suspend one coroutine and give control to another routine
 | halt     | Create unrecoverable error and stop program
+| retry    | Repeat a trial block a second time
 
 **Read next:** [Syntax Overview](overview.md)

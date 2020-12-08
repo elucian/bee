@@ -11,14 +11,14 @@ Standard library contains:
  
 **Introspection**
 
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | type     | type name
 | size     | type size 
 
 ## Composite rules
 
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | length   | type length 
 | capacity | type capacity
@@ -27,7 +27,7 @@ Standard library contains:
  
 **List/strings**
 
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | split    | Split a string into a list / array
 | join     | Join a list into a string 
@@ -40,7 +40,7 @@ Standard library contains:
  
 **Numeric**
  
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | round    | Convert one real into an integer
 | floor    | Convert one real into an integer
@@ -54,14 +54,14 @@ Modules for _date_ and _time_ will contain all required rules.
 
 **time**
 
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | now      | get current time
 
 
 **date**
 
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | now      | get current date
 
@@ -69,7 +69,7 @@ Modules for _date_ and _time_ will contain all required rules.
 
 Library math will implement rules:
 
-| rule     | Purpose
+| method     | Purpose
 |----------|------------------------------------------ 
 | sin      | sinus 
 | cos      | cousin
@@ -77,7 +77,7 @@ Library math will implement rules:
 | pow      | power
 | sqr      | square root
 | fac      | factorial
-| mod      | module rule y := \|x\|  
+| mod      | module method y := \|x\|  
 
 ## System Library
 
@@ -99,17 +99,17 @@ Interaction with operating system require load from library.
 
 To read and print into files and save to disk, we must use system.io library. This library define type "F" : file handler. It offer support for file input/output.
 
-**Rules**
+**Methods**
 
 Next is a fragment from system.io library that define rules open and close.
 
 ```
-rule .open(name ∈ S, mode ∈ A) => (file ∈ File);
-rule .close(file ∈ File);
-rule .list(folder ∈ Folder) ∈ (S);
-rule .exist(name ∈ S) ∈ L;
-rule ,delete(name ∈ S); 
-rule ,rename(name, new_name ∈ S); 
+method .open(name ∈ S, mode ∈ A) => (file ∈ File);
+method .close(file ∈ File);
+method .list(folder ∈ Folder) ∈ (S);
+method .exist(name ∈ S) ∈ L;
+method ,delete(name ∈ S); 
+method ,rename(name, new_name ∈ S); 
 ...
 
 ```
@@ -123,7 +123,7 @@ rule ,rename(name, new_name ∈ S);
 
 System IO rules
 
-| rule    | Purpose
+| method    | Purpose
 |---------|------------------------------------------ 
 | open    | Open a file
 | close   | Close a file

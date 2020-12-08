@@ -151,7 +151,7 @@ make x := 0;
 while (x < m) do
   alter test[i] := x;
   alter x += 1;
-loop;
+redo;
 
 ** print all elements of array
 print test;
@@ -184,7 +184,7 @@ make a7 := a1 ∪ a2; //[1,2,3,4]
 
 **example:**
 ```
-rule test_array:
+method test_array:
   ** array  with capacity of 10 elements
   make my_array ∈ [Z](10);
   make m := my_array.capacity();
@@ -193,7 +193,7 @@ rule test_array:
   while i < m do
     alter my_array[i] := i;     
     alter i += 1;
-  loop;
+  redo;
   ** array  elements using escape template by index #[]
   print ("First element: #[1]"  ? my_array); 
   print ("Last element:  #[-1]" ? my_array);
@@ -219,7 +219,7 @@ Array capacity can be modified using union operator "+" or "+=". This will reset
 make array := [0](10); 
 make acopy := array; //copy reference
 
-rule main():
+method main():
   print array = acopy; //1 = True (same array)
   
   ** extend array with 10 more elements
@@ -239,8 +239,8 @@ return;
 Array data can be used as arguments for feeding a function that receive variable arguments.
 
 ```
-rule sum(*args ∈ Z) => (result: 0 ∈ Z): 
-  with e ∈ args do 
+method sum(*args ∈ Z) => (result: 0 ∈ Z): 
+  with e <- args do 
     result += e;
   done;  
 return;
@@ -258,7 +258,7 @@ make array := [1,2,3,4,5];
 
 make x, y, *other := [1,2,3,4,5]; //decomposition
 
-rule main():
+method main():
   print "x = #(n)" ? x;  // x = 1
   print "y = #(n)" ? y;  // y = 2
   print "other = #[*]" ? other; //other = [3,4,5]
@@ -292,7 +292,7 @@ Anonymous slicing notation can be used to extract or modify specific elements fr
 ```
 ** initialized array
 make a:= [0,1,2,3,4,5,6,7,8,9]; 
-rule main():
+method main():
   print a[1..-1];  // will print [0,1,2,3,4,5,6,7,8,9]
   print a[-3..-1]; // will print [7,8,9]
   print a[1..1];   // will print [0]
@@ -318,7 +318,7 @@ make a:= [0](5); //[0,0,0,0,0]
 make c := a[0..2]; //[0,0,0]
 make e := a[3..4]; //[0,0]
 
-rule main():
+method main():
   ** modify all slice elements
   alter c[*] := 1;
   alter e[*] := 2;
@@ -340,7 +340,7 @@ Modify all elements of the matrix is possible using [*] and assign operator “ 
 ** a matrix having 2 rows and 2 columns
 make M ∈ [Z](2,2);
 
-rule main():
+method main():
   M[*] := 100; //initialize all elements with 100
   print (M);   //[[100,100],[100,100]]
 return;
@@ -352,7 +352,7 @@ return;
 ```
 make M ∈ [Z](2,2);
 
-rule main():
+method main():
 ** assign same value to all elements
   M[*] := 100;
 ** modify all elements
@@ -399,7 +399,7 @@ make M := ⎡'a0','b0','c0'⎤
           ⎢'a1','b1','c1'⎥
           ⎣'a2','b2','c2'⎦
           
-rule main():
+method main():
   ** local control variables
   make row, col := 0;  // type inference: ∈ Z
   
@@ -408,14 +408,14 @@ rule main():
     while row < 3 do   // traverse row first
       print M[row,col];
       alter row += 1;
-    loop;
+    redo;
     alter col += 1;
-  loop;
+  redo;
   
   ** traversal with visitor pattern
-  with e ∈ M do
+  with e <- M do
     print e; //element
-  loop;
+  redo;
 return;  
 ```
 
@@ -441,7 +441,7 @@ New map defined from a domain
 ```
 make  new_map := { (x:x²) | x ∈ (0.!10) ∧ (x % 2 = 0) }; 
 
-rule main():
+method main():
   print new_map; //{(0:0),(2:4),(4:16),(6:36),(8:64)}
 return;  
 ```
@@ -461,7 +461,7 @@ Collection members can be copy into the new collection using collection builder:
 ```
 make source := [0,1,2,2,2,2];
 
-rule main():
+method main():
   make set := { x | x ∈ source }; //eliminate duplicates
   print set; //{0,1,2} 
 return;
@@ -474,7 +474,7 @@ Build notation can use expressions to filter out elements during build.
 ```
 make source := [0,1,2,3,4,5];
 
-rule main()
+method main()
   make set := { x | x ∈ source ∧ (x % 2 = 0) };
   print set; //{0,2,4} 
 return;
@@ -486,7 +486,7 @@ The elements in one set or list can be transformed by a function or expression t
 **Example:**
 ```
 make source := {0,1,2,3,4,5};
-rule main():
+method main():
   ** create Table pairs (key, value) for Table map   
   make target := {(x:x^2) | x ∈ source };
   print target; //{ 0:0, 1:1, 2:4, 3:9, 4:16, 5:25} 
@@ -511,7 +511,7 @@ Therefore List union act very similar to append, except we add multiple elements
 make a := ('a','b','c');
 make b := ('1','2','3');
 
-rule main():
+method main():
   make c := a + b;
   print c; //('a','b','c','1','2','3');
 return;  
@@ -521,7 +521,7 @@ return;
 The join function receive a list and convert elements into a string separated be specified character.
 
 ```
-rule main():
+method main():
   make str := join([1,2,3],',');
   print (str); //'1,2,3';
 return;  
@@ -531,7 +531,7 @@ return;
 The join function receive a list and convert elements into a string separated be specified character.
 
 ```
-rule main():
+method main():
   make lst := split("1,2,3",",");
   print lst; //(1,2,3)
 return;  
@@ -545,7 +545,7 @@ A stack is a LIFO list of elements: LIFO = (last in first out)
 make a := (1, 2, 3); //list
 make last ∈ N;
 
-rule main():
+method main():
   ** append operator: "<+"
   alter a <+ 4; //(1,2,3,4)
   
@@ -565,7 +565,7 @@ A queue is a FIFO collection of elements: (first in first out)
 make q := (1,2,3); 
 make first: N;
 
-rule main():
+method main():
    ** enqueue new element into list "++" 
    alter q <+ 4; //(1,2,3,4)
    
@@ -608,11 +608,11 @@ Available for: {List, Table, Set} but not Array or Slice
 
 **Example:**
 ```
-rule main():
+method main():
    make my_map := {("a":1),("b":2),("c":3)};
-   with (key, value) ∈ my_map do
+   with (key, value) in my_map do
      print('("' + key + '",' + value +')');
-   loop;
+   redo;
 return;   
 ```
 
@@ -634,7 +634,7 @@ Hash tables are sorted in memory by _key_ for faster search. It is more difficul
 ** check if a key is present in a hash collection
 make my_map := {(1:'a'),(2:'b'),(3:'c')};
 
-rule main()
+method main()
    make my_key := 3;
    when my_key ∈ my_map do
      print("True"); //expected
@@ -647,7 +647,7 @@ return;
 **example:**
 ```
 make animals ∈ {S,S};
-rule main():
+method main():
   alter animals["Bear"] := "dog";
   alter animals["Kiwi"] := "bird";
   print(animals);
@@ -669,7 +669,7 @@ Output:
 ```  
 make animals := {}; //partial declaration
 
-rule main():
+method main():
   ** establish element types (S:X)
   alter animals["Rover"] := "dog";
 
@@ -698,7 +698,7 @@ Strings can be concatenated using:
 ** this is example of string concatenation
 make str := ""; 
 
-rule main():
+method main():
   ** concatenate string as they are (no trim)
   alter str := "this " & " string"; //"this  string"
   
@@ -713,7 +713,7 @@ Two strings can be concatenated using concatenation operator "/" or "\\". This o
 
 ```
 make s := "";
-rule main()
+method main()
   alter s := "te/" / "/st"; //"te/st"
   alter s := "te/" \ "/st"; //"te\\st"
   alter s := "te"."st"; //"te\\st" or "te/st" depending on OS
@@ -731,7 +731,7 @@ make s := ' ' * 10;
 
 **Examples:**
 ```
-rule main():
+method main():
   ** make a string from pattern 01
   make  a := "01" * 4;
   print a; //01010101;
@@ -754,7 +754,7 @@ make str := constant * n ∈ S(n);
 ```
 make sep := '-' * 19;
 
-rule main():
+method main():
   print ('+' + sep + "-");
   print ('|   this is a test   |');
   print ('+' + sep + '+');
@@ -812,7 +812,7 @@ make template := "Duration:#(n) minutes and #(n) seconds";
 make var1 := 4; 
 make var2 := 55;
 ...
-rule main():
+method main():
   print template ? (var1,var2,...); //Duration:4 minutes and 55 seconds
 return;  
 ```
@@ -824,7 +824,7 @@ return;
 make x := 30; //Code ASCII 0
 make y := 41; //Code ASCII A
 
-rule main():
+method main():
    ** template writing alternative
    print "#(n) > #(n)" ? (x,y); //"30 > 41" 
    print "#(a) > #(a)" ? (x,y); //"0 > A"  
@@ -900,7 +900,7 @@ A large template can be stored into a file, loaded from file and format().
 2. Create the template text and store it in external file;
 3. Use a loop to visit the template file row by row;
 4. Use template modifier: "?" to replace placeholders row by row;
-5. Alternative use _format()_ build-in rule to replace all placeholders;
+5. Alternative use _format()_ build-in method to replace all placeholders;
 
 **Using Hash:**
 
@@ -909,7 +909,7 @@ make template1 := "Hey look at this #[key1] it #[key2]!";
 make template2 := "Hey look at this #(s)[key1] it #(q)[key2]!";
 make map       := {("key1":"test"),("key2":"works")};
 
-rule main():
+method main():
   print template.format(map);
   print template ? map;
 return;  
@@ -926,7 +926,7 @@ Hey look at this 'test' it "works"!
 make  template := "Hey look at this #[0] it #[1]!";
 make  my_set   := {"test","works"};
 
-rule main():
+method main():
   print template ? my_set; 
 return;  
 ```
@@ -941,7 +941,7 @@ Hey look at this test it works!
 Number type is implementing format() method. This method has one string parameter that is optional.
 
 ```
-rule format(number ∈ R, pattern ∈ S) => (result ∈ S):
+method format(number ∈ R, pattern ∈ S) => (result ∈ S):
   ...
 return;
   

@@ -50,7 +50,7 @@ type type_name: { name1:0, name2, name3} <: Ordinal;
 
 make a, b, c ∈ type_name; //a, b, c will have same type
 
-rule main():
+method main():
   alter a := type_name.name1; //a=2
   alter b := type_name.name2; //b=3
   alter c := type_name.name3; //c=4
@@ -64,7 +64,7 @@ type type_names: {.name0, .name1} <: Ordinal;
 
 make a, b ∈ type_name;
 
-rule main()
+method main()
   alter  a := name0; //a = 0
   alter  b := name1; //b = 1
 return;  
@@ -96,15 +96,15 @@ Bee tuples are very different from Python and other languages.
 **See also:** definition of tuple on Wikipedia: [Tuple](https://en.wikipedia.org/wiki/Tuple)
 
 **multiple results**
-A rule can have multiple results defined using a tuple:
+A method can have multiple results defined using a tuple:
 
-```** rule with multiple results
-rule test(x,y ∈ Z) => (r, c ∈ Z):
+```** method with multiple results
+method test(x,y ∈ Z) => (r, c ∈ Z):
   alter r := x+1;
   alter c := y+1;
 return;
 
-rule main()
+method main()
   make n, m ∈ Z;
   ** collecting the results
   alter n, m := test(1,2);
@@ -158,17 +158,17 @@ make two:() ∈ (Z);  //empty list of integers = ()
 make one:(0,);      //initialize list with single element
 make two:(1,2);     //initialize list with two elements
 ** define a list type of unsigned short integer
-type Lou:(N) <: List;
+type Lon:(N) <: List;
 ** define a list variable of defined type Lou
-make list:(0, 1, 2, 3, 4, 5) ∈ Lou;
+make myList:(0, 1, 2, 3, 4, 5) ∈ Lon;
 ** list traversal
-rule main():
-  with x ∈ list do
+method main():
+  with x <- myList do
     write x;
-    write "," if (x ≠ list.head);
-  loop;
+    write "," if (x ≠ myList.head);
+  redo;
   print; //0,1,2,3,4,5
-rule;  
+method;  
 ```
 
 ## Array
@@ -198,11 +198,11 @@ make array_name ∈ Array_Type;
 ```
 make array := ['a', 'b', 'c']; // initialized array
 
-rule main():
-  with c ∈ array do
+method main():
+  with c <- array do
     write c;
     write ',';
-  loop;
+  redo;
 return;  
 ```
 
@@ -221,7 +221,7 @@ Initial value for elements can be set during declaration or later:
 ```** you can use a single value to initialize all vector elements
 make zum:0 ∈ [Z](10); //explicit initialization using single value
 
-rule main():  ** modify one element by index
+method main():  ** modify one element by index
   alter zum[1]  := 1; 
   alter zum[-1] := 9; 
   print zum; //expect [0,1,0,0,0,0,0,0,0,9]
@@ -238,7 +238,7 @@ We can define an empty array and initialize elements later.
 make vec ∈ [A](); 
 make nec ∈ [N](); 
 
-rule main():   ** arrays are empty
+method main():   ** arrays are empty
    print vec = []; //True
    print nec = []; //True
       ** initialize with operator "×"
@@ -259,7 +259,7 @@ A matrix is an array with 2 or more dimensions.
 type Mat: [R](4,4) <: Matrix;
 make mat ∈ Mat //define matrix
 
-rule main()  ** modify matrix using ":=" operator
+method main()  ** modify matrix using ":=" operator
   alter mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
   print mat[0,0]; //1  = first element
   print mat[3,3]; //16 = last element
@@ -281,12 +281,12 @@ make i   := 0;
 make mat := [Z](3,3);
 make x   := mat.length;
 
-rule main():  
+method main():  
   while (i < x) do
     mat[i] := i+1;
     write mat[x], ',';
     i += 1;
-  loop
+  redo
   print;
 return;  
 ```
@@ -316,7 +316,7 @@ make d1 := s1 - s2; //{1}        :difference 1
 make d2 := s2 - s1; //{4}        :difference 2
 make d  := s2 ⊖ s1; //{1,4}      :symmetric difference
 
-rule main():   ** verify expectation
+method main():   ** verify expectation
    pass if d = d1 ∪ d2; //equivalent (else fail)
       ** belonging check
    print s1 ⊂ s;  //True
@@ -350,7 +350,7 @@ make new_map := {} ∈ type_name;
 ```** initial value of map
 make map := {('a':"first"), ('b':"second")};
 
-rule main():   ** create new element
+method main():   ** create new element
    alter map['c'] := "third";
       ** modification of non existent element will fail
    alter map['e'] := "forth"; //ERROR
@@ -378,7 +378,7 @@ type  Tmap: {(A:U)} <: Hash;
 
 make map  := {('a':"first"), ('b':"second")} ∈ Tmap;
 
-rule main():
+method main():
    when ('a' ∈ map) do
      print("a is found");
    else
@@ -434,7 +434,7 @@ Single quoted or back quoted literals can contain a single symbol.
 ```** fixed capacity array or ASCII symbols
 type A128: [A](128) <: Array; 
 
-rule main()
+method main()
   ** populate array using spreading operator (*)
   make str ∈ A128;
   alter *str := "test"; //spreading a ASCII literal
@@ -453,7 +453,7 @@ Double quoted string literals are Unicode UTF8 strings.
 
 **example:**
 ```
-rule main():
+method main():
    ** fixed capacity string UTF8
    make  uco ∈ S; //Unicode string unknown capacity
    alter uco := "∈ ≡ ≤ ≥ ÷ ≠ · × ¬ ↑ ↓ ∧ ∨";
@@ -502,7 +502,7 @@ symbol| description
 make m: ('-' * 10) ∈ S; //m = "----------"
 make (u, c, s) ∈ S; //default length is 128 octets = 1024 bit
 
-rule main():   ** string concatenation
+method main():   ** string concatenation
    alter u := "This is " & " a short string.";
    alter c := "This is " + "a large string"; 
       ** automatic conversion to string
@@ -517,13 +517,13 @@ return;
 ```
 
 ### Conversion
-Conversion of a string into number is done using _parse_ rule:
+Conversion of a string into number is done using _parse_ method:
 
 ```
 make x,y ∈ R;
 
-rule main():
-  ** rule parse return; a Real number
+method main():
+  ** method parse return; a Real number
   alter x := parse("123.512",2); //convert to real 123.5
   alter y := parse("10,000.3333",2); //convert to real 10000.33
 return;  
@@ -538,7 +538,7 @@ Object type is a data structure with elements enclosed in curly brackets { , , ,
 ```** declare a category of objects
 type  Type_name: {attribute ∈ type_name, ...} <: Object;
 
-rule main():  ** create an object instance using default constructor
+method main():  ** create an object instance using default constructor
   make item_name := {
          attribute : constant,
          ...
@@ -569,7 +569,7 @@ make catalog ∈ [Person](10);
 make catalog[0] := {name:"Cleopatra", age:15};
 make catalog[1] := {name:"Martin", age:17};
 
-rule main():
+method main():
    ** using one element with dot operators
    print caralog[0].name; //will print Cleopatra
    print caralog[1].name; //will print Martin
@@ -613,18 +613,18 @@ An object can have associated rules that are called _methods_:
 ```** define Foo as object with 2 public attributes:
 type Foo: {a, b ∈ N} <: Object;
   ** constructor has the same name as the type
-rule foo(p1,p2 ∈ N) => (self ∈ Foo):
+method foo(p1,p2 ∈ N) => (self ∈ Foo):
   make self := {a:p1, b:p2};
 return;
 ** define a method for Foo
-rule bar(self ∈ Foo):
+method bar(self ∈ Foo):
   print "a =" + self.a;
   print "b =" + self.b;
 return;
 ** call constructor
 make test := foo(1,1);
 ** run bar() method using object test as dot qualifier
-rule main():
+method main():
   apply test.bar;
   fail if test.a ≠ 1; //verify attribute a
   fail if test.b ≠ 1; //verify attribute b
@@ -637,8 +637,8 @@ return;
 
 **Notes:** 
 * Binded rules are using multiple dispatch so they can be overloaded;
-* Rules can be overwritten in other modules;
-* Rules can be private or public using dot prefix;
+* Methods can be overwritten in other modules;
+* Methods can be private or public using dot prefix;
 * If an object is public, the constructor must also be public;
 * You can not modify object structure after it is defined.
 
@@ -647,7 +647,7 @@ return;
 The last parameter in a parameter list can use prefix: "\*"
 
 ```
-rule foo(*bar ∈ [Z]) => (x ∈ Z):
+method foo(*bar ∈ [Z]) => (x ∈ Z):
   make c := bar.count();
   ** precondition
   when (c = 0) do
@@ -655,13 +655,13 @@ rule foo(*bar ∈ [Z]) => (x ∈ Z):
     exit;
   done;
   ** sum all parameters  
-  with i ∈ (0.!c) do
+  with i <- (0.!c) do
     alter x += bar[i];
-  loop;
+  redo;
 return;
 
 ** we can call foo with variable number of arguments
-rule main():
+method main():
    print foo();        //0
    print foo(1);       //1
    print foo(1,2);     //3
@@ -698,7 +698,7 @@ String interpolation "?" can be used to customize the error messages:
 
 **example:**
 ```
-rule main():
+method main():
    make  flag ∈ L;
    read (flag, "enter flag (0/1):");
    

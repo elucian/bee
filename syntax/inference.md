@@ -56,7 +56,7 @@ make s := {1,2,3,4};
 ** hash map of (Z: String)
 make c := {(1:"storage"),(2:"string")};
 ** object with two attributes: name ∈ String, age ∈ Z 
-make  b := {name:"Goliath", age:30};
+make b := {name:"Goliath", age:30};
 
 ```
 
@@ -65,12 +65,12 @@ When we define parameters we can use type inference only for optional parameters
 
 **Optional Parameters:**
 
-```** in rule foo, parameters a, b are optional.
-rule foo(a: 0, b: 0) => (r ∈ Z):
+```** in method foo, parameters a, b are optional.
+method foo(a:= 0, b:= 0) => (r ∈ Z):
   alter r := a + b;
-rule;  
+method;  
         
-rule main():        
+method main():        
   print foo();    // 0               
   print foo(1);   // 1
   print foo(1,2); // 3
@@ -81,11 +81,11 @@ return;
 
 ```
 ** parameters: a, b are mandatory, c is optional.
-rule foo(a, b ∈ Z, c:0) => (r ∈ Z):
+method foo(a, b ∈ Z, c := 0) => (r ∈ Z):
   alter r := (a + b + c);
 return;  
 
-rule main():
+method main():
   print foo(1,2);   // 3
   print foo(1,2,3); // 6
   print foo(1);     // Error: expected 2 arguments
@@ -96,14 +96,14 @@ return;
 
 We can use parameter name and pair-up ":" symbol for argument value.
 
-```** rule with optional parameters (Z)rule bar(a:0, b:0, c:0 ∈ Z) => (result ∈ Z):
+```** method with optional parameters (Z)method bar(a := 0, b := 0, c := 0 ∈ Z) => (result ∈ Z):
   alter result := (a+b+c);
 return;  
 ** observe we use pair-up ":" to give value for each argument
-rule main():
-  print bar(a:1); //print 1 because (b,c := 0) 
-  print bar(b:1); //print 1 because (a,b := 0) 
-  print bar(c:1); //print 1 because (a,b := 0) 
+method main():
+  print bar(a:=1); //print 1 because (b,c := 0) 
+  print bar(b:=1); //print 1 because (a,b := 0) 
+  print bar(c:=1); //print 1 because (a,b := 0) 
 return;  
 ```
 

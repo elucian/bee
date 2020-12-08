@@ -67,17 +67,17 @@ Bee can use a runt-time configuration file:
 ```
 
 ### Global Constants
- Global constants are using "$" prefix. There are several predefined system constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new global constants at the beginning of any module.
+Global constants are using "$" prefix. There are several predefined system constants available in Bee. These constants can be used to locate project files or connect to databases. You can define new global constants at the beginning of any module.
 
-|Constant  | Environment| Description                |
-|----------|------------|----------------------------|
-|$bee_home | BEE_HOME   | Bee home folder            |
-|$bee_lib  | BEE_LIB    | Bee library home           |
-|$bee_path | BEE_PATH   | Bee library path           |
-|$pro_home | N/A        | Program home folder        |
-|$pro_lib  | N/A        | Program library home       |
-|$pro_mod  | N/A        | Program modules home    |
-|$pro_log  | N/A        | Reporting folder           |
+|Constant  | Environment| Description                
+|----------|------------|----------------------------
+|$bee_home | BEE_HOME   | Bee home folder            
+|$bee_lib  | BEE_LIB    | Bee library home           
+|$bee_path | BEE_PATH   | Bee library path           
+|$pro_home | N/A        | Program home folder        
+|$pro_lib  | N/A        | Program library home       
+|$pro_mod  | N/A        | Program modules home       
+|$pro_log  | N/A        | Reporting folder           
 
 ### Compiler directives
 
@@ -101,7 +101,7 @@ Compiler directives are system constants that control the compilation process. Y
 
 ### Global Variables
 
-Global variables are defined usually at the beginning of a module outside of any rule. 
+Global variables are defined usually at the beginning of a module outside of any method. 
 
 **introspection:**
 
@@ -127,7 +127,7 @@ An _module_ is a file located in _"src"_ folder having extension *.bee. A _modul
 
 **notes:**
 * An  _module_ can have public elements,
-* One _module_ can can contain rule main(),
+* One _module_ can can contain method main(),
 * One _module_ can load multiple other modules,
 * One _module_ can be loaded a single time in another module,
 * You can not load a module from a block statement,
@@ -137,14 +137,14 @@ A _library_ is a reusable module located in a sub-folder _"lib"_. One module can
 
 **notes:**
 * A library must have at least one public member,
-* A library can not contain a rule called main(),
+* A library can not contain a method called main(),
 * A library can not be stored in project _"src"_ folder,
 * You can loaded a library one single time in a module,
 * You can not load a library from a block statement.
 
 ### Main module
 
-One module that contains rule main() is the application _main module_. Main module is usually defining _global constants_, _global variables_ and main rule. A good designer will split the rest of the application in secondary modules.
+One module that contains method main() is the application _main module_. Main module is usually defining _global constants_, _global variables_ and main method. A good designer will split the rest of the application in secondary modules.
 
 **restrictions**
 
@@ -160,7 +160,7 @@ Bee is using 6 kind of declarations:
 * type  // declare data types
 * make  // declare variable
 * save  // declare a constant
-* rule  // declare named code block
+* method  // declare named code block
 
 ### Statements
 
@@ -172,8 +172,8 @@ Each statement start with one imperative keyword:
 * read   :accept input from console into a variable
 * write  :register in console cash result of an expressions
 * print  :output to console with end of new line and flush console cash
-* apply  :execute one rule in synchronous mode and wait for it to finish
-* begin  :start execution of a rule in asynchronous mode and do not wait to finish
+* apply  :execute one method in synchronous mode and wait for it to finish
+* begin  :start execution of a method in asynchronous mode and do not wait to finish
 
 **notes:**
 
@@ -194,19 +194,19 @@ Statements can be contained in blocks of code.
 **notes:**
 
 * Each block is finalized with a different keyword,
-* Closing keyword can be one of: { done, loop, next },
+* Closing keyword can be one of: { done, redo, next },
 * Statements in nested blocks are using indentation at 2 spaces.
 
 
-### Main rule
+### Main method
 
-A module can define "rules". These are sub-programs that can be executed on demand. One special rule is the main() rule that can be defined in the main module. This rule can receive multiple parameters and is automatically executed when program starts.
+A module can define "rules". These are sub-programs that can be executed on demand. One special method is the main() method that can be defined in the main module. This method can receive multiple parameters and is automatically executed when program starts.
 
 **Example:**
 
 ```
-# demonstrate main rule
-rule main(*params ∈ S):
+# demonstrate main method
+method main(*params ∈ S):
    ** read the number of parameters
    make c := params.count;
    halt if (c = 0);
@@ -217,7 +217,7 @@ rule main(*params ∈ S):
      write params[i];
      alter i += 1;
      write "," if (i < c);
-   loop;
+   redo;
    ** print the buffer to console
    print;  
 return;
@@ -229,7 +229,7 @@ Do not try to understand this example. It is just a worm-up code!
 * This program consist of one main module;
 * Input parameter _*params_ is an array of strings;
 * Early program termination can be trigger using: halt or exit;
-* Any rule is ending with mandatory keyword: _"return"_; 
+* Any method is ending with mandatory keyword: _"return"_; 
 
 ## External code
 
@@ -293,11 +293,11 @@ save .pi := 3.14;   // public constant
 make .v   ∈ N;      // public variable
 make str := "test"; // private variable
 
-# expression rule foo is private
-rule foo(x ∈ N) ∈ N => (x + 1);
+# expression method foo is private
+method foo(x ∈ N) ∈ N => (x + 1);
 
-# block rule bar is public
-rule.bar(x, y ∈ N) => (r ∈ N):
+# block method bar is public
+method.bar(x, y ∈ N) => (r ∈ N):
   alter r := x + y;
 return;
 ```
@@ -363,9 +363,9 @@ In next example we are using various comments into a demo program.
    /* Nested comments are allowed. */   
 */
 
-# rule descriptive comments (unindented comment outside rules)
-rule main():
-  ** This is a single line comment (indented comment inside rule)
+# method descriptive comments (unindented comment outside rules)
+method main():
+  ** This is a single line comment (indented comment inside method)
   pass; // does nothing
   ... 
    
@@ -384,28 +384,28 @@ return;
 
 ## Execution
 
-When a program is executed the _main module_ is located and executed first. If a program do not have a _main module_, it can not be executed nor compiled. The main() rule is the program main entry point. It is executed only once.  If you try to execute rule main() you can but there is no point to it.
+When a program is executed the _main module_ is located and executed first. If a program do not have a _main module_, it can not be executed nor compiled. The main() method is the program main entry point. It is executed only once.  If you try to execute method main() you can but there is no point to it.
 
 **module:**
 
-The main module can load numerous modules and libraries. After loading, all public elements can be executed on demand. Before execution the main() rule can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
+The main module can load numerous modules and libraries. After loading, all public elements can be executed on demand. Before execution the main() method can interact with the user to ask for input. After executing it can print feedback and reuse or store results for later use.
 
 
 **pattern:**
 
-This pattern demonstrate how to use a rule from a module named "module_name"
+This pattern demonstrate how to use a method from a module named "module_name"
 
 ```# loading a module
 load $pro.src.module_name;
 
-# give alias to module rule
+# give alias to module method
 alias new_name: module_name.rule_name;
 
-rule main():
+method main():
    ** results can be captured using make
    make result := module_name.rule_name(arguments);
    
-   ** modify a variable using rule alias:
+   ** modify a variable using method alias:
    alter result := new_name(arguments);
 return;   
 ```
@@ -415,8 +415,8 @@ return;
 This pattern demonstrate how to declare an module named "test.bee".
 
 ```
-# define a public rule
-rule .abs(i ∈ Z) => (v ∈ N):
+# define a public method
+method .abs(i ∈ Z) => (v ∈ N):
   when (i < 0) do 
     alter v := -i;
   else
@@ -436,7 +436,7 @@ load $pro_src.test;
 make collect ∈ (N);
 
 # execute test() and append result in collect
-rule main():
+method main():
    ** normal use
    print abs(-1) // 1
    

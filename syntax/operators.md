@@ -34,17 +34,18 @@ symbol| description
  `&`  | String concatenation \| number concatenation
  `#`  | String interpolation \| placeholders for operator "?"
  `∈`  | Define variable/constant/result/parameter type
+ `_`  | Anonymous variable \| Constant value = one space (_ = ' ')  
  `+`  | Maximum upper limit for a domain \| Unicode notation U+ 
  `-`  | Minimum lower limit in a domain  \| Unicode notation U- 
- `:`  | Define type or rule or module
- `:`  | Pair-up key-value in: objects, rule parameters, rule arguments, hash-map pairs
+ `:`  | Define type or method or module
+ `:`  | Pair-up key-value in: objects, method parameters, method arguments, hash-map pairs
  `;`  | End of statement \| Statement separator
  `.`  | Decimals for real numbers \| Path string concatenation
  `.`  | Membership dot notation \| Prefix for public member/attribute
  `\|` | Declarative collection builder: set := `{x | x ∈ array}`
  `\|` | Exact divisor: since 15 = 3 · 5 then `(3 ∣ 15 = True)` and `(5 ∣ 15 = True)`
- `_`  | Anonymous variable \| Constant value = one space (_ = ' ')
  `\\` | Escape character ( `\n` := New Line), ( `\"` = Double Quotes)
+
 
 ## Numeric operators  
 
@@ -77,8 +78,9 @@ symbol| description
  `!!` | Define domain (n!!m) (n,m are excluded) 
  `-.` | Minus infinite range: instead of (-∞..0) write: (-..0)
  `.+` | Plus infinite range: instead of (0..+∞) write: (0..+)
- `=>` | Define: rule expression \| rule result
+ `=>` | Define: method expression \| method result
  `->` | Data cast pipeline operator / Type conversion
+ `<-` | Define and generate values in a loop from range or set
  `<:` | Define subset from set \| Specify super-type for a new type
  `:>` | Can be used as logical operator: is super-type for object
  `<<` | Shift values of collection to right by removing first elements
@@ -97,7 +99,7 @@ Each modifier is created with pattern "x=" where x is a single symbol:
 
 symbol| meaning
 ------|--------------------------------------------------------------------
- `:=` | Binding value  \| Reference 
+ `:=` | Modify \| (value  \| reference)
  `+=` | Increment value
  `-=` | Decrement value
  `·=` | Multiplication modifier 
@@ -129,11 +131,11 @@ symbol | meaning
 Operator: "!" can be used in combination with other operators:
 
 ```
- x != y; //equivalent to: ¬(x = y)
- x !≡ y; //equivalent to: ¬(x ≡ y)
- x !∈ y; //equivalent to: ¬(x ∈ y)
- x !≈ y; //equivalent to: ¬(x ≈ y)
- x !~ y; //equivalent to: ¬(x ~ y)
+ x  != y; //equivalent to: ¬(x = y)
+ x  !≡ y; //equivalent to: ¬(x ≡ y)
+ x  !∈ y; //equivalent to: ¬(x ∈ y)
+ x  !≈ y; //equivalent to: ¬(x ≈ y)
+ x  !~ y; //equivalent to: ¬(x ~ y)
 ```
 
 ## Collection operators
@@ -150,7 +152,7 @@ symbol | result     |meaning
  `+`   | Array      |Concatenation between two arrays
  `∀`   | Element    |All: used in collection qualification
  `∃`   | Logic      |One: used in collection qualification
-                                          
+
 ## Logic Operators 
 
 Bee is using enumeration symbols:  True = 1 and False = 0

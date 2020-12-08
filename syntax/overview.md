@@ -20,9 +20,9 @@ We have used a _simple design_ for notation based on examples and notes:
 * [Logical expression](#logical-expression)
 * [Conditionals](#conditionals)
 * [Pattern matching](#pattern-matching)
-* [Rule as function](#Rule-as-function)
-* [Rule as routine](#Rule-as-routine)
-* [Rule as method](#Rule-as-method)
+* [Method as function](#Method-as-function)
+* [Method as routine](#Method-as-routine)
+* [Method as method](#Method-as-method)
 * [External rules](#external-rules)
 
 ## Expressions
@@ -38,7 +38,7 @@ Expressions are created using identifiers, operators, rules and constant literal
 **Examples**
 ```
 # demo some print statements
-rule main():
+method main():
   ** no need for parentheses for a single value
   print 10; 
   print "this is a test";
@@ -220,7 +220,7 @@ range ::= (min..max);
 
 **example:**
 ```
-rule main():
+method main():
   print (0..5); // 0,1,2,3,4
   
   pass if  32667 ∈ (0..+); //expect to pass
@@ -250,7 +250,7 @@ type Capital:  ['A'..'Z']       <: A;
 type Lowercase:['a'..'z']       <: A;  
 type Latin:    [U+0041..U+FB02] <: U;
 
-rule main():
+method main():
   ** following statements should pass
   pass if '0' ∈ Digit;     
   fail if 'x' ∈ Capital; 
@@ -304,11 +304,11 @@ save n: U-00002200 ∈ U; //Symbol: ∀
 Variables are defined using keyword _make_ plus one of the operators:
 
 operator | purpose
----------|-----------------------------------------------------
+---------|--------------------------------------------------------------------
  ∈       | declare variable/element type 
- :       | define type \| initial value \| pair up
- :=      | binding  \| share a reference \|execute expression
- ::      | cloning  \| duplicate object  
+ :       | define type \| initial value (with type) \| pair up \| argument by names
+ :=      | binding initial value \| share a reference \|execute expression
+ ::      | deep copy  \| duplicate object  \| cloning operator
  
 **Notes:**
 * Symbol ":" can be used to initialize one variable at a time, 
@@ -318,18 +318,18 @@ operator | purpose
 
 ```
 ** primitive variable declarations with type
-make var_name ∈  type_name; // declaration without initial value
-make var_name : constant ∈ type_name; // declaration with initialization
+make var_name ∈  type_name; // declaration only type without initial value
+make var_name: value ∈  type_name; // declaration with initial value and type
 
 ** partial declaration using type inference
 make var_name := expression; //expression ":=" do not require type hint ("∈").
 
 ** Multiple variables can be define in one single line using comma separator:
-make var1, var2 ... ∈  TypeName;  //default initial values
-make var1, var2 ... := Expression; //use type inference for initial values
+make var1, var2 ... ∈  TypeName;   //default initial values
+make var1, var2 ... := Expression; //use type inference for all initial values
 
-** Initialize multiple variables in a list with different values
-make var1:con1, var2:con2 ... ∈  TypeName; 
+** Initialize multiple variables, of the same type (type is required)
+make var1:con1, var2:con2 ... ∈ TypeName; 
 ```
 
 ## Modify values
@@ -359,7 +359,7 @@ make a   ∈ Z; //Integer
 make x,y ∈ R; //Double
 make q,p ∈ L; //Logic
 
-rule main():
+method main():
   ** using modifiers
   alter a := 10; //modify value of a := 10
   alter a += 1;  //increment value of a := 11
@@ -390,7 +390,7 @@ When data type mismatch you must perform explicit conversion.
 make a: 0, b:20 ∈ Z;
 make v: 10.5, x: 0.0 ∈ R;
 
-rule main():
+method main():
 ** explicit conversion
    alter a := v -> N;
    print a; //truncated to 10 
@@ -413,7 +413,7 @@ Bee define A as single UTF-8 code point with representation: U+HH
 make a, b ∈ A; //ASCII 
 make x, y ∈ B; //Binary integer
 
-rule main():
+method main():
   alter a :='0';     //ASCII symbol '0'
   alter x := a -> B; //convert to binary 30
   alter y := 30;     //decimal code for '0'
@@ -447,7 +447,7 @@ We can use variable type to validate expression type.
 make a := 0;   //integer variable 
 make b := 0.0; //real variable 
 
-rule main():
+method main():
   alter a:= 10.5; //Warning: a is of type: Integer  
   alter b:= 10;   //Warning: b is of type: Real
   print a, b; // 10, 10.00
@@ -459,7 +459,7 @@ You can use operator "∈" to verify data type:
 ```
 make a := 0 ∈ Z;
 
-rule main():
+method main():
   ** expected: Integer
   fail if ¬ (a ∈ Z); // fail if a is not integer
 return;  
@@ -473,7 +473,7 @@ Logic type is an enumeration of two public symbols: False and True
 type .L: {.False: 0, .True: 1} <: Ordinal;
 
 ** printing logical values
-rule main():
+method main():
   print True;  //1
   print False; //0
 return;  
@@ -509,7 +509,7 @@ Comparison operators will create a logical response: 1 = True or 0 = False
 ```
 make  (x, y):4 ∈  Z; //primitive integer
 
-rule main():
+method main():
   ** value comparison
   print x = 4;  //1 (equal)
   print x ≡ 4;  //1 (identical)
@@ -554,7 +554,7 @@ Logical expression have value { 0 = False, 1 = True }
 make x := False ∈ L; 
 make y := True  ∈ L; 
 
-rule main():
+method main():
   ** expressions with single operant
   print   x; //0
   print ¬ x; //1
@@ -583,7 +583,7 @@ Any numeric expression ca be converted to logic using coercion operation `-> L`
 make (x, y) ∈ L;
 make (a:0.0, b:1.5) ∈ R;
 
-rule main():
+method main():
   alter x := a -> L; //0
   alter y := b -> L; //1
 return;  
@@ -632,7 +632,7 @@ The statement is executed only if the expression evaluate to True.
 ```
 make a := 0 ∈ Z;
 
-rule main():
+method main():
   ** conditional execution
   alter a := 1 if a = 0;
 
@@ -655,19 +655,19 @@ These expressions are separated by coma and enclosed in ().
 ```
 make var ∈ type;
 
-rule main():
+method main():
   ** single condition matching
-  alter var := exp ? cnd1, def;
+  alter var := (exp ? cnd1, xp);
   
   
   ** multiple matching with default value
-  alter var := exp1 ? cnd1, xp2 ? cnd2,...,def;
+  alter var := (exp1 ? cnd1, xp2 ? cnd2,...,xp);
   
   ** alternative code alignment
   alter var := 
     (exp1 ? cnd1
     ,exp2 ? cnd2
-    ,def);
+    ,xp);
 return;  
 ```
 
@@ -676,12 +676,12 @@ return;
 * var  ::= predefined variable,
 * exp1 ::= expression of same type with var,
 * cnd1 ::= condition to produce exp1,
-* def  ::= default expression (no condition).
+* xp    ::= default expression (no condition).
 
 
 **example:**
 ```
-rule main():
+method main():
    make x := '0'; //symbol
    write "x:"
    read   x;
@@ -691,44 +691,44 @@ rule main():
 return;
 ```
 
-## Rules
+## Methods
 
-Rules are named blocks of code, representing a program fragment that can be executed multiple times on demand.
+Methods are named blocks of code, representing a program fragment that can be executed multiple times on demand.
 
 **Notes:**
-* A rule is declared with keyword _rule_;
-* A rule can resolve a single task;
-* A rule can have optional one or multiple results;
-* A rule can have local variables and constants;
-* A rule can have public attributes;
+* A method is declared with keyword _rule_;
+* A method can resolve a single task;
+* A method can have optional one or multiple results;
+* A method can have local variables and constants;
+* A method can have public attributes;
 
 **Usability:**
-A rule can be used for different purpose depending on a particular syntax pattern:
+A method can be used for different purpose depending on a particular syntax pattern:
 
-* Rule as function
-* Rule as routine
-* Rule as method
-* Rule as generic
+* Method as function
+* Method as routine
+* Method as method
+* Method as generic
 
 **Restrictions:**
-* Rules are static: can not be created at runtime;
-* Rules are primary: you can not create nested rules;
-* Rules are not references: you can not pass around a rule;
-* Rules can be call from other rules but not from lambda expressions;
+* Methods are static: can not be created at runtime;
+* Methods are primary: you can not create nested rules;
+* Methods are not references: you can not pass around a method;
+* Methods can be call from other rules but not from lambda expressions;
 
 ### Parameters
 
-Parameters are special variables defined in rule signature.
+Parameters are special variables defined in method signature.
 
 **Example:**
 ```
-** a rule with two parameter
-rule foo(name, message ∈ S):
+** a method with two parameter
+method foo(name, message ∈ S):
   alter message:= "hello:" + name + ". I am Foo. Nice to meet you!";
 return;
 
-** using apply + rule name will execute the rule  
-rule main()
+** using apply + method name will execute the method  
+method main()
   make str ∈ S;
   apply foo("Bee", str);
   print str; 
@@ -749,21 +749,21 @@ hello: Bee. I am Foo. Nice to meet you!
 
 ### Results
 
-A rule can have multiple results. Result variables must be declared and assigned.
+A method can have multiple results. Result variables must be declared and assigned.
 
 **Example:** 
 
-In this example we have a rule that return a list of two values.
+In this example we have a method that return a list of two values.
 
 ```
-** rule with two results "s" and "d"
+** method with two results "s" and "d"
 ** parameter x is mandatory y is optional
-rule com(x ∈ Z, y:0 ∈ Z) => (s, d ∈ Z):
+method com(x ∈ Z, y:0 ∈ Z) => (s, d ∈ Z):
    alter s := x + y; 
    alter d := x - y;
 return;
 
-rule main():
+method main():
    ** capture result into a single variable
    make  r := com(3,2); //create a list
    print r; // (5,1) 
@@ -780,19 +780,19 @@ return;
 
 **Notes:**   
 * Multiple results are declared with name and can also have initial value;
-* A rule with multiple results can be called using spread operator (*) 
+* A method with multiple results can be called using spread operator (*) 
 * You can capture results into multiple variables separated by comma;
 * You can ignore one result using anonymous variable "_";
-* Rules with multiple results can not be used in expressions;
+* Methods with multiple results can not be used in expressions;
 
-### Rule as function
+### Method as function
 
-A pure rule with a single result can be used as a _function_;
+A pure method with a single result can be used as a _function_;
 
 **pattern:**
 ```
-** define a functional rule
-rule name(param ∈ type,...) => (result ∈ type):    
+** define a functional method
+method name(param ∈ type,...) => (result ∈ type):    
    ...
    exit if condition; //early transfer
    ...
@@ -800,11 +800,11 @@ rule name(param ∈ type,...) => (result ∈ type):
    ...
 return;
 
-rule main():
+method main():
   ** direct call and print the result
   print rule_name(argument,...);
   
-  ** capture rule result and make a new variable:
+  ** capture method result and make a new variable:
   make  r := rule_name(argument,...);
   
   ** capture result using existing variable:
@@ -815,31 +815,31 @@ return;
 
 **Pure rules:**
 
-Compiler can detect is a rule is pure.
+Compiler can detect if a method is pure.
 
-A rule is pure when ...
+A method is pure when ...
 
 * do not have multiple results but one;
 * do not have public attributes;
 * do not perform unsafe data conversions;
-* do not raise any unhandled errors;
+* do not raise errors;
 * do not have side-effects;
-* do not call a downgraded rule;
+* do not call a downgraded method;
 
 
 **Notes:**
 * Pure rules are deterministic in contrast to stochastic rules,
-* If a rule is not pure is _downgraded_ by the compiler as _dirty_,
+* If a method is not pure is _downgraded_ by the compiler as _dirty_,
 * Dirty rules can be used in assignments but not in expressions,
 * Dirty rules can not be send as parameter to other functions,
-* Compiler should warn you if you use a dirty rule as a function.
+* Compiler should warn you if you use a dirty method as a function.
 
 **See also:**
 * [bs.bee](./demo/bs.bee); //Bubble Sort
 
-## Rule as routine
+## Method as routine
 
-A rule that have no results can be called _routine_: 
+A method that have no results can be called _routine_: 
 
 **properties:**
 
@@ -854,32 +854,32 @@ Attributes of a routine are local variables starting with dot prefix.
 
 **pattern:**
 ```
-rule rule_name(param ∈ type,...):   
+method rule_name(param ∈ type,...):   
    make .x, .y, .z ∈ Z; 
    ...
 return;
 
-rule main():
-  ** modify rule states
+method main():
+  ** modify method states
   alter rule_name.x := 1;
   alter rule_name.y := 2;
   alter rule_name.z := 3;
   
-  ** read rule states
+  ** read method states
   print rule_name.x, rule_name.y, rule_name.z; //1 2 3
   
-  ** execute a rule that has no results:
+  ** execute a method that has no results:
   apply rule_name(param:argument, ...);
 return;    
 ```
 
 **Notes:**
-* Rule attributes are public and can be accessed using scope qualifier;
-* Rule attributes represent _states_ and can be initialized one single time;
+* Method attributes are public and can be accessed using scope qualifier;
+* Method attributes represent _states_ and can be initialized one single time;
 
-## Rule as method
+## Method as method
 
-A rule binding first parameter to an object or composite type is called: _method_ 
+A method binding first parameter to an object or composite type is called: _method_ 
 
 **properties:**
 
@@ -893,12 +893,12 @@ A rule binding first parameter to an object or composite type is called: _method
 type ObjType: {attribute:type, ...} <: Object;
 
 ** define a method for ObjType
-rule method_name(self ∈ ObjType, param ∈ type,...) => (result ∈ type):
+method method_name(self ∈ ObjType, param ∈ type,...) => (result ∈ type):
    ...
    result := expression;
 return;
 
-rule main():
+method main():
   ** create an object instance
   make obj := {attribute:value, ...} ∈ Object_Type;
   
@@ -913,19 +913,19 @@ See also: [Composite:Object](composite#object)
 
 Hoisting is a technique used by many compilers to identify declarations of members. Using this technique you can use an identifier before it is defined. In Bee there is no hoisting technique. You can not use an identifier before it is declared or loaded. 
 
-Two rules may call each other and create a cyclic interdependence. For this you can declare a rule "signature" before implementing it. That is called "forward declaration". Therefore the main rules are usually defined on the bottom of the source code.
+Two rules may call each other and create a cyclic interdependence. For this you can declare a method "signature" before implementing it. That is called "forward declaration". Therefore the main rules are usually defined on the bottom of the source code.
 
 ```
-** forward declaration for rule "plus"
-rule plus(Z,Z) ∈ Z; //signature
+** forward declaration for method "plus"
+method plus(Z,Z) ∈ Z; //signature
 
-rule main():
+method main():
    ** execute before implementation
    print plus(1,1);  
 return   
 
-** later implement the rule "plus"
-rule plus(a,b ∈ Z) => (r ∈ Z): 
+** later implement the method "plus"
+method plus(a,b ∈ Z) => (r ∈ Z): 
   alter r := (a + b);
 return;
 ```
@@ -943,7 +943,7 @@ This is myLib.bee file:
 load $bee.lib.cpp.myLib; //load cpp library
 
 ** define a wrapper for external "fib"
-rule fib(n ∈ Z) => (x ∈ Z));
+method fib(n ∈ Z) => (x ∈ Z));
   alter x := myLib.fib(n);
 return;
 ```
@@ -955,8 +955,8 @@ This is the main module:
 ** load library
 load myLib := $bee.lib.myLib;
 
-** use external rule
-rule main():
+** use external method
+method main():
   print myLib.fib(5);
 return;   
 ```
