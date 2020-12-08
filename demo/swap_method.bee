@@ -1,9 +1,9 @@
 +---------------------------
-|     Swap rule demo       |
+|     Swap method demo       |
 ---------------------------+
 load $pro_lib.console:(*);
 
-rule swap(x ∈ Z, y ∈ Z):
+method swap(x ∈ Z, y ∈ Z):
    ** create temporary value
    make  t := x; 
    
@@ -11,7 +11,7 @@ rule swap(x ∈ Z, y ∈ Z):
    alter y := x, x := t; 
 return;
 
-rule main():
+method main():
    make (a: 1, b: 2) ∈ Z;
    print "a = #(n), b = #(n)" ? (a,b);
    apply swap(a, b); 

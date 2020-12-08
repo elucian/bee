@@ -1,9 +1,9 @@
 +----------------------------
-|  Demo Fibonacci rule      |
+|  Demo Fibonacci method      |
 +---------------------------+
 load $pro_lib.console:(*);
-** declare Fibonacci rule
-rule fib(n ∈ N) => (y ∈ N):
+** declare Fibonacci method
+method fib(n ∈ N) => (y ∈ N):
   when (n = 1) ∨ (n = 0) do
     alter y := 1; //first value
   else     
@@ -11,8 +11,8 @@ rule fib(n ∈ N) => (y ∈ N):
   done;
 return;
 
-rule main():
-   ** call fib rule using argument 5
+method main():
+   ** call fib method using argument 5
    make r := fib(n:5);
    
    ** print the result to console

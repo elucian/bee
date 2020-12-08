@@ -3,13 +3,13 @@
 ------------------------------------+
 load $pro_lib.console:(*);
 
-** rule with boxed parameters
-rule pro(a,b ∈ [N]):
+** method with boxed parameters
+method pro(a,b ∈ [N]):
   alter a += 1; // alter parameter a
   alter b += 2; // alter parameter b 
 return;
 
-rule main():
+method main():
    ** define native integers using inference
    make x, y := [10];
    

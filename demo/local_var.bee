@@ -6,25 +6,25 @@ load $pro_lib.console:(*);
 ** global variable
 make x := 1;
 
-** rule side-effects
-rule add:
+** method side-effects
+method add:
   alter x := x + 1;
   print x;
 return;
 ** local context attribute
-rule add2:
+method add2:
   make  x := 0; // local
   alter x += 1;
   print x;
 return;
 
-rule main():
+method main():
   ** test side effects
   apply add; // will print 2
   apply add; // will print 3
   print x; // x = 3 (is modified)  
   
-  ** changing x influence rule
+  ** changing x influence method
   alter x := 1; // global x = 1
   apply add2 ;   // will print 1
   apply add2 ;   // will print 2
@@ -32,5 +32,5 @@ rule main():
   ** verify global variable x
   print x;         // x = 1 (unmodified)
   print $Global.x; // x = 1 (unmodified)
-rule;
+method;
 #end of module

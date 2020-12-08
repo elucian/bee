@@ -3,7 +3,7 @@
 -------------------------------+
 load $pro_lib.console:(*);
 
-rule main():
+method main():
   write "define a number:";
   make x ∈ N; read x; 
   

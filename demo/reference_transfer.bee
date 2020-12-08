@@ -3,7 +3,7 @@
 ----------------------------------------------+
 load $pro_lib.console:(*);
 
-rule main():
+method main():
   make s: 10 ∈ [Z];   // define integer reference
   make d, e  ∈ [Z];   // reference to natural number
   

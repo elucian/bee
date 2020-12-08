@@ -4,7 +4,7 @@
 +-------------------------------+
 load $pro_lib.console:(*);
 
-rule main():
+method main():
   ** declare two natural numbers
   make (a: 10, b: 5) ∈ N;
   ** simple decision 
@@ -43,18 +43,19 @@ rule main():
   |  case statement replace nested when  |
   +--------------------------------------+
   ** mutual exclusive multi-path selector
-  alter a := 2;
-  case a ∈ [0..4] do
-    ** this is true since a = 2
-    print ('a is between 0 and 4');
-  case a ∈ [2..5] do
-    ** this is also true since a = 2
-    print ('a is between 2 and 5');
-  case a < 0 do
-    ** this is not true since a > 0
-    print ('a ≤ 0');
-  else
-    print ('a ≥ 5'); // no match
+  trial one
+    alter a := 2;
+    case a ∈ [0..4] do
+        ** this is true since a = 2
+        print ('a is between 0 and 4');
+    case a ∈ [2..5] do
+        ** this is also true since a = 2
+        print ('a is between 2 and 5');
+    case a < 0 do
+        ** this is not true since a > 0
+        print ('a ≤ 0');
+    default
+        print ('a ≥ 5'); // no match
   done;
 return;
 #end of module

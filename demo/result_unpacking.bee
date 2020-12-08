@@ -3,27 +3,27 @@
 -------------------------------------+
 load $pro_lib.console:(*);
 
-** rule with two results
-rule test(x, y ∈ Z) => (a,b ∈ Z):
+** method with two results
+method test(x, y ∈ Z) => (a,b ∈ Z):
   alter a := x + 1;
   alter b := y + 1;
 return;
 
-** rule with structured result
+** method with structured result
 type Rec: {x ∈ Z, y ∈ R} <: Object;
-rule demo(x ∈ Z, y ∈ R) => (r ∈ Rec):
+method demo(x ∈ Z, y ∈ R) => (r ∈ Rec):
   alter r.x := x;
   alter r.y := y;
 return;
 
-rule deom():
+method deom():
   ** unpacking and modify two variables
   make (n,m) ∈ Z;
   alter n,m := test(1,2);
   print n,m; // will print 2, 3
   
   
-  ** test rule using make instead
+  ** test method using make instead
   make  r := demo(1, 0.5);
   print r ; // {x:1, y:0.5}
 return;

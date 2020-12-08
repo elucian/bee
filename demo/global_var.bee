@@ -7,22 +7,22 @@ load $pro_lib.console:(*);
 ** declare a share variable x
 make @x := 1;
 
-** use global variable x in rule "add1"
+** use global variable x in method "add1"
 ** since add has not parameters and no result
-** it is just a simple rule declaration
-rule add1:
+** it is just a simple method declaration
+method add1:
   alter @x += 1;
   print @x;
 return;
 
 
-rule add2: 
+method add2: 
   make  x := 0;     // make a variable x 
   alter x := x + 1; // increment local variable
   print x;          // print local x
 return;
 
-rule main():
+method main():
   ** call a subroutine by name
   apply add1; // print 2
   apply add1; // print 3

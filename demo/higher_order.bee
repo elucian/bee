@@ -1,11 +1,11 @@
 +---------------------------------
-  High order rules & rule objects
+  High order rules & method objects
 ----------------------------------+
 load $pro_lib.console:(*);
 
-** create a rule prototype
-** this rule can be used or cloned 
-rule generator{min, max ∈ Z}() => (r ∈ Z):
+** create a method prototype
+** this method can be used or cloned 
+method generator{min, max ∈ Z}() => (r ∈ Z):
   make .index := min;
   when .index > max do
     fail (201, "index out of bounds");
@@ -15,14 +15,14 @@ rule generator{min, max ∈ Z}() => (r ∈ Z):
   done;
 return;
 
-rule main()
-  ** instantiate one rule object
+method main()
+  ** instantiate one method object
   make count := generator{0,9};
   
   ** instantiate a fixture with test
   make test  := generator{4,12};
   
-  ** test cloned rule: count()
+  ** test cloned method: count()
   trial
     make set ∈ {Z}; 
     ** this loop is infinite
@@ -37,7 +37,7 @@ rule main()
     print set; //  {0,1,2,3,4,5,6,7,8,9}  
   done;
   
-  ** use rule properties to check rule status
+  ** use method properties to check method status
   print count.max ;  // 9
   print count.index; // 10 (count is finished)
   

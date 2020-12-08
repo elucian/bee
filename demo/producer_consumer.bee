@@ -5,7 +5,7 @@
 make s := [0](1000); //array of integers
 
 ** producer coroutine
-rule foo(channel ∈ (N), start, end, batch ∈ N):
+method foo(channel ∈ (N), start, end, batch ∈ N):
     ** prepare next batch    
   make mark := start;
   when mark < end do    
@@ -20,7 +20,7 @@ rule foo(channel ∈ (N), start, end, batch ∈ N):
 return;
 
 ** consumer coroutine
-rule bar(channel ∈ (N), batch ∈ N):  
+method bar(channel ∈ (N), batch ∈ N):  
   make index = 0;
   when channel.length > 0 do
     with index in [0..batch]  do
@@ -34,7 +34,7 @@ rule bar(channel ∈ (N), batch ∈ N):
   loop;  
 return;
 
-rule main():
+method main():
   ** prepare a channel
   make ch ∈  (N); //empty list of natural numbers
   
