@@ -6,7 +6,7 @@
 
 <p align="center"><i>A technical computer language for arithmetic and geometry.<i/></p>
 
-<p align="center"> <a href=syntax/readme.md>Bee Syntax</a></p>
+<p align="center"> <a href="https://sagecode.net/bee/index.html">Bee Syntax</a></p>
 
 <p align="center">
 Copyright 2018 Elucian Moise
