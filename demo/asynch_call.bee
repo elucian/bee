@@ -2,12 +2,12 @@
 |  asynchronous call using "begin"  |
 +-----------------------------------+
 ** suspend with 2.5 sec
-method test(n ∈ N):
+rule test(n ∈ N):
   wait n; 
   print ".";
 return; // test
 
-method main():
+rule main():
   ** start 8 threads
   make i := 0; 
   when (i ≤ 8) do

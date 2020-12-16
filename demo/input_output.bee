@@ -3,7 +3,7 @@
 --------------------------+
 load $pro_lib.console:(*);
 
-method main():
+rule main():
   print "Hello. I'm Bee!";
   make your_name ∈ String, 
   make your_age  ∈ [1..100];

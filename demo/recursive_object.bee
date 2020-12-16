@@ -10,7 +10,7 @@ type Person: {
       children ∈ (Person) // list of persons
      } <: Object;
 
-method main():
+rule main():
   ** create two objects of type Person
   make (r1, r2) ∈ Person;
   

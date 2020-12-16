@@ -1,5 +1,5 @@
 +----------------------------------------
- demonstrate method associated to a type
+ demonstrate rule associated to a type
 ----------------------------------------+
 load $pro_lib.console:(*);
 
@@ -7,20 +7,20 @@ load $pro_lib.console:(*);
 type Number: {.zero, .one, .two} <: Ordinal;
 
 
-** make a method with define Number
-method convert(self ∈ Number) => (y ∈ S):
+** make a rule with define Number
+rule convert(self ∈ Number) => (y ∈ S):
   alter y := ("zero"  if self = zero,
               "one"   if self = one,
               "two"   if self = two,
               "none");
 return;
 
-** a wrapper method with convert
-method equal(self ∈ Number, s ∈ S) => (r ∈ L):
+** a wrapper rule with convert
+rule equal(self ∈ Number, s ∈ S) => (r ∈ L):
   alter r := (s = convert(x));
 return;
 
-method main():
+rule main():
   make test ∈ Number;
   alter test := zero; // instance of Number
       

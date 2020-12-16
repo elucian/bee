@@ -7,7 +7,7 @@ load $pro_lib.console:(*);
 make a ∈ [Z](10);   
 make i := 0; //control variable
 
-method main():
+rule main():
   ** array initialization
   with i ∈ (0.!10) do
      alter a[i] := i; 

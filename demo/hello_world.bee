@@ -1,7 +1,7 @@
 ** hello world demo
 load $pro_lib.console:(*);
 
-method main():
+rule main():
   print "Hello World";
 return;
 #end of module

@@ -3,14 +3,14 @@
 --------------------------+
 load $pro_lib.console:(*);
 
-method main():
+rule main():
   make a ∈ N;
   print "to stop enter 0";
-  when (a ≠ 0) do
+  while (a ≠ 0) do
     write "enter a number ≠ 0:"
     read  a, "#(n)";
-    print ("you have enter:> #(n)" ? a);
-  loop;
+    print ("you have enter #(n)" ? a);
+  cycle;
 return;
 
 #end of module

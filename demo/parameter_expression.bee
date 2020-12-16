@@ -3,22 +3,22 @@
 +-------------------------------------+
 load $pro_lib.console:(*);
 
-** declare method with method "cmp" as parameter
-method compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
+** declare rule with rule "cmp" as parameter
+rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
   alter r := cmp(a,b);
 return;
 
 
-method main():
+rule main():
   ** declare a lambda expression:
   make lt := λ(a,b ∈ Z) ∈ L => (a < b);
   make test ∈ L;
   
-  ** delegate method compare to execute expression: lt
+  ** delegate rule compare to execute expression: lt
   alter test := compare(1,2,cmp:lt);
   print test; // expect 1
   
-  ** delegate method compare to execute an anonymous lambda expression
+  ** delegate rule compare to execute an anonymous lambda expression
   alter test := compare(1, 2, (a, b) => (a ≥ b));
   print test; // expect 1
 return;

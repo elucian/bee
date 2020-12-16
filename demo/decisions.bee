@@ -4,7 +4,7 @@
 +-------------------------------+
 load $pro_lib.console:(*);
 
-method main():
+rule main():
   ** declare two natural numbers
   make (a: 10, b: 5) ∈ N;
   ** simple decision 

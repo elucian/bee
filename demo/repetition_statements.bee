@@ -3,7 +3,7 @@
 +--------------------------------------+
 load $pro_lib.console:(*);
 
-method main():
+rule main():
   ** local context
   make x,y:10 ∈ Z; 
   with x := 1 do

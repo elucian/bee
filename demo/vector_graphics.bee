@@ -7,7 +7,7 @@ load $lib.graphic.core:(*);
 make (p1, p2) ∈ ⊡; // graphic point
 make (v1, v2) ∈ ↗; // graphic vector
 
-method main():
+rule main():
   ** setup the points
   alter p1 := {x:0,  y:0};   
   alter p2 := {x:10, y:10};  
