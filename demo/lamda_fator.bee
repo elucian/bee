@@ -1,0 +1,13 @@
++-----------------------------------
+    recursive lambda expression 
+-----------------------------------+
+load $pro_lib.console:(*);
+
+
+make fator: λ(n ∈ N) ∈ N => (1 if n = 0, fator(n-1));
+
+
+rule main():
+   pass if fator(3) = 6;
+   print "pass"
+return;

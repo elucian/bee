@@ -10,9 +10,5 @@ rule main():
    ** use lambda expression with print
    print add(1, 2);    // print 3
    print add(-10, 10); // print 0
-   
-   ** recursive lambda expression
-   make fac:= λ(n ∈ N) ∈ N => (1 if n = 0, fac(n-1));
-   pass if fac(3) = 6;
 return;
 #end of module
