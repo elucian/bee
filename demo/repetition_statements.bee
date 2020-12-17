@@ -6,8 +6,9 @@ load $pro_lib.console:(*);
 rule main():
   ** local context
   make x,y:10 ∈ Z; 
-  with x := 1 do
-    ** inner context contains "x"
+  do
+    ** inner context shadow external "x"
+    make  x := 1     
     alter y := 5;
     alter x += 2;
     print x, y; // 3, 5
@@ -17,7 +18,7 @@ rule main():
   do
     write x & ',';  // write in buffer
     alter x -= 1;   // decrement
-  redo if x > 0;
+  cycle if x > 0;
   write x; // write 0 the last value
   print;   // expected: 10,8,7,6,5,4,3,2,1,0
 return;

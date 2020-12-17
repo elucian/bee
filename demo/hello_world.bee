@@ -4,4 +4,3 @@ load $pro_lib.console:(*);
 rule main():
   print "Hello World";
 return;
-#end of module

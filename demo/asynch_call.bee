@@ -13,7 +13,7 @@ rule main():
   when (i ≤ 8) do
     defer test(i);
     alter i += 1;
-  loop;
+  cycle;
   yield test; // synchronize
 return;
 #end of module

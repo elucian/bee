@@ -29,7 +29,7 @@ rule main():
    when ¬ foo.finish() do
      alter x := foo.next();
      write (x,",");
-   loop;
+   cycle;
    
    ** flush the buffer
    print; //10,11,12,13,14,15,16,17,18,19,20, 

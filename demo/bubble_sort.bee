@@ -13,15 +13,15 @@ rule sort(this ∈ [Z]):
   ** repetitive block: when
   while swap do
     alter swap := False; // reset flag
-    with i in (0.!n) do
+    given i <- (0.!n) do
       ** this pair is out of order ?
       when this[i] < this[i+1] do
         ** swap two elements
         alter (this[i+1], this[i]) := (this[i], this[i+1]);
         alter swap := True; // set flag
       done;
-    redo;
-  redo;
+    cycle;
+  cycle;
 return;
 
 rule main

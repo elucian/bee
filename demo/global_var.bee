@@ -4,22 +4,22 @@
 ------------------------------+
 load $pro_lib.console:(*);
 
-** declare a share variable x
-make @x := 1;
+** declare a public variable x
+make .x := 1;
 
-** use global variable x in rule "add1"
-** since add has not parameters and no result
-** it is just a simple rule declaration
+** use module variable x in rule "add1"
 rule add1:
-  alter @x += 1;
-  print @x;
+  alter x += 1;
+  print x;
 return;
 
-
+** demo shadow effect by making a local x
 rule add2: 
-  make  x := 0;     // make a variable x 
-  alter x := x + 1; // increment local variable
-  print x;          // print local x
+  make   x := 0;     // make a local variable x 
+  alter  x := x + 1; // increment local variable
+  print  x;          // print local  x
+  print .x;          // print public x 
+  print .x;          // print public x 
 return;
 
 rule main():

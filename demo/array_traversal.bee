@@ -9,13 +9,13 @@ make i := 0; //control variable
 
 rule main():
   ** array initialization
-  with i ∈ (0.!10) do
+  given i <- (0.!10) do
      alter a[i] := i; 
-  loop;
+  cycle;
   
   ** array traversal and print
-  with i ∈ (0.!10) do
+  given i <- (0.!10) do
      print " a[#(n)] = #(n)" ? (i, a[i]);
-  loop;
+  cycle;
 return; 
 #end of module

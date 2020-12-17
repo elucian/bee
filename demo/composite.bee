@@ -28,7 +28,7 @@ rule main():
   ** array with capacity
   make v1 ∈ [Z](10) ; // vector of 10 integer elements
   make v2 ∈ [R](2,3); // matrix of 2 rows and 3 columns
-  ** dynamic alter / map collections
+  ** dynamic alter map collections
   make p ∈ {U};     // alter collection of symbols
   make m ∈ {(R:S)}; // hash map of strings with real key
   
@@ -37,7 +37,7 @@ rule main():
   ** complex list examples
   make ∈ (U) ;   // a list of characters
   make ∈ (R) ;   // a list of real numbers
-  make ∈ ((U)); // a list of lists of symbols
+  make ∈ ((U));     // a list of lists of symbols
   make ∈ ([U](10)); // a list of array with 10 symbols
   
   ** Array and Matrix literals

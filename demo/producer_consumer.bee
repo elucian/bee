@@ -16,14 +16,14 @@ rule foo(channel ∈ (N), start, end, batch ∈ N):
     done;
     yield; //suspend producer
     alter mark := 0;
-  loop;  
+  cycle;  
 return;
 
 ** consumer coroutine
 rule bar(channel ∈ (N), batch ∈ N):  
   make index = 0;
   when channel.length > 0 do
-    with index in [0..batch]  do
+    given index <- (0..batch)  do
       write channel.head,",";  
       alter channel -? channel.head;
       wait 1; //slow down with a second
@@ -31,7 +31,7 @@ rule bar(channel ∈ (N), batch ∈ N):
     done;
     print
     yield; //suspend consumer
-  loop;  
+  cycle;  
 return;
 
 rule main():
@@ -42,11 +42,11 @@ rule main():
   begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
   when ch.length > 0 do
     ** prepare consumers
-    with i ∈ (1..4) do
+    given i <- (1..4) do
       defer bar(n); //asynchronous call
-    loop; 
+    cycle; 
     yield bar; // execute consumers on 4 threads
     yield foo if (ch.length = 0); // execute producer on single thread
-  loop;  
+  cycle;  
 return;  
 #end of module
