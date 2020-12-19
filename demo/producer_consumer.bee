@@ -43,7 +43,7 @@ rule main():
   when ch.length > 0 do
     ** prepare consumers
     given i <- (1..4) do
-      defer bar(n); //asynchronous call
+      begin bar(n); //asynchronous call
     cycle; 
     yield bar; // execute consumers on 4 threads
     yield foo if (ch.length = 0); // execute producer on single thread
