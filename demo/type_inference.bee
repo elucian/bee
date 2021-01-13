@@ -5,11 +5,11 @@
 load $pro_lib.console:(*);
 
 ** constant type inference
-save a := 10;     // Z (integer on 64bit)
-save x := 0.5;    // R (double precision)
-save y := 1/2;    // Q (rational number)
-save f := False;  // L (logic)
-save t := True;   // L (logic)
+stow a := 10;     // Z (integer on 64bit)
+stow x := 0.5;    // R (double precision)
+stow y := 1/2;    // Q (rational number)
+stow f := False;  // L (logic)
+stow t := True;   // L (logic)
 
 ** variable type inference
 make v := (1,2,3);     // List of Z

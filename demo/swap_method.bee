@@ -3,18 +3,23 @@
 ---------------------------+
 load $pro_lib.console:(*);
 
-rule swap(x ∈ Z, y ∈ Z):
+rule swap(x, y ∈ [Z]):
    ** create temporary value
-   make  t := x; 
+   make t := x; 
    
    ** swap the values
-   alter y := x, x := t; 
+   alter y := x;
+   alter x := t; 
 return;
 
 rule main():
    make (a: 1, b: 2) ∈ Z;
    print "a = #(n), b = #(n)" ? (a,b);
+   ** swap to variables using single statement
+   alter a := b, b := a; 
+   print "a = #(n), b = #(n)" ? (a,b); //a = 2, b = 1
+   ** swap to variables using swap rule
    apply swap(a, b); 
-   print "a = #(n), b = #(n)" ? (a,b);
+   print "a = #(n), b = #(n)" ? (a,b); //a = 1, b = 2   
 return;
 #end of module

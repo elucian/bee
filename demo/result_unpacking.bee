@@ -17,9 +17,8 @@ rule demo(x ∈ Z, y ∈ R) => (r ∈ Rec):
 return;
 
 rule deom():
-  ** unpacking and modify two variables
-  make (n,m) ∈ Z;
-  alter n,m := test(1,2);
+  ** unpacking and create two variables
+  make  n,m := test(1,2);
   print n,m; // will print 2, 3
   
   
