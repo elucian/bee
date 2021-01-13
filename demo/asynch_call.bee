@@ -11,7 +11,7 @@ rule main():
   ** start 8 threads
   make i := 0; 
   when (i ≤ 8) do
-    defer test(i);
+    begin test(i);
     alter i += 1;
   cycle;
   yield test; // synchronize
