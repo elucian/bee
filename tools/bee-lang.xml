@@ -5,7 +5,7 @@
             <Prefix Keywords1="no" Keywords2="no" Keywords3="no" Keywords4="no" Keywords5="no" Keywords6="no" Keywords7="yes" Keywords8="no" />
         </Settings>
         <KeywordLists>
-            <Keywords name="Comments">00# 00** 01 02 03+- 04-+</Keywords>
+            <Keywords name="Comments">00** 01 02 03+- 04-+</Keywords>
             <Keywords name="Numbers, prefix1">0b u i f</Keywords>
             <Keywords name="Numbers, prefix2">0x U+ U-</Keywords>
             <Keywords name="Numbers, extras1">A B C D E F</Keywords>
@@ -32,12 +32,12 @@
             <Keywords name="Keywords6">u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;A B C L W U N Q R Z S X D T E F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;Logic Alpha Unicode &#x000D;&#x000A;Integer Natural Binary Rational Real &#x000D;&#x000A;Array Matrix List Set Hash Text Ordinal&#x000D;&#x000A;Date Time Error File Folder Lambda &#x000D;&#x000A;Complex String</Keywords>
             <Keywords name="Keywords7">$ @ # &amp;</Keywords>
             <Keywords name="Keywords8">&#x03B1; &#x03B2; &#x0263; &#x03B5; &#x03B4; &#x03BC; &#x03C9; &#x03BB; &#x03C6; &#x03C0; &#x03C3;&#x000D;&#x000A;&#x0394; &#x0393; &#x039B; &#x03A6; &#x03A8; &#x03A9; &#x22A5; &#x01C1;&#x000D;&#x000A;&#x0411; &#x0413; &#x0414; &#x0416; &#x0418; &#x041B; &#x0424; &#x0426; &#x0427; &#x0428; &#x0429; &#x042D; &#x042F;&#x000D;&#x000A;</Keywords>
-            <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06&apos; 06&quot; 06&amp; 07 08&apos; 08&quot; 08; 09``` 10 11``` 12/* 13 14*/ 15{ 16 17} 18// 19 20((EOL)) 21&lt;sql&gt; 21&lt;xml&gt; 21&lt;text&gt; 21&lt;html&gt; 22 23&lt;/sql&gt; 23&lt;/xml&gt; 23&lt;/text&gt; 23&lt;/html&gt;</Keywords>
+            <Keywords name="Delimiters">00( 01 02) 03[ 04 05] 06&apos; 06&quot; 06&amp; 07 08&apos; 08&quot; 08; 09# 10 11((EOL)) 12/* 13 14*/ 15{ 16 17} 18// 19 20((EOL)) 21&lt;sql&gt; 21&lt;xml&gt; 21&lt;text&gt; 21&lt;html&gt; 22 23&lt;/sql&gt; 23&lt;/xml&gt; 23&lt;/text&gt; 23&lt;/html&gt;</Keywords>
         </KeywordLists>
         <Styles>
             <WordsStyle name="DEFAULT" fgColor="C0C0C0" bgColor="363636" fontName="FindWindowPosition" fontStyle="1" fontSize="10" nesting="0" />
-            <WordsStyle name="COMMENTS" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="LINE COMMENTS" fgColor="00D200" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="COMMENTS" fgColor="FFC891" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="LINE COMMENTS" fgColor="FFC891" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="NUMBERS" fgColor="0080FF" bgColor="FFFFFF" fontName="1128" fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS1" fgColor="D279F4" bgColor="FFFFFF" fontName="&#x63F0;&#xD507;&#x0255;" fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS2" fgColor="0080FF" bgColor="FFFFFF" fontName="*.html" fontStyle="0" nesting="0" />
@@ -54,7 +54,7 @@
             <WordsStyle name="DELIMITERS1" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690427" />
             <WordsStyle name="DELIMITERS2" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690427" />
             <WordsStyle name="DELIMITERS3" fgColor="FFFF00" bgColor="FFFFFF" fontName="" fontStyle="1" nesting="0" />
-            <WordsStyle name="DELIMITERS4" fgColor="FFFFFF" bgColor="000000" fontName="" fontStyle="0" nesting="117702647" />
+            <WordsStyle name="DELIMITERS4" fgColor="A0F836" bgColor="000000" fontName="" fontStyle="0" nesting="256" />
             <WordsStyle name="DELIMITERS5" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="16" />
             <WordsStyle name="DELIMITERS6" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690427" />
             <WordsStyle name="DELIMITERS7" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
