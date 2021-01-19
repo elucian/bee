@@ -1,4 +1,9 @@
-# demo main rule
++-----------------------------------
+ demonstrate a driver with main rule
+------------------------------------+
+driver main_rule:
+
+# main rule is mandatory in drivers
 rule main(*params ∈ S):
    ** read the number of parameters
    make c := params.count;
