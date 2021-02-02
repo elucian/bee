@@ -4,27 +4,34 @@
 ** first make a class
 type GenI: {min ,max , ci ∈ Z} <: Object;
 
-** reset generator
-rule reset(self ∈ GenI, p_min , p_max ∈ Z):
-  alter self.min := p_min;
-  alter self.max := p_max;
-  alter self.ci  := p_min;
-return;
+rule GenI:
+    ** reset generator
+    rule reset(self ∈ GenI, p_min , p_max ∈ Z):
+      alter self.min := p_min;
+      alter self.max := p_max;
+      alter self.ci  := p_min;
+    return;
 
-** get next index
-rule next(self ∈ GenI) => (i ∈ Z):
-  alter i  := self.ci;
-  alter self.ci += 1;
-return;
+    ** get next index
+    rule next(self ∈ GenI) => (i ∈ Z):
+      alter i  := self.ci;
+      alter self.ci += 1;
+    return;
 
-** detect if finish
-rule finish(self ∈ GenI)  => (r ∈ L):
-  alter r := (self.ci ≥ self.max);
+    ** detect if finish
+    rule finish(self ∈ GenI)  => (r ∈ L):
+      alter r := (self.ci ≥ self.max);
+    return;
+    
+    ** constructor
+    rule(min, max ∈ Z) =>(self ∈ GenI):
+       self = {min, max, 0} ∈ GenI;
+    return;
 return;
 
 rule main():
-   ** use GenI to make one instance: 
-   make foo := {min:10,max:20} ∈ GenI;
+   ** use GenI constructor: 
+   make foo := GenI(10, 20);
    make x   := 0;
    if ¬ foo.finish() do
      alter x := foo.next();

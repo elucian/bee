@@ -1,7 +1,7 @@
 +----------------------------------------------------
 |        user defined data types                    |
 ----------------------------------------------------+
-load $pro_lib.console:(*);
+load loop(*);
 
 ** this type is public (uses dot prefix)
 type .New_Data := {key:U, value:N} <: Hash;

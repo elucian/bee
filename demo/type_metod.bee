@@ -1,7 +1,7 @@
 +----------------------------------------
  demonstrate rule associated to a type
 ----------------------------------------+
-load $pro_lib.console:(*);
+load loop(*);
 
 ** enumeration with public members
 type Number: {.zero, .one, .two} <: Ordinal;

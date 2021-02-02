@@ -2,7 +2,7 @@
   type inference is using
   operator := with initialization
 -----------------------------------+
-load $pro_lib.console:(*);
+load loop(*);
 
 ** constant type inference
 stow a := 10;     // Z (integer on 64bit)

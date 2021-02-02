@@ -3,7 +3,7 @@
 +---------------------------+
 driver fibonacci
 
-load $pro_lib.console:(*);
+load $pro_lib.console.(*);
 ** declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):
   if (n = 1) ∨ (n = 0) do

@@ -25,8 +25,8 @@
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close"></Keywords>
             <Keywords name="Keywords1">driver module aspect load alias type stow make rule return like class create remove </Keywords>
-            <Keywords name="Keywords2">if else case next cycle trial other final with do done all one match when none run&#x000D;&#x000A;</Keywords>
-            <Keywords name="Keywords3">panic abort over exit yield skip&#x000D;&#x000A;redo fail pass retry expect&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords2">if else case next cycle trial other final with do done all one match when none run local share&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords3">panic abort over exit yield stop&#x000D;&#x000A;loop fail pass retry expect&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords4">alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;draw wipe show hide&#x000D;&#x000A;wait begin defer apply solve&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords5">self base result null&#x000D;&#x000A;head tail&#x000D;&#x000A;Null True False On Off&#x000D;&#x000A;Object Class&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords6">u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;A B C L W U N Q R Z S X D T E F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;Logic Alpha Unicode &#x000D;&#x000A;Integer Natural Binary Rational Real &#x000D;&#x000A;Array Matrix List Set Hash Text Ordinal&#x000D;&#x000A;Date Time Error File Folder Lambda &#x000D;&#x000A;Complex String</Keywords>

@@ -1,7 +1,7 @@
 +------------------------------------
        vector graphics prospect
 ------------------------------------+
-load $lib.graphic.core:(test);
+load $lib.graphic.core.(test);
 
 ** define two points and two vectors
 make (p1, p2) ∈ ⊡; // graphic point

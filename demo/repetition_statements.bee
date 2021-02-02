@@ -1,7 +1,7 @@
 +---------------------------------------
 | Local context & repetitive statement |
 +--------------------------------------+
-load $pro_lib.console.(*);
+load loop(*);
 
 rule main():
   ** rule context
