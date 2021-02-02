@@ -14,7 +14,7 @@
             <Keywords name="Numbers, suffix2">r j &#x03C0;</Keywords>
             <Keywords name="Numbers, range"></Keywords>
             <Keywords name="Operators1">. , + - * : ; \ % = ! ? | ^ ~</Keywords>
-            <Keywords name="Operators2">_ &#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; &#x2200; &#x2203; &#x03A3; &#x03A0; &#x0394; &#x2295; &#x2296; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x00BB; &#x00AB; &#x2191; &#x2193; if is or in as on off &lt; &gt; / &amp;</Keywords>
+            <Keywords name="Operators2">_ &#x2208; &#x222A; &#x2229; &#x2283; &#x2282; &#x2227; &#x2228; &#x2200; &#x2203; &#x03A3; &#x03A0; &#x0394; &#x2295; &#x2296; &#x00AC; &#x2261; &#x2264; &#x2265; &#x2248; &#x2260; &#x00B7; &#x00B1; &#x00D7; &#x00F7; &#x00BB; &#x00AB; &#x2191; &#x2193; is or in as on off &lt; &gt; / &amp;</Keywords>
             <Keywords name="Folders in code1, open"></Keywords>
             <Keywords name="Folders in code1, middle"></Keywords>
             <Keywords name="Folders in code1, close"></Keywords>
@@ -24,9 +24,9 @@
             <Keywords name="Folders in comment, open"></Keywords>
             <Keywords name="Folders in comment, middle"></Keywords>
             <Keywords name="Folders in comment, close"></Keywords>
-            <Keywords name="Keywords1">driver module aspect load alias type stow make rule return like class create remove</Keywords>
-            <Keywords name="Keywords2">when else case default while next cycle trial cover final patch with do done all one check match none run given orif&#x000D;&#x000A;</Keywords>
-            <Keywords name="Keywords3">abort over exit yield stop &#x000D;&#x000A;loop fail pass retry&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords1">driver module aspect load alias type stow make rule return like class create remove </Keywords>
+            <Keywords name="Keywords2">if else case next cycle trial other final with do done all one match when none run&#x000D;&#x000A;</Keywords>
+            <Keywords name="Keywords3">panic abort over exit yield skip&#x000D;&#x000A;redo fail pass retry expect&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords4">alter scrap&#x000D;&#x000A;read write print&#x000D;&#x000A;draw wipe show hide&#x000D;&#x000A;wait begin defer apply solve&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords5">self base result null&#x000D;&#x000A;head tail&#x000D;&#x000A;Null True False On Off&#x000D;&#x000A;Object Class&#x000D;&#x000A;</Keywords>
             <Keywords name="Keywords6">u8 u16 u32 u64 i8 i16 i32 i64 f32 f64&#x000D;&#x000A;A B C L W U N Q R Z S X D T E F&#x000D;&#x000A;T12 T24 MDY DMY&#x000D;&#x000A;Logic Alpha Unicode &#x000D;&#x000A;Integer Natural Binary Rational Real &#x000D;&#x000A;Array Matrix List Set Hash Text Ordinal&#x000D;&#x000A;Date Time Error File Folder Lambda &#x000D;&#x000A;Complex String</Keywords>
@@ -43,7 +43,7 @@
             <WordsStyle name="KEYWORDS2" fgColor="0080FF" bgColor="FFFFFF" fontName="*.html" fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS3" fgColor="FF0000" bgColor="FFFFFF" fontName=".." fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS4" fgColor="FF8000" bgColor="FFFFFF" fontName="2" fontStyle="0" nesting="0" />
-            <WordsStyle name="KEYWORDS5" fgColor="FF0080" bgColor="FFFFFF" fontName="3" fontStyle="0" nesting="0" />
+            <WordsStyle name="KEYWORDS5" fgColor="A0C8FE" bgColor="FFFFFF" fontName="3" fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS6" fgColor="8080FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS7" fgColor="808000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="KEYWORDS8" fgColor="8080FF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
@@ -51,14 +51,14 @@
             <WordsStyle name="FOLDER IN CODE1" fgColor="808080" bgColor="FFFFFF" fontName="&#x1060;&#xD500;&#x0255;" fontStyle="0" nesting="0" />
             <WordsStyle name="FOLDER IN CODE2" fgColor="DF4800" bgColor="FFFFFF" fontName="&#x0CA0;&#xD500;&#x0255;" fontStyle="0" nesting="0" />
             <WordsStyle name="FOLDER IN COMMENT" fgColor="808000" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS1" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690427" />
-            <WordsStyle name="DELIMITERS2" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690427" />
+            <WordsStyle name="DELIMITERS1" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690423" />
+            <WordsStyle name="DELIMITERS2" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690423" />
             <WordsStyle name="DELIMITERS3" fgColor="FFFF00" bgColor="FFFFFF" fontName="" fontStyle="1" nesting="0" />
-            <WordsStyle name="DELIMITERS4" fgColor="A0F836" bgColor="000000" fontName="" fontStyle="0" nesting="256" />
+            <WordsStyle name="DELIMITERS4" fgColor="FFFF80" bgColor="000000" fontName="" fontStyle="0" nesting="0" />
             <WordsStyle name="DELIMITERS5" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="16" />
             <WordsStyle name="DELIMITERS6" fgColor="80FFFF" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="117690427" />
             <WordsStyle name="DELIMITERS7" fgColor="808080" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
-            <WordsStyle name="DELIMITERS8" fgColor="8080C0" bgColor="FFFFFF" fontName="" fontStyle="0" nesting="0" />
+            <WordsStyle name="DELIMITERS8" fgColor="BCFED3" bgColor="400000" fontName="" fontStyle="0" nesting="0" />
         </Styles>
     </UserLang>
 </NotepadPlus>

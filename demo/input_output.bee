@@ -15,7 +15,7 @@ rule main():
   write "Your age:"; 
   read your_age; 
   
-  when age < 21 do
+  if age < 21 do
     print "have a candy!";
   else
     print "have a beer!";

@@ -17,7 +17,7 @@ rule next(self ∈ GenI) => (i ∈ Z):
   alter self.ci += 1;
 return;
 
-** detect when finish
+** detect if finish
 rule finish(self ∈ GenI)  => (r ∈ L):
   alter r := (self.ci ≥ self.max);
 return;
@@ -26,7 +26,7 @@ rule main():
    ** use GenI to make one instance: 
    make foo := {min:10,max:20} ∈ GenI;
    make x   := 0;
-   when ¬ foo.finish() do
+   if ¬ foo.finish() do
      alter x := foo.next();
      write (x,",");
    cycle;

@@ -34,7 +34,7 @@ type Number: {
 rule main():
   make a := 0;
   ** example of use
-  when a = zero do
+  if a = zero do
     print "zero!";
   else
     print "life is misery!";

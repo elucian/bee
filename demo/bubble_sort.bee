@@ -10,12 +10,12 @@ rule sort(this ∈ [Z]):
   ** local variables
   make n := length(this);
   make swap := True ∈ L;
-  ** repetitive block: when
-  while swap do
+  ** repetitive block: if
+  if swap do
     alter swap := False; // reset flag
     given i <- (0.!n) do
       ** this pair is out of order ?
-      when this[i] < this[i+1] do
+      if this[i] < this[i+1] do
         ** swap two elements
         alter (this[i+1], this[i]) := (this[i], this[i+1]);
         alter swap := True; // set flag

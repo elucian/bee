@@ -10,7 +10,7 @@ return; // test
 rule main():
   ** start 8 threads
   make i := 0; 
-  when (i ≤ 8) do
+  if (i ≤ 8) do
     begin test(i);
     alter i += 1;
   cycle;

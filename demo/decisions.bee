@@ -1,6 +1,6 @@
 +--------------------------------
 |  conditional statements:       |  
-|  when and case in one demo
+|  if and case in one demo
 +-------------------------------+
 load $pro_lib.console:(*);
 
@@ -13,12 +13,12 @@ rule main():
   print ("a > b") if a > b;
   
   ** single branch decision
-  when a = b do
+  if a = b do
     print ("a = b");
   done;
   
   ** decision with alternate branch
-  when a < 5 do
+  if a < 5 do
     print "a < 5";
   else
     print "no";
@@ -27,12 +27,12 @@ rule main():
   ** nested statements are supported
   alter a:= 1; // True
   alter b:= 0; // False
-  when a ∧ b do
+  if a ∧ b do
     print ("a ≠ 0 and b ≠ 0");
-    when a ≥ b do
+    if a ≥ b do
       print ("a ≥ b");
     done;
-    when a > b do
+    if a > b do
        print ("a > b");
     done;
   else
@@ -40,7 +40,7 @@ rule main():
   done;
   
   +---------------------------------------
-  |  case statement replace nested when  |
+  |  case statement replace nested if  |
   +--------------------------------------+
   ** mutual exclusive multi-path selector
   trial one

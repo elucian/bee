@@ -7,11 +7,11 @@ driver main_rule:
 rule main(*params ∈ S):
    ** read the number of parameters
    make c := params.count;
-   abort -1 if (c = 0);
+   panic if (c = 0);
    
    ** print comma separated parameters
    make i:= 0 ∈ Z;
-   while (i < c) do
+   if (i < c) do
      write params[i];
      alter i += 1;
      write "," if (i < c);

@@ -33,7 +33,7 @@ rule main():
   trial:
     alter c := i; // auto boxing, makes c = 10 
     alter i := c; // not possible (fail)
-  patch
+  other
     ** implicit unboxing error
     print "unboxing error:" + @error.message;
   done;

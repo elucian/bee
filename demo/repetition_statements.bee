@@ -1,14 +1,17 @@
 +---------------------------------------
 | Local context & repetitive statement |
 +--------------------------------------+
-load $pro_lib.console:(*);
+load $pro_lib.console.(*);
 
 rule main():
-  ** local context
+  ** rule context
   make x,y:10 ∈ Z; 
+  
+  ** local context
+  local:
+    make  x := 1       
   do
     ** inner context shadow external "x"
-    make  x := 1     
     alter y := 5;
     alter x += 2;
     print x, y; // 3, 5
@@ -16,7 +19,7 @@ rule main():
   print x, y; // 10, 5
   ** repetitive block without "with"
   do
-    write x & ',';  // write in buffer
+    write x + ',';  // write in buffer
     alter x -= 1;   // decrement
   cycle if x > 0;
   write x; // write 0 the last value

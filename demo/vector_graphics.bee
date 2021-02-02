@@ -1,7 +1,7 @@
 +------------------------------------
        vector graphics prospect
 ------------------------------------+
-load $lib.graphic.core:(*);
+load $lib.graphic.core:(test);
 
 ** define two points and two vectors
 make (p1, p2) ∈ ⊡; // graphic point
@@ -30,6 +30,8 @@ rule main():
   
   show c ; // activate canvas
   wait 30; // wait 30 seconds
+
+  #test
   
   +-----------------------------------
     hide canvas from view
