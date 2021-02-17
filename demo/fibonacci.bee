@@ -18,5 +18,4 @@ rule main():
    ** print the result to console
    print r;
 return;
-
 #end of module
