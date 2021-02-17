@@ -1,8 +1,6 @@
 +--------------------------------------
 |   Bubble sort with Array of integers |
 +-------------------------------------+
-driver bs:
-
 load $pro_lib.console:(*);
 
 ** bubble sort with integers

@@ -1,8 +1,6 @@
 +----------------------------
 |  Demo Fibonacci rule      |
 +---------------------------+
-driver fibonacci
-
 load $pro_lib.console.(*);
 ** declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):
