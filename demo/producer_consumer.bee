@@ -24,10 +24,10 @@ rule bar(channel ∈ (N), batch ∈ N):
   make index = 0;
   if channel.length > 0 do
     given index <- (0..batch)  do
-      write channel.head,",";  
-      alter channel -? channel.head;
-      wait 1; //slow down with a second
-      exit if channel.length = 0; //empty
+       write channel.head,",";  
+       alter channel -? channel.head;
+       wait 1; //slow down with a second
+       exit if channel.length = 0; //empty
     done;
     print
     yield; //suspend consumer
