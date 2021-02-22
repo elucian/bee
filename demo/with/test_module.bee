@@ -1,0 +1,4 @@
+#define test_module
+rule .test(x:0) => (r: 0):
+   alter r := x + 1;
+return;
