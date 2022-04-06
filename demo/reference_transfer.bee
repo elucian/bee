@@ -7,7 +7,7 @@ rule main:
   d, e    ∈ [Z]; 
   
   ** assign "by share" 
-  bound d := s;  -- use same location
+  d := s;  -- use same location
   d += 1;  -- increment
   claim s = 11; -- is modified)
   
@@ -29,10 +29,10 @@ rule main:
   claim e ≢ d; -- different locations
   
   ** boxing/ unboxing  
-   i := 10 ∈  Z  ; -- native type
-   c := 0  ∈ [Z] ; -- reference
+  i := 10 ∈  Z  ; -- native type
+  c := 0  ∈ [Z] ; -- reference
   
-  bound   c := @i; -- explicit boxing
+  c := @i; -- explicit boxing
   claim c  = 10; -- defines c = 10 
   
   ** verify identity

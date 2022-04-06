@@ -12,8 +12,8 @@ rule main(*params ∈ (S)):
     i:= 0 ∈ Z;
   while (i < c) do
     write params[i];
-    i += 1;
     write "," if (i < c);
+    i += 1;    
   repeat;
   ** print the buffer to console
   print;  

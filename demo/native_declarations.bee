@@ -12,7 +12,7 @@ rule main:
    print h; -- ''
    
    ** declaring with initial value
-   (g, h) := -10 ∈ Z;
+   (g, h) := -10  ∈ Z;
    (x: 10, y: 20) ∈ N;
    
    ** native array are auto initialized
