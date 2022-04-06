@@ -1,14 +1,14 @@
 +-----------------------------------
   declare and use an expression rule
 -----------------------------------+
-load $pro_lib.console:(*);
+load $pro_lib.console.(*);
 
 ** lambda expression
-make add := λ(a, b ∈ Z) ∈ Z => (a + b);
+add := λ(a, b ∈ Z) => (a + b) ∈ Z;
 
-rule main():
+rule main:
    ** use lambda expression with print
-   print add(1, 2);    // print 3
-   print add(-10, 10); // print 0
+   print add(1, 2);    -- print 3
+   print add(-10, 10); -- print 0
 return;
 #end of module

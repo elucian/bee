@@ -1,28 +1,22 @@
-#!/bin/bee //shabang comment
+# Style of comment
++----------------------------------
+ Bee has support for:
+   ** Single line comments
+   -- End of line comments
+   |: Nested comments     :|
+   |: Expression comments :|
+   |: Debug-code comments :|
+----------------------------------+
 
-#Title comment
-+------------------------------------------------------------------
-| At the beginning of program you can have  several comments,     |
-| to explain how the program works. This notation is preferred.   |
-+-----------------------------------------------------------------+
-
-##Rule subtitle
-/* This is a second comment notation used for:
-   /* Expression comments */
-   /* Debug-code comments */
-*/
-rule main():
-  ** This is a single line comment
-  pass; // end of line comment
+## rule
+rule main:
+  ** Single line comment
+  pass; -- end of line comment
   ...
 
-  ** In expression comments use /*...*/
-  print ("comment in expression \n", /*first line*/
-         "is working \n",            /*second line*/
-         "this is a test \n"         /*last line*/
-        ); // end of expression
+  ** Expression comments
+print ("comments     |: expression:|
+        are working  |: comments  :|
+        in strings"  |: are useful:|
+        ); 
 return;
-*******************************************************************
-** This is the old style boxed comment, used for matrix printers **
-** In Bee you can add comments/notes at the end of your code     **
-*******************************************************************

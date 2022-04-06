@@ -2,49 +2,47 @@
   type inference is using
   operator := with initialization
 -----------------------------------+
-load loop(*);
-
 ** constant type inference
-stow a := 10;     // Z (integer on 64bit)
-stow x := 0.5;    // R (double precision)
-stow y := 1/2;    // Q (rational number)
-stow f := False;  // L (logic)
-stow t := True;   // L (logic)
+store a := 10;     -- Z (integer on 64bit)
+store x := 0.5;    -- R (double precision)
+store y := 1/2;    -- Q (rational number)
+store f := False;  -- L (logic)
+store t := True;   -- L (logic)
 
 ** variable type inference
-make v := (1,2,3);     // List of Z
-make s := "string";    // Unrestricted capacity string
-make c := 'c';         // Single symbol type A
+v := (1,2,3);     -- List of Z
+s := "string";    -- Unrestricted capacity string
+c := 'c';         -- Single symbol type A
 
 ** explicit conversion + inference
-make t := "23:45"      -> T24; // Time
-make t := "1:45am"     -> T12; // Time
-make d := "10/10/2010" -> DMY; // Date
+t := "23:45"      -> T24; -- Time
+t := "1:45am"     -> T12; -- Time
+d := "10/10/2010" -> DMY; -- Date
 
 ** optional parameters inference
 rule add(x,y:0) => (z ∈ Z):
-  alter z := x + y;
+  z := x + y;
 return;
 
 ** argument x is mandatory, y is optional
 rule plus(x ∈ Z, y:1 ∈ Z) => (z ∈ Z):
-  alter z := (x + y);
+  z := (x + y);
 return;
 
 ** input/output arguments
 rule inc(x, y ∈ [Z]):
-  alter x += 1;
-  alter y += 1;
+  x += 1;
+  y += 1;
 return;
 
 
-rule main():
-  print add(1,1);  // will print 2
-  print plus(0);   // will print 1
-  print plus(1,2); // will print 3
+rule main:
+  print add(1,1);  -- will print 2
+  print plus(0);   -- will print 1
+  print plus(1,2); -- will print 3
   
-  make  (i,k) ∈ [Z] ; // references
-  apply inc(i,k);     // i = 1 and k = 1
-  print (i,k);        // expect: 1 1
+   (i,k) ∈ [Z] ; -- references
+   inc(i,k);     -- i = 1 and k = 1
+  print (i,k);        -- aver: 1 1
 return;
 #end of module

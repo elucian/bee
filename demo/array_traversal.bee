@@ -3,19 +3,20 @@
 +--------------------------+
 load $pro_lib.console:(*);
  
-** define array with 10 elements
-make a ∈ [Z](10);   
-make i := 0; //control variable
+** array with 10 elements
+a ∈ [Z](10);   
+i := 0; --control variable
 
-rule main():
+rule main:
   ** array initialization
-  given i <- (0.!10) do
-     alter a[i] := i; 
-  cycle;
+  
+  for ∀ i ∈ (0..9) do
+     a[i] := i; 
+  repeat;
   
   ** array traversal and print
-  given i <- (0.!10) do
+  for ∀ i ∈ (0.!10) do
      print " a[#(n)] = #(n)" ? (i, a[i]);
-  cycle;
+  repeat;
 return; 
 #end of module

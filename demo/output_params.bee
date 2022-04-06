@@ -1,23 +1,21 @@
 +------------------------------------
 |      Input/Output parameters      |
 ------------------------------------+
-load $pro_lib.console:(*);
-
 ** rule with boxed parameters
 rule pro(a,b ∈ [N]):
-  alter a += 1; // alter parameter a
-  alter b += 2; // alter parameter b 
+  a += 1; -- parameter a
+  b += 2; -- parameter b 
 return;
 
-rule main():
-   ** define native integers using inference
-   make x, y := [10];
+rule main:
+   ** native integers using inference
+   x, y := 10 ∈ N;
    
-   ** execute pro and expect x, y  to be modified
-   apply pro (x, y);
+   ** execute pro and claim x, y  to be modified
+   pro(a:@x, b:@y);
    
    ** verify new values with arguments
-   print x; // will print 11
-   print y; // will print 12
+   print x; -- will print 11
+   print y; -- will print 12
 return;  
 #end of module

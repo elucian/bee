@@ -5,25 +5,30 @@ load $pro_lib.console:(*);
 
 ** rule with two results
 rule test(x, y ∈ Z) => (a,b ∈ Z):
-  alter a := x + 1;
-  alter b := y + 1;
+  a := x + 1;
+  b := y + 1;
 return;
 
 ** rule with structured result
 type Rec: {x ∈ Z, y ∈ R} <: Object;
+
 rule demo(x ∈ Z, y ∈ R) => (r ∈ Rec):
-  alter r.x := x;
-  alter r.y := y;
+  r.x := x;
+  r.y := y;
 return;
 
-rule deom():
-  ** unpacking and create two variables
-  make  n,m := test(1,2);
-  print n,m; // will print 2, 3
+rule main:  
+  n ∈ Z, m ∈ R;  
   
+  ** result and create two variables  
+  n, m := test(1,2);
   
-  ** test rule using make instead
-  make  r := demo(1, 0.5);
-  print r ; // {x:1, y:0.5}
+  ** verify parse results
+  claim n = 1;
+  claim m = 2;
+    
+  ** test rule using instead
+  r := demo(1, 0.5);
+  print  r ; -- {x:1, y:0.5}
 return;
 #end of module 

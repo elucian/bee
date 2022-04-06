@@ -5,21 +5,21 @@ load $pro_lib.console:(*);
 
 ** declare rule with rule "cmp" as parameter
 rule compare(a,b ∈ Z, cmp(Z,Z) ∈ L) => (r ∈ L):
-  alter r := cmp(a,b);
+  r := cmp(a,b);
 return;
 
 
-rule main():
+rule main:
   ** declare a lambda expression:
-  make lt := λ(a,b ∈ Z) ∈ L => (a < b);
-  make test ∈ L;
+  lth := λ(a,b ∈ Z) => (a < b) ∈ L;
+  test ∈ L;
   
   ** delegate rule compare to execute expression: lt
-  alter test := compare(1,2,cmp:lt);
-  print test; // expect 1
+  test := compare(1,2,cmp:lth);
+  print test; -- claim 1
   
   ** delegate rule compare to execute an anonymous lambda expression
-  alter test := compare(1, 2, (a, b) => (a ≥ b));
-  print test; // expect 1
+  test := compare(1, 2, (a, b) => (a ≥ b));
+  print test; -- claim 1
 return;
 #end of module

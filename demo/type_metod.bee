@@ -1,15 +1,13 @@
 +----------------------------------------
  demonstrate rule associated to a type
 ----------------------------------------+
-load loop(*);
-
 ** enumeration with public members
 type Number: {.zero, .one, .two} <: Ordinal;
 
 
-** make a rule with define Number
+** a rule with Number
 rule convert(self ∈ Number) => (y ∈ S):
-  alter y := ("zero"  if self = zero,
+  y := ("zero"  if self = zero,
               "one"   if self = one,
               "two"   if self = two,
               "none");
@@ -17,16 +15,16 @@ return;
 
 ** a wrapper rule with convert
 rule equal(self ∈ Number, s ∈ S) => (r ∈ L):
-  alter r := (s = convert(x));
+  r := (s = convert(x));
 return;
 
-rule main():
-  make test ∈ Number;
-  alter test := zero; // instance of Number
+rule main:
+  test ∈ Number;
+  test := zero; -- instance of Number
       
   ** calling test rules 
-  print test.convert;       // will print "zero"
-  print test.equal('zero'); // will print 1
+  print test.convert;       -- will print "zero"
+  print test.equal('zero'); -- will print 1
 return;
 
 #end of module

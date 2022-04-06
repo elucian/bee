@@ -1,6 +1,4 @@
 ** hello world demo
-load $pro_lib.console:(*);
-
-rule main():
+rule main:
   print "Hello World";
 return;

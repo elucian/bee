@@ -1,0 +1,37 @@
++-------------------------------
+    recursive objects demo    
+--------------------------------+
+load $pro_lib.console:(*);
+
+** recursive type Person
+type Person: {
+      name ∈ S, 
+      age  ∈ N,  
+      children ∈ (Person) -- list of persons
+     } <: Object;
+
+rule main:
+  ** create two items of type Person
+  r1, r2 ∈ Person;  
+
+  ** person with no children          
+  r1 := {name:'Mica', age:21};
+  
+  ** person with two children
+  r2 := {name:'Barbu', age:25, 
+                children: (
+                  {name:'Telu', age:4},
+                  {name:'Radu', age:1} 
+                )
+              };
+  
+  ** object unpacking into new variables
+  r_name, r_age, r_children := r2;
+  
+  ** using introspection
+  print data_type(r_name); -- S
+  print data_type(r_age) ; -- N
+  print data_type(r_children); -- (Person)
+  
+return;
+#end of module

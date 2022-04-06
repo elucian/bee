@@ -4,10 +4,10 @@
 load $pro_lib.console:(*);
 
 
-make fator: λ(n ∈ N) ∈ N => (1 if n = 0, fator(n-1));
+factor: λ(n ∈ N) => (1 if n = 0, factor(n-1)) ∈ N;
 
 
-rule main():
-   pass if fator(3) = 6;
+rule main:
+   claim factor(3) = 6;
    print "pass"
 return;

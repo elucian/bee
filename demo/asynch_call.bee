@@ -5,15 +5,16 @@
 rule test(n ∈ N):
   wait n; 
   print ".";
-return; // test
+return; -- test
 
-rule main():
-  ** start 8 threads
-  make i := 0; 
-  if (i ≤ 8) do
-    begin test(i);
-    alter i += 1;
-  cycle;
-  yield test; // synchronize
+rule main:
+  cycle local: 
+    ** start 8 threads
+    i := 0; 
+  while (i ≤ 8) do
+    begin test(i); 
+    i += 1;
+  repeat local;  
+  yield test; -- synchronize
 return;
 #end of module

@@ -1,29 +1,13 @@
-+---------------------------------------
-| Local context & repetitive statement |
-+--------------------------------------+
-load loop(*);
-
-rule main():
-  ** rule context
-  make x,y:10 ∈ Z; 
-  
-  ** local context
-  local:
-    make  x := 1       
++-----------------------
+| repetitive statement |
++----------------------+
+rule main:
+  cycle:
+    x := 10 ∈ Z; 
   do
-    ** inner context shadow external "x"
-    alter y := 5;
-    alter x += 2;
-    print x, y; // 3, 5
-  done;
-  print x, y; // 10, 5
-  ** repetitive block without "with"
-  do
-    write x + ',';  // write in buffer
-    alter x -= 1;   // decrement
-  cycle if x > 0;
-  write x; // write 0 the last value
-  print;   // expected: 10,8,7,6,5,4,3,2,1,0
+    write x + ',';  -- write in buffer
+    x -= 1;   -- decrement
+  repeat if x > 0;
+  print; -- avered: 10,8,7,6,5,4,3,2,1,0
 return;
 
-#end of module

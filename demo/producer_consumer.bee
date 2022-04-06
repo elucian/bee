@@ -2,51 +2,53 @@
   Producer-consumer design pattern 
 -----------------------------------+
 ** data source/target to process
-make s := [0](1000); //array of integers
+s := [0](1000); --array of integers
 
 ** producer coroutine
 rule foo(channel ∈ (N), start, end, batch ∈ N):
     ** prepare next batch    
-  make mark := start;
-  if mark < end do    
+  cycle:
+    mark := start;
+  while mark < end do    
     if channel.length < batch do
-      alter channel <+ mark; //append mark to channel
-      exit if mark = end;    //stop the producer
-      alter mark += 1; //next number in channel
+      channel <+ mark; --append mark to channel
+      exit if mark = end;    --stop the producer
+      mark += 1; --next number in channel
     done;
-    yield; //suspend producer
-    alter mark := 0;
-  cycle;  
+    yield; --suspend producer
+    mark := 0;
+  repeat;  
 return;
 
 ** consumer coroutine
 rule bar(channel ∈ (N), batch ∈ N):  
-  make index = 0;
-  if channel.length > 0 do
-    given index <- (0..batch)  do
+  cycle:  
+    index = 0;
+  while channel.length > 0 do
+    for ∀ index ∈ (0..batch)  do
        write channel.head,",";  
-       alter channel -? channel.head;
-       wait 1; //slow down with a second
-       exit if channel.length = 0; //empty
+       channel -? channel.head;
+       wait 1; --slow down with a second
+       exit if channel.length = 0; --empty
     done;
     print
-    yield; //suspend consumer
-  cycle;  
+    yield; --suspend consumer
+  repeat;  
 return;
 
-rule main():
-  ** prepare a channel
-  make ch ∈  (N); //empty list of natural numbers
-  
-  ** activate producer
-  begin foo(ch, start:1000, end:2000, batch:100); //synchronous call
-  if ch.length > 0 do
+rule main:  
+  cycle:
+    ** prepare a channel
+    ch ∈  (N); --empty list of natural numbers
+    ** activate producer
+    begin foo(ch, start:1000, end:2000, batch:100); --synchronous call  
+  while ch.length > 0 do
     ** prepare consumers
-    given i <- (1..4) do
-      begin bar(n); //asynchronous call
-    cycle; 
-    yield bar; // execute consumers on 4 threads
-    yield foo if (ch.length = 0); // execute producer on single thread
-  cycle;  
+    for ∀ i ∈ (1..4) do
+      begin bar(n); --asynchronous call
+    repeat; 
+    yield bar; -- execute consumers on 4 threads
+    yield foo if (ch.length = 0); -- execute producer on single thread
+  repeat;  
 return;  
 #end of module

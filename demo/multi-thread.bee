@@ -1,27 +1,26 @@
 +--------------------------------------
- Demo sum on multit-hread
+ Demo sum on multi-thread
 ---------------------------------------+
 rule sum(a, b &isin; Z) => (r &isin; Z):
-  given i in (a..b) do
-      r += i;
-  cycle;    
+  for ∀ i in (a..b) do
+    r += i;
+  repeat;    
 return;
 
 ** prepare for execution on 4 threads
-rule main():
-    make results <: List; // partial sum collection
+rule main:
+    sums ∈ (Z); -- partial sum
     ** use a mapping technigue to split data in 4 equal batches
-    given i <- (1.!100:25) do
+    for ∀ i ∈ (1.!100:25) do
         begin sums <+ test(i,i+25); 
-    cycle;        
-    yield; //wait for other threads to finish    
-    
-    make output ∈ Z;
-    
+    repeat;        
+    yield test; --wait for other threads to finish    
+       
     ** reduce results into output
-    given partial <- results do
-        alter output += partial;
-    cycle;
-    print output; // 5050
-    pass if output = 5050; 
+    output := 0 ∈ Z;
+    for partial ∈ results do
+        output += partial;
+    repeat;
+    claim  output = 5050; 
+    print  output; -- 5050    
 return;

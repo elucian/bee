@@ -6,64 +6,64 @@ load $pro_lib.console:(*);
 ** enumeration is a type 
 type Enum: {.fst:1, .snd, .trd} <: Ordinal;
 
-rule main():
+rule main:
   ** print enumeration members
-  print fst ; // 1
-  print snd ; // 2
-  print trd ; // 3
+  print fst ; -- 1
+  print snd ; -- 2
+  print trd ; -- 3
   
-  ** define hash map variable
-  make s ∈ {(U:N)};
+  ** hash map variable
+  s ∈ {(U:N)};
   ** assign (key:value) pairs
-  alter s :=
+  s :=
     {
      ("first" : 1), 
      ("secont": 2),
      ("third" : 3)
     };
-  print s["first"] ; // 1
-  print s["second"]; // 2
-  print s["third"] ; // 3
+  print s["first"] ; -- 1
+  print s["second"]; -- 2
+  print s["third"] ; -- 3
   
   ** array with capacity
-  make v1 ∈ [Z](10) ; // vector of 10 integer elements
-  make v2 ∈ [R](2,3); // matrix of 2 rows and 3 columns
-  ** dynamic alter map collections
-  make p ∈ {U};     // alter collection of symbols
-  make m ∈ {(R:S)}; // hash map of strings with real key
+  v1 ∈ [Z](10) ; -- vector of 10 integer elements
+  v2 ∈ [R](2,3); -- matrix of 2 rows and 3 columns
+  ** dynamic map collections
+  p ∈ {U};     -- collection of symbols
+  m ∈ {(R:S)}; -- hash map of strings with real key
   
   ** Establish map using literals
-  alter m := {'a':1, 'b':2, 'c':3}
+  m := {'a':1, 'b':2, 'c':3}
   ** complex list examples
-  make ∈ (U) ;   // a list of characters
-  make ∈ (R) ;   // a list of real numbers
-  make ∈ ((U));     // a list of lists of symbols
-  make ∈ ([U](10)); // a list of array with 10 symbols
+  ∈ (U) ;      -- a list of characters
+  ∈ (R) ;      -- a list of real numbers
+  ∈ ((U));     -- a list of lists of symbols
+  ∈ ([U](10)); -- a list of array with 10 symbols
   
   ** Array and Matrix literals
-  make l2 := [1,2,3];        // array of 3 elements
-  make m2 := [[1,1],[2,2]] ; // matrix of 2x2
+  l2 := [1,2,3];        -- array of 3 elements
+  m2 := [[1,1],[2,2]] ; -- matrix of 2x2
   ** Demo with "set" operations
-  make s1 := {Z}; // empty set of strings
+  s1 := {Z}; -- empty set of strings
   
-  ** Initialized set of 3 elements
-  make s2 := {1, 2, 3};
+  ** initialized set of 3 elements
+  s2 := {1, 2, 3};
   ** Append one element into a set
-  alter s1 <+ 0; // {0}
-  alter s1 <+ 1; // {0,1}
-  alter s1 <+ 2; // {0,1,2}
+  s1 <+ 0; -- {0}
+  s1 <+ 1; -- {0,1}
+  s1 <+ 2; -- {0,1,2}
   ** Remove one element from set
-  alter s1 -? 1; // {0,2}
-  alter s1 -? 2; // {0}
+  s1 -? 1; -- {0,2}
+  s1 -? 2; -- {0}
   ** Set literals using type inference
-  make s3 := {'a','b','c'}; // set of 3 symbols
-  make s4 := {'a','b','d'}; // set of 3 symbols
+  s3 := {'a','b','c'}; -- set of 3 symbols
+  s4 := {'a','b','d'}; -- set of 3 symbols
   ** union between 2 sets (a, b) are nod duplicated
-  print (s3 ∨ s4); // {'a','b','c','d'}
+  print (s3 ∨ s4); -- {'a','b','c','d'}
   ** intersection between 2 sets
-  print (s3 ∧ s4); // {'a','b'}
+  print (s3 ∧ s4); -- {'a','b'}
   ** difference between two sets
-  print (s3 - s4); // {'c'}
-  print (s4 - s3); // {'d'}
+  print (s3 - s4); -- {'c'}
+  print (s4 - s3); -- {'d'}
 return;
 #end of module

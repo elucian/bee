@@ -1,16 +1,14 @@
 +--------------------------
    Input a value demo
 --------------------------+
-load $pro_lib.console:(*);
-
-rule main():
-  make a ∈ N;
+rule main:
+  a ∈ N;
   print "to stop enter 0";
-  if (a ≠ 0) do
+  while (a ≠ 0) do
     write "enter a number ≠ 0:"
     read  a, "#(n)";
     print ("you have enter #(n)" ? a);
-  cycle;
+  repeat;
 return;
 
 #end of module

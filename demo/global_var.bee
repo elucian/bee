@@ -2,37 +2,30 @@
    global variables are public
    use prefix @ and lowercase
 ------------------------------+
-load $pro_lib.console:(*);
-
 ** declare a public variable x
-make .x := 1;
+.x := 0;
 
 ** use module variable x in rule "add1"
 rule add1:
-  alter x += 1;
+  x += 1;
   print x;
 return;
 
 ** demo shadow effect by making a local x
 rule add2: 
-  make   x := 0;     // make a local variable x 
-  alter  x := x + 1; // increment local variable
-  print  x;          // print local  x
-  print .x;          // print public x 
-  print .x;          // print public x 
+  x := 0;     -- a local variable x 
+   x := x + 1; -- increment local variable
 return;
 
-rule main():
+rule main:
   ** call a subroutine by name
-  apply add1; // print 2
-  apply add1; // print 3
-  apply add1; // print 4
-  print x;    // expect 4    
+   add1; 
+   add1; 
+  claim x = 2;    
   ** variable shadowing
-  apply add2; // print 1
-  apply add2; // print 1
-  apply add2; // print 1
-  print x;    // x remain 4
+   add2; 
+   add2; 
+  claim x = 2;
 return;
  
 #end of module

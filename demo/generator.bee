@@ -1,48 +1,48 @@
 +-----------------------------------
 |      Generator Class demo        |
 +----------------------------------+
-** first make a class
+** first a class
 type GenI: {min ,max , ci ∈ Z} <: Object;
 
-rule GenI:
+rule GenI(p_min, p_max ∈ Z) =>(self ∈ GenI):
+    
+    ** prepare result as object
+    self = {p_min, p_max, 0} ∈ GenI;
+    
     ** reset generator
-    rule reset(self ∈ GenI, p_min , p_max ∈ Z):
-      alter self.min := p_min;
-      alter self.max := p_max;
-      alter self.ci  := p_min;
+    rule .reset(self ∈ GenI, p_min , p_max ∈ Z):
+      self.min := p_min;
+      self.max := p_max;
+      self.ci  := p_min;
     return;
 
     ** get next index
-    rule next(self ∈ GenI) => (i ∈ Z):
-      alter i  := self.ci;
-      alter self.ci += 1;
+    rule .make(self ∈ GenI) => (i ∈ Z):
+      i  := self.ci;
+      self.ci += 1;
     return;
 
     ** detect if finish
-    rule finish(self ∈ GenI)  => (r ∈ L):
-      alter r := (self.ci ≥ self.max);
-    return;
-    
-    ** constructor
-    rule(min, max ∈ Z) =>(self ∈ GenI):
-       self = {min, max, 0} ∈ GenI;
-    return;
+    rule .finish(self ∈ GenI)  => (r ∈ L):
+      r := (self.ci ≥ self.max);
+    return;   
 return;
 
-rule main():
-   ** use GenI constructor: 
-   make foo := GenI(10, 20);
-   make x   := 0;
-   if ¬ foo.finish() do
-     alter x := foo.next();
-     write (x,",");
-   cycle;
+rule main:
+  ** use GenI constructor: 
+  foo := GenI(10, 20);
+  cycle:
+    x := 0;
+  while ¬ foo.finish() do
+    x := foo.next();
+    write (x,",");
+  repeat;
    
-   ** flush the buffer
-   print; //10,11,12,13,14,15,16,17,18,19,20, 
+  ** flush the buffer
+  print; --10,11,12,13,14,15,16,17,18,19,20, 
    
-   ** test reset rule
-   apply foo.reset();
-   fail if foo.ci ≠ 10; // expect: 10
+  ** test reset rule
+   foo.reset();
+  fail if foo.ci ≠ 10; -- aver: 10
 return;   
 #end of module
