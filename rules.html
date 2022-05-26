@@ -1,0 +1,211 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="description" content="Define Bee language rules.">
+  <meta name="author" content="Elucian Moise">
+  <meta name="keywords" content="sage, code, bee, bee-lang, rules, syntax, paradigm">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Website title -->
+  <title>Bee Rules</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <!-- Icon -->
+  <link rel="icon" type="image/png"  href="../images/favicon.ico">
+  <!-- Bee Highlighter -->
+  <script src="bee.js"></script>
+  <!-- Sage-Code CSS -->
+  <link rel="stylesheet" href="../sage.css">
+  </head>
+<body onload="bee_render()">
+<div class="container">
+
+<!-- header -->
+<div class="row">
+    <div class="col">
+        <a href="https://sagecode.net"><img src="../images/sage-logo.svg" alt="Sage-Code Laboratory" height="80"/></a>
+    </div>
+    <div class="col  bottom-right">
+        <a href="index.html#lang-index" rel="nofollow">index</a>&lt;--
+    </div>
+</div><hr>
+
+<h1>Bee Rules</h1>
+<div class="alert alert-secondary shadow-sm">
+Bee is rule oriented language. A rule is a named section of code that can be executed multiple times on demand. Rules can have parameters and can return results, similar to a function, subroutine, procedure or method, used in other languages.
+</div>
+
+<h2>Bookmarks</h2>
+
+<ul>
+<li><a href="#rule-anatomy">rule anatomy</a></li>
+<li><a href="#rule-features">rule features</a></li>
+<li><a href="#rule-purpose">rule purpose</a></li>
+<li><a href="#advanced-topics">advanced topics</a></li>
+</ul>
+
+<h2><a id="rule-anatomy"/>Rule Anatomy</h2>
+
+<p>A rule declaration start with keyword: "rule" and end with keyword "return". You can send arguments to a rule by using a rule call and you can receive results that can be captures into variables using assign statement.</p>
+
+<div align="center">
+  <img src="img/bee-rule.svg" alt="bee rule" width="500" class="img-fluid protect rounded shadow border" >
+  <p>Rule Concept</p>
+</div>
+
+<p>We have chosen "rule" keyword instead of "def" for naming a sub-routine. So, Bee has "rules" and "functions". Rules are subprograms that can have side-effects similar to procedures, methods or subroutines used in other languages. </p>
+
+<h4>Properties:</h4>
+<ul>
+<li>A rule is declared with keyword <em> "rule"</em>;</li>
+<li>A rule can have local variables and constants;</li>
+<li>A rule can have public attributes, and internal states;</li>
+<li>A rule can have nested rules that are public or private;</li>
+<li>A rule can create another rule that is called closure;</li>
+<li>A rule that receive as parameter an object is a method;</li>
+<li>A rule that produce an object as a result is a constructor;</li>
+<li>A rule that have same name as a composite type is a companion;</li>
+</ul>
+
+
+<h2><a id="rule-features"/>Features</h2>
+
+<p>In Bee the rules are versatile yet comprehensible. Making rules require design skills. To learn this skill you must know understand first thr rule features. Next topic will explain the most important features:</p>
+
+<ul>
+<li><a href="#rule-params">rule parameters</a></li>
+<li><a href="#rule-varargs">rule varargs</a></li>
+<li><a href="#rule-results">rule results</a></li>
+</ul>
+
+<h3><a id="rule-params"></a>Rule parameters</h3>
+
+<p>Parameters are special variables defined in rule signature using parenthesis. The parameter list is used to define input variables. Each parameter has a name, a type and initial value.</p>
+
+<h4>Example:</h4>
+
+<p>In next example we define a rule that require two string parameters. We provide arguments for each parameters by position. In this case, foo do not return results so we use "apply" keyword to execute the rule. Parameters are input/output strings so they can be modified.</code>.
+
+<pre><code class="language-bee">** a rule with two parameter
+rule foo(name, message &isin; [S]):
+    message:= "hello:" + name + ". I am Foo. Nice to meet you!";
+return;
+
+** using apply + rule name will execute the rule
+rule main:
+    str &isin; S;
+    apply foo("Bee", [str]);
+    print str;
+return;
+</code></pre>
+
+<p><b>Expected output:</b></p>
+<pre class="language-bee">hello: Bee. I am Foo. Nice to meet you!</pre>
+
+<h4>Notes:</h4>
+<ul>
+<li>Parameters are enumerated in a list separated by comma;</li>
+<li>Optional parameters are initialized with pair-up operator ":";</li>
+<li>Primitive types parameters receive values: <em> by copy</em>;</li>
+<li>Composite type parameters receive value: <em> by share</em>;</li>
+</ul>
+
+<h3><a id="rule-varargs" class="anchor" href="#varargs"></a>Rule varargs</h3>
+<p>The last parameter in a parameter list can use prefix: "*" to receive multiple values into an array of values. This is called "vararg" parameter and is very useful way to accept multiple parameters by declaring just one.</p>
+
+<pre><code class="language-bee"># rule with varargs
+rule foo(*bar &isin; [Z]) =&gt; (x &isin; Z):
+    c := bar.count();
+    ** precondition
+    when (c = 0) do
+        x := 0;
+        exit;
+    done;
+    ** sum all parameters
+    for &forall; i &isin; (0.!c) do
+        x += bar[i];
+    repeat;
+return;
+** we can call foo with variable number of arguments
+rule main:
+    print foo();        -- 0
+    print foo(1);       -- 1
+    print foo(1,2);     -- 3
+    print foo(1,2,3);   -- 6
+    print foo(1,2,3,4); -- 10
+return;
+</code></pre>
+
+<h3><a id="rule-results"></a>Rule results</h3>
+
+<p>A rule can have multiple results. Result variables must be declared. This is characteristic to Bee language. In other languages, you can use: "return value" but in Bee things are different. A rule has a result list similar to a parameter list.</p>
+
+<h4>Example:</h4>
+
+<p>In this example we have a rule that return a tuple of two values. These values can be assigned inside the rule body. If the values are not assigned the default values are used. Like parameters, the result variables can have initial values.</p>
+
+<pre><code class="language-bee">** rule with two results "s" and "d"
+** parameter x is mandatory y is optional
+rule com(x &isin; Z, y:0 &isin; Z) =&gt; (s, d &isin; Z):
+    s := x + y;
+    d := x - y;
+return;
+
+rule main:
+    ** capture result into a single variable
+     r := com(3,2); -- create a list
+    print r; -- (5,1)
+
+    ** deconstruction of result into variables: s, d
+     s, d := com(3,2);  -- capture two values
+    print s, d, sep:"," ;    -- 5,1 (use separator = ",")
+
+    ** ignore one result using variable "_"
+     a, _ := com(3);
+    print a; -- 3
+return;
+</code></pre>
+
+<h4>Notes:</h4>
+<ul>
+<li>Multiple results are declared with name and can also have initial value;</li>
+<li>A rule with multiple results can be called using spread operator (*)</li>
+<li>You can capture results into multiple variables separated by comma;</li>
+<li>You can ignore one result using anonymous variable "_";</li>
+<li>Rules with multiple results can not be used in expressions;</li>
+</ul>
+
+<h3><a id="external-rules"></a>External rules</h3>
+<p>Will be useful to import C functions calls from Bee. These rules could be wrapped in Bee modules. We have not yet establish this is the way to go. If it is, we add a dependency toward C and I don't particularly like it. Yet if we implement this it should look maybe like this:</p>
+
+<p><b>Example:</b>&nbsp;This is myLib.bee file:</p>
+<pre><code class="language-bee">#module myLib
+load $bee.lib.cpp.myLib; -- load cpp library
+** define a wrapper for external "fib"
+rule fib(n &isin; Z) =&gt; (x &isin; Z));
+  x := myLib.fib(n);
+return;
+</code></pre>
+
+<p>This is the main module:</p>
+<pre><code class="language-bee"># module main
+** load library
+load myLib := $bee.lib.myLib;
+** use external rule
+rule main:
+  print myLib.fib(5);
+return;
+</code></pre>
+
+<p>To understand more about interacting with other languages check this article about ABI:&nbsp;<a href="https://en.wikipedia.org/wiki/Application_binary_interface" rel="nofollow">Application Binary Interface</a></p>
+
+<!-- work in progress-->
+<hr>
+
+<p><b>Read next:</b>
+<a href="functions.html">Functions</a></p>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-copyright text-center"></div>
+</footer>
+</div>
+</body>
+</html>

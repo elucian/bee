@@ -1,0 +1,686 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="description" content="Control flow statements in Bee.">
+  <meta name="author" content="Elucian Moise">
+  <meta name="keywords" content="bee, lang, control flow, decision, ladder, match, switch, cycle, repeat">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Website title -->
+  <title>Bee Control</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <!-- Icon -->
+  <link rel="icon" type="image/png"  href="../images/favicon.ico">
+  <!-- Bee Highlighter -->
+  <script src="bee.js"></script>
+  <!-- Sage-Code CSS -->
+  <link rel="stylesheet" href="../sage.css">
+  </head>
+<body onload="bee_render()">
+<div class="container">
+
+<!-- header -->
+<div class="row">
+    <div class="col">
+        <a href="https://sagecode.net"><img src="../images/sage-logo.svg" alt="Sage-Code Laboratory" height="80"/></a>
+    </div>
+    <div class="col  bottom-right">
+        <a href="index.html#lang-index" rel="nofollow">index</a>&lt;--
+    </div>
+</div><hr>
+
+<h1>Control Flow</h1>
+<div class="alert alert-secondary shadow-sm">
+Control flow statements are used to modify the linear program workflow. In Bee each control statement start with a different keyword, and ends with one of: <em>done</em> or <em>cycle </em>. Control flow statements are unnamed blocks of code.</div>
+
+<h4>Bookmarks</h4>
+
+<p>These are all block statements in Bee language:</p>
+
+<table class="table table-bordered table-striped">
+<tr><th>Name                      </th><th>Description</th></tr>
+<tr><td><a href="#do"    >do      </a></td><td>start anonymous block</td></tr>
+<tr><td><a href="#task"  >task    </a></td><td>start local statement</td></tr>
+<tr><td><a href="#with"  >with    </a></td><td>qualifier suppression block</td></tr>
+<tr><td><a href="#if"    >if      </a></td><td>decision fork</td></tr>
+<tr><td><a href="#ladder">ladder  </a></td><td>decision ladder</td></tr>
+<tr><td><a href="#cycle" >cycle   </a></td><td>repetitive unconditional block</td></tr>
+<tr><td><a href="#for"   >for     </a></td><td>repetitive block with local scope</td></tr>
+<tr><td><a href="#match" >match   </a></td><td>enumerable symbol selector</td></tr>
+<tr><td><a href="#trial" >trial   </a></td><td>exception handler block</td></tr>
+</table>
+
+<h2><a id="do"/>do</h2>
+
+<p>Keyword "do" can be used to start an anonymous block of code that can be executed unconditionally. All block statements are using this keyword. A "do" block can end with: "done" or "repeat". All block have an implicit local scope.</p>
+
+<p>Next syntax pattern show the anonymous unconditional block.</p>
+
+<pre><code class="language-bee"># anonymous unconditional block
+do
+  ** block statements
+  ...
+done;
+</code></pre>
+
+<p>Next syntax pattern show the anonymous repetitive block.</p>
+
+<pre><code class="language-bee"># anonymous repetitive block
+do
+  ** block statements
+  ...
+repeat;
+</code></pre>
+
+<p><b>Note:</b> You can not declare anything new inside a do block. All declarations must be done before starting an executable block. Therefore Bee has keywords to define a local scope for every block statement.</p>
+
+<h2><a id="task"/>task</h2>
+
+<p>Next syntax pattern show how to use a task to create a named scope for a block of code. A "task" is executed a single time and is not repetitive. So you can not use "repeat" at the end of this kind of block.</p>
+
+<pre><code class="language-bee">#local scope
+task [label]:
+   ** local variables
+   local_var := value;
+   ...
+do
+   ** statements
+   ...
+done [label];
+</code></pre>
+
+<p><b>Note:&nbsp;</b>The [label] is optional and can be numeric or alphanumeric. After label you must use ":" that is mandatory. Task start with a declaration region then reduce indentation with "do" or other determinant keyword to start an executable region.</p>
+
+<h2><a id="with"/>with</h2>
+
+<p>Start executable region with a qualifier. This is a block that eliminate the need for qualifier into a local scope. You can use "with" to suppress module names or aliases.</p>
+
+<h4>Syntax:</h4><pre><code class="language-bee">#using with block
+load name1:path/module_name1;
+load name2:path/module_name2;
+...
+task [label]:
+    ** define locals
+    x := 2
+with name1 [,name2] ... do
+    ** call external routine .test
+    print test(x); -- 3
+done [label];
+</pre></code>
+
+<p><b>Notes:</b>
+<ul>
+<li>task is optional</li>
+<li>label is optional</li>
+<li>you can use with in front of any do</li>
+</ul>
+</p>
+
+<h4>Example:</h4>
+
+<p>For this example first we create a simple module:</p>
+<pre><code class="language-bee">#define test_module
+rule .inc(x:0) => (r: 0):
+  r := x + 1;
+return;
+</pre></code>
+
+<p>We load a secondary module and use a qualifier for it:</p>
+
+<pre><code class="language-bee">#using qualifier suppressor
+load test:lib_folder/test_module;
+
+rule main:
+  ** define locals
+  x := 2
+with test do
+  ** call external routine .test
+  print inc(x);
+  expect x = 3;
+done;
+</code></pre>
+
+<h2><a id="if"></a>if</h2>
+
+<p>Using "if" keyword you can create a task that is executed or not depending of a condition. When the condition is false the block statement is ignored and next statement is executed. This statement is sometimes called fork.</p>
+
+<h3>Pattern 1: conditional branch</h3>
+
+<p>Using "if" keyword we can start a <em>conditional branch</em>:</p>
+
+<pre><code class="language-bee"># decision
+if condition do
+  ** statements
+  ...
+done;
+</code></pre>
+
+<h4>Example:</h4>
+
+<p>In this example we use a "task" to create a local scope for the "if" block.</p>
+
+<pre><code class="language-bee"># fragment
+task:
+  b := 2;
+  a := random();
+if a &ne; 0 do
+  print b/a;
+done;
+</code></pre>
+
+<h3>Pattern 2: two-ways conditional</h3>
+
+<p>By using "else" keyword we can split the conditional branch into two branches:</p>
+
+<div align="center">
+  <img src="../images/decision.jpg" alt="decision" srcset="../images/decision.svg"
+  width="520" class="img-fluid protect rounded shadow border" >
+  <p>decision diagram</p>
+</div>
+
+<pre><code class="language-bee"># decision with two branches
+if condition do
+  ** true branch
+  ...
+else
+  ** false branch
+  ...
+done;
+</code></pre>
+
+<h3>Pattern 3: nested multi-path conditional</h3>
+
+<p>You can use multiple conditions to create nested decisions:</p>
+
+<pre><code class="language-bee">#nested decisions
+task:
+    ** local variable
+    a :=  random();
+if a &le; 0 do
+    write "a = ";
+    read  a;
+    if a = 0 do
+      print "a = 0";
+    else
+      print "a &lt; 0";
+    done; -- a &le; 0
+done;
+</code></pre>
+
+<h2><a id="ladder"></a>Decision Ladder</h2>
+
+<p>By using keywords "if" and "else" you can create a cascade of decisions called "decision ladder" that has several conditional branches plus one optional branch that is executed when no other condition is fulfilled.</p>
+
+<div align="center">
+  <img src="../images/ladder.jpg" alt="decision" srcset="../images/ladder.svg"
+  width="640" class="img-fluid protect rounded shadow border" >
+  <p>decision ladder</p>
+</div>
+
+<h4>Example:</h4>
+
+<pre><code class="language-bee">#decision ladder
+task:
+  ** local scope
+  a &isin; Z;   -- control variable
+  read("a = ", a);   -- expressions in declaration area
+if a = 0    do       -- first decision
+  print "a = 0";
+else if a &gt; 0 do  -- second decision
+  print "a > 0";
+else if a &lt; 0 do  -- third decision
+  print "a &lt; 1";
+else
+  ** default block
+  print "unexpected:" + a;
+done;
+</code></pre>
+
+<h2><a id="cycle"/>cycle</h2>
+
+<p>You can use "cycle" to start a repetitive block. This keyword is used before local declaration and can create a named cycle. "do" will repeat all statements in the block until a condition ends the cycle. If no condition exists, the cycle is infinite.</p>
+
+<h3>Pattern 1: Infinite cycle</h3>
+
+<p>Next example show a repetitive "do" block that runs forever. It is not very practical but will be terminated when reaches maxim limit of iteration establish by $iteration variable.</p>
+
+<div align="center">
+  <img src="img/cycle.svg" alt="cycle" width="400"
+       class="img-fluid protect rounded shadow border" >
+  <p>infinite cycle</p>
+</div>
+
+<pre><code class="language-bee">#infinite cycle
+cycle [label]:
+  ** local variables
+do
+  ** repetitive block
+  ...
+repeat;
+</code></pre>
+
+<h3>Pattern 2: stop condition</h3>
+
+<p>Next block will execute multiple times until stop condition is true.</p>
+
+<div align="center">
+  <img src="img/run-cycle.svg" alt="run cycle" width="400" class="img-fluid protect rounded shadow border" >
+  <p>stop condition</p>
+</div>
+
+<pre><code class="language-bee">#conditional run cycle
+cycle [label]:
+  ** local variables
+  ...
+do
+  ** repetitive block
+  ...
+  redo if condition;
+  ...
+  stop if condition;
+  ...
+repeat;
+</code></pre>
+
+<h3>Pattern 3: while condition</h3>
+
+<p>Keyword "while" can be used to evaluate a condition and start or continue a repetitive block. The number of repetitions is controlled by condition. If the start condition is not fulfilled the else block is executed. When "else" block is ending the cycle normally stops unless "redo" is used to revive the cycle.</p>
+
+<div align="center">
+  <img src="img/start-cycle.svg" alt="start cycle" width="460" class="img-fluid protect rounded shadow border" >
+  <p>start-condition cycle</p>
+</div>
+
+<pre><code class="language-bee">#conditional start cycle
+cycle [label]:
+    ** define local variables
+    ...
+while start_condition do
+    ** first repetitive block
+    ...
+    [stop if condition]; -- break the cycle
+    ...
+    [redo if condition]; -- restart the cycle
+    ...
+else
+    ** second repetitive block
+    ...
+repeat [label];
+</code></pre>
+
+
+<p><b>Note 1:&nbsp;</b>The else block runs one single time, that is when the condition evaluate to false. Otherwise if we repeat the cycle for "else" block we can end-up with infinite loop that is absurd.</b></p>
+
+<p><b>Note 2:&nbsp;</b>Keyword: "stop" is similar to "break" in Java and "redo" similar to "continue". These are optional interruption statements. Occasional you can use these statements to improve code performance or readability.</b></p>
+
+<h3><a id="label"/>Pattern 3: nested cycles</h3>
+
+<p>Next syntax pattern show how to use a nested cycles with labels.</p>
+
+<pre><code class="language-bee"># nested blocks
+cycle 42:
+    ** local variables
+    local_variable := value;
+    ...
+do
+    ...
+    cycle 10: do
+        ...
+        redo 42 if condition; -- restart block 42
+        ...
+        stop 42 if condition; -- exit block 42
+        ...
+        stop 10 if condition; -- exit block 10
+    repeat;
+    ...
+repeat;
+...
+</code></pre>
+
+<h4>Notes:</h4>
+
+<ul>
+<li>Block names can be numeric and are optional,</li>
+<li>Declaration region after ":" is optional,</li>
+<li>Keywords "redo" and "stop" can be used with labels,</li>
+<li>Flat code is better. Do not nest too deep.</li>
+</ul>
+
+<h2><a id="for">for</h3>
+
+<p>You can start an iterative cycle by using keyword "for". This statement create a cycle that is controlled by a set of values. We use a control variable generated from a domain or visit elements of a collection.</p>
+
+<div align="center">
+  <img src="img/given.svg" alt="given" width="560" class="img-fluid protect rounded shadow border" >
+  <p>for cycle</p>
+</div>
+
+<pre><code class="language-bee">#iterative cycle
+cycle [label]:
+  **
+for &forall; i &isin; (min..max:rate) do
+  ...
+  [next if condition]; -- fast forward
+  ...
+  [redo if condition]; -- shortcut
+  ...
+  [stop if condition]; -- early transfer
+  ...
+repeat [label];
+</code></pre>
+
+<h4>Notes:</h4>
+<ul>
+<li>Cycle blocks can be named using a label identifier;</li>
+<li></li>
+<li>If used, label enable creation of local variables;</li>
+<li>Control variable: "i" is in local scope, even if label is missing;</li>
+<li>Interruptions (next, redo, stop) are optional and most of the time not needed;/li>
+<li>By using "next", control variable is incremented automatically;</li>
+<li>By using "redo", control variable is not incremented;</li>
+<li>Only one iterable variable is permitted in given scope;</li>
+</ul>
+
+<h4>Example 1:</h4>
+
+<pre><code class="language-bee">#range iteration with rate 1
+for &forall; i &isin; (1..10) do
+  if i % 2 = 0 do
+    next;    -- iterate
+  else
+    write i; -- odd numbers
+  done;
+  write ',' if (i &lt; 10);
+repeat;
+</code></pre>
+
+<pre class="language-output">
+1,3,5,7,9
+</pre>
+
+<h4>Example 2:</h4>
+
+<p><b>Ratio:</b>&nbsp;Using domain ratio the example above can be simplified:</p>
+<pre><code class="language-bee">#range iteration with rate 2
+for &forall; i &isin; (1..9:2) do
+    write(i); -- odd numbers
+    write(',') if (i &lt; 9);
+repeat;
+print;
+</code></pre>
+
+<h4>Notes:</h4>
+<ul>
+<li>Don''t use <em> "make"</em> inside a repetitive block,</li>
+<li>Bee has a limit on how many repetitions before give up: $max_iterations.</li>
+</ul>
+
+<h2><a id="match"/>match</h2>
+<p>This is a multi-path selector similar also named: <em>jump table.</em> A jump table in Bee has two variants: "all" or "one". That is optional keyword. If used, ALL will evaluate all "when" values it may be matching multiple when blocks. If "one" is used (this is the default), only first block that has a matching value will be executed and the rest are ignored even if a second match exist. The second match should not be present though and is probably a mistake!</p>
+
+<div align="center">
+  <img src="img/bee-match.svg" alt="match"
+  width="320" class="img-fluid protect rounded shadow border" >
+  <p>Match Diagram</p>
+</div>
+
+<h4>Pattern:</h4>
+
+<pre><code class="language-bee">#enumerable selector
+type Selector = {v1,v2,v3,v4}
+select = Selector.random()
+match select:
+** declare locals
+...
+when v1 do
+  ** first path
+  ...
+when v1, v2 do
+  ** second path
+  ...
+when rest
+  ** v3 or v4 found
+  ...
+when none
+  ** no match found
+  ...
+done;
+</code></pre>
+
+<h2><a id="trial"></a>trial</h2>
+
+<p>The <em>trial</em> is by far the most complex statement of Bee language. A trial block is used to handle a process that can have exceptions. It has a default block and optional can include multiple case regions. Each case can resolve one error or several errors.</p>
+
+<div align="center">
+  <img src="img/bee-trial.svg" alt="trial" width="480" class="img-fluid protect rounded shadow border" >
+  <p>Trial Diagram</p>
+</div>
+
+<h4>Notes:</h4>
+<ul>
+<li>Trial and error is a fundamental method used for problem solving,</li>
+<li>It consist of repeated attempts until a solution is found,</li>
+<li>Trial can be terminated early by an interruption statement or error.</li>
+</ul>
+
+<p><b>Keywords:</b></p>
+
+<p>Next keywords are used to create a full trial block:</p>
+
+<table class="table table-bordered table-striped">
+<thead>
+<tr><th>word</th><th>description</th></tr>
+</thead>
+<tbody>
+<tr><td>trial</td><td>start a process that may fail</td></tr>
+<tr><td>case </td><td>catch errors with specific code or code range</td></tr>
+<tr><td>other</td><td>catch all other errors not fixed by a patch</td></tr>
+<tr><td>final</td><td>finalization region, executed before trial end</td></tr>
+</tbody>
+</table>
+
+
+<h4>Pattern:</h4>
+<pre><code class="language-bee">#complex trial with many cases
+trial [label]:
+    ** local variables
+    ....
+    ** preconditions: early termination without errors
+    abort if condition;
+       ...
+    ** initial or default statements
+       ...
+    ** check a condition and stop trial
+    pass if condition;
+        ...
+    ** optional create error
+    fail {code, message} if condition;
+    ...
+case $error.code = code do
+    ** handler1
+    ...
+    abort; -- stop the trial
+case $error.code &isin; (code1,code2) do
+    ** handler2
+    ...
+    retry; -- repeat trial
+other
+    ** cover all other errors
+    ...
+    raise; -- propagate last error
+final
+    ** finalization statement (executed before leaving)
+    print "final error:" + $error.code if $error.code &gt; 0;
+done;
+</code></pre>
+
+
+<h4>Note:</h4>
+<ul>
+<li>It is unusual to create nested trial blocks;</li>
+<li>A trial can be repeated several times when fail;</li>
+<li>A trial can stop execution of a rule with error;</li>
+</ul>
+
+<h4>Errors</h4>
+
+<p>Errors can be defined in your program using next notation:</p>
+
+<pre class="language-bee">** define error
+error_name := {code,"message"} &isin; Error;
+</pre>
+
+<p>Errors can be issued using "fail" keyword.</p>
+<pre><code class="language-bee">** "raise" can create a customized error or message
+fail error_name  if condition -- create an error that is predefined
+fail "message"   if condition -- create instant user error code: 200
+fail {code,"message"} if condition -- create instant custom error with code
+</code></pre>
+
+
+<p><b>Note:</b>&nbsp;The standard module will define standard <em>error objects</em> as system constants. Code 100 is used for default $user_error, created by pass and fail keywords.</p>
+
+<ul>
+<li>code: $user_error = 100 with standard message: "user defined error";</li>
+</ul>
+
+<h4>case</h4>
+
+<p>This region can catch an error and decide what to do next. Error can be catch by code or a list of codes. For each cases you can handle the errors using keywords: "abort","retry" or "raise". If a case is not using any of these keywords, the next case is executed. If no case resolve the error, this error auto-propagate.</p>
+
+<h4>Transfer Statements</h4>
+
+<p>Next statements are transfer statements used in trial block:</p>
+
+<table class="table table-bordered table-striped">
+<thead>
+<tr><th>word</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>abort</td>
+<td>early stop the trial and transfer execution to final block</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>transfer execution to case blocks to resolve an error</td>
+</tr>
+<tr>
+<td>pass</td>
+<td>stop trial and transfer execution to final block without exception</td>
+</tr>
+<tr>
+<td>raise</td>
+<td>stop the trial cases and propagate current error to caller</td>
+</tr>
+<tr>
+<td>retry</td>
+<td>repeat the trial, without executing the final block</td>
+</tr>
+<tr>
+</tbody>
+</table>
+
+<h4>other</h4>
+<p>This region is used for any other error that is not handled by <em>case</em> handlers. You can use any selector in this region to find an exceptions by code but you can also just report the error or log the error and stop the trial.</p>
+
+<h4>final</h4>
+<p>This region is executed just before trial is done, regardless of error status. Even if there is no error to propagate this region is still executed. This region is mandatory execute even if the trial is aborted.</p>
+
+<p>It can contain:</p>
+
+<ul>
+<li>close files</li>
+<li>close connection to databases</li>
+<li>close locked resources</li>
+<li>error report, log or print statement</li>
+</ul>
+
+<h4>Example:</h4>
+<pre><code class="language-bee">#simple trial block
+trial:
+     x &isin; Q;
+     y &isin; Q;
+    x := 1/0;
+final
+    print "x = " + x;
+    print $error.message if $error.code &ne; 0;
+done;
+</code></pre>
+
+
+<h4>fail:</h4>
+
+<p>In this example we use "fail" statement to create an error on purpose:</p>
+
+<pre><code class="language-bee">#define a custom error
+trial:
+    my_error := {200, "my error"} &isin; E;
+    fail my_error; -- issue user error
+case $error.code == 200 do
+    ** we catch the the error and do something
+    print $error.message;
+    print $error.line;
+other
+    raise; -- propagate all errors
+done;
+</code></pre>
+
+<h4>Notes:</h4>
+<ul>
+<li>Only {abort, raise, retry} can resolve an error;</li>
+<li>In this case the error 200 is not handled and propagate;</li>
+<li>The other region will be executed for all errors;</li>
+</ul>
+
+<h4>retry:</h4>
+
+<p>By using <em> "retry"</em>  you can repeat a trial several times until other ending conditions are encounter: {abort, pass, fail}. You can issue "retry" from trial block using a condition or from case blocks for specific errors.</p>
+
+<pre><code class="language-bee">#example of repeating trial
+** try maximum 3 times
+trial:
+    count &isin; (1..3);
+    a &isin; (0..9);
+    count += 1;
+    read a;
+    if  a &lt; 0 do -- trigger patch
+      fail;
+    else if a &lt; 9 do
+      write "correct";
+    else if  a &gt; 9 do
+      write "incorrect";
+    else
+      pass;
+    done;
+case $out_of_range do
+    if count &lt; 3 do
+      write "wrong try again:"
+      retry; -- try again the entire trial
+    else
+      write "wrong 3 times!";
+      fail $out_of_range;
+    done;
+final
+    print;
+done;
+</code></pre>
+
+<h4>Note:</h4>
+<ul>
+<li>When you <em>retry</em> the error code is erased,</li>
+<li>You can not use <em>retry</em> in <em>final</em> region.</li>
+</ul>
+
+<hr>
+
+<p><b>Read next:</b>
+<a href="rules.html">Rules</a></p>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-copyright text-center"></div>
+</footer>
+</div>
+</body>
+</html>

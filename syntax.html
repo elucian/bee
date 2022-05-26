@@ -1,0 +1,1365 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="description" content="Bee specification: syntax overview.">
+  <meta name="author" content="Elucian Moise">
+  <meta name="keywords" content="bee, language, syntax, overview, expressions, lambda">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Website title -->
+  <title>Bee Syntax</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <!-- Icon -->
+  <link rel="icon" type="image/png"  href="../images/favicon.ico">
+  <!-- Bee Highlighter -->
+  <script src="bee.js"></script>
+  <!-- Sage-Code CSS -->
+  <link rel="stylesheet" href="../sage.css">
+  </head>
+<body onload="bee_render()">
+<div class="container">
+
+<!-- header -->
+<div class="row">
+    <div class="col">
+        <a href="https://sagecode.net"><img src="../images/sage-logo.svg" alt="Sage-Code Laboratory" height="80"/></a>
+    </div>
+    <div class="col  bottom-right">
+        <a href="index.html#lang-index" rel="nofollow">index</a>&lt;--
+    </div>
+</div><hr>
+
+<h1>Bee Syntax</h1>
+
+<div class="alert alert-secondary shadow-sm">
+  Bee is not a curly bracket language. Its syntax is inspired from Python, Pascal and Ruby. We have created an imperative programming language. Therefore we have chose to use verbs over substantives to create statements.
+</div>
+
+<h4>Bookmarks:</h4>
+
+<p>Next we enumerate the fundamental concepts to grasp Bee syntax. After this overview we will go in details. We use long pages you can scroll. Here are the main topics for this page:</p>
+
+<ul>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#keywords">Keywords</a></li>
+<li><a href="#declarations">Declarations</a></li>
+<li><a href="#expressions">Expressions</a></li>
+<li><a href="#statements">Statements</a></li>
+<li><a href="#conditions">Conditions</a></li>
+<li><a href="#operators">Operators</a></li>
+</ul>
+
+<h4>Legend:</h4>
+
+<p>We use examples and sometimes a simplified version of BNF notation to explain the syntax rules. If you do not know anything about BNF don't wary, here is a short introduction to this weird notation:</p>
+
+<ul>
+<li>We use suggestive descriptors for language elements,</li>
+<li>We use "::=" to explain a descriptor,</li>
+<li>We use "..." for repetitive sequences of symbols,</li>
+<li>We use notes to explain the semantics,</li>
+<li>Optional keyword is enclosed in square brackets [];</li>
+</ul>
+
+<h2><a id="comments"</a>Comments</h2>
+<p>Comments are very important part of Bee code. We have multiple conventions for making good comments for any project. Bee comments are tailored by architectural principle: "if there are no comments in the code the code is wrong." </p>
+
+<h4>Example:</h4>
+<p>In next example we are using various comments into a demo program.</p>
+<pre><code class="language-bee">#!/bin/bee
++------------------------------------------------------------------
+| At the beginning of program you can have  several comments,     |
+| to explain how the program works. This notation is preferred.   |
++-----------------------------------------------------------------+
+rule main:
+  ** This is a single line comment
+  pass; -- end of line comment
+  ...
+
+  ** We must break expressions to add comments
+  print ("comment in expression \n", -- first line
+         "is working \n",            -- second line
+         "this is a test \n"         -- last line
+        );
+
+return;
+*******************************************************************
+** This is the old style boxed comment, used for matrix printers **
+** In Bee you can add comments/notes at the end of your code     **
+*******************************************************************
+</code></pre>
+
+<h4>Title comment</h4>
+
+<p>For single line title comments we use one "#" symbol. This can be used in combination with "!" to create "shebang" comment known in scripting languages on Linux to specify interpreter location. You can use two "##" for subtitles, usually before a rule.</p>
+
+<h4>Single line</h4>
+<p>For single line comments we use two stars like this: "**";</p>
+<ul>
+<li>This comment can be extended to multiple stars to create a separator,</li>
+<li>You can use single line comment at beginning of new line,</li>
+<li>You can use two spaces to indent the comment and align with the code.</li>
+</ul>
+
+<h4>End of line</h4>
+<p>Before new line of code: (EOL) you can use comments starting with: "-- "</p>
+<ul>
+<li>notice one line may be or not a full statement. the end of statement is not (EOL),</li>
+<li>you can use "-- " in the middle of an expression, if expression is on multiple lines,</li>
+<li>you can have multiple statements separated by ";" in a line but only one comment,</li>
+<li>you can not use "-- " inside parenthesis of any kind (), [] or {}.</li>
+</ul>
+
+<h4>Box comment</h4>
+<p>This notation is specific to Bee language. It is a multi-line comment starting with "+-" and end with "-+". The upper right corner is missing. I guess you will notice this defect later. However you can use old-style C comments.</p>
+
+<h4>Notes:</h4>
+<ul>
+<li>Bee comments are inspired from Ada language and Wiki markdown</li>
+<li>Bee comments are designed for better syntax coloring</li>
+</ul>
+
+<h2><a id="keywords"/>Bee Keywords</h2>
+
+<p>Bee core has 58 reserved keywords so far:</p>
+
+<table class="table table-bordered table-dark table-hover table-sm shadow">
+<tr><td>_      </td><td>alias </td><td>and   </td><td>apply </td><td>abort  </td></tr>
+<tr><td>other  </td><td>case  </td><td>&nbsp;</td><td>done  </td><td>default</td></tr>
+<tr><td>if     </td><td>is    </td><td>do    </td><td>else  </td><td>exit   </td></tr>
+<tr><td>fail   </td><td>final </td><td>given </td><td>panic </td><td>like   </td></tr>
+<tr><td>load   </td><td>next  </td><td>_     </td><td>match </td><td>over   </td></tr>
+<tr><td>print  </td><td>pass  </td><td>rest  </td><td>rule  </td><td>return </td></tr>
+<tr><td>fail   </td><td>retry </td><td>none  </td><td>scrap </td><td>type   </td></tr>
+<tr><td>read   </td><td>trial </td><td>stop  </td><td>yield </td><td>xor    </td></tr>
+<tr><td>write  </td><td>wait  </td><td>when  </td><td>or    </td><td>with   </td></tr>
+<tr><td>hide   </td><td>&nbsp;</td><td>begin </td><td>&nbsp;</td><td>loop   </td></tr>
+</table>
+
+<h4>Notes:</h4>
+<ul>
+<li>You can not use these keywords as identifiers;</li>
+<li>Some of these keywords are reserved but not implemented;</li>
+<li>New keywords are going to be created for new features;</li>
+</ul>
+
+
+<h3><a href="#semantic-keywords"></a>Semantic keywords</h3>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if</td>
+<td>conditional executor for one statement block</td>
+</tr>
+<tr>
+<td>is</td>
+<td>query element or variable data type</td>
+</tr>
+<tr>
+<td>or</td>
+<td>alternative for ladder decision</td>
+</tr>
+<tr>
+<td>in</td>
+<td>alternative for belong operation</td>
+</tr>
+<tr>
+<td>and</td>
+<td>alternative for cascade decision</td>
+</tr>
+<tr>
+<td>xor</td>
+<td>alternative for logic operation</td>
+</tr>
+<tr>
+<td>not</td>
+<td>alternative for logic operation</td>
+</tr>
+</tbody>
+</table>
+
+<h2><a id="statements"/>Statements</h2>
+<p>Statements can start with imperative keyword or a declarative keyword:</p>
+
+<h4>Examples:</h4>
+<table class="table table-bordered table-sm table-striped">
+<tr><td>store width="15%"</td><td>create a constant  </li>
+<tr><td>type </td><td>create a data type </li>
+<tr><td>task  </td><td>create a named block of code                  </td>
+<tr><td>read  </td><td>accept input from console into a variable     </li>
+<tr><td>write </td><td>register in console cash a string             </li>
+<tr><td>print </td><td>output to console with end of new line        </li>
+<tr><td>apply </td><td>execute one rule in synchronous mode          </li>
+<tr><td>begin </td><td>start execution of a rule in asynchronous mode</li>
+</table>
+
+<h4>Notes:</h4>
+<ul>
+<li>One statement is usually indented 2 space,</li>
+<li>One statement is usually described in a single line,</li>
+<li>Multiple statements on a single line are separated with ";",</li>
+<li>One expression in a statement can extend on multiple lines.</li>
+</ul>
+<h3><a id="code-blocks"/>Code blocks</h3>
+<p>Statements can be contained in blocks of code.</p>
+
+<table class="table table-bordered table-sm table-striped">
+<tr><td>do    </td><td>start a nameless block statement</td></tr>
+<tr><td>task  </td><td>start a named block statement</td></tr>
+<tr><td>with  </td><td>qualifier suppression block</td></tr>
+<tr><td>when  </td><td>single or multi-path decision block</td></tr>
+<tr><td>given </td><td>start an iteration cycle</td></tr>
+<tr><td>match </td><td>multi-path value selector</td></tr>
+<tr><td>trial </td><td>exception handler block</td></tr>
+<tr><td>done  </td><td>end a block statement</td></tr>
+<tr><td>cycle </td><td>end a repetitive block</td></tr>
+</table>
+
+<h4>Notes:</h4>
+<ul>
+<li>Block ending keyword can be one of: { done, cycle },</li>
+<li>Statements in nested blocks are using indentation.</li>
+</ul>
+
+<h3><a href="#definition-statements"></a>Definition statements</h3>
+<p>Next statements are used to declare new elements in a module.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>load</td>
+<td>Load module or module</td>
+</tr>
+<tr>
+<td>alias</td>
+<td>Eliminate scope qualifier</td>
+</tr>
+<tr>
+<td>hide</td>
+<td>Hiding public members from a loaded module</td>
+</tr>
+<tr>
+<td>define</td>
+<td>Declare constant, data type or sub-type</td>
+</tr>
+<tr>
+<td>make</td>
+<td>Create a new variable or multiple variables</td>
+</tr>
+<tr>
+<td>rule</td>
+<td>Create a new <em>business rule</em> or <em>prototype</em></td>
+</tr>
+<tr>
+<td>return</td>
+<td>End <em>rule</em> declaration and transfer control to caller</td>
+</tr>
+</tbody>
+</table>
+
+<h3><a href="#execution-statements"></a>Execution statements</h3>
+<p>Next keywords are simple statements. These represents actions called <em>imperative statements</em>.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>apply</td>
+<td>Execute a <em>rule</em> and ignore the <em>result</em> if there is one</td>
+</tr>
+<tr>
+<td>begin</td>
+<td>Commence execution of a coroutine</td>
+</tr>
+<tr>
+<td>wait</td>
+<td>Suspend current thread execution for a number of seconds</td>
+</tr>
+<tr>
+<td>read</td>
+<td>Flush the console buffer and accept user input from console</td>
+</tr>
+<tr>
+<td>write</td>
+<td>Add something to console buffer but no new line</td>
+</tr>
+<tr>
+<td>print</td>
+<td>Output expression result, variable or constant to console</td>
+</tr>
+<tr>
+<td>alter</td>
+<td>Mutate variable value using an expression</td>
+</tr>
+<tr>
+<td>scrap</td>
+<td>Remove one element from its collection</td>
+</tr>
+</tbody>
+</table>
+
+<h2><a href="#control-statements"></a>Control statements</h2>
+<p>Control statements are also known as selection statements.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>task</td>
+  <td>Create named block of code</td>
+</tr>
+<tr>
+<td>match</td>
+<td>Value multi-path search selector</td>
+</tr>
+<tr>
+<td>when</td>
+<td>Create node values for match statement</td>
+</tr>
+<tr>
+<td>none</td>
+<td>Create last node for a match statement</td>
+</tr>
+<tr>
+<td>when</td>
+<td>Start a decision block or repetitive statement</td>
+</tr>
+<tr>
+<td>other</td>
+<td>Alternative path for decision statement or trial block</td>
+</tr>
+<tr>
+<td>given</td>
+<td>Start iteration for a domain or collection</td>
+</tr>
+<tr>
+<td>trial</td>
+<td>Protect a block of code that may have exceptions</td>
+</tr>
+<tr>
+<td>case</td>
+<td>Associated with trial to resolve specific errors</td>
+</tr>
+<tr>
+<td>final</td>
+<td>Associated with trial to finalize the trial block</td>
+</tr>
+<tr>
+<td>do</td>
+<td>Begin a statement region in a block statement</td>
+</tr>
+<tr>
+<td>done</td>
+<td>Finalize a block statement that is not repetitive</td>
+</tr>
+<tr>
+<td>cycle</td>
+<td>Start a declaration region for a repetitive block</td>
+</tr>
+<tr>
+  <td>repeat</td>
+  <td>Cause a block of code to re-iterate</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Transfer statements</h2>
+<p>These statements execute a jump or make an interruption of current thread.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>panic</td>
+<td>Create unrecoverable error code and stop current program</td>
+</tr>
+<tr>
+<td>over</td>
+<td>Silent termination of program. No error is raised in this case.</td>
+</tr>
+<tr>
+<td>exit</td>
+<td>Silently stop execution of current rule and return to the caller</td>
+</tr>
+<tr>
+<td>yield</td>
+<td>Suspend one coroutine and give control to another routine</td>
+</tr>
+<tr>
+<td>rest</td>
+<td>Suspend a routine and wait for all threads created by the routine to finish</td>
+</tr>
+<tr>
+<tr>
+<td>stop</td>
+<td>Interrupt execution for current cycle and continue after the cycle,</td>
+</tr>
+<tr>
+<td>loop</td>
+<td>Continue current cycle from the beginning making a shortcut,</td>
+</tr>
+<tr>
+<td>next</td>
+<td>Continue current iteration from the beginning making a shortcut,</td>
+</tr>
+<tr>
+<td>abort</td>
+<td>Interrupt early a trial block</td>
+</tr>
+<tr>
+<td>fail</td>
+<td>Create error message if a condition is true else pass</td>
+</tr>
+<tr>
+<td>pass</td>
+<td>Stop trial block execution or does nothing if not in trial block</td>
+</tr>
+<tr>
+  <td>expect</td>
+  <td>Does nothing if condition is true, otherwise create an $unexpected exception</td>
+</tr>
+<tr>
+<td>raise</td>
+<td>Stop trial case and re-issue last error</td>
+</tr>
+<tr>
+<td>retry</td>
+<td>Clear error and repeat a trial block</td>
+</tr>
+</tbody>
+</table>
+
+<h2><a id="declarations"/>Declarations</h2>
+
+<p>Bee is using 6 kind of declarations:</p>
+
+<table class="table table-bordered table-sm table-striped">
+<tr><td width="15%">load  </td><td>import a module in global scope</td></tr>
+<tr><td>alias </td><td>declare alternative name for module</td></tr>
+<tr><td>type  </td><td>declare custom data type</td></tr>
+<tr><td>rule  </td><td>declare named code block</td></tr>
+</table>
+
+
+<h2><a id="expressions"></a>Expressions</h2>
+
+<p>Expressions are created using identifiers, operators, rules and constant literals.</p>
+<ul>
+<li>can use () to establish order of operations,</li>
+<li>can be enumerated using comma separator ","</li>
+<li>can be combined to create more complex expressions,</li>
+<li>have a result that can be assigned to variables,</li>
+<li>have a result that can be printed to console,</li>
+<li>result type is given automatically using logical inference;</li>
+</ul>
+
+<h4>Examples</h4>
+
+<pre><code class="language-bee linenumbers">** demo some print statements
+10
+10 + 10 + 15
+"this is a test"
+
+** complex expressions
+(10 &gt; 5) &or; (2 &lt; 3)
+-b + sqr(b² - 4·a·b)/(2·a)
+
+** enumeration of expressions
+(1,2,3)
+(1,',',2,',',3)
+</code></pre>
+
+<h4>Naming:</h4>
+<p>Bee uses diverse identifiers names to <em>data types</em>. It uses ASCII characters and numbers or Unicode symbols. Most predefined data types have a longer name and a code. You can use both to represent a type. Long names are synonyms (alias) to the short name.</p>
+
+<h4>Examples:</h4>
+
+<pre class="language-output">
+Z64      -- primitive type: long integer
+Integer  -- same as Z64
+Rational -- same as Q(50.12)
+File     -- composite type: text file
+List     -- composite type: list of values
+</pre>
+
+<h4>Subscript:</h4>
+
+<p>Bee has support for subscript to make identifiers. This is useful especialy in mathematical formulas for geometry and geography. You can use a limited number of characters offered by Unicode:</p>
+
+<pre class="language-out">
+x₀ x₁ x₂ x₃ x₄ x₅ x₆ x₇ x₈ x₉ x₁₀
+yₐ yₑ yₕ yᵢ yⱼ yₖ yₗ yₘ yₙ yₒ yₚ yᵣ yₛ yₜ yᵤ yᵥ yₓ
+</pre>
+
+<h4>Superscript:</h4>
+
+<p>Bee has support for exponent using superscript. You can make any numeric exponent or variable exponent. Notice the variable is mapped to normal variables. The limitation is only lowercase variable names can be used as exponents. That makes constants impossible to use as exponents.<p>
+
+<pre class="language-out">
+x⁺ x⁻ x¹ x² x³ x⁴ x⁵ x⁶ x⁷ x⁸ x⁹ x¹⁰
+y° y′ y″ yᵃ yᵇ yᶜ yᵈ yᵉ yᶠ yᵍ yʰ yⁱ yʲ yᵏ
+yᶩ yᵐ yⁿ yᵒ yᵖ yʳ yˢ yᵗ yᵘ yᵛ yʷ yˣ yʸ yᶻ
+</pre>
+
+<h4>Operations:</h4>
+
+<p>Bee has support for fractions. Bee is using regular slash "/" for all fractions. You can use superscript for left and subscript for right: These two are equivalent (1/2 = ¹/₂). Unfortunately we can not support fractional power due to lower readability.</p>
+
+<pre class="language-out">
+¹/₂ ¹/₃ ¹/₄ ¹/₅ ¹/₆ ¹/₇ ¹/₈ ¹/₉  ¹/₁₀ ¹/₁₀₀
+x⁻¹ = 1/x, x⁻² = 1/x², x⁻³ = 1/x³ ...
+</pre>
+
+<p>Power operations have priority but we have support only for (+, -) no other operations are possible in exponent. In next expressions, (n-1) is done first before making the power operation.</p>
+
+<pre class="language-out">
+-- equivalent notations
+xⁿ⁻¹ = pwr(x,n-1)
+xˣ⁺¹ = pwr(x,n+1)
+
+-- supported  notations
+x^(¹/₂) = sqrt(x,2)  -- Symbol ^ is for power
+x^(¹/₃) = sqrt(x,3)  -- This will also work
+</pre>
+
+<h4>Unicode Identifiers:</h4>
+
+<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Killick characters are permited.</p>
+
+<pre class="language-out">
+Λ Γ Δ Ξ Π Σ Φ Ψ Ω α β ɣ δ ζ
+Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я
+η θ λ μ ν ξ ο π ρ σ ς τ υ φ ω
+</pre>
+
+<h2>Lambda expressions</h2>
+
+<p>A lambda expressions is a named expression with parameters and specified result type: </p>
+
+<h4>Syntax:</h4>
+<pre><code class="language-bee">** declaration of Lambda expression
+name := &lambda;(param &isin; Type,...) &isin; ResultType =&gt; (expression);
+</code></pre>
+
+<pre><code class="language-bee">** you can define a lambda signature first
+type SigName: (Type,...) &isin; Type &lt;: Lambda;
+** then you can declare a &lambda; variable
+name &isin; SigName; -- Null Expression
+** then you can modify assign expression to variable
+name := &lambda;(param &isin; Type,...) &isin; Type =&gt; (expression);
+</code></pre>
+
+
+<h4>Example:</h4>
+<pre><code class="language-bee">** define "exp" as Lambda expression
+exp: &lambda;(x,y &isin; Z) &isin; Z =&gt; (xʸ);
+** use introspection to check what is "exp"?
+print type(exp); -- Lambda
+** use the lambda expression
+z := 2&middot;exp(2,3);
+print z; -- 16
+</code></pre>
+
+
+<h4>Properties:</h4>
+<p>Lambda Expressions...</p>
+<ul>
+<li>are similar to mathematical functions;</li>
+<li>are binding external states in context;</li>
+<li>can be used in other expressions;</li>
+<li>can be used as parameter in rules;</li>
+<li>can be created from a rule as a result;</li>
+<li>can be assigned to a variable of type: Lambda</li>
+</ul>
+
+<p><b>restrictions:</b></p>
+<ul>
+<li>can have one single result;</li>
+<li>can not be interrupted from execution;</li>
+<li>can not call any rule that is downgraded;</li>
+<li>do not have internal states;</li>
+<li>do not have side-effects;</li>
+<li>do not depend on external states;</li>
+</ul>
+
+<p><b>result:</b></p>
+<ul>
+<li>result can be primitive or native type but not a collection;</li>
+<li>result can be temporary and can be used in other expressions;</li>
+</ul>
+
+<h2><a id="lambda-signature"/>Lambda signature</h2>
+
+<p>Lambda expression signature is a type declaration;</p>
+<pre><code class="language-bee">** declare a rule signature
+type CMP:(Z,Z) &isin; L &lt;: Lambda;
+** instantiate 3 Lambda expressions like "CMP"
+gt := (x, y &isin; Z) &isin; L =&gt; (x &gt; y);
+lt := (x, y &isin; Z) &isin; L =&gt; (x &lt; y);
+eq := (x, y &isin; Z) &isin; L =&gt; (x = y);
+** define a dictionary of rules
+type Dic: {(S(2) : CMP)} &lt;: Hash;
+
+** define a hash map of expressions
+dic := {('gt':gt),('lt':lt),('eq':eq)} &isin; Dic;
+** call 3 rules in very unusual way
+print dic['gt'](3,1); -- 1
+print dic['lt'](3,1); -- 0
+print dic['eq'](3,1); -- 0
+</code></pre>
+
+<h4>Notes:</h4>
+
+<ul>
+<li>print statement add new line by default,</li>
+<li>write statement can be used to avoid new line.</li>
+</ul>
+
+<h2><a id="conditions"/>Conditional Execution</h2>
+
+<p>A condition is a logic expression used to control statement execution. For this we use "if" keyword and "else" keyword. These keywords are used in be a little bit different than in other languages.</p>
+
+<pre><code class="language-bee">statement if condition;
+</code></pre>
+
+<p><b>Note:</b> Previous statement is executed only if the condition is True.</p>
+
+<pre><code class="language-bee">expect condition else statement;
+</code></pre>
+
+<p><b>Note:</b> Previous statement is executed only if the condition is False.</p>
+
+<p><b>restrictions:</b></p>
+<ol>
+<li>Can not use "if" with define statement;</li>
+<li>Can not use "if" with make statement;</li>
+<li>Can not use "if" for block statements;</li>
+</ol>
+<pre><code class="language-bee">make a := 0 &isin; Z;
+rule main:
+  ** conditional execution
+  a := 1 if a = 0;
+  ** conditional print
+  print "a is 0" if a = 0;
+return;
+</code></pre>
+
+<h3>Pattern Matching</h3>
+
+<p>Instead of ternary operator we use conditional expressions. These expressions are separated by coma and enclosed in (). Conditional expressions are also known as pattern matching expressions.</p>
+
+<h4>Syntax:</h4>
+<pre><code class="language-bee">make var &isin; type;
+rule main:
+  ** single condition matching
+  var := (xp1 if cnd1, xp);
+
+  ** multiple matching with default value
+  var := (xp1 if cnd1, xp2 if cnd2,..., xp);
+
+  ** alternative code alignment
+  var :=
+    (xp1 if cnd1
+    ,xp2 if cnd2
+    ,xp);
+return;
+</code></pre>
+
+
+<p><b>Legend:</b></p>
+<ul>
+<li>var  ::= predefined variable,</li>
+<li>xp1  ::= expression of same type with var,</li>
+<li>xp2  ::= expression of same type with var,</li>
+<li>xp   ::= default expression (no condition).</li>
+<li>cnd1 ::= condition to produce exp1,</li>
+<li>cnd2 ::= condition to produce exp2,</li>
+</ul>
+
+<h4>Example:</h4>
+<pre><code class="language-bee">rule main:
+   x := '0'; -- symbol
+   write "x:"
+   read   x;
+
+   kind := ("digit" if x &isin; ['0'..'9'], "letter" if x &isin; ['a'..'z'],or "unknown");
+   print ("x is " + kind); -- expect: "x is digit"
+return;
+</code></pre>
+
+<h2><a id="operators"/>Operators</h2>
+
+<p>In Bee operators are created using Unicode special symbols not available on your keyword. There is only one symbol for an operation, no alternatives. This is why Bee language is considered esoteric. It is a language difficult to write without a dedicated keyboard.</p>
+
+<h2>Delimiters</h2>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+-...-+</td>
+<td>Multi-line boxed comments</td>
+</tr>
+<tr>
+<td>#(....)</td>
+<td>String interpolation (placeholder) for operator "?"</td>
+</tr>
+<tr>
+<td>(_,_,_)</td>
+<td>Expression | List literal</td>
+</tr>
+<tr>
+<td>[_,_,_]</td>
+<td>Index | Array literals | Parameterize types</td>
+</tr>
+<tr>
+<td>{_,_,_}</td>
+<td>Ordinal type | Set of values | Hash map</td>
+</tr>
+</tbody>
+</table>
+<h2>Strings</h2>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>'x'</td>
+<td>Fixed capacity Unicode UTF32 string literal</td>
+</tr>
+<tr>
+<td>"y"</td>
+<td>Variable capacity Unicode string literal</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Single Symbols</h2>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>!</td>
+<td>Negation symbol for relations | Excluded from domain</td>
+</tr>
+<tr>
+<td>?</td>
+<td>Template modifier. Associated with string templates</td>
+</tr>
+<tr>
+<td>*</td>
+<td>String replication | Varargs prefix | Spread operator | Many something</td>
+</tr>
+<tr>
+<td>@</td>
+<td>System variable | Global variable</td>
+</tr>
+<tr>
+<td>$</td>
+<td>System constant | Environment variables</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>String concatenation | number concatenation</td>
+</tr>
+<tr>
+<td>#</td>
+<td>Title | String interpolation </td>
+</tr>
+<tr>
+<td>&isin;</td>
+<td>Define variable/constant/result/parameter type</td>
+</tr>
+<tr>
+<td>_</td>
+<td>Anonymous variable | Constant value = one space (_ = ' ')</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Maximum upper limit for a domain | Unicode notation U+</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Minimum lower limit in a domain | Unicode notation U-</td>
+</tr>
+<tr>
+<td>:</td>
+<td>Define type or rule or module</td>
+</tr>
+<tr>
+<td>:</td>
+<td>Pair-up key-value in: objects, rule parameters, rule arguments, hash-map pairs</td>
+</tr>
+<tr>
+<td>;</td>
+<td>End of statement | Statement separator</td>
+</tr>
+<tr>
+<td>.</td>
+<td>Decimals for real numbers | Path string concatenation</td>
+</tr>
+<tr>
+<td>.</td>
+<td>Membership dot notation | Prefix for public member/attribute</td>
+</tr>
+<tr>
+<td>|</td>
+<td>Declarative collection builder: set := { x*2 | x &isin; (0..3)}</td>
+</tr>
+<tr>
+<td>\</td>
+<td>Exact divisor: since 15 = 3 &middot; 5 then&nbsp;(3 \ 15 = True)&nbsp;and&nbsp;(5 \ 15 = True)</td>
+</tr>
+<tr>
+<td>\</td>
+<td>Escape character (&nbsp;\n&nbsp;:= New Line), (&nbsp;\"&nbsp;= Double Quotes)</td>
+</tr>
+</tbody>
+</table>
+<h2>Numeric operators</h2>
+<p>Listed in the order of precedence top down.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-</td>
+<td>Change sign, replace "y = -x" with "y = -1&middot;x"</td>
+</tr>
+<tr>
+<td>/</td>
+<td>Rational number division</td>
+</tr>
+<tr>
+<td>^</td>
+<td>Power symbol used with fractions or expressions</td>
+</tr>
+<tr>
+<td>&middot;</td>
+<td>Multiplication</td>
+</tr>
+<tr>
+<td>&divide;</td>
+<td>Real division</td>
+</tr>
+<tr>
+<td>&times;</td>
+<td>Array multiplication | Matrix multiplication</td>
+</tr>
+<tr>
+<td>%</td>
+<td>Modulo operator 5 % 2 = 2</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Numeric addition | List append | Mattrix addition</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Numeric subtraction | Collection difference</td>
+</tr>
+<tr>
+<td>&plusmn;</td>
+<td>Numeric tolerance (use with &asymp;)</td>
+</tr>
+</tbody>
+</table>
+<h2>Double Symbols</h2>
+<p>Double symbols is a group of two ASCII symbols considered as one.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-- </td>
+<td>End of line comments (not in expression)</td>
+</tr>
+<tr>
+<td>##</td>
+<td>Single line subtitle comments (no indentation)</td>
+</tr>
+<tr>
+<td>**</td>
+<td>Single line comments (allow indentation)</td>
+</tr>
+<tr>
+<td>..</td>
+<td>Define range/domain/slice (n..m) | [n..m]</td>
+</tr>
+<tr>
+<td>.!</td>
+<td>Define range/domain with excluded limit (n.!m) | [n.!m]</td>
+</tr>
+<tr>
+<td>!.</td>
+<td>Define range/domain with excluded limit (n!.m) | [n.!m] </td>
+</tr>
+<tr>
+<td>!!</td>
+<td>Define range/domain with excluded limits: (n!!m) | [n.!m] </td>
+</tr>
+<tr>
+<td>-.</td>
+<td>Minus infinite domain: instead of [-&infin;..0] write: [-..0]</td>
+</tr>
+<tr>
+<td>.+</td>
+<td>Plus infinite domain: instead of [0..+&infin;] write: [0..+]</td>
+</tr>
+<tr>
+<td>=&gt;</td>
+<td>Define: rule expression | rule result</td>
+</tr>
+<tr>
+<td>&lt;-</td>
+<td>Define and generate values in a loop from range or set</td>
+</tr>
+<tr>
+<td>&lt;:</td>
+<td>Define subset from set | Specify super-type for a new type</td>
+</tr>
+<tr>
+<td>:&gt;</td>
+<td>Data cast pipeline operator / Type conversion</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>Shift values of collection to right by removing first elements</td>
+</tr>
+<tr>
+<td>&gt;&gt;</td>
+<td>Shift values of collection to left by removing first elements</td>
+</tr>
+<tr>
+<td>::</td>
+<td>Deep copy | Clone operator</td>
+</tr>
+<tr>
+<td>++</td>
+<td>Concatenate two lists or extend an array</td>
+</tr>
+<tr>
+<td>--</td>
+<td>Symmetric difference or shrink an array</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>Find and delete one element, from a collection</td>
+</tr>
+<td>+=</td>
+<td>Append an element in a set or a map but not in a list</td>
+</tr>
+<tr>
+<td>+&gt;</td>
+<td>Append element to beginning of a list</td>
+</tr>
+<tr>
+<td>&lt;+</td>
+<td>Append element to end of a list</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Modifiers</h2>
+<p>Each modifier is created with pattern "x=" where x is a single symbol:</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:=</td>
+<td>Modify | (value | reference)</td>
+</tr>
+<tr>
+<td>+=</td>
+<td>Increment value</td>
+</tr>
+<tr>
+<td>-=</td>
+<td>Decrement value</td>
+</tr>
+<tr>
+<td>&middot;=</td>
+<td>Multiplication modifier</td>
+</tr>
+<tr>
+<td>&divide;=</td>
+<td>Real division modifier</td>
+</tr>
+<tr>
+<td>^=</td>
+<td>Power modifier</td>
+</tr>
+<tr>
+<td>%=</td>
+<td>Modulo modifier</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Relation Operators</h2>
+<p>Relation operators are used to compare expressions.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&isin;</td>
+<td>check if element belong to collection</td>
+</tr>
+<tr>
+<td>=</td>
+<td>equal { compare values or attributes}</td>
+</tr>
+<tr>
+<td>&ne;</td>
+<td>different { compare values or attributes}</td>
+</tr>
+<tr>
+<td>&equiv;</td>
+<td>identical | { compare types & values or attributes }</td>
+</tr>
+<tr>
+<td>&asymp;</td>
+<td>approximative equal numbers, used with&nbsp;&plusmn;&nbsp;like: (x &asymp; 4 &plusmn; 0.25)</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>value is greater than: (2 &gt; 1)</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>value is less than: (1 &lt; 2)</td>
+</tr>
+<tr>
+<td>&ge;</td>
+<td>greater than or equal to</td>
+</tr>
+<tr>
+<td>&le;</td>
+<td>less than or equal to</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>negation:</strong></p>
+<p>Operator: "!" can be used in combination with other operators:</p>
+<pre class="language-out">
+ x != y; -- equivalent to: &not;(x = y)
+ x !&equiv; y; -- equivalent to: &not;(x &equiv; y)
+ x !&isin; y; -- equivalent to: &not;(x &isin; y)
+ x !&asymp; y; -- equivalent to: &not;(x &asymp; y)
+ x !~ y; -- equivalent to: &not;(x ~ y)
+</pre>
+<h2>Collection operators</h2>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>result</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&cap;</td>
+<td>Set</td>
+<td>Intersection between two collections</td>
+</tr>
+<tr>
+<td>&cup;</td>
+<td>Set</td>
+<td>Union between two collections</td>
+</tr>
+<tr>
+<td>&sub;</td>
+<td>Logic</td>
+<td>Set is included in superset: "&sub;"</td>
+</tr>
+<tr>
+<td>&sup;</td>
+<td>Logic</td>
+<td>Set contain subset: "&sup;"</td>
+</tr>
+<tr>
+<td>&Delta;</td>
+<td>Set</td>
+<td>Set symmetric difference</td>
+</tr>
+<tr>
+<td>+</td>
+<td>String</td>
+<td>Concatenation between two strings</td>
+</tr>
+<tr>
+<td>+</td>
+<td>List</td>
+<td>Concatenation between two lists</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Array</td>
+<td>Concatenation between two arrays</td>
+</tr>
+<tr>
+<td>&forall;</td>
+<td>Element</td>
+<td>All: used in collection qualification</td>
+</tr>
+<tr>
+<td>&exist;</td>
+<td>Logic</td>
+<td>One: used in collection qualification</td>
+</tr>
+</tbody>
+</table>
+<h2>Logic Operators</h2>
+<p>Bee is using enumeration symbols: True = 1 and False = 0</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>meaning</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&not;</td>
+<td>NOT</td>
+<td>unary operator</td>
+</tr>
+<tr>
+<td>&and;</td>
+<td>AND</td>
+<td>shortcut operator</td>
+</tr>
+<tr>
+<td>&or;</td>
+<td>OR</td>
+<td>shortcut operator</td>
+</tr>
+<tr>
+<td>&oplus;</td>
+<td>XOR</td>
+<td>exclusive OR</td>
+</tr>
+<tr>
+<td>&darr;</td>
+<td>NOR</td>
+<td>p &darr; q = &not; (p &or; q)</td>
+</tr>
+<tr>
+<td>&uarr;</td>
+<td>NAND</td>
+<td>p &uarr; q = &not; (p &and; q)</td>
+</tr>
+</tbody>
+</table>
+
+<h4>The table of truth</p>
+
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>p</th>
+<th>q</th>
+<th>&not; p</th>
+<th>p &oplus; q</th>
+<th>p &and; q</th>
+<th>p &or; q</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Bitwise operators</h2>
+
+<p>Bitwise operators are processing numbers not Boolean values.</p>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>symbol</th>
+<th>meaning</th>
+<th>notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&laquo;</td>
+<td>bit SHIFTL</td>
+<td>shift bits to left</td>
+</tr>
+<tr>
+<td>&raquo;</td>
+<td>bit SHIFTR</td>
+<td>shift bits to right</td>
+</tr>
+<tr>
+<td>~</td>
+<td>bit NOT</td>
+<td>negate all bits</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>bit AND</td>
+<td>execute AND between each bits</td>
+</tr>
+<tr>
+<td>|</td>
+<td>bit OR</td>
+<td>execute OR between each bits</td>
+</tr>
+<tr>
+<td>&oplus;</td>
+<td>bit XOR</td>
+<td>execute XOR between each bits</td>
+</tr>
+</tbody>
+</table>
+<!-- todo check bit manipulation article to inject some content here
+"https://en.wikipedia.org/wiki/Bit_manipulation" rel="nofollow"-->
+
+<h4>Arity = 1</h4>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>a</th>
+<th>~ a</th>
+<th>a &laquo; 1</th>
+<th>a &raquo; 2</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0000</td><td>1111</td><td>0000</td><td>0000</td></tr>
+<tr><td>1111</td><td>0000</td><td>1110</td><td>0011</td></tr>
+<tr><td>0111</td><td>1000</td><td>1110</td><td>0001</td></tr>
+<tr><td>0110</td><td>1001</td><td>1100</td><td>0001</td></tr>
+</tbody></table>
+
+<h4>Arity = 2</h4>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>a</th><th>b</th><th>a &amp; b</th><th>a | b</th><th>a &oplus; b</th></tr>
+</thead>
+<tbody>
+<tr><td>00</td><td>00</td><td>00</td><td>00</td><td>00</td></tr>
+<tr><td>01</td><td>00</td><td>00</td><td>01</td><td>01</td></tr>
+<tr><td>11</td><td>01</td><td>01</td><td>11</td><td>10</td></tr>
+<tr><td>10</td><td>11</td><td>10</td><td>11</td><td>01</td></tr>
+</tbody>
+</table>
+
+<h2>String operators</h2>
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>Symbol</th><th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>*</td><td>string pattern repetition (right operator must be numeric)</td></tr>
+<tr><td>/</td><td>concatenate url or path using / not depending on OS</td></tr>
+<tr><td>+</td><td>concatenate two strings as they are preserving trial spaces.</td></tr>
+<tr><td>-</td><td>concatenate two strings and trim spaces to a single space.</td></tr>
+<tr><td>?</td><td>string format operator, replace "#" with number.</td></tr>
+</tbody>
+</table>
+
+<!-- work in progress-->
+<hr>
+
+<p><b>Read next:</b>
+<a href="structure.html">Structure</a></p>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-copyright text-center"></div>
+</footer>
+</div>
+</body>
+</html>

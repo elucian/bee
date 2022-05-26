@@ -1,0 +1,262 @@
+<html><head>
+  <meta charset="utf-8">
+  <meta name="description" content="Bee programming language project.">
+  <meta name="author" content="Elucian Moise">
+  <meta name="keywords" content="sage, code, bee, language, syntax, tutorial">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Website title -->
+  <title>Bee Functions</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <!-- Icon -->
+  <link rel="icon" type="image/png"  href="../images/favicon.ico">
+  <!-- Bee Highlighter -->
+  <script src="bee.js"></script>
+  <!-- Sage-Code CSS -->
+  <link rel="stylesheet" href="../sage.css">
+  </head>
+<body onload="bee_render()">
+<div class="container">
+
+<!-- header -->
+<div class="row">
+    <div class="col">
+        <a href="https://sagecode.net"><img src="../images/sage-logo.svg" alt="Sage-Code Laboratory" height="80"/></a>
+    </div>
+    <div class="col  bottom-right">
+        <a href="index.html#lang-index" rel="nofollow">index</a>&lt;--
+    </div>
+</div><hr>
+<h1>Bee Functions</h1>
+<div class="alert alert-secondary shadow-sm">
+Bee is a esoteric and experimental programming language design by Sage-Code.
+</div>
+<!-- work in progress-->
+<hr>
+
+<h2><a id="rule-purpose"/>Rule Purpose</h2>
+
+<p>A rule can be used for different purposes depending on a the way the rule is designed. For this reason we have not called the rule: class, method or function. It can serve all these purposes:</p>
+
+<ul>
+<li><a href="#rule-as-function">rule as function</a></li>
+<li><a href="#rule-as-closure">rule as closure</a></li>
+<li><a href="#rule-as-singleton">rule as singleton</a></li>
+<li><a href="#rule-as-companion">rule as companion</a></li>
+</ul>
+
+<h3><a id="rule-as-function"></a>Rule as function</h3>
+
+<p>A rule with a single result can be used as a <em>function</em>. That is can be used in complex expressions but not inside &lambda; expressions. &lambda; must be pure.</p>
+
+<h4>Pattern:</h4>
+<pre><code class="language-bee">** define a functional rule
+rule name(param &isin; type,...) =&gt; result &isin; type:
+    ...
+    exit if condition; -- early (successful) transfer
+    ...
+    result := expression; -- computing the result
+    ...
+return;
+
+rule main:
+    ** direct call and print the result
+    print rule_name(argument,...);
+
+    ** capture rule result into a new variable:
+    r := rule_name(argument,...);
+
+    ** using existing variable:
+    n &isin; type;
+    n := rule_name(argument,...)
+return;
+</code></pre>
+
+<h4>Pure rules:</h4>
+
+<p>Compiler can detect if a rule is pure.</p>
+<p>A rule is pure when ...</p>
+<ul>
+<li>do not have multiple results but one;</li>
+<li>do not modify external states;</li>
+<li>do not perform unsafe data conversions;</li>
+<li>do not raise errors;</li>
+<li>do not have side-effects;</li>
+<li>do not have internal rules;</li>
+<li>do not accept rules as parameters;</li>
+<li>do not call a dirty rule;</li>
+</ul>
+
+<h4>Dirty rules:</h4>
+
+<p>A rule is pure as long as compiler do not degrade the rule to dirty status. A dirty rule has restrictions.</p>
+
+<h4>Notes:</h4>
+<ul>
+<li>Pure rules are deterministic in contrast to stochastic rules,</li>
+<li>If a rule is not pure is <em>downgraded</em> by the compiler,</li>
+<li>Dirty rules can be used in assignments but not in &lambda; expressions,</li>
+<li>Dirty rules can not be send as arguments to other rules for call-back,</li>
+</ul>
+
+<h2><a id="advanced-topics"/>Advaced Topics</h2>
+
+<p>Next extra features about functions will be explained later in future articles. Making examples for these features require knowledge about collections and data processing. So you can read a brief introduction now then skip ahead.</p>
+
+<ul>
+<li><a href="#static-members">static members</a></li>
+<li><a href="#forward-declarations">forward declarations</a></li>
+<li><a href="#recursive-rules">recursive rules</a></li>
+<li><a href="#multi-threading">multi threading</a></li>
+<li><a href="#external-rules">external rules</a></li>
+</ul>
+
+<h3><a id="static-members"/>Static members</h3>
+
+<p>Companion properties are static. There is no need and not possible to define a singleton and a companion with the same name. A companion is already a singleton, You can access companion rules and attributes using dot notation with the object name or with the companion name.</p>
+
+<h4>Restrictions:</h4>
+
+<ol>
+<li>You can't access companion attributes from singleton rules,</li>
+<li>You can't access companion methods from a singleton rules.</li>
+</ol>
+<h4>Example:</h4>
+
+<pre><code class="language-bee">** define Foo as object with 2 public attributes:
+type Foo: {a, b &isin; N} &lt;: Object;
+
+** define constructor with same name as the type name
+rule Foo(p1, p2 &isin; N) => (self &isin; Foo):
+    ** define static property
+    x &isin; N;
+
+    ** create the object using parameters
+    self   := {a:p1, b:p2}; -- create object instance
+    self.c := x;            -- create a new attribute
+
+    ** define static methods
+    rule .set_x(p &isin; N):
+       x := p;
+    return;
+
+    ** define a object method
+    rule .bar(self &isin; Foo):
+        print "a  =" + self.a;
+        print "b  =" + self.b;
+        print "c  =" + self.c;
+    return;
+return;
+
+** run bar() rule using object test as dot qualifier
+rule main:
+    ** modify singleton state: x = 3
+    apply Foo.set_x(3);
+    ** call constructor to create an instance of Foo
+    test := Foo(1,2);
+    ** call a method using apply (print private attributes)
+    apply test.bar;
+return;
+</code></pre>
+
+<h4>Expected Output:</h4>
+
+<pre class="language-out">
+a  = 1
+b  = 2
+c  = 3
+</pre>
+
+<p><b>Note:&nbsp;</b>Property "c" is display as if belong to the object. This is because the constructor has created a new attribute. In real life, you can use this trick to create new properties to an existing object without modification of original object structure.</p>
+
+
+<h3><a id="forward-declarations"></a>Forward declarations</h3>
+
+<p>Hoisting is a technique used by many compilers to identify declarations of members. Using this technique you can use an identifier before it is defined. In Bee there is no hoisting technique. You can not use an identifier before it is declared or loaded.</p>
+
+<p>Two rules may call each other and create a cyclic interdependence. For this you can declare a rule "signature" before implementing it. That is called "forward declaration". Therefore the main rules are usually defined on the bottom of the source code.</p>
+
+<h4>Pattern:</h4>
+
+<pre><code class="language-bee">** forward declaration pattern
+rule plus(Z,Z) &isin; Z; -- forward declaration
+
+** declare the main rule
+rule main:
+   ** execute before implementation
+   print plus(1,1);
+return
+
+** later implement the rule "plus"
+rule plus(a,b &isin; Z) =&gt; (r &isin; Z):
+  r := (a + b);
+return;
+</code></pre>
+
+<h3><a id="recursive-rules"/>Recursive Rules</h3>
+
+<div class="alert alert-secondary">A rule that call itself is so called "recursive". You should know any recursive rule can be replaced by a stack and a cycle that is much more efficient than a recursive rule.</div>
+
+<p>Normally during recursion, the runtime needs to keep track of all the recursive calls, so that when one returns it can resume at the previous call and so on. Keeping track of all the calls takes up space, which gets significant when the function calls itself a lot. But with TCO, it can just say "go back to the beginning, only this time change the parameter values to these new ones." It can do that because nothing after the recursive call refers to those values.</p>
+
+<h4>Example1</h4>
+
+<p>Regular recursive rule can not be optimized by the compiler.</p>
+
+<pre><code class="language-bee">** this rule is not optimized:
+rule fact(n &isin; N) =&gt; (r &isin; N):
+    when (n = 0) do
+        r := 1;
+    else
+        r := n &middot; fact(n-1);
+    done;
+return;
+</code></pre>
+
+<h4>TCO:</h4>
+
+<p>Let's learn about: TCO = Tail Call Optimization</p>
+
+<p>TCO apply to a special case of recursion. The gist of it is, if the last thing you do in a function is call itself (e.g. it is calling itself from the "tail" position), this can be optimized by the compiler to act like iteration instead of standard recursion.</p>
+
+<h4>Example2</h4>
+
+<p>Compiler should be able to optimize this recursive rule.</p>
+
+<pre><code class="language-bee">** this rule can be optimized:
+rule tail(n &isin; N, acc &isin; N) =&gt; (r &isin; N):
+    when (n = 0) do
+      r:= acc;
+    else
+      r:= tail(n-1, acc &middot; n);
+    done;
+return;
+
+rule fact(n &isin; N) =&gt; (r &isin; N):
+  r := tail(n , 1);
+return;
+</code></pre>
+
+<h4>Example3</h4>
+
+<p>Replacing a recursive rule with a cycle is more difficult but rule may run faster:</p>
+
+<pre><code class="language-bee">** this rule is manually optimized:
+rule fact(a &isin; N, b &isin; N) =&gt; (r &isin; N):
+    while (b &gt; 1) do
+      a := a &middot; a + a;
+      b := b - 1;
+    else
+      r := a;
+    repeat;
+return;</code></pre>
+
+<p><b>Read next:</b>
+<a href="objects.html">Objects</a></p>
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-copyright text-center"></div>
+</footer>
+</div>
+</body>
+</html>
