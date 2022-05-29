@@ -1,12 +1,22 @@
 function apply_style(str) {
     //keywords without indentation
-    str = str.replace(/\bload\b/,keyword("load"))
-    str = str.replace(/\btype\b/,keyword("type"))
-    str = str.replace(/\brule\b/,keyword("rule"))
-    str = str.replace(/\breturn\b/,keyword("return"))
-    str = str.replace(/\bobject\b/,keyword("object"))
 
-    //colorize data types keywords
+    str = str.replace(/^load\b/,keyword("load"))
+    str = str.replace(/^type\b/,keyword("type"))
+    str = str.replace(/^rule\b/,keyword("rule"))
+    str = str.replace(/^return\b/,keyword("return"))
+    str = str.replace(/^object\b/,keyword("object"))
+
+    //keywords with indentation
+    str = str.replace(/\bvoid\b/,impera("void"))
+    str = str.replace(/\bnew\b/,impera("new"))
+    str = str.replace(/\bfix\b/,impera("fix"))
+    str = str.replace(/\blet\b/,impera("let"))
+    str = str.replace(/\bprint\b/,impera("print"))
+    str = str.replace(/\bread\b/,impera("read"))
+    str = str.replace(/\bwrite\b/,impera("write"))
+
+    //data types keywords
     str = str.replace(/\bOrdinal\b/,types("Ordinal"))
     str = str.replace(/\bList\b/,types("List"))
     str = str.replace(/\bArray\b/,types("Array"))
@@ -30,62 +40,24 @@ function apply_style(str) {
     str = str.replace(/\bcase\b/,control("case"))
     str = str.replace(/\bother\b/,control("other"))
     str = str.replace(/\bfinal\b/,control("final"))
+
     // interruption statements
-    str = str.replace(/\bpass/,interrupt("pass"))
-    str = str.replace(/\babort/,interrupt("abort"))
-    str = str.replace(/\bfail/,interrupt("fail"))
-    str = str.replace(/\bretry/,interrupt("retry"))
-    str = str.replace(/\braise/,interrupt("raise"))
-    str = str.replace(/\bapply/,interrupt("apply"))
-    str = str.replace(/\bprint/,interrupt("print"))
-    str = str.replace(/\bread/,interrupt("read"))
+    str = str.replace(/\bpass\b/,interrupt("pass"))
+    str = str.replace(/\babort\b/,interrupt("abort"))
+    str = str.replace(/\bfail\b/,interrupt("fail"))
+    str = str.replace(/\bretry\b/,interrupt("retry"))
+    str = str.replace(/\braise\b/,interrupt("raise"))
 
     //operators
-    str = str.replace(/xxx/,operator("xxx"))
+
+
+    str = str.replace(/:=/,operator(":="))
+    str = str.replace(/∈/,operator("∈"))
+
+    // System & built-in variables
+    str = str.replace(/\bself\b/g,builtin("self"))
 
     return str
-}
-
-
-function line_span(str) {
-    var span = document.createElement("span");
-    return "<span class=\"line\">"+ str + "</span>"
-}
-
-function title(str) {
-    return "<span class=\"title\">"+ str + "</span>"
-}
-
-function subtitle(str) {
-    return "<span class=\"subtitle\">"+ str + "</span>"
-}
-
-function comments(str) {
-    return "<span class=\"comment\">"+ str + "</span>"
-}
-
-function keyword(str) {
-    return "<span class=\"keyword\">"+ str + "</span>"
-}
-
-function types(str) {
-    return "<span class=\"type\">"+ str + "</span>"
-}
-
-function control(str) {
-    return "<span class=\"control\">"+ str + "</span>"
-}
-
-function interrupt(str) {
-    return "<span class=\"interrupt\">"+ str + "</span>"
-}
-
-function operator(str) {
-    return "<span class=\"operator\">"+ str + "</span>"
-}
-
-function strings(str) {
-    return "<span class=\"string\">"+ str + "</span>"
 }
 
 function bee_render() {
@@ -164,4 +136,53 @@ function bee_render() {
     } else {
       console.log("not_found")
     }
+}
+
+function line_span(str) {
+    var span = document.createElement("span");
+    return "<span class=\"line\">"+ str + "</span>"
+}
+
+function title(str) {
+    return "<span class=\"title\">"+ str + "</span>"
+}
+
+function subtitle(str) {
+    return "<span class=\"subtitle\">"+ str + "</span>"
+}
+
+function comments(str) {
+    return "<span class=\"comment\">" + str + "</span>"
+}
+
+function keyword(str) {
+    return "<span class=\"keyword\">" + str + "</span>"
+}
+
+function impera(str) {
+    return "<span class=\"impera\">" + str + "</span>"
+}
+
+function types(str) {
+    return "<span class=\"type\">"+ str + "</span>"
+}
+
+function control(str) {
+    return "<span class=\"control\">"+ str + "</span>"
+}
+
+function interrupt(str) {
+    return "<span class=\"interrupt\">"+ str + "</span>"
+}
+
+function operator(str) {
+    return "<span class=\"operator\">"+ str + "</span>"
+}
+
+function strings(str) {
+    return "<span class=\"string\">"+ str + "</span>"
+}
+
+function builtin(str) {
+    return "<span class=\"builtin\">"+ str + "</span>"
 }

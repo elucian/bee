@@ -31,7 +31,7 @@
 <h1>Bee Syntax</h1>
 
 <div class="alert alert-secondary shadow-sm">
-  Bee is not a curly bracket language. Its syntax is inspired from Python, Pascal and Ruby. We have created an imperative programming language. Therefore we have chose to use verbs over substantives to create statements.
+  Bee is not a curly bracket language. Its syntax is inspired from Ada and Ruby. We have created an imperative programming language. We favor verbs over substantives to create most statements.
 </div>
 
 <h4>Bookmarks:</h4>
@@ -72,7 +72,7 @@
 +-----------------------------------------------------------------+
 rule main:
   ** This is a single line comment
-  pass; -- end of line comment
+  void; -- this statement does absolutely nothing
   ...
 
   ** We must break expressions to add comments
@@ -128,11 +128,11 @@ return;
 <tr><td>if     </td><td>is    </td><td>do    </td><td>else  </td><td>exit   </td></tr>
 <tr><td>fail   </td><td>final </td><td>given </td><td>panic </td><td>like   </td></tr>
 <tr><td>load   </td><td>next  </td><td>_     </td><td>match </td><td>over   </td></tr>
-<tr><td>print  </td><td>pass  </td><td>rest  </td><td>rule  </td><td>return </td></tr>
+<tr><td>print  </td><td>pass  </td><td>void  </td><td>rule  </td><td>return </td></tr>
 <tr><td>fail   </td><td>retry </td><td>none  </td><td>scrap </td><td>type   </td></tr>
 <tr><td>read   </td><td>trial </td><td>stop  </td><td>yield </td><td>xor    </td></tr>
 <tr><td>write  </td><td>wait  </td><td>when  </td><td>or    </td><td>with   </td></tr>
-<tr><td>hide   </td><td>&nbsp;</td><td>begin </td><td>&nbsp;</td><td>loop   </td></tr>
+<tr><td>hide   </td><td>new   </td><td>begin </td><td>let   </td><td>loop   </td></tr>
 </table>
 
 <h4>Notes:</h4>
@@ -253,7 +253,7 @@ return;
 <td>Declare constant, data type or sub-type</td>
 </tr>
 <tr>
-<td>make</td>
+<td>new </td>
 <td>Create a new variable or multiple variables</td>
 </tr>
 <tr>
@@ -302,7 +302,7 @@ return;
 <td>Output expression result, variable or constant to console</td>
 </tr>
 <tr>
-<td>alter</td>
+<td>let</td>
 <td>Mutate variable value using an expression</td>
 </tr>
 <tr>
@@ -506,7 +506,7 @@ List     -- composite type: list of values
 
 <h4>Subscript:</h4>
 
-<p>Bee has support for subscript to make identifiers. This is useful especialy in mathematical formulas for geometry and geography. You can use a limited number of characters offered by Unicode:</p>
+<p>Bee has support for subscript to make identifiers. This is useful especially in mathematical formulas for geometry and geography. You can use a limited number of characters offered by Unicode:</p>
 
 <pre class="language-out">
 x₀ x₁ x₂ x₃ x₄ x₅ x₆ x₇ x₈ x₉ x₁₀
@@ -546,7 +546,7 @@ x^(¹/₃) = sqrt(x,3)  -- This will also work
 
 <h4>Unicode Identifiers:</h4>
 
-<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Killick characters are permited.</p>
+<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Killick characters are permitted.</p>
 
 <pre class="language-out">
 Λ Γ Δ Ξ Π Σ Φ Ψ Ω α β ɣ δ ζ
@@ -560,25 +560,25 @@ x^(¹/₃) = sqrt(x,3)  -- This will also work
 
 <h4>Syntax:</h4>
 <pre><code class="language-bee">** declaration of Lambda expression
-name := &lambda;(param &isin; Type,...) &isin; ResultType =&gt; (expression);
+new name := &lambda;(param &isin; Type,...) &isin; ResultType =&gt; (expression);
 </code></pre>
 
 <pre><code class="language-bee">** you can define a lambda signature first
 type SigName: (Type,...) &isin; Type &lt;: Lambda;
 ** then you can declare a &lambda; variable
-name &isin; SigName; -- Null Expression
+new name &isin; SigName; -- Null Expression
 ** then you can modify assign expression to variable
-name := &lambda;(param &isin; Type,...) &isin; Type =&gt; (expression);
+let name := &lambda;(param &isin; Type,...) &isin; Type =&gt; (expression);
 </code></pre>
 
 
 <h4>Example:</h4>
 <pre><code class="language-bee">** define "exp" as Lambda expression
-exp: &lambda;(x,y &isin; Z) &isin; Z =&gt; (xʸ);
+new exp: &lambda;(x,y &isin; Z) &isin; Z =&gt; (xʸ);
 ** use introspection to check what is "exp"?
 print type(exp); -- Lambda
 ** use the lambda expression
-z := 2&middot;exp(2,3);
+new z := 2&middot;exp(2,3);
 print z; -- 16
 </code></pre>
 
@@ -616,14 +616,14 @@ print z; -- 16
 <pre><code class="language-bee">** declare a rule signature
 type CMP:(Z,Z) &isin; L &lt;: Lambda;
 ** instantiate 3 Lambda expressions like "CMP"
-gt := (x, y &isin; Z) &isin; L =&gt; (x &gt; y);
-lt := (x, y &isin; Z) &isin; L =&gt; (x &lt; y);
-eq := (x, y &isin; Z) &isin; L =&gt; (x = y);
+new gt := (x, y &isin; Z) &isin; L =&gt; (x &gt; y);
+new lt := (x, y &isin; Z) &isin; L =&gt; (x &lt; y);
+new eq := (x, y &isin; Z) &isin; L =&gt; (x = y);
 ** define a dictionary of rules
 type Dic: {(S(2) : CMP)} &lt;: Hash;
 
 ** define a hash map of expressions
-dic := {('gt':gt),('lt':lt),('eq':eq)} &isin; Dic;
+new dic := {('gt':gt),('lt':lt),('eq':eq)} &isin; Dic;
 ** call 3 rules in very unusual way
 print dic['gt'](3,1); -- 1
 print dic['lt'](3,1); -- 0
@@ -654,15 +654,20 @@ print dic['eq'](3,1); -- 0
 <p><b>restrictions:</b></p>
 <ol>
 <li>Can not use "if" with define statement;</li>
-<li>Can not use "if" with make statement;</li>
+<li>Can not use "if" with new statement;</li>
 <li>Can not use "if" for block statements;</li>
 </ol>
-<pre><code class="language-bee">make a := 0 &isin; Z;
+<pre><code class="language-bee">
 rule main:
+  ** generate a random number
+  new a := random(Z);
+
   ** conditional execution
-  a := 1 if a = 0;
-  ** conditional print
-  print "a is 0" if a = 0;
+  new b := a;
+  let b := -a if a < 0;
+
+  ** print result
+  print "|b| = ", a;
 return;
 </code></pre>
 
@@ -671,19 +676,21 @@ return;
 <p>Instead of ternary operator we use conditional expressions. These expressions are separated by coma and enclosed in (). Conditional expressions are also known as pattern matching expressions.</p>
 
 <h4>Syntax:</h4>
-<pre><code class="language-bee">make var &isin; type;
+<pre><code class="language-bee">
 rule main:
+  ** define a local variable
+  new var &isin; type;
+
   ** single condition matching
-  var := (xp1 if cnd1, xp);
+  let var := (xp1 if cnd1, xp);
 
   ** multiple matching with default value
-  var := (xp1 if cnd1, xp2 if cnd2,..., xp);
+  let var := (xp1 if cnd1, xp2 if cnd2,..., xp);
 
   ** alternative code alignment
-  var :=
-    (xp1 if cnd1
-    ,xp2 if cnd2
-    ,xp);
+  let var := ( xp1 if cnd1
+              ,xp2 if cnd2
+              ,xp);
 return;
 </code></pre>
 
@@ -700,11 +707,11 @@ return;
 
 <h4>Example:</h4>
 <pre><code class="language-bee">rule main:
-   x := '0'; -- symbol
+   new x := '0'; -- symbol
    write "x:"
    read   x;
 
-   kind := ("digit" if x &isin; ['0'..'9'], "letter" if x &isin; ['a'..'z'],or "unknown");
+   new kind := ("digit" if x &isin; ['0'..'9'], "letter" if x &isin; ['a'..'z'],or "unknown");
    print ("x is " + kind); -- expect: "x is digit"
 return;
 </code></pre>
@@ -891,7 +898,7 @@ return;
 </tr>
 <tr>
 <td>+</td>
-<td>Numeric addition | List append | Mattrix addition</td>
+<td>Numeric addition | List append | Matrix addition</td>
 </tr>
 <tr>
 <td>-</td>
@@ -1072,7 +1079,7 @@ return;
 </tr>
 <tr>
 <td>&asymp;</td>
-<td>approximative equal numbers, used with&nbsp;&plusmn;&nbsp;like: (x &asymp; 4 &plusmn; 0.25)</td>
+<td>approximating equal numbers, used with&nbsp;&plusmn;&nbsp;like: (x &asymp; 4 &plusmn; 0.25)</td>
 </tr>
 <tr>
 <td>&gt;</td>
