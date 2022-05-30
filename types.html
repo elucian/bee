@@ -397,10 +397,10 @@ print (0..1:0.25); -- 0.00, 0.25, 0.50, 0.75, 1.00
 <h2><a id="constant-declarations"></a>Constant declarations</h2>
 <p>Constants literals bound to identifiers using keyword "store".</p>
 <pre><code class="language-bee">** using explicit type
-store constant_name := constant_literal &isin; type_name;
+set constant_name := constant_literal &isin; type_name;
 
 ** using implicit type
-store constant_name := constant_literal;
+set constant_name := constant_literal;
 </code></pre>
 
 
@@ -415,8 +415,8 @@ store constant_name := constant_literal;
 
 <h4>Example:</h4>
 <pre><code class="language-bee">#symbol constants
-store forall := U+2200     &isin; A; -- Symbol: &forall;
-store forall := U-00002200 &isin; U; -- Symbol: &forall;
+set forall := U+2200     &isin; A; -- Symbol: &forall;
+set forall := U-00002200 &isin; U; -- Symbol: &forall;
 </code></pre>
 
 
@@ -464,18 +464,18 @@ store forall := U-00002200 &isin; U; -- Symbol: &forall;
 <li>Symbol ":" can be used as pair-up operator for arguments and maps.</li>
 </ul>
 <pre><code class="language-bee">** primitive variable declarations with type
-var_name &isin;  type_name; -- declaration only type without initial value
-var_name: value &isin;  type_name; -- declaration with initial value and type
+new var_name &isin;  type_name; -- declaration only type without initial value
+new var_name: value &isin;  type_name; -- declaration with initial value and type
 
 ** Variable declaration using type inference
-var_name := expression; -- expression ":=" do not require type hint ("&isin;").
+new var_name := expression; -- expression ":=" do not require type hint ("&isin;").
 
 ** Multiple variables can be define in one single line using comma separator:
-var1, var2 ... &isin;  TypeName;   -- default initial values
-var1, var2 ... := Expression; -- use type inference for all initial values
+new var1, var2 ... &isin;  TypeName;   -- default initial values
+new var1, var2 ... := Expression; -- use type inference for all initial values
 
 ** Initialize multiple variables, of the same type (type is required)
-var1:con1, var2:con2 ... &isin; TypeName;
+new var1:con1, var2:con2 ... &isin; TypeName;
 </code></pre>
 
 
@@ -485,10 +485,10 @@ var1:con1, var2:con2 ... &isin; TypeName;
 <h4>Example:</h4>
 <pre><code class="language-bee">#fragment of code
 
-a:10, b:0 &isin; Z; -- initialize two variables
-b := a + 1;   -- modify b using binding operator :=
-b += 1;       -- modify b using modifier +=
-print b;            -- expected 12
+new a = 10, b = 0 &isin; Z; -- initialize two variables
+let b := a + 1;   -- modify b using binding operator :=
+let b += 1;       -- modify b using modifier +=
+print b;          -- expected 12
 </code></pre>
 
 <h4>Notes:</h4>
@@ -502,27 +502,27 @@ print b;            -- expected 12
 
 <h4>Examples:</h4>
 <pre><code class="language-bee">** declare a constant
-PI: 3.14 &isin; R;
+fix PI = 3.14 &isin; R;
 
 ** declare multiple variables
-a   &isin; Z; -- Integer
-x,y &isin; R; -- Double
-q,p &isin; L; -- Logic
+new a   &isin; Z; -- Integer
+new x,y &isin; R; -- Double
+new q,p &isin; L; -- Logic
 
 rule main:
   ** using modifiers
-  a := 10; -- modify value of a := 10
-  a += 1;  -- increment value of a := 11
-  a -= 1;  -- decrement value of a := 10
+  let a := 10; -- modify value of a := 10
+  let a += 1;  -- increment value of a := 11
+  let a -= 1;  -- decrement value of a := 10
 
   ** modify two variables using one single constant
-  x, y := 10.5;
+  let x, y := 10.5;
 
   ** modify two variables using two constants
-  q, p := True, False;
+  let q, p := True, False;
 
   ** swapping two variables
-  p, q := q, p;
+  let p, q := q, p;
 return;
 </code></pre>
 
@@ -538,13 +538,13 @@ return;
 <h4>Example:</h4>
 <pre><code class="language-bee">** data conversion
 rule main:
-   a = 0, b = 20 &isin; Z;
-   v = 10.5, x = 0.0 &isin; R;
+   new a = 0, b = 20 &isin; Z;
+   new v = 10.5, x = 0.0 &isin; R;
 ** explicit conversion
-   a := v :&gt; N;
+   let a := v :&gt; N;
    print a; -- truncated to 10
 ** explicit conversion
-   x := b :&gt; R;
+   let x := b :&gt; R;
    print x; -- expect 20.00
 return;
 </code></pre>
@@ -558,13 +558,14 @@ return;
 
 <h2><a id="alphanumeric-type"/>Alphanumeric type</h2>
 <p>Bee define A as single UTF-8 code point with representation: U+HH</p>
-<pre><code class="language-bee">a, b &isin; A; -- ASCII
-x, y &isin; B; -- Binary integer
+<pre><code class="language-bee">
 rule main:
-  a :='0';     -- ASCII symbol '0'
-  x := a :&gt; B; -- convert to binary 30
-  y := 30;     -- decimal code for '0'
-  b := y :&gt; A; -- convert to ASCII symbol '0'
+  new a, b &isin; A; -- ASCII
+  new x, y &isin; B; -- Binary integer
+  let a :='0';     -- ASCII symbol '0'
+  let x := a :&gt; B; -- convert to binary 30
+  let y := 30;     -- decimal code for '0'
+  let b := y :&gt; A; -- convert to ASCII symbol '0'
 return;
 </code></pre>
 
@@ -572,31 +573,33 @@ return;
 <h2><a id="type-inference"/>Type inference</h2>
 <p>You can use symbol ":=" to initialize variables using type inference.</p>
 <pre><code class="language-bee">** declare constants
-store i:= 4;   -- integer constant
-store r:= 2.5; -- real constant
-store q:= 1/8; -- rational constant
+set i := 4;   -- integer constant
+set r := 2.5; -- real constant
+set q := 1/8; -- rational constant
 ** declare variables
-x := 0;   -- integer variable
-y := 0.0; -- real variable
-z := 0/0; -- rational variable
+new x := 0;   -- integer variable
+new y := 0.0; -- real variable
+new z := 0/0; -- rational variable
 </code></pre>
 
 <h2><a id="type-checking"/>Type checking</h2>
 <p>We can use variable type to validate expression type.</p>
 
 <pre><code class="language-bee">** using type inference
-a := 0;   -- integer variable
-b := 0.0; -- real variable
 rule main:
-  a:= 10.5; -- Warning: a is of type: Integer
-  b:= 10;   -- Warning: b is of type: Real
-  print a, b;     -- 10, 10.00
+  new a := 0;   -- integer variable
+  new b := 0.0; -- real variable
+
+  let a:= 10.5; -- Warning: a is of type: Integer
+  let b:= 10;   -- Warning: b is of type: Real
+  print a, b;   -- 10, 10.00
 return;
 </code></pre>
 
 <p>You can use operator "&isin;" to verify data type:</p>
-<pre><code class="language-bee">a := 0 &isin; Z;
+<pre><code class="language-bee">
 rule main:
+  new a := 0 &isin; Z;
   ** expected: Integer
   fail if &not; (a &isin; Z); -- fail if a is not integer
 return;
@@ -605,7 +608,7 @@ return;
 
 <h2><a id="logic-type"></a>Logic type</h2>
 <p>Logic type is an enumeration of two public symbols: False and True</p>
-<pre><code class="language-bee">type .L: {.False: 0, .True: 1} &lt;: Ordinal;
+<pre><code class="language-bee">type .L = {.False: 0, .True: 1} &lt;: Ordinal;
 ** printing logical values
 rule main:
   print True;  -- 1
@@ -652,8 +655,9 @@ print 6&lt;&lt;2  -- out:1 is because: 110 &lt;&lt; 2   = 001 = 1;
 </ul>
 
 <h4>Example:</h4>
-<pre><code class="language-bee"> (x, y):4 &isin;  Z; -- primitive integer
+<pre><code class="language-bee">
 rule main:
+  new (x, y) = 4 &isin;  Z; -- primitive integer
   ** value comparison
   print x = 4;  -- 1 (equal)
   print x &equiv; 4;  -- 1 (identical)
@@ -690,8 +694,10 @@ print `s` &equiv; `s`; -- 1
 
 <h3><a id="logical-expression"/>Logical expression</h3>
 <p>Logical expression have value { 0 = False, 1 = True }</p>
-<pre><code class="language-bee">x := False &isin; L;
-y := True  &isin; L;
+<pre><code class="language-bee">
+fix x := False &isin; L;
+fix y := True  &isin; L;
+
 rule main:
   ** expressions with single operant
   print   x; -- 0
@@ -720,11 +726,13 @@ return;
 
 <p><b>coercion</b>&nbsp;Any numeric expression  can be converted to a logic value using coercion operator ":&gt;" (easy to memorize if you think is like an arrow).</p>
 
-<pre><code class="language-bee">(x, y) &isin; L;
-(a:0.0, b:1.5) &isin; R;
+<pre><code class="language-bee">
+set (a = 0.0, b = 1.5) &isin; R;
 rule main:
-  x := a :&gt; L; -- 0
-  y := b :&gt; L; -- 1
+  new (x, y) &isin; L;
+
+  let x := a :&gt; L; -- 0
+  let y := b :&gt; L; -- 1
 return;
 </code></pre>
 
@@ -766,20 +774,20 @@ print Null  = False  -- 0
 <h3><a id="default-types"/>Default types</h3>
 <p>Each literal has associated a default type, induced by operators {":=", "::"}.</p>
 <pre><code class="language-bee">** string expressions
-c := 'a'     ;  -- type = A
-s := '&isin;'     ;  -- type = U
-s := "str"   ;  -- type = S
-b := &lt;Text&gt;  ;  -- type = Text
+new c := 'a'     ;  -- type = A
+new s := '&isin;';  -- type = U
+new s := "str"   ;  -- type = S
+new b := &lt;Text&gt;  ;  -- type = Text
 ** numeric expressions
-i := 0;    -- type = Z
-j := 0.50; -- type = R
+new i := 0;    -- type = Z
+new j := 0.50; -- type = R
 ** define synonyms for logic constants
-cast F := False; -- type L = 0
-cast T := True;  -- type L = 1
+set F := False; -- type L = 0
+set T := True;  -- type L = 1
 ** multiple variables get same value
-x, y, z := 5; -- type = Z for all
+new (x, y, z) := 5; -- type = Z for all
 ** multiple variables get multiple values
-int, rea := 4, 4.44;
+new int, rea := 4, 4.44;
 print type(int); -- Z
 print type(rea); -- R
 </code></pre>
@@ -787,27 +795,27 @@ print type(rea); -- R
 <h3><a id="ti-composite-types"></a>Composite Types</h3>
 <p>Composite structures are using () [] and {} to create different data types. Next you can study some examples. We wil explain later all these types: List, Map, Array, Object, String. All of these are also called Bee collections.</p>
 <pre><code class="language-bee">** boxed integer (type = Z)
-i := [10]; -- array of one value!
+new i := [10]; -- array of one value!
 ** list of one value (Z)
-a := (1,);
+new a := (1,);
 ** list of integers (Z)
-b := (1,2);
+new b := (1,2);
 ** list of symbols (type = A)
-l := ('a','b');
+new l := ('a','b');
 ** list of Unicode symbol (type = U)
-u := ('&Delta;', '&Lambda;', '&Gamma;');
+new u := ('&Delta;', '&Lambda;', '&Gamma;');
 ** array with capacity of 4 integers: Z
-d := [1,2,3,4];
+new d := [1,2,3,4];
 ** array with capacity of 10 real numbers: R
-e := [0.00](10);
+new e := [0.00](10);
 ** matrix with capacity of 10x10 real numbers: R
-m := [0.00](10,10);
+new m := [0.00](10,10);
 ** data set of 4 integers: Z
-s := {1,2,3,4};
+new s := {1,2,3,4};
 ** hash map of (Z: String)
-c := {(1:"storage"),(2:"string")};
+new c := {(1:"storage"),(2:"string")};
 ** object with two attributes: name &isin; String, age &isin; Z
-b := {name:"Goliath", age:30};
+new b := {name:"Goliath", age:30};
 </code></pre>
 
 
@@ -816,8 +824,8 @@ b := {name:"Goliath", age:30};
 
 <p><b>Optional Parameters:</b></p>
 <pre><code class="language-bee">** in rule foo, parameters a, b are optional.
-rule foo(a: 0, b: 0 &isin; Z) =&gt; (r &isin; Z):
-  r := a + b;
+rule foo(a: 0 &isin; Z, b: 0 &isin; Z) =&gt; (r &isin; Z):
+  let r := a + b;
 rule;
 
 rule main:
@@ -830,8 +838,8 @@ return;
 
 <p><b>Multiple parameters:</b></p>
 <pre><code class="language-bee">** parameters: a, b are mandatory, c is optional.
-rule foo(a, b, c: 0 &isin; Z) =&gt; (r &isin; Z):
-  r := (a + b + c);
+rule foo((a, b, c) = 0 &isin; Z) =&gt; (r &isin; Z):
+  let r := a + b + c;
 return;
 rule main:
   print foo(1,2);   -- 3
@@ -844,14 +852,14 @@ return;
 <p><b>Pass arguments by name:</b></p>
 <p>We can use parameter name and pair-up ":" symbol for argument value.</p>
 <pre><code class="language-bee">** rule with optional parameters (Z)
-rule bar(a: 0, b: 0, c: 0 &isin; Z) =&gt; (result &isin; Z):
-  result := (a+b+c);
+rule bar( (a, b, c) = 0 &isin; Z) =&gt; (result &isin; Z):
+  let result := (a+b+c);
 return;
 ** observe we use pair-up ":" to give value for each argument
 rule main:
-  print bar(a: 1); -- print 1 because b,c = 0
-  print bar(b: 1); -- print 1 because a,b = 0
-  print bar(c: 1); -- print 1 because a,b = 0
+  print bar( a : 1 ); -- print 1 because b,c = 0
+  print bar( b : 1 ); -- print 1 because a,b = 0
+  print bar( c : 1 ); -- print 1 because a,b = 0
 return;  </code></pre>
 
 
@@ -876,12 +884,13 @@ return;  </code></pre>
 <p>It can be used with type inference to create Q numbers:</p>
 
 <h4>Example:</h4>
-<pre><code class="language-bee">x := 0    &isin; Q; -- 0
-a := 1/2  &isin; Q; -- 0.5
-b := 1/4  &isin; Q; -- 0.25
-c := 1/8  &isin; Q; -- 0.125
-d := 1/8  &isin; Q; -- 0.062
-e := 1/8  &isin; Q; -- 0.031
+<pre><code class="language-bee">
+new x := 0    &isin; Q; -- 0
+new a := 1/2  &isin; Q; -- 0.5
+new b := 1/4  &isin; Q; -- 0.25
+new c := 1/8  &isin; Q; -- 0.125
+new d := 1/8  &isin; Q; -- 0.062
+new e := 1/8  &isin; Q; -- 0.031
 </code></pre>
 
 <h4>Note:</h4>
@@ -918,9 +927,10 @@ e := 1/8  &isin; Q; -- 0.031
 <li>from value: -2⁵ = -32.00</li>
 <li>to value: 2⁵ - 2⁻&sup2; = 32 - 0.25 = 31.75</li>
 </ul>
-<pre><code class="language-bee"> v &isin; Q5.2;
-v := -32; -- minim value
-v := 31.75; -- maxim value
+<pre><code class="language-bee">
+new v &isin; Q5.2;
+let v := -32;   -- minim value
+let v := 31.75; -- maxim value
 </code></pre>
 
 <p>See also:&nbsp;<a href="https://en.wikipedia.org/wiki/Q_(number_format)" rel="nofollow">wikipedia</a></p>
@@ -1032,10 +1042,11 @@ v := 31.75; -- maxim value
 <h4>Example:</h4>
 <p>In next example b = 0.33(3), delta = (b - a) = 0.083</p>
 <pre><code class="language-bee">** override default precision
-$precision := 0.01;
+set $precision := 0.01;
+
 rule main:
-    a := 0.25; -- real
-    b := 1/3;  -- rational
+    new a := 0.25; -- real
+    new b := 1/3;  -- rational
     ** using specified precision 0.01 &lt; 0.083
     print (a &asymp; b); -- false
     print (a &asymp; b &plusmn; 0.1); -- true

@@ -6,15 +6,22 @@ function apply_style(str) {
     str = str.replace(/^rule\b/,keyword("rule"))
     str = str.replace(/^return\b/,keyword("return"))
     str = str.replace(/^object\b/,keyword("object"))
+    str = str.replace(/^module\b/,keyword("module"))
+    str = str.replace(/^class\b/,keyword("class"))
+    str = str.replace(/^alias\b/,keyword("alias"))
+    str = str.replace(/^hide\b/,keyword("hide"))
 
     //keywords with indentation
-    str = str.replace(/\bvoid\b/,impera("void"))
-    str = str.replace(/\bnew\b/,impera("new"))
-    str = str.replace(/\bfix\b/,impera("fix"))
-    str = str.replace(/\blet\b/,impera("let"))
-    str = str.replace(/\bprint\b/,impera("print"))
-    str = str.replace(/\bread\b/,impera("read"))
-    str = str.replace(/\bwrite\b/,impera("write"))
+    str = str.replace(/\bvoid\b/,imperative("void"))
+    str = str.replace(/\bnew\b/,imperative("new"))
+    str = str.replace(/\bset\b/,imperative("set"))
+    str = str.replace(/\blet\b/,imperative("let"))
+    str = str.replace(/\bprint\b/,imperative("print"))
+    str = str.replace(/\bread\b/,imperative("read"))
+    str = str.replace(/\bwrite\b/,imperative("write"))
+    str = str.replace(/\bapply\b/,imperative("apply"))
+    str = str.replace(/\bbegin\b/,imperative("begin"))
+    str = str.replace(/\bwait\b/,imperative("wait"))
 
     //data types keywords
     str = str.replace(/\bOrdinal\b/,types("Ordinal"))
@@ -26,7 +33,6 @@ function apply_style(str) {
     // control flow keywords
     str = str.replace(/\bdo\b/,control("do"))
     str = str.replace(/\bdone\b/,control("done"))
-    str = str.replace(/\brepeat\b/,control("repeat"))
     str = str.replace(/\bif\b/,control("if"))
     str = str.replace(/\belse\b/,control("else"))
     str = str.replace(/\btask\b/,control("task"))
@@ -42,17 +48,47 @@ function apply_style(str) {
     str = str.replace(/\bfinal\b/,control("final"))
 
     // interruption statements
+    str = str.replace(/\brepeat\b/,interrupt("repeat"))
     str = str.replace(/\bpass\b/,interrupt("pass"))
     str = str.replace(/\babort\b/,interrupt("abort"))
+    str = str.replace(/\bpanic\b/,interrupt("panic"))
     str = str.replace(/\bfail\b/,interrupt("fail"))
     str = str.replace(/\bretry\b/,interrupt("retry"))
     str = str.replace(/\braise\b/,interrupt("raise"))
+    str = str.replace(/\bcontinue\b/,interrupt("continue"))
 
     //operators
 
-
     str = str.replace(/:=/,operator(":="))
+    str = str.replace(/\+=/,operator("+="))
+    str = str.replace(/-=/,operator("-="))
+    str = str.replace(/\/=/,operator("/="))
+    str = str.replace(/\*=/,operator("*="))
+    str = str.replace(/:=/,operator(":="))
+    str = str.replace(/::/,operator("::"))
+    str = str.replace(/<</,operator("<<"))
+    str = str.replace(/>>/,operator(">>"))
+    str = str.replace(/!=/,operator("!="))
+    str = str.replace(/!≡/,operator("!≡"))
+    //str = str.replace(/U\+/g,operator("U+"))
+    //str = str.replace(/U\-/g,operator("U-"))
     str = str.replace(/∈/,operator("∈"))
+    str = str.replace(/≡/,operator("≡"))
+    str = str.replace(/≥/,operator("≥"))
+    str = str.replace(/≤/,operator("≤"))
+    str = str.replace(/⊕/,operator("⊕"))
+    str = str.replace(/≈/,operator("≈"))
+    str = str.replace(/≠/,operator("≠"))
+
+    //questionable
+    str = str.replace(/\|/g,operator("|"))
+    str = str.replace(/\&/g,operator("&"))
+    str = str.replace(/\~/g,operator("~"))
+    str = str.replace(/\+/g,operator("+"))
+    str = str.replace(/\-/g,operator("-"))
+    str = str.replace(/\*/g,operator("*"))
+    //str = str.replace(/\=/g,operator("="))
+
 
     // System & built-in variables
     str = str.replace(/\bself\b/g,builtin("self"))
@@ -159,7 +195,7 @@ function keyword(str) {
     return "<span class=\"keyword\">" + str + "</span>"
 }
 
-function impera(str) {
+function imperative(str) {
     return "<span class=\"impera\">" + str + "</span>"
 }
 

@@ -276,14 +276,14 @@ Bee has a modular architecture. A source file represents a module. A project can
 <pre><code class="language-bee"># main rule
 rule main(*params &isin; S):
    ** read the number of parameters
-   c := params.count;
+   new c := params.count;
    panic if (c = 0);
 
    ** print comma separated parameters
-   i:= 0 &isin; Z;
+   new i:= 0 &isin; Z;
    if (i &lt; c) do
      write params[i];
-     i += 1;
+     let i += 1;
      write "," if (i &lt; c);
    cycle;
    ** print the buffer to console
@@ -291,7 +291,7 @@ rule main(*params &isin; S):
 return;
 </code></pre>
 
-<p>Do not try to understand this example. It is just a worm-up code!</p>
+<p>Do not try to understand this example right now. It is just a worm-up code!</p>
 
 <h4>Notes:</h4>
 <ul>
@@ -361,22 +361,22 @@ load pro:$program.pro_lib.(*); -- load project library
 <pre><code class="language-bee">#define a module
 module demo_module:
 
-cast .pi: 3.14;      -- public constant
- .v   &isin; N; -- public variable
- str := "test"; -- private variable
+set .pi: 3.14; -- public constant
+new .v   &isin; N; -- public variable
+new str := "test"; -- private variable
 
 ** expression rule foo is private
 rule foo(x &isin; N) &isin; N =&gt; (x + 1);
 
 ** block rule bar is public
 rule .bar(x, y &isin; N) =&gt; (r &isin; N):
-  r := x + y;
+  let r := x + y;
 return;
 </code></pre>
 
 <h4>Loading:</h4>
 
-<p>The main module can load numerous secondary modules or libraries. After loading, all public elements of a library can be accessed on demand using dot notation. You can not have colisions of names, except if you use "with" blocks. To simplify the code you can use "alias" statement and can rename a rule belonging to loaded modules.</p>
+<p>The main module can load numerous secondary modules or libraries. After loading, all public elements of a library can be accessed on demand using dot notation. You can not have collisions of names, except if you use "with" blocks. To simplify the code you can use "alias" statement and can rename a rule belonging to loaded modules.</p>
 
 <p><b>Aliases:</b></p>
 <p>You can create an alias for a specific member to eliminate the qualifier. This rule can be used to "merge" public members into current scope. A member can have one single alias in a module. If you do it multiple times, only the last alias is used. It is a bad practice to change the alias of a member.</p>
@@ -401,10 +401,10 @@ alias sum: demo.bar;
 ** define main rule
 rule main:
     ** call rule using qualifier
-    test := demo.bar(1,1); -- 2
+    new test := demo.bar(1,1); -- 2
 
     ** call rule using alias
-    result := sum(1,1); -- 2
+    new result := sum(1,1); -- 2
 
     ** call rule using "with" block
     with demo do
@@ -427,11 +427,11 @@ hide qualifier.(reg_exp_pattern);
 
 <h4>Example:</h4>
 
-<p>In next module called: "test_module.bee", we create a public rule that delay execution for several seconds using "wait" then it returns a result "r" equal to the argument value "t". So the rule basicly does nothing but wait.</p>
+<p>In next module called: "test_module.bee", we create a public rule that delay execution for several seconds using "wait" then it returns a result "r" equal to the argument value "t". So the rule basicity does nothing but wait.</p>
 
 <pre><code class="language-bee"># secondary module: test_module.bee
 rule .test(t &isin; Z) =&gt; (r &isin; N):
-  r := t; -- prepare the result
+  let  r := t; -- prepare the result
   wait t;       -- wait for t seconds
 return;
 </code></pre>
@@ -443,11 +443,13 @@ return;
 <pre><code class="language-bee"># main module
 load $pro_src.test_module.(*);
 
-|: execute test() and append result
-   at the end of "collect" list :|
++--------------------------------
+execute test() and append result
+at the end of "collect" list
+--------------------------------+
 rule main:
    ** define a collector (list)
-   collect &isin; (N);
+   new collect &isin; (N);
 
    apply collect &lt;+ test(30);
    apply collect &lt;+ test(40);
@@ -460,29 +462,31 @@ return;</code></pre>
 
 <h4>2.Asynchronous call using: begin</h4>
 
-<p>Let's use the module previously defined in asynchronous mode. For this we use keywords "begin" to start a process and "rest" to wait for the processes to synchronize.</p>
+<p>Let's use the module previously defined in asynchronous mode. For this we use keywords "begin" to start a process and "wait" for all asynchronous sub-processes to synchronize.</p>
 
 <pre><code class="language-bee"># main module
 load $pro_src.test_aspect.(*);
 
-|: execute test() and append result
-   at the end of "collect" list :|
++-----------------------------------------
+   execute test() and append result
+   at the end of "collect" list
+-----------------------------------------+
 rule main:
    ** define a collector (list)
-   collect &isin; (N);
+   new collect &isin; (N);
 
    begin collect &lt;+ test(30); -- open one thread
    begin collect &lt;+ test(40); -- open one thread
    begin collect &lt;+ test(10); -- open one thread
    begin collect &lt;+ test(20); -- open one thread
 
-   rest; -- stop and wait for the all open threads to finish
+   wait; -- stop and wait for the all open threads to finish
 
    ** the collector is ordered
    print collect; -- (10,20,30,40)
 return;</code></pre>
 
-<p><b>Note:&nbsp;</b>By using begin and rest you can create multi-session applications. Each aspect is executed on a different core, and the application runs them in parallel. The main thread is waiting using resolve keyword for the threads to finish.
+<p><b>Note:&nbsp;</b>By using begin and wait you can create multi-session applications. Each aspect is executed on a different core, and the application runs them in parallel. The main thread is waiting using resolve keyword for the threads to finish.
 <p>
 
 <hr>
