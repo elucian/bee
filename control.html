@@ -38,10 +38,8 @@ Control flow statements are used to modify the linear program workflow. In Bee e
 
 <table class="table table-bordered table-striped">
 <tr><th>Name                      </th><th>Description</th></tr>
-<tr><td><a href="#do"    >do      </a></td><td>start anonymous block</td></tr>
-<tr><td><a href="#task"  >task    </a></td><td>start local statement</td></tr>
-<tr><td><a href="#with"  >with    </a></td><td>qualifier suppression block</td></tr>
-<tr><td><a href="#if"    >if      </a></td><td>decision fork</td></tr>
+<tr><td><a href="#with"  >with    </a></td><td>anonymous block</td></tr>
+<tr><td><a href="#if"    >if-else </a></td><td>decision fork</td></tr>
 <tr><td><a href="#ladder">ladder  </a></td><td>decision ladder</td></tr>
 <tr><td><a href="#cycle" >cycle   </a></td><td>repetitive unconditional block</td></tr>
 <tr><td><a href="#for"   >for     </a></td><td>repetitive block with local scope</td></tr>
@@ -49,71 +47,9 @@ Control flow statements are used to modify the linear program workflow. In Bee e
 <tr><td><a href="#trial" >trial   </a></td><td>exception handler block</td></tr>
 </table>
 
-<h2><a id="do"/>do</h2>
-
-<p>Keyword "do" can be used to start an anonymous block of code that can be executed unconditionally. All block statements are using this keyword. A "do" block can end with: "done" or "repeat". All block have an implicit local scope.</p>
-
-<p>Next syntax pattern show the anonymous unconditional block.</p>
-
-<pre><code class="language-bee"># anonymous unconditional block
-do
-  ** block statements
-  ...
-done;
-</code></pre>
-
-<p>Next syntax pattern show the anonymous repetitive block.</p>
-
-<pre><code class="language-bee"># anonymous repetitive block
-do
-  ** block statements
-  ...
-repeat;
-</code></pre>
-
-<p><b>Note:</b> You can not declare anything new inside a do block. All declarations must be done before starting an executable block. Therefore Bee has keywords to define a local scope for every block statement.</p>
-
-<h2><a id="task"/>task</h2>
-
-<p>Next syntax pattern show how to use a task to create a named scope for a block of code. A "task" is executed a single time and is not repetitive. So you can not use "repeat" at the end of this kind of block.</p>
-
-<pre><code class="language-bee">#local scope
-task [label]:
-   ** local variables
-   new local_var := value;
-   ...
-do
-   ** statements
-   ...
-done [label];
-</code></pre>
-
-<p><b>Note:&nbsp;</b>The [label] is optional and can be numeric or alphanumeric. After label you must use ":" that is mandatory. Task start with a declaration region then reduce indentation with "do" or other determinant keyword to start an executable region.</p>
-
 <h2><a id="with"/>with</h2>
 
-<p>Start executable region with a qualifier. This is a block that eliminate the need for qualifier into a local scope. You can use "with" to suppress module names or aliases.</p>
-
-<h4>Syntax:</h4><pre><code class="language-bee">#using with block
-load name1:path/module_name1;
-load name2:path/module_name2;
-...
-task [label]:
-    ** define locals
-    new x := 2
-with name1 [,name2] ... do
-    ** call external routine .test
-    print test(x); -- 3
-done [label];
-</pre></code>
-
-<p><b>Notes:</b>
-<ul>
-<li>task is optional</li>
-<li>label is optional</li>
-<li>you can use with in front of any do</li>
-</ul>
-</p>
+<p>Start a <em>"qualifier suppression block"</em>. This is a block that eliminate the need for qualifiers into an anonymous local scope. You can use "with" to suppress module names or aliases.</p>
 
 <h4>Example:</h4>
 
@@ -127,21 +63,28 @@ return;
 <p>We load a secondary module and use a qualifier for it:</p>
 
 <pre><code class="language-bee">#using qualifier suppressor
-load test:lib_folder/test_module;
+use lib_folder/test_module as test;
 
 rule main:
   ** define locals
   new x := 2;
-with test do
-  ** call external routine .test
-  print inc(x);
-  expect x = 3;
-done;
+  with test do
+    ** call external routine .test
+    expect x == 3;
+    print inc(x);
+  done;
+return;
 </code></pre>
 
-<h2><a id="if"></a>if</h2>
+<p><b>Notes:</b>
+<ul>
+  <li>you can use "with" for any "do" block</li>
+  <li>any "do" block has a local scope</li>
+</ul>
 
-<p>Using "if" keyword you can create a task that is executed or not depending of a condition. When the condition is false the block statement is ignored and next statement is executed. This statement is sometimes called fork.</p>
+<h2><a id="if"></a>if-else</h2>
+
+<p>Using "if" and "do" keywords you can create a task that is executed or not depending of a condition. When the condition is false the block statement is ignored and next statement is executed. This statement is sometimes called fork.</p>
 
 <h3>Pattern 1: conditional branch</h3>
 
@@ -156,14 +99,16 @@ done;
 
 <h4>Example:</h4>
 
-<p>In this example we use a "task" to create a local scope for the "if" block.</p>
+<p>In this example we use "do" and "if" to create a local scope and a new variable inside this scope.</p>
 
 <pre><code class="language-bee"># fragment
-task:
-  new b := 2;
+do
   new a := random();
-if a &ne; 0 do
-  print b/a;
+  if a &lt; 0 do
+    print ("|a| =", a);
+  else
+    print ("|a| =", -a);
+  done;
 done;
 </code></pre>
 
@@ -187,25 +132,6 @@ else
 done;
 </code></pre>
 
-<h3>Pattern 3: nested multi-path conditional</h3>
-
-<p>You can use multiple conditions to create nested decisions:</p>
-
-<pre><code class="language-bee">#nested decisions
-task:
-    ** local variable
-    new a :=  random();
-if a &le; 0 do
-    write "a = ";
-    read  a;
-    if a = 0 do
-      print "a = 0";
-    else
-      print "a &lt; 0";
-    done; -- a &le; 0
-done;
-</code></pre>
-
 <h2><a id="ladder"></a>Decision Ladder</h2>
 
 <p>By using keywords "if" and "else" you can create a cascade of decisions called "decision ladder" that has several conditional branches plus one optional branch that is executed when no other condition is fulfilled.</p>
@@ -219,20 +145,21 @@ done;
 <h4>Example:</h4>
 
 <pre><code class="language-bee">#decision ladder
-task:
+rule test:
   ** local scope
-  new a &isin; Z;   -- control variable
+  new a &isin; Z; -- control variable
   read("a = ", a);   -- expressions in declaration area
-if a = 0    do       -- first decision
-  print "a = 0";
-else if a &gt; 0 do  -- second decision
-  print "a > 0";
-else if a &lt; 0 do  -- third decision
-  print "a &lt; 1";
-else
-  ** default block
-  print "unexpected:" + a;
-done;
+  if a = 0 do        -- first decision
+    print "a = 0";
+  else if a &gt; 0 do  -- second decision
+    print "a > 0";
+  else if a &lt; 0 do  -- third decision
+    print "a &lt; 1";
+  else
+    ** default block
+    print "unexpected:" + a;
+  done;
+return;
 </code></pre>
 
 <h2><a id="cycle"/>cycle</h2>
@@ -255,7 +182,7 @@ cycle [label]:
 do
   ** repetitive block
   ...
-repeat;
+repeat [label];
 </code></pre>
 
 <h3>Pattern 2: stop condition</h3>
@@ -268,17 +195,17 @@ repeat;
 </div>
 
 <pre><code class="language-bee">#conditional run cycle
-cycle [label]:
+cycle:
   ** local variables
   ...
 do
   ** repetitive block
   ...
-  redo if condition;
+  [redo if condition1];
   ...
-  stop if condition;
+  [stop if condition2];
   ...
-repeat;
+repeat [if condition3];
 </code></pre>
 
 <h3>Pattern 3: while condition</h3>
@@ -301,10 +228,10 @@ while start_condition do
     ...
     [redo if condition]; -- restart the cycle
     ...
-else
-    ** second repetitive block
+then
+    ** non repetitive block
     ...
-repeat [label];
+repeat [label] [if (condition)];
 </code></pre>
 
 
@@ -328,10 +255,9 @@ do
         ...
         stop 42 if condition; -- exit block 42
         ...
-        stop 10 if condition; -- exit block 10
-    repeat;
+    repeat 10 if condition;
     ...
-repeat;
+repeat 42;
 ...
 </code></pre>
 
@@ -358,12 +284,16 @@ cycle [label]:
   ** local variables
   new i &isin; N;
 for &forall; i &isin; (min..max:rate) do
+  ** repetitive block
   ...
   [next if condition]; -- fast forward
   ...
   [redo if condition]; -- shortcut
   ...
   [stop if condition]; -- early transfer
+  ...
+[then]
+  ** non repetitive block
   ...
 repeat [label];
 </code></pre>
@@ -432,21 +362,22 @@ print;
 <pre><code class="language-bee">#enumerable selector
 type Selector = {v1,v2,v3,v4}
 
-task:
+rule main:
   new select := Selector.random()
-match select:
-** declare locals
-...
-when v1 do
-  ** first path
-  ...
-when v1, v2 do
-  ** second path
-  ...
-when other
-  ** v3 or v4 found
-  ...
-done;
+  match select:
+    ** declare locals
+    ...
+  when v1 do
+    ** first path
+    ...
+  when v1, v2 do
+    ** second path
+    ...
+  when other
+    ** v3 or v4 found
+    ...
+  done;
+return;
 </code></pre>
 
 <h2><a id="trial"></a>trial</h2>
@@ -681,6 +612,7 @@ done;
 </ul>
 
 <hr>
+
 
 <p><b>Read next:</b>
 <a href="rules.html">Rules</a></p>

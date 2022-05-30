@@ -308,8 +308,8 @@ return;
 <h4>Pattern:</h4>
 
 <pre><code class="language-bee"># loading modules
-load $bee_lib.folder_name.(*);     -- load all modules from folder
-load $bee_lib.folder_name.(x,y,z); -- load modules x.bee, y.bee and z.bee
+use $bee_lib.folder_name.(*);     -- load all modules from folder
+use $bee_lib.folder_name.(x,y,z); -- load modules x.bee, y.bee and z.bee
 </code></pre>
 
 <h4>Notes:</h4>
@@ -325,7 +325,7 @@ load $bee_lib.folder_name.(x,y,z); -- load modules x.bee, y.bee and z.bee
 <h4>Pattern:</h4>
 
 <pre><code class="language-bee"># load a single module and create a qualifier
-load  qualifier:$bee_lib.folder_name.module_name; -- load a single module
+use  $bee_lib.folder_name.module_name as qualifier; -- load a single module
 ...
 apply qualifier.member_name; -- using dot notation with qualifier
 ...
@@ -339,10 +339,10 @@ apply qualifier.member_name; -- using dot notation with qualifier
 <h4>Examples:</h4>
 
 <pre><code class="language-bee">#load examples
-load cpp:$runtime.cpp_lib.(*); -- load cpp library
-load asm:$runtime.asm_lib.(*); -- load asm library
-load bee:$runtime.bee_lib.(*); -- load bee core library
-load pro:$program.pro_lib.(*); -- load project library
+use cpp:$runtime.cpp_lib.(*); -- load cpp library
+use asm:$runtime.asm_lib.(*); -- load asm library
+use bee:$runtime.bee_lib.(*); -- load bee core library
+use pro:$program.pro_lib.(*); -- load project library
 </code></pre>
 
 <h2><a id="global-scope"></a>Global scope</h2>
@@ -393,10 +393,10 @@ alias new_name: qualifier.member_name;
 <p>This example demonstrate how to use a rule from a module named "module_name"</p>
 <pre><code class="language-bee">#define program name
 ** loading a module with qualifier
-load demo:$pro.src.demo_module;
+use $pro.src.demo_module as demo;
 
 ** give alias to module rule
-alias sum: demo.bar;
+alias sum = demo.bar;
 
 ** define main rule
 rule main:
@@ -465,7 +465,7 @@ return;</code></pre>
 <p>Let's use the module previously defined in asynchronous mode. For this we use keywords "begin" to start a process and "wait" for all asynchronous sub-processes to synchronize.</p>
 
 <pre><code class="language-bee"># main module
-load $pro_src.test_aspect.(*);
+use $pro_src.test_aspect.(*);
 
 +-----------------------------------------
    execute test() and append result

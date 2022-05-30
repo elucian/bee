@@ -1,7 +1,7 @@
 +------------------------------------
        vector graphics prospect
 ------------------------------------+
-load $lib.graphic.core.(test);
+use $lib.graphic.core.(test);
 
 ** two points and two vectors
 (p1, p2) ∈ ⊡; -- graphic point
@@ -9,45 +9,45 @@ load $lib.graphic.core.(test);
 
 rule main:
   ** setup the points
-  p1 := {x:0,  y:0};   
-  p2 := {x:10, y:10};  
-  
+  p1 := {x:0,  y:0};
+  p2 := {x:10, y:10};
+
   ** setup the vectors
-  v1 := {o:p1, p:p2};  
-  v2 := {o:p2, p:p1};  
-  
+  v1 := {o:p1, p:p2};
+  v2 := {o:p2, p:p1};
+
   ** one 2D graphic layer
-  c := {o:{0,0}, w: 1200, h: 675}; 
-  
+  c := {o:{0,0}, w: 1200, h: 675};
+
   ** check canvas properties
   c.size  := 400;
   c.color := white;
   c.pen   := black;
-  
+
   draw c;
   draw p1, p2;
   draw v1;
-  
+
   show c ; -- activate canvas
   wait 30; -- wait 30 seconds
 
   #test
-  
+
   +-----------------------------------
     hide canvas from view
   -----------------------------------+
   hide c;
-  
+
   ** two circles
   ** circles in p1, p2 radius 5
   c1 := {o:p1,r:5} ∈ ○;
   c2 := {o:p2,r:5} ∈ ○;
-  
+
   draw c;
   draw c1, c2;
-  
+
   ** activate canvas
-  show c; 
+  show c;
   wait 30;
 return;
 #end of module

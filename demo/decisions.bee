@@ -1,29 +1,29 @@
 +--------------------------------
-|  conditional statements:       |  
+|  conditional statements:       |
 |  if and case in one demo
 +-------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 rule main:
   ** declare two natural numbers
    a := 10, b := 5 ∈ N;
-  ** simple decision 
+  ** simple decision
   print "a = b" if a = b;
   print "a < b" if a < b;
   print "a > b" if a > b;
-  
+
   ** single branch decision
   if a = b do
     print "a = b";
   done;
-  
+
   ** decision with alternate branch
   if a < 5 do
     print "a < 5";
   else
     print "no";
   done;
-  
+
   ** nested statements are supported
   a:= 1; -- True
   b:= 0; -- False
@@ -38,7 +38,7 @@ rule main:
   else
     print "a = 0 and b = 0";
   done;
-  
+
   +---------------------------------------
   |  case statement replace nested if  |
   +--------------------------------------+
@@ -56,7 +56,7 @@ rule main:
         print 'a ≤ 0';
     else
         print 'a ≥ 5'; -- no match
-    done;    
+    done;
   done;
 return;
 #end of module

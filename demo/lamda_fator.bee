@@ -1,7 +1,7 @@
 +-----------------------------------
-    recursive lambda expression 
+    recursive lambda expression
 -----------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 
 factor: λ(n ∈ N) => (1 if n = 0, factor(n-1)) ∈ N;

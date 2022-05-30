@@ -1,7 +1,7 @@
 +-------------------------------------
    result unpacking
 -------------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 ** rule with two results
 rule test(x, y ∈ Z) => (a,b ∈ Z):
@@ -17,18 +17,18 @@ rule demo(x ∈ Z, y ∈ R) => (r ∈ Rec):
   r.y := y;
 return;
 
-rule main:  
-  n ∈ Z, m ∈ R;  
-  
-  ** result and create two variables  
+rule main:
+  n ∈ Z, m ∈ R;
+
+  ** result and create two variables
   n, m := test(1,2);
-  
+
   ** verify parse results
   claim n = 1;
   claim m = 2;
-    
+
   ** test rule using instead
   r := demo(1, 0.5);
   print  r ; -- {x:1, y:0.5}
 return;
-#end of module 
+#end of module

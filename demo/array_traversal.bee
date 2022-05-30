@@ -1,22 +1,22 @@
 +--------------------------
 |  array traversal demo    |
 +--------------------------+
-load $pro_lib.console:(*);
- 
+use $pro_lib.console:(*);
+
 ** array with 10 elements
-a ∈ [Z](10);   
+a ∈ [Z](10);
 i := 0; --control variable
 
 rule main:
   ** array initialization
-  
+
   for ∀ i ∈ (0..9) do
-     a[i] := i; 
+     a[i] := i;
   repeat;
-  
+
   ** array traversal and print
   for ∀ i ∈ (0.!10) do
      print " a[#(n)] = #(n)" ? (i, a[i]);
   repeat;
-return; 
+return;
 #end of module

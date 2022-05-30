@@ -1,16 +1,16 @@
 # module condition.bee
 +-----------------------------
-|  conditional execution "if"|  
-|  was inspired from ruby!   |  
+|  conditional execution "if"|
+|  was inspired from ruby!   |
 -----------------------------+
-load $bee_lib/console:(*);
+use $bee_lib/console:(*);
 
 rule main:
   x := 0 ∈ N;
   ** input a number in console
-  write "number:"; 
+  write "number:";
   read x; -- wait user for ∀ input
- 
+
   ** claim one of these:
   print "x = 0" if x = 0;
   print "x ≠ 0" if x ≠ 0;

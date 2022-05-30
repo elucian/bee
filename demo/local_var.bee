@@ -1,7 +1,7 @@
 +-------------------------------------------
    demo with local variable site-effect
 -------------------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 ** global variable
 x := 1;
@@ -22,13 +22,13 @@ rule main:
   ** test side effects
   add; -- will print 2
   add; -- will print 3
-  print x; -- x = 3 (is modified)  
-  
+  print x; -- x = 3 (is modified)
+
   ** changing x influence rule
   x := 1; -- global x = 1
   add2; -- will print 1
   add2; -- will print 2
-  
+
   ** verify global variable x
   print x;         -- x = 1 (unmodified)
   print $Global.x; -- x = 1 (unmodified)

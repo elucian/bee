@@ -1,25 +1,25 @@
 +---------------------------
 |     Swap rule demo       |
 ---------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 rule swap(x, y ∈ [Z]):
    ** create temporary value
-   t := x; 
-   
+   t := x;
+
    ** swap the values
    y := x;
-   x := t; 
+   x := t;
 return;
 
 rule main:
    (a: 1, b: 2) ∈ Z;
    print "a = #(n), b = #(n)" ? (a,b);
    ** swap to variables using single statement
-   a := b, b := a; 
+   a := b, b := a;
    print "a = #(n), b = #(n)" ? (a,b); --a = 2, b = 1
    ** swap to variables using swap rule
-    swap(a, b); 
-   print "a = #(n), b = #(n)" ? (a,b); --a = 1, b = 2   
+    swap(a, b);
+   print "a = #(n), b = #(n)" ? (a,b); --a = 1, b = 2
 return;
 #end of module

@@ -1,7 +1,7 @@
 +--------------------------------------
 |  Bubble sort with Array of integers |
 +-------------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 ** bubble sort with integers
 rule sort(this ∈ [Z]):
@@ -12,7 +12,7 @@ rule sort(this ∈ [Z]):
   cycle: do
     swap := False; -- reset flag
     for ∀ i ∈ (0.!n) do
-      ** this pair is out of order ?      
+      ** this pair is out of order ?
       if this[i] < this[i+1] do
         ** swap two elements
         (this[i+1], this[i]) := (this[i], this[i+1]);

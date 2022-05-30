@@ -1,17 +1,17 @@
 +-------------------------------
   pattern matching expression
 ------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
 ** making a lambda expression
 pmc := λ(p1,p2 ∈ N) =>
-  (0 if p1 = 0 
-  ,1 if p2 = 0  
-  ,2 if p1 = p2 
+  (0 if p1 = 0
+  ,1 if p2 = 0
+  ,2 if p1 = p2
   ,3 if p1 > p2
   ,4 ) ∈ N;
 
-rule main:  
+rule main:
   ** execute pm expression
   print pmc(0,2); -- 0
   print pmc(1,0); -- 1
@@ -20,4 +20,3 @@ rule main:
   print pmc(2,1); -- 4
 return;
 #end of module
-

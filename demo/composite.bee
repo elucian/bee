@@ -1,9 +1,9 @@
 +----------------------------------
    demo with composite types
 ----------------------------------+
-load $pro_lib.console:(*);
+use $pro_lib.console:(*);
 
-** enumeration is a type 
+** enumeration is a type
 type Enum: {.fst:1, .snd, .trd} <: Ordinal;
 
 rule main:
@@ -11,27 +11,27 @@ rule main:
   print fst ; -- 1
   print snd ; -- 2
   print trd ; -- 3
-  
+
   ** hash map variable
   s ∈ {(U:N)};
   ** assign (key:value) pairs
   s :=
     {
-     ("first" : 1), 
+     ("first" : 1),
      ("secont": 2),
      ("third" : 3)
     };
   print s["first"] ; -- 1
   print s["second"]; -- 2
   print s["third"] ; -- 3
-  
+
   ** array with capacity
   v1 ∈ [Z](10) ; -- vector of 10 integer elements
   v2 ∈ [R](2,3); -- matrix of 2 rows and 3 columns
   ** dynamic map collections
   p ∈ {U};     -- collection of symbols
   m ∈ {(R:S)}; -- hash map of strings with real key
-  
+
   ** Establish map using literals
   m := {'a':1, 'b':2, 'c':3}
   ** complex list examples
@@ -39,13 +39,13 @@ rule main:
   ∈ (R) ;      -- a list of real numbers
   ∈ ((U));     -- a list of lists of symbols
   ∈ ([U](10)); -- a list of array with 10 symbols
-  
+
   ** Array and Matrix literals
   l2 := [1,2,3];        -- array of 3 elements
   m2 := [[1,1],[2,2]] ; -- matrix of 2x2
   ** Demo with "set" operations
   s1 := {Z}; -- empty set of strings
-  
+
   ** initialized set of 3 elements
   s2 := {1, 2, 3};
   ** Append one element into a set

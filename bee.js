@@ -1,7 +1,7 @@
 function apply_style(str) {
     //keywords without indentation
 
-    str = str.replace(/^load\b/,keyword("load"))
+    str = str.replace(/^use\b/,keyword("use"))
     str = str.replace(/^type\b/,keyword("type"))
     str = str.replace(/^rule\b/,keyword("rule"))
     str = str.replace(/^return\b/,keyword("return"))
@@ -12,6 +12,9 @@ function apply_style(str) {
     str = str.replace(/^hide\b/,keyword("hide"))
 
     //keywords with indentation
+    str = str.replace(/\bfrom\b/,keyword("from"))
+
+    //imperative keywords
     str = str.replace(/\bvoid\b/,imperative("void"))
     str = str.replace(/\bnew\b/,imperative("new"))
     str = str.replace(/\bset\b/,imperative("set"))
@@ -44,15 +47,18 @@ function apply_style(str) {
     str = str.replace(/\bwhen\b/,control("when"))
     str = str.replace(/\btrial\b/,control("trial"))
     str = str.replace(/\bcase\b/,control("case"))
-    str = str.replace(/\bother\b/,control("other"))
+    str = str.replace(/\bmiss\b/,control("miss"))
+    str = str.replace(/\btry\b/,control("try"))
     str = str.replace(/\bfinal\b/,control("final"))
     str = str.replace(/\brepeat\b/,control("repeat"))
     str = str.replace(/\bother\b/,control("other"))
+    str = str.replace(/\bthen\b/,control("then"))
 
     // interruption statements
     str = str.replace(/\bexpect\b/,interrupt("expect"))
     str = str.replace(/\bpass\b/,interrupt("pass"))
     str = str.replace(/\babort\b/,interrupt("abort"))
+    str = str.replace(/\bexit\b/,interrupt("exit"))
     str = str.replace(/\bpanic\b/,interrupt("panic"))
     str = str.replace(/\bfail\b/,interrupt("fail"))
     str = str.replace(/\bretry\b/,interrupt("retry"))
@@ -62,8 +68,10 @@ function apply_style(str) {
     str = str.replace(/\bredo\b/,interrupt("redo"))
     str = str.replace(/\bnext\b/,interrupt("next"))
 
-    //operators
-
+    //keyword operators
+    str = str.replace(/\bas\b/,operator("as"))
+    //symbol operators
+    str = str.replace(/==/,operator("=="))
     str = str.replace(/:=/,operator(":="))
     str = str.replace(/\+=/,operator("+="))
     str = str.replace(/-=/,operator("-="))
@@ -77,7 +85,7 @@ function apply_style(str) {
     str = str.replace(/!≡/,operator("!≡"))
     //str = str.replace(/U\+/g,operator("U+"))
     //str = str.replace(/U\-/g,operator("U-"))
-    str = str.replace(/∈/,operator("∈"))
+    str = str.replace(/∈/g,operator("∈"))
     str = str.replace(/≡/,operator("≡"))
     str = str.replace(/≥/,operator("≥"))
     str = str.replace(/≤/,operator("≤"))
