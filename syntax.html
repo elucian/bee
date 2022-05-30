@@ -688,9 +688,9 @@ rule main:
   let var := (xp1 if cnd1, xp2 if cnd2,..., xp);
 
   ** alternative code alignment
-  let var := ( xp1 if cnd1
-              ,xp2 if cnd2
-              ,xp);
+  let var := ( xp1 if cnd1 else
+               xp2 if cnd2 else
+               xp);
 return;
 </code></pre>
 

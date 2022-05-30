@@ -79,13 +79,26 @@
 <li>Enable Greek and Cyrillic letters for identifiers;</li>
 </ul>
 
-<p>The result of these choices is demonstrate below. You can observe different comment notations enable different color. Syntax colorizer is able to identify also the keywords and highlite every statement.</p>
+<p>The result of these choices is demonstrate below. You can observe different comment notations enable different color. Syntax colorizer is able to identify also the keywords and highlight every statement.</p>
 
-<div align="center">
-  <img src="img/Fibonacci-Rule.png" alt="Fibonacci-Rule" width="600" class="img-fluid protect rounded shadow border" >
-  <p>Bee program example</p>
-</div>
-<hr>
+<pre><code class="language-bee">
+** declare Fibonacci rule
+rule fib(n ∈ N) => (y ∈ N):
+  if (n = 1) ∨ (n = 0) do
+    y := 1; -- first value
+  else
+    y := fib(n-1) + fib(n-2);
+  done;
+return;
+
+rule main:
+   ** call fib rule using argument 5
+   r := fib(n: 5);
+
+   ** print the result to console
+   print r;
+return; -- end of module
+</code></pre>
 
 
 <h2><a id="efficient"></a>Efficient</h2>
@@ -104,7 +117,7 @@
 </ul>
 
 <h2><a id="safe"></a>Safe</h2>
-<p>Bee is designed to be a safe language. It is difficult to make a safe language that is also efficient. To fulfill these goals we setu-up a runway architecture based on next principles and believes:</p>
+<p>Bee is designed to be a safe language. It is difficult to make a safe language that is also efficient. To fulfill these goals we setup a runway architecture based on next principles and believes:</p>
 
 <ol>
 <li>There are more than one ways to resolve a problem,</li>
@@ -130,7 +143,7 @@
 <hr>
 
 <ol>
-<li>Bee program consis of application modules and library modules</li>
+<li>Bee program consist of application modules and library modules</li>
 <li>Main program is called <em>main module</em> and contains rule: main</li>
 <li>Secondary modules can be reused in multiple Bee programs</li>
 <li>Library modules are modules installed in Bee library folders</li>
@@ -147,7 +160,7 @@
 <li>Most languages do not have a name for result variables in functions. Bee allow developers to declare explicit names and types for every result. This is helpful when a subroutine has multiple results.</li>
 <li>Precision is implicit and maximum possible in most other languages, forcing the computation of multiple decimals that are not necessary. In Bee you can define rational numbers that have fixed number of decimals therefore precision is explicit.</li>
 <li>Variables and parameters are automatically initialized with zero value when there is no explicit initialization. Also, if a parameter has explicit initial value it becomes optional.</li>
-<li>Bee has three assignment operators: ":", "::" and ":=". First is called "pair up". Second is called "clone", therd is called "assign". Developers can control what assignment operator actually do by using kewords: "make" to declare a new variable and "alter" to modify an existing variable.</li>
+<li>Bee has three assignment operators: ":", "::" and ":=". First is called "pair up". Second is called "clone", thread is called "assign". Developers can control what assignment operator actually do by using keywords: "make" to declare a new variable and "alter" to modify an existing variable.</li>
 <li>In a rule, primitive type parameters are transferred <em>by value</em> while composite type parameters and objects are transferred <em>by reference</em>. Same rule apply for result variables.</li>
 <li>Bee do not have pointers nor pointer arithmetic. However you can define references to primitive types using explicit boxing operator [x] that are as good as pointers.</li>
 </ol>
@@ -165,7 +178,7 @@
 <li>Bee use Unicode symbols for geometric types. These symbols are intuitive and make geometric types shorter. For example: &ang; = Angle, ⊡ = Dot, ◷ = Arc. Many other shapes are recognized.</li>
 <li>Bee define the "if" statement differently than most other languages. The "if" keyword is used as a <em>conditional</em> for other statements or as ternary operator in lambda expressions.</li>
 <li>Bee is using "#" for module single line comments outside of any rule or block of code. This is same symbol used in Wiki *.md pages for titles and sub-titles. It does not support indentation.</li>
-<li>Bee is using "**" for single line comment inside rules and blocks. This is used in Wiki *.md files for bold. You can use "**" only at begginning of new line or after space indentation but not at the end of a line.</li>
+<li>Bee is using "**" for single line comment inside rules and blocks. This is used in Wiki *.md files for bold. You can use "**" only at beginning of new line or after space indentation but not at the end of a line.</li>
 <li>Bee use "+- ... -+" for block comment. In combination with "|" you can create boxed comments where "+" is the corner of the box. This is useful to create a module header.</li>
 <li>Bee support C like comments: /* ... */ is for "expression comments" that can be used in parenthesis. Two slashes "//" represent end of line comment or statement comment. This can not be used in parenthesis or brackets and can not be used at beginning of new line. You must use ** for line comments.</li>
 <li>For string pattern replication you can use star: "*" operator. For example "01" * 4 = "01010101". In other languages the same operator is numeric <em>times</em> but in Bee we are using "&middot;" for <em>times</em> like in mathematics.</li>

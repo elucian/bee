@@ -80,7 +80,7 @@ repeat;
 <pre><code class="language-bee">#local scope
 task [label]:
    ** local variables
-   local_var := value;
+   new local_var := value;
    ...
 do
    ** statements
@@ -100,7 +100,7 @@ load name2:path/module_name2;
 ...
 task [label]:
     ** define locals
-    x := 2
+    new x := 2
 with name1 [,name2] ... do
     ** call external routine .test
     print test(x); -- 3
@@ -120,7 +120,7 @@ done [label];
 <p>For this example first we create a simple module:</p>
 <pre><code class="language-bee">#define test_module
 rule .inc(x:0) => (r: 0):
-  r := x + 1;
+  let r := x + 1;
 return;
 </pre></code>
 
@@ -131,7 +131,7 @@ load test:lib_folder/test_module;
 
 rule main:
   ** define locals
-  x := 2
+  new x := 2;
 with test do
   ** call external routine .test
   print inc(x);
@@ -160,8 +160,8 @@ done;
 
 <pre><code class="language-bee"># fragment
 task:
-  b := 2;
-  a := random();
+  new b := 2;
+  new a := random();
 if a &ne; 0 do
   print b/a;
 done;
@@ -194,7 +194,7 @@ done;
 <pre><code class="language-bee">#nested decisions
 task:
     ** local variable
-    a :=  random();
+    new a :=  random();
 if a &le; 0 do
     write "a = ";
     read  a;
@@ -221,7 +221,7 @@ done;
 <pre><code class="language-bee">#decision ladder
 task:
   ** local scope
-  a &isin; Z;   -- control variable
+  new a &isin; Z;   -- control variable
   read("a = ", a);   -- expressions in declaration area
 if a = 0    do       -- first decision
   print "a = 0";
@@ -319,7 +319,6 @@ repeat [label];
 <pre><code class="language-bee"># nested blocks
 cycle 42:
     ** local variables
-    local_variable := value;
     ...
 do
     ...
@@ -356,7 +355,8 @@ repeat;
 
 <pre><code class="language-bee">#iterative cycle
 cycle [label]:
-  **
+  ** local variables
+  new i &isin; N;
 for &forall; i &isin; (min..max:rate) do
   ...
   [next if condition]; -- fast forward
@@ -383,6 +383,8 @@ repeat [label];
 <h4>Example 1:</h4>
 
 <pre><code class="language-bee">#range iteration with rate 1
+cycle:
+  new i &isin; N;
 for &forall; i &isin; (1..10) do
   if i % 2 = 0 do
     next;    -- iterate
@@ -401,6 +403,8 @@ repeat;
 
 <p><b>Ratio:</b>&nbsp;Using domain ratio the example above can be simplified:</p>
 <pre><code class="language-bee">#range iteration with rate 2
+cycle:
+    new i &isin; N;
 for &forall; i &isin; (1..9:2) do
     write(i); -- odd numbers
     write(',') if (i &lt; 9);
@@ -427,7 +431,9 @@ print;
 
 <pre><code class="language-bee">#enumerable selector
 type Selector = {v1,v2,v3,v4}
-select = Selector.random()
+
+task:
+  new select := Selector.random()
 match select:
 ** declare locals
 ...
@@ -437,11 +443,8 @@ when v1 do
 when v1, v2 do
   ** second path
   ...
-when rest
+when other
   ** v3 or v4 found
-  ...
-when none
-  ** no match found
   ...
 done;
 </code></pre>
@@ -489,6 +492,7 @@ trial [label]:
        ...
     ** initial or default statements
        ...
+try
     ** check a condition and stop trial
     pass if condition;
         ...
@@ -503,14 +507,14 @@ case $error.code &isin; (code1,code2) do
     ** handler2
     ...
     retry; -- repeat trial
-other
+miss
     ** cover all other errors
     ...
     raise; -- propagate last error
 final
     ** finalization statement (executed before leaving)
     print "final error:" + $error.code if $error.code &gt; 0;
-done;
+done [label];
 </code></pre>
 
 
@@ -526,7 +530,7 @@ done;
 <p>Errors can be defined in your program using next notation:</p>
 
 <pre class="language-bee">** define error
-error_name := {code,"message"} &isin; Error;
+new error_name := {code,"message"} &isin; Error;
 </pre>
 
 <p>Errors can be issued using "fail" keyword.</p>
@@ -600,9 +604,9 @@ fail {code,"message"} if condition -- create instant custom error with code
 <h4>Example:</h4>
 <pre><code class="language-bee">#simple trial block
 trial:
-     x &isin; Q;
-     y &isin; Q;
-    x := 1/0;
+    new x &isin; Q;
+    new y &isin; Q;
+    new x := 1/0;
 final
     print "x = " + x;
     print $error.message if $error.code &ne; 0;
@@ -616,14 +620,14 @@ done;
 
 <pre><code class="language-bee">#define a custom error
 trial:
-    my_error := {200, "my error"} &isin; E;
-    fail my_error; -- issue user error
+  new my_error := {200, "my error"} &isin; E;
+  fail my_error; -- issue user error
 case $error.code == 200 do
-    ** we catch the the error and do something
-    print $error.message;
-    print $error.line;
-other
-    raise; -- propagate all errors
+  ** we catch the the error and do something
+  print $error.message;
+  print $error.line;
+miss
+  raise; -- propagate all errors
 done;
 </code></pre>
 
@@ -641,9 +645,10 @@ done;
 <pre><code class="language-bee">#example of repeating trial
 ** try maximum 3 times
 trial:
-    count &isin; (1..3);
-    a &isin; (0..9);
-    count += 1;
+    new count &isin; (1..3);
+    new a &isin; (0..9);
+try
+    set count += 1;
     read a;
     if  a &lt; 0 do -- trigger patch
       fail;
@@ -662,6 +667,8 @@ case $out_of_range do
       write "wrong 3 times!";
       fail $out_of_range;
     done;
+miss
+    write "mistrial: no case"
 final
     print;
 done;

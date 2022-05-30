@@ -46,9 +46,11 @@ function apply_style(str) {
     str = str.replace(/\bcase\b/,control("case"))
     str = str.replace(/\bother\b/,control("other"))
     str = str.replace(/\bfinal\b/,control("final"))
+    str = str.replace(/\brepeat\b/,control("repeat"))
+    str = str.replace(/\bother\b/,control("other"))
 
     // interruption statements
-    str = str.replace(/\brepeat\b/,interrupt("repeat"))
+    str = str.replace(/\bexpect\b/,interrupt("expect"))
     str = str.replace(/\bpass\b/,interrupt("pass"))
     str = str.replace(/\babort\b/,interrupt("abort"))
     str = str.replace(/\bpanic\b/,interrupt("panic"))
@@ -56,6 +58,9 @@ function apply_style(str) {
     str = str.replace(/\bretry\b/,interrupt("retry"))
     str = str.replace(/\braise\b/,interrupt("raise"))
     str = str.replace(/\bcontinue\b/,interrupt("continue"))
+    str = str.replace(/\bstop\b/,interrupt("stop"))
+    str = str.replace(/\bredo\b/,interrupt("redo"))
+    str = str.replace(/\bnext\b/,interrupt("next"))
 
     //operators
 
