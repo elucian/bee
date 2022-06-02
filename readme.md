@@ -9,5 +9,5 @@
 <p align="center"> <a href="https://sagecode.net/bee/index.html">Bee Syntax</a></p>
 
 <p align="center">
-Copyright 2018-2020 Elucian Moise
+Copyright 2018-2022 Elucian Moise
 </p>
