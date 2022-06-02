@@ -35,7 +35,7 @@ Collections are composite data types. A composite type is a data structures that
 
 <h4>Bookmarks:</h4>
 
-<p>These bookmarks enable you to visit a particular collection type. If you are first time here, just scrol down and read the whole page at least one time. Next time you can use this small index to jump to a particular topic. Enjoy!</p>
+<p>These bookmarks enable you to visit a particular collection type. If you are first time here, just scroll down and read the whole page at least one time. Next time you can use this small index to jump to a particular topic. Enjoy!</p>
 
 <ul>
 <li><a href="#ordinal">ordinals</a></li>
@@ -79,23 +79,25 @@ Collections are composite data types. A composite type is a data structures that
 <p>Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1. Associated values can start with a different integer number. Values can be specified using pair up operator ":". All values must be unsigned integer (i &le; 0) in consecutive ascending order.</p>
 
 <h4>Pattern:</h4>
-<pre><code class="language-bee">type type_name: { name1:0, name2, name3} &lt;: Ordinal;
-  a, b, c &isin; type_name; -- a, b, c will have same type
+<pre><code class="language-bee">type type_name(start:0) = {name1, name2, name3} &lt;: Ordinal;
 rule main:
-  a := type_name.name1; -- a=2
-  b := type_name.name2; -- b=3
-  c := type_name.name3; -- c=4
+  new a, b, c &isin; type_name; -- a, b, c will have same type
+
+  let a := type_name.name1; -- a=2
+  let b := type_name.name2; -- b=3
+  let c := type_name.name3; -- c=4
 return;
 </code></pre>
 
-<p><b>Note:</b>&nbsp;When element name start with "." no need to use qualifiers for the individual values. This is becouse values starting with "." are public by default and known in the scope where ordinal is defined (or loaded).</p>
+<p><b>Note:</b>&nbsp;When element name start with "." no need to use qualifiers for the individual values. This is because values starting with "." are public by default and known in the scope where ordinal is defined (or loaded).</p>
 
 <pre><code class="language-bee">** using public elements in enumeration
 type type_names: {.name0, .name1} &lt;: Ordinal;
-make a, b &isin; type_name;
 rule main()
-   a := name0; -- a = 0
-   b := name1; -- b = 1
+   new a, b &isin; type_name;
+
+   let a := name0; -- a = 0
+   let b := name1; -- b = 1
 return;
 </code></pre>
 
@@ -126,9 +128,9 @@ return;
 
 <p><b>variable declaration</b>&nbsp;You can use one of three forms of declarations:</p>
 <pre><code class="language-bee"># declare some variables
-name1 &isin;  (element_type); -- explicit declaration
-name2 := (constant,...); -- implicit declaration
-name3 := (constant,...) &isin; Type_name; -- full declaration
+new name1 &isin;  (element_type); -- explicit declaration
+new name2 := (constant,...); -- implicit declaration
+new name3 := (constant,...) &isin; Type_name; -- full declaration
 </code></pre>
 
 
@@ -141,21 +143,26 @@ name3 := (constant,...) &isin; Type_name; -- full declaration
 <li>accessing elements in a list by index is slow.</li>
 </ul>
 
-<h4>Example:</h4>
-<pre><code class="language-bee">** define a diverse lists
-two:() &isin; (Z);  -- empty list of integers = ()
-one:(0,);      -- initialize list with single element
-two:(1,2);     -- initialize list with two elements
+<h4>Example1:</h4>
+
+<pre><code class="language-bee">## define a diverse lists
+new two:() &isin; (Z);  -- empty list of integers = ()
+new one:(0,);      -- initialize list with single element
+new two:(1,2);     -- initialize list with two elements
+</code></pre>
+
+<h4>Example2:</h4>
+<pre><code class="language-bee">## list traversal demo
 ** define a list type of unsigned short integer
-type Lon:(N) &lt;: List;
-** define a list variable of defined type Lou
-myList:(0, 1, 2, 3, 4, 5) &isin; Lon;
-** list traversal
+type Lon[N] &lt;: List;
 rule main:
-  given x &lt;- myList do
+  ** define a list variable of defined type Lou
+  new myList(start:0) = (0, 1, 2, 3, 4, 5) &isin; Lon;
+  ** list traversal
+  cycle: for &forall; x &isin; myList do
     write x;
     write "," if (x &ne; myList.head);
-  cycle;
+  repeat;
   print; -- 0,1,2,3,4,5
 rule;
 </code></pre>
@@ -166,14 +173,13 @@ rule;
 
 <h4>Syntax:</h4>
 <pre><code class="language-bee">** diverse array variables
-array_name &isin; [element_type]  ;    -- single element array
-array_name &isin; [element_type]();    -- undefined capacity array
-array_name &isin; [element_type](c);   -- capacity c
-array_name &isin; [element_type](n,m); -- capacity c = n&middot;m
-** define new kind of array
-type Array_Type: [element_type](c) &lt;: Array;
-** use previous  defined type
-array_name &isin; Array_Type;
+new array_name1  &isin; Array[element_type]  ;    -- single element array
+new array_name3  &isin; Array[element_type](c);   -- capacity c
+new array_name4  &isin; Array[element_type](n,m); -- capacity c = n&middot;m
+** define new sub-type of array
+type Array_Type[element_type] &lt;: Array
+** use previous  defined sub-type
+new array_name5 = Array_Type(c);
 </code></pre>
 
 
@@ -191,16 +197,16 @@ array_name &isin; Array_Type;
 <p>Lets implement previous array: numbers[] and print it nicely using a cycle.</p>
 
 <pre><code class="language-bee"># define public array
-.numbers[Z](10) := [0,1,2,3,4,5,6,7,8,9];
+new .numbers[Z](10) := [0,1,2,3,4,5,6,7,8,9];
 ** access .numbers elements one by one
 rule main:
-  write "numbers = [";
-  given i &isin; (1..10) do
-    write numbers[i];
-    write ',' if i &lt; 10;
-  cycle;
-  write "]";
-  print; -- flush the buffer
+    write "numbers = [";
+    cycle: for &forall; i &isin; (1..10) do
+        write numbers[i];
+        write ',' if i &lt; 10;
+    repeat;
+    write "]";
+    print; -- flush the buffer
 return;
 </code></pre>
 
@@ -222,36 +228,34 @@ numbers = [0,1,2,3,4,5,6,7,8,9]
 <p>Initial value for elements can be set during declaration or later:</p>
 <pre><code class="language-bee">** you can use a single value to initialize all vector elements
 rule main:
-  zum := 0 &isin; [Z](10); -- explicit initialization using single value
-  ** modify one element by index
-  zum[1]  := 1;
-  zum[-1] := 10;
-  print zum; -- expect [1,0,0,0,0,0,0,0,0,10]
+    new zum := 0 &isin; [Z](10); -- explicit initialization using single value
+    ** modify one element by index
+    let zum[1]  := 1;
+    let zum[-1] := 10;
+    print zum; -- expect [1,0,0,0,0,0,0,0,0,10]
 
-  ** modify all elements
-  zum[*] := 0;
-  print zum; -- expect [0,0,0,0,0,0,0,0,0,0]
+    ** modify all elements
+    let zum[*] := 0;
+    print zum; -- expect [0,0,0,0,0,0,0,0,0,0]
 return;
 </code></pre>
 
 
-<p><b>Deferred initialization:</b>&nbsp;We can define an empty array and initialize its elements later. Epty arrays do not have establish a capacity until array is initialized</p>
+<p><b>Deferred initialization:</b>&nbsp;We can define an empty array and initialize its elements later. Empty arrays do not have establish a capacity until array is initialized</p>
 
 <pre><code class="language-bee">** array without capacity (partial type inference)
 rule main:
-   vec &isin; [A]();
-   nec &isin; [N]();
-   ** arrays are empty
-   print vec = []; -- True
-   print nec = []; -- True
-
-   ** smart initializer with operator "&times;"
-   vec := 'x' &times; 10; -- 10;
-   print vec; -- expect ['x','x','x','x','x','x','x','x','x','x']
-
-   ** smart initializer with 0 values
-   nec := 0 &times; 10;
-   print nec; -- expect [0,0,0,0,0,0,0,0,0,0];
+    new vec &isin; [A]();
+    new nec &isin; [N]();
+    ** arrays are empty
+    print vec = []; -- True
+    print nec = []; -- True
+    ** smart initializer with operator "&times;"
+    let vec := 'x' &times; 10; -- 10;
+    print vec; -- expect ['x','x','x','x','x','x','x','x','x','x']
+    ** smart initializer with 0 values
+    let nec := 0 &times; 10;
+    print nec; -- expect [0,0,0,0,0,0,0,0,0,0];
 return;
 </code></pre>
 
@@ -265,15 +269,15 @@ return;
 </div>
 
 <h4>Example:</h4>
-<p>In next example we demonstrate a curious notation for matrix. You have maybe not seen this before in any other language becouse is ridiculous to parse. But from aestetic point of view we think this is the way a matrix literal should look like:</p>
+<p>In next example we demonstrate a curious notation for matrix. You have maybe not seen this before in any other language because is ridiculous to parse. But from an esthetic point of view we think this is the way a matrix literal should look like:</p>
 
 <pre><code class="language-bee"># define a subtype of Matrix
 type Mat: [R](4,4) &lt;: Matrix;
 
 rule main()
-    mat &isin; Mat -- define matrix variable
+    new mat &isin; Mat -- define matrix variable
     ** modify matrix using ":=" operator
-    mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
+    let mat := [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
     print mat[1,1]; -- 1  = first element
     print mat[4,4]; -- 16 = last element
 
@@ -283,7 +287,7 @@ rule main()
                    ⎢ 9, 10 ,11, 12 ⎥
                    ⎣13, 14 ,15, 16 ⎦;
 
-    ** nice optput using array print method
+    ** nice output using array print method
     apply mat.print;
 return;
 </code></pre>
@@ -303,14 +307,14 @@ return;
 
 <pre><code class="language-bee">** initialize matrix elements
 rule main:
-  i   := 1;
-  mat := [Z](3,3);
-  x   := mat.length;
+  new i   := 1;
+  new mat := [Z](3,3);
+  new x   := mat.length;
 
-  if (i &lt; x) do
-    mat[i] := i+1;
-    i += 1;
-  cycle;
+  cycle: while (i &lt; x) do
+    let mat[i] := i+1;
+    let i += 1;
+  repeat;
   apply mat.print; -- nice output
 return;
 </code></pre>
@@ -327,18 +331,18 @@ return;
 <p>A data set is a sorted collection of unique values. Elements of a data set can be accessed sequential. There is no index associated with elements like we have in Arrays so the access to an element is slow.</p>
 
 <pre><code class="language-bee">** user defined set
-type NS: {N} &lt;: Set; -- define a set of natural numbers
+type NS: {N} &lt;: DataSet; -- define a set of natural numbers
 rule main:
-   uds &isin; NS;     -- define a shared variable of type set
+   new uds &isin; NS;     -- define a shared variable of type set
    ** define shared sets s1, s2 of 3 elements each
-   s1 := {1,2,3} &isin; {N};
-   s2 := {2,3,4} &isin; {N};
+   new s1 := {1,2,3} &isin; {N};
+   new s2 := {2,3,4} &isin; {N};
    ** specific operations
-   u  := s1 &cup; s2; -- {1,2,3,4,5}:union
-   i  := s1 &cap; s2; -- {2,3}      :intersection
-   d1 := s1 - s2; -- {1}        :difference 1
-   d2 := s2 - s1; -- {4}        :difference 2
-   d  := s2 ⊖ s1; -- {1,4}      :symmetric difference
+   new u  := s1 &cup; s2; -- {1,2,3,4,5}:union
+   new i  := s1 &cap; s2; -- {2,3}      :intersection
+   new d1 := s1 - s2; -- {1}        :difference 1
+   new d2 := s2 - s1; -- {4}        :difference 2
+   new d  := s2 ⊖ s1; -- {1,4}      :symmetric difference
 
    ** verify expectation
    pass if d = d1 &cup; d2; -- equivalent (else fail)
@@ -348,11 +352,11 @@ rule main:
    print s  &sup; s2; -- True
 
    ** declare a new set
-   a := {1,2,3};
+   new a := {1,2,3};
 
    ** using operator +/- to mutate set a
-   a += 4;  -- {1,2,3,4}
-   a -= 3;  -- {1,2,4}
+   let a += 4;  -- {1,2,3,4}
+   let a -= 3;  -- {1,2,4}
 return;
 </code></pre>
 
@@ -364,14 +368,14 @@ return;
 <li>Set elements must be sortable types;</li>
 </ul>
 
-<h2><a id="hash-map"></a>Hash maps</h2>
+<h2><a id="hash-map"></a>Hash Map</h2>
 <p>A hash map is a set of (key:value) pairs sorted by key.</p>
 
 <h4>Syntax:</h4>
 <pre><code class="language-bee">** define a hash map type
-type type_name: {(key_type: value_type)} &lt;: Hash;
+type type_name = {(key_type: value_type)} &lt;: HashMap;
 ** declare a new empty hash map
-make new_map := {} &isin; type_name;
+new new_map &isin; type_name;
 </code></pre>
 
 <h4>Example:</h4>
@@ -384,10 +388,11 @@ make new_map := {} &isin; type_name;
 </div>
 
 <pre><code class="language-bee">** initial value of map
-make map := {('key1':"value1"), ('key2':"value2")};
 rule main:
+   new map := {('key1':"value1"), ('key2':"value2")};
+
    ** create new element
-   map['key3'] := "value3";
+   let map['key3'] := "value3";
 
    ** finding elements by key
    print map['key1']; -- "value1"
@@ -410,9 +415,11 @@ return;
 
 <h2><a id="check-for-inclusion"></a>Check for inclusion</h2>
 <p>We can check if an element is included in a collection using "&isin;".</p>
-<pre><code class="language-bee">type  Tmap: {(A:U)} &lt;: Hash;
-make map  := {('a':"first"), ('b':"second")} &isin; Tmap;
+<pre><code class="language-bee">
+type  Tmap = {(A:U)} &lt;: HashMap;
+
 rule main:
+   new map  := {('a':"first"), ('b':"second")} &isin; Tmap;
    when ('a' &isin; map) do
      print("a is found");
    else
@@ -470,12 +477,12 @@ return;
 </ul>
 
 <h4>Example:</h4>
-<pre><code class="language-bee">make query :=
-&lt;sql&gt;
+<pre><code class="language-bee">
+new query := &lt; sql &gt;
    select name, age
      from persons
     where age &lt; 24;
-&lt;/sql&gt;;
+  &lt; /sql &gt;;
 </code></pre>
 
 <h3><a id="array-of-symbols" class="anchor" href="#array-of-symbols"></a>Array of symbols</h3>
@@ -485,13 +492,13 @@ return;
 type A128: [A](128) &lt;: Array;
 rule main()
   ** populate array using spreading operator (*)
-  make str &isin; A128;
+  new str &isin; A128;
   *str := "test"; -- spreading a ASCII literal
   print  str;   -- [`t`,`e`,`s`,`t`]
 
   ** fixed capacity array of symbols UTF32
-  make   uco &isin; [U](128);
-  *uco := "&isin;&equiv;&le;&ge;&divide;&ne;"; -- spreading a Unicode literal
+  mew  uco &isin; [U](128);
+  let *uco := "&isin;&equiv;&le;&ge;&divide;&ne;"; -- spreading a Unicode literal
   print  uco; -- ['&isin;','&equiv;','&le;','&ge;','&divide;','&ne;'];
 return;
 </code></pre>
@@ -502,8 +509,8 @@ return;
 <h4>Example:</h4>
 <pre><code class="language-bee">rule main:
    ** fixed capacity string UTF8
-   make  uco &isin; S; -- Unicode string unknown capacity
-   uco := "&isin; &equiv; &le; &ge; &divide; &ne; &middot; &times; &not; &uarr; &darr; &and; &or;";
+   new  uco &isin; S; -- Unicode string unknown capacity
+   let uco := "&isin; &equiv; &le; &ge; &divide; &ne; &middot; &times; &not; &uarr; &darr; &and; &or;";
 
    ** strings are printed with quotes
    print uco; -- "&isin; &equiv; &le; &ge; &divide; &ne; &middot; &times; &not; &uarr; &darr; &and; &or;"
@@ -566,17 +573,19 @@ new line in string
 </table>
 
 <p><b>examples</b></p>
-<pre><code class="language-bee">make m: ('-' * 10) &isin; S; -- m = "----------"
-make (u, c, s) &isin; S; -- default length is 128 octets = 1024 bit
+<pre><code class="language-bee">
 rule main:
+   new make m: ('-' * 10) &isin; S; -- m = "----------"
+   new make (u, c, s) &isin; S; -- default length is 128 octets = 1024 bit
+
    ** string concatenation
-   c := "This is " + "a large string";
+   new c := "This is " + "a large string";
 
    ** automatic conversion to string
-   s := "40" + 5; -- "405"
+   let s := "40" + 5; -- "405"
 
    ** URL/path concatenation
-   make test_file := $pro.'src'.'test.bee';
+   new test_file := $pro.'src'.'test.bee';
 
    ** when $platform = "Windows"
    ** Let's say $pro = "c:\work\project\"
@@ -590,11 +599,12 @@ return;
 
 <h3><a id="conversion" class="anchor" href="#conversion"></a>Conversion</h3>
 <p>Conversion of a string into number is done using <em>parse</em> rule:</p>
-<pre><code class="language-bee">make x,y &isin; R;
+<pre><code class="language-bee">
 rule main:
+  new x,y &isin; R;
   ** rule parse return; a Real number
-  x := parse("123.512",2);     -- convert to real 123.5
-  y := parse("10,000.3333",2); -- convert to real 10000.33
+  let x := parse("123.512",2);     -- convert to real 123.5
+  let y := parse("10,000.3333",2); -- convert to real 10000.33
 return;
 </code></pre>
 
@@ -604,16 +614,17 @@ return;
 
 <h4>Pattern:</h4>
 <pre><code class="language-bee">** declare a category of objects
-mold Type_name: {attribute &isin; type_name, ...} &lt;: Object;
+type Type_name = {attribute &isin; type_name, ...} &lt;: Object;
+
 rule main:
   ** create an object instance using default constructor
-  make item_name := {
+  new object_name := {
          attribute : constant,
          ...
          } &isin; Type_name;
 
   ** modify one object attribute
-  object_name.attribute := new_value;
+  let object_name.attribute := new_value;
 return;
 </code></pre>
 
@@ -631,41 +642,42 @@ return;
 
 <h4>Example:</h4>
 <pre><code class="language-bee">type  Person: {name &isin; S, age &isin; N} &lt;: Object;
-** array of 10 persons
-make catalog &isin; [Person](10);
-
-** initialize value using literals
-make catalog[0] := {name:"Cleopatra", age:15};
-make catalog[1] := {name:"Martin", age:17};
 rule main:
-   ** using one element with dot operators
-   print caralog[0].name;  -- will print Cleopatra
-   print caralog[1].name;  -- will print Martin
+  ** array of 10 persons
+  new catalog &isin; [Person](10);
 
-   ** member type can be check using _type()_ built in
-   print type(Person.name); -- will print U
-   print type(Person.age);  -- will print W
+  ** initialize value using literals
+  new catalog[0] := {name:"Cleopatra", age:15};
+  new catalog[1] := {name:"Martin", age:17};
 
-   ** print size of structure
-   print size(Person);
+  ** using one element with dot operators
+  print catalog[0].name;  -- will print Cleopatra
+  print catalog[1].name;  -- will print Martin
+
+  ** member type can be check using _type()_ built in
+  print type(Person.name); -- will print U
+  print type(Person.age);  -- will print W
+
+  ** print size of structure
+  print size(Person);
 return;
 </code></pre>
 
 <h3><a id="recursive" class="anchor" href="#recursive"></a>Recursive</h3>
 <p>We can limit how deep a call stack become using a directive. $recursion:1000</p>
 <pre><code class="language-bee">** example of single recursive node
-type Node: {
-  data &isin; Z,       |: integer data :|
-  previous &isin; Node |: reference to previous node :|
+type Node = {
+  data &isin; Z,       -- integer data
+  previous &isin; Node -- reference to previous node
 } &lt;: Object;
 </code></pre>
 
 <p>This kind of structure can be used to create a data chain.</p>
 <pre><code class="language-bee">** example of double recursive node
 type Node &lt;: {
-  data  &isin; Z,    |: integer data :|
-  prior &isin; Node, |: reference to previous node :|
-  next  &isin; Node  |: reference to next node :|
+  data  &isin; Z,    -- integer data
+  prior &isin; Node, -- reference to previous node
+  next  &isin; Node  -- reference to next node
 } &lt;: Object;
 </code></pre>
 

@@ -3,8 +3,6 @@ function apply_style(str) {
 
     str = str.replace(/^use\b/,keyword("use"))
     str = str.replace(/^type\b/,keyword("type"))
-    str = str.replace(/^rule\b/,keyword("rule"))
-    str = str.replace(/^return\b/,keyword("return"))
     str = str.replace(/^object\b/,keyword("object"))
     str = str.replace(/^module\b/,keyword("module"))
     str = str.replace(/^class\b/,keyword("class"))
@@ -13,6 +11,8 @@ function apply_style(str) {
 
     //keywords with indentation
     str = str.replace(/\bfrom\b/,keyword("from"))
+    str = str.replace(/\brule\b/,keyword("rule"))
+    str = str.replace(/\breturn\b/,keyword("return"))
 
     //imperative keywords
     str = str.replace(/\bvoid\b/,imperative("void"))
@@ -25,13 +25,16 @@ function apply_style(str) {
     str = str.replace(/\bapply\b/,imperative("apply"))
     str = str.replace(/\bbegin\b/,imperative("begin"))
     str = str.replace(/\bwait\b/,imperative("wait"))
+    str = str.replace(/\bscrap\b/,imperative("scrap"))
 
     //data types keywords
     str = str.replace(/\bOrdinal\b/,types("Ordinal"))
     str = str.replace(/\bList\b/,types("List"))
     str = str.replace(/\bArray\b/,types("Array"))
-    str = str.replace(/\bSet\b/,types("Set"))
-    str = str.replace(/\bHash\b/,types("Hash"))
+    str = str.replace(/\bArray\b/,types("Vector"))
+    str = str.replace(/\bArray\b/,types("Matrix"))
+    str = str.replace(/\bSet\b/,types("DataSet"))
+    str = str.replace(/\bHash\b/,types("HashTab"))
 
     // control flow keywords
     str = str.replace(/\bdo\b/,control("do"))
@@ -71,6 +74,7 @@ function apply_style(str) {
     //keyword operators
     str = str.replace(/\bas\b/,operator("as"))
     //symbol operators
+    str = str.replace(/=>/,operator("=>"))
     str = str.replace(/==/,operator("=="))
     str = str.replace(/:=/,operator(":="))
     str = str.replace(/\+=/,operator("+="))
@@ -90,8 +94,14 @@ function apply_style(str) {
     str = str.replace(/≥/,operator("≥"))
     str = str.replace(/≤/,operator("≤"))
     str = str.replace(/⊕/,operator("⊕"))
+    str = str.replace(/⊖/,operator("⊖"))
     str = str.replace(/≈/,operator("≈"))
     str = str.replace(/≠/,operator("≠"))
+    str = str.replace(/∪/,operator("∪"))
+    str = str.replace(/∩/,operator("∩"))
+    str = str.replace(/⊂/,operator("⊂"))
+    str = str.replace(/⊃/,operator("⊃"))
+
 
     //questionable
     str = str.replace(/\|/g,operator("|"))
@@ -100,7 +110,7 @@ function apply_style(str) {
     str = str.replace(/\+/g,operator("+"))
     str = str.replace(/\-/g,operator("-"))
     str = str.replace(/\*/g,operator("*"))
-    //str = str.replace(/\=/g,operator("="))
+    str = str.replace(/\s=/g,operator(" ="))
 
 
     // System & built-in variables

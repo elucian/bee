@@ -210,7 +210,7 @@ repeat [if condition3];
 
 <h3>Pattern 3: while condition</h3>
 
-<p>Keyword "while" can be used to evaluate a condition and start or continue a repetitive block. The number of repetitions is controlled by condition. If the start condition is not fulfilled the else block is executed. When "else" block is ending the cycle normally stops unless "redo" is used to revive the cycle.</p>
+<p>Keyword "while" can be used to evaluate a condition and start or continue a repetitive block. The number of repetitions is controlled by condition. If the start condition is not fulfilled the else block is executed. When "else" block is ending the cycle normally stops unless "redo" is used to restart the cycle.</p>
 
 <div align="center">
   <img src="img/start-cycle.svg" alt="start cycle" width="460" class="img-fluid protect rounded shadow border" >
@@ -231,7 +231,7 @@ while start_condition do
 then
     ** non repetitive block
     ...
-repeat [label] [if (condition)];
+repeat [label];
 </code></pre>
 
 
@@ -251,11 +251,11 @@ do
     ...
     cycle 10: do
         ...
-        redo 42 if condition; -- restart block 42
+        redo 42 if condition1; -- restart block 42
         ...
-        stop 42 if condition; -- exit block 42
+        stop 42 if condition2; -- exit block 42
         ...
-    repeat 10 if condition;
+    repeat if condition3;
     ...
 repeat 42;
 ...
@@ -288,8 +288,6 @@ for &forall; i &isin; (min..max:rate) do
   ...
   [next if condition]; -- fast forward
   ...
-  [redo if condition]; -- shortcut
-  ...
   [stop if condition]; -- early transfer
   ...
 [then]
@@ -304,9 +302,10 @@ repeat [label];
 <li></li>
 <li>If used, label enable creation of local variables;</li>
 <li>Control variable: "i" is in local scope, even if label is missing;</li>
-<li>Interruptions (next, redo, stop) are optional and most of the time not needed;/li>
+<li>Interruptions (next, stop) are optional and most of the time not needed;/li>
 <li>By using "next", control variable is incremented automatically;</li>
-<li>By using "redo", control variable is not incremented;</li>
+<li>By using "redo", you can end up in an infinite loop, ;</li>
+<li>You can also use "redo", but the compiler will sen you a warning, ;</li>
 <li>Only one iterable variable is permitted in given scope;</li>
 </ul>
 
@@ -423,7 +422,7 @@ trial [label]:
        ...
     ** initial or default statements
        ...
-try
+[try]
     ** check a condition and stop trial
     pass if condition;
         ...
@@ -433,11 +432,10 @@ try
 case $error.code = code do
     ** handler1
     ...
-    abort; -- stop the trial
 case $error.code &isin; (code1,code2) do
     ** handler2
     ...
-    retry; -- repeat trial
+    retry; -- repeat trial from try
 miss
     ** cover all other errors
     ...
@@ -452,8 +450,9 @@ done [label];
 <h4>Note:</h4>
 <ul>
 <li>It is unusual to create nested trial blocks;</li>
-<li>A trial can be repeated several times when fail;</li>
-<li>A trial can stop execution of a rule with error;</li>
+<li>A trial can contain try and retry keywords that are optional</li>
+<li>A trial can be repeated several times when fail if has a try;</li>
+<li>A trial can stop execution of a rule with error if error is not handled;</li>
 </ul>
 
 <h4>Errors</h4>
@@ -537,7 +536,8 @@ fail {code,"message"} if condition -- create instant custom error with code
 trial:
     new x &isin; Q;
     new y &isin; Q;
-    new x := 1/0;
+try
+    let x := 1/0;
 final
     print "x = " + x;
     print $error.message if $error.code &ne; 0;
@@ -552,6 +552,7 @@ done;
 <pre><code class="language-bee">#define a custom error
 trial:
   new my_error := {200, "my error"} &isin; E;
+try
   fail my_error; -- issue user error
 case $error.code == 200 do
   ** we catch the the error and do something

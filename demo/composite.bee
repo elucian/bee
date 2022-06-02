@@ -18,7 +18,7 @@ rule main:
   s :=
     {
      ("first" : 1),
-     ("secont": 2),
+     ("second": 2),
      ("third" : 3)
     };
   print s["first"] ; -- 1

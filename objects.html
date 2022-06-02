@@ -54,15 +54,15 @@ Bee is a esoteric and experimental programming language design by Sage-Code.
 ** define object companion
 rule closureName(param &isin; type...) => (result &isin; Rule):
     ** context variable
-    context_variable := value;
+    new context_variable := value;
     ...
     ** create enclosed rule
     rule object_rule(param &isin; type,...):
         ...
-        context_variable := expression(param);
+        let context_variable := expression(param);
     return;
     ** assign a rule reference to result
-    result := object_rule;
+    let result := object_rule;
 return;
 </code></pre>
 
@@ -91,13 +91,13 @@ return;
 <pre><code class="language-bee"># Define a singleton object:
 object SgtName:
     ** singleton, public constant (uppercase)
-    .CST := value;
+    set .CST := value;
     ...
     ** singleton, public property
-    .public_property := "value";
+    new .public_property := "value";
     ...
     ** singleton, private property
-    private_property := "value";
+    new private_property := "value";
     ...
     ** singleton public rule
     rule .public_rule(param &isin; type,...) =&gt; (result &isin; type):
@@ -116,7 +116,7 @@ end SgtName;
 # Using singleton properties and methods
 rule main:
   ** call a singleton rule
-  r := SgtName.singleton_rule(argument, ...);
+  new r := SgtName.singleton_rule(argument, ...);
 
   ** check singleton public property
   print r.public_property; -- expect "value"
@@ -158,7 +158,7 @@ type ObjType: {attribute:type, ...} &lt;: Object;
 ** Augment object with methods
 rule ObjType(param &isin; type,... ) => (self &isin; ObjType) :
     ** use super constructor:
-    self = super(params);
+    let self := super(params);
     ...
     ** attach traits
     self.attach(trait_name1);
@@ -166,13 +166,13 @@ rule ObjType(param &isin; type,... ) => (self &isin; ObjType) :
     ** private method
     rule private_method(self &isin; ObjType, param &isin; type,...) =&gt; (result &isin; type):
        ...
-       result := expression;
+       let result := expression;
     return;
     ...
     ** public method
     rule .public_method(self &isin; ObjType, param &isin; type,...) =&gt; (result &isin; type):
        ...
-       result := expression;
+       let result := expression;
     return;
     ...
 return;
@@ -180,9 +180,9 @@ return;
 # Using object type and methods
 rule main:
     ** create an object instance
-    obj := {attribute:value, ...} &isin; ObjType;
+    new obj := {attribute:value, ...} &isin; ObjType;
     ** execute a plubcli rule
-    r := obj.public_rule(argument, ...);
+    let r := obj.public_rule(argument, ...);
     ** access attributes
     print r.attribute;     -- original attribute
     print r.new_attribute; -- extended attribute
@@ -198,7 +198,7 @@ type Foo: {a, b &isin; N} &lt;: Object;
 
 **Implement Foo constructor:
 rule Foo(p1,p2 &isin; N) =&gt; (self &isin; Foo):
-    self := {a:p1, b:p2};
+    let self := {a:p1, b:p2};
 return;
 
 **Implement Foo companion:
@@ -213,7 +213,7 @@ continue;
 ** create new object using constructor
 rule main:
     ** call constructor to create an instance of Foo
-    test := Foo(1,1);
+    new test := Foo(1,1);
 
     ** call a method test.bar
     test.bar;

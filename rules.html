@@ -30,7 +30,7 @@
 
 <h1>Bee Rules</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is rule oriented language. A rule is a named section of code that can be executed multiple times on demand. Rules can have parameters and can return results, similar to a function, subroutine, procedure or method, used in other languages.
+Bee is rule oriented language. A rule is a named section of code that can be executed multiple times on demand. Rules can have parameters and can return results, similar to functions and methods, used in other languages.
 </div>
 
 <h2>Bookmarks</h2>
@@ -39,6 +39,8 @@ Bee is rule oriented language. A rule is a named section of code that can be exe
 <li><a href="#rule-anatomy">rule anatomy</a></li>
 <li><a href="#rule-features">rule features</a></li>
 <li><a href="#rule-purpose">rule purpose</a></li>
+<li><a href="#early-termination">early termination</a></li>
+<li><a href="#advanced-topics">advanced topics</a></li>
 </ul>
 
 <h2><a id="rule-anatomy"/>Rule Anatomy</h2>
@@ -71,8 +73,8 @@ Bee is rule oriented language. A rule is a named section of code that can be exe
 
 <ul>
 <li><a href="#rule-params">rule parameters</a></li>
-<li><a href="#rule-varargs">rule varargs</a></li>
 <li><a href="#rule-results">rule results</a></li>
+<li><a href="#variadic-rules">variadic rules</a></li>
 </ul>
 
 <h3><a id="rule-params"></a>Rule parameters</h3>
@@ -106,32 +108,6 @@ return;
 <li>Primitive types parameters receive values: <em> by copy</em>;</li>
 <li>Composite type parameters receive value: <em> by share</em>;</li>
 </ul>
-
-<h3><a id="rule-varargs" class="anchor" href="#varargs"></a>Variadic Rule</h3>
-<p>The last parameter in a parameter list can use prefix: "*" to receive multiple values into an array of values. This is called "varargs" parameter and is very useful way to accept multiple parameters by declaring just one.</p>
-
-<pre><code class="language-bee"># rule with varargs
-rule foo(*bar &isin; [Z]) =&gt; (x &isin; Z):
-    new c := bar.count();
-    ** precondition
-    if (c = 0) do
-        let x := 0;
-        exit;
-    done;
-    ** sum all parameters
-    for &forall; i &isin; (0.!c) do
-        let x += bar[i];
-    repeat;
-return;
-** we can call foo with variable number of arguments
-rule main:
-    print foo();        -- 0
-    print foo(1);       -- 1
-    print foo(1,2);     -- 3
-    print foo(1,2,3);   -- 6
-    print foo(1,2,3,4); -- 10
-return;
-</code></pre>
 
 <h3><a id="rule-results"></a>Rule results</h3>
 
@@ -172,20 +148,35 @@ return;
 <li>Rules with multiple results can not be used in expressions;</li>
 </ul>
 
-<h2><a id="rule-purpose"/>Rule Purpose</h2>
+<h3><a id="variadic-rules" class="anchor" href="#varargs"></a>Variadic Rule</h3>
+<p>The last parameter in a parameter list can use prefix: "*" to receive multiple values into an array of values. This is called "varargs" parameter and is very useful way to accept multiple parameters by declaring just one.</p>
 
-<p>A rule can be used for different purposes depending on a the way the rule is designed. For this reason we have not called the rule: class, method or function. It can serve all these purposes:</p>
+<pre><code class="language-bee"># rule with varargs
+rule foo(*bar &isin; [Z]) =&gt; (x &isin; Z):
+    new c := bar.count();
+    ** precondition
+    if (c == 0) do
+        let x := 0;
+        exit;
+    done;
+    ** sum all parameters
+    for &forall; i &isin; (0.!c) do
+        let x += bar[i];
+    repeat;
+return;
+** we can call foo with variable number of arguments
+rule main:
+    print foo();        -- 0
+    print foo(1);       -- 1
+    print foo(1,2);     -- 3
+    print foo(1,2,3);   -- 6
+    print foo(1,2,3,4); -- 10
+return;
+</code></pre>
 
-<ul>
-<li><a href="#rule-as-function">rule as function</a></li>
-<li><a href="#rule-as-closure">rule as closure</a></li>
-<li><a href="#rule-as-singleton">rule as singleton</a></li>
-<li><a href="#rule-as-companion">rule as companion</a></li>
-</ul>
+<h2><a id="early-termination"/>Early Termination</h2>
 
-<h3><a id="rule-as-function"></a>Rule as function</h3>
-
-<p>A rule with a single result can be used as a <em>function</em>. That is can be used in complex expressions but not inside &lambda; expressions. &lambda; must be pure.</p>
+<p>A rule should have a single exit point. Therefore in Bee the last statement in a rule is "return". The return is closing the rule block. However a rule can have an one or many other termination points. A function can be interrupted using keyword "exit" that terminate the rule without signaling any error. Other way to terminate a rule is to create an exception. This will be explained later.</p>
 
 <h4>Pattern:</h4>
 <pre><code class="language-bee">** define a functional rule
@@ -193,7 +184,7 @@ rule name(param &isin; type,...) =&gt; result &isin; type:
     ...
     exit if condition; -- early (successful) transfer
     ...
-    result := expression; -- computing the result
+    let result := expression; -- computing the result
     ...
 return;
 
@@ -202,42 +193,15 @@ rule main:
     print rule_name(argument,...);
 
     ** capture rule result into a new variable:
-    r := rule_name(argument,...);
+    new r := rule_name(argument,...);
 
     ** using existing variable:
-    n &isin; type;
-    n := rule_name(argument,...)
+    new n &isin; type;
+    let n := rule_name(argument,...)
 return;
 </code></pre>
 
-<h4>Pure rules:</h4>
-
-<p>Compiler can detect if a rule is pure.</p>
-<p>A rule is pure when ...</p>
-<ul>
-<li>do not have multiple results but one;</li>
-<li>do not modify external states;</li>
-<li>do not perform unsafe data conversions;</li>
-<li>do not raise errors;</li>
-<li>do not have side-effects;</li>
-<li>do not have internal rules;</li>
-<li>do not accept rules as parameters;</li>
-<li>do not call a dirty rule;</li>
-</ul>
-
-<h4>Dirty rules:</h4>
-
-<p>A rule is pure as long as compiler do not degrade the rule to dirty status. A dirty rule has restrictions.</p>
-
-<h4>Notes:</h4>
-<ul>
-<li>Pure rules are deterministic in contrast to stochastic rules,</li>
-<li>If a rule is not pure is <em>downgraded</em> by the compiler,</li>
-<li>Dirty rules can be used in assignments but not in &lambda; expressions,</li>
-<li>Dirty rules can not be send as arguments to other rules for call-back,</li>
-</ul>
-
-<h2><a id="advanced-topics"/>Advaced Topics</h2>
+<h2><a id="advanced-topics"/>Advanced Topics</h2>
 
 <p>Next extra features about functions will be explained later in future articles. Making examples for these features require knowledge about collections and data processing. So you can read a brief introduction now then skip ahead.</p>
 
@@ -247,6 +211,7 @@ return;
 <li><a href="#recursive-rules">recursive rules</a></li>
 <li><a href="#multi-threading">multi threading</a></li>
 <li><a href="#external-rules">external rules</a></li>
+<li><a href="#purity-level">purity level</a></li>
 </ul>
 
 <h3><a id="static-members"/>Static members</h3>
@@ -267,7 +232,7 @@ type Foo: {a, b &isin; N} &lt;: Object;
 ** define constructor with same name as the type name
 rule Foo(p1, p2 &isin; N) => (self &isin; Foo):
     ** define static property
-    x &isin; N;
+    new x &isin; N;
 
     ** create the object using parameters
     self   := {a:p1, b:p2}; -- create object instance
@@ -275,7 +240,7 @@ rule Foo(p1, p2 &isin; N) => (self &isin; Foo):
 
     ** define static methods
     rule .set_x(p &isin; N):
-       x := p;
+       let x := p;
     return;
 
     ** define a object method
@@ -291,7 +256,7 @@ rule main:
     ** modify singleton state: x = 3
     apply Foo.set_x(3);
     ** call constructor to create an instance of Foo
-    test := Foo(1,2);
+    new test := Foo(1,2);
     ** call a method using apply (print private attributes)
     apply test.bar;
 return;
@@ -327,7 +292,7 @@ return
 
 ** later implement the rule "plus"
 rule plus(a,b &isin; Z) =&gt; (r &isin; Z):
-  r := (a + b);
+  let r := (a + b);
 return;
 </code></pre>
 
@@ -344,9 +309,9 @@ return;
 <pre><code class="language-bee">** this rule is not optimized:
 rule fact(n &isin; N) =&gt; (r &isin; N):
     when (n = 0) do
-        r := 1;
+        let r := 1;
     else
-        r := n &middot; fact(n-1);
+        let r := n &middot; fact(n-1);
     done;
 return;
 </code></pre>
@@ -364,14 +329,14 @@ return;
 <pre><code class="language-bee">** this rule can be optimized:
 rule tail(n &isin; N, acc &isin; N) =&gt; (r &isin; N):
     when (n = 0) do
-      r:= acc;
+      let r:= acc;
     else
-      r:= tail(n-1, acc &middot; n);
+      let r:= tail(n-1, acc &middot; n);
     done;
 return;
 
 rule fact(n &isin; N) =&gt; (r &isin; N):
-  r := tail(n , 1);
+  let r := tail(n , 1);
 return;
 </code></pre>
 
@@ -382,10 +347,10 @@ return;
 <pre><code class="language-bee">** this rule is manually optimized:
 rule fact(a &isin; N, b &isin; N) =&gt; (r &isin; N):
     while (b &gt; 1) do
-      a := a &middot; a + a;
-      b := b - 1;
+      let a := a &middot; a + a;
+      let b := b - 1;
     else
-      r := a;
+      let r := a;
     repeat;
 return;</code></pre>
 
@@ -414,6 +379,37 @@ return;
 <p>To understand more about interacting with other languages check this article about ABI:&nbsp;<a href="https://en.wikipedia.org/wiki/Application_binary_interface" rel="nofollow">Application Binary Interface</a></p>
 
 <hr>
+
+<h3><a id="purity-level">Rule purity level</h3>
+
+<p>Bee compiler should track rule purity level to be able to optimize the generated code. A pure rule can be optimized better than an impure rule. Therefore a developer must understand how to create code using pure rules and avoid dirty rules as much as possible.</p>
+
+<h4>Pure rules:</h4>
+
+<p>Compiler can detect if a rule is pure.</p>
+<p>A rule is pure when ...</p>
+<ul>
+<li>do not have multiple results but one;</li>
+<li>do not modify external states;</li>
+<li>do not perform unsafe data conversions;</li>
+<li>do not raise errors;</li>
+<li>do not have side-effects;</li>
+<li>do not have internal rules;</li>
+<li>do not accept rules as parameters;</li>
+<li>do not call a dirty rule;</li>
+</ul>
+
+<h4>Dirty rules:</h4>
+
+<p>A rule is pure as long as compiler do not degrade the rule to dirty status. A dirty rule has restrictions.</p>
+
+<h4>Notes:</h4>
+<ul>
+<li>Pure rules are deterministic in contrast to stochastic rules,</li>
+<li>If a rule is not pure is <em>downgraded</em> by the compiler,</li>
+<li>Dirty rules can be used in assignments but not in &lambda; expressions,</li>
+<li>Dirty rules can not be send as arguments to other rules for call-back,</li>
+</ul>
 
 <p><b>Read next:</b>
 <a href="objects.html">Objects</a></p>
