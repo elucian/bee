@@ -24,10 +24,10 @@ Bee is going to be a multi-paradigm rule based programming language.
 
 ## reference
 
-**Home page:** [Bee project](https://sagecode.net/bee/index.html)    
-**Discord community:** [Invitation](https://discord.gg/twXtRsTVDA)     
-**Contribute:** [Discutions](https://github.com/sage-code/bee/discussions)
 
+**Contribute:** [Discutions](https://github.com/sage-code/bee/discussions)
+**Community:** [Invitation](https://discord.gg/twXtRsTVDA)     
+**Home page:** [Bee project](https://sagecode.net/bee/index.html)    
 -----
 Copyright (c) Sage-Code 2018-2022 
 
