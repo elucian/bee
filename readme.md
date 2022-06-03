@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://sagecode.net/bee" target="_blank" align="center" rolle="button">
-<img style="border-radius:10px;" src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo" ></img>
+<img style="border-radius:10px;" src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo" with="120"></img>
 </a>
 </p>
 
