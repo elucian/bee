@@ -1,10 +1,8 @@
-<p align="center">
-<a href="https://sagecode.net/bee" target="_blank" align="center" rolle="button">
-<div style="border-radius:10px;withd:120px;">
-   <img src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo"></img>
+<div style="border-radius:10px;withd:120px;" align="center">
+   <a href="https://sagecode.net/bee" target="_blank" align="center" rolle="button">
+   <img src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo"></img></a>
 </div>  
-</a>
-</p>
+
 
 <p align="center"><i>A technical computer language for arithmetic and geometry.<i/></p>
 
