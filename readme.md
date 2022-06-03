@@ -1,6 +1,6 @@
 <p align="center">
 <a href="https://sagecode.net/bee" target="_blank" align="center" rolle="button">
-<img style="border-radius:10px;withd:120px" src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo"></img>
+<img style="border-radius:10px;withd:120px;" src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo"></img>
 </a>
 </p>
 
@@ -9,5 +9,5 @@
 <p align="center"> <a href="https://sagecode.net/bee/index.html">Bee Syntax</a></p>
 
 <p align="center">
-Copyright 2018-2022 Elucian Moise
+Copyright (c) Sage-Code 2018-2022 
 </p>
