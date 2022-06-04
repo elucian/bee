@@ -263,6 +263,16 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>F</td>
 <td>File handler</td>
 </tr>
+<tr>
+  <td>Lambda</td>
+  <td>&lambda;</td>
+  <td>Function reference</td>
+</tr>
+<tr>
+  <td>Object</td>
+  <td>O</td>
+  <td>Object reference</td>
+</tr>
 </tbody>
 </table>
 
@@ -381,9 +391,9 @@ return;
 
 <p>Domain is very similar to range except a domain has a ratio. This is the difference, the numbers are not integers, can be fractional or Q umber.</p>
 
-<pre class="language-output">
-  type Domain ::= (min..max:ratio)  &lt;: Super_Type
-</pre>
+<pre><code class="language-bee">
+type Domain: (min..max:ratio)  &lt;: Super_Type;
+</code></pre>
 
 <h4>Examples:</h4>
 
@@ -395,9 +405,10 @@ print (0..1:0.25); -- 0.00, 0.25, 0.50, 0.75, 1.00
 </code></pre>
 
 <h2><a id="constant-declarations"></a>Constant declarations</h2>
-<p>Constants literals bound to identifiers using keyword "store".</p>
+<p>Constants literals bound to identifiers using keyword "set".</p>
+
 <pre><code class="language-bee">** using explicit type
-set constant_name := constant_literal &isin; type_name;
+set constant_name = constant_literal &isin; type_name;
 
 ** using implicit type
 set constant_name := constant_literal;
@@ -406,17 +417,18 @@ set constant_name := constant_literal;
 
 <h4>Notes:</h4>
 <ul>
-<li>Constant initial value is assigned using operator ":",</li>
-<li>Constant initial value van be assigned using operator ":=",</li>
-<li>System constants are public and have prefix "$",</li>
-<li>User defined constants using prefix "." are also public,</li>
-<li>Local constants are possible but they are transient.</li>
+<li>Unfortunate English is using "set" to define a sequence,</li>
+<li>In Bee we use "set" keyword to setup a constant not a sequence,</li>
+<li>Constant initial value can be assigned using operator ":=" or "=",</li>
+<li>Constants can be public, private or local,</li>
+<li>Public constants are defined using prefix ".",</li>
+<li>Local constants are defined in a local scope.</li>
 </ul>
 
 <h4>Example:</h4>
-<pre><code class="language-bee">#symbol constants
-set forall := U+2200     &isin; A; -- Symbol: &forall;
-set forall := U-00002200 &isin; U; -- Symbol: &forall;
+<pre><code class="language-bee">#define symbol constants
+set forall1 = U+2200     &isin; A; -- Symbol: &forall;
+set forall2 = U-00002200 &isin; U; -- Symbol: &forall;
 </code></pre>
 
 
@@ -443,7 +455,11 @@ set forall := U-00002200 &isin; U; -- Symbol: &forall;
 </tr>
 <tr>
 <td>:</td>
-<td>start block | pair up </td>
+<td>define type | block | pair up operator </td>
+</tr>
+<tr>
+  <td>=</td>
+  <td>set initial value (require type declaration) </td>
 </tr>
 <tr>
 <td>:=</td>
@@ -458,10 +474,10 @@ set forall := U-00002200 &isin; U; -- Symbol: &forall;
 
 <h4>Notes:</h4>
 <ul>
-<li>Symbol ":" can be used to initialize one variable at a time,</li>
-<li>Symbol ":" can not accept expressions when is used in declarations,</li>
-<li>Symbol ":" used in declarations require &isin; otherwise you must use ":=",</li>
+<li>Symbol ":" can be used to define a type,</li>
 <li>Symbol ":" can be used as pair-up operator for arguments and maps.</li>
+<li>Symbol "=" can not accept expressions but constants,</li>
+<li>Symbol "=" used in declarations require &isin; otherwise you must use ":=",</li>
 </ul>
 <pre><code class="language-bee">** primitive variable declarations with type
 new var_name &isin;  type_name; -- declaration only type without initial value
@@ -485,7 +501,7 @@ new var1:con1, var2:con2 ... &isin; TypeName;
 <h4>Example:</h4>
 <pre><code class="language-bee">#fragment of code
 
-new a = 10, b = 0 &isin; Z; -- initialize two variables
+new (a = 10, b = 0) &isin; Z; -- initialize two variables
 let b := a + 1;   -- modify b using binding operator :=
 let b += 1;       -- modify b using modifier +=
 print b;          -- expected 12
@@ -501,19 +517,21 @@ print b;          -- expected 12
 </ul></ul>
 
 <h4>Examples:</h4>
-<pre><code class="language-bee">** declare a constant
-fix PI = 3.14 &isin; R;
-
-** declare multiple variables
-new a   &isin; Z; -- Integer
-new x,y &isin; R; -- Double
-new q,p &isin; L; -- Logic
+<pre><code class="language-bee">** declare a public constant
+set .PI = 3.14 &isin; R;
 
 rule main:
+  ** declare a single variable
+  new a   &isin; Z; -- Integer
+
+  ** declare multiple variables
+  new (x,y) = 0 &isin; R; -- Double
+  new (q,p) = 0 &isin; L; -- Logic
+
   ** using modifiers
-  let a := 10; -- modify value of a := 10
-  let a += 1;  -- increment value of a := 11
-  let a -= 1;  -- decrement value of a := 10
+  let a := 10; -- modify value of: a == 10
+  let a += 1;  -- increment value of: a == 11
+  let a -= 1;  -- decrement value of: a == 10
 
   ** modify two variables using one single constant
   let x, y := 10.5;

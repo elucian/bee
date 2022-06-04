@@ -29,12 +29,12 @@
 </div><hr>
 <h1>Bee Purpose</h1>
 <div class="alert alert-secondary shadow-sm">
-  We try to learn how to create compilers for domain specific languages. Bee is a DSL made for arithmetic, data algorithms, 2D graphics and geometric calculations. Bee is an imperative programming language that implement a new programming paradigm named <em>rule based programming</em>.
+  Bee is a DSL (domain specific language) made for arithmetic, data algorithms, 2D graphics and geometric calculations. Bee is an imperative programming language that implement a new programming paradigm named <em>rule based programming.</em>
 </div>
 
 <h1>Bee Features</h1>
 
-<p>Bee is a disruptive strange language that will bring Math notation into source code. Bee has uncommon keywords, operators and symbols not used in other computer languages. We have made an effort to maximize specific features listed below:</p>
+<p>Bee is a disruptive strange looking language that will bring Math notation into source code. Bee has uncommon keywords, operators and symbols not used in classic computer languages. We have made an effort to maximize some specific features listed below:</p>
 
 <table class="table table-bordered table-striped table-sm">
 <tr>
@@ -42,7 +42,7 @@
 
 <tr><td>0</td>
 <td><a href="#readable">readable</a></td>
-<td>use familiar keywords</td>
+<td>use English keywords</td>
 </tr>
 <tr><td>1</td>
 <td><a href="#efficient">efficient</a></td>
@@ -54,20 +54,20 @@
 </tr>
 <tr><td>3</td>
 <td><a href="#modular">modular</a></td>
-<td>has reusable modules </td>
+<td>reusable modules </td>
 </tr>
 <tr><td>4</td>
 <td><a href="#explicit">explicit</a></td>
-<td>has type declarations </td>
+<td>named results & arguments</td>
 </tr>
 <tr><td>5</td>
   <td><a href="#disruptive">disruptive</a></td>
-  <td>has type declarations </td>
+  <td>unusual syntax choices</td>
 </tr>
 </table>
 
 <h2><a id="readable"></a>Readable</h2>
-<p>Bee is designed to be learn as first programming language on our website for a Sage-Code developer. We think that you can learn Bee by reading code examples. Next design choices will make Bee code easier to read therefore easier to learn:</p>
+<p>Bee is designed to be learn as first programming language for Sage-Code developers. We think that you can learn Bee by reading code examples in one week. Next design choices will make Bee code easier to read therefore easier to learn:</p>
 
 <ul>
 <li>Use short and familiar English keywords;</li>
@@ -81,19 +81,20 @@
 
 <p>The result of these choices is demonstrate below. You can observe different comment notations enable different color. Syntax colorizer is able to identify also the keywords and highlight every statement.</p>
 
-<pre><code class="language-bee">
+<pre><code class="language-bee"># Demo: Fibonacci Sequence
+
 ** declare Fibonacci rule
 rule fib(n ∈ N) => (y ∈ N):
   if (n = 1) ∨ (n = 0) do
-    y := 1; -- first value
+    let y := 1; -- first value
   else
-    y := fib(n-1) + fib(n-2);
+    let y := fib(n-1) + fib(n-2);
   done;
 return;
 
 rule main:
    ** call fib rule using argument 5
-   r := fib(n: 5);
+   new r := fib(n: 5);
 
    ** print the result to console
    print r;
@@ -117,24 +118,21 @@ return; -- end of module
 </ul>
 
 <h2><a id="safe"></a>Safe</h2>
-<p>Bee is designed to be a safe language. It is difficult to make a safe language that is also efficient. To fulfill these goals we setup a runway architecture based on next principles and believes:</p>
+<p>Bee is designed to be a safe and efficient language. These goals are ambitious and difficult to achieve. To fulfill these goals we setup a runway architecture based on next principles and believes:</p>
 
 <ol>
 <li>There are more than one ways to resolve a problem,</li>
-<li>If your problem is simple do not make it complicated,</li>
 <li>If your problem is large, split it into parts,</li>
-<li>Most of the time implicit behavior is good enough,</li>
-<li>When implicit do not work as expected, do it explicit,</li>
 <li>It is better to be proactive than reactive,</li>
 <li>If something can go wrong, eventually it will,</li>
-<li>Sometimes if you try a second time it will work,</li>
-<li>Aim for efficiency when performance is expensive,</li>
-<li>Aim for precision when perfection is impossible.</li>
+<li>Efficiency is better than high cost performance,</li>
+<li>Precision is better than maximum perfection,</li>
+<li>Sometimes if you try a second time it may work.</li>
 </ol>
 
 
 <h2><a id="modular"></a>Modular</h2>
-<p>Bee applications are usually small, based on single source file. However Bee enable usage of multiple files for separation of concerns. There are 3 kind of modules in a large application:</p>
+<p>Bee applications are usually small, based on single source file. However Bee enable usage of multiple files for separation of concerns. There are 2 kind of modules in a large application: application modules and library modules.</p>
 
 <div align="center">
   <img src="img/bee-design.svg" alt="Bee Program" width="600" class="img-fluid protect rounded" >

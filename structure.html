@@ -182,7 +182,7 @@ Bee has a modular architecture. A source file represents a module. A project can
 <td>Control time format: HH:MM:SS,MS am/pm or HH:MM:SS,MS</td>
 </tr>
 <tr>
-<td>$target_platform</td>
+<td>$platform</td>
 <td>"Windows"</td>
 <td>Alternative: "Linux", "Mac" is the target platform</td>
 </tr>
@@ -196,27 +196,27 @@ Bee has a modular architecture. A source file represents a module. A project can
 </ul>
 
 <h3><a id="global-variables"></a>Global Variables</h3>
-<p>Global variables are defined usually at the beginning of a module outside of any rule.</p>
+<p>Global variables are defined usually at the beginning of a module outside of any rule. </p>
 
 <h4>introspection:</h4>
 
 <p>Following system variables are available for debugging:</p>
 <table class="table table-bordered table-sm table-striped">
-<tr><td width="15%">@timer   </td>
+<tr><td width="15%">$timer   </td>
 <td>duration information about last statement     </td></tr>
-<tr><td>@stack   </td>
+<tr><td>$bee_stack   </td>
 <td>debug information about current call stack    </td></tr>
-<tr><td>@trace   </td>
+<tr><td>$bee_trace   </td>
 <td>reporting information about statements        </td></tr>
-<tr><td>@level   </td>
+<tr><td>$bee_level   </td>
 <td>how deep is the current call stack            </td></tr>
-<tr><td>@count   </td>
+<tr><td>$bee_deep   </td>
 <td>query count: updated/inserted/deleted records </td></tr>
-<tr><td>@query   </td>
+<tr><td>$bee_query   </td>
 <td>last query statement                          </td></tr>
-<tr><td>$error   </td>
+<tr><td>$bee_error   </td>
 <td>last error                                    </td></tr>
-<tr><td>@threads </td>
+<tr><td>$bee_threads </td>
 <td>number of active threads                      </td></tr>
 </table>
 
@@ -224,7 +224,8 @@ Bee has a modular architecture. A source file represents a module. A project can
 <h4>Notes:</h4>
 <ul>
 <li>System variables are global and are defined in core library;</li>
-<li>Prefix "@" is used to improve code readability;</li>
+<li>You can define your own global variables in main module;</li>
+<li>Prefix "$" is used to improve code readability;</li>
 </ul>
 
 <h2><a id="modules"/>Modules</h2>
@@ -361,16 +362,19 @@ use pro:$program.pro_lib.(*); -- load project library
 <pre><code class="language-bee">#define a module
 module demo_module:
 
-set .pi: 3.14; -- public constant
-new .v   &isin; N; -- public variable
-new str := "test"; -- private variable
+** public constant
+set .pi: 3.14;
 
 ** expression rule foo is private
 rule foo(x &isin; N) &isin; N =&gt; (x + 1);
 
 ** block rule bar is public
 rule .bar(x, y &isin; N) =&gt; (r &isin; N):
-  let r := x + y;
+  ** define local variable
+  new str := "test";
+  ...
+  ** assign the result
+  let r := x + y; -- r, x, y are locals
 return;
 </code></pre>
 
@@ -383,9 +387,13 @@ return;
 
 <h4>Pattern:</h4>
 
-<pre class="language-bee">
+<pre><code class="language-bee">
+** import library module
+use library as qualifier
+
+** create alias for a particular member
 alias new_name: qualifier.member_name;
-</pre>
+</pre></code>
 
 
 <h4>Example:</h4>
@@ -432,7 +440,7 @@ hide qualifier.(reg_exp_pattern);
 <pre><code class="language-bee"># secondary module: test_module.bee
 rule .test(t &isin; Z) =&gt; (r &isin; N):
   let  r := t; -- prepare the result
-  wait t;       -- wait for t seconds
+  wait t;      -- wait for t seconds
 return;
 </code></pre>
 
@@ -441,7 +449,9 @@ return;
 <p>Let's use the module previously defined in synchronous mode.</p>
 
 <pre><code class="language-bee"># main module
-load $pro_src.test_module.(*);
+use $pro_src.test_module;
+
+alias test = test_module.test;
 
 +--------------------------------
 execute test() and append result

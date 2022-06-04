@@ -73,7 +73,21 @@ function apply_style(str) {
 
     //keyword operators
     str = str.replace(/\bas\b/,operator("as"))
-    //symbol operators
+    str = str.replace(/\bas\b/,operator("in"))
+    str = str.replace(/\bas\b/,operator("or"))
+    str = str.replace(/\bas\b/,operator("and"))
+    str = str.replace(/\bas\b/,operator("not"))
+
+    //questionable
+    str = str.replace(/\s\|\s/g,operator(" | "))
+    str = str.replace(/\s\&\s/g,operator(" & "))
+    str = str.replace(/\s\~\s/g,operator(" ~ "))
+    str = str.replace(/\s\+\s/g,operator(" + "))
+    str = str.replace(/\s\-\s/g,operator(" - "))
+    str = str.replace(/\s\*\s/g,operator(" * "))
+    str = str.replace(/\s\=\s/g,operator(" = "))
+
+    //double symbols
     str = str.replace(/=>/,operator("=>"))
     str = str.replace(/==/,operator("=="))
     str = str.replace(/:=/,operator(":="))
@@ -87,9 +101,19 @@ function apply_style(str) {
     str = str.replace(/>>/,operator(">>"))
     str = str.replace(/!=/,operator("!="))
     str = str.replace(/!≡/,operator("!≡"))
-    //str = str.replace(/U\+/g,operator("U+"))
-    //str = str.replace(/U\-/g,operator("U-"))
+    str = str.replace(/<:/,operator("<:"))
+    str = str.replace(/<\+/,operator("<+"))
+
+
+    // many times
     str = str.replace(/∈/g,operator("∈"))
+    str = str.replace(/∨/g,operator("∨"))
+    str = str.replace(/∧/g,operator("∧"))
+    str = str.replace(/÷/g,operator("÷"))
+    str = str.replace(/·/g,operator("·"))
+    str = str.replace(/¬/g,operator("¬"))
+    str = str.replace(/±/g,operator("±"))
+    // one time
     str = str.replace(/≡/,operator("≡"))
     str = str.replace(/≥/,operator("≥"))
     str = str.replace(/≤/,operator("≤"))
@@ -101,16 +125,6 @@ function apply_style(str) {
     str = str.replace(/∩/,operator("∩"))
     str = str.replace(/⊂/,operator("⊂"))
     str = str.replace(/⊃/,operator("⊃"))
-
-
-    //questionable
-    str = str.replace(/\|/g,operator("|"))
-    str = str.replace(/\&/g,operator("&"))
-    str = str.replace(/\~/g,operator("~"))
-    str = str.replace(/\+/g,operator("+"))
-    str = str.replace(/\-/g,operator("-"))
-    str = str.replace(/\*/g,operator("*"))
-    str = str.replace(/\s=/g,operator(" ="))
 
 
     // System & built-in variables
