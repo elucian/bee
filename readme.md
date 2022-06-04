@@ -1,13 +1,34 @@
-<p align="center">
-<a href="https://sagecode.net/bee" target="_blank" align="center" rolle="button">
-<img style="border-radius:10px;" src="https://sagecode.net/bee/img/bee.png" alt="Bee Logo" ></img>
-</a>
-</p>
+# Bee Language
 
-<p align="center"><i>A technical computer language for arithmetic and geometry.<i/></p>
+This is a technical computer language for arithmetic and geometry.
 
-<p align="center"> <a href="https://sagecode.net/bee/index.html">Bee Syntax</a></p>
+## goals
 
-<p align="center">
-Copyright 2018-2022 Elucian Moise
-</p>
+Bee is a disruptive project with exotic syntax aiming these goals:
+
+1. readable;
+2. comprehensible;
+3. safe;
+4. efficient;
+5. easy to learn;
+
+## design 
+
+Bee is going to be a multi-paradigm rule based programming language.
+
+1. strongly typed;
+2. general purpose;
+3. modular;
+4. compiled;
+5. open source;
+
+## reference
+
+
+**Contribute:** [Discutions](https://github.com/sage-code/bee/discussions)    
+**Community:** [Invitation](https://discord.gg/twXtRsTVDA)     
+**Home page:** [Bee project](https://sagecode.net/bee/index.html)    
+
+-----
+Copyright (c) Sage-Code 2018-2022 
+
