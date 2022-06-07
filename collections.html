@@ -38,7 +38,7 @@ Collections are composite data types. A composite type is a data structures that
 <p>These bookmarks enable you to visit a particular collection type. If you are first time here, just scroll down and read the whole page at least one time. Next time you can use this small index to jump to a particular topic. Enjoy!</p>
 
 <ul>
-<li><a href="#ordinal">ordinals</a></li>
+<li><a href="#enumeration">enumeration</a></li>
 <li><a href="#list">lists</a></li>
 <li><a href="#array">arrays</a></li>
 <li><a href="#data-set">data sets</a></li>
@@ -75,11 +75,11 @@ Collections are composite data types. A composite type is a data structures that
 <li>The super_type is optional. It can be inferred from type descriptor</li>
 </ul>
 
-<h2><a id="ordinal"</a>Ordinals</h2>
-<p>Ordinal is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1. Associated values can start with a different integer number. Values can be specified using pair up operator ":". All values must be unsigned integer (i &le; 0) in consecutive ascending order.</p>
+<h2><a id="enumeration"</a>Enumeration</h2>
+<p>Enumeration is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1. Associated values can start with a different integer number. Values can be specified using pair up operator ":". All values must be unsigned integer (i &le; 0) in consecutive ascending order.</p>
 
 <h4>Pattern:</h4>
-<pre><code class="language-bee">type type_name(start:0) = {name1, name2, name3} &lt;: Ordinal;
+<pre><code class="language-bee">type type_name(start:0) = {name1, name2, name3} &lt;: E;
 rule main:
   new a, b, c &isin; type_name; -- a, b, c will have same type
 
@@ -92,7 +92,7 @@ return;
 <p><b>Note:</b>&nbsp;When element name start with "." no need to use qualifiers for the individual values. This is because values starting with "." are public by default and known in the scope where ordinal is defined (or loaded).</p>
 
 <pre><code class="language-bee">** using public elements in enumeration
-type type_names: {.name0, .name1} &lt;: Ordinal;
+type type_names: {.name0, .name1} &lt;: E;
 rule main()
    new a, b &isin; type_name;
 

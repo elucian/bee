@@ -359,7 +359,7 @@ print;
 <h4>Pattern:</h4>
 
 <pre><code class="language-bee">#enumerable selector
-type Selector = {v1,v2,v3,v4}
+type Selector: {v1,v2,v3,v4} <: E;
 
 rule main:
   new select := Selector.random()
@@ -455,19 +455,19 @@ done [label];
 <li>A trial can stop execution of a rule with error if error is not handled;</li>
 </ul>
 
-<h4>Errors</h4>
+<h4>Exceptions</h4>
 
-<p>Errors can be defined in your program using next notation:</p>
+<p>Exceptions can be defined in your program using next notation:</p>
 
 <pre class="language-bee">** define error
-new error_name := {code,"message"} &isin; Error;
+new exception := {code,"message"} &isin; X;
 </pre>
 
 <p>Errors can be issued using "fail" keyword.</p>
 <pre><code class="language-bee">** "raise" can create a customized error or message
-fail error_name  if condition -- create an error that is predefined
-fail "message"   if condition -- create instant user error code: 200
-fail {code,"message"} if condition -- create instant custom error with code
+fail exception   if condition; -- create an error that is predefined
+fail "message"   if condition; -- create instant user error code: 200
+fail {code,"message"} if condition; -- create instant custom error with code
 </code></pre>
 
 
