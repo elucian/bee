@@ -43,7 +43,7 @@ Bee is designed for high performance computing using multi-core processors. Ther
 
 <ul>
 <li>you need only one coroutine to create a side branch,</li>
-<li>call a branch using <em> "begin"</em> and suspended using <em> "yield"</em>,</li>
+<li>call a branch using <em>start</em> keyword and suspended using <em> yield</em> keyword,</li>
 <li>resume a coroutine using <em>yield</em> plus routine name.</li>
 </ul>
 
@@ -54,17 +54,18 @@ rule test(n &isin; N) =&gt; (result &isin; N):
     result := i;
     ** suspend execution
     yield; -- wait for the main thread
-  cycle;
+  repeat;
   result = 0; -- finalization signal
 return;
 
 ** start secondary process
- r &isin; N;  -- result reference
-begin test(9)      -- initialize coroutine
+dtart test(9) -- initialize coroutine
+begin: 
+  r &isin; N;  -- result reference
 do
   yield r &lt;- test;  -- capture next result
   write (r, ",");
-cycle if r &gt; 0;
+repeat if r &gt; 0;
 
 print;  -- 0,1,2,3,4,5,6,7,8,9,
 </code></pre>

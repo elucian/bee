@@ -47,6 +47,32 @@ Control flow statements are used to modify the linear program workflow. In Bee e
 <tr><td><a href="#trial" >trial   </a></td><td>exception handler block</td></tr>
 </table>
 
+<h2><a id="begin">Begin</h2>
+
+<p>Using "if" keyword we can start a <em>conditional branch</em>:</p>
+
+<pre><code class="language-bee"># decision
+if condition do
+  ** statements
+  ...
+done;
+</code></pre>
+
+<h4>Syntax:</h4>
+
+<p>In this example we use "begin" to create a local scope and a new variable (a) inside this scope. Then we use nested anonymous if statement.</p>
+
+<pre><code class="language-bee"
+>
+begin [label]:
+  ** local variables
+  ...
+do
+  ** executable block
+  ...
+done [label];
+</code></pre>
+
 <h2><a id="with"/>with</h2>
 
 <p>Start a <em>"qualifier suppression block"</em>. This is a block that eliminate the need for qualifiers into an anonymous local scope. You can use "with" to suppress module names or aliases.</p>
@@ -99,17 +125,18 @@ done;
 
 <h4>Example:</h4>
 
-<p>In this example we use "do" and "if" to create a local scope and a new variable inside this scope.</p>
+<p>In this example we use "begin" to create a local scope and a new variable (a) inside this scope. Then we use nested anonymous if statement.</p>
 
 <pre><code class="language-bee"># fragment
-do
+begin test:
   new a := random();
+do
   if a &lt; 0 do
     print ("|a| =", a);
   else
     print ("|a| =", -a);
   done;
-done;
+done test;
 </code></pre>
 
 <h3>Pattern 2: two-ways conditional</h3>
@@ -275,7 +302,7 @@ repeat 42;
 <p>You can start an iterative cycle by using keyword "for". This statement create a cycle that is controlled by a set of values. We use a control variable generated from a domain or visit elements of a collection.</p>
 
 <div align="center">
-  <img src="img/given.svg" alt="given" width="560" class="img-fluid protect rounded shadow border" >
+  <img src="img/given.svg" alt="for cycle" width="560" class="img-fluid protect rounded shadow border" >
   <p>for cycle</p>
 </div>
 
@@ -576,7 +603,7 @@ done;
 
 <pre><code class="language-bee">#example of repeating trial
 ** try maximum 3 times
-trial:
+trial [name]:
     new count &isin; (1..3);
     new a &isin; (0..9);
 try
@@ -602,8 +629,8 @@ case $out_of_range do
 miss
     write "mistrial: no case"
 final
-    print;
-done;
+    print "trial is resolved";
+done [name];
 </code></pre>
 
 <h4>Note:</h4>

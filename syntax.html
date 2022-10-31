@@ -119,7 +119,7 @@ return;
 <p>Bee is an expressive language but it's core has only 58 reserved keywords:</p>
 
 <table class="table table-bordered table-dark table-hover table-sm shadow">
-<tr><td>_      </td><td>alias </td><td>and     </td><td>apply </td><td>abort  </td></tr>
+<tr><td>begin  </td><td>alias </td><td>and     </td><td>apply </td><td>abort  </td></tr>
 <tr><td>other  </td><td>case  </td><td>continue</td><td>done  </td><td>default</td></tr>
 <tr><td>if     </td><td>is    </td><td>do      </td><td>else  </td><td>exit   </td></tr>
 <tr><td>fail   </td><td>final </td><td>given   </td><td>panic </td><td>like   </td></tr>
@@ -128,7 +128,7 @@ return;
 <tr><td>fail   </td><td>retry </td><td>none    </td><td>scrap </td><td>type   </td></tr>
 <tr><td>read   </td><td>trial </td><td>stop    </td><td>yield </td><td>xor    </td></tr>
 <tr><td>write  </td><td>wait  </td><td>when    </td><td>or    </td><td>with   </td></tr>
-<tr><td>hide   </td><td>new   </td><td>begin   </td><td>let   </td><td>loop   </td></tr>
+<tr><td>hide   </td><td>new   </td><td>cycle   </td><td>let   </td><td>start  </td></tr>
 </table>
 
 <h4>Notes:</h4>
@@ -208,15 +208,13 @@ return;
 <p>Statements can be contained in blocks of code.</p>
 
 <table class="table table-bordered table-sm table-striped">
-<tr><td class="fixed">do    </td><td>start a nameless block statement</td></tr>
-<tr><td class="fixed">job   </td><td>start a named block statement</td></tr>
+<tr><th> Keyword </th><th> Block description </th></tr>
+<tr><td class="fixed">begin </td><td>simple block with local scope</td></tr>
 <tr><td class="fixed">with  </td><td>qualifier suppression block</td></tr>
-<tr><td class="fixed">when  </td><td>single or multi-path decision block</td></tr>
-<tr><td class="fixed">given </td><td>start an iteration cycle</td></tr>
-<tr><td class="fixed">match </td><td>multi-path value selector</td></tr>
+<tr><td class="fixed">if    </td><td>first block in decision statement</td></tr>
+<tr><td class="fixed">cycle </td><td>repetitive or iterative blocks</td></tr>
+<tr><td class="fixed">match </td><td>multi-path value selector block</td></tr>
 <tr><td class="fixed">trial </td><td>exception handler block</td></tr>
-<tr><td class="fixed">done  </td><td>end a block statement</td></tr>
-<tr><td class="fixed">cycle </td><td>end a repetitive block</td></tr>
 </table>
 
 <h4>Notes:</h4>
@@ -322,10 +320,6 @@ return;
 </thead>
 <tbody>
 <tr>
-  <td>task</td>
-  <td>Create named block of code</td>
-</tr>
-<tr>
 <td>match</td>
 <td>Value multi-path search selector</td>
 </tr>
@@ -334,24 +328,16 @@ return;
 <td>Create node values for match statement</td>
 </tr>
 <tr>
-<td>none</td>
-<td>Create last node for a match statement</td>
-</tr>
-<tr>
-<td>when</td>
-<td>Start a decision block or repetitive statement</td>
-</tr>
-<tr>
 <td>other</td>
-<td>Alternative path for decision statement or trial block</td>
-</tr>
-<tr>
-<td>given</td>
-<td>Start iteration for a domain or collection</td>
+<td>Default branch for match statement</td>
 </tr>
 <tr>
 <td>trial</td>
-<td>Protect a block of code that may have exceptions</td>
+<td>Start declaration region for a protected block of code</td>
+</tr>
+<tr>
+<td>try</td>
+<td>Begin the executable region in a trial statement</td>
 </tr>
 <tr>
 <td>case</td>
@@ -362,20 +348,11 @@ return;
 <td>Associated with trial to finalize the trial block</td>
 </tr>
 <tr>
-<td>do</td>
-<td>Begin a statement region in a block statement</td>
-</tr>
-<tr>
+<td>miss</td>
+<td>Default trial block, executed when there is no case</td>
+</tr>  
 <td>done</td>
 <td>Finalize a block statement that is not repetitive</td>
-</tr>
-<tr>
-<td>cycle</td>
-<td>Start a declaration region for a repetitive block</td>
-</tr>
-<tr>
-  <td>repeat</td>
-  <td>Cause a block of code to re-iterate</td>
 </tr>
 </tbody>
 </table>
@@ -416,7 +393,7 @@ return;
 <td>Interrupt execution for current cycle and continue after the cycle,</td>
 </tr>
 <tr>
-<td>loop</td>
+<td>redo</td>
 <td>Continue current cycle from the beginning making a shortcut,</td>
 </tr>
 <tr>
@@ -446,6 +423,14 @@ return;
 <tr>
 <td>retry</td>
 <td>Clear error and repeat a trial block</td>
+</tr>
+<tr>
+  <td class="fixed">done  </td>
+  <td>end a block statement</td>
+</tr>
+<tr>
+  <td class="fixed">repeat  </td>
+  <td>end a repetitive block</td>
 </tr>
 </tbody>
 </table>
@@ -981,12 +966,8 @@ return;
 <td>Deep copy | Clone operator</td>
 </tr>
 <tr>
-<td>++</td>
-<td>Concatenate two lists or extend an array</td>
-</tr>
-<tr>
-<td>--</td>
-<td>Symmetric difference or shrink an array</td>
+<td>++N</td>
+<td>Extend an array with one or more elements</td>
 </tr>
 <tr>
 <td>-=</td>
