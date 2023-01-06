@@ -497,7 +497,7 @@ rule main()
   print  str;   -- [`t`,`e`,`s`,`t`]
 
   ** fixed capacity array of symbols UTF32
-  mew  uco &isin; [U](128);
+  new  uco &isin; [U](128);
   let *uco := "&isin;&equiv;&le;&ge;&divide;&ne;"; -- spreading a Unicode literal
   print  uco; -- ['&isin;','&equiv;','&le;','&ge;','&divide;','&ne;'];
 return;

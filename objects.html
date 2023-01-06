@@ -29,186 +29,30 @@
 </div><hr>
 <h1>Bee Objects</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is a esoteric and experimental programming language design by Sage-Code.
-</div>
-<!-- work in progress-->
-<hr>
-
-<h3><a id="rule-as-closure"></a>Rule as closure</h3>
-<p>A rule that have nested rules can be called  <em> "closure"</em>. This is actually a rule behaving like an object. Such a rule is a dirty rule. It can not be used in expressions, but it can produce a result. The result can be captured into a variable using assign statements.</p>
-
-<h4>Properties:</h4>
-<ul>
-<li>A closure can have output parameters,</li>
-<li>A closure can have side-effects,</li>
-<li>A closure can modify shared variables,</li>
-<li>A closure can create a result,</li>
-<li>A closure can generate a rule.</li>
-</ul>
-
-<h4>Pattern:</h4>
-
-<p>Next pattern is typical, for a closure to create a rule. The enclosed rule becomes public but not by using a dot prefix but is transfer as the result of the closure. Observe that object_rule is not follow by round brackets "()" therefore it's reference is assigned.</p>
-
-<pre><code class="language-bee">** Define a closure:
-** define object companion
-rule closureName(param &isin; type...) => (result &isin; Rule):
-    ** context variable
-    new context_variable := value;
-    ...
-    ** create enclosed rule
-    rule object_rule(param &isin; type,...):
-        ...
-        let context_variable := expression(param);
-    return;
-    ** assign a rule reference to result
-    let result := object_rule;
-return;
-</code></pre>
-
-<h3><a id="rule-as-singleton"/>Rule as singleton</h3>
-
-<p>A rule that behave as an object is called singleton. You can use this kind of rule as object that have a single instance. These rules can not be instantiated but one single instance is automatically created when the module is loaded.</p>
-
-<div align="center">
-  <img src="img/singleton-rule.svg" alt="singleton rule"
-  width="420" class="img-fluid protect rounded shadow border" >
-  <p>Singleton Anatomy</p>
+Bee is using a type declaration to define object attributes. Later you can define one constructor and associated methods. Objects can be extended using inheritance model and methods can be overvriten.
 </div>
 
+<h2>Features</h2>
 
-<h4>Properties:</h4>
-<ul>
-<li>A singleton name start with uppercase letter,</li>
-<li>A singleton do not have parameters nor result,</li>
-<li>A singleton can not be instantiated, or cloned,</li>
-<li>Singleton members starting with "." are public members,
-<li>Singleton members that do not have prefix are private members.</li>
-</ul>
-
-<h4>Pattern:</h4>
-
-<pre><code class="language-bee"># Define a singleton object:
-object SgtName:
-    ** singleton, public constant (uppercase)
-    set .CST := value;
-    ...
-    ** singleton, public property
-    new .public_property := "value";
-    ...
-    ** singleton, private property
-    new private_property := "value";
-    ...
-    ** singleton public rule
-    rule .public_rule(param &isin; type,...) =&gt; (result &isin; type):
-        ...
-        result := expression;
-    return;
-    ...
-    ** singleton private rule
-    rule private_rule(param &isin; type,...) =&gt; (result &isin; type):
-        ...
-        result := expression;
-    return;
-    ...
-end SgtName;
-
-# Using singleton properties and methods
-rule main:
-  ** call a singleton rule
-  new r := SgtName.singleton_rule(argument, ...);
-
-  ** check singleton public property
-  print r.public_property; -- expect "value"
-return;
-</code></pre>
-
-<h3><a id="rule-as-companion"></a>Rule as companion</h3>
-
-<p>A <em>companion</em> is a special rule that extend an object. There can be only one companion for an object. The companion has role of a container that encapsulate object methods and optional, an object constructor.</p>
-
-<div align="center">
-  <img src="img/companion-rule.svg" alt="companion rule"
-  width="420" class="img-fluid protect rounded shadow border" >
-  <p>Companion Anatomy</p>
-</div>
-
-<h4>Properties:</h4>
-<ul>
-<li>A companion has same name as its associated object,</li>
-<li>A companion can have public and private methods,</li>
-<li>Constructors are anonymous rules that return an object,</li>
-<li>Members starting with "." are public members,
-<li>Members that do not have prefix are private members.</li>
-</ul>
-
-<p><b>Node:&nbsp;</b>A companion rule is a singleton associated with one or more objects. A method is bound to an object explicit. That is first parameter is called "self" and it represent an associated object that is transmitted by the call as qualifier:</p>
-
-<div align="center">
-  <img src="img/method-call.svg" alt="method call"
-  width="420" class="img-fluid protect rounded shadow border" >
-  <p>Method Call</p>
-</div>
-
-<h4>Pattern:</h4>
-
-<pre><code class="language-bee">** Define a type of Object:
-type ObjType: {attribute:type, ...} &lt;: Object;
-
-** Augment object with methods
-rule ObjType(param &isin; type,... ) => (self &isin; ObjType) :
-    ** use super constructor:
-    let self := super(params);
-    ...
-    ** attach traits
-    self.attach(trait_name1);
-    ...
-    ** private method
-    rule private_method(self &isin; ObjType, param &isin; type,...) =&gt; (result &isin; type):
-       ...
-       let result := expression;
-    return;
-    ...
-    ** public method
-    rule .public_method(self &isin; ObjType, param &isin; type,...) =&gt; (result &isin; type):
-       ...
-       let result := expression;
-    return;
-    ...
-return;
-
-# Using object type and methods
-rule main:
-    ** create an object instance
-    new obj := {attribute:value, ...} &isin; ObjType;
-    ** execute a plubcli rule
-    let r := obj.public_rule(argument, ...);
-    ** access attributes
-    print r.attribute;     -- original attribute
-    print r.new_attribute; -- extended attribute
-return;
-</code></pre>
+<p>Bee is implementing object oriented principles: abstraction, encapsulation, inheritance and polimorphism. However Bee do not have classes. Objects are instances of composite data types, similar to structs or records used in other languages.</p>
 
 <h4>Example:</h4>
 
-<p>Next example demonstrate an object Foo that has one public method ".bar" and one constructor: Foo(). The constructor is an anonymous rule that receive two parameters and produce a result of type Foo.</p>
+<p>Next example demonstrate a type Foo that has one public method ".bar" and one constructor: Foo(). The constructor is an anonymous rule that receive two parameters and produce a result of type Foo.</p>
 
 <pre><code class="language-bee">** define Foo as object:
 type Foo: {a, b &isin; N} &lt;: Object;
 
-**Implement Foo constructor:
+**define Foo constructor:
 rule Foo(p1,p2 &isin; N) =&gt; (self &isin; Foo):
     let self := {a:p1, b:p2};
 return;
 
-**Implement Foo companion:
-upgrade Foo:
-    ** define a method for Foo
-    rule .bar(self &isin; Foo):
-        print "a =" + self.a;
-        print "b =" + self.b;
-    return;
-continue;
+** define method: Foo.bar
+rule .bar(self &isin; Foo):
+    print "a =" + self.a;
+    print "b =" + self.b;
+return;
 
 ** create new object using constructor
 rule main:
@@ -216,7 +60,7 @@ rule main:
     new test := Foo(1,1);
 
     ** call a method test.bar
-    test.bar;
+    test.bar();
     fail if test.a &ne; 1; -- verify attribute a
     fail if test.b &ne; 1; -- verify attribute b
 return;
@@ -224,11 +68,86 @@ return;
 
 <h4>Notes:</h4>
 <ul>
-<li>Methods can be overloaded: (multiple signatures);</li>
-<li>Methods are identified using multiple dispatch;</li>
-<li>Methods can be overwritten in other modules;</li>
-<li>Methods can be private or public using underscore/dot prefix;</li>
+<li>Types are defined with capital letters;</li>
+<li>Constructor has the same name as the data type;</li>
+<li>Constructor is returning a reference to the new object;</li>
+<li>You create a new object instance using the keyword "new";</li>
+<li>Methods are public and must use dot (.)) prefix;</li>
 </ul>
+
+<div align="center">
+  <img src="img/method-call.svg" alt="method call"
+  width="420" class="img-fluid protect rounded shadow border" >
+  <p>Method Call</p>
+</div>
+
+<h3><a id="rule-as-closure"></a>Constructor</h3>
+
+<p>The Object is the most simple type and is the root type for all objects. An Object can be created using the default constructor but you can define a new constructor. The new constructor can have local variables and rules.</p>
+
+<h4>Example:</h4>
+
+<p>Next example is typical, to create a symple object using a constructor. This constructor receive a variable number of arguments and produce an object that has sum of arguments and the average.</p>
+
+<pre><code class="language-bee">** define the object type
+type MyObject: {sum &isin; N, avg &isin; R} &lt;: Object;
+
+** define an onject constructor with varargs
+rule MyObject(*v &isin; [N]) => (self &isin; MyObject):
+    ** local variable
+    new count := 0;
+    new x &isin; N;
+    for &forall; x &isin; v do
+        let self.sum += x; 
+        let count += 1;
+    repeat;
+    self.avg = self.sum / count;
+return;
+</code></pre>
+
+<h3><a id="rule-as-singleton"/>Object Initialization</h3>
+
+<p>An object type can be initialized empty. The attributes can be assigned later. But of course, you can use a JSON notation that we already demonstrated. Also, the object can be created using a collection builder that we will study later.</p>
+
+<pre><code class="language-bee">** empty object
+new object := {}; 
+
+** set attribute values
+new object.attr1 := value1;
+new object.attr2 := value2;
+...
+</code></pre>
+
+<p>An equivalent syntax is using attribute value to identify the attribute names. This notation is typicaly used with integer variables but in Bee you can use this notation with strings or symbols.</p>
+
+<pre><code class="language-bee">** empty object
+new object := {}; 
+
+** set attribute values
+new object["attr1"] := value1;
+new object["attr2"] := value2;
+...
+</code></pre>
+
+<h2><a id="rule-as-singleton"/>Key Looping</h2>
+
+<p>Bee objects are based on dictionaries. In fact an object do not has attributes it has keys. Each attribute is represented by a key. Keys are iterable of type string.</p>
+
+<p>If you define the type upfront, Bee can loop the keys and you can set-up value for each attribute in a loop. This is one of scenarios where you can use the "new" statement in a loop.</p>
+
+<pre><code class="language-bee">** define object type
+type MyObject: {a1,a2,a3 &isin; R} <: Object
+
+** define a constructor
+rule MyObject(*values &isin; R) => (self &isin; MyObject):
+    ** set attribute values in a loop
+    new i := 0;
+    for &forall; key &isin; MyObject.keys() do
+        new self[key] := values(i);
+        let i += 1;
+    done;
+return;
+</code></pre>
 
 <p><b>Read next:</b>
 <a href="collections.html">Collections</a></p>

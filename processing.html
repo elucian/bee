@@ -28,7 +28,7 @@
     </div>
 </div><hr>
 
-<h1>Bee Data Processing</h1>
+<h1>Data Processing</h1>
 <div class="alert alert-secondary shadow-sm">
 By using collections and control structures one can read, modify and store data. Bee has exquisite features to build collections and then access data elements as quick as possible to visit, extract, modify, combine or add new data. </div>
 
@@ -516,7 +516,7 @@ return;
 <pre><code class="language-bee">source := {0,1,2,3,4,5};
 rule main():
   ** create Table pairs (key, value) for Table map
-  target := {(x:x^2) | x &isin; source };
+  new target := {(x:x^2) | x &isin; source };
   print target; -- { 0:0, 1:1, 2:4, 3:9, 4:16, 5:25}
 return;
 </code></pre>
