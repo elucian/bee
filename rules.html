@@ -206,72 +206,12 @@ return;
 <p>Next extra features about functions will be explained later in future articles. Making examples for these features require knowledge about collections and data processing. So you can read a brief introduction now then skip ahead.</p>
 
 <ul>
-<li><a href="#static-members">static members</a></li>
 <li><a href="#forward-declarations">forward declarations</a></li>
 <li><a href="#recursive-rules">recursive rules</a></li>
 <li><a href="#multi-threading">multi threading</a></li>
 <li><a href="#external-rules">external rules</a></li>
 <li><a href="#purity-level">purity level</a></li>
 </ul>
-
-<h3><a id="static-members"/>Static members</h3>
-
-<p>Companion properties are static. There is no need and not possible to define a singleton and a companion with the same name. A companion is already a singleton, You can access companion rules and attributes using dot notation with the object name or with the companion name.</p>
-
-<h4>Restrictions:</h4>
-
-<ol>
-<li>You can't access companion attributes from singleton rules,</li>
-<li>You can't access companion methods from a singleton rules.</li>
-</ol>
-<h4>Example:</h4>
-
-<pre><code class="language-bee">** define Foo as object with 2 public attributes:
-type Foo: {a, b &isin; N} &lt;: Object;
-
-** define constructor with same name as the type name
-rule Foo(p1, p2 &isin; N) => (self &isin; Foo):
-    ** define static property
-    new x &isin; N;
-
-    ** create the object using parameters
-    self   := {a:p1, b:p2}; -- create object instance
-    self.c := x;            -- create a new attribute
-
-    ** define static methods
-    rule .set_x(p &isin; N):
-       let x := p;
-    return;
-
-    ** define a object method
-    rule .bar(self &isin; Foo):
-        print "a  =" + self.a;
-        print "b  =" + self.b;
-        print "c  =" + self.c;
-    return;
-return;
-
-** run bar() rule using object test as dot qualifier
-rule main:
-    ** modify singleton state: x = 3
-    apply Foo.set_x(3);
-    ** call constructor to create an instance of Foo
-    new test := Foo(1,2);
-    ** call a method using apply (print private attributes)
-    apply test.bar;
-return;
-</code></pre>
-
-<h4>Expected Output:</h4>
-
-<pre class="language-out">
-a  = 1
-b  = 2
-c  = 3
-</pre>
-
-<p><b>Note:&nbsp;</b>Property "c" is display as if belong to the object. This is because the constructor has created a new attribute. In real life, you can use this trick to create new properties to an existing object without modification of original object structure.</p>
-
 
 <h3><a id="forward-declarations"></a>Forward declarations</h3>
 

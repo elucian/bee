@@ -85,7 +85,7 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <tr>
 <td>Alpha</td>
 <td>A</td>
-<td>Alpha-numeric code point E-ASCII ('0'..'9') ('a'..'Z')</td>
+<td>Alpha-numeric E-ASCII ('0'..'9') ('a'..'Z')</td>
 </tr>
 <tr>
 <td>Binary</td>
@@ -95,7 +95,7 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <tr>
 <td>Unicode</td>
 <td>U</td>
-<td>Unsigned code point on 32 bit, max: U-FFFFFFFF (UTF32)</td>
+<td>Unsigned 32 bit, max: U-FFFFFFFF (UTF32)</td>
 </tr>
 <tr>
 <td>Rational</td>
@@ -830,9 +830,9 @@ new e := [0.00](10);
 new m := [0.00](10,10);
 ** data set of 4 integers: Z
 new s := {1,2,3,4};
-** hash map of (Z: String)
+** hash map of (Integer: String)
 new c := {(1:"storage"),(2:"string")};
-** object with two attributes: name &isin; String, age &isin; Z
+** object with two attributes: name &isin; S, age &isin; Z
 new b := {name:"Goliath", age:30};
 </code></pre>
 

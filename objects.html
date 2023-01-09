@@ -29,51 +29,10 @@
 </div><hr>
 <h1>Bee Objects</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is using a type declaration to define object attributes. Later you can define one constructor and associated methods. Objects can be extended using inheritance model and methods can be overvriten.
+Bee is implementing object oriented principles: abstraction, encapsulation, inheritance and polimorphism. However Bee do not have classes. Objects are instances of composite data types, similar to structs or records used in other languages. 
 </div>
 
-<h2>Features</h2>
-
-<p>Bee is implementing object oriented principles: abstraction, encapsulation, inheritance and polimorphism. However Bee do not have classes. Objects are instances of composite data types, similar to structs or records used in other languages.</p>
-
-<h4>Example:</h4>
-
-<p>Next example demonstrate a type Foo that has one public method ".bar" and one constructor: Foo(). The constructor is an anonymous rule that receive two parameters and produce a result of type Foo.</p>
-
-<pre><code class="language-bee">** define Foo as object:
-type Foo: {a, b &isin; N} &lt;: Object;
-
-**define Foo constructor:
-rule Foo(p1,p2 &isin; N) =&gt; (self &isin; Foo):
-    let self := {a:p1, b:p2};
-return;
-
-** define method: Foo.bar
-rule .bar(self &isin; Foo):
-    print "a =" + self.a;
-    print "b =" + self.b;
-return;
-
-** create new object using constructor
-rule main:
-    ** call constructor to create an instance of Foo
-    new test := Foo(1,1);
-
-    ** call a method test.bar
-    test.bar();
-    fail if test.a &ne; 1; -- verify attribute a
-    fail if test.b &ne; 1; -- verify attribute b
-return;
-</code></pre>
-
-<h4>Notes:</h4>
-<ul>
-<li>Types are defined with capital letters;</li>
-<li>Constructor has the same name as the data type;</li>
-<li>Constructor is returning a reference to the new object;</li>
-<li>You create a new object instance using the keyword "new";</li>
-<li>Methods are public and must use dot (.)) prefix;</li>
-</ul>
+<p>The Object is the most simple type and is the root type for all objects. An Object can be created using the default notation: {}. Also, the object can be created using a collection builder or a data literal similar to JSON. An object can have public and private members that you can access using dot notation.</p>
 
 <div align="center">
   <img src="img/method-call.svg" alt="method call"
@@ -81,18 +40,94 @@ return;
   <p>Method Call</p>
 </div>
 
-<h3><a id="rule-as-closure"></a>Constructor</h3>
+<h4>Design pattern</h4>
 
-<p>The Object is the most simple type and is the root type for all objects. An Object can be created using the default constructor but you can define a new constructor. The new constructor can have local variables and rules.</p>
+<p>Next design pattern is the most simple way to define an object and associate it's members. You can start with an empty object and define its attributes one by one. These new attributes will be public. Later you can remove onject attributes.</p>
 
-<h4>Example:</h4>
+<pre><code class="language-bee">** empty object
+new object := {}; 
 
-<p>Next example is typical, to create a symple object using a constructor. This constructor receive a variable number of arguments and produce an object that has sum of arguments and the average.</p>
+** create new attributes
+new object.attr1 := value1;
+new object.attr2 := value2;
+
+** remove attributes
+del object.attr1;
+del object.attr2;
+
+** check the object
+expect object == {};
+</code></pre>
+
+<p>An equivalent syntax is using attribute value to identify the attribute names. This notation is typicaly used with integer variables but in Bee you can use this notation with strings or symbols.</p>
+
+<pre><code class="language-bee">** empty object
+new object := {}; 
+
+** set attribute values
+new object["attr1"] := value1;
+new object["attr2"] := value2;
+
+** remove attributes
+del object["attr1"];
+del object["attr2"];
+
+** check the object
+expect object == {};
+</code></pre>
+
+<h3>Companion</h3>
+
+<p>A companion is a special rule that we can define to associate one type with it's members. An object can have associated one or more companions. A companion can be used as a static object or as a constructor.</p>
+
+<h4>Example 1:</h4>
+
+<p>Next example demonstrate a type Foo that has a companion Foo(). This receive two parameters and produce a result of type Foo. Nested, we define method .bar() that is public. We can call bar() using the dont notation test.bar().</p>
+
+<pre><code class="language-bee">** define Foo as object:
+type Foo: {a, b &isin; N} &lt;: Object;
+
+** define Foo companion
+rule Foo(p1,p2 &isin; N) =&gt; (self &isin; Foo):
+    let self := {a:p1, b:p2};
+
+    ** define method: Foo.bar
+    rule .bar():
+        print "a =" + self.a;
+        print "b =" + self.b;
+    return;
+return;
+
+** create new object
+rule main:
+    ** Create an instance of Foo
+    new test := Foo(1,1);
+
+    ** call a method test.bar
+    apply test.bar;
+    fail if test.a &ne; 1; -- verify attribute a
+    fail if test.b &ne; 1; -- verify attribute b
+return;
+</code></pre>
+
+<h4>Notes:</h4>
+<ul>
+<li>Types and companions start with capital letters;</li>    
+<li>Companion has the same name as the data type;</li>
+<li>Public members must use dot (.) prefix;</li>
+<li>You create a new object instance using the keyword "new";</li>
+<li>Companion is returning a reference to the new object;</li>
+</ul>
+
+
+<h4>Example 2:</h4>
+
+<p>Next example create a symple object using a companion. This particular companion can receive a variable number of arguments and produce an object that has sum of arguments and the average calculated.</p>
 
 <pre><code class="language-bee">** define the object type
 type MyObject: {sum &isin; N, avg &isin; R} &lt;: Object;
 
-** define an onject constructor with varargs
+** define an onject companion
 rule MyObject(*v &isin; [N]) => (self &isin; MyObject):
     ** local variable
     new count := 0;
@@ -105,40 +140,16 @@ rule MyObject(*v &isin; [N]) => (self &isin; MyObject):
 return;
 </code></pre>
 
-<h3><a id="rule-as-singleton"/>Object Initialization</h3>
+<h2>Key Looping</h2>
 
-<p>An object type can be initialized empty. The attributes can be assigned later. But of course, you can use a JSON notation that we already demonstrated. Also, the object can be created using a collection builder that we will study later.</p>
-
-<pre><code class="language-bee">** empty object
-new object := {}; 
-
-** set attribute values
-new object.attr1 := value1;
-new object.attr2 := value2;
-...
-</code></pre>
-
-<p>An equivalent syntax is using attribute value to identify the attribute names. This notation is typicaly used with integer variables but in Bee you can use this notation with strings or symbols.</p>
-
-<pre><code class="language-bee">** empty object
-new object := {}; 
-
-** set attribute values
-new object["attr1"] := value1;
-new object["attr2"] := value2;
-...
-</code></pre>
-
-<h2><a id="rule-as-singleton"/>Key Looping</h2>
-
-<p>Bee objects are based on dictionaries. In fact an object do not has attributes it has keys. Each attribute is represented by a key. Keys are iterable of type string.</p>
+<p>Bee objects are based on dictionaries. In fact an object do not have attributes it has keys. Each attribute is a (key:value) pair. Keys are of type string. You can append new attributes by creating new (key:value) pairs in the object companion.</p>
 
 <p>If you define the type upfront, Bee can loop the keys and you can set-up value for each attribute in a loop. This is one of scenarios where you can use the "new" statement in a loop.</p>
 
 <pre><code class="language-bee">** define object type
 type MyObject: {a1,a2,a3 &isin; R} <: Object
 
-** define a constructor
+** define a companion rule
 rule MyObject(*values &isin; R) => (self &isin; MyObject):
     ** set attribute values in a loop
     new i := 0;
@@ -148,6 +159,95 @@ rule MyObject(*values &isin; R) => (self &isin; MyObject):
     done;
 return;
 </code></pre>
+
+<h3>Companion context</h3>
+
+<p>Companiom is a singleton object. It's automaticly created by the system when a module is loaded in memory. The companion has a static context. Therefore, companions can be used without instantiation.</p>
+
+<p>The object context is dynamic. When a new object is created, the static variables are not reset, the initial value is preserved. You can access the dynamic context inside companion using object qualifier "self." If you do not use "self." qualifier, you are accesing the static context.</p>
+
+<h4>Notes:</h4>
+
+<ol>
+<li>Object "self" is never null, it represent the current context;</li>
+<li>You can access companion public members using companion name as qualifier;</li>
+<li>You can access object public members using object identifier as qualifier;</li>
+</ol>
+<h4>Example:</h4>
+
+<pre><code class="language-bee">** define Foo as object with 2 public attributes:
+type Foo: {a, b &isin; N} &lt;: Object;
+
+** define companion with same name as the type name
+rule Foo(p1, p2 &isin; N) => (self &isin; Foo):
+    ** define static variable
+    new .x &isin; N;
+
+    ** define dynamic variable
+    new self.x &isin; N;
+
+    ** create the object using parameters
+    let self   := {a:p1, b:p2}; -- create object instance
+    new self.c := x;            -- create a new attribute
+
+    ** define static methods
+    rule .setx(p &isin; N):
+       let x := p;
+    return;
+
+    ** define a object method
+    rule .bar(self &isin; Foo):
+        print "a = " + self.a;
+        print "b = " + self.b;
+        print "c = " + self.c;
+        print "x = " + self.x;
+        print;
+    return;
+return;
+
+** run bar() rule using object test as dot qualifier
+rule main:
+    ** modify singleton state: x = 3
+    apply Foo.setx(3);
+    apply test.bar;
+
+    ** call companion to create an instance of Foo
+    new test := Foo(1,2);
+
+    ** call a method using apply (print private attributes)
+    apply test.bar;
+
+    ** check both static and dynamic values
+    print "-------"
+    print "x = " + Foo.x;
+    print "x = " + test.x;
+return;
+</code></pre>
+
+<h4>Expected Output:</h4>
+
+<pre class="language-out">
+a = 0
+b = 0
+c = 3
+x = 3
+
+a = 1
+b = 2
+c = 3
+x = 0
+------
+x = 3
+x = 0
+</pre>
+
+<h4>Notes:&nbsp;</h4>
+
+<ol>
+<li>Property "c" belongs to the new object. This is because the companion has created a new attribute. That is, you can add properties to an existing object. The initial declaration of the object is enhanced by the companion.</li>
+<li>Static variable x is modified to have value 3. When a new object instance is created, the static value of x is used to create property c. A new self.x that is dynamic is created and it has value 0. This may be confusing, but is the best we can do and we avoid using "static" keyword.</li>
+</ol>
+
 
 <p><b>Read next:</b>
 <a href="collections.html">Collections</a></p>

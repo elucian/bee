@@ -409,8 +409,9 @@ return;
 <h4>Notes:</h4>
 <ul>
 <li>Hash operators are working like for a set of keys,</li>
-<li>Hash key type must be numeric or sortable:{A, U, S, Date, Time},</li>
-<li>Hash key type can not be double quoted string or other collection.</li>
+<li>Hash key type can be numeric or: {A, U, S, Date, Time},</li>
+<li>Hash keys are not ordered but sorted by hash function,</li>
+<li>Hash keys have limited length of 32 code points,</li>
 </ul>
 
 <h2><a id="check-for-inclusion"></a>Check for inclusion</h2>
@@ -430,7 +431,7 @@ return;
 
 
 <h2><a id="strings"></a>Strings</h2>
-<p>Bee has 4 kind of string literals:</p>
+<p>Bee has 4 basic types for characters and strings:</p>
 <ul>
 <li>A: ASCII symbol used for ASCII Array,</li>
 <li>U: Unicode symbol used for Unicode Array,</li>
@@ -453,8 +454,8 @@ return;
 </thead>
 <tbody>
 <tr>
-<td><code>`_`</code></td>
-<td>Back quotes, ASCII single symbol</td>
+<td><code>"_"</code></td>
+<td>Byte / ASCII single symbol</td>
 </tr>
 <tr>
 <td>'_'</td>
@@ -468,7 +469,7 @@ return;
 </table>
 <h3><a id="text" class="anchor" href="#text"></a>Text</h3>
 
-<p>For large text literals (X) we can use a markup language:</p>
+<p>For large text literals (X) we can use a markup tag:</p>
 <ul>
 <li>&lt;text&gt;...&lt;/text&gt;&nbsp;: Text block</li>
 <li>&lt;sql&gt;...&lt;/sql&gt;  &nbsp;: SQL text block</li>
@@ -485,16 +486,26 @@ new query := &lt; sql &gt;
   &lt; /sql &gt;;
 </code></pre>
 
+<h4>Example:</h4>
+<pre><code class="language-bee">
+new html := &lt; html &gt;
+   <p>Hello World</p>
+   <p>Bee is a great language.</p>
+  &lt; /html &gt;;
+</code></pre>
+
 <h3><a id="array-of-symbols" class="anchor" href="#array-of-symbols"></a>Array of symbols</h3>
 
 <p>Single quoted or back quoted literals can contain a single symbol.</p>
 <pre><code class="language-bee">** fixed capacity array or ASCII symbols
 type A128: [A](128) &lt;: Array;
 rule main()
-  ** populate array using spreading operator (*)
+  ** declare a string of type A128
   new str &isin; A128;
-  *str := "test"; -- spreading a ASCII literal
-  print  str;   -- [`t`,`e`,`s`,`t`]
+
+  ** populate array using spreading operator (*)
+  let *str := "test"; -- spreading the ASCII literal
+  print  str;   -- ['t','e','s','t']
 
   ** fixed capacity array of symbols UTF32
   new  uco &isin; [U](128);
@@ -575,8 +586,8 @@ new line in string
 <p><b>examples</b></p>
 <pre><code class="language-bee">
 rule main:
-   new make m: ('-' * 10) &isin; S; -- m = "----------"
-   new make (u, c, s) &isin; S; -- default length is 128 octets = 1024 bit
+   new m: ('-' * 10) &isin; S; -- m = "----------"
+   new (u, c, s) &isin; S; -- default length is 128 octets = 1024 bit
 
    ** string concatenation
    new c := "This is " + "a large string";
@@ -692,7 +703,7 @@ type Node &lt;: {
 <pre><code class="language-bee">** global exception type
 define Error: {code &isin; Z, message &isin; S, line &isin; Z} &lt;: Object;
 ** global system error
-make $error &isin; Error;
+new $error &isin; Error;
 </code></pre>
 
 <p>You can define exceptions with code &gt; 200 and raise exceptions with 3 statements:</p>
@@ -702,7 +713,7 @@ make $error &isin; Error;
 </ul>
 
 <h4>Pattern:</h4>
-<pre><code class="language-bee">make my_error := {200,"message"} &isin; Error;
+<pre><code class="language-bee">new my_error := {200,"message"} &isin; Error;
 fail my_error if condition;
 pass if condition;
 </code></pre>
@@ -711,10 +722,10 @@ pass if condition;
 
 <h4>Example:</h4>
 <pre><code class="language-bee">rule main:
-   make  flag &isin; L;
+   new  flag &isin; L;
    read (flag, "enter flag (0/1):");
 
-   make my_error := {201,"error:#(s)"} &isin; Error;
+   new my_error := {201,"error:#(s)"} &isin; Error;
    fail (my_error ? "test") if flag;
 return;
 </code></pre>
