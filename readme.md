@@ -1,6 +1,6 @@
 # Bee Language
 
-Bee is a general purpose computer language.
+Bee is a general purpose computer language designed by Sage-Code Laboratory. We design this project in public with the help of community. In this repository we store language design documentation and demo code but we do not store the compiler here.
 
 ## goals
 
@@ -9,6 +9,8 @@ Bee is a experimental project with original syntax aiming these goals:
 1. safe;
 2. efficient;
 3. reliable;
+4. scientific;
+5. disruptive;
 
 ## design 
 
@@ -22,12 +24,9 @@ Bee is going to be a rule based programming language.
 
 ## reference
 
-**Home page:** [Bee project](https://sagecode.net/bee/index.html)     
-**Discussions:** [Discutions](https://github.com/sage-code/bee/     
-**Community:** [Invitation](https://discord.gg/twXtRsTVDA)   
-
-discussions) 
-
+* **Home page:** [Bee project](https://sagecode.net/bee/index.html)
+* **Forum:** [Discutions](https://github.com/sage-code/bee/discussions) 
+* **Community:** [Invitation](https://discord.gg/twXtRsTVDA)   
 
 -----
 Copyright (c) Sage-Code 2018-2022 
