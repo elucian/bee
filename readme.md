@@ -29,5 +29,5 @@ Bee is going to be a rule based programming language.
 * **Discord:** [Invitation](https://discord.gg/twXtRsTVDA)   
 
 -----
-Copyright (c) Sage-Code 2018-2022 
+Copyright (c) Sage-Code 2018-2023 
 

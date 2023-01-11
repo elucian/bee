@@ -529,7 +529,7 @@ x^(¹/₃) = sqrt(x,3)  -- This will also work
 
 <h4>Unicode Identifiers:</h4>
 
-<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Killick characters are permitted.</p>
+<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Cyrillic characters are permitted.</p>
 
 <pre class="language-out">
 Λ Γ Δ Ξ Π Σ Φ Ψ Ω α β ɣ δ ζ
@@ -743,11 +743,11 @@ return;
 <tbody>
 <tr>
 <td>'x'</td>
-<td>Fixed capacity Unicode UTF32 string literal</td>
+<td>Single quoted string literal or ASCII code point</td>
 </tr>
 <tr>
 <td>"y"</td>
-<td>Variable capacity Unicode string literal</td>
+<td>Double quoted string literal or UTF32 code point</td>
 </tr>
 </tbody>
 </table>
@@ -807,7 +807,7 @@ return;
 </tr>
 <tr>
 <td>:</td>
-<td>Define type or rule or module</td>
+<td>Start a block or define something</td>
 </tr>
 <tr>
 <td>:</td>
@@ -862,11 +862,23 @@ return;
 <td>Power symbol used with fractions or expressions</td>
 </tr>
 <tr>
+<td>√</td>
+<td>Radical: x√n is equivalent to x^(1/n)</td>
+</tr>
+<tr>
 <td>&middot;</td>
-<td>Multiplication</td>
+<td>Multiplication (middle dot)</td>
+</tr>
+<tr>
+<td>*</td>
+<td>Multiplication alternative</td>
 </tr>
 <tr>
 <td>&divide;</td>
+<td>Real division</td>
+</tr>
+<tr>
+<td>/</td>
 <td>Real division</td>
 </tr>
 <tr>
@@ -891,8 +903,11 @@ return;
 </tr>
 </tbody>
 </table>
+
 <h2>Double Symbols</h2>
-<p>Double symbols is a group of two ASCII symbols considered as one.</p>
+
+<p>Double symbols is a group of two ASCII symbols considered as one. Some of these symbols have an Unicode equivalent, some do not. When available, Unicode equivalent is preferred choice.</p>
+
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
@@ -966,7 +981,7 @@ return;
 <td>Deep copy | Clone operator</td>
 </tr>
 <tr>
-<td>++N</td>
+<td>++</td>
 <td>Extend an array with one or more elements</td>
 </tr>
 <tr>
@@ -983,6 +998,24 @@ return;
 <tr>
 <td>&lt;+</td>
 <td>Append element to end of a list</td>
+</tr>
+<td>==</td>
+<td>Relation operator for identical (the same)</td>
+</tr>
+<td>!=</td>
+<td>Relation operator not identical (not the same)</td>
+</tr>
+<tr>
+<td>~=</td>
+<td>Relation operator: regular expression match</td>
+</tr>
+<tr>
+<td>>=</td>
+<td>Relation operator: greater then or equal to</td>
+</tr>
+<tr>
+<td><=</td>
+<td>Relation operator: less then or equal to</td>
 </tr>
 </tbody>
 </table>
@@ -1013,13 +1046,24 @@ return;
 <td>&middot;=</td>
 <td>Multiplication modifier</td>
 </tr>
+<td>*=</td>
+<td>Multiplication modifier</td>
+</tr>
 <tr>
 <td>&divide;=</td>
 <td>Real division modifier</td>
 </tr>
 <tr>
+<td>/=</td>
+<td>Real division modifier</td>
+</tr>
+<tr>
 <td>^=</td>
 <td>Power modifier</td>
+</tr>
+<tr>
+<td>√=</td>
+<td>Radical modifier</td>
 </tr>
 <tr>
 <td>%=</td>
@@ -1052,7 +1096,7 @@ return;
 </tr>
 <tr>
 <td>&equiv;</td>
-<td>identical | { compare types & values or attributes }</td>
+<td>identical | { compare types & values / attributes }</td>
 </tr>
 <tr>
 <td>&asymp;</td>
