@@ -35,9 +35,9 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 
 <p>Bee use 2 kind of data types:</p>
 <ol>
-<li><a href="#primitive-types">Primitive data types;</a></li>
+<li><a href="#primitive-types">Primitive types;</a></li>
 <li><a href="#constant-literals">Constant literals;</a></li>
-<li><a href="#composite-types">Composite types;</a></li>
+<li><a href="#composite-types">Special types;</a></li>
 <li><a href="#type-declaration">Type declaration;</a></li>
 <li><a href="#range-type">Range type;</a></li>
 <li><a href="#domain-type">Domain type;</a></li>
@@ -216,8 +216,8 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <li>primitive variables are identical to themselves.</li>
 </ul>
 
-<h2><a id="composite-types"/>Composite types</h2>
-<p>Predefined composite types have an alias starting with capital letter:</p>
+<h2><a id="special-types"/>Special types</h2>
+<p>Special types have an alias starting with capital letter. These types are embeded in the language and contribute to language coherence. All these types are actually references to memory structures:</p>
 
 <table class="table table-bordered table-striped">
 <thead>
@@ -228,6 +228,11 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 </tr>
 </thead>
 <tbody>
+<tr>
+  <td>Object</td>
+  <td>O</td>
+  <td>Object reference</td>
+</tr>  
 <tr>
 <td>Complex</td>
 <td>C</td>
@@ -253,23 +258,12 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
   <td>F</td>
   <td>Lambda function reference</td>
 </tr>
-<tr>
-  <td>Object</td>
-  <td>O</td>
-  <td>Object reference</td>
-</tr>
 </tbody>
 </table>
 
-<h4>Notes:</h4>
-<ul>
-<li>Composite variables are references to objects;</li>
-<li>Composite variables have variable size;</li>
-<li>Composite variables are allocated on the heap;</li>
-</ul>
 
 <h2><a id="collection-types"></a>Collection types</h2>
-<p>Bee define a collection literal using a special notation based on brackets.</p>
+<p>Bee define a collection literal using a special notation based on brackets. These types are going to be explained later in another page. We mention these types here because they represent types.</p>
 
 <table class="table table-bordered table-striped">
 <thead>
@@ -289,14 +283,14 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 </tr>
 <tr>
 <td>{}</td>
-<td>Ordinal / Set / Hash / Object</td>
+<td>Enumeration / Set / Map / Object</td>
 </tr>
 </tbody>
 </table>
 
 <h4>Notes:</h4>
 <ul>
-<li>All collections are also composite types therefore references,</li>
+<li>All collections are actually references to custom objects,</li>
 <li>Collection elements can be references or native types,</li>
 <li>Elements of collection are separated by comma,</li>
 <li>Pair of values in Hash map and Object are separated by columns ":"</li>
@@ -497,7 +491,7 @@ print b;          -- expected 12
 <li>Following operators are called modifiers and can change value of a variable:</li>
 <ul>
 <li>{":=","::"} </li>
-<li>{"+=","-=","&divide;=","&middot;=","^=","%="}</li>
+<li>{"+=","-=","&divide;=","&middot;=","^=","%=", "*=", "/=", "√="}</li>
 </ul></ul>
 
 <h4>Examples:</h4>
@@ -610,7 +604,7 @@ return;
 
 <h2><a id="logic-type"></a>Logic type</h2>
 <p>Logic type is an enumeration of two public symbols: False and True</p>
-<pre><code class="language-bee">type .L = {.False: 0, .True: 1} &lt;: E;
+<pre><code class="language-bee">type .L = {.False: 0, .True: 1};
 ** printing logical values
 rule main:
   print True;  -- 1
@@ -624,7 +618,7 @@ return;
 <ul>
 <li>&not; (not)</li>
 <li>&and; (and)</li>
-<li>&or; (or)</li>
+<li>&or;  (or)</li>
 <li>&oplus; (xor)</li>
 </ul>
 <p>Precedence: { &not;, &and;, &or;, &oplus;, = }. Symbol &not; apply first (has higher precedence)</p>

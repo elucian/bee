@@ -282,11 +282,11 @@ rule main(*params &isin; S):
 
    ** print comma separated parameters
    new i:= 0 &isin; Z;
-   if (i &lt; c) do
+   while (i &lt; c) do
      write params[i];
      let i += 1;
      write "," if (i &lt; c);
-   cycle;
+   repeat;
    ** print the buffer to console
    print;
 return;
@@ -353,7 +353,7 @@ use pro:$program.pro_lib.(*); -- load project library
 <ul>
 <li>Global scope helps to use <em>public identifiers</em> from loaded modules;</li>
 <li>When a module is loaded, its public members are defined in the <em>global scope</em>;</li>
-<li>Public members of other modules loaded with qualifier must use dot notation;</li>
+<li>Public members of other modules can be used with quialifier.;</li>
 </ul>
 
 <h2><a id="name-space"></a>Name space</h2>

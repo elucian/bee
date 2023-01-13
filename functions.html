@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="description" content="Bee programming language project.">
   <meta name="author" content="Elucian Moise">
-  <meta name="keywords" content="sage, code, bee, language, syntax, tutorial">
+  <meta name="keywords" content="sage, code, bee, language, syntax, functions, lambda, expressions">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Website title -->
   <title>Bee Functions</title>
@@ -29,14 +29,12 @@
 </div><hr>
 <h1>Bee Functions</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is a esoteric and experimental programming language design by Sage-Code.
+Bee is a functional programming language. Bee enable functional programming using lambda functions. These are special expressions that can make a computation and return a result.
 </div>
-<!-- work in progress-->
-<hr>
 
 <h2>Lambda expressions</h2>
 
-<p>A lambda expressions is a named expression with parameters and specified result type: </p>
+<p>A lambda expressions has parameters and specified result type. Lamda expressions can be used to create named functions or anonymous functions. Unlike Rules, lamda expressions do not have states.</p>
 
 <h4>Syntax:</h4>
 <pre><code class="language-bee">** declaration of Lambda expression
@@ -48,7 +46,7 @@ new name := &lambda;(param &isin; Type,...) &isin; ResultType =&gt; (expression)
 new exp := &lambda;(x,y &isin; Z) =&gt; x^ʸ &isin; Z;
 
 ** use introspection
-print type(exp); -- Lambda
+print type(exp); -- Function
 
 ** use the lambda expression
 new z := 2&middot;exp(2,3);
@@ -82,72 +80,28 @@ print z;
 
 <p><b>result:</b></p>
 <ul>
-<li>result can be primitive or native type but not a collection;</li>
-<li>result can be temporary and can be used in other expressions;</li>
+<li>lambda expressions can produce one or more results;</li>
+<li>result is temporary and can be used in other expressions;</li>
 </ul>
 
 <h2><a id="lambda-signature"/>Lambda type</h2>
 
-<p>Lambda &lambda; symbol can be used as type in declarations;</p>
+<p>Lambda expressions have a special type: "L". This type can be used to define variables and parameters that require a lambda expression;</p>
 <pre><code class="language-bee">
-** instantiate 3 Lambda expressions like "CMP"
-new gt := &lambda;(x, y &isin; Z) =&gt; (x &gt; y) &isin; L;
-new lt := &lambda;(x, y &isin; Z) =&gt; (x &lt; y) &isin; L;
-new eq := &lambda;(x, y &isin; Z) =&gt; (x = y) &isin; L;
+** instantiate 3 Lambda expressions
+new gt := &lambda;(x, y &isin; Z) =&gt; (x &gt; y) &isin; F;
+new lt := &lambda;(x, y &isin; Z) =&gt; (x &lt; y) &isin; F;
+new eq := &lambda;(x, y &isin; Z) =&gt; (x = y) &isin; F;
 
 ** define a sub-type, dictionary of rules
-type Dic: {(S(2) : &lambda;)} &lt;: Hash;
+type Dic: {[A]:F} &lt;: Map;
 
 ** define a hash map of expressions
-new dic := {('gt':gt),('lt':lt),('eq':eq)} &isin; Dic;
+new dic := {'gt':gt,'lt':lt,'eq':eq} &isin; Dic;
 ** call 3 rules in very unusual way
 print dic['gt'](3,1); -- 1
-print dic['lt'](3,1); -- 0
-print dic['eq'](3,1); -- 0
-</code></pre>
-
-<h4>Notes:</h4>
-
-<ul>
-<li>print statement add new line by default,</li>
-<li>write statement can be used to avoid new line.</li>
-</ul>
-
-<h2><a id="conditions"/>Conditional Execution</h2>
-
-<p>A condition is a logic expression used to control statement execution. For this we use "if" keyword and "else" keyword. These keywords are used in be a little bit different than in other languages.</p>
-
-<pre><code class="language-bee">statement if condition;
-</code></pre>
-
-<p><b>Note:</b> Previous statement is executed only if the condition is True.</p>
-
-<pre><code class="language-bee">expect condition else statement;
-</code></pre>
-
-<p><b>Note:</b> Previous statement is executed only if the condition is False.</p>
-
-<p><b>restrictions:</b></p>
-<ol>
-<li>Can not use "if" with set statement;</li>
-<li>Can not use "if" with new statement;</li>
-<li>Can not use "if" after done;</li>
-</ol>
-
-<h4>Example:</h4>
-
-<pre><code class="language-bee">
-rule main:
-  ** generate a random number
-  new a := random(Z);
-
-  ** conditional execution
-  new b := a;
-  let b := -a if a < 0;
-
-  ** print result
-  print "|b| = ", a;
-return;
+print dic['lt'](1,2); -- 1
+print dic['eq'](2,2); -- 1
 </code></pre>
 
 <p><b>Read next:</b>

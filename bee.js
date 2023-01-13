@@ -37,6 +37,7 @@ function apply_style(str) {
     str = str.replace(/\bHash\b/,types("HashTab"))
 
     // control flow keywords
+    str = str.replace(/\bstart\b/,control("start"))
     str = str.replace(/\bdo\b/,control("do"))
     str = str.replace(/\bdone\b/,control("done"))
     str = str.replace(/\bif\b/,control("if"))

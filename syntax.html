@@ -128,6 +128,7 @@ return;
 <tr><td>read   </td><td>trial </td><td>stop    </td><td>yield </td><td>xor    </td></tr>
 <tr><td>write  </td><td>wait  </td><td>when    </td><td>or    </td><td>with   </td></tr>
 <tr><td>hide   </td><td>new   </td><td>cycle   </td><td>let   </td><td>start  </td></tr>
+<tr><td>while  </td><td>for   </td><td>        </td><td>      </td><td>       </td></tr>
 </table>
 
 <h4>Notes:</h4>
@@ -208,7 +209,7 @@ return;
 
 <table class="table table-bordered table-sm table-striped">
 <tr><th> Keyword </th><th> Block description </th></tr>
-<tr><td class="fixed">begin </td><td>simple block with local scope</td></tr>
+<tr><td class="fixed">start </td><td>start local scope for do block</td></tr>
 <tr><td class="fixed">with  </td><td>qualifier suppression block</td></tr>
 <tr><td class="fixed">if    </td><td>first block in decision statement</td></tr>
 <tr><td class="fixed">cycle </td><td>repetitive or iterative blocks</td></tr>
@@ -309,7 +310,7 @@ return;
 </table>
 
 <h2><a href="#control-statements"></a>Control statements</h2>
-<p>Control statements are also known as selection statements.</p>
+<p>Control statements are used to create local blocks of code that resolve a small task synchronously. After task is finished the control is returned to the main thread.</p>
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
@@ -349,10 +350,13 @@ return;
 <tr>
 <td>miss</td>
 <td>Default trial block, executed when there is no case</td>
-</tr>  
-<td>done</td>
-<td>Finalize a block statement that is not repetitive</td>
+<td>cycle</td>
+<td>Define a local block that is repetitive</td>
 </tr>
+<td>start</td>
+<td>Define a local block that usually has a name</td>
+</tr>
+</tr>  
 </tbody>
 </table>
 
