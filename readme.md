@@ -6,17 +6,16 @@ Bee is a general purpose computer language designed by Sage-Code Laboratory. We 
 
 Bee is a experimental project with original syntax aiming these goals:
 
-1. safe;
-2. efficient;
+1. efficient;
+2. explicit;
 3. reliable;
-4. scientific;
-5. disruptive;
+4. disruptive;
 
 ## design 
 
 Bee is going to be a rule based programming language.
 
-1. strongly typed;
+1. staticly typed;
 2. modular;
 3. compiled;
 4. open source;

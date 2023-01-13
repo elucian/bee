@@ -31,8 +31,7 @@
 <h1>Bee Syntax</h1>
 
 <div class="alert alert-secondary shadow-sm">
-  Bee is not a curly bracket language. Its syntax is inspired from Ada and Ruby. We have created an imperative programming language. We favor verbs over substantives to create most statements.
-</div>
+  Bee is not a curly bracket language. Its syntax is inspired from Ada, Ruby, Fortran and Julia. We have created an imperative programming language with original front-end.</div>
 
 <h4>Bookmarks:</h4>
 
@@ -506,112 +505,6 @@ y° y′ y″ yᵃ yᵇ yᶜ yᵈ yᵉ yᶠ yᵍ yʰ yⁱ yʲ yᵏ
 yᶩ yᵐ yⁿ yᵒ yᵖ yʳ yˢ yᵗ yᵘ yᵛ yʷ yˣ yʸ yᶻ
 </pre>
 
-<h4>Operations:</h4>
-
-<p>Bee has support for fractions. Bee is using regular slash "/" for all fractions. You can use superscript for left and subscript for right: These two are equivalent (1/2 = ¹/₂). Unfortunately we can not support fractional power due to lower readability.</p>
-
-<pre class="language-out">
-¹/₂ ¹/₃ ¹/₄ ¹/₅ ¹/₆ ¹/₇ ¹/₈ ¹/₉  ¹/₁₀ ¹/₁₀₀
-x⁻¹ = 1/x, x⁻² = 1/x², x⁻³ = 1/x³ ...
-</pre>
-
-<p>Power operations have priority but we have support only for (+, -) no other operations are possible in exponent. In next expressions, (n-1) is done first before making the power operation.</p>
-
-<pre class="language-out">
--- equivalent notations
-xⁿ⁻¹ = pwr(x,n-1)
-xˣ⁺¹ = pwr(x,n+1)
-
--- supported  notations
-x^(¹/₂) = sqrt(x,2)  -- Symbol ^ is for power
-x^(¹/₃) = sqrt(x,3)  -- This will also work
-</pre>
-
-<h4>Unicode Identifiers:</h4>
-
-<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Cyrillic characters are permitted.</p>
-
-<pre class="language-out">
-Λ Γ Δ Ξ Π Σ Φ Ψ Ω α β ɣ δ ζ
-Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я
-η θ λ μ ν ξ ο π ρ σ ς τ υ φ ω
-</pre>
-
-<h2>Lambda expressions</h2>
-
-<p>A lambda expressions is a named expression with parameters and specified result type: </p>
-
-<h4>Syntax:</h4>
-<pre><code class="language-bee">** declaration of Lambda expression
-new name := &lambda;(param &isin; Type,...) &isin; ResultType =&gt; (expression);
-</code></pre>
-
-<h4>Example:</h4>
-<pre><code class="language-bee">** define "exp" as Lambda expression
-new exp := &lambda;(x,y &isin; Z) &isin; Z =&gt; xʸ;
-
-** use introspection to check what is "exp"?
-print type(exp); -- Lambda
-** use the lambda expression
-new z := 2&middot;exp(2,3);
-print z; -- 16
-</code></pre>
-
-
-<h4>Properties:</h4>
-<p>Lambda Expressions...</p>
-<ul>
-<li>are similar to mathematical functions;</li>
-<li>are binding external states in context;</li>
-<li>can be used in other expressions;</li>
-<li>can be used as parameter in rules;</li>
-<li>can be created from a rule as a result;</li>
-<li>can be assigned to a variable of type: Lambda</li>
-</ul>
-
-<p><b>restrictions:</b></p>
-<ul>
-<li>can have one single result;</li>
-<li>can not be interrupted from execution;</li>
-<li>can not call any rule that is downgraded;</li>
-<li>do not have internal states;</li>
-<li>do not have side-effects;</li>
-<li>do not depend on external states;</li>
-</ul>
-
-<p><b>result:</b></p>
-<ul>
-<li>result can be primitive or native type but not a collection;</li>
-<li>result can be temporary and can be used in other expressions;</li>
-</ul>
-
-<h2><a id="lambda-signature"/>Lambda type</h2>
-
-<p>Lambda &lambda; symbol can be used as type in declarations;</p>
-<pre><code class="language-bee">
-** instantiate 3 Lambda expressions like "CMP"
-new gt := &lambda;(x, y &isin; Z) &isin; L =&gt; (x &gt; y);
-new lt := &lambda;(x, y &isin; Z) &isin; L =&gt; (x &lt; y);
-new eq := &lambda;(x, y &isin; Z) &isin; L =&gt; (x = y);
-
-** define a sub-type, dictionary of rules
-type Dic: {(S(2) : &lambda;)} &lt;: Hash;
-
-** define a hash map of expressions
-new dic := {('gt':gt),('lt':lt),('eq':eq)} &isin; Dic;
-** call 3 rules in very unusual way
-print dic['gt'](3,1); -- 1
-print dic['lt'](3,1); -- 0
-print dic['eq'](3,1); -- 0
-</code></pre>
-
-<h4>Notes:</h4>
-
-<ul>
-<li>print statement add new line by default,</li>
-<li>write statement can be used to avoid new line.</li>
-</ul>
-
 <h2><a id="conditions"/>Conditional Execution</h2>
 
 <p>A condition is a logic expression used to control statement execution. For this we use "if" keyword and "else" keyword. These keywords are used in be a little bit different than in other languages.</p>
@@ -648,6 +541,38 @@ rule main:
   print "|b| = ", a;
 return;
 </code></pre>
+
+<h4>Operations:</h4>
+
+<p>Bee has support for fractions. Bee is using regular slash "/" for all fractions. You can use superscript for left and subscript for right: These two are equivalent (1/2 = ¹/₂). Unfortunately we can not support fractional power due to lower readability.</p>
+
+<pre class="language-out">
+¹/₂ ¹/₃ ¹/₄ ¹/₅ ¹/₆ ¹/₇ ¹/₈ ¹/₉  ¹/₁₀ ¹/₁₀₀
+x⁻¹ = 1/x, x⁻² = 1/x², x⁻³ = 1/x³ ...
+</pre>
+
+<p>Power operations have priority but we have support only for (+, -) no other operations are possible in exponent. In next expressions, (n-1) is done first before making the power operation.</p>
+
+<pre class="language-out">
+-- equivalent notations
+xⁿ⁻¹ = pwr(x,n-1)
+xˣ⁺¹ = pwr(x,n+1)
+
+-- supported  notations
+x^(¹/₂) = sqrt(x,2)  -- Symbol ^ is for power
+x^(¹/₃) = sqrt(x,3)  -- This will also work
+</pre>
+
+<h4>Unicode Identifiers:</h4>
+
+<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Cyrillic characters are permitted.</p>
+
+<pre class="language-out">
+Λ Γ Δ Ξ Π Σ Φ Ψ Ω α β ɣ δ ζ
+Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я
+η θ λ μ ν ξ ο π ρ σ ς τ υ φ ω
+</pre>
+
 
 <h3>Pattern Matching</h3>
 
@@ -699,7 +624,7 @@ return;
 
 <h2><a id="operators"/>Operators</h2>
 
-<p>In Bee operators are created using Unicode special symbols not available on your keyword. There is only one symbol for an operation, no alternatives. This is why Bee language is considered esoteric. It is a language difficult to write without a dedicated keyboard.</p>
+<p>Bee operators are ASCII, 2 ASCII symbols or Unicode alternative symbol. Sometimes there is only one symbol available, with no alternative. This is why Bee language is considered experimental, esoteric & disruptive.</p>
 
 <h2>Delimiters</h2>
 <table class="table table-bordered table-striped">

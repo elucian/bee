@@ -55,7 +55,7 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <h4>Usability:</h4>
 <ul>
 <li>
-<p>We think dynamic typing is more fragile and prone to errors than the static typing. Therefore Bee is a <em>strongly typed</em> language with type inference. That means any data is constrained by fixed <em> "data type"</em> rules.</p>
+<p>We think dynamic typing is more fragile and prone to errors than the static typing. Therefore Bee is a <em>strongly typed</em> language with type inference and gradual typing. That means any data is constrained by fixed <em> "data type"</em> rules.</p>
 </li>
 <li>
 <p>Bee has predefined data types. You can create new data types based on predefined types using a type declaration. You can create sub-types or composite types having new constraints and rules that can improve data validation further.</p>
@@ -254,16 +254,6 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>"hh:mm,ms"</td>
 </tr>
 <tr>
-<td>Error</td>
-<td>E</td>
-<td>Error object: {code, message, line}</td>
-</tr>
-<tr>
-<td>File</td>
-<td>F</td>
-<td>File handler</td>
-</tr>
-<tr>
   <td>Lambda</td>
   <td>&lambda;</td>
   <td>Function reference</td>
@@ -408,7 +398,7 @@ print (0..1:0.25); -- 0.00, 0.25, 0.50, 0.75, 1.00
 <p>Constants literals bound to identifiers using keyword "set".</p>
 
 <pre><code class="language-bee">** using explicit type
-set constant_name = constant_literal &isin; type_name;
+set constant_name: constant_literal &isin; type_name;
 
 ** using implicit type
 set constant_name := constant_literal;
@@ -427,8 +417,8 @@ set constant_name := constant_literal;
 
 <h4>Example:</h4>
 <pre><code class="language-bee">#define symbol constants
-set forall1 = U+2200     &isin; A; -- Symbol: &forall;
-set forall2 = U-00002200 &isin; U; -- Symbol: &forall;
+set forall1: U+2200     &isin; A; -- Symbol: &forall;
+set forall2: U-00002200 &isin; U; -- Symbol: &forall;
 </code></pre>
 
 
@@ -455,11 +445,11 @@ set forall2 = U-00002200 &isin; U; -- Symbol: &forall;
 </tr>
 <tr>
 <td>:</td>
-<td>define type | block | pair up operator </td>
+<td>define | block start | pair up operator </td>
 </tr>
 <tr>
-  <td>=</td>
-  <td>set initial value (require type declaration) </td>
+  <td>:</td>
+  <td>set initial value (require type in declarations) </td>
 </tr>
 <tr>
 <td>:=</td>
@@ -474,10 +464,9 @@ set forall2 = U-00002200 &isin; U; -- Symbol: &forall;
 
 <h4>Notes:</h4>
 <ul>
-<li>Symbol ":" can be used to define a type,</li>
 <li>Symbol ":" can be used as pair-up operator for arguments and maps.</li>
-<li>Symbol "=" can not accept expressions but constants,</li>
-<li>Symbol "=" used in declarations require &isin; otherwise you must use ":=",</li>
+<li>Symbol ":=" can can be used to define initial values of variables or parameters.</li>
+<li>Symbol "<:" used in declarations is used to indicate a supertype,</li>
 </ul>
 <pre><code class="language-bee">** primitive variable declarations with type
 new var_name &isin;  type_name; -- declaration only type without initial value
@@ -501,7 +490,7 @@ new var1:con1, var2:con2 ... &isin; TypeName;
 <h4>Example:</h4>
 <pre><code class="language-bee">#fragment of code
 
-new (a = 10, b = 0) &isin; Z; -- initialize two variables
+new (a:10, b:0) &isin; Z; -- initialize two variables
 let b := a + 1;   -- modify b using binding operator :=
 let b += 1;       -- modify b using modifier +=
 print b;          -- expected 12
@@ -518,15 +507,15 @@ print b;          -- expected 12
 
 <h4>Examples:</h4>
 <pre><code class="language-bee">** declare a public constant
-set .PI = 3.14 &isin; R;
+set .PI: 3.14 &isin; R;
 
 rule main:
   ** declare a single variable
   new a   &isin; Z; -- Integer
 
   ** declare multiple variables
-  new (x,y) = 0 &isin; R; -- Double
-  new (q,p) = 0 &isin; L; -- Logic
+  new (x,y):0 &isin; R; -- Double
+  new (q,p):0 &isin; L; -- Logic
 
   ** using modifiers
   let a := 10; -- modify value of: a == 10
@@ -556,10 +545,10 @@ return;
 <h4>Example:</h4>
 <pre><code class="language-bee">** data conversion
 rule main:
-   new a = 0, b = 20 &isin; Z;
-   new v = 10.5, x = 0.0 &isin; R;
+   new a:0, b:20 &isin; Z;
+   new v:10.5, x:0.0 &isin; R;
 ** explicit conversion
-   let a := v :&gt; N;
+   let a:=v :&gt; N;
    print a; -- truncated to 10
 ** explicit conversion
    let x := b :&gt; R;
@@ -675,11 +664,11 @@ print 6&lt;&lt;2  -- out:1 is because: 110 &lt;&lt; 2   = 001 = 1;
 <h4>Example:</h4>
 <pre><code class="language-bee">
 rule main:
-  new (x, y) = 4 &isin;  Z; -- primitive integer
+  new (x, y):4 &isin;  Z; -- primitive integer
   ** value comparison
   print x = 4;  -- 1 (equal)
   print x &equiv; 4;  -- 1 (identical)
-  print x = y;  -- 1
+  print x = y;  -- 1 (equal)
   print x &equiv; y;  -- 1
   print x &ne; 5;  -- 1 (different)
   print x!&equiv; 5;  -- 1 (not identical)
@@ -700,10 +689,10 @@ return;
 
 
 <p><b>singleton</b></p>
-<p>Primitive types are unique. That means they are identical.</p>
+<p>Primitive types are unique. That means they are equivalent.</p>
 <pre><code class="language-bee">** primitive values are singleton
 print  1  &equiv;  1;  -- 1
-print `s` &equiv; `s`; -- 1
+print 's' &equiv; "s"; -- 1
 </code></pre>
 
 
@@ -713,8 +702,8 @@ print `s` &equiv; `s`; -- 1
 <h3><a id="logical-expression"/>Logical expression</h3>
 <p>Logical expression have value { 0 = False, 1 = True }</p>
 <pre><code class="language-bee">
-fix x := False &isin; L;
-fix y := True  &isin; L;
+fix x: False &isin; L;
+fix y: True  &isin; L;
 
 rule main:
   ** expressions with single operant
@@ -745,7 +734,7 @@ return;
 <p><b>coercion</b>&nbsp;Any numeric expression  can be converted to a logic value using coercion operator ":&gt;" (easy to memorize if you think is like an arrow).</p>
 
 <pre><code class="language-bee">
-set (a = 0.0, b = 1.5) &isin; R;
+set (a: 0.0, b: 1.5) &isin; R;
 rule main:
   new (x, y) &isin; L;
 
@@ -856,7 +845,7 @@ return;
 
 <p><b>Multiple parameters:</b></p>
 <pre><code class="language-bee">** parameters: a, b are mandatory, c is optional.
-rule foo((a, b, c) = 0 &isin; Z) =&gt; (r &isin; Z):
+rule foo((a, b, c):0 &isin; Z) =&gt; (r &isin; Z):
   let r := a + b + c;
 return;
 rule main:
@@ -870,8 +859,8 @@ return;
 <p><b>Pass arguments by name:</b></p>
 <p>We can use parameter name and pair-up ":" symbol for argument value.</p>
 <pre><code class="language-bee">** rule with optional parameters (Z)
-rule bar( (a, b, c) = 0 &isin; Z) =&gt; (result &isin; Z):
-  let result := (a+b+c);
+rule bar( (a, b, c):0 &isin; Z) =&gt; (result &isin; Z):
+  let result := a+b+c;
 return;
 ** observe we use pair-up ":" to give value for each argument
 rule main:
@@ -903,12 +892,12 @@ return;  </code></pre>
 
 <h4>Example:</h4>
 <pre><code class="language-bee">
-new x := 0    &isin; Q; -- 0
-new a := 1/2  &isin; Q; -- 0.5
-new b := 1/4  &isin; Q; -- 0.25
-new c := 1/8  &isin; Q; -- 0.125
-new d := 1/8  &isin; Q; -- 0.062
-new e := 1/8  &isin; Q; -- 0.031
+new x: 0    &isin; Q; -- 0
+new a: 1/2  &isin; Q; -- 0.5
+new b: 1/4  &isin; Q; -- 0.25
+new c: 1/8  &isin; Q; -- 0.125
+new d: 1/8  &isin; Q; -- 0.062
+new e: 1/8  &isin; Q; -- 0.031
 </code></pre>
 
 <h4>Note:</h4>

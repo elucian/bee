@@ -30,7 +30,7 @@
 
 <h1>Bee Rules</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is rule oriented language. A rule is a named section of code that can be executed multiple times on demand. Rules can have parameters and can return results, similar to functions and methods, used in other languages.
+Bee is rule oriented language. A rule is a section of code that can be executed multiple times on demand. Rules can have name, parameters and can return one or more results.
 </div>
 
 <h2>Bookmarks</h2>
@@ -54,22 +54,18 @@ Bee is rule oriented language. A rule is a named section of code that can be exe
 
 <p>We have chosen "rule" keyword instead of "def" for naming a sub-routine. So, Bee has "rules" and "functions". Rules are subprograms that can have side-effects similar to procedures, methods or subroutines used in other languages. </p>
 
-<h4>Properties:</h4>
+<h4>Notes:</h4>
 <ul>
-<li>A rule is declared with keyword <em> "rule"</em>;</li>
-<li>A rule can have local variables and constants;</li>
-<li>A rule can have public attributes, and internal states;</li>
-<li>A rule can have nested rules that are public or private;</li>
-<li>A rule can create another rule that is called closure;</li>
-<li>A rule that receive as parameter an object is a method;</li>
-<li>A rule that produce an object as a result is a constructor;</li>
-<li>A rule that have same name as a composite type is a companion;</li>
+<li>A rule start with keyword: <em> rule</em>;</li>
+<li>A rule ends with keyword <em>return</em>;</li>
+<li>A rule can have public/private states;</li>
+
 </ul>
 
 
 <h2><a id="rule-features"/>Features</h2>
 
-<p>In Bee the rules are versatile yet comprehensible. Making rules require design skills. To learn this skill you must know understand first thr rule features. Next topic will explain the most important features:</p>
+<p>In Bee the rules are versatile yet comprehensible. Making rules require design skills. Next we start from simple to advanced to present rule features:</p>
 
 <ul>
 <li><a href="#rule-params">rule parameters</a></li>
@@ -119,7 +115,7 @@ return;
 
 <pre><code class="language-bee">** rule with two results "s" and "d"
 ** parameter x is mandatory y is optional
-rule com(x &isin; Z, y = 0 &isin; Z) =&gt; (s, d &isin; Z):
+rule com(x &isin; Z, y: 0 &isin; Z) =&gt; (s, d &isin; Z):
     let s := x + y;
     let d := x - y;
 return;
@@ -224,7 +220,7 @@ return;
 <h4>Pattern:</h4>
 
 <pre><code class="language-bee">** forward declaration pattern
-rule plus(Z,Z) &isin; Z; -- forward declaration
+rule plus(a, b &isin; Z) =&gt; (r &isin; Z); -- forward declaration
 
 ** declare the main rule
 rule main:
@@ -283,7 +279,7 @@ return;
 
 <h4>Example3</h4>
 
-<p>Replacing a recursive rule with a cycle is more difficult but rule may run faster:</p>
+<p>Replacing a recursive rule with a cycle is more difficult but the rule may run faster. We encourage this design pattern and avoidance of recursive roules:</p>
 
 <pre><code class="language-bee">** this rule is manually optimized:
 rule fact(a &isin; N, b &isin; N) =&gt; (r &isin; N):
