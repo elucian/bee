@@ -239,11 +239,6 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>UTF8 encoded double quoted string "&alpha; &beta; ɣ &epsilon; &delta; &mu; &omega;"</td>
 </tr>
 <tr>
-<td>Text</td>
-<td>X</td>
-<td>Multi-line large block of text ...</td>
-</tr>
-<tr>
 <td>Date</td>
 <td>D</td>
 <td>"DD/MM/YYYY"</td>
@@ -254,9 +249,9 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>"hh:mm,ms"</td>
 </tr>
 <tr>
-  <td>Lambda</td>
-  <td>&lambda;</td>
-  <td>Function reference</td>
+  <td>Function</td>
+  <td>F</td>
+  <td>Lambda function reference</td>
 </tr>
 <tr>
   <td>Object</td>
@@ -820,14 +815,14 @@ new m := [0.00](10,10);
 ** data set of 4 integers: Z
 new s := {1,2,3,4};
 ** hash map of (Integer: String)
-new c := {(1:"storage"),(2:"string")};
+new c := {1:"storage",2:"string"};
 ** object with two attributes: name &isin; S, age &isin; Z
 new b := {name:"Goliath", age:30};
 </code></pre>
 
 
 <h3><a id="parameter-types"/>Parameter types</h3>
-<p>When we define parameters we can use type inference only for optional parameters:</p>
+<p>When we define parameters we can use type inference only for optional parameters. Mandatory parameters must have type declaration using &isin; symbol.</p>
 
 <p><b>Optional Parameters:</b></p>
 <pre><code class="language-bee">** in rule foo, parameters a, b are optional.
@@ -858,15 +853,14 @@ return;
 
 <p><b>Pass arguments by name:</b></p>
 <p>We can use parameter name and pair-up ":" symbol for argument value.</p>
-<pre><code class="language-bee">** rule with optional parameters (Z)
-rule bar( (a, b, c):0 &isin; Z) =&gt; (result &isin; Z):
+<pre><code class="language-bee">** rule with optional parameter (c)
+rule bar(a, b, c:0 &isin; Z) =&gt; (result &isin; Z):
   let result := a+b+c;
 return;
 ** observe we use pair-up ":" to give value for each argument
 rule main:
-  print bar( a : 1 ); -- print 1 because b,c = 0
-  print bar( b : 1 ); -- print 1 because a,b = 0
-  print bar( c : 1 ); -- print 1 because a,b = 0
+  print bar( 1, 1 );    -- print 2 because c = 0
+  print bar( 1, 1, 1 ); -- print 3 because c = 1
 return;  </code></pre>
 
 

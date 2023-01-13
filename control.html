@@ -38,6 +38,7 @@ Control flow statements are used to modify the linear program workflow. In Bee e
 
 <table class="table table-bordered table-striped">
 <tr><th>Name                      </th><th>Description</th></tr>
+<tr><td><a href="#with"  >start   </a></td><td>named block</td></tr>
 <tr><td><a href="#with"  >with    </a></td><td>anonymous block</td></tr>
 <tr><td><a href="#if"    >if-else </a></td><td>decision fork</td></tr>
 <tr><td><a href="#ladder">ladder  </a></td><td>decision ladder</td></tr>
@@ -47,24 +48,17 @@ Control flow statements are used to modify the linear program workflow. In Bee e
 <tr><td><a href="#trial" >trial   </a></td><td>exception handler block</td></tr>
 </table>
 
-<h2><a id="begin">Begin</h2>
+<h2><a id="start">Start</h2>
 
-<p>Using "if" keyword we can start a <em>conditional branch</em>:</p>
-
-<pre><code class="language-bee"># decision
-if condition do
-  ** statements
-  ...
-done;
-</code></pre>
+<p>We use ocasionaly a block of code that has a local scope by using "start" keyword follow by a label. The label can be numeric or alphanumeric. The label is optional. </p>
 
 <h4>Syntax:</h4>
 
-<p>In this example we use "begin" to create a local scope and a new variable (a) inside this scope. Then we use nested anonymous if statement.</p>
+<p>In this example we use "start" to create a local scope and a new variable (a) inside this scope. Then we use nested anonymous if statement.</p>
 
 <pre><code class="language-bee"
 >
-begin [label]:
+start [label]:
   ** local variables
   ...
 do
@@ -104,6 +98,7 @@ return;
 
 <p><b>Notes:</b>
 <ul>
+  <li>before "with" you can use "start"</li> 
   <li>you can use "with" for any "do" block</li>
   <li>any "do" block has a local scope</li>
 </ul>
@@ -128,7 +123,7 @@ done;
 <p>In this example we use "begin" to create a local scope and a new variable (a) inside this scope. Then we use nested anonymous if statement.</p>
 
 <pre><code class="language-bee"># fragment
-begin test:
+start test:
   new a := random();
 do
   if a &lt; 0 do
@@ -172,21 +167,20 @@ done;
 <h4>Example:</h4>
 
 <pre><code class="language-bee">#decision ladder
-rule test:
+start test:
   ** local scope
   new a &isin; Z; -- control variable
   read("a = ", a);   -- expressions in declaration area
-  if a = 0 do        -- first decision
-    print "a = 0";
-  else if a &gt; 0 do  -- second decision
-    print "a > 0";
-  else if a &lt; 0 do  -- third decision
-    print "a &lt; 1";
-  else
-    ** default block
-    print "unexpected:" + a;
-  done;
-return;
+if a = 0 do        -- first decision
+  print "a = 0";
+else if a &gt; 0 do  -- second decision
+  print "a > 0";
+else if a &lt; 0 do  -- third decision
+  print "a &lt; 1";
+else
+  ** default block
+  print "unexpected:" + a;
+done test;
 </code></pre>
 
 <h2><a id="cycle"/>cycle</h2>
@@ -373,7 +367,9 @@ print;
 </ul>
 
 <h2><a id="match"/>match</h2>
-<p>This is a multi-path selector similar also named: <em>jump table.</em> A jump table in Bee has two variants: "all" or "one". That is optional keyword. If used, ALL will evaluate all "when" values it may be matching multiple when blocks. If "one" is used (this is the default), only first block that has a matching value will be executed and the rest are ignored even if a second match exist. The second match should not be present though and is probably a mistake!</p>
+<p>This is a multi-path selector similar to so called <em>jump table</em>. A selector is based on a series of blocks. One or more blocks can be executed depending on specific value. In other languages a selector is created using "switch" statement. In Bee we use "match" statement instead.</p>
+
+</em>A match has two variants: "all" or "one". If used, ALL will evaluate all values it may execute multiple blocks. If "one" is used, only first block that match value will be executed!</p>
 
 <div align="center">
   <img src="img/bee-match.svg" alt="match"
@@ -388,7 +384,7 @@ type Selector: {v1,v2,v3,v4} <: E;
 
 rule main:
   new select := Selector.random()
-  match select:
+  match select [all] | [one]:
     ** declare locals
     ...
   when v1 do
