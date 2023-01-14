@@ -691,23 +691,24 @@ print 's' &equiv; "s"; -- 1
 <h3><a id="logical-expression"/>Logical expression</h3>
 <p>Logical expression have value { 0 = False, 1 = True }</p>
 <pre><code class="language-bee">
-fix x: False &isin; L;
-fix y: True  &isin; L;
+** define constants based on logic values
+set f: False &isin; L;
+set t: True  &isin; L;
 
 rule main:
   ** expressions with single operant
-  print   x; -- 0
-  print &not; x; -- 1
+  print       f; -- 0
+  print &not; t; -- 1
 
   ** expressions with two operands
-  print (x = y); -- 0
-  print (x &equiv; y); -- 0
-  print (x &ne; y); -- 1
-  print (x &lt; y); -- 1
-  print (x &gt; y); -- 0
-  print (x &and; y); -- 0
-  print (x &or; y); -- 1
-  print (x &oplus; y); -- 1
+  print (f = t); -- 0
+  print (f &equiv; t); -- 0
+  print (f &ne; t); -- 1
+  print (f &lt; t); -- 1
+  print (f &gt; t); -- 0
+  print (f &and;t); -- 0
+  print (f &or; t); -- 1
+  print (f &oplus; t); -- 1
 return;
 </code></pre>
 
@@ -742,17 +743,18 @@ return;
 </ul>
 
 <p><b>design</b></p>
-<pre><code class="language-bee">** logical values are singleton
-print True  &equiv; True;   -- 1
-print False &equiv; False;  -- 1
-** logical values are numeric
-print False - True; -- -1
-print True  + True; -- +2
-** Null value is a singleton
-print Null  &equiv; Null   -- 1
-** Null is not the same as false
+<pre><code class="language-bee">** logical values are numeric
+print True  &equiv; 1;  -- 1
+print False &equiv; 0;  -- 1
+
+** logical values do not compute
+print False - True; -- Error
+print True  + True; -- Error
+
+** Null value is not True
+print Null  &equiv; True   -- 0
+** Null value is not False
 print Null  &equiv; False  -- 0
-print Null  = False  -- 0
 </code></pre>
 
 
@@ -778,12 +780,12 @@ new b := &lt;Text&gt;  ;  -- type = Text
 new i := 0;    -- type = Z
 new j := 0.50; -- type = R
 ** define synonyms for logic constants
-set F := False; -- type L = 0
-set T := True;  -- type L = 1
+set f := False; -- type L
+set t := True;  -- type L
 ** multiple variables get same value
 new (x, y, z) := 5; -- type = Z for all
 ** multiple variables get multiple values
-new int, rea := 4, 4.44;
+new int, rea := -4, 4.44;
 print type(int); -- Z
 print type(rea); -- R
 </code></pre>
@@ -792,6 +794,10 @@ print type(rea); -- R
 <p>Composite structures are using () [] and {} to create different data types. Next you can study some examples. We wil explain later all these types: List, Map, Array, Object, String. All of these are also called Bee collections.</p>
 <pre><code class="language-bee">** boxed integer (type = Z)
 new i := [10]; -- array of one value!
+** array with capacity of 4 integers: Z
+new d := [1,2,3,4];
+** array with capacity of 10 real numbers: R
+new e := [0.00](10);
 ** list of one value (Z)
 new a := (1,);
 ** list of integers (Z)
@@ -800,12 +806,10 @@ new b := (1,2);
 new l := ('a','b');
 ** list of Unicode symbol (type = U)
 new u := ('&Delta;', '&Lambda;', '&Gamma;');
-** array with capacity of 4 integers: Z
-new d := [1,2,3,4];
-** array with capacity of 10 real numbers: R
-new e := [0.00](10);
-** matrix with capacity of 10x10 real numbers: R
+** 2d matrix with capacity of 10x10 real numbers: R
 new m := [0.00](10,10);
+** 3d matrix with capacity of 10x10x10 reals: R
+new m := [0.00](10,10,10);
 ** data set of 4 integers: Z
 new s := {1,2,3,4};
 ** hash map of (Integer: String)
@@ -813,7 +817,6 @@ new c := {1:"storage",2:"string"};
 ** object with two attributes: name &isin; S, age &isin; Z
 new b := {name:"Goliath", age:30};
 </code></pre>
-
 
 <h3><a id="parameter-types"/>Parameter types</h3>
 <p>When we define parameters we can use type inference only for optional parameters. Mandatory parameters must have type declaration using &isin; symbol.</p>

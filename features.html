@@ -29,12 +29,12 @@
 </div><hr>
 <h1>Bee Purpose</h1>
 <div class="alert alert-secondary shadow-sm">
-  Bee is a DSL (domain specific language) made for arithmetic, data algorithms, 2D graphics and geometric calculations. Bee is an imperative programming language that implement a new programming paradigm named <em>rule based programming.</em>
+  Bee is a general purpose language made for engineering and high performance computing. Bee is an imperative programming language that implement a new, rule based programming paradigm.</em>
 </div>
 
 <h1>Bee Features</h1>
 
-<p>Bee is a disruptive strange looking language that will bring Math notation into source code. Bee has uncommon keywords, operators and symbols not used in classic computer languages. We have made an effort to maximize some specific features listed below:</p>
+<p>Bee is a disruptive strange looking language that will bring Math notation into the source code. Bee has some uncommon keywords, operators and symbols. We have made an effort to maximize these features:</p>
 
 <table class="table table-bordered table-striped table-sm">
 <tr>
@@ -65,6 +65,8 @@
   <td>unusual syntax choices</td>
 </tr>
 </table>
+
+<div class="alert alert-warning">We have made a costly sacrifice, that we call technical debt, to use Unicode symbol that are difficult to input. This is compensated by improved readability but the cost is very high.</div>
 
 <h2><a id="readable"></a>Readable</h2>
 <p>Bee is designed to be learn as first programming language for Sage-Code developers. We think that you can learn Bee by reading code examples in one week. Next design choices will make Bee code easier to read therefore easier to learn:</p>
@@ -118,16 +120,19 @@ return; -- end of module
 </ul>
 
 <h2><a id="safe"></a>Safe</h2>
-<p>Bee is designed to be a safe and efficient language. These goals are ambitious and difficult to achieve. To fulfill these goals we setup a runway architecture based on next principles and believes:</p>
+<p>Bee is designed to be a safe but also comprehensive. To fulfill these goals we setup a runway architecture based on next principles and believes. Some of these principles create real challange for our design.</p>
 
 <ol>
+<li>Safety is more important than performance.</li>
+<li>If something can go wrong, eventually it will,</li>
+<li>If you already know it can be a problem, prevent it,</li>
+<li>It is better to be proactive than reactive,</li>
+<li>Sometimes if you try a second time it may work,</li>
 <li>There are more than one ways to resolve a problem,</li>
 <li>If your problem is large, split it into parts,</li>
-<li>It is better to be proactive than reactive,</li>
-<li>If something can go wrong, eventually it will,</li>
-<li>Efficiency is better than high cost performance,</li>
-<li>Precision is better than maximum perfection,</li>
-<li>Sometimes if you try a second time it may work.</li>
+<li>Explicit is better than implicit even if require more work,</li>
+<li>Efficiency is more important than high cost performance,</li>
+<li>Good precision is more important than perfect precision,</li>
 </ol>
 
 
@@ -165,27 +170,17 @@ return; -- end of module
 
 <h2><a id="disruptive">Disruptive</h2>
 
+<p>We have try and failed to create a consistend language because the people who invented Unicode symbols have done such a mess. Some symbols are duplicated, some are not ordered, some are missing. Sometimes the unicode symbol look like a Latin letter. We have done our best to select the most useful symbols.</p>
+
 <ol>
-<li>Bee use Unicode operators. This is the main factor that makes Bee disruptive: { &divide; &middot; &times; &not; &and; &or; &isin; &le; &ge; &equiv; &ne; &asymp; &plusmn; &sub; &sup; &cup; &cap; &uarr; &darr; &raquo; &laquo; &oplus; ⊖ &forall; &exist;}. This can be difficult to type without a programmable keyboard.</li>
-<li>Bee use one single letter for primitive types: {A B C D T F L W U N Q R S X Z} This come from mathematics. We have not used Unicode symbols: { ℂ ℍ ℕ ℙ ℚ ℝ ℤ }. We could have, but not all capital letters are available: {A B F L D S T X} there are all missing and the Bee language could look inconsistent.</li>
-<li>Single letter symbols make type annotation very compact. Sometimes a list of parameters could be long with various type annotations. Avoiding long expressions is one of Bee goals, so it is logical to use short type identifiers.</li>
-<li>Bee support some Greek and &Sigma; &Pi; &Delta; &Gamma; &Lambda; &Phi; &Psi; &Omega; Also we enable some lowercase Greek letters: {&lambda; &phi; &pi; &alpha; &beta; ɣ &epsilon; &delta; &mu; &omega; }</li>
-<li>Bee support some Cyrillic letters: {Б Г Д Ж И Л Ф Ц Ч Ш Э Я}. We could have support all but some look too much like the Latin letters. </li>
-<li>Bee support superscript numbers: {⁺⁻⁰&sup1;&sup2;&sup3;⁴⁵⁶⁷⁸⁹}. We recognize superscript as power: x&sup2; and xⁿ. You can also use any Latin superscript characters: (ᵃ..ᶻ). Caret symbol ^ is used to deal with fraction exponent: X^(&sup1;/₂)</li>
-<li>Subscript numbers are recognized as numbers in fractions like: {&sup1;/₂,⁻&sup1;/₄,&sup3;/₄...}. You can also use composite identifiers starting with a letter: (x₁, x₂, &alpha;₁, &beta;₂ &omega;₂) are some valid identifiers in Bee.</li>
+<li>Bee use Unicode operators: { &divide; &middot; &times; &not; &and; &or; &isin; &le; &ge; &equiv; &ne; &asymp; &plusmn; &sub; &sup; &cup; &cap; &uarr; &darr; &raquo; &laquo; &oplus; ⊖ &forall; &exist;}. We have alternative ASCII 2 symbols for some of these but not all. This is why Bee looks inconsistent & disruptive: </li>
+<li>Bee use one single letter for primitive types: {A B C D T L U N Q R S X Z}, we have not used Unicode symbols: { ℂ ℍ ℕ ℙ ℚ ℝ ℤ } despite aparent inconsistency.</li>
+<li>Bee support some Greek letters and symbols. These can be used as identifiers or operators: { &Sigma; &Pi; &Delta; &Gamma; &Lambda; &Phi; &Psi; &Omega;, &lambda; &phi; &pi; &alpha; &beta; &epsilon; &delta; &mu; &omega; }</li>
+<li>Bee support Cyrilic letters: {Б Г Д Ж И Л Ф Ц Ч Ш Э Я}. We do not support all Cyrikic alphabet for identifiers but you can use them in strings. </li>
+<li>Bee support superscript numbers: <code>{⁺⁻⁰¹²³⁴⁵⁶⁷⁸⁹}</code>. We recognize superscript as power: x^&sup2; and x^ⁿ. You can also use any Latin superscript characters: (ᵃ..ᶻ).</li>
+<li>Subscript indices can be used to create identifiers starting with a letter and use a suffix: (x₁, x₂, &alpha;₁, &beta;₂) are some valid identifiers in Bee.</li>
 <li>Bee use Unicode symbols for geometric types. These symbols are intuitive and make geometric types shorter. For example: &ang; = Angle, ⊡ = Dot, ◷ = Arc. Many other shapes are recognized.</li>
-<li>Bee define the "if" statement differently than most other languages. The "if" keyword is used as a <em>conditional</em> for other statements or as ternary operator in lambda expressions.</li>
-<li>Bee is using "#" for module single line comments outside of any rule or block of code. This is same symbol used in Wiki *.md pages for titles and sub-titles. It does not support indentation.</li>
-<li>Bee is using "**" for single line comment inside rules and blocks. This is used in Wiki *.md files for bold. You can use "**" only at beginning of new line or after space indentation but not at the end of a line.</li>
-<li>Bee use "+- ... -+" for block comment. In combination with "|" you can create boxed comments where "+" is the corner of the box. This is useful to create a module header.</li>
-<li>Bee support C like comments: /* ... */ is for "expression comments" that can be used in parenthesis. Two slashes "//" represent end of line comment or statement comment. This can not be used in parenthesis or brackets and can not be used at beginning of new line. You must use ** for line comments.</li>
-<li>For string pattern replication you can use star: "*" operator. For example "01" * 4 = "01010101". In other languages the same operator is numeric <em>times</em> but in Bee we are using "&middot;" for <em>times</em> like in mathematics.</li>
-<li>For concatenation between two strings We have chosen: "+" and "-". A number can not be appended to a string without explicit conversion. We think that explicit is better.</li>
-<li>Bee is an imperative &amp; verbose language. That is the reason we use verb statements. For example "make" will create variables, "alter" modify variables, "apply" execute a rule and so on. Code will look better due to color syntax for keywords.</li>
-<li>Bee do not use any abbreviation for keywords. This enable spell checking tools, to avoid typos in source code. Also, not all developers know English. Bee offer this opportunity to learn some English while learning the language.</li>
-<li>Data type is declared after the identifier, as an optional <em>hint</em>. This makes <em>type inference</em> possible. In contrast, for example in Java, usage of type keyword is mandatory before identifier. We think sometimes implicit types are good enough.</li>
-<li>Bee use keyword <em>rule</em> to define a subroutine and keyword <em>apply</em> to execute a subroutine. We have considered other keyword alternatives: {"routine", "functor", "relation", "rule"}, but the <em>rule</em> is more general for all these cases.</li>
-<li>Bee use prefix "*" to declare variable number of arguments. In C and JavaScript you must use 3 dots for this job "...". I think this was a poor choice. In Bee we use dots (more) to describe syntax patterns.</li>
+<li>Bee define the "if" statement differently than most other languages. The "if" keyword is used as a <em>conditional</em> for other statements or in lambda expressions.</li>
 <li>Bee use <em>sigils:</em> "$" for <em>system variables</em>. These are globals and we import all environment variables and configuration variables into the execution. Protecting these variables with a <em>sigil</em> is preventing overriding by mistake.</li>
 <li>Bee use starting and ending keywords to define blocks of code, not curly brackets. This eliminate the nested bracket nightmares and improve visual aspect of the code. We can use brackets for data literals: ordinals, sets, hash tables and objects.</li>
 </ol>
