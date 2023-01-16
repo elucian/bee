@@ -204,20 +204,18 @@ Bee has a modular architecture. A source file represents a module. A project can
 <table class="table table-bordered table-sm table-striped">
 <tr><td width="15%">$timer   </td>
 <td>duration information about last statement     </td></tr>
-<tr><td>$bee_stack   </td>
+<tr><td>$stack   </td>
 <td>debug information about current call stack    </td></tr>
-<tr><td>$bee_trace   </td>
+<tr><td>$trace   </td>
 <td>reporting information about statements        </td></tr>
-<tr><td>$bee_level   </td>
-<td>how deep is the current call stack            </td></tr>
-<tr><td>$bee_deep   </td>
-<td>query count: updated/inserted/deleted records </td></tr>
-<tr><td>$bee_query   </td>
+<tr><td>$query   </td>
 <td>last query statement                          </td></tr>
-<tr><td>$bee_error   </td>
-<td>last error                                    </td></tr>
-<tr><td>$bee_threads </td>
+<tr><td>$error   </td>
+<td>last error object                             </td></tr>
+<tr><td>$threads </td>
 <td>number of active threads                      </td></tr>
+<tr><td>$trial </td>
+<td>trial object, contain last trial messages     </td></tr>
 </table>
 
 
@@ -424,10 +422,10 @@ return;
 
 <p><b>Hiding: </b>To hide a public member instead of making an alias you can use keyword "hide". You can hide any public members from a loaded module. If you use a regular expression you can hide several public members that use a specific pattern.</p>
 
-<pre class="language-bee">
+<pre><code class="language-bee">
 hide qualifier.member_name;
 hide qualifier.(reg_exp_pattern);
-</pre>
+</code></pre>
 
 <h2><a id="execution"/>Execution</h2>
 

@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="description" content="Bee specification: syntax overview.">
   <meta name="author" content="Elucian Moise">
-  <meta name="keywords" content="bee, language, syntax, overview, expressions, lambda">
+  <meta name="keywords" content="bee, language, syntax, overview, expressions">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Website title -->
   <title>Bee Syntax</title>
@@ -40,7 +40,7 @@
 <ul>
 <li><a href="#comments">Comments</a></li>
 <li><a href="#keywords">Keywords</a></li>
-<li><a href="#declarations">Declarations</a></li>
+<li><a href="#variables">Variables</a></li>
 <li><a href="#expressions">Expressions</a></li>
 <li><a href="#statements">Statements</a></li>
 <li><a href="#conditions">Conditions</a></li>
@@ -128,7 +128,7 @@ return;
 <tr><td>read   </td><td>trial </td><td>stop    </td><td>yield </td><td>xor    </td></tr>
 <tr><td>write  </td><td>wait  </td><td>when    </td><td>or    </td><td>with   </td></tr>
 <tr><td>hide   </td><td>new   </td><td>cycle   </td><td>let   </td><td>start  </td></tr>
-<tr><td>while  </td><td>for   </td><td>        </td><td>      </td><td>       </td></tr>
+<tr><td>while  </td><td>for   </td><td>resum   </td><td>      </td><td>       </td></tr>
 </table>
 
 <h4>Notes:</h4>
@@ -246,14 +246,6 @@ return;
 <td>Hiding public members from a loaded module</td>
 </tr>
 <tr>
-<td>define</td>
-<td>Declare constant, data type or sub-type</td>
-</tr>
-<tr>
-<td>new </td>
-<td>Create a new variable or multiple variables</td>
-</tr>
-<tr>
 <td>rule</td>
 <td>Create a new <em>business rule</em> or <em>prototype</em></td>
 </tr>
@@ -320,12 +312,40 @@ return;
 </thead>
 <tbody>
 <tr>
+<td>start</td>
+<td>Create non repetitive local scope</td>
+</tr>  
+<tr>
+<td>if</td>
+<td>Start a conditional branch</td>
+</tr>
+<tr>
+<td>else</td>
+<td>Start an alternative branch</td>
+</tr>   
+<tr>
+<td>do</td>
+<td>Start a block of code</td>
+</tr> 
+<tr>
+<td>cycle</td>
+<td>Create repetitive local scope</td>
+</tr> 
+<tr>
+<td>for</td>
+<td>Create finite iterative block</td>
+</tr> 
+<tr>
+<td>while</td>
+<td>Create conditional repetitive block</td>
+</tr> 
+<tr>
 <td>match</td>
 <td>Value multi-path search selector</td>
 </tr>
 <tr>
 <td>when</td>
-<td>Create node values for match statement</td>
+<td>Create node for match statement</td>
 </tr>
 <tr>
 <td>other</td>
@@ -344,19 +364,13 @@ return;
 <td>Associated with trial to resolve specific errors</td>
 </tr>
 <tr>
+<td>miss</td>
+<td>Default trial block, executed when there is no case</td>
+</tr>
+<tr>
 <td>final</td>
 <td>Associated with trial to finalize the trial block</td>
 </tr>
-<tr>
-<td>miss</td>
-<td>Default trial block, executed when there is no case</td>
-<td>cycle</td>
-<td>Define a local block that is repetitive</td>
-</tr>
-<td>start</td>
-<td>Define a local block that usually has a name</td>
-</tr>
-</tr>  
 </tbody>
 </table>
 
@@ -405,15 +419,15 @@ return;
 </tr>
 <tr>
 <td>abort</td>
-<td>Interrupt early a trial block</td>
+<td>stop early a trial block</td>
 </tr>
 <tr>
 <td>fail</td>
-<td>Create error message if a condition is true else pass</td>
+<td>Create error message and continue with next step</td>
 </tr>
 <tr>
 <td>pass</td>
-<td>Stop trial block execution or does nothing if not in trial block</td>
+<td>Skip the rest and continue with next step</td>
 </tr>
 <tr>
   <td>expect</td>
@@ -421,11 +435,15 @@ return;
 </tr>
 <tr>
 <td>raise</td>
-<td>Stop trial case and re-issue last error</td>
+<td>Intrerupt a try job or trial and issue an error</td>
 </tr>
 <tr>
 <td>retry</td>
-<td>Clear error and repeat a trial block</td>
+<td>Repeat a trial block from the begioning</td>
+</tr>
+<tr>
+<td>resume</td>
+<td>Mark error as handled and continue trial</td>
 </tr>
 <tr>
   <td class="fixed">done  </td>
@@ -438,87 +456,124 @@ return;
 </tbody>
 </table>
 
-<h2><a id="declarations"/>Declarations</h2>
+<h4>Identifiers:</h4>
 
-<p>Bee is using 6 kind of declarations:</p>
+<p>Bee identifiers can start with dolar ($), dot (.), underscore (_), Latin, Greek, Chyrillic. An identifier can contain numbers but can not start with a number.</p>
 
-<table class="table table-bordered table-sm table-striped">
-<tr><td width="15%">use..as</td><td>import a module in global scope</td></tr>
-<tr><td width="15%">type   </td><td>declare custom data type</td></tr>
-<tr><td width="15%">rule   </td><td>declare named code block</td></tr>
-</table>
+<h4>Unicode letters:</h4>
 
+<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek an Cyrillic letters for identifiers:</p>
 
-<h2><a id="expressions"></a>Expressions</h2>
-
-<p>Expressions are created using identifiers, operators, rules and constant literals.</p>
-<ul>
-<li>can use () to establish order of operations,</li>
-<li>can be enumerated using comma separator ","</li>
-<li>can be combined to create more complex expressions,</li>
-<li>have a result that can be assigned to variables,</li>
-<li>have a result that can be printed to console,</li>
-<li>result type is given automatically using logical inference;</li>
-</ul>
-
-<h4>Examples</h4>
-
-<pre><code class="language-bee linenumbers">** demo some print statements
-10
-10 + 10 + 15
-"this is a test"
-
-** complex expressions
-(10 &gt; 5) &or; (2 &lt; 3)
--b + sqr(b² - 4·a·b)/(2·a)
-
-** enumeration of expressions
-(1,2,3)
-(1,',',2,',',3)
-</code></pre>
-
-<h4>Naming:</h4>
-<p>Bee uses diverse identifiers names to <em>data types</em>. It uses ASCII characters and numbers or Unicode symbols. Most predefined data types have a longer name and a code. You can use both to represent a type. Long names are synonyms (alias) to the short name.</p>
-
-<h4>Examples:</h4>
-
-<pre class="language-output">
-Z64      -- primitive type: long integer
-Integer  -- same as Z64
-Rational -- same as Q(50.12)
-File     -- composite type: text file
-List     -- composite type: list of values
+<pre class="language-out">
+Σ Π Δ Ξ Γ Ψ Ω ζ
+α β ɣ λ π μ φ ε δ η σ ω
+Б Г Д Ж И Л Ф Ц Ч Ш Э Я 
 </pre>
 
-<h4>Subscript:</h4>
+<h3>Subscript:</h3>
 
-<p>Bee has support for subscript to make identifiers. This is useful especially in mathematical formulas for geometry and geography. You can use a limited number of characters offered by Unicode:</p>
+<p>You can use a limited number of letters and numbers available in Unicode as subscript to make identifier names. You can not start an identifier with one of these symbols and you can't add other symbols that are not subscript after a subscript:</p>
 
 <pre class="language-out">
 x₀ x₁ x₂ x₃ x₄ x₅ x₆ x₇ x₈ x₉ x₁₀
 yₐ yₑ yₕ yᵢ yⱼ yₖ yₗ yₘ yₙ yₒ yₚ yᵣ yₛ yₜ yᵤ yᵥ yₓ
+
 </pre>
 
-<h4>Superscript:</h4>
+<h3>Superscript:</h3>
 
-<p>Bee has support for exponent using superscript. You can make any numeric exponent or variable exponent. Notice the variable is mapped to normal variables. The limitation is only lowercase variable names can be used as exponents. That makes constants impossible to use as exponents.<p>
+<p>Bee has support for exponent using superscript. You can make any integer exponent including negative numbers but you can not use dot or fraction in the exponent.<p>
 
 <pre class="language-out">
 x⁺ x⁻ x¹ x² x³ x⁴ x⁵ x⁶ x⁷ x⁸ x⁹ x¹⁰
-y° y′ y″ yᵃ yᵇ yᶜ yᵈ yᵉ yᶠ yᵍ yʰ yⁱ yʲ yᵏ
-yᶩ yᵐ yⁿ yᵒ yᵖ yʳ yˢ yᵗ yᵘ yᵛ yʷ yˣ yʸ yᶻ
 </pre>
+
+<p><b>Note: </b>
+Symbol (^) is exponent operator and is not required when you use superscript exponent. You can use it with expressions, constants or rational numbers to resolve the exceptional cases.</p>
+
+<h4>Lowercase exponent:</h4>
+
+<p>Identifiers that start with a lowercase Latin letter can be used as exponent. The superscript variable can start with a letter and can also use numbers.</p>
+
+<pre class="language-out">
+yᵃ yᵇ yᶜ yᵈ yᵉ yᶠ yᵍ yʰ yⁱ yʲ yᵏ yᶩ 
+yᵐ yⁿ yᵒ yᵖ yʳ yˢ yᵗ yᵘ yᵛ yʷ yˣ yʸ yᶻ
+</pre>
+
+<h4>Uppercase exponent:</h4>
+
+<p>If you define a constant or variable that start with capital letter there may be some issues. You can't use all Latin letters or any Greek or Cyrilic capital letters in exponent. So your options are limited to create uppercase exponents.</p>
+
+<pre class="language-out">
+zᴬ zᴮ zᴰ zᴱ zᴲ zᴳ zᵸ zᴵ zᴶ zᴷ zᴸ 
+zᴹ zᴺ zᴻ zᴼ zᴾ zᴿ zᵀ zᵁ zᵂ
+</pre>
+<br>
+<div class="alert alert-warning"><b>Caution: </b>Observe letters: {C, F ,S ,Q} are missing. So if you define a constant that use any of these letters, you will need symbol (^) to create exponent.</div>
+
+<h2><a id="variables"/>Variable declarations</h2>
+
+<p>In Bee, all variables must be declared using an imperative statement. Variables can be dynamic or static and can have a data type. Data type can be custom or pre-defined.</p>
+
+<table class="table table-bordered table-sm table-striped">
+<tr>
+  <td width="15%">type</td>
+  <td>declare custom data type</td>
+</tr>
+<tr>
+  <td width="15%">new</td>
+  <td>declare a dynamic variable</td>
+</tr>
+<tr>
+  <td width="15%">set</td>
+  <td>declare a static variable</td>
+</tr>
+</table>
+
+<h2><a id="expressions"></a>Expressions</h2>
+
+<p>Expressions are created using identifiers, operators, rules and constant literals. Expressions can be anonymous or can be assigned to identifiers to create lambda expressions.</p>
+
+<p>expressions ...</p>
+<ul>
+<li>can use () to establish order of operations,</li>
+<li>can be enumerated using comma separator "," in a list,</li>
+<li>can be combined to create more complex expressions,</li>
+</ul>
+
+<h4>Examples</h4>
+
+<pre><code class="language-bee linenumbers">** expressions
+print 10
+print 10 + 10 + 15
+print "this is a test"
+
+** complex expressions
+print (10 &gt; 5) &or; (2 &lt; 3)
+print -b + sqr(b² - 4·a·b)/(2·a)
+
+** enumeration of expressions
+print (1,2,3)
+print (1,',',2,',',3)
+</code></pre>
 
 <h2><a id="conditions"/>Conditional Execution</h2>
 
-<p>A condition is a logic expression used to control statement execution. For this we use "if" keyword and "else" keyword. These keywords are used in be a little bit different than in other languages.</p>
+<p>A condition is a logic expression used to control statement execution. For this we use {"if", "else"} keywords at end of statements.</p>
 
-<pre><code class="language-bee">statement if condition;
+<pre><code class="language-bee">
+** conditional statement execution
+statement if condition;
 </code></pre>
 
 <p><b>Note:</b> Previous statement is executed only if the condition is True.</p>
 
-<pre><code class="language-bee">expect condition else statement;
+<pre><code class="language-bee">
+** alternative statement 
+  expect condition else statement;
+
+** alternative expression
+  expect condition else expression;
 </code></pre>
 
 <p><b>Note:</b> Previous statement is executed only if the condition is False.</p>
@@ -558,25 +613,16 @@ x⁻¹ = 1/x, x⁻² = 1/x², x⁻³ = 1/x³ ...
 <p>Power operations have priority but we have support only for (+, -) no other operations are possible in exponent. In next expressions, (n-1) is done first before making the power operation.</p>
 
 <pre class="language-out">
--- equivalent notations
-xⁿ⁻¹ = pwr(x,n-1)
-xˣ⁺¹ = pwr(x,n+1)
+-- equivalent notation
+xⁿ⁻¹ = x^(n-1)
+xˣ⁺¹ = x^(n+1)
 
--- supported  notations
-x^(¹/₂) = sqrt(x,2)  -- Symbol ^ is for power
-x^(¹/₃) = sqrt(x,3)  -- This will also work
+-- equivalent  notation
+x^(¹/₂) = √2(x)  
+x^(¹/₃) = √3(x) 
 </pre>
-
-<h4>Unicode Identifiers:</h4>
-
-<p>In mathematics is very popular notation for angles to use Greek letters. We support in Bee a limited number of Greek letters to make variable names. Also several Cyrillic characters are permitted.</p>
-
-<pre class="language-out">
-Λ Γ Δ Ξ Π Σ Φ Ψ Ω α β ɣ δ ζ
-Б Г Д Ж И Л Ф Ц Ч Ш Щ Э Я
-η θ λ μ ν ξ ο π ρ σ ς τ υ φ ω
-</pre>
-
+<br>
+<div class="alert alert-warning"><b>Note:</b>In expressions above () symbols are mandatory. The compiler will detect missing paranthesis and will ask for it. This will improve code readability and eliminate confusions.</div>
 
 <h3>Pattern Matching</h3>
 
@@ -596,21 +642,12 @@ rule main:
 
   ** alternative code alignment
   let var := ( xp1 if cnd1 else
-               xp2 if cnd2 else
-               xp);
+               xp2 if con2 else
+               xp3 if cnd3 else
+               xp
+              );
 return;
 </code></pre>
-
-
-<p><b>Legend:</b></p>
-<ul>
-<li>var  ::= predefined variable,</li>
-<li>xp1  ::= expression of same type with var,</li>
-<li>xp2  ::= expression of same type with var,</li>
-<li>xp   ::= default expression (no condition).</li>
-<li>cnd1 ::= condition to produce exp1,</li>
-<li>cnd2 ::= condition to produce exp2,</li>
-</ul>
 
 <h4>Example:</h4>
 <pre><code class="language-bee">rule main:
@@ -628,7 +665,7 @@ return;
 
 <h2><a id="operators"/>Operators</h2>
 
-<p>Bee operators are ASCII, 2 ASCII symbols or Unicode alternative symbol. Sometimes there is only one symbol available, with no alternative. This is why Bee language is considered experimental, esoteric & disruptive.</p>
+<p>Bee operators are ASCII or Unicode symbols. One operator can be created using one or two characters. This is why Bee language is considered experimental, esoteric & disruptive.</p>
 
 <h2>Delimiters</h2>
 <table class="table table-bordered table-striped">
@@ -670,6 +707,10 @@ return;
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>`x`</td>
+<td>Back quoted string: regular expression.</td>
+</tr>
 <tr>
 <td>'x'</td>
 <td>Single quoted string literal or ASCII code point</td>
@@ -753,14 +794,13 @@ return;
 <tr>
 <td>.</td>
 <td>Membership dot notation | Prefix for public member/attribute</td>
+<tr>
+<td>,</td>
+<td>Enumeration of elements | expressions</td>
 </tr>
 <tr>
 <td>|</td>
 <td>Declarative collection builder: set := { x*2 | x &isin; (0..3)}</td>
-</tr>
-<tr>
-<td>\</td>
-<td>Exact divisor: since 15 = 3 &middot; 5 then&nbsp;(3 \ 15 = True)&nbsp;and&nbsp;(5 \ 15 = True)</td>
 </tr>
 <tr>
 <td>\</td>
@@ -808,7 +848,7 @@ return;
 </tr>
 <tr>
 <td>/</td>
-<td>Real division</td>
+<td>Real division. This can create rational numbers.</td>
 </tr>
 <tr>
 <td>&times;</td>
@@ -1046,6 +1086,9 @@ return;
 <tr>
 <td>&le;</td>
 <td>less than or equal to</td>
+</tr>
+<td>\</td>
+<td>Exact divisor: 3 \ 15 &equiv; True</td>
 </tr>
 </tbody>
 </table>

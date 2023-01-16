@@ -204,9 +204,8 @@ return;
 <ul>
 <li><a href="#forward-declarations">forward declarations</a></li>
 <li><a href="#recursive-rules">recursive rules</a></li>
-<li><a href="#multi-threading">multi threading</a></li>
 <li><a href="#external-rules">external rules</a></li>
-<li><a href="#purity-level">purity level</a></li>
+<li><a href="#closures">closures</a></li>
 </ul>
 
 <h3><a id="forward-declarations"></a>Forward declarations</h3>
@@ -317,36 +316,65 @@ return;
 
 <hr>
 
-<h3><a id="purity-level">Rule purity level</h3>
+<h2><a id="closures"></a>Closures</h2>
 
-<p>Bee compiler should track rule purity level to be able to optimize the generated code. A pure rule can be optimized better than an impure rule. Therefore a developer must understand how to create code using pure rules and avoid dirty rules as much as possible.</p>
+<p>A closure is a special kind of rule defined inside of another rule. A closure is encapsulated in a hig order rule that can have public or private states.</p>
 
-<h4>Pure rules:</h4>
+<h4>Example:</h4>
 
-<p>Compiler can detect if a rule is pure.</p>
-<p>A rule is pure when ...</p>
-<ul>
-<li>do not have multiple results but one;</li>
-<li>do not modify external states;</li>
-<li>do not perform unsafe data conversions;</li>
-<li>do not raise errors;</li>
-<li>do not have side-effects;</li>
-<li>do not have internal rules;</li>
-<li>do not accept rules as parameters;</li>
-<li>do not call a dirty rule;</li>
-</ul>
+<p>In next example we define rule foo() that has two public states: .count and .step and a public method .next() that is a closure. You can call foo() to initialize the states.</p>
 
-<h4>Dirty rules:</h4>
+<pre><code class="language-bee">** define foo generator
+rule foo(start:0 &isin; N, step:1 &isin; R):
+    ** create public states
+    set .count := [start];
+    set .step  := [step];
 
-<p>A rule is pure as long as compiler do not degrade the rule to dirty status. A dirty rule has restrictions.</p>
+    ** define closure method
+    rule .next() => (r &isin; Z):
+       let r := foo.count + foo.step;
+       let foo.count := r;
+    return;
+return;
 
-<h4>Notes:</h4>
-<ul>
-<li>Pure rules are deterministic in contrast to stochastic rules,</li>
-<li>If a rule is not pure is <em>downgraded</em> by the compiler,</li>
-<li>Dirty rules can be used in assignments but not in &lambda; expressions,</li>
-<li>Dirty rules can not be send as arguments to other rules for call-back,</li>
-</ul>
+rule main:
+    ** initialize the states
+    apply foo(10, 5);
+
+    ** verify internal states
+    expect foo.start = 10;
+    expect foo.step  = 5;
+    
+    ** generate some numbers
+    cycle:
+       new x := 0;
+    while x <= 30 do
+       let x := foo.next();
+       print "x = " + x; 
+    done;
+return;
+</code></pre>
+
+<p><b>Notes: </b>We use "set" to create foo() properties. These properties are alocated on the heap when foo() is first called. The heap is used to hold data for a long period of time. We box these variables using [] to be mutable, otherwise would be constant.<p>
+
+<div class="alert alert-warning"><b>Warning:</b> If you do not initialize the states before use, you may end-up with a run-time error when the state is used: "Uninitialized state x in line #."</div>
+
+<h4>Expected Output:</h4>
+
+<pre class="language-out">
+x = 10
+x = 15
+x = 20
+x = 25
+x = 30
+</pre>
+
+<h4>Notes:&nbsp;</h4>
+
+<ol>
+<li>Usually the attributes have default values; </li>
+<li>There are othery ways to create generators;</li>
+</ol>
 
 <p><b>Read next:</b>
 <a href="objects.html">Objects</a></p>

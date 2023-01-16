@@ -67,6 +67,7 @@ function apply_style(str) {
     str = str.replace(/\bfail\b/,interrupt("fail"))
     str = str.replace(/\bretry\b/,interrupt("retry"))
     str = str.replace(/\braise\b/,interrupt("raise"))
+    str = str.replace(/\bresume\b/,interrupt("resume"))
     str = str.replace(/\bcontinue\b/,interrupt("continue"))
     str = str.replace(/\bstop\b/,interrupt("stop"))
     str = str.replace(/\bredo\b/,interrupt("redo"))
@@ -74,63 +75,63 @@ function apply_style(str) {
 
     //keyword operators
     str = str.replace(/\bas\b/,operator("as"))
-    str = str.replace(/\bas\b/,operator("in"))
-    str = str.replace(/\bas\b/,operator("or"))
-    str = str.replace(/\bas\b/,operator("and"))
-    str = str.replace(/\bas\b/,operator("not"))
+    str = str.replace(/\bin\b/,operator("in"))
+    str = str.replace(/\bor\b/,operator("or"))
+    str = str.replace(/\band\b/,operator("and"))
+    str = str.replace(/\bnot\b/,operator("not"))
 
-    //questionable
-    str = str.replace(/\s\|\s/g,operator(" | "))
-    str = str.replace(/\s\&\s/g,operator(" & "))
-    str = str.replace(/\s\~\s/g,operator(" ~ "))
-    str = str.replace(/\s\+\s/g,operator(" + "))
-    str = str.replace(/\s\-\s/g,operator(" - "))
-    str = str.replace(/\s\*\s/g,operator(" * "))
-    str = str.replace(/\s\=\s/g,operator(" = "))
+    //next operator has problems, is better not to do it
+    //str = str.replace(/\s\|\s/g,operator(" | "))
+    //str = str.replace(/\s\&\s/g,operator(" & "))
+    //str = str.replace(/\s\~\s/g,operator(" ~ "))
+    //str = str.replace(/\s\+\s/g,operator(" + "))
+    //str = str.replace(/\s\-\s/g,operator(" - "))
+    //str = str.replace(/\s\*\s/g,operator(" * "))
+    //str = str.replace(/\s\=\s/g,operator(" = "))
 
     //double symbols
-    str = str.replace(/=>/,operator("=>"))
-    str = str.replace(/==/,operator("=="))
-    str = str.replace(/:=/,operator(":="))
-    str = str.replace(/\+=/,operator("+="))
-    str = str.replace(/-=/,operator("-="))
-    str = str.replace(/\/=/,operator("/="))
-    str = str.replace(/\*=/,operator("*="))
-    str = str.replace(/:=/,operator(":="))
-    str = str.replace(/::/,operator("::"))
-    str = str.replace(/<</,operator("<<"))
-    str = str.replace(/>>/,operator(">>"))
-    str = str.replace(/!=/,operator("!="))
-    str = str.replace(/!≡/,operator("!≡"))
-    str = str.replace(/<:/,operator("<:"))
-    str = str.replace(/<\+/,operator("<+"))
+    //str = str.replace(/=>/,operator("=>"))
+    //str = str.replace(/==/,operator("=="))
+    //str = str.replace(/:=/,operator(":="))
+    //str = str.replace(/\+=/,operator("+="))
+    //str = str.replace(/-=/,operator("-="))
+    //str = str.replace(/\/=/,operator("/="))
+    //str = str.replace(/\*=/,operator("*="))
+    //str = str.replace(/:=/,operator(":="))
+    //str = str.replace(/::/,operator("::"))
+    //str = str.replace(/<</,operator("<<"))
+    //str = str.replace(/>>/,operator(">>"))
+    //str = str.replace(/!=/,operator("!="))
+    //str = str.replace(/!≡/,operator("!≡"))
+    //str = str.replace(/<:/,operator("<:"))
+    //str = str.replace(/<\+/,operator("<+"))
 
 
     // many times
-    str = str.replace(/∈/g,operator("∈"))
-    str = str.replace(/∨/g,operator("∨"))
-    str = str.replace(/∧/g,operator("∧"))
-    str = str.replace(/÷/g,operator("÷"))
-    str = str.replace(/·/g,operator("·"))
-    str = str.replace(/¬/g,operator("¬"))
-    str = str.replace(/±/g,operator("±"))
+    //str = str.replace(/∈/g,operator("∈"))
+    //str = str.replace(/∨/g,operator("∨"))
+    //str = str.replace(/∧/g,operator("∧"))
+    //str = str.replace(/÷/g,operator("÷"))
+    //str = str.replace(/·/g,operator("·"))
+    //str = str.replace(/¬/g,operator("¬"))
+    //str = str.replace(/±/g,operator("±"))
     // one time
-    str = str.replace(/≡/,operator("≡"))
-    str = str.replace(/≥/,operator("≥"))
-    str = str.replace(/≤/,operator("≤"))
-    str = str.replace(/⊕/,operator("⊕"))
-    str = str.replace(/⊖/,operator("⊖"))
-    str = str.replace(/≈/,operator("≈"))
-    str = str.replace(/≠/,operator("≠"))
-    str = str.replace(/∪/,operator("∪"))
-    str = str.replace(/∩/,operator("∩"))
-    str = str.replace(/⊂/,operator("⊂"))
-    str = str.replace(/⊃/,operator("⊃"))
+    //str = str.replace(/≡/,operator("≡"))
+    //str = str.replace(/≥/,operator("≥"))
+    //str = str.replace(/≤/,operator("≤"))
+    //str = str.replace(/⊕/,operator("⊕"))
+    //str = str.replace(/⊖/,operator("⊖"))
+    //str = str.replace(/≈/,operator("≈"))
+    //str = str.replace(/≠/,operator("≠"))
+    //str = str.replace(/∪/,operator("∪"))
+    //str = str.replace(/∩/,operator("∩"))
+    //str = str.replace(/⊂/,operator("⊂"))
+    //str = str.replace(/⊃/,operator("⊃"))
 
 
     // System & built-in variables
     str = str.replace(/\bself\b/g,builtin("self"))
-
+    str = str.replace(/\bsuper\b/g,builtin("super"))
     return str
 }
 
@@ -163,7 +164,7 @@ function bee_render() {
                         start_comments = false
                     } else {
                         //split away end comments //
-                        parts = line.split("\-\-")
+                        parts = line.split(" \-\- ")
                         if (parts.length > 1) {
                             line = parts[0]
                             comment = "-- " + parts[1]

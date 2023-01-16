@@ -30,10 +30,9 @@
 
 <h1>Bee Types</h1>
 <div class="alert alert-secondary shadow-sm">
-Data types represent abstract <em>domains of values</em>. In other words, data type represent constrain rules that can be used to validate a particular data value. Data<em>"type"</em> is an attribute of any data element. In Bee there is no data element without this attribute.
-</div>
+Data types represent a <em>domains of values</em>. In other words, data type represent constraints that can be used to validate a particular value. Data<em>"type"</em> is an attribute of any data value.</div>
 
-<p>Bee use 2 kind of data types:</p>
+<p>Bee use several kind of data types described below. Use these links to jump to a particular data type. Use browser back-button to revisit a particular data type:</p>
 <ol>
 <li><a href="#primitive-types">Primitive types;</a></li>
 <li><a href="#constant-literals">Constant literals;</a></li>
@@ -47,7 +46,7 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <li><a href="#alphanumeric-type">Alphanumeric type;</a></li>
 <li><a href="#type-inference">Type inference;</a></li>
 <li><a href="#type-checking">Type checking;</a></li>
-<li><a href="#logic-type">Logic type;</a></li>
+<li><a href="#boolean-type">Boolean type;</a></li>
 <li><a href="#rational-numbers">Rational numbers;</a></li>
 
 </ol>
@@ -55,13 +54,13 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <h4>Usability:</h4>
 <ul>
 <li>
-<p>We think dynamic typing is more fragile and prone to errors than the static typing. Therefore Bee is a <em>strongly typed</em> language with type inference and gradual typing. That means any data is constrained by fixed <em> "data type"</em> rules.</p>
+<p>Bee is using a gradual typing system. We think dynamic typing is more fragile and prone to errors. Therefore Bee is a <em>strongly typed</em> language with type inference. That means any data is constrained by fixed <em> "data type"</em> rules.</p>
 </li>
 <li>
 <p>Bee has predefined data types. You can create new data types based on predefined types using a type declaration. You can create sub-types or composite types having new constraints and rules that can improve data validation further.</p>
 </li>
 <li>
-<p>A data type can be manipulated using rules and operators. You can have a variable of type: <em> Type</em>. To detect a data type of any variable you can use function type(). Therefore type(type_variable) = Type.</p>
+<p>A data type can be manipulated using rules and operators. You can have a variable of type: <em> Type</em>. To detect a data type of any variable you can use the introspection function type().
 </li>
 </ul>
 
@@ -78,9 +77,9 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 </thead>
 <tbody>
 <tr>
-<td>Logic</td>
-<td>L</td>
-<td>Numeric enumeration of two values: 0 = False, 1 = True</td>
+<td>Boolean</td>
+<td>B</td>
+<td>Boolean or 8 bit number, 0 = False, >= 1 True</td>
 </tr>
 <tr>
 <td>Alpha</td>
@@ -88,10 +87,6 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>Alpha-numeric E-ASCII ('0'..'9') ('a'..'Z')</td>
 </tr>
 <tr>
-<td>Binary</td>
-<td>B</td>
-<td>Binary number on 8 bit, max: 0b11111111 (0..255) (0..0xFF)</td>
-</tr>
 <tr>
 <td>Unicode</td>
 <td>U</td>
@@ -157,9 +152,9 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>(&forall; UTF8)</td>
 </tr>
 <tr>
-<td>0b11111111</td>
+<td>0B0,0B1</td>
 <td>B</td>
-<td>(0b) &amp; (0,1)</td>
+<td>(0,1) &amp; B</td>
 </tr>
 <tr>
 <td>1234567890</td>
@@ -172,9 +167,9 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>(-+) &amp; (0,1,2,3,4,5,6,7,8,9)</td>
 </tr>
 <tr>
-<td>0xFFFF</td>
+<td>'a','b'</td>
 <td>A</td>
-<td>(0x) &amp; (0,1,2,3,4,5,6,7,8,9) &amp; ABCDEF</td>
+<td>ASCII (0x00..OxFF)</td>
 </tr>
 <tr>
 <td>U+FFFF</td>
@@ -229,11 +224,6 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 </thead>
 <tbody>
 <tr>
-  <td>Object</td>
-  <td>O</td>
-  <td>Object reference</td>
-</tr>  
-<tr>
 <td>Complex</td>
 <td>C</td>
 <td>Double precision pair of double float numbers (9r+9j)</td>
@@ -254,9 +244,9 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 <td>"hh:mm,ms"</td>
 </tr>
 <tr>
-  <td>Function</td>
-  <td>F</td>
-  <td>Lambda function reference</td>
+  <td>Lambda</td>
+  <td>L</td>
+  <td>Lambda expression or function.</td>
 </tr>
 </tbody>
 </table>
@@ -283,25 +273,30 @@ Data types represent abstract <em>domains of values</em>. In other words, data t
 </tr>
 <tr>
 <td>{}</td>
-<td>Enumeration / Set / Map / Object</td>
+<td> Set / Map / Object / Enumeration</td>
 </tr>
 </tbody>
 </table>
 
 <h4>Notes:</h4>
 <ul>
-<li>All collections are actually references to custom objects,</li>
+<li>All collections are actually references,</li>
 <li>Collection elements can be references or native types,</li>
 <li>Elements of collection are separated by comma,</li>
-<li>Pair of values in Hash map and Object are separated by columns ":"</li>
+<li>Pair of values are separated by columns ":"</li>
 </ul>
 
 <h2><a id="type-declaration"/>Type declaration</h2>
-<p>User can define super-types and sub-types using operators ":" and "&lt;:".</p>
-<pre><code class="language-bee">** declare new type
+<p>User can define type alias using operators ":" and sub-types using operator "&lt;:" (inheritance). Usr can specify type of variables explicit usin operator &isin;</p>
+
+<pre><code class="language-bee">** declare new type alias
 type Type_Identifier: type_descriptor &lt;: super_type;
-** declare variables using new type
-var_name,var_name ... &isin; Type_Identifier;
+
+** declare variables using type alias
+new var_name &isin; Type_Identifier;
+
+** declare many variables using type alias
+new var_name, var_name ... &isin; Type_Identifier;
 </code></pre>
 
 
@@ -453,8 +448,9 @@ set forall2: U-00002200 &isin; U; -- Symbol: &forall;
 
 <h4>Notes:</h4>
 <ul>
-<li>Symbol ":" can be used as pair-up operator for arguments and maps.</li>
-<li>Symbol ":=" can can be used to define initial values of variables or parameters.</li>
+<li>Symbol ":" can be used to define a type or set initial value or type for a variable or parameter.</li>  
+<li>Symbol ":" can be used as pair-up operator for arguments and map pairs.</li>
+<li>Symbol ":=" can can be used to define or mutate the value of variables or parameters.</li>
 <li>Symbol "<:" used in declarations is used to indicate a supertype,</li>
 </ul>
 <pre><code class="language-bee">** primitive variable declarations with type
@@ -479,10 +475,10 @@ new var1:con1, var2:con2 ... &isin; TypeName;
 <h4>Example:</h4>
 <pre><code class="language-bee">#fragment of code
 
-new (a:10, b:0) &isin; Z; -- initialize two variables
+new a:10, b:0 &isin; Z; -- initialize two variables
 let b := a + 1;   -- modify b using binding operator :=
 let b += 1;       -- modify b using modifier +=
-print b;          -- expected 12
+expect b = 12;    -- check if b has proper value
 </code></pre>
 
 <h4>Notes:</h4>
@@ -602,26 +598,35 @@ return;
 </code></pre>
 
 
-<h2><a id="logic-type"></a>Logic type</h2>
-<p>Logic type is an enumeration of two public symbols: False and True</p>
-<pre><code class="language-bee">type .L = {.False: 0, .True: 1};
-** printing logical values
+<h2><a id="boolean-type"></a>Boolean type</h2>
+<p>Boolean type is Bee is native numeric of type B. However we also implement native two constants True, False that are publicly available in core library</p>
+
+<pre><code class="language-bee">
+** overwrite the default values
+set False = 0; 
+set True  = 1; 
+</code></pre>
+
+<p>Printing native Boolean values is going to print numbers. Type B can support a number between 0b0 and 0b00000001. Therefore printing this type is done using notation 0B0 and 0B1.</p>
+<pre><code class="language-bee">
+** printing Boolean values
 rule main:
-  print True;  -- 1
-  print False; -- 0
+  print False; -- 0B0
+  print True;  -- 0B1
 return;
 </code></pre>
+
+<p>You can convert B to a number, safely. You can convert a number to B explicit using cast operator: <code>number :&gt; B. </code>The number will loose all it's significance and become 0B1 or 0B0.</p> 
 
 
 <h3>Logic operations</h3>
 <p>Bee uses several familiar logic operators from mathematics:</p>
 <ul>
-<li>&not; (not)</li>
-<li>&and; (and)</li>
-<li>&or;  (or)</li>
-<li>&oplus; (xor)</li>
+<li>&not; - equivalent "not"</li>
+<li>&and; - equivalent "and"</li>
+<li>&or;  - equivalent "or"</li>
 </ul>
-<p>Precedence: { &not;, &and;, &or;, &oplus;, = }. Symbol &not; apply first (has higher precedence)</p>
+<p>Precedence: { &not;, &and;, &or; }. Symbol &not; will apply first, symbol &or; will apply last.</p>
 
 <p><b>bitwise</b></p>
 <p>In Bee we define special operators to perform bitwise operations. One opperator is overwrite: &oplus;. This operator (xor) can operate on both, logical values or expressions and also on integer numbers.</p>
@@ -633,21 +638,23 @@ return;
 <li>&oplus; (xor)</li>
 </ul>
 
-
-<pre><code class="language-bee"># betweese opperations
-print 4 | 3;-- out:7 is because 100 &or; 011 = 111 = 7;
-print ~4    -- out:3 is because: 100 &oplus;  100 = 011 = 3;
-print 4 &amp; 7 -- out:4 is because: 100 &and; 111 = 100 = 4;
-print 4&oplus;4  -- out:0 is because: 100 &oplus; 100 = 000 = 0;
-print 1&lt;&lt;2  -- out:2 is because: 001 &lt;&lt; 2   = 100 = 4;
-print 6&lt;&lt;2  -- out:1 is because: 110 &lt;&lt; 2   = 001 = 1;
+<pre><code class="language-bee"># bitwise operations
+print 4 | 3; -- out:7 is because 100 | 011 = 111 = 7;
+print ~4;    -- out:3 is because: 100 ~  100 = 011 = 3;
+print 4 &amp; 7; -- out:4 is because: 100 &amp; 111 = 100 = 4;
+print 4 &oplus; 4;  -- out:0 is because: 100 &oplus; 100 = 000 = 0;
+print 1 &lt;&lt; 2;  -- out:2 is because: 001 &lt;&lt; 2   = 100 = 4;
+print 6 &gt;&gt; 2;  -- out:1 is because: 110 &gt;&gt; 2   = 001 = 1;
 </code></pre>
 
+<h4>Other operators</h4>
 
-<p><b>comparison</b>&nbsp;Comparison operators will create a logical response: 1 = True or 0 = False</p>
+<p>Comparison operators will create a Boolean response: 1 = True or 0 = False. Also, the equivalent and belonging operators will create a Boolean response. You can combine them to create Boolean expressions.</p>
+
 <ul>
-<li>comparison ( &asymp;, =, &ne;, &equiv;, &gt;, &lt;, &le;, &ge;)</li>
-<li>belonging ( &isin;, &sup;, &sub; )</li>
+<li>comparison ( &asymp;, =, &ne;, &equiv;, !&equiv;,  &gt;, &lt;, &le;, &ge;)</li>
+<li>equivalents (==, !=, <=, >=)</li>
+<li>belonging ( &isin;, !&isin; )</li>
 </ul>
 
 <h4>Example:</h4>
@@ -678,12 +685,16 @@ return;
 
 
 <p><b>singleton</b></p>
-<p>Primitive types are unique. That means they are equivalent.</p>
+<p>Primitive types are unique. That means they are equivalent. A literal or constant is equivalent to another literal having the same value.</p>
+
 <pre><code class="language-bee">** primitive values are singleton
 print  1  &equiv;  1;  -- 1
-print 's' &equiv; "s"; -- 1
-</code></pre>
+print "s" &equiv; "s"; -- 1
 
+** alternative operator have the same significance
+print  1  == 1;  -- 1
+print "s" == "s"; -- 1
+</code></pre>
 
 <p><b>Precedence:</b></p>
 <p>Logic operators have greater precedence than comparison operators.</p>
@@ -691,14 +702,14 @@ print 's' &equiv; "s"; -- 1
 <h3><a id="logical-expression"/>Logical expression</h3>
 <p>Logical expression have value { 0 = False, 1 = True }</p>
 <pre><code class="language-bee">
-** define constants based on logic values
-set f: False &isin; L;
-set t: True  &isin; L;
+** define constants based on Boolean values
+set f: False;
+set t: True;
 
 rule main:
   ** expressions with single operant
-  print       f; -- 0
-  print &not; t; -- 1
+  print f; -- 0
+  print &not; t; -- 0
 
   ** expressions with two operands
   print (f = t); -- 0
@@ -706,8 +717,8 @@ rule main:
   print (f &ne; t); -- 1
   print (f &lt; t); -- 1
   print (f &gt; t); -- 0
-  print (f &and;t); -- 0
-  print (f &or; t); -- 1
+  print (f &and; t); -- 0
+  print (f &or;  t); -- 1
   print (f &oplus; t); -- 1
 return;
 </code></pre>
@@ -726,18 +737,17 @@ return;
 <pre><code class="language-bee">
 set (a: 0.0, b: 1.5) &isin; R;
 rule main:
-  new (x, y) &isin; L;
+  new (x, y) &isin; B;
 
-  let x := a :&gt; L; -- 0
-  let y := b :&gt; L; -- 1
+  let x := a :&gt; B; -- 0
+  let y := b :&gt; B; -- 1
 return;
 </code></pre>
 
 
 <h4>Notes:</h4>
 <ul>
-<li>Only the integer part of a number is used in conversion to logical;</li>
-<li>Fraction is truncated before conversion to logical;</li>
+<li>Real number is truncated before conversion to Boolean;</li>
 <li>A string: "Yes", "yes", "True", "true", "On","on", "T", "t" or "1" convert to: True = 1</li>
 <li>A string: "No", "no", "False", "false", "Off","off", "F", "f" or "0" convert to: False = 0</li>
 </ul>
@@ -773,15 +783,14 @@ print Null  &equiv; False  -- 0
 <p>Each literal has associated a default type, induced by operators {":=", "::"}.</p>
 <pre><code class="language-bee">** string expressions
 new c := 'a'     ;  -- type = A
-new s := '&isin;';  -- type = U
+new s := '&isin;'    ;  -- type = U
 new s := "str"   ;  -- type = S
-new b := &lt;Text&gt;  ;  -- type = Text
 ** numeric expressions
 new i := 0;    -- type = Z
 new j := 0.50; -- type = R
 ** define synonyms for logic constants
-set f := False; -- type L
-set t := True;  -- type L
+set f := False; -- type B
+set t := True;  -- type B
 ** multiple variables get same value
 new (x, y, z) := 5; -- type = Z for all
 ** multiple variables get multiple values
@@ -791,24 +800,24 @@ print type(rea); -- R
 </code></pre>
 
 <h3><a id="ti-composite-types"></a>Composite Types</h3>
-<p>Composite structures are using () [] and {} to create different data types. Next you can study some examples. We wil explain later all these types: List, Map, Array, Object, String. All of these are also called Bee collections.</p>
+<p>Composite structures are using () [] and {} to create different data types. Next you can study some examples. We wil explain later all these types: List, Map, Array, Object. All of these are also called Bee collections.</p>
 <pre><code class="language-bee">** boxed integer (type = Z)
-new i := [10]; -- array of one value!
+new i := [10]; -- array of one value = 10!
 ** array with capacity of 4 integers: Z
 new d := [1,2,3,4];
-** array with capacity of 10 real numbers: R
+** array with capacity of 10 real numbers: R = 0.00
 new e := [0.00](10);
 ** list of one value (Z)
-new a := (1,);
+new a := (1);
 ** list of integers (Z)
 new b := (1,2);
 ** list of symbols (type = A)
 new l := ('a','b');
 ** list of Unicode symbol (type = U)
-new u := ('&Delta;', '&Lambda;', '&Gamma;');
+new u := ("&Delta;", "&Lambda;", "&Gamma;");
 ** 2d matrix with capacity of 10x10 real numbers: R
 new m := [0.00](10,10);
-** 3d matrix with capacity of 10x10x10 reals: R
+** 3d matrix with capacity of 10x10x10 reals: R = 0.00
 new m := [0.00](10,10,10);
 ** data set of 4 integers: Z
 new s := {1,2,3,4};
@@ -837,9 +846,10 @@ return;
 
 <p><b>Multiple parameters:</b></p>
 <pre><code class="language-bee">** parameters: a, b are mandatory, c is optional.
-rule foo((a, b, c):0 &isin; Z) =&gt; (r &isin; Z):
+rule foo(a, b, c:0 &isin; Z) =&gt; (r &isin; Z):
   let r := a + b + c;
 return;
+
 rule main:
   print foo(1,2);   -- 3
   print foo(1,2,3); -- 6
@@ -849,7 +859,7 @@ return;
 
 
 <p><b>Pass arguments by name:</b></p>
-<p>We can use parameter name and pair-up ":" symbol for argument value.</p>
+<p>We can use parameter name and pair-up symbol ":" for argument value.</p>
 <pre><code class="language-bee">** rule with optional parameter (c)
 rule bar(a, b, c:0 &isin; Z) =&gt; (result &isin; Z):
   let result := a+b+c;
@@ -857,12 +867,12 @@ return;
 ** observe we use pair-up ":" to give value for each argument
 rule main:
   print bar( 1, 1 );    -- print 2 because c = 0
-  print bar( 1, 1, 1 ); -- print 3 because c = 1
+  print bar( a:1, b:1, c:1 ); -- print 3 because c = 1
 return;  </code></pre>
 
 
 <h2><a id="rational-numbers"/>Rational numbers</h2>
-<p>In mathematics rational number is any number that can be expressed as the fraction p\q of two integer numbers: numerator "p" of type <em>integer</em> and a non-zero denominator "q" of type <em>natural</em>&gt; 0. <br />Since "q" may be equal to 1, every binary integer is also a rational number.</p>
+<p>In mathematics rational number is any number that can be expressed as the fraction p/q of two integer numbers: numerator "p" of type <em>integer</em> and a non-zero denominator "q" of type <em>natural</em>&gt; 0. <br />Since "q" may be equal to 1, every binary integer is also a rational number.</p>
 
 <p><b>Note:</b>&nbsp;Q numbers are approximated numbers.</p>
 <ul>
@@ -872,9 +882,9 @@ return;  </code></pre>
 </ul>
 <p>Other precision constants:</p>
 <ul>
-<li>$deci := 1d = 10⁻&sup1;</li>
+<li>$deci  := 1d = 10⁻&sup1;</li>
 <li>$centi := 1c = 10⁻&sup2;</li>
-<li>$mili := 1m = 10⁻&sup3;</li>
+<li>$mili  := 1m = 10⁻&sup3;</li>
 <li>$micro := 1&mu; = 10⁻⁶</li>
 </ul>
 
@@ -883,12 +893,12 @@ return;  </code></pre>
 
 <h4>Example:</h4>
 <pre><code class="language-bee">
-new x: 0    &isin; Q; -- 0
-new a: 1/2  &isin; Q; -- 0.5
-new b: 1/4  &isin; Q; -- 0.25
-new c: 1/8  &isin; Q; -- 0.125
-new d: 1/8  &isin; Q; -- 0.062
-new e: 1/8  &isin; Q; -- 0.031
+new x: 0     &isin; Q; -- 0
+new a: 1/2   &isin; Q; -- 0.5
+new b: 1/4   &isin; Q; -- 0.25
+new c: 1/8   &isin; Q; -- 0.125
+new d: 1/16  &isin; Q; -- 0.062
+new e: 1/32  &isin; Q; -- 0.031
 </code></pre>
 
 <h4>Note:</h4>
@@ -919,7 +929,7 @@ new e: 1/8  &isin; Q; -- 0.031
 </li>
 </ul>
 
-<p><b>For example:</b>&nbsp;A number format "Q5.2" can store in range (-32.00..31.75) on 8 bits.</p>
+<p><b>For example:</b>&nbsp;Number format "Q5.2" can store in range (-32.00..31.75) on 8 bits.</p>
 <ul>
 <li>with precision of 2⁻&sup2; = 1/4 = 0.25</li>
 <li>from value: -2⁵ = -32.00</li>
@@ -1047,9 +1057,9 @@ rule main:
     new b := 1/3;  -- rational
     ** using specified precision 0.01 &lt; 0.083
     print (a &asymp; b); -- false
-    print (a &asymp; b &plusmn; 0.1); -- true
-    print (a &asymp; c &plusmn; 0.5); -- true
-    print (b &asymp; c &plusmn; 0.5); -- true
+    print (a &asymp; b &plusmn; 0.5);  -- true
+    print (a &asymp; b &plusmn; 0.1);  -- true
+    print (a &asymp; b &plusmn; 0.05); -- false
 return
 </code></pre>
 

@@ -29,72 +29,76 @@
 </div><hr>
 <h1>Bee Functions</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is a functional programming language. Bee enable functional programming using lambda functions. These are special expressions that can make a computation and return a result.
+Bee is a functional programming language. Bee enable functional programming using lambda expressions. These are arithmetic expressions that can make a computation and return a result.
 </div>
 
 <h2>Lambda expressions</h2>
 
-<p>A lambda expressions has parameters and specified result type. Lamda expressions can be used to create named functions or anonymous functions. Unlike Rules, lamda expressions do not have states.</p>
+<p>A lambda expressions can have parameters and results. Lamda expressions can be used to create functions. Lamda expressions do not have a local scope.</p>
 
 <h4>Syntax:</h4>
-<pre><code class="language-bee">** declaration of Lambda expression
-new name := &lambda;(param &isin; Type,...) &isin; ResultType =&gt; (expression);
+<pre><code class="language-bee"># declaration of Lambda expressns
+new name := &lambda;(p1 &isin; Type,...) =&gt; (expression) &isin; ResultType;
 </code></pre>
 
 <h4>Example:</h4>
 <pre><code class="language-bee">** define lambda expression
-new exp := &lambda;(x,y &isin; Z) =&gt; x^ʸ &isin; Z;
+new exp := &lambda;(x,y &isin; Z) =&gt; x^y &isin; Z;
 
 ** use introspection
-print type(exp); -- Function
+print type(exp); -- L
 
 ** use the lambda expression
-new z := 2&middot;exp(2,3);
+new z := 2 &middot; exp(2,3);
 
 ** verify the result
-expect z = 8;
+expect z = 16; -- will pass
 print z; 
 </code></pre>
 
 
 <h4>Properties:</h4>
+
 <p>Lambda Expressions...</p>
 <ul>
 <li>are similar to mathematical functions;</li>
-<li>are binding external states in context;</li>
 <li>can be used in other expressions;</li>
-<li>can be used as parameter in rules;</li>
+<li>can be used as arguments for call-back;</li>
 <li>can be created from a rule as a result;</li>
-<li>can be assigned to a variable of type: Lambda</li>
+<li>can be assigned to variables of type: L</li>
 </ul>
 
 <p><b>restrictions:</b></p>
 <ul>
-<li>can have one single result;</li>
-<li>can not be interrupted from execution;</li>
-<li>can not call any rule that is downgraded;</li>
-<li>do not have internal states;</li>
+<li>have no internal states;</li>
+<li>have deterministic result;</li>
 <li>do not have side-effects;</li>
-<li>do not depend on external states;</li>
+<li>do not modify external states;</li>
 </ul>
 
 <p><b>result:</b></p>
 <ul>
-<li>lambda expressions can produce one or more results;</li>
+<li>lambda expressions can produce one single result;</li>
+<li>result type must be specified but not the result name;</li>
 <li>result is temporary and can be used in other expressions;</li>
 </ul>
 
 <h2><a id="lambda-signature"/>Lambda type</h2>
 
-<p>Lambda expressions have a special type: "L". This type can be used to define variables and parameters that require a lambda expression;</p>
+<p>Lambda expressions have a special type: "L", that is a reference. This type can be used to define variables, collection elements  or parameters that require a lambda expression;</p>
+
+<h4>Demo use-case</h4>
+
+<p>In next example we create a dictionary of expressions then we call every expression in the dictionary by string ID. This is a trick useful to parse a specific formula that comes as a string. You can use this trick for example to implement custom domain specific expressions.</p>
+
 <pre><code class="language-bee">
 ** instantiate 3 Lambda expressions
-new gt := &lambda;(x, y &isin; Z) =&gt; (x &gt; y) &isin; F;
-new lt := &lambda;(x, y &isin; Z) =&gt; (x &lt; y) &isin; F;
-new eq := &lambda;(x, y &isin; Z) =&gt; (x = y) &isin; F;
+new gt := &lambda;(x, y &isin; Z) =&gt; (x &gt; y) &isin; L;
+new lt := &lambda;(x, y &isin; Z) =&gt; (x &lt; y) &isin; L;
+new eq := &lambda;(x, y &isin; Z) =&gt; (x = y) &isin; L;
 
 ** define a sub-type, dictionary of rules
-type Dic: {[A]:F} &lt;: Map;
+type Dic: {[A]:L} &lt;: Map;
 
 ** define a hash map of expressions
 new dic := {'gt':gt,'lt':lt,'eq':eq} &isin; Dic;
@@ -102,6 +106,26 @@ new dic := {'gt':gt,'lt':lt,'eq':eq} &isin; Dic;
 print dic['gt'](3,1); -- 1
 print dic['lt'](1,2); -- 1
 print dic['eq'](2,2); -- 1
+</code></pre>
+
+<h2>Call-back functions</h2>
+
+<p>Lambda expressions become call-back functions when used as arguments for specific rules that require lambda expressions. The function is executed later in the rule. Lambda function signature is required to define the parameter.</p>
+
+<h4>Example</h4>
+
+<pre><code class="language-bee">
+rule foo(a1, a2 &isin; N, xp: &lambda;(x,y &isin; N) =&gt; R) =&gt; (r &isin; Type):
+   ** prepare the result
+   let r := xp(a1,a2);
+return;
+
+rule main:
+   ** call foo using anonymous expression
+   print foo(2,3,(x,y)=> x^y); -- 8.0
+   print foo(2,3,(x,y)=> x*y); -- 6.0
+   print foo(2,3,(x,y)=> x/y); -- 1.5 
+return
 </code></pre>
 
 <p><b>Read next:</b>

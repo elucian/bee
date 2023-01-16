@@ -29,10 +29,9 @@
 </div><hr>
 
 <h1>Bee Objects</h1>
-<div class="alert alert-secondary shadow-sm">
-Bee is implementing object oriented principles: abstraction, encapsulation, inheritance and polimorphism. Bee is using multiple inheritance model.</div>
+<div class="alert alert-secondary shadow-sm">Bee implements object oriented programming using custom defined data types and special rules called constructors. Bee enable al 4 object oriented principles: Encapsulation, Inheritance, Abstraction and Polimorphis.</div>
 
-<p>An Object is the root of all other objects. The root Object has standard methods and attributes. An Object can have many rules. You can use dot notation to access object methods.</p>
+<p>Bee has pre-defined root Object with standard methods and attributes. The Object can be extended and can have a custom design constructor. You can create instances of Object and, you can use dot notation to access object members.</p>
 
 <div align="center">
   <img src="img/method-call.svg" alt="method call"
@@ -42,7 +41,7 @@ Bee is implementing object oriented principles: abstraction, encapsulation, inhe
 
 <h2>Instantiation</h2>
 
-<p>An object can be instantiated using reserved keyword "new" and empty JSON literal: {}. The type Object has a default constructor that is implemented in language core and is named: O() but we recommand using {} notation all the time.</p>
+<p>An object can be instantiated using reserved keyword "new" and  JSON literal or constructor Object() with arguments. After the object is created you can enhance the object.</p>
 
 <pre><code class="language-bee">** empty object
 new object := {}; 
@@ -52,7 +51,7 @@ new object.a1 := 1;
 new object.a2 := 2;
 
 ** check the object
-expect object == {a1:1, a2:2};
+expect object = {a1:1, a2:2};
 
 ** remove attributes
 del object["a1"];
@@ -64,7 +63,7 @@ expect object = {};
 
 <h3>Custom type</h3>
 
-<p>Type of objects can be defined using JSON like structure. You can enumerate attributes with type declarations in a complex structure. Later you will create instances of these types using a constructor.</p>
+<p>Type of objects can be defined using JSON. You can enumerate attributes with type declarations in a complex structure. Later you can create instances of this type using the default object constructor.</p>
 
 <pre><code class="language-bee">** object subtype with attributes
 type TName: {a1, a2 &isin; Type, a3 &isin; Type, ...} &lt; O;
@@ -73,14 +72,16 @@ type TName: {a1, a2 &isin; Type, a3 &isin; Type, ...} &lt; O;
 new myObject = TName(a1:value1, a2:value2, a3 value3 ...);
 </code></pre>
 
-<h4>Example:</p>
+<p><b>Note: </b>Default object constructor is created automaticly by the compiler. You can use the type-name as if you have already implemented a constructor for this new type.</p>
+
+<h4>Example:</h4>
 
 <p>Next example demonstrate an object with two attributes that have default values. Attributes with default values can be created using type inference.</p>
 
-<pre><code class="language-bee">** new object without a type
+<pre><code class="language-bee">** define object type using JSON
 type T:{a1:10, a2:5};
 
-** create two objects
+** create two new objects
 new obj1 := T(a2:0); -- a1, a2 are optional
 new obj2 := T(1,10); -- attribute names are optional
 
@@ -89,46 +90,46 @@ expect obj1 = {a1:10, a2:0};
 expect obj2 = {a1:1, a2:10};
 </code></pre>
 
-<h3>Define methods</h3>
+<h3>Object constructor</h3>
 
-<p>An custom object type can have methods. To create this kind of object you need to create a special rule that is named object constructor.</p>
+<p>A custom object type can be created automaticly by the compiler using type inference. All you need is a rule that return an object with rule name reused as type. The compiler will detect that result  type is not defined so it will create a default type behind the scene.</p>
 
 <h4>Syntax Pattern</h4>
 
 <pre><code class="language-bee">** define object constuctor 
-rule TypeName(p1 &isin; Type, ...) => (self &isin; O):
+rule TName(a1 &isin; Type, ...) => (self &isin; TName):
 
   ** initialize object attributes 
-  let self.a1 := p1;
+  let self.a1 := a1;
   ....
 
   ** define object method
-  rule .name(param  &isin; Type):
+  rule .name(self  &isin; TName):
     ...
   return;
 return;
 </code></pre>
 
-<p>Note: You do not need to create a type. The object tipe is created implicit by the compiler using type inference. You can use the constructor name as a type.</p>
-
 <h3>Encapsulation</h3>
 
-<p>An object constructor is a high order rule. It has a static context and can contain states and methods. All methods are sharing the same context. Result object "self" represent the current context.</p>
+<p>An object constructor is a high order rule. It has a static context and can contain object states and methods. All methods are sharing the same context. Result is by convention called "self" and it represent the current context.</p>
 
 <h4>Public members</h4>
 
-<p>Access to public members is enable by using (qualifier.) notation. The qualifier can be type name or object name. The qualifier is automaticly used as "self context".</p>
+<p>Access to public members is enable by using dot qualifier notation. The qualifier is the actual object represented as input-output parameter or result: "self"  that is explicitly defined as parameter for every public method. </p>
 
 <h4>Object scope</h4>
 
-<p>Object scope is dynamic in contrast to the constructor scope that is static. The scope is pass to method as a pointer. Usually the qualifier is the object instance but it can be the rule name.</p>
+<p>Object scope is dynamic in contrast to the constructor scope that is static. The "self" scope is pass to public methods as a pointer. Object scope is created by the object constructor rule using keyword "new:.</p>
+
+<div class="alert alert-info"><b>Note:</b>You can use "apply" or "begin" to enhance an existing object by runing a constructor. This will enable you to apply traits and realize multiple inhheritance. We will analyze this feature later.</div>
 
 <h4>Example</h4>
 
-<p>We define an object constructor Foo that has two attributes and a public method. The type receive parameters (a,b) and create an object with attributes {a,b}. The .log() method is called using "apply" with dot notation.</p>
+<p>We define an object constructor Foo that has two attributes and a public method. The constructor receive parameters (a,b) and create an object with attributes {a,b}. The .log() method is called using "apply" keyword.</p>
 
 <pre><code class="language-bee">** define object constructor:
-rule Foo(a, b &isin; N) => (self &isin; O):
+rule Foo(a, b &isin; N) => (self &isin; Foo):
     ** create object attributes
     new self.a := a;
     new self.b := b;
@@ -169,18 +170,16 @@ Foo
 <ul>
 <li>Constructor name start with capital letter;</li>    
 <li>Public members start with self. qualifier;</li>
-<li>Result self, is the current object;</li>
+<li>Result self, is the new object instance;</li>
 </ul>
 
 <h2>Object structure</h2>
 
-<p>Next example create an object using a constructor. This particular constructor can receive a variable number of arguments and produce an object that has two attributes.</p>
+<p>Next example define an object using a constructor. This particular constructor can receive a variable number of arguments and produce an object that has two attributes.</p>
 
 <pre><code class="language-bee">** define the object type
-rule MyObject(*v &isin; [N]) => (self &isin; O):
-    ** object structure
-    let self := {sum &isin; N, avg: &isin; R}
-
+rule MyObject(*v &isin; [N]) => 
+             (self: {sum &isin; N, avg &isin; R}):
     ** private variable
     new count := 0;
     cycle:
@@ -193,7 +192,7 @@ rule MyObject(*v &isin; [N]) => (self &isin; O):
 return;
 </code></pre>
 
-<p>Note: In previous example demonstrate type inference. Attributes are defined in the result: Compiler creates the type MyObject automaticly. Compiler will create the attributes from JSON and assign default zero value.</p>
+<p><b>Note: </b>In previous example we demonstrate type inference for result object. Object attributes are defined in the result declaration: Compiler will create the attributes from JSON and assign default values.</p>
 
 <h2>Key Looping</h2>
 
@@ -215,64 +214,13 @@ rule MyObject(*values &isin; R) => (self &isin; O):
 return;
 </code></pre>
 
-<h2>Generator</h2>
-
-<p>You can define a generator object in Bee. The object can use object scome self to define an attribute that can hold current state "count" and can modify this variable.</p>
-
-<h4>Example:</h4>
-
-<pre><code class="language-bee">** define foo singleton
-rule Foo(start:0 &isin; N, step:1 &isin; R) => (self &isin; O):
-    ** create static variable
-    new self.count := 0;
-
-    ** define closure method
-    rule .next(self &isin; Foo) => (r &isin; Z):
-       if start > self.count do
-          let self.count := self.start;
-       else 
-          let self.count += self.step;
-       endif;
-       let r := count;
-    return;
-static;
-
-rule main:
-    ** create object instance
-    new bar := Foo(10, 5);
-    cycle:
-       new x := 0;
-    while x < 30 do
-       let x := bar.next();
-       print "x = " + x; 
-    done;
-return;
-</code></pre>
-
-<h4>Expected Output:</h4>
-
-<pre class="language-out">
-x = 10
-x = 15
-x = 20
-x = 25
-x = 30
-</pre>
-
-<h4>Notes:&nbsp;</h4>
-
-<ol>
-<li>Usually the attributes have default values; </li>
-<li>There are othery ways to create generators;</li>
-</ol>
-
 <h3>Inheritance</h3>
 
 <p>By default, Bee custom types are dynamic and can be extended using inheritance. We use symbol "<:" to define the super-type. A derived type can call super type constructor using qualifier: "super."</p>
 
 <h4>Examples:</h4>   
 
-<pre><code class="language-bee">** define custom Foo type
+<pre><code class="language-bee">** define custom type
 type Foo: {a, b &isin; N} &lt;: Object;
 
 ** define Foo constructor
@@ -292,7 +240,7 @@ type Bar: {a, b &isin; N, c &isin; R} <: Foo;
 ** define Bar constructor
 rule Bar(p1, p2 &isin; N) => (self &isin; Bar);
    let self   := super(p1, p2);
-   let self.c := p1+p2;
+   new self.c := p1+p2;
 
    ** overvrite the original method
    rule .log():
@@ -318,27 +266,27 @@ c = 7
 
 <h3>Abstraction</h3>
 
-<p>Bee can define an abstract constructor. This can contain default and forward declarations. These are method signatures that have no implementation.</p>
+<p>Bee can define an abstract constructor. This can contain forward declarations. These are method signatures that have no statements and can't be run.</p>
 
 <h4>Example</h4>
 
-<p>Next example demonstrate how to create an abstract type. Abstract type can't have a constructor. An abstract type block is ending with keyword "abstract" and contains at least one method.</p>
+<p>Next example demonstrate how to create a constructor for abstract type. An abstract rule can't be instantiated directly. It is design for inheritance. You must implement all the abstract methods when you extend it.</p>
 
 <pre><code class="language-bee">** define abstract type
-rule Root() => (self &isin; O):
+rule Root() => (self &isin; Root):
    ** define an abstract method
-   rule .log(self &isin; O);
-abstract;
+   rule .log(self &isin; Root);
+return;
 
-** use an abstract type
-type Foo: {a,b &isin; N} <: Root;
+** implement an abstract type
+rule Foo(a,b &isin; N) =>(self &isin; Foo <: Root);
    ** imlement the log method
    rule .log(self &isin; Foo):
       for x &isin; self.keys() do
          print x + " = " + self[x]; 
       done;
    return;
-dynamic;
+return;
 
 rule main:
    new foo := Foo(1,2);
@@ -348,7 +296,7 @@ return;
 
 <h3>Traits</h3>
 
-<p>A trait is a special structure that encapsulate behaviour. Traits can be used to extend a specific type. Think of traits like behaviour that you can attach to an object type.</p>
+<p>A trait is a special rule that encapsulate behaviour. Traits can be used to extend a specific type. When you apply a rule to an object this is enhanced with new behaviour.</p>
 
 <h4>Declaration</h4>
 
@@ -360,25 +308,28 @@ type TName {attribute Type, ...} <: Object+(trait_list):
 
 <h4>Example</h4>
 
-<p>In next example we define a trait named: Extra, this is used to define type Foo that is augmented with Extra. You can call the .log() method like it belong to Foo but is defined inside trait.</p>
+<p>In next example we define a trait. The trait is used to define type Foo that is augmented. To signal an augmented object type you must use symbol "+" after the type name.</p>
 
 <pre><code class="language-bee">
 ** define new trait
-trait Log(self &isin; O):
+rule augment(self &isin; O):
    ** overvrite the log method
-   rule .log():
+   rule .log(self &isin; O):
       for x &isin; self.keys() do
           print x + " = " + self[x]; 
       done;
    return;
-continue;
+return;
 
-** use trait Extra to define Foo
-type Foo: {a, b &isin; N} &lt;: O+Log;
+** use trait augment to define Foo
+rule Foo(a, b &isin; N) => (self:Foo &lt;: Foo+):
+   ** apply the augmentation
+   apply augment(self);
+return;
 
 rule main:
-   new foo = Foo(a:1, b:2);
-   foo.log;
+   new bar = Foo(a:1, b:2);
+   apply bar.log;
 return;
 </code></pre>
 

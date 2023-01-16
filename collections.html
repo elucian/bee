@@ -30,12 +30,10 @@
 
 <h1>Bee Collections</h1>
 <div class="alert alert-secondary shadow-sm">
-Collections are composite data types. A composite type is a data structures that group a limited number of values together. You can have access to individual values using different methods, depending on the type of the collection.
+Collections are composite data types. A composite type is a data structures that group a limited number of values together. You can have access to individual values using different methods, depending on the collection type.
 </div>
 
-<h4>Bookmarks:</h4>
-
-<p>These bookmarks enable you to visit a particular collection type. If you are first time here, just scroll down and read the whole page at least one time. Next time you can use this small index to jump to a particular topic. Enjoy!</p>
+<p>Next links enable you to find definition of a particular collection type. Collections have different features and performance. Use browser back-button to jump back here and compare collections later.</p>
 
 <ul>
 <li><a href="#enumeration">enumeration</a></li>
@@ -78,7 +76,9 @@ type new_type: descriptor &lt;: super_type;
 </ul>
 
 <h2><a id="enumeration"</a>Enumeration</h2>
-<p>Enumeration is an abstract data set. It is a group of identifiers. Each identifier represents an integer value starting from 0 to capacity-1. Associated values can start with a different integer number. Values can be specified using pair up operator ":". All values must be unsigned integer (i &le; 0) in consecutive ascending order.</p>
+<p>Enumeration is an abstract data set. It represents a group of identifiers. Each identifier represents an integer value starting from  a specific number and have a fix capacity.</p>
+
+<p>Usually the first element has value 1, but this can be specified using (n) in front of set of elements. The set of elements is enclosed in curly brackets.</p>
 
 <h4>Pattern:</h4>
 <pre><code class="language-bee">type type_name: (1){name1, name2, name3} &lt;: Enum;
@@ -94,7 +94,7 @@ return;
 <p><b>Note:</b>&nbsp;When element name start with "." no need to use qualifiers for the individual values. This is because values starting with "." are public by default and known in the scope where ordinal is defined (or loaded).</p>
 
 <pre><code class="language-bee">** using public elements in enumeration
-type type_names: {.name0, .name1} &lt;: Enum;
+type type_names: (0){.name0, .name1} &lt;: Enum;
 rule main()
    new a, b &isin; type_name;
 
@@ -129,10 +129,17 @@ return;
 
 
 <p><b>variable declaration</b>&nbsp;You can use one of three forms of declarations:</p>
-<pre><code class="language-bee"># declare some variables
-new name1: (element_type,);   -- explicit declaration
-new name2 := (constant,...); -- implicit declaration
-new name3 := (constant,...) &isin; Type_name; -- full declaration
+<pre><code class="language-bee">** declare emty list without type
+new name1: ();  -- element type will be established later
+ 
+** declare empty list, using explicit type
+new name1: (element_type);  
+
+** declare populated lists using type inference
+new name2 := (e1,e2...); -- implicit declaration
+
+** 
+new name3 := (e1,e2...) &isin; Type_name; -- full declaration
 </code></pre>
 
 
