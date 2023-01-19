@@ -487,8 +487,8 @@ return;
 
 <h4>Example:</h4>
 <pre><code class="language-xml">&lt;text&gt;
-  Bee language is design for passionate developers.
-  Bee do not has no compiler and is experimental.
+  Bee language has suport for large text literal.
+  A text can be SQL, XML, HTML or report template.
 &lt;/text&gt;;
 </code></pre>
 
@@ -518,7 +518,7 @@ rule main()
 
   ** populate vector using spreading operator (*)
   let *str := 'test'; -- spreading the ASCII literal
-  print  str;   -- ['t','e','s','t']
+  print str;   -- ['t','e','s','t']
 
   ** fixed capacity vector of symbols UTF32
   new  uco: [U](128);
@@ -536,9 +536,6 @@ return;
    ** variable capacity string UTF32
    new uco &isin; S; -- Unicode string unknown capacity
    let uco := "&isin; &equiv; &le; &ge; &divide; &ne; &times; &not; &uarr; &darr; &and; &or;";
-
-   ** strings are printed with quotes
-   print uco; -- "&isin; &equiv; &le; &ge; &divide; &ne; &times; &not; &uarr; &darr; &and; &or;"
 return;
 </code></pre>
 
@@ -556,11 +553,10 @@ new line in string
 
 <h4>Notes:</h4>
 <ul>
-<li>This string can be a "rope" or "radix tree";</li>
-<li>Single quoted strings are not supported: 'like this';</li>
-<li>Back quoted strings are not supported:&nbsp;<code>like this</code>;</li>
+<li>Double quoted string can be "rope" or "radix tree";</li>
+<li>Single quoted strings are ASCII literals: 'like this';</li>
+<li>Back quoted strings are regular expressions `...`;</li>
 </ul>
-
 
 <h4>Examples:</h4>
 
@@ -568,36 +564,13 @@ new line in string
 
 <pre><code class="language-bee">
 rule main:
-   new m: ('=' * 10) &isin; S; -- m = "=========="
-   new (u, c, s) &isin; S; -- default length is 128 octets = 1024 bit
+   new (c, s) &isin; S; -- default length is 128 octets = 1024 bit
 
    ** string concatenation
-   new c := "This is " + "a large string";
-
+   let c := "This is 
+             a large unicode string";
    ** automatic conversion to string
-   let s := "40" + 5; -- "405"
-
-   ** URL/path concatenation
-   new test_file := $pro.'src'.'test.bee';
-
-   ** when $platform = "Windows"
-   ** Let's say $pro = "c:\work\project\"
-   print test_file; -- "c:\work\project\src\test.bee"
-
-   ** when $platform = "Linux"
-   ** Let's say $pro = "/work/project/"
-   print test_file; -- "/work/project/src/test.bee"
-return;
-</code></pre>
-
-<h3><a id="conversion" class="anchor" href="#conversion"></a>Conversion</h3>
-<p>Conversion of a string into number is done using <em>parse</em> rule:</p>
-<pre><code class="language-bee">
-rule main:
-  new x,y &isin; R;
-  ** rule parse return; a Real number
-  let x := parse("123.512",2);     -- convert to real 123.5
-  let y := parse("10,000.3333",2); -- convert to real 10000.33
+   let s := 'This is an ASCII string';
 return;
 </code></pre>
 

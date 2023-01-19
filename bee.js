@@ -19,6 +19,8 @@ function apply_style(str) {
     str = str.replace(/\bnew\b/,imperative("new"))
     str = str.replace(/\bset\b/,imperative("set"))
     str = str.replace(/\blet\b/,imperative("let"))
+    str = str.replace(/\bput\b/,imperative("put"))    
+    str = str.replace(/\bpop\b/,imperative("pop")) 
     str = str.replace(/\bprint\b/,imperative("print"))
     str = str.replace(/\bread\b/,imperative("read"))
     str = str.replace(/\bwrite\b/,imperative("write"))
