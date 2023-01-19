@@ -1172,7 +1172,7 @@ return;
 <td>unary operator</td>
 </tr>
 <tr>
-<td>&and;</td>
+<td>∧</td>
 <td>AND</td>
 <td>shortcut operator</td>
 </tr>
@@ -1194,7 +1194,7 @@ return;
 <tr>
 <td>&uarr;</td>
 <td>NAND</td>
-<td>p &uarr; q = &not; (p &and; q)</td>
+<td>p &uarr; q = &not; (p ∧ q)</td>
 </tr>
 </tbody>
 </table>
@@ -1208,7 +1208,7 @@ return;
 <th>q</th>
 <th>&not; p</th>
 <th>p &oplus; q</th>
-<th>p &and; q</th>
+<th>p ∧ q</th>
 <th>p &or; q</th>
 </tr>
 </thead>
@@ -1338,6 +1338,7 @@ return;
 <tr><td>/</td><td>concatenate url or path using / not depending on OS</td></tr>
 <tr><td>+</td><td>concatenate two strings as they are preserving trial spaces.</td></tr>
 <tr><td>-</td><td>concatenate two strings and trim spaces to a single space.</td></tr>
+<tr><td>.</td><td>concatenate strings with "/" on Linux or "\" on Windows.</td></tr>
 <tr><td>?</td><td>string format operator, replace "#" with number.</td></tr>
 </tbody>
 </table>

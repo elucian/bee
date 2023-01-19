@@ -622,10 +622,10 @@ return;
 <p>Bee uses several familiar logic operators from mathematics:</p>
 <ul>
 <li>&not; - equivalent "not"</li>
-<li>&and; - equivalent "and"</li>
+<li>∧ - equivalent "and"</li>
 <li>&or;  - equivalent "or"</li>
 </ul>
-<p>Precedence: { &not;, &and;, &or; }. Symbol &not; will apply first, symbol &or; will apply last.</p>
+<p>Precedence: { &not;, ∧, &or; }. Symbol &not; will apply first, symbol &or; will apply last.</p>
 
 <p><b>bitwise</b></p>
 <p>In Bee we define special operators to perform bitwise operations. One opperator is overwrite: &oplus;. This operator (xor) can operate on both, logical values or expressions and also on integer numbers.</p>
@@ -716,7 +716,7 @@ rule main:
   print (f &ne; t); -- 1
   print (f &lt; t); -- 1
   print (f &gt; t); -- 0
-  print (f &and; t); -- 0
+  print (f ∧ t); -- 0
   print (f &or;  t); -- 1
   print (f &oplus; t); -- 1
 return;
@@ -726,7 +726,7 @@ return;
 <h4>Notes:</h4>
 <ul>
 <li>Operators { &not; } is unary operator;</li>
-<li>Operators { &and;, &or; } are also bitwise operators;</li>
+<li>Operators { ∧, &or; } are also bitwise operators;</li>
 <li>Operators { &not;, &oplus; } are also bitwise operators;</li>
 <li>Operators { &laquo;, &raquo; } are bitwise operators;</li>
 </ul>
