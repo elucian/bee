@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="description" content="Concurrency for Bee language.">
   <meta name="author" content="Elucian Moise">
-  <meta name="keywords" content="sage, code, bee, language, syntax, concurrency">
+  <meta name="keywords" content="sagecode, beelang, concurrency, parallel, computing">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Website title -->
   <title>Bee Concurrency</title>
@@ -29,11 +29,9 @@
 </div><hr>
 <h1>Bee Concurrence</h1>
 <div class="alert alert-secondary shadow-sm">
-Bee is capable to run processes in parallel using multi-threading and multi-tasking. In Bee we have special statements to start a process in parallel with main pricess and to synchronieze the processes after execution.
-</div>
-<!-- work in progress-->
-<hr>
+In Bee we have special statements to start a process asynchronously and run in parallel in separate threads. We can synchronieze the processes after execution.</div>
 
+<hr>
 
 <h3><a id="multi-threading"></a>Multi threading</h3>
 
@@ -42,7 +40,7 @@ Bee is capable to run processes in parallel using multi-threading and multi-task
 <table class="table table-bordered table-striped">
 <thead>
 <tr><th>keyword</th><th>description</th></tr></thead><tbody>
-<tr><td>start  </td><td>call a rule asynchronously and create a new thread</td></tr>
+<tr><td>begin  </td><td>call a rule asynchronously and create a new thread</td></tr>
 <tr><td>wait   </td><td>suspend a thread for specific number of seconds</td></tr>
 <tr><td>yield  </td><td>suspend current thread and give priority to other threads</td></tr>
 </tbody>
@@ -51,17 +49,18 @@ Bee is capable to run processes in parallel using multi-threading and multi-task
 
 <h4>Example 1:</h4>
 
-<p>Asynchronous call can be done using a control cycle and keyword <em> "start"</em>. This is significant because a rule need parameters. By using keyword "start" we initiate one rule "test" 4 times but this rule does absolutely nothing and wait about 30 seconds.
+<p>Asynchronous call can be done using a control cycle and keyword <em> "begin"</em>. This is significant because a rule need parameters. By using keyword "begin" we initiate one rule "test" 4 times but this rule does absolutely nothing, just wait about 30 seconds.
 </p>
 
 <pre><code class="language-bee">** suspend n seconds
-rule test():
+rule test:
     wait 10 + i*5;
 return;
+
 ** prepare for execution 4 threads
 rule main:
     for &forall; i &isin; (1..4) do
-       start test(i);
+       begin test(i);
     repeat;
     wait; -- wait for other threads to finish;
 return;
@@ -81,9 +80,9 @@ return;
 <pre><code class="language-bee">** suspend n seconds
 rule sum(a, b &isin; Z) => (r &isin; Z):
   cycle:
-    i := 0
+    new i := 0
   for &forall; i &isin; (a..b) do
-    r += i;
+    let r += i;
   repeat;
 return;
 
@@ -91,17 +90,19 @@ return;
 rule main:
     new results &lt;: List; -- partial sum collection
     ** use a mapping technigue to split data in 4 equal batches
+    cycle:
+        new i &isin; N;
     for &forall; i &isin; (1.!100:25) do
-        start test(i,i+25) +&gt; results;
+        begin test(i,i+25) +&gt; results;
     repeat;
     wait; -- wait for other threads to finish;
     new output &isin; Z;
     ** reduce results into output
-    for &isin; partial &lt;- results 
-       output += partial;
+    for &forall; partial &isin; results do
+       let output += partial;
     repeat;
     print output; -- 5050
-    pass if output = 5050;
+    expect output = 5050;
 return;
 </code></pre>
 
@@ -129,23 +130,28 @@ Bee is designed for high performance computing using multi-core processors. Ther
 <pre><code class="language-bee">
 rule test(n &isin; N) =&gt; (result &isin; N):
   ** can generate n numbers
+  cycle:
+    new i &isin; N;
   for &forall; i &isin; (1..n) do
-    result := i;
+    let result := i;
     ** suspend execution
     yield; -- wait for the main thread
   cycle;
   result = 0; -- finalization signal
 return;
 
-** start secondary process
-new  r &isin; N;  -- result reference
-start test(9)     -- initialize coroutine
-do
-  yield r &lt;- test;  -- capture next result
-  write (r, ",");
-cycle if r &gt; 0;
+rule main:
+    ** start secondary process
+    begin test(9)     -- initialize coroutine
+    cycle:
+      new  r &isin; N;  -- result reference
+    do
+      yield r &lt;- test;  -- capture next result
+      write (r, ",");
+    repeat if r &gt; 0;
 
-print;  -- 0,1,2,3,4,5,6,7,8,9,
+    print;  -- 0,1,2,3,4,5,6,7,8,9,
+return
 </code></pre>
 
 <p><b>Note:&amp;</b>In the example above, the program is still working in serial mode, except that has a branch running on a separated thread. When the coroutine function the main thread is on hold, and when the main thread function the coroutine is waiting.</p>

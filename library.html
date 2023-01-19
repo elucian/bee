@@ -2,7 +2,7 @@
   <meta charset="utf-8">
   <meta name="description" content="High level design for Bee Library.">
   <meta name="author" content="Elucian Moise">
-  <meta name="keywords" content="sage, code, bee, language, standard, library">
+  <meta name="keywords" content="beelang, standard, library">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Website title -->
   <title>Bee Library</title>
@@ -364,8 +364,9 @@ rule ,rename(name, new_name &isin; S);
 </ul>
 
 <h4>Making files/folders</h4>
-<pre><code class="language-bee">file_name   := File.open('name','w');
-folder_name := Folder.open('name');
+<pre><code class="language-bee">
+new file_name   := File.open('name','w');
+new folder_name := Folder.open('name');
 </code></pre>
 
 <hr>
