@@ -340,6 +340,60 @@ a = 10
 b = 20
 </pre>
 
+<h2>Data Structures</h2>
+
+<p>In data science you need to organize structured data in memory. Memory is flat so you can use Objects to make a complex structure. For example you can store Object references into a Collection.
+
+<h3>Array of Objects</h3>
+
+</p>A collection is an Object that has references to other objects. The Objects can be stored together in a Vector, or a List or any other collection. Next example demonstrate an Array of Objects.</p>
+
+<h4>Example:</h4>
+<pre><code class="language-bee">type  Person: {name &isin; S, age &isin; N} &lt;: Object;
+rule main:
+  ** array of 10 persons
+  new catalog &isin; [Person](10);
+
+  ** initialize value using literals
+  new catalog[1] := {name:"Cleopatra", age:15};
+  new catalog[2] := {name:"Martin", age:17};
+
+  ** using one element with dot operators
+  print catalog[1].name;  -- will print Cleopatra
+  print catalog[2].name;  -- will print Martin
+
+  ** member type can be check using _type()_ built in
+  print type(Person.name); -- will print U
+  print type(Person.age);  -- will print W
+
+  ** print size of structure
+  print size(Person);
+return;
+</code></pre>
+
+<h3>Recursive Structures</h3>
+
+<p>Recursive structure type is an Object that contains one or more references to other Objects of the same type as himself. The Object can grow in size and create a tree.</p>
+
+<pre><code class="language-bee">** example of single recursive node
+type Node: {
+  data &isin; Z,       -- integer data
+  previous &isin; Node -- reference to previous node
+} &lt;: Object;
+</code></pre>
+
+<p>A linked List could be created using this kind of Object. In principle a Linked List has 2 references. One is for prior element and another is the next element:</p>
+
+<pre><code class="language-bee">** example of double recursive node
+type Node: {
+  data  &isin; Z,    -- integer data
+  prior &isin; Node, -- reference to previous node
+  next  &isin; Node  -- reference to next node
+} &lt;: Object;
+</code></pre>
+
+<p><b>Note: </b>First element will have prior = Null. Last element will have next = Null. There is more to say about these kind of objects. We will explain complex data structures in the next chapter.</b>
+
 <p><b>Read next:</b>
 <a href="collections.html">Collections</a></p>
 <!-- Footer -->

@@ -820,7 +820,7 @@ return;
 <tbody>
 <tr>
 <td>-</td>
-<td>Change sign, replace "y = -x" with "y = -1&middot;x"</td>
+<td>Change sign, replace "y = -x" with "y = -1*x"</td>
 </tr>
 <tr>
 <td>/</td>
@@ -835,20 +835,16 @@ return;
 <td>Radical: x√n is equivalent to x^(1/n)</td>
 </tr>
 <tr>
-<td>&middot;</td>
-<td>Multiplication (middle dot)</td>
-</tr>
-<tr>
 <td>*</td>
 <td>Multiplication alternative</td>
 </tr>
 <tr>
-<td>&divide;</td>
-<td>Real division</td>
+<td>\</td>
+<td>Rational number division</td>
 </tr>
 <tr>
 <td>/</td>
-<td>Real division. This can create rational numbers.</td>
+<td>Real number division</td>
 </tr>
 <tr>
 <td>&times;</td>
@@ -1012,15 +1008,8 @@ return;
 <td>Decrement value</td>
 </tr>
 <tr>
-<td>&middot;=</td>
-<td>Multiplication modifier</td>
-</tr>
 <td>*=</td>
 <td>Multiplication modifier</td>
-</tr>
-<tr>
-<td>&divide;=</td>
-<td>Real division modifier</td>
 </tr>
 <tr>
 <td>/=</td>
@@ -1065,7 +1054,7 @@ return;
 </tr>
 <tr>
 <td>&equiv;</td>
-<td>identical | { compare types & values / attributes }</td>
+<td>equivalent | { compare values / convert type }</td>
 </tr>
 <tr>
 <td>&asymp;</td>
@@ -1087,8 +1076,8 @@ return;
 <td>&le;</td>
 <td>less than or equal to</td>
 </tr>
-<td>\</td>
-<td>Exact divisor: 3 \ 15 &equiv; True</td>
+<td>&divide;</td>
+<td>Exact divisor: 3 &division; 15 &equiv; True</td>
 </tr>
 </tbody>
 </table>

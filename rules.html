@@ -247,7 +247,7 @@ rule fact(n &isin; N) =&gt; (r &isin; N):
     when (n = 0) do
         let r := 1;
     else
-        let r := n &middot; fact(n-1);
+        let r := n * fact(n-1);
     done;
 return;
 </code></pre>
@@ -267,7 +267,7 @@ rule tail(n &isin; N, acc &isin; N) =&gt; (r &isin; N):
     when (n = 0) do
       let r:= acc;
     else
-      let r:= tail(n-1, acc &middot; n);
+      let r:= tail(n-1, acc * n);
     done;
 return;
 
@@ -283,7 +283,7 @@ return;
 <pre><code class="language-bee">** this rule is manually optimized:
 rule fact(a &isin; N, b &isin; N) =&gt; (r &isin; N):
     while (b &gt; 1) do
-      let a := a &middot; a + a;
+      let a := a * a + a;
       let b := b - 1;
     else
       let r := a;

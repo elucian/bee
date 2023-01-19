@@ -441,7 +441,7 @@ trial [label]:
     ** preconditions: create recoverable error
     expect condition else "message";
     ...
-[try(code1:"description")]
+try [code1]: -- description
     ...
     ** jump to next try (no error)
     pass if condition;
@@ -452,7 +452,7 @@ trial [label]:
     ** create error, and jump to cases
     raise {code, message} if condition;
     ...
-[try(code2:"description")]
+try [code2]: -- description
     ...
     ** skip the rest (no error) and jump to final
     pass if condition;
@@ -486,6 +486,8 @@ done [label];
 <ul>
 <li>It is unusual to create nested trial blocks;</li>
 <li>A trial can contain many try blocks that are optional;</li>
+<li>A trisl can have many case blocks that are also optional;</li>
+<li>A trial can have one miss block and one final block;</li>
 <li>A trial can be repeated several times if errors are raised;</li>
 <li>A trial can stop execution of a rule with error if error raised;</li>
 </ul>
@@ -565,13 +567,13 @@ raise {code,"message"} if condition; -- create instant custom error with code
 
 <p>In this region there is an oportunity to report all messages recorded in $trial object. You can use $trial.messages that is a hash-map created by the system automaticly.</p>
 
-<p>It can contain:</p>
+<p>In final block:</p>
 
 <ul>
-<li>close files</li>
+<li>you close files</li>
 <li>close connection to databases</li>
 <li>close locked resources</li>
-<li>error report, log or print statement</li>
+<li>create log, report $trial.messages</li>
 </ul>
 
 <h4>Example:</h4>
