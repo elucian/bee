@@ -15,7 +15,7 @@ Bee is a experimental project with original syntax aiming these goals:
 
 Bee is going to be a rule based programming language.
 
-1. staticly typed;
+1. static typed;
 2. modular;
 3. compiled;
 4. open source;
@@ -24,9 +24,9 @@ Bee is going to be a rule based programming language.
 ## reference
 
 * **Home page:** [Bee project](https://bee.sagecode.net/index.html)
-* **Community:** [Discutions](https://github.com/sage-code/bee/discussions) 
+* **Community:** [Discussions](https://github.com/sage-code/bee/discussions) 
 * **Discord:** [Invitation](https://discord.gg/twXtRsTVDA)   
 
 -----
-Copyright (c) Sage-Code 2018-2023 
+Copyright (c) Sage-Code 2018-2025
 
